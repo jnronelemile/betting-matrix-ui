@@ -1,0 +1,31 @@
+{
+
+    "PremierLeague": [
+      	{"home": "Brighton", "away": "Chelsea", "date": "2026-04-21"},
+          {"home": "Burnley", "away": "Man City", "date": "2026-04-22"},
+          {"home": "Bournemouth", "away": "Leeds", "date": "2026-04-22"},
+          {"home": "Sunderland", "away": "Forest", "date": "2026-04-24"},
+          {"home": "Fulham", "away": "Aston Villa", "date": "2026-04-25"},
+          {"home": "Liverpool", "away": "Crystal Palace", "date": "2026-04-25"},
+   
+          {"home": "Wolverhampton Wanderers ", "away": "Tottenham Hotspur", "date": "2026-04-25"},
+          {"home": "West Ham", "away": "Everton", "date": "2026-04-25"},
+          {"home": "Arsenal", "away": "Newcastle", "date": "2026-04-25"},
+          {"home": "Man Utd", "away": "Brentford", "date": "2026-04-27"}
+              
+    ],
+    
+    "Eredivisie": [
+          {"home": "Telstar", "away": "Sparta", "date": "2026-04-22"},
+          {"home": "Go Ahead Eagles", "away": "AZ Alkmaar", "date": "2026-04-23"},
+          {"home": "PSV", "away": "Zwolle", "date": "2026-04-23"},
+          {"home": "Feyenoord", "away": "Groningen", "date": "2026-04-25"},
+          {"home": "Heerenveen", "away": "Fortuna", "date": "2026-04-25"},
+          {"home": "NAC Breda", "away": "Ajax", "date": "2026-04-25"},
+          {"home": "Twente", "away": "NEC", "date": "2026-04-25"},
+          {"home": "Excelsior", "away": "Utrecht", "date": "2026-04-26"},
+          {"home": "Heracles", "away": "Volendam", "date": "2026-04-26"}
+   ]
+
+
+}

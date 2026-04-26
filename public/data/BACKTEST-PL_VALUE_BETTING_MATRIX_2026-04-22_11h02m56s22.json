@@ -1,0 +1,859 @@
+{
+    "_METADATA_": {
+        "league_folder": "BACKTEST-PL",
+        "Engine_Version": "7.6.0",
+        "timestamp_analysis": "2026-04-22_T11:02:56.436567"
+    },
+    "matches": [
+        {
+            "Matchup": "Brighton & Hove Albion vs Chelsea",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 9,
+                        "objective": "MID_TABLE",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 9,
+                            "position_diff": -2,
+                            "points_diff": 2.3,
+                            "goals_for_diff": -3.76,
+                            "goals_against_diff": -4.06
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 3,
+                        "objective": "MID_TABLE",
+                        "momentum": "ICE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 6,
+                            "position_diff": -2,
+                            "points_diff": 7.64,
+                            "goals_for_diff": -9,
+                            "goals_against_diff": -2.4
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.98,
+                    "motivation_away": 0.98,
+                    "net_justice_tension": -5.34
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 6.01,
+                    "wastefulness_gap": -0.236
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3479,
+                "PROB_X": 0.2572,
+                "PROB_2": 0.395,
+                "PROB_O25": 0.7458,
+                "PROB_U25": 0.2542
+            },
+            "True_Odds": {
+                "ODDS_1": 2.87,
+                "ODDS_X": 3.89,
+                "ODDS_2": 2.53,
+                "ODDS_O25": 1.34,
+                "ODDS_U25": 3.93
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.4959,
+                "PROP_HOME_MORE_SOT": 0.5095,
+                "PROP_HOME_MORE_CORNERS": 0.4309,
+                "PROP_HOME_MORE_TACKLES": 0.316,
+                "PROP_HOME_MORE_FOULS": 0.4925,
+                "PROP_HOME_MORE_YELLOWS": 0.2054,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6461,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6461,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.6088,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.345,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.5481,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.4032,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Burnley vs Manchester City",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 20,
+                        "objective": "DESPERATION",
+                        "momentum": "ICE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 19,
+                            "position_diff": 1,
+                            "points_diff": 2,
+                            "goals_for_diff": 5.65,
+                            "goals_against_diff": 1.46
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 2,
+                        "objective": "TITLE_CHASE",
+                        "momentum": "FIRE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 2,
+                            "position_diff": 0,
+                            "points_diff": -6.38,
+                            "goals_for_diff": 6.04,
+                            "goals_against_diff": -6.86
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.95,
+                    "motivation_away": 1.018,
+                    "net_justice_tension": 8.38
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.81,
+                    "wastefulness_gap": -0.213
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.5973,
+                "PROB_X": 0.2217,
+                "PROB_2": 0.181,
+                "PROB_O25": 0.7366,
+                "PROB_U25": 0.2634
+            },
+            "True_Odds": {
+                "ODDS_1": 1.67,
+                "ODDS_X": 4.51,
+                "ODDS_2": 5.52,
+                "ODDS_O25": 1.36,
+                "ODDS_U25": 3.8
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.3318,
+                "PROP_HOME_MORE_SOT": 0.454,
+                "PROP_HOME_MORE_CORNERS": 0.31,
+                "PROP_HOME_MORE_TACKLES": 0.1483,
+                "PROP_HOME_MORE_FOULS": 0.1468,
+                "PROP_HOME_MORE_YELLOWS": 0.7387,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6346,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6346,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.6195,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3891,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.7644,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.6532,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "AFC Bournemouth vs Leeds United",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 10,
+                        "objective": "MID_TABLE",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 8,
+                            "position_diff": 1,
+                            "points_diff": 1.21,
+                            "goals_for_diff": -4.16,
+                            "goals_against_diff": -0.54
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 18,
+                        "objective": "MID_TABLE",
+                        "momentum": "HOT",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 15,
+                            "position_diff": -5,
+                            "points_diff": 9.63,
+                            "goals_for_diff": -6.46,
+                            "goals_against_diff": 2.5
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.98,
+                    "motivation_away": 0.98,
+                    "net_justice_tension": -8.42
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 6.05,
+                    "wastefulness_gap": -0.07
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.2776,
+                "PROB_X": 0.253,
+                "PROB_2": 0.4694,
+                "PROB_O25": 0.7476,
+                "PROB_U25": 0.2524
+            },
+            "True_Odds": {
+                "ODDS_1": 3.6,
+                "ODDS_X": 3.95,
+                "ODDS_2": 2.13,
+                "ODDS_O25": 1.34,
+                "ODDS_U25": 3.96
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.5089,
+                "PROP_HOME_MORE_SOT": 0.5199,
+                "PROP_HOME_MORE_CORNERS": 0.5508,
+                "PROP_HOME_MORE_TACKLES": 0.925,
+                "PROP_HOME_MORE_FOULS": 0.785,
+                "PROP_HOME_MORE_YELLOWS": 0.2095,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6484,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6484,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.6113,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3042,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.7419,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.6081,
+                "SUPER_SIGNAL_O15": true
+            }
+        },
+        {
+            "Matchup": "Sunderland AFC vs Nottingham Forest",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 6,
+                        "objective": "MID_TABLE",
+                        "momentum": "HOT",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 11,
+                            "position_diff": 7,
+                            "points_diff": -11.22,
+                            "goals_for_diff": 2.32,
+                            "goals_against_diff": -9.07
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 13,
+                        "objective": "SURVIVAL",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 16,
+                            "position_diff": -2,
+                            "points_diff": 3,
+                            "goals_for_diff": -2.13,
+                            "goals_against_diff": -2.48
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.98,
+                    "motivation_away": 1.045,
+                    "net_justice_tension": -14.22
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.1,
+                    "wastefulness_gap": -0.098
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.1377,
+                "PROB_X": 0.257,
+                "PROB_2": 0.6053,
+                "PROB_O25": 0.7017,
+                "PROB_U25": 0.2983
+            },
+            "True_Odds": {
+                "ODDS_1": 7.26,
+                "ODDS_X": 3.89,
+                "ODDS_2": 1.65,
+                "ODDS_O25": 1.43,
+                "ODDS_U25": 3.35
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.4506,
+                "PROP_HOME_MORE_SOT": 0.4889,
+                "PROP_HOME_MORE_CORNERS": 0.3837,
+                "PROP_HOME_MORE_TACKLES": 0.8418,
+                "PROP_HOME_MORE_FOULS": 0.387,
+                "PROP_HOME_MORE_YELLOWS": 0.0212,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.5925,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.5925,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5691,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3671,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.8995,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.7852,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Fulham vs Aston Villa",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 7,
+                        "objective": "MID_TABLE",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 12,
+                            "position_diff": 1,
+                            "points_diff": -3.58,
+                            "goals_for_diff": 0.92,
+                            "goals_against_diff": -0.63
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 8,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 4,
+                            "position_diff": 8,
+                            "points_diff": -15.97,
+                            "goals_for_diff": 5.1,
+                            "goals_against_diff": -6.14
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.98,
+                    "motivation_away": 1.038,
+                    "net_justice_tension": 12.39
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.38,
+                    "wastefulness_gap": -0.003
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.6673,
+                "PROB_X": 0.2174,
+                "PROB_2": 0.1153,
+                "PROB_O25": 0.7159,
+                "PROB_U25": 0.2841
+            },
+            "True_Odds": {
+                "ODDS_1": 1.5,
+                "ODDS_X": 4.6,
+                "ODDS_2": 8.67,
+                "ODDS_O25": 1.4,
+                "ODDS_U25": 3.52
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.4842,
+                "PROP_HOME_MORE_SOT": 0.4778,
+                "PROP_HOME_MORE_CORNERS": 0.467,
+                "PROP_HOME_MORE_TACKLES": 0.9361,
+                "PROP_HOME_MORE_FOULS": 0.5474,
+                "PROP_HOME_MORE_YELLOWS": 0.9613,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6093,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6093,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5807,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3574,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.8493,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.705,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Liverpool vs Crystal Palace",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 5,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 5,
+                            "position_diff": -2,
+                            "points_diff": 0.8,
+                            "goals_for_diff": -0.29,
+                            "goals_against_diff": 4.08
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 7,
+                        "objective": "MID_TABLE",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 13,
+                            "position_diff": -5,
+                            "points_diff": 6.27,
+                            "goals_for_diff": -14.04,
+                            "goals_against_diff": -5.17
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.038,
+                    "motivation_away": 0.98,
+                    "net_justice_tension": -5.47
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.64,
+                    "wastefulness_gap": -0.353
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3623,
+                "PROB_X": 0.2521,
+                "PROB_2": 0.3857,
+                "PROB_O25": 0.7285,
+                "PROB_U25": 0.2715
+            },
+            "True_Odds": {
+                "ODDS_1": 2.76,
+                "ODDS_X": 3.97,
+                "ODDS_2": 2.59,
+                "ODDS_O25": 1.37,
+                "ODDS_U25": 3.68
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.5892,
+                "PROP_HOME_MORE_SOT": 0.5422,
+                "PROP_HOME_MORE_CORNERS": 0.6276,
+                "PROP_HOME_MORE_TACKLES": 0.5803,
+                "PROP_HOME_MORE_FOULS": 0.6781,
+                "PROP_HOME_MORE_YELLOWS": 0.2849,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6247,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6247,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.6011,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.335,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.6028,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.4836,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Wolverhampton Wanderers vs Tottenham Hotspur",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 18,
+                        "objective": "DESPERATION",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 20,
+                            "position_diff": -1,
+                            "points_diff": 13.91,
+                            "goals_for_diff": -5.18,
+                            "goals_against_diff": 7.51
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 10,
+                        "objective": "SURVIVAL",
+                        "momentum": "ICE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 18,
+                            "position_diff": -1,
+                            "points_diff": 5.6,
+                            "goals_for_diff": 7.56,
+                            "goals_against_diff": 4.1
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.95,
+                    "motivation_away": 1.055,
+                    "net_justice_tension": 8.31
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.03,
+                    "wastefulness_gap": 0.376
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.5589,
+                "PROB_X": 0.248,
+                "PROB_2": 0.1931,
+                "PROB_O25": 0.6981,
+                "PROB_U25": 0.3019
+            },
+            "True_Odds": {
+                "ODDS_1": 1.79,
+                "ODDS_X": 4.03,
+                "ODDS_2": 5.18,
+                "ODDS_O25": 1.43,
+                "ODDS_U25": 3.31
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.438,
+                "PROP_HOME_MORE_SOT": 0.4595,
+                "PROP_HOME_MORE_CORNERS": 0.358,
+                "PROP_HOME_MORE_TACKLES": 0.2272,
+                "PROP_HOME_MORE_FOULS": 0.4551,
+                "PROP_HOME_MORE_YELLOWS": 0.8776,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.01,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.01,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5677,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3789,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.7239,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.585,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "West Ham United vs Everton",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 17,
+                        "objective": "SURVIVAL",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 17,
+                            "position_diff": -1,
+                            "points_diff": 4.89,
+                            "goals_for_diff": 0.67,
+                            "goals_against_diff": 5.59
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 5,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 10,
+                            "position_diff": 5,
+                            "points_diff": -8.29,
+                            "goals_for_diff": 0.52,
+                            "goals_against_diff": -10.32
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.075,
+                    "motivation_away": 0.98,
+                    "net_justice_tension": 13.18
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.44,
+                    "wastefulness_gap": 0.006
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.7049,
+                "PROB_X": 0.2035,
+                "PROB_2": 0.0916,
+                "PROB_O25": 0.7188,
+                "PROB_U25": 0.2812
+            },
+            "True_Odds": {
+                "ODDS_1": 1.42,
+                "ODDS_X": 4.91,
+                "ODDS_2": 10.92,
+                "ODDS_O25": 1.39,
+                "ODDS_U25": 3.56
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.4607,
+                "PROP_HOME_MORE_SOT": 0.4943,
+                "PROP_HOME_MORE_CORNERS": 0.5235,
+                "PROP_HOME_MORE_TACKLES": 0.3525,
+                "PROP_HOME_MORE_FOULS": 0.5511,
+                "PROP_HOME_MORE_YELLOWS": 0.9683,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6129,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6129,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5866,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3553,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.8678,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.7269,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Arsenal vs Newcastle United",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 2,
+                        "objective": "TITLE_DEFENSE",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 1,
+                            "position_diff": 0,
+                            "points_diff": -2.35,
+                            "goals_for_diff": 6.38,
+                            "goals_against_diff": 1.33
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 16,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 14,
+                            "position_diff": -3,
+                            "points_diff": 6.1,
+                            "goals_for_diff": -3.45,
+                            "goals_against_diff": 3.56
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.038,
+                    "motivation_away": 0.98,
+                    "net_justice_tension": -8.45
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.34,
+                    "wastefulness_gap": -0.206
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.2914,
+                "PROB_X": 0.2574,
+                "PROB_2": 0.4512,
+                "PROB_O25": 0.7139,
+                "PROB_U25": 0.2861
+            },
+            "True_Odds": {
+                "ODDS_1": 3.43,
+                "ODDS_X": 3.89,
+                "ODDS_2": 2.22,
+                "ODDS_O25": 1.4,
+                "ODDS_U25": 3.5
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.5538,
+                "PROP_HOME_MORE_SOT": 0.5147,
+                "PROP_HOME_MORE_CORNERS": 0.5125,
+                "PROP_HOME_MORE_TACKLES": 0.5379,
+                "PROP_HOME_MORE_FOULS": 0.5695,
+                "PROP_HOME_MORE_YELLOWS": 0.1252,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6069,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6069,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5835,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3727,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.7242,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.5786,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Manchester United vs Brentford",
+            "League": "BACKTEST-PL",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.34,
+                    "median_sot": 8.0,
+                    "median_corners": 9.88,
+                    "median_tackles": 32.71,
+                    "median_fouls": 20.8,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 4,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 3,
+                            "position_diff": 2,
+                            "points_diff": -5.3,
+                            "goals_for_diff": 3.06,
+                            "goals_against_diff": 2.4
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 12,
+                        "objective": "MID_TABLE",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 7,
+                            "position_diff": -1,
+                            "points_diff": 3.08,
+                            "goals_for_diff": -5.28,
+                            "goals_against_diff": -0.4
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.038,
+                    "motivation_away": 0.98,
+                    "net_justice_tension": -8.38
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.92,
+                    "wastefulness_gap": -0.263
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.2983,
+                "PROB_X": 0.2519,
+                "PROB_2": 0.4497,
+                "PROB_O25": 0.7416,
+                "PROB_U25": 0.2584
+            },
+            "True_Odds": {
+                "ODDS_1": 3.35,
+                "ODDS_X": 3.97,
+                "ODDS_2": 2.22,
+                "ODDS_O25": 1.35,
+                "ODDS_U25": 3.87
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.5535,
+                "PROP_HOME_MORE_SOT": 0.5521,
+                "PROP_HOME_MORE_CORNERS": 0.504,
+                "PROP_HOME_MORE_TACKLES": 0.3525,
+                "PROP_HOME_MORE_FOULS": 0.6365,
+                "PROP_HOME_MORE_YELLOWS": 0.1469,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.641,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.641,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.6072,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3084,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.7151,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.5611,
+                "SUPER_SIGNAL_O15": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,909 @@
+{
+    "_METADATA_": {
+        "league_folder": "BACKTEST-LIGA",
+        "Engine_Version": "7.6.1",
+        "timestamp_analysis": "2026-04-25_T03:19:46.654003"
+    },
+    "matches": [
+        {
+            "Matchup": "Real Betis vs Real Madrid",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 10,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 5,
+                            "position_diff": -1,
+                            "points_diff": 1.76,
+                            "goals_for_diff": 1.27,
+                            "goals_against_diff": 2.62
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 2,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 2,
+                            "position_diff": 0,
+                            "points_diff": -6.36,
+                            "goals_for_diff": -2.53,
+                            "goals_against_diff": -5.3
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.035,
+                    "motivation_away": 1.035,
+                    "net_justice_tension": 8.12
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.9,
+                    "wastefulness_gap": -0.225,
+                    "fotmob_rating_home": 6.94,
+                    "fotmob_rating_away": 7.23,
+                    "team_rating_gap": -0.29,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.5205,
+                "PROB_X": 0.2353,
+                "PROB_2": 0.2442,
+                "PROB_O25": 0.6695,
+                "PROB_U25": 0.3305
+            },
+            "True_Odds": {
+                "ODDS_1": 1.92,
+                "ODDS_X": 4.25,
+                "ODDS_2": 4.1,
+                "ODDS_O25": 1.49,
+                "ODDS_U25": 3.03
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.3909,
+                "PROP_HOME_MORE_SOT": 0.4689,
+                "PROP_HOME_MORE_CORNERS": 0.3475,
+                "PROP_HOME_MORE_TACKLES": 0.9626,
+                "PROP_HOME_MORE_FOULS": 0.2689,
+                "PROP_HOME_MORE_YELLOWS": 0.8069,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "HOME_MOST_TACKLES",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.645,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.645,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.6215,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3061,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.7203,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.5796,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Deportivo Alaves vs RCD Mallorca",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 15,
+                        "objective": "SURVIVAL",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 18,
+                            "position_diff": -6,
+                            "points_diff": 8.41,
+                            "goals_for_diff": -3.72,
+                            "goals_against_diff": 5.21
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 19,
+                        "objective": "SURVIVAL",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 15,
+                            "position_diff": 3,
+                            "points_diff": -2.1,
+                            "goals_for_diff": 2.9,
+                            "goals_against_diff": -5.19
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.061,
+                    "motivation_away": 1.061,
+                    "net_justice_tension": 10.51
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.43,
+                    "wastefulness_gap": 0.269,
+                    "fotmob_rating_home": 6.72,
+                    "fotmob_rating_away": 6.75,
+                    "team_rating_gap": -0.03,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.6493,
+                "PROB_X": 0.2308,
+                "PROB_2": 0.1198,
+                "PROB_O25": 0.6596,
+                "PROB_U25": 0.3404
+            },
+            "True_Odds": {
+                "ODDS_1": 1.54,
+                "ODDS_X": 4.33,
+                "ODDS_2": 8.35,
+                "ODDS_O25": 1.52,
+                "ODDS_U25": 2.94
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.5355,
+                "PROP_HOME_MORE_SOT": 0.4816,
+                "PROP_HOME_MORE_CORNERS": 0.5963,
+                "PROP_HOME_MORE_TACKLES": 0.3775,
+                "PROP_HOME_MORE_FOULS": 0.7773,
+                "PROP_HOME_MORE_YELLOWS": 0.967,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.0833,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.0833,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5895,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3345,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.8241,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.7052,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Getafe CF vs FC Barcelona",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 14,
+                        "objective": "EUROPE_CHASE",
+                        "momentum": "HOT",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 6,
+                            "position_diff": 11,
+                            "points_diff": -9.62,
+                            "goals_for_diff": 3.35,
+                            "goals_against_diff": -5.42
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 1,
+                        "objective": "TITLE_DEFENSE",
+                        "momentum": "FIRE",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 1,
+                            "position_diff": 0,
+                            "points_diff": -14.61,
+                            "goals_for_diff": 5.3,
+                            "goals_against_diff": -9.45
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.0,
+                    "motivation_away": 1.035,
+                    "net_justice_tension": 4.99
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.66,
+                    "wastefulness_gap": -0.341,
+                    "fotmob_rating_home": 6.79,
+                    "fotmob_rating_away": 7.32,
+                    "team_rating_gap": -0.53,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3891,
+                "PROB_X": 0.2641,
+                "PROB_2": 0.3468,
+                "PROB_O25": 0.6032,
+                "PROB_U25": 0.3968
+            },
+            "True_Odds": {
+                "ODDS_1": 2.57,
+                "ODDS_X": 3.79,
+                "ODDS_2": 2.88,
+                "ODDS_O25": 1.66,
+                "ODDS_U25": 2.52
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.283,
+                "PROP_HOME_MORE_SOT": 0.4216,
+                "PROP_HOME_MORE_CORNERS": 0.2829,
+                "PROP_HOME_MORE_TACKLES": 0.1016,
+                "PROP_HOME_MORE_FOULS": 0.2814,
+                "PROP_HOME_MORE_YELLOWS": 0.6649,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6311,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6311,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.6222,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3313,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.585,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.4732,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Valencia CF vs Girona FC",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 12,
+                        "objective": "SURVIVAL",
+                        "momentum": "COLD",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 14,
+                            "position_diff": -7,
+                            "points_diff": 11.54,
+                            "goals_for_diff": -6.73,
+                            "goals_against_diff": 7.52
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 9,
+                        "objective": "SURVIVAL",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 13,
+                            "position_diff": 1,
+                            "points_diff": -0.33,
+                            "goals_for_diff": -4.08,
+                            "goals_against_diff": -2.22
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.052,
+                    "motivation_away": 1.033,
+                    "net_justice_tension": 11.87
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.33,
+                    "wastefulness_gap": 0.087,
+                    "fotmob_rating_home": 6.74,
+                    "fotmob_rating_away": 6.78,
+                    "team_rating_gap": -0.04,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.7018,
+                "PROB_X": 0.2069,
+                "PROB_2": 0.0913,
+                "PROB_O25": 0.6451,
+                "PROB_U25": 0.3549
+            },
+            "True_Odds": {
+                "ODDS_1": 1.42,
+                "ODDS_X": 4.83,
+                "ODDS_2": 10.95,
+                "ODDS_O25": 1.55,
+                "ODDS_U25": 2.82
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.523,
+                "PROP_HOME_MORE_SOT": 0.4789,
+                "PROP_HOME_MORE_CORNERS": 0.5744,
+                "PROP_HOME_MORE_TACKLES": 0.5577,
+                "PROP_HOME_MORE_FOULS": 0.7773,
+                "PROP_HOME_MORE_YELLOWS": 0.9763,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.592,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.592,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5821,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3469,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.8619,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.7504,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Atletico Madrid vs Athletic Club",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 3,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "ICE",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 4,
+                            "position_diff": 2,
+                            "points_diff": -7.91,
+                            "goals_for_diff": 5.14,
+                            "goals_against_diff": -5.05
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 15,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 9,
+                            "position_diff": -4,
+                            "points_diff": 8.87,
+                            "goals_for_diff": -9.84,
+                            "goals_against_diff": 9.34
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.035,
+                    "motivation_away": 0.98,
+                    "net_justice_tension": -16.78
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.23,
+                    "wastefulness_gap": -0.391,
+                    "fotmob_rating_home": 6.9,
+                    "fotmob_rating_away": 6.74,
+                    "team_rating_gap": 0.16,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3095,
+                "PROB_X": 0.3004,
+                "PROB_2": 0.3901,
+                "PROB_O25": 0.5986,
+                "PROB_U25": 0.4014
+            },
+            "True_Odds": {
+                "ODDS_1": 3.23,
+                "ODDS_X": 3.33,
+                "ODDS_2": 2.56,
+                "ODDS_O25": 1.67,
+                "ODDS_U25": 2.49
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.5104,
+                "PROP_HOME_MORE_SOT": 0.5365,
+                "PROP_HOME_MORE_CORNERS": 0.5414,
+                "PROP_HOME_MORE_TACKLES": 0.491,
+                "PROP_HOME_MORE_FOULS": 0.2689,
+                "PROP_HOME_MORE_YELLOWS": 0.01,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6058,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6058,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5779,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3875,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.9415,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.8566,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Rayo Vallecano vs Real Sociedad",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 11,
+                        "objective": "SURVIVAL",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 11,
+                            "position_diff": -2,
+                            "points_diff": 8.63,
+                            "goals_for_diff": -14.68,
+                            "goals_against_diff": -3.41
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 11,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 8,
+                            "position_diff": 2,
+                            "points_diff": 4.62,
+                            "goals_for_diff": 2.26,
+                            "goals_against_diff": 3.6
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.033,
+                    "motivation_away": 0.98,
+                    "net_justice_tension": 4.01
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.57,
+                    "wastefulness_gap": 0.538,
+                    "fotmob_rating_home": 6.78,
+                    "fotmob_rating_away": 6.81,
+                    "team_rating_gap": -0.03,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.5358,
+                "PROB_X": 0.2522,
+                "PROB_2": 0.2119,
+                "PROB_O25": 0.671,
+                "PROB_U25": 0.329
+            },
+            "True_Odds": {
+                "ODDS_1": 1.87,
+                "ODDS_X": 3.97,
+                "ODDS_2": 4.72,
+                "ODDS_O25": 1.49,
+                "ODDS_U25": 3.04
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.4858,
+                "PROP_HOME_MORE_SOT": 0.4688,
+                "PROP_HOME_MORE_CORNERS": 0.4925,
+                "PROP_HOME_MORE_TACKLES": 0.6664,
+                "PROP_HOME_MORE_FOULS": 0.343,
+                "PROP_HOME_MORE_YELLOWS": 0.6485,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.01,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.01,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5949,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3343,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.5258,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.4212,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Real Oviedo vs Elche CF",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 19,
+                        "objective": "SURVIVAL",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 20,
+                            "position_diff": 0,
+                            "points_diff": 1.98,
+                            "goals_for_diff": -6,
+                            "goals_against_diff": -2.73
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 20,
+                        "objective": "SURVIVAL",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 16,
+                            "position_diff": 0,
+                            "points_diff": -0.43,
+                            "goals_for_diff": 4.17,
+                            "goals_against_diff": -7.33
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.014,
+                    "motivation_away": 1.061,
+                    "net_justice_tension": 2.41
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.53,
+                    "wastefulness_gap": 0.251,
+                    "fotmob_rating_home": 6.67,
+                    "fotmob_rating_away": 6.83,
+                    "team_rating_gap": -0.16,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.4632,
+                "PROB_X": 0.2525,
+                "PROB_2": 0.2843,
+                "PROB_O25": 0.6486,
+                "PROB_U25": 0.3514
+            },
+            "True_Odds": {
+                "ODDS_1": 2.16,
+                "ODDS_X": 3.96,
+                "ODDS_2": 3.52,
+                "ODDS_O25": 1.54,
+                "ODDS_U25": 2.85
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.4557,
+                "PROP_HOME_MORE_SOT": 0.4711,
+                "PROP_HOME_MORE_CORNERS": 0.467,
+                "PROP_HOME_MORE_TACKLES": 0.2512,
+                "PROP_HOME_MORE_FOULS": 0.2689,
+                "PROP_HOME_MORE_YELLOWS": 0.5006,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.1279,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.1279,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5959,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3224,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.4649,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.391,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "CA Osasuna vs Sevilla FC",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 6,
+                        "objective": "SURVIVAL",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 10,
+                            "position_diff": 1,
+                            "points_diff": 3.19,
+                            "goals_for_diff": -1.57,
+                            "goals_against_diff": -2.93
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 10,
+                        "objective": "SURVIVAL",
+                        "momentum": "ICE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 17,
+                            "position_diff": 2,
+                            "points_diff": -2.26,
+                            "goals_for_diff": 5.71,
+                            "goals_against_diff": 1.39
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.024,
+                    "motivation_away": 1.071,
+                    "net_justice_tension": 5.45
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.17,
+                    "wastefulness_gap": 0.184,
+                    "fotmob_rating_home": 6.83,
+                    "fotmob_rating_away": 6.73,
+                    "team_rating_gap": 0.1,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.5964,
+                "PROB_X": 0.2256,
+                "PROB_2": 0.178,
+                "PROB_O25": 0.6323,
+                "PROB_U25": 0.3677
+            },
+            "True_Odds": {
+                "ODDS_1": 1.68,
+                "ODDS_X": 4.43,
+                "ODDS_2": 5.62,
+                "ODDS_O25": 1.58,
+                "ODDS_U25": 2.72
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.516,
+                "PROP_HOME_MORE_SOT": 0.4962,
+                "PROP_HOME_MORE_CORNERS": 0.4202,
+                "PROP_HOME_MORE_TACKLES": 0.2272,
+                "PROP_HOME_MORE_FOULS": 0.2689,
+                "PROP_HOME_MORE_YELLOWS": 0.6819,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.3401,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.3401,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5737,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3524,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.6275,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.5257,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "Villarreal CF vs Celta Vigo",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 4,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "HOT",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 3,
+                            "position_diff": 0,
+                            "points_diff": -10.03,
+                            "goals_for_diff": 7.68,
+                            "goals_against_diff": -1.18
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 3,
+                        "objective": "EUROPE_CHASE",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 7,
+                            "position_diff": 1,
+                            "points_diff": 2.74,
+                            "goals_for_diff": 1.57,
+                            "goals_against_diff": 1.87
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.035,
+                    "motivation_away": 1.0,
+                    "net_justice_tension": -12.77
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.28,
+                    "wastefulness_gap": -0.078,
+                    "fotmob_rating_home": 6.89,
+                    "fotmob_rating_away": 6.77,
+                    "team_rating_gap": 0.12,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3503,
+                "PROB_X": 0.2711,
+                "PROB_2": 0.3786,
+                "PROB_O25": 0.6114,
+                "PROB_U25": 0.3886
+            },
+            "True_Odds": {
+                "ODDS_1": 2.85,
+                "ODDS_X": 3.69,
+                "ODDS_2": 2.64,
+                "ODDS_O25": 1.64,
+                "ODDS_U25": 2.57
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.5456,
+                "PROP_HOME_MORE_SOT": 0.5109,
+                "PROP_HOME_MORE_CORNERS": 0.511,
+                "PROP_HOME_MORE_TACKLES": 0.5587,
+                "PROP_HOME_MORE_FOULS": 0.2689,
+                "PROP_HOME_MORE_YELLOWS": 0.022,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6087,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6087,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5834,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3307,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.8775,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.7638,
+                "SUPER_SIGNAL_O15": false
+            }
+        },
+        {
+            "Matchup": "RCD Espanyol vs Levante UD",
+            "League": "BACKTEST-LIGA",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.78,
+                    "median_sot": 8.2,
+                    "median_corners": 9.06,
+                    "median_tackles": 32.26,
+                    "median_fouls": 24.4,
+                    "median_yellow_cards": 4.4
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 16,
+                        "objective": "SURVIVAL",
+                        "momentum": "ICE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 12,
+                            "position_diff": 1,
+                            "points_diff": 2.37,
+                            "goals_for_diff": -5.44,
+                            "goals_against_diff": 2.21
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 13,
+                        "objective": "SURVIVAL",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 19,
+                            "position_diff": -4,
+                            "points_diff": 4.66,
+                            "goals_for_diff": -4.14,
+                            "goals_against_diff": -2.92
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.033,
+                    "motivation_away": 1.052,
+                    "net_justice_tension": -2.29
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 5.72,
+                    "wastefulness_gap": 0.022,
+                    "fotmob_rating_home": 6.69,
+                    "fotmob_rating_away": 6.66,
+                    "team_rating_gap": 0.03,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.4436,
+                "PROB_X": 0.2392,
+                "PROB_2": 0.3171,
+                "PROB_O25": 0.6721,
+                "PROB_U25": 0.3279
+            },
+            "True_Odds": {
+                "ODDS_1": 2.25,
+                "ODDS_X": 4.18,
+                "ODDS_2": 3.15,
+                "ODDS_O25": 1.49,
+                "ODDS_U25": 3.05
+            },
+            "Prop_Bets": {
+                "PROP_HOME_MORE_SHOTS": 0.5069,
+                "PROP_HOME_MORE_SOT": 0.5145,
+                "PROP_HOME_MORE_CORNERS": 0.5469,
+                "PROP_HOME_MORE_TACKLES": 0.1328,
+                "PROP_HOME_MORE_FOULS": 0.7773,
+                "PROP_HOME_MORE_YELLOWS": 0.5443,
+                "SIGNAL_H2H_FOUL_DOMINANCE": "NONE",
+                "SIGNAL_H2H_TACKLE_DOMINANCE": "NONE",
+                "PROP_MATCH_OVER_MEDIAN_SHOTS": 0.6346,
+                "PROP_MATCH_OVER_MEDIAN_SOT": 0.6346,
+                "PROP_MATCH_OVER_MEDIAN_CORNERS": 0.5991,
+                "PROP_MATCH_OVER_MEDIAN_TACKLES": 0.3076,
+                "PROP_MATCH_OVER_MEDIAN_FOULS": 0.4643,
+                "PROP_MATCH_OVER_MEDIAN_YELLOWS": 0.3933,
+                "SUPER_SIGNAL_O15": false
+            }
+        }
+    ]
+}
