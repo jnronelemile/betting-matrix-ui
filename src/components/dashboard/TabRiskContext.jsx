@@ -31,16 +31,16 @@ export default function TabRiskContext({ match }) {
                </Badge>
              </div>
              
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
-                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Tension de Justice</span>
-                <span className={`font-mono text-3xl font-bold ${psychology.net_justice_tension > 5 || psychology.net_justice_tension < -5 ? 'text-rose-400' : 'text-emerald-400'}`}>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex-1 bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 flex justify-between items-center shadow-inner">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest">Tension de Justice</span>
+                <span className={`font-mono text-2xl sm:text-3xl font-bold ${psychology.net_justice_tension > 5 || psychology.net_justice_tension < -5 ? 'text-rose-400' : 'text-emerald-400'}`}>
                   {psychology.net_justice_tension > 0 ? '+' : ''}{psychology.net_justice_tension?.toFixed(2) || 'N/A'}
                 </span>
               </div>
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
-                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Indice d'Ouverture</span>
-                <span className="font-mono text-3xl font-bold text-slate-200">
+              <div className="flex-1 bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 flex justify-between items-center shadow-inner">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest">Indice d'Ouverture</span>
+                <span className="font-mono text-2xl sm:text-3xl font-bold text-slate-200">
                   {tactical.match_openness_index?.toFixed(2) || 'N/A'}
                 </span>
               </div>

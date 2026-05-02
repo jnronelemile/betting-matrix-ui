@@ -31,9 +31,9 @@ export default function TabNarrative({ match }) {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Team Profiles */}
       <Card title="Profils Situationnels" titleIcon={<Brain size={16} />}>
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        <div className="flex gap-4 overflow-x-auto snap-x custom-scrollbar pb-2">
           {/* Home Team */}
-          <div className="bg-slate-950 rounded-xl border border-slate-800 p-3 sm:p-5 relative overflow-hidden">
+          <div className="min-w-[260px] sm:min-w-0 flex-1 shrink-0 snap-center bg-slate-950 rounded-xl border border-slate-800 p-4 sm:p-5 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
             <h4 className="text-xs uppercase tracking-widest text-slate-500 font-bold mb-4">Équipe à Domicile</h4>
             
@@ -71,7 +71,7 @@ export default function TabNarrative({ match }) {
           </div>
 
           {/* Away Team */}
-          <div className="bg-slate-950 rounded-xl border border-slate-800 p-3 sm:p-5 relative overflow-hidden">
+          <div className="min-w-[260px] sm:min-w-0 flex-1 shrink-0 snap-center bg-slate-950 rounded-xl border border-slate-800 p-4 sm:p-5 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-1 h-full bg-rose-500"></div>
             <h4 className="text-xs uppercase tracking-widest text-slate-500 font-bold mb-4 text-right">Équipe à l'Extérieur</h4>
             
