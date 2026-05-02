@@ -63,9 +63,8 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Mobile Tab Select */}
-      {!isKillSwitch && (
-        <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 relative">
-          <select
+      <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 relative">
+        <select
             value={activeTab}
           onChange={(e) => setActiveTab(e.target.value)}
           className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-xs font-bold uppercase tracking-widest text-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 appearance-none cursor-pointer shadow-sm"
@@ -80,12 +79,10 @@ export function MatchDashboard({ match }) {
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </div>
       </div>
-      )}
 
       {/* Desktop Tab Navigation */}
-      {!isKillSwitch && (
-        <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0">
-          {TABS.map(tab => (
+      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0">
+        {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
@@ -101,27 +98,26 @@ export function MatchDashboard({ match }) {
           </button>
         ))}
       </div>
-      )}
 
       {/* Tab Content */}
       <div className="min-h-[500px]">
-        {isKillSwitch ? (
-          <div className="flex flex-col items-center justify-center h-full min-h-[400px] border border-rose-500/30 bg-rose-500/5 rounded-xl text-center p-6 space-y-4 animate-in fade-in zoom-in-95 duration-500 mt-4">
-            <AlertTriangle className="text-rose-500 w-16 h-16 opacity-80" />
-            <h3 className="text-xl font-bold text-slate-100 uppercase tracking-widest">Données Invalidées (Kill-Switch)</h3>
-            <p className="text-sm text-slate-400 max-w-md">
-              Les probabilités principales de ce match (Vainqueur et Buts) ont été évaluées à zéro ou sont manquantes. L'analyse détaillée est verrouillée pour prévenir toute erreur de prédiction.
-            </p>
-          </div>
-        ) : (
-          <>
-            {activeTab === 'core' && <TabCoreMarket match={match} />}
-            {activeTab === 'risk' && <TabRiskContext match={match} />}
-            {activeTab === 'narrative' && <TabNarrative match={match} />}
-            {activeTab === 'tactical' && <TabTactical match={match} />}
-            {activeTab === 'calibration' && <TabCalibration match={match} />}
-          </>
+        {activeTab === 'core' && (
+          isKillSwitch ? (
+            <div className="flex flex-col items-center justify-center h-full min-h-[400px] border border-rose-500/30 bg-rose-500/5 rounded-xl text-center p-6 space-y-4 animate-in fade-in zoom-in-95 duration-500 mt-4">
+              <AlertTriangle className="text-rose-500 w-16 h-16 opacity-80" />
+              <h3 className="text-xl font-bold text-slate-100 uppercase tracking-widest">Marchés Principaux Désactivés (Kill-Switch)</h3>
+              <p className="text-sm text-slate-400 max-w-md">
+                Les probabilités pour le Vainqueur et les Buts ont été évaluées à zéro. L'analyse du Core Market est verrouillée, mais vous pouvez consulter les marchés statistiques et tactiques dans les autres onglets.
+              </p>
+            </div>
+          ) : (
+            <TabCoreMarket match={match} />
+          )
         )}
+        {activeTab === 'risk' && <TabRiskContext match={match} />}
+        {activeTab === 'narrative' && <TabNarrative match={match} />}
+        {activeTab === 'tactical' && <TabTactical match={match} />}
+        {activeTab === 'calibration' && <TabCalibration match={match} />}
       </div>
     </div>
   );
