@@ -28,10 +28,9 @@ export default function TabCoreMarket({ match }) {
   );
 
   return (
-    <div className="overflow-x-auto custom-scrollbar pb-4 -mx-4 px-4 lg:mx-0 lg:px-0">
-      <div className="min-w-[1024px] grid grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        {/* Widget A: Probabilities & Odds */}
-        <div className="flex flex-col gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Widget A: Probabilities & Odds */}
+      <div className="flex flex-col gap-6">
         <Card title="Vainqueur du Match (1X2)" titleIcon={<Percent size={16} />}>
           <div className="space-y-6 mt-2">
             <ProgressBar label="Domicile (1)" value={probs.PROB_1 || 0} colorClass="bg-blue-500" displayValue={renderProbOdds(probs.PROB_1 || 0, odds.ODDS_1)} />
@@ -43,27 +42,27 @@ export default function TabCoreMarket({ match }) {
         <Card title="Signaux Forts (>70%)" titleIcon={<TrendingUp size={16} />}>
           <div className="flex flex-col gap-6 mt-2">
             {match.Super_Signals?.O15_ELITE && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 sm:p-4 rounded-xl flex flex-wrap gap-2 sm:gap-3 items-center shadow-sm">
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex gap-3 items-center shadow-sm">
                 <AlertCircle className="text-emerald-400 shrink-0" size={18} />
-                <span className="text-[10px] sm:text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal O1.5 : Élite</span>
+                <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal O1.5 : Élite</span>
               </div>
             )}
             {match.Super_Signals?.O_CORNERS_ELITE && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 sm:p-4 rounded-xl flex flex-wrap gap-2 sm:gap-3 items-center shadow-sm">
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex gap-3 items-center shadow-sm">
                 <AlertCircle className="text-emerald-400 shrink-0" size={18} />
-                <span className="text-[10px] sm:text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Corners : Élite</span>
+                <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Corners : Élite</span>
               </div>
             )}
             {match.Super_Signals?.O_SHOTS_ELITE && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 sm:p-4 rounded-xl flex flex-wrap gap-2 sm:gap-3 items-center shadow-sm">
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex gap-3 items-center shadow-sm">
                 <AlertCircle className="text-emerald-400 shrink-0" size={18} />
-                <span className="text-[10px] sm:text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Tirs : Élite</span>
+                <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Tirs : Élite</span>
               </div>
             )}
             {match.Super_Signals?.O_SOT_ELITE && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 sm:p-4 rounded-xl flex flex-wrap gap-2 sm:gap-3 items-center shadow-sm">
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex gap-3 items-center shadow-sm">
                 <AlertCircle className="text-emerald-400 shrink-0" size={18} />
-                <span className="text-[10px] sm:text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Cadrés : Élite</span>
+                <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Cadrés : Élite</span>
               </div>
             )}
 
@@ -101,16 +100,18 @@ export default function TabCoreMarket({ match }) {
                   <span>Handicaps Asiatiques</span>
                   <Badge variant="info" className="text-[10px] px-2 py-0.5">Fav: {match.Asian_Handicaps.favorite}</Badge>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {Object.entries(match.Asian_Handicaps).filter(([k]) => k.startsWith('AH_')).map(([k, v]) => (
-                    <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex flex-col items-center text-center shadow-inner">
-                      <span className="text-[10px] text-slate-400 uppercase tracking-widest mb-1.5">{k.replace('_', ' ')}</span>
-                      <div className="flex items-center justify-between w-full px-2 mt-1 border-t border-slate-800/50 pt-2">
-                        <span className="text-xs font-bold text-slate-300">{(v.prob * 100).toFixed(1)}%</span>
-                        <span className="font-mono text-xs text-emerald-400 font-bold">@{v.odds?.toFixed(2)}</span>
+                <div className="overflow-x-auto pb-2 -mx-2 px-2 custom-scrollbar">
+                  <div className="grid grid-cols-2 gap-3 min-w-[340px]">
+                    {Object.entries(match.Asian_Handicaps).filter(([k]) => k.startsWith('AH_')).map(([k, v]) => (
+                      <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex flex-col items-center text-center shadow-inner">
+                        <span className="text-[10px] text-slate-400 uppercase tracking-widest mb-1.5">{k.replace('_', ' ')}</span>
+                        <div className="flex items-center justify-between w-full px-2 mt-1 border-t border-slate-800/50 pt-2">
+                          <span className="text-xs font-bold text-slate-300">{(v.prob * 100).toFixed(1)}%</span>
+                          <span className="font-mono text-xs text-emerald-400 font-bold">@{v.odds?.toFixed(2)}</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -155,7 +156,6 @@ export default function TabCoreMarket({ match }) {
           </div>
         </Card>
       </div>
-    </div>
     </div>
   );
 }
