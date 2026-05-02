@@ -22,6 +22,9 @@ export function MatchDashboard({ match }) {
     { id: 'calibration', label: 'Maths & Calibration', icon: <Calculator size={14} /> },
   ];
 
+  const probs = match.True_Probabilities || {};
+  const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
+
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -41,6 +44,12 @@ export function MatchDashboard({ match }) {
                 <AlertTriangle size={12} /> Faux Favori Détecté
               </Badge>
             )}
+
+            {isKillSwitch && (
+              <Badge variant="danger" className="text-[10px] flex items-center gap-1.5 px-2 py-1 uppercase tracking-widest shadow-[0_0_10px_rgba(244,63,94,0.3)] bg-rose-500/20 text-rose-400 border-rose-500/50">
+                <AlertTriangle size={12} /> KILL-SWITCH ACTIVÉ
+              </Badge>
+            )}
           </div>
         </div>
         <div className="flex flex-wrap gap-2 mt-3">
@@ -54,9 +63,10 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Mobile Tab Select */}
-      <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 relative">
-        <select
-          value={activeTab}
+      {!isKillSwitch && (
+        <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 relative">
+          <select
+            value={activeTab}
           onChange={(e) => setActiveTab(e.target.value)}
           className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-xs font-bold uppercase tracking-widest text-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 appearance-none cursor-pointer shadow-sm"
         >
@@ -72,8 +82,9 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Desktop Tab Navigation */}
-      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0">
-        {TABS.map(tab => (
+      {!isKillSwitch && (
+        <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0">
+          {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
@@ -89,14 +100,27 @@ export function MatchDashboard({ match }) {
           </button>
         ))}
       </div>
+      )}
 
       {/* Tab Content */}
       <div className="min-h-[500px]">
-        {activeTab === 'core' && <TabCoreMarket match={match} />}
-        {activeTab === 'risk' && <TabRiskContext match={match} />}
-        {activeTab === 'narrative' && <TabNarrative match={match} />}
-        {activeTab === 'tactical' && <TabTactical match={match} />}
-        {activeTab === 'calibration' && <TabCalibration match={match} />}
+        {isKillSwitch ? (
+          <div className="flex flex-col items-center justify-center h-full min-h-[400px] border border-rose-500/30 bg-rose-500/5 rounded-xl text-center p-6 space-y-4 animate-in fade-in zoom-in-95 duration-500 mt-4">
+            <AlertTriangle className="text-rose-500 w-16 h-16 opacity-80" />
+            <h3 className="text-xl font-bold text-slate-100 uppercase tracking-widest">Données Invalidées (Kill-Switch)</h3>
+            <p className="text-sm text-slate-400 max-w-md">
+              Les probabilités principales de ce match (Vainqueur et Buts) ont été évaluées à zéro ou sont manquantes. L'analyse détaillée est verrouillée pour prévenir toute erreur de prédiction.
+            </p>
+          </div>
+        ) : (
+          <>
+            {activeTab === 'core' && <TabCoreMarket match={match} />}
+            {activeTab === 'risk' && <TabRiskContext match={match} />}
+            {activeTab === 'narrative' && <TabNarrative match={match} />}
+            {activeTab === 'tactical' && <TabTactical match={match} />}
+            {activeTab === 'calibration' && <TabCalibration match={match} />}
+          </>
+        )}
       </div>
     </div>
   );
