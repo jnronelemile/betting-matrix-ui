@@ -28,9 +28,10 @@ export default function TabCoreMarket({ match }) {
   );
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500 w-full max-w-full overflow-hidden">
-      {/* Widget A: Probabilities & Odds */}
-      <div className="flex flex-col gap-6 w-full max-w-full">
+    <div className="overflow-x-auto custom-scrollbar pb-4 -mx-4 px-4 lg:mx-0 lg:px-0">
+      <div className="min-w-[1024px] grid grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        {/* Widget A: Probabilities & Odds */}
+        <div className="flex flex-col gap-6">
         <Card title="Vainqueur du Match (1X2)" titleIcon={<Percent size={16} />}>
           <div className="space-y-6 mt-2">
             <ProgressBar label="Domicile (1)" value={probs.PROB_1 || 0} colorClass="bg-blue-500" displayValue={renderProbOdds(probs.PROB_1 || 0, odds.ODDS_1)} />
@@ -76,7 +77,7 @@ export default function TabCoreMarket({ match }) {
       </div>
 
       {/* Colonne 2: Marchés des Buts */}
-      <div className="flex flex-col gap-6 w-full max-w-full">
+      <div className="flex flex-col gap-6">
         <Card title="Marchés des Buts & BTTS" titleIcon={<ShieldCheck size={16} />}>
           <div className="space-y-6 mt-2">
             <ProgressBar label="Plus de 1.5 (Over)" value={probs.PROB_O15 || 0} colorClass={probs.PROB_O15 >= 0.75 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O15 || 0, odds.ODDS_O15)} />
@@ -89,7 +90,7 @@ export default function TabCoreMarket({ match }) {
       </div>
 
       {/* Colonne 3: Scénarios Précis */}
-      <div className="flex flex-col gap-6 w-full max-w-full">
+      <div className="flex flex-col gap-6">
         <Card title="Scénarios Précis & Handicaps" titleIcon={<TrendingUp size={16} />}>
           <div className="flex flex-col gap-5 mt-1">
             
@@ -154,6 +155,7 @@ export default function TabCoreMarket({ match }) {
           </div>
         </Card>
       </div>
+    </div>
     </div>
   );
 }
