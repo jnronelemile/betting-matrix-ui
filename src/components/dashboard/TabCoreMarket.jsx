@@ -21,7 +21,7 @@ export default function TabCoreMarket({ match }) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="grid grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Widget A: Probabilities & Odds */}
       <div className="flex flex-col gap-6">
         <Card title="Vainqueur du Match (1X2)" titleIcon={<Percent size={16} />}>
@@ -113,9 +113,9 @@ export default function TabCoreMarket({ match }) {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {Object.entries(match.Asian_Handicaps).filter(([k]) => k.startsWith('AH_')).map(([k, v]) => (
-                    <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex justify-between items-center shadow-inner">
-                      <span className="text-[10px] text-slate-400 uppercase tracking-widest">{k.replace('_', ' ')}</span>
-                      <div className="flex items-center gap-3">
+                    <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex flex-col items-center text-center shadow-inner">
+                      <span className="text-[10px] text-slate-400 uppercase tracking-widest mb-1.5">{k.replace('_', ' ')}</span>
+                      <div className="flex items-center gap-2.5">
                         <span className="text-xs font-bold text-slate-300">{(v.prob * 100).toFixed(1)}%</span>
                         <span className="font-mono text-xs text-emerald-400 font-bold">@{v.odds?.toFixed(2)}</span>
                       </div>

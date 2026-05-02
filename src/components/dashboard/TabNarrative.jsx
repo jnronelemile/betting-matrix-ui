@@ -28,12 +28,12 @@ export default function TabNarrative({ match }) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="grid grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Team Profiles */}
       <Card title="Profils Situationnels" titleIcon={<Brain size={16} />}>
-        <div className="flex gap-4 overflow-x-auto snap-x custom-scrollbar pb-2">
+        <div className="grid grid-cols-2 gap-4">
           {/* Home Team */}
-          <div className="min-w-[260px] sm:min-w-0 flex-1 shrink-0 snap-center bg-slate-950 rounded-xl border border-slate-800 p-4 sm:p-5 relative overflow-hidden">
+          <div className="bg-slate-950 rounded-xl border border-slate-800 p-5 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
             <h4 className="text-xs uppercase tracking-widest text-slate-500 font-bold mb-4">Équipe à Domicile</h4>
             
@@ -71,7 +71,7 @@ export default function TabNarrative({ match }) {
           </div>
 
           {/* Away Team */}
-          <div className="min-w-[260px] sm:min-w-0 flex-1 shrink-0 snap-center bg-slate-950 rounded-xl border border-slate-800 p-4 sm:p-5 relative overflow-hidden">
+          <div className="bg-slate-950 rounded-xl border border-slate-800 p-5 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-1 h-full bg-rose-500"></div>
             <h4 className="text-xs uppercase tracking-widest text-slate-500 font-bold mb-4 text-right">Équipe à l'Extérieur</h4>
             
@@ -112,8 +112,8 @@ export default function TabNarrative({ match }) {
 
       {/* Performance Delta */}
       <Card title="Delta de Performance (Attendu vs Réel)" titleIcon={<LineChart size={16} />}>
-        <div className="overflow-x-auto custom-scrollbar rounded-xl border border-slate-800 bg-slate-950 pb-1">
-          <table className="w-full text-sm text-left whitespace-nowrap">
+        <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+          <table className="w-full text-sm text-left">
             <thead className="bg-slate-900/80 text-[10px] uppercase tracking-widest text-slate-400 border-b border-slate-800">
               <tr>
                 <th className="px-4 py-3 font-semibold">Métrique</th>

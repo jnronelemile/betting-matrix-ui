@@ -19,7 +19,7 @@ export default function TabRiskContext({ match }) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="grid grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Colonne 1 : Context Metrics */}
       <div className="flex flex-col gap-6">
         <Card title="Métriques de Risque" titleIcon={<Activity size={16} />}>
@@ -31,16 +31,16 @@ export default function TabRiskContext({ match }) {
                </Badge>
              </div>
              
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <div className="flex-1 bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 flex justify-between items-center shadow-inner">
-                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest">Tension de Justice</span>
-                <span className={`font-mono text-2xl sm:text-3xl font-bold ${psychology.net_justice_tension > 5 || psychology.net_justice_tension < -5 ? 'text-rose-400' : 'text-emerald-400'}`}>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Tension de Justice</span>
+                <span className={`font-mono text-3xl font-bold ${psychology.net_justice_tension > 5 || psychology.net_justice_tension < -5 ? 'text-rose-400' : 'text-emerald-400'}`}>
                   {psychology.net_justice_tension > 0 ? '+' : ''}{psychology.net_justice_tension?.toFixed(2) || 'N/A'}
                 </span>
               </div>
-              <div className="flex-1 bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 flex justify-between items-center shadow-inner">
-                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest">Indice d'Ouverture</span>
-                <span className="font-mono text-2xl sm:text-3xl font-bold text-slate-200">
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Indice d'Ouverture</span>
+                <span className="font-mono text-3xl font-bold text-slate-200">
                   {tactical.match_openness_index?.toFixed(2) || 'N/A'}
                 </span>
               </div>
@@ -95,8 +95,8 @@ export default function TabRiskContext({ match }) {
       {/* Colonne 2 : Delta de Performance */}
       <div className="flex flex-col gap-6">
         <Card title="Justification : Delta de Performance (Attendu vs Réel)" titleIcon={<LineChart size={16} />}>
-          <div className="overflow-x-auto custom-scrollbar rounded-xl border border-slate-800 bg-slate-950 mt-1 pb-1">
-            <table className="w-full text-sm text-left whitespace-nowrap">
+          <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950 mt-1">
+            <table className="w-full text-sm text-left">
               <thead className="bg-slate-900/80 text-[10px] uppercase tracking-widest text-slate-400 border-b border-slate-800">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Métrique</th>

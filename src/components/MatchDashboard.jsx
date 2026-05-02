@@ -90,13 +90,15 @@ export function MatchDashboard({ match }) {
         ))}
       </div>
 
-      {/* Tab Content */}
-      <div className="min-h-[500px]">
-        {activeTab === 'core' && <TabCoreMarket match={match} />}
-        {activeTab === 'risk' && <TabRiskContext match={match} />}
-        {activeTab === 'narrative' && <TabNarrative match={match} />}
-        {activeTab === 'tactical' && <TabTactical match={match} />}
-        {activeTab === 'calibration' && <TabCalibration match={match} />}
+      {/* Tab Content (Forced PC Layout with Horizontal Scroll on Mobile) */}
+      <div className="min-h-[500px] overflow-x-auto custom-scrollbar pb-4 -mx-4 px-4 lg:mx-0 lg:px-0">
+        <div className="min-w-[1024px]">
+          {activeTab === 'core' && <TabCoreMarket match={match} />}
+          {activeTab === 'risk' && <TabRiskContext match={match} />}
+          {activeTab === 'narrative' && <TabNarrative match={match} />}
+          {activeTab === 'tactical' && <TabTactical match={match} />}
+          {activeTab === 'calibration' && <TabCalibration match={match} />}
+        </div>
       </div>
     </div>
   );
