@@ -25,11 +25,11 @@ export function MatchDashboard({ match }) {
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
-      <div className="border-b border-slate-800 pb-4">
-        <div className="flex items-center gap-4">
-          <h2 className="text-3xl font-serif tracking-tight font-medium text-slate-100">{match.Matchup}</h2>
+      <div className="border-b border-slate-800 pb-4 mt-2">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-serif tracking-tight font-medium text-slate-100">{match.Matchup}</h2>
           
-          <div className="flex gap-2 items-center">
+          <div className="flex flex-wrap gap-2 items-center mt-1 lg:mt-0">
             {match.Calibration_Diagnostics?.confidence_index !== undefined && (
               <Badge variant={match.Calibration_Diagnostics.confidence_index >= 0.5 ? 'success' : 'warning'} className="text-[10px] font-mono tracking-widest px-2 py-1">
                 CONFIANCE: {(match.Calibration_Diagnostics.confidence_index * 100).toFixed(1)}%
@@ -43,7 +43,7 @@ export function MatchDashboard({ match }) {
             )}
           </div>
         </div>
-        <div className="flex gap-2 mt-2">
+        <div className="flex flex-wrap gap-2 mt-3">
           {match.Data_Integrity?.map((flag, idx) => {
             if (flag === 'COMPLETE') {
               return <span key={idx} className="px-1.5 py-0.5 text-[8px] bg-slate-800/40 text-slate-500 border border-slate-700/50 rounded-sm uppercase tracking-widest">{flag}</span>;
@@ -54,7 +54,7 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px">
+      <div className="flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0">
         {TABS.map(tab => (
           <button
             key={tab.id}

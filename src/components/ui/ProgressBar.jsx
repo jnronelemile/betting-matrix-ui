@@ -5,9 +5,9 @@ export function ProgressBar({ value, max = 1, label, colorClass = 'bg-emerald-40
   
   return (
     <div className="w-full">
-      <div className="flex justify-between items-end mb-1.5">
-        {label && <span className="text-xs text-slate-400 font-medium uppercase tracking-wide">{label}</span>}
-        <span className="font-mono text-sm text-slate-200 font-medium">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-1.5 gap-1">
+        {label && <span className="text-xs text-slate-400 font-medium uppercase tracking-wide truncate">{label}</span>}
+        <span className="font-mono text-sm text-slate-200 font-medium shrink-0">
           {displayValue !== undefined ? displayValue : `${(percentage).toFixed(1)}%`}
         </span>
       </div>

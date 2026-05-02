@@ -92,7 +92,7 @@ export default function TabCoreMarket({ match }) {
                 <h4 className="text-xs uppercase text-slate-500 font-bold tracking-widest border-b border-slate-800 pb-2 mb-4">Top 3 Scores Exacts</h4>
                 <div className="flex flex-col gap-3">
                   {Object.values(scores).map((item, idx) => (
-                    <div key={idx} className="flex justify-between items-center bg-slate-950 border border-slate-800 p-3.5 rounded-xl shadow-inner">
+                    <div key={idx} className="flex flex-wrap gap-2 justify-between items-center bg-slate-950 border border-slate-800 p-3.5 rounded-xl shadow-inner">
                       <div className="flex items-center gap-4">
                         <span className="text-base font-bold text-slate-200 font-serif tracking-wider">{item.score}</span>
                         <Badge variant="default" className="text-[10px] px-2 py-0.5">{(item.prob * 100).toFixed(1)}%</Badge>
@@ -111,7 +111,7 @@ export default function TabCoreMarket({ match }) {
                   <span>Handicaps Asiatiques</span>
                   <Badge variant="info" className="text-[10px] px-2 py-0.5">Fav: {match.Asian_Handicaps.favorite}</Badge>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {Object.entries(match.Asian_Handicaps).filter(([k]) => k.startsWith('AH_')).map(([k, v]) => (
                     <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex flex-col items-center text-center shadow-inner">
                       <span className="text-[10px] text-slate-400 uppercase tracking-widest mb-1.5">{k.replace('_', ' ')}</span>
