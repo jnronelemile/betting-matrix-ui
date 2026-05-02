@@ -101,19 +101,7 @@ export function MatchDashboard({ match }) {
 
       {/* Tab Content */}
       <div className="min-h-[500px]">
-        {activeTab === 'core' && (
-          isKillSwitch ? (
-            <div className="flex flex-col items-center justify-center h-full min-h-[400px] border border-rose-500/30 bg-rose-500/5 rounded-xl text-center p-6 space-y-4 animate-in fade-in zoom-in-95 duration-500 mt-4">
-              <AlertTriangle className="text-rose-500 w-16 h-16 opacity-80" />
-              <h3 className="text-xl font-bold text-slate-100 uppercase tracking-widest">Marchés Principaux Désactivés (Kill-Switch)</h3>
-              <p className="text-sm text-slate-400 max-w-md">
-                Les probabilités pour le Vainqueur et les Buts ont été évaluées à zéro. L'analyse du Core Market est verrouillée, mais vous pouvez consulter les marchés statistiques et tactiques dans les autres onglets.
-              </p>
-            </div>
-          ) : (
-            <TabCoreMarket match={match} />
-          )
-        )}
+        {activeTab === 'core' && <TabCoreMarket match={match} />}
         {activeTab === 'risk' && <TabRiskContext match={match} />}
         {activeTab === 'narrative' && <TabNarrative match={match} />}
         {activeTab === 'tactical' && <TabTactical match={match} />}

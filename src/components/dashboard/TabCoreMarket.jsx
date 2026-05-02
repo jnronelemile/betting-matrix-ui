@@ -14,6 +14,9 @@ export default function TabCoreMarket({ match }) {
   const props = match.Prop_Bets || {};
   const scores = match.Top_3_Exact_Scores || {};
 
+  const is1X2Zero = probs.PROB_1 === 0 || probs.PROB_1 == null;
+  const isGoalsZero = probs.PROB_O25 === 0 || probs.PROB_O25 == null;
+
   const getMomentumVariant = (momentum) => {
     if (momentum === 'HOT' || momentum === 'FIRE') return 'success';
     if (momentum === 'COLD' || momentum === 'ICE') return 'danger';
@@ -33,9 +36,19 @@ export default function TabCoreMarket({ match }) {
       <div className="flex flex-col gap-6">
         <Card title="Vainqueur du Match (1X2)" titleIcon={<Percent size={16} />}>
           <div className="space-y-6 mt-2">
-            <ProgressBar label="Domicile (1)" value={probs.PROB_1 || 0} colorClass="bg-blue-500" displayValue={renderProbOdds(probs.PROB_1 || 0, odds.ODDS_1)} />
-            <ProgressBar label="Nul (X)" value={probs.PROB_X || 0} colorClass="bg-slate-500" displayValue={renderProbOdds(probs.PROB_X || 0, odds.ODDS_X)} />
-            <ProgressBar label="Extérieur (2)" value={probs.PROB_2 || 0} colorClass="bg-rose-500" displayValue={renderProbOdds(probs.PROB_2 || 0, odds.ODDS_2)} />
+            {is1X2Zero ? (
+              <div className="flex flex-col items-center justify-center p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-center gap-2">
+                <AlertTriangle className="text-rose-400 w-6 h-6 mb-1" />
+                <span className="text-xs font-bold text-rose-400 uppercase tracking-widest">Données Invalidées</span>
+                <span className="text-[10px] text-slate-500">Marché 1X2 à zéro (Kill-Switch)</span>
+              </div>
+            ) : (
+              <>
+                <ProgressBar label="Domicile (1)" value={probs.PROB_1 || 0} colorClass="bg-blue-500" displayValue={renderProbOdds(probs.PROB_1 || 0, odds.ODDS_1)} />
+                <ProgressBar label="Nul (X)" value={probs.PROB_X || 0} colorClass="bg-slate-500" displayValue={renderProbOdds(probs.PROB_X || 0, odds.ODDS_X)} />
+                <ProgressBar label="Extérieur (2)" value={probs.PROB_2 || 0} colorClass="bg-rose-500" displayValue={renderProbOdds(probs.PROB_2 || 0, odds.ODDS_2)} />
+              </>
+            )}
           </div>
         </Card>
 
@@ -79,11 +92,21 @@ export default function TabCoreMarket({ match }) {
       <div className="flex flex-col gap-6">
         <Card title="Marchés des Buts & BTTS" titleIcon={<ShieldCheck size={16} />}>
           <div className="space-y-6 mt-2">
-            <ProgressBar label="Over 1.5" value={probs.PROB_O15 || 0} colorClass={probs.PROB_O15 >= 0.75 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O15 || 0, odds.ODDS_O15)} />
-            <ProgressBar label="Over 2.5" value={probs.PROB_O25 || 0} colorClass={probs.PROB_O25 >= 0.55 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O25 || 0, odds.ODDS_O25)} />
-            <ProgressBar label="Under 2.5" value={probs.PROB_U25 || 0} colorClass={probs.PROB_U25 >= 0.55 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U25 || 0, odds.ODDS_U25)} />
-            <ProgressBar label="Under 3.5" value={probs.PROB_U35 || 0} colorClass={probs.PROB_U35 >= 0.75 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U35 || 0, odds.ODDS_U35)} />
-            <ProgressBar label="Les Deux Marquent (Oui)" value={probs.PROB_BTTS || 0} colorClass={probs.PROB_BTTS >= 0.60 ? "bg-indigo-500" : "bg-indigo-500/50"} displayValue={renderProbOdds(probs.PROB_BTTS || 0, odds.ODDS_BTTS)} />
+            {isGoalsZero ? (
+              <div className="flex flex-col items-center justify-center p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-center gap-2">
+                <AlertTriangle className="text-rose-400 w-6 h-6 mb-1" />
+                <span className="text-xs font-bold text-rose-400 uppercase tracking-widest">Données Invalidées</span>
+                <span className="text-[10px] text-slate-500">Marchés des Buts à zéro (Kill-Switch)</span>
+              </div>
+            ) : (
+              <>
+                <ProgressBar label="Over 1.5" value={probs.PROB_O15 || 0} colorClass={probs.PROB_O15 >= 0.75 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O15 || 0, odds.ODDS_O15)} />
+                <ProgressBar label="Over 2.5" value={probs.PROB_O25 || 0} colorClass={probs.PROB_O25 >= 0.55 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O25 || 0, odds.ODDS_O25)} />
+                <ProgressBar label="Under 2.5" value={probs.PROB_U25 || 0} colorClass={probs.PROB_U25 >= 0.55 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U25 || 0, odds.ODDS_U25)} />
+                <ProgressBar label="Under 3.5" value={probs.PROB_U35 || 0} colorClass={probs.PROB_U35 >= 0.75 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U35 || 0, odds.ODDS_U35)} />
+                <ProgressBar label="Les Deux Marquent (Oui)" value={probs.PROB_BTTS || 0} colorClass={probs.PROB_BTTS >= 0.60 ? "bg-indigo-500" : "bg-indigo-500/50"} displayValue={renderProbOdds(probs.PROB_BTTS || 0, odds.ODDS_BTTS)} />
+              </>
+            )}
           </div>
         </Card>
       </div>
