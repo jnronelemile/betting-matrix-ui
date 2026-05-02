@@ -19,7 +19,7 @@ export default function TabRiskContext({ match }) {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Colonne 1 : Context Metrics */}
       <div className="flex flex-col gap-6">
         <Card title="Métriques de Risque" titleIcon={<Activity size={16} />}>
@@ -31,7 +31,7 @@ export default function TabRiskContext({ match }) {
                </Badge>
              </div>
              
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
                 <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Tension de Justice</span>
                 <span className={`font-mono text-3xl font-bold ${psychology.net_justice_tension > 5 || psychology.net_justice_tension < -5 ? 'text-rose-400' : 'text-emerald-400'}`}>

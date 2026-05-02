@@ -28,10 +28,10 @@ export default function TabNarrative({ match }) {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Team Profiles */}
       <Card title="Profils Situationnels" titleIcon={<Brain size={16} />}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Home Team */}
           <div className="bg-slate-950 rounded-xl border border-slate-800 p-5 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>

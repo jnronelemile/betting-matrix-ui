@@ -30,9 +30,9 @@ export default function TabTactical({ match }) {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Tactical Matchup */}
-      <div className="col-span-1">
+      <div className="lg:col-span-1">
         <Card title="Notes Tactiques & Écarts" titleIcon={<Crosshair size={16} />}>
           <div className="space-y-6">
             <div>
@@ -59,7 +59,7 @@ export default function TabTactical({ match }) {
                   Handicaps Asiatiques
                   <Badge variant="info">Fav: {match.Asian_Handicaps.favorite}</Badge>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {Object.entries(match.Asian_Handicaps).filter(([k]) => k.startsWith('AH_')).map(([k, v]) => (
                     <div key={k} className="bg-slate-900 border border-slate-800 p-2.5 rounded-lg flex flex-col items-center text-center shadow-inner">
                       <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">{k.replace('_', ' ')}</span>
@@ -83,7 +83,7 @@ export default function TabTactical({ match }) {
       </div>
 
       {/* League Anchors */}
-      <div className="col-span-1">
+      <div className="lg:col-span-1">
         <Card title="Match vs Moyennes Ligue" titleIcon={<Layers size={16} />}>
           <div className="space-y-4 mt-2">
             <div className="text-[10px] text-slate-500 uppercase tracking-widest pb-2 border-b border-slate-800 flex justify-between">
@@ -123,7 +123,7 @@ export default function TabTactical({ match }) {
       </div>
 
       {/* Full Props Grid */}
-      <div className="col-span-1">
+      <div className="lg:col-span-1">
         <Card title="Marché des Propositions" titleIcon={<Target size={16} />}>
           <div className="flex flex-col gap-4 mt-2">
             {propBetsKeys.map(key => {
