@@ -111,7 +111,7 @@ export default function TabCoreMarket({ match }) {
                   <span>Handicaps Asiatiques</span>
                   <Badge variant="info" className="text-[10px] px-2 py-0.5">Fav: {match.Asian_Handicaps.favorite}</Badge>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   {Object.entries(match.Asian_Handicaps).filter(([k]) => k.startsWith('AH_')).map(([k, v]) => (
                     <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex flex-col items-center text-center shadow-inner">
                       <span className="text-[10px] text-slate-400 uppercase tracking-widest mb-1.5">{k.replace('_', ' ')}</span>
