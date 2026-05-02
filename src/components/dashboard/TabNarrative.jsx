@@ -31,7 +31,7 @@ export default function TabNarrative({ match }) {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Team Profiles */}
       <Card title="Profils Situationnels" titleIcon={<Brain size={16} />}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Home Team */}
           <div className="bg-slate-950 rounded-xl border border-slate-800 p-5 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
@@ -112,8 +112,8 @@ export default function TabNarrative({ match }) {
 
       {/* Performance Delta */}
       <Card title="Delta de Performance (Attendu vs Réel)" titleIcon={<LineChart size={16} />}>
-        <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
-          <table className="w-full text-sm text-left">
+        <div className="overflow-x-auto custom-scrollbar rounded-xl border border-slate-800 bg-slate-950 pb-1">
+          <table className="w-full text-sm text-left whitespace-nowrap">
             <thead className="bg-slate-900/80 text-[10px] uppercase tracking-widest text-slate-400 border-b border-slate-800">
               <tr>
                 <th className="px-4 py-3 font-semibold">Métrique</th>

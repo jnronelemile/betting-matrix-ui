@@ -95,8 +95,8 @@ export default function TabRiskContext({ match }) {
       {/* Colonne 2 : Delta de Performance */}
       <div className="flex flex-col gap-6">
         <Card title="Justification : Delta de Performance (Attendu vs Réel)" titleIcon={<LineChart size={16} />}>
-          <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950 mt-1">
-            <table className="w-full text-sm text-left">
+          <div className="overflow-x-auto custom-scrollbar rounded-xl border border-slate-800 bg-slate-950 mt-1 pb-1">
+            <table className="w-full text-sm text-left whitespace-nowrap">
               <thead className="bg-slate-900/80 text-[10px] uppercase tracking-widest text-slate-400 border-b border-slate-800">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Métrique</th>

@@ -67,7 +67,7 @@ export default function TabCalibration({ match }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center shadow-inner flex flex-col justify-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-blue-500/50"></div>
                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 block">Lambda Home</span>
