@@ -293,8 +293,8 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3 ml-4">
-            <div className="relative group w-full max-w-[180px] hidden md:block">
+          <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3 ml-2 sm:ml-4 min-w-0">
+            <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-500 transition-colors" size={16} />
               <input 
                 type="text" 
@@ -307,7 +307,7 @@ export default function App() {
             <select 
               value={selectedDate}
               onChange={e => setSelectedDate(e.target.value)}
-              className="bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-sm text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none min-w-[130px] cursor-pointer"
+              className="bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-2 sm:px-3 text-xs sm:text-sm text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none shrink-0 cursor-pointer"
             >
               <option value="ALL">Toutes les dates</option>
               {availableDates.map(date => {
@@ -325,10 +325,10 @@ export default function App() {
               })}
             </select>
             
-            <div className="flex gap-1.5 sm:gap-2">
+            <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-1 min-w-0 custom-scrollbar snap-x">
               <button
                 onClick={() => setShowTrueFavorites(!showTrueFavorites)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                   showTrueFavorites 
                     ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
                     : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
@@ -341,7 +341,7 @@ export default function App() {
               
               <button
                 onClick={() => setShowSuperSignals(!showSuperSignals)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                   showSuperSignals 
                     ? 'bg-amber-500/10 border-amber-500/50 text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
                     : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
@@ -354,7 +354,7 @@ export default function App() {
               
               <button
                 onClick={() => setShowHighConfidence(!showHighConfidence)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                   showHighConfidence 
                     ? 'bg-blue-500/10 border-blue-500/50 text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
                     : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
@@ -367,7 +367,7 @@ export default function App() {
 
               <button
                 onClick={() => setShowUltraSafe(!showUltraSafe)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                   showUltraSafe 
                     ? 'bg-purple-500/10 border-purple-500/50 text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
                     : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
@@ -380,7 +380,7 @@ export default function App() {
 
               <button
                 onClick={() => setShowRegularity(!showRegularity)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                   showRegularity 
                     ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
                     : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
@@ -393,7 +393,7 @@ export default function App() {
 
               <button
                 onClick={() => setShowSafeButs(!showSafeButs)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                   showSafeButs 
                     ? 'bg-orange-500/10 border-orange-500/50 text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
                     : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
@@ -406,7 +406,7 @@ export default function App() {
 
               <button
                 onClick={() => setShowTopForm(!showTopForm)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                   showTopForm 
                     ? 'bg-pink-500/10 border-pink-500/50 text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
                     : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'

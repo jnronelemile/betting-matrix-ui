@@ -155,7 +155,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2 mt-1">
                       {isKillSwitch && (
                         <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/20 text-rose-400 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.3)]">
                           <AlertTriangle size={10} /> KILL-SWITCH
@@ -245,7 +245,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                           <h4 className="font-serif tracking-wide font-medium text-slate-100 text-sm">
                             {match.shortAway ? `${match.shortHome} vs ${match.shortAway}` : match.Matchup}
                           </h4>
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex flex-wrap items-center gap-1.5 mt-1">
                             {isKillSwitch && (
                               <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/20 text-rose-400 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.3)]">
                                 <AlertTriangle size={10} /> KILL-SWITCH
