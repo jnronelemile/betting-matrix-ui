@@ -4,10 +4,16 @@ import fs from 'fs'
 import path from 'path'
 
 const generateIndex = () => {
-  const dir = path.resolve(__dirname, 'public/data');
-  if (fs.existsSync(dir)) {
-    const files = fs.readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'index.json');
-    fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(files));
+  const dataDir = path.resolve(__dirname, 'public/data');
+  if (fs.existsSync(dataDir)) {
+    const files = fs.readdirSync(dataDir).filter(f => f.endsWith('.json') && f !== 'index.json');
+    fs.writeFileSync(path.join(dataDir, 'index.json'), JSON.stringify(files));
+  }
+  
+  const matchupsDir = path.resolve(__dirname, 'public/data/matchups');
+  if (fs.existsSync(matchupsDir)) {
+    const files = fs.readdirSync(matchupsDir).filter(f => f.endsWith('.json') && f !== 'index.json');
+    fs.writeFileSync(path.join(matchupsDir, 'index.json'), JSON.stringify(files));
   }
 };
 

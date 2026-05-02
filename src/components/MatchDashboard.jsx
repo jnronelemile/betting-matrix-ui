@@ -5,6 +5,9 @@ import { BarChart3, Brain, Crosshair } from 'lucide-react';
 import TabCoreMarket from './dashboard/TabCoreMarket';
 import TabNarrative from './dashboard/TabNarrative';
 import TabTactical from './dashboard/TabTactical';
+import TabCalibration from './dashboard/TabCalibration';
+import TabRiskContext from './dashboard/TabRiskContext';
+import { Calculator, Activity, AlertTriangle } from 'lucide-react';
 
 export function MatchDashboard({ match }) {
   const [activeTab, setActiveTab] = useState('core');
@@ -12,20 +15,41 @@ export function MatchDashboard({ match }) {
   if (!match) return null;
 
   const TABS = [
-    { id: 'core', label: 'Core Market & Risk', icon: <BarChart3 size={14} /> },
+    { id: 'core', label: 'Core Market', icon: <BarChart3 size={14} /> },
+    { id: 'risk', label: 'Risk Context', icon: <Activity size={14} /> },
     { id: 'narrative', label: 'Narrative & Psych', icon: <Brain size={14} /> },
     { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
+    { id: 'calibration', label: 'Maths & Calibration', icon: <Calculator size={14} /> },
   ];
 
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
       <div className="border-b border-slate-800 pb-4">
-        <h2 className="text-3xl font-serif tracking-tight font-medium text-slate-100">{match.Matchup}</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-3xl font-serif tracking-tight font-medium text-slate-100">{match.Matchup}</h2>
+          
+          <div className="flex gap-2 items-center">
+            {match.Calibration_Diagnostics?.confidence_index !== undefined && (
+              <Badge variant={match.Calibration_Diagnostics.confidence_index >= 0.5 ? 'success' : 'warning'} className="text-[10px] font-mono tracking-widest px-2 py-1">
+                CONFIANCE: {(match.Calibration_Diagnostics.confidence_index * 100).toFixed(1)}%
+              </Badge>
+            )}
+
+            {match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE && (
+              <Badge variant="danger" className="text-[10px] flex items-center gap-1.5 px-2 py-1 uppercase tracking-widest shadow-[0_0_10px_rgba(244,63,94,0.3)]">
+                <AlertTriangle size={12} /> Faux Favori Détecté
+              </Badge>
+            )}
+          </div>
+        </div>
         <div className="flex gap-2 mt-2">
-          {match.Data_Integrity?.map((flag, idx) => (
-            <Badge key={idx} variant={flag === 'COMPLETE' ? 'success' : 'warning'}>{flag}</Badge>
-          ))}
+          {match.Data_Integrity?.map((flag, idx) => {
+            if (flag === 'COMPLETE') {
+              return <span key={idx} className="px-1.5 py-0.5 text-[8px] bg-slate-800/40 text-slate-500 border border-slate-700/50 rounded-sm uppercase tracking-widest">{flag}</span>;
+            }
+            return <Badge key={idx} variant="info" className="text-[9px] opacity-80">{flag}</Badge>;
+          })}
         </div>
       </div>
 
@@ -51,8 +75,10 @@ export function MatchDashboard({ match }) {
       {/* Tab Content */}
       <div className="min-h-[500px]">
         {activeTab === 'core' && <TabCoreMarket match={match} />}
+        {activeTab === 'risk' && <TabRiskContext match={match} />}
         {activeTab === 'narrative' && <TabNarrative match={match} />}
         {activeTab === 'tactical' && <TabTactical match={match} />}
+        {activeTab === 'calibration' && <TabCalibration match={match} />}
       </div>
     </div>
   );

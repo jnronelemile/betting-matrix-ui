@@ -1,11 +1,39 @@
 import React, { useState } from 'react';
 import { Badge } from './ui/Badge';
-import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2 } from 'lucide-react';
+import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Clock, Radio } from 'lucide-react';
 
 export function MatchList({ matches, selectedMatch, onSelectMatch }) {
   const [collapsedDates, setCollapsedDates] = useState({});
+  const [sortByTime, setSortByTime] = useState(true);
+  const [showLiveOnly, setShowLiveOnly] = useState(false);
 
-  const groupedMatches = matches.reduce((acc, match) => {
+  const formatTimeAMPM = (timeStr) => {
+    if (!timeStr) return '';
+    const [hours, minutes] = timeStr.split(':');
+    let h = parseInt(hours, 10);
+    
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    h = h ? h : 12; 
+    return `${h}:${minutes} ${ampm}`;
+  };
+
+  const isMatchLive = (dateStr, hoursStr) => {
+    if (!dateStr || !hoursStr || dateStr === 'Date Inconnue') return false;
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const [h, m] = hoursStr.split(':').map(Number);
+    
+    const matchTimeLocal = new Date(year, month - 1, day, h, m);
+    const now = new Date();
+    const diffMinutes = (now - matchTimeLocal) / (1000 * 60);
+    return diffMinutes >= 0 && diffMinutes <= 120;
+  };
+
+  const visibleMatches = showLiveOnly 
+    ? matches.filter(match => isMatchLive(match.date, match.hours))
+    : matches;
+
+  const groupedMatches = visibleMatches.reduce((acc, match) => {
     const d = match.date || 'Date Inconnue';
     if (!acc[d]) acc[d] = [];
     acc[d].push(match);
@@ -52,99 +80,210 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
       {sortedDates.length > 0 && (
         <div className="flex items-center justify-between mb-1 px-1">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Calendrier</span>
-          {sortedDates.length > 1 && (
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={expandAll} 
-                className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-500 hover:text-emerald-400 transition-colors"
-              >
-                <Maximize2 size={12} /> Déplier Tout
-              </button>
-              <div className="w-px h-3 bg-slate-800"></div>
-              <button 
-                onClick={collapseAll} 
-                className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-500 hover:text-amber-400 transition-colors"
-              >
-                <Minimize2 size={12} /> Replier Tout
-              </button>
-            </div>
-          )}
+          <div className="flex items-center gap-3">
+            {sortedDates.length > 1 && (
+              <>
+                <button 
+                  onClick={expandAll} 
+                  className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-500 hover:text-emerald-400 transition-colors"
+                  title="Déplier Tout"
+                >
+                  <Maximize2 size={12} /> <span className="hidden xl:inline">Déplier Tout</span>
+                </button>
+                <div className="w-px h-3 bg-slate-800"></div>
+                <button 
+                  onClick={collapseAll} 
+                  className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-500 hover:text-amber-400 transition-colors"
+                  title="Replier Tout"
+                >
+                  <Minimize2 size={12} /> <span className="hidden xl:inline">Replier Tout</span>
+                </button>
+                <div className="w-px h-3 bg-slate-800"></div>
+              </>
+            )}
+            <button 
+              onClick={() => setSortByTime(!sortByTime)} 
+              className={`flex items-center p-1 rounded transition-colors ${sortByTime ? 'bg-blue-500/20 text-blue-400' : 'text-slate-500 hover:text-blue-400'}`}
+              title="Trier par heure"
+            >
+              <Clock size={14} />
+            </button>
+            <button 
+              onClick={() => setShowLiveOnly(!showLiveOnly)} 
+              className={`flex items-center p-1 rounded transition-colors ${showLiveOnly ? 'bg-emerald-500/20 text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)]' : 'text-slate-500 hover:text-emerald-400'}`}
+              title="Afficher les matchs en cours"
+            >
+              <Radio size={14} className={showLiveOnly ? "animate-pulse" : ""} />
+            </button>
+          </div>
         </div>
       )}
 
-      {sortedDates.map((date) => {
-        const isCollapsed = collapsedDates[date];
-        const isToday = date === '2026-04-26';
-
-        return (
-          <div key={date} className="flex flex-col gap-3">
-            <button 
-              onClick={() => toggleDate(date)}
-              className={`sticky top-0 z-10 w-full flex items-center justify-between backdrop-blur-md border py-2 px-3 rounded-lg shadow-sm transition-all group focus:outline-none focus:ring-1 focus:ring-slate-700 ${
-                isToday 
-                  ? 'bg-emerald-950/30 border-emerald-500/20 hover:bg-emerald-950/50' 
-                  : 'bg-indigo-950/30 border-indigo-500/20 hover:bg-indigo-950/50'
-              }`}
-            >
-              <div className="flex items-center gap-2.5">
-                <div className={`p-1 rounded-md ${isToday ? 'bg-emerald-500/20 text-emerald-400' : 'bg-indigo-500/20 text-indigo-400'}`}>
-                  <Calendar size={12} />
-                </div>
-                <span className={`text-[10px] font-bold uppercase tracking-widest ${isToday ? 'text-emerald-400' : 'text-indigo-300'}`}>
-                  {formatDate(date)}
-                </span>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <div className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${isToday ? 'bg-emerald-950 border-emerald-500/30 text-emerald-500' : 'bg-indigo-950 border-indigo-500/30 text-indigo-400'}`}>
-                  {groupedMatches[date].length} MATCH{groupedMatches[date].length > 1 ? 'S' : ''}
-                </div>
-                <ChevronDown size={14} className={`${isToday ? 'text-emerald-500' : 'text-indigo-500'} transition-transform duration-300 ${isCollapsed ? '-rotate-90' : 'rotate-0'}`} />
-              </div>
-            </button>
+      {sortByTime ? (
+        <div className="flex-col gap-2 overflow-hidden flex">
+          {[...visibleMatches].sort((a, b) => {
+            const timeA = a.hours || '99:99';
+            const timeB = b.hours || '99:99';
+            if (timeA !== timeB) return timeA.localeCompare(timeB);
+            return a.Matchup.localeCompare(b.Matchup);
+          }).map((match, idx) => {
+            const isSelected = selectedMatch && selectedMatch.Matchup === match.Matchup;
+            const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
+            const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
+            const probs = match.True_Probabilities || {};
+            const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
             
-            <div className={`flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out ${isCollapsed ? 'max-h-0 opacity-0 hidden' : 'max-h-[5000px] opacity-100 flex'}`}>
-              {groupedMatches[date].map((match, idx) => {
-                const isSelected = selectedMatch && selectedMatch.Matchup === match.Matchup;
-                const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
-                const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
-                
-                return (
-                  <div 
-                    key={idx}
-                    onClick={() => onSelectMatch(match)}
-                    className={`p-4 rounded-xl cursor-pointer transition-all border ${
-                      isSelected 
-                        ? 'bg-slate-800 border-slate-600 shadow-md ring-1 ring-slate-500' 
-                        : 'bg-slate-900 border-slate-800 hover:border-slate-700 hover:bg-slate-800/50'
-                    }`}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex flex-col gap-1.5">
-                        <h4 className="font-serif tracking-wide font-medium text-slate-100 text-base">{match.Matchup}</h4>
-                        <div className="flex items-center gap-2">
-                          {isFalseFav && (
-                            <Badge variant="danger" className="flex items-center gap-1">
-                              <AlertTriangle size={10} /> False Fav
-                            </Badge>
+            return (
+              <div 
+                key={idx}
+                onClick={() => onSelectMatch(match)}
+                className={`p-2.5 rounded-lg cursor-pointer transition-all border ${
+                  isSelected 
+                    ? 'bg-slate-800 border-slate-600 shadow-md ring-1 ring-slate-500' 
+                    : 'bg-slate-900 border-slate-800 hover:border-slate-700 hover:bg-slate-800/50'
+                }`}
+              >
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-1.5">
+                      <h4 className="font-serif tracking-wide font-medium text-slate-100 text-sm">
+                        {match.shortAway ? `${match.shortHome} vs ${match.shortAway}` : match.Matchup}
+                      </h4>
+                      {match.date && match.date !== 'Date Inconnue' && (
+                        <span className="text-[9px] text-slate-500 uppercase tracking-widest border border-slate-800 px-1 rounded bg-slate-950">
+                          {formatDate(match.date).substring(0, 3)}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {isKillSwitch && (
+                        <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/20 text-rose-400 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.3)]">
+                          <AlertTriangle size={10} /> KILL-SWITCH
+                        </Badge>
+                      )}
+                      {isFalseFav && !isKillSwitch && (
+                        <Badge variant="danger" className="flex items-center gap-1">
+                          <AlertTriangle size={10} /> False Fav
+                        </Badge>
+                      )}
+                      {tension > 5 && (
+                        <Badge variant="warning">High Tension</Badge>
+                      )}
+                      {(!isFalseFav && tension <= 5) && (
+                        <Badge variant="info">Standard</Badge>
+                      )}
+                      {match.hours && (
+                        <div className="flex items-center gap-1 ml-1 bg-slate-950/50 px-1.5 py-0.5 rounded border border-slate-800">
+                          {isMatchLive(match.date, match.hours) && (
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title="Match en cours"></div>
                           )}
-                          {tension > 5 && (
-                            <Badge variant="warning">High Tension</Badge>
-                          )}
-                          {(!isFalseFav && tension <= 5) && (
-                            <Badge variant="info">Standard</Badge>
-                          )}
+                          <span className="text-[10px] font-mono font-bold text-blue-400">
+                            {formatTimeAMPM(match.hours)}
+                          </span>
                         </div>
-                      </div>
-                      <ChevronRight className={`text-slate-500 transition-transform ${isSelected ? 'translate-x-1 text-slate-300' : ''}`} size={18} />
+                      )}
                     </div>
                   </div>
-                );
-              })}
+                  <ChevronRight className={`text-slate-500 transition-transform ${isSelected ? 'translate-x-1 text-slate-300' : ''}`} size={18} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        sortedDates.map((date) => {
+          const isCollapsed = collapsedDates[date];
+          const isToday = date === '2026-04-26';
+
+          return (
+            <div key={date} className="flex flex-col gap-3">
+              <button 
+                onClick={() => toggleDate(date)}
+                className={`sticky top-0 z-10 w-full flex items-center justify-between backdrop-blur-md border py-2 px-3 rounded-lg shadow-sm transition-all group focus:outline-none focus:ring-1 focus:ring-slate-700 ${
+                  isToday 
+                    ? 'bg-emerald-950/30 border-emerald-500/20 hover:bg-emerald-950/50' 
+                    : 'bg-indigo-950/30 border-indigo-500/20 hover:bg-indigo-950/50'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className={`p-1 rounded-md ${isToday ? 'bg-emerald-500/20 text-emerald-400' : 'bg-indigo-500/20 text-indigo-400'}`}>
+                    <Calendar size={12} />
+                  </div>
+                  <span className={`text-[10px] font-bold uppercase tracking-widest ${isToday ? 'text-emerald-400' : 'text-indigo-300'}`}>
+                    {formatDate(date)}
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <div className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${isToday ? 'bg-emerald-950 border-emerald-500/30 text-emerald-500' : 'bg-indigo-950 border-indigo-500/30 text-indigo-400'}`}>
+                    {groupedMatches[date].length} MATCH{groupedMatches[date].length > 1 ? 'S' : ''}
+                  </div>
+                  <ChevronDown size={14} className={`${isToday ? 'text-emerald-500' : 'text-indigo-500'} transition-transform duration-300 ${isCollapsed ? '-rotate-90' : 'rotate-0'}`} />
+                </div>
+              </button>
+              
+              <div className={`flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out ${isCollapsed ? 'max-h-0 opacity-0 hidden' : 'max-h-[5000px] opacity-100 flex'}`}>
+                {groupedMatches[date].map((match, idx) => {
+                  const isSelected = selectedMatch && selectedMatch.Matchup === match.Matchup;
+                  const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
+                  const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
+                  const probs = match.True_Probabilities || {};
+                  const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
+                  
+                  return (
+                    <div 
+                      key={idx}
+                      onClick={() => onSelectMatch(match)}
+                      className={`p-2.5 rounded-lg cursor-pointer transition-all border ${
+                        isSelected 
+                          ? 'bg-slate-800 border-slate-600 shadow-md ring-1 ring-slate-500' 
+                          : 'bg-slate-900 border-slate-800 hover:border-slate-700 hover:bg-slate-800/50'
+                      }`}
+                    >
+                      <div className="flex justify-between items-center">
+                        <div className="flex flex-col gap-1">
+                          <h4 className="font-serif tracking-wide font-medium text-slate-100 text-sm">
+                            {match.shortAway ? `${match.shortHome} vs ${match.shortAway}` : match.Matchup}
+                          </h4>
+                          <div className="flex items-center gap-1.5">
+                            {isKillSwitch && (
+                              <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/20 text-rose-400 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.3)]">
+                                <AlertTriangle size={10} /> KILL-SWITCH
+                              </Badge>
+                            )}
+                            {isFalseFav && !isKillSwitch && (
+                              <Badge variant="danger" className="flex items-center gap-1">
+                                <AlertTriangle size={10} /> False Fav
+                              </Badge>
+                            )}
+                            {tension > 5 && (
+                              <Badge variant="warning">High Tension</Badge>
+                            )}
+                            {(!isFalseFav && tension <= 5) && (
+                              <Badge variant="info">Standard</Badge>
+                            )}
+                            {match.hours && (
+                              <div className="flex items-center gap-1 ml-1 bg-slate-950/50 px-1.5 py-0.5 rounded border border-slate-800">
+                                {isMatchLive(match.date, match.hours) && (
+                                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title="Match en cours"></div>
+                                )}
+                                <span className="text-[10px] font-mono font-bold text-blue-400">
+                                  {formatTimeAMPM(match.hours)}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <ChevronRight className={`text-slate-500 transition-transform ${isSelected ? 'translate-x-1 text-slate-300' : ''}`} size={18} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </div>
   );
 }

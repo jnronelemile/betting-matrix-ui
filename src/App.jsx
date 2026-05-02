@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck } from 'lucide-react';
+import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
 
@@ -25,6 +25,12 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [matchListOpen, setMatchListOpen] = useState(true);
   const [showTrueFavorites, setShowTrueFavorites] = useState(false);
+  const [showSuperSignals, setShowSuperSignals] = useState(false);
+  const [showHighConfidence, setShowHighConfidence] = useState(false);
+  const [showUltraSafe, setShowUltraSafe] = useState(false);
+  const [showRegularity, setShowRegularity] = useState(false);
+  const [showSafeButs, setShowSafeButs] = useState(false);
+  const [showTopForm, setShowTopForm] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -76,16 +82,22 @@ export default function App() {
           json = await response.json();
         }
 
-        // Fetch matchups to get dates
+        // Fetch matchups dynamically
         try {
-          const [matchupA, matchupB] = await Promise.all([
-            fetch('/data/matchups/Matchups_Week-A04-Avril.json').then(res => res.ok ? res.json() : null),
-            fetch('/data/matchups/Matchups_Week-B04-Avril.json').then(res => res.ok ? res.json() : null)
-          ]);
-          
+          const matchupsIndexRes = await fetch('/data/matchups/index.json').catch(() => null);
           let allMatchups = [];
-          if (matchupA) Object.values(matchupA).forEach(arr => allMatchups.push(...arr));
-          if (matchupB) Object.values(matchupB).forEach(arr => allMatchups.push(...arr));
+          
+          if (matchupsIndexRes && matchupsIndexRes.ok) {
+            const matchupFiles = await matchupsIndexRes.json();
+            const fetchPromises = matchupFiles.map(async (file) => {
+              const res = await fetch(`/data/matchups/${file}`);
+              if (res.ok) {
+                const data = await res.json();
+                Object.values(data).forEach(arr => allMatchups.push(...arr));
+              }
+            });
+            await Promise.all(fetchPromises);
+          }
 
           const ALIASES = {
             "m'gladbach": "monchengladbach",
@@ -123,8 +135,14 @@ export default function App() {
                   return homeMatch && awayMatch;
                 });
                 m.date = found ? found.date : 'Date Inconnue';
+                m.hours = found && found.hours ? found.hours : null;
+                m.shortHome = found ? found.home : parts[0];
+                m.shortAway = found ? found.away : parts[1];
               } else {
                 m.date = 'Date Inconnue';
+                m.hours = null;
+                m.shortHome = m.Matchup;
+                m.shortAway = '';
               }
             });
           }
@@ -158,7 +176,37 @@ export default function App() {
     const dateMatch = selectedDate === 'ALL' || match.date === selectedDate;
     const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
     const favMatch = !showTrueFavorites || isFalseFav === false;
-    return textMatch && dateMatch && favMatch;
+
+    const hasSuperSignal = match.Super_Signals && Object.values(match.Super_Signals).some(v => v === true);
+    const signalMatch = !showSuperSignals || hasSuperSignal;
+
+    const confidence = match.Calibration_Diagnostics?.confidence_index || 0;
+    const confidenceMatch = !showHighConfidence || confidence >= 0.65;
+
+    const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
+    const hasData = match.Risk_Management_Context?.Tactical_Red_Flags?.MISSING_FOTMOB_DATA === false;
+    const ultraSafeMatch = !showUltraSafe || (confidence >= 0.65 && isFalseFav === false && tension <= 5 && hasData);
+
+    const trajH = match.Calibration_Diagnostics?.trajectory_home || 1;
+    const trajA = match.Calibration_Diagnostics?.trajectory_away || 1;
+    const isRegular = (1 - Math.abs(trajH - 1)) >= 0.99 && (1 - Math.abs(trajA - 1)) >= 0.99;
+    const regularMatch = !showRegularity || isRegular;
+
+    const openness = match.Risk_Management_Context?.Tactical_Red_Flags?.match_openness_index || 0;
+    const safeButsMatch = !showSafeButs || (confidence >= 0.65 && openness >= 3.0 && hasData);
+
+    const homeNarrative = match.Risk_Management_Context?.Situational_Narrative?.Home_Team || {};
+    const awayNarrative = match.Risk_Management_Context?.Situational_Narrative?.Away_Team || {};
+    
+    const homeFotmob = match.Risk_Management_Context?.Tactical_Red_Flags?.fotmob_rating_home || 0;
+    const awayFotmob = match.Risk_Management_Context?.Tactical_Red_Flags?.fotmob_rating_away || 0;
+    const gap = match.Risk_Management_Context?.Tactical_Red_Flags?.team_rating_gap || 0;
+
+    const homeIsTopForm = homeNarrative.momentum === 'HOT' && trajH >= 0.98 && (homeNarrative.performance_analysis?.actual_league_position || 99) <= 6 && homeFotmob >= 6.8 && gap > 0;
+    const awayIsTopForm = awayNarrative.momentum === 'HOT' && trajA >= 0.98 && (awayNarrative.performance_analysis?.actual_league_position || 99) <= 6 && awayFotmob >= 6.8 && gap < 0;
+    const topFormMatch = !showTopForm || homeIsTopForm || awayIsTopForm;
+
+    return textMatch && dateMatch && favMatch && signalMatch && confidenceMatch && ultraSafeMatch && regularMatch && safeButsMatch && topFormMatch;
   }) || [];
 
   return (
@@ -245,21 +293,21 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex-1 max-w-lg ml-4 lg:ml-0 flex items-center gap-2">
-            <div className="relative group flex-1">
+          <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3 ml-4">
+            <div className="relative group w-full max-w-[180px] hidden md:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-500 transition-colors" size={16} />
               <input 
                 type="text" 
-                placeholder="Filtrer les matchs..."
+                placeholder="Filtrer..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg py-2 pl-9 pr-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono"
+                className="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono"
               />
             </div>
             <select 
               value={selectedDate}
               onChange={e => setSelectedDate(e.target.value)}
-              className="bg-slate-950 border border-slate-700 rounded-lg py-2 px-3 text-sm text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none min-w-[140px] cursor-pointer"
+              className="bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-sm text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none min-w-[130px] cursor-pointer"
             >
               <option value="ALL">Toutes les dates</option>
               {availableDates.map(date => {
@@ -276,18 +324,99 @@ export default function App() {
                 );
               })}
             </select>
-            <button
-              onClick={() => setShowTrueFavorites(!showTrueFavorites)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all font-mono border ${
-                showTrueFavorites 
-                  ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-inner' 
-                  : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200'
-              }`}
-              title="Afficher uniquement les vrais favoris"
-            >
-              <ShieldCheck size={16} className={showTrueFavorites ? 'text-emerald-400' : 'text-slate-500'} />
-              <span className="hidden sm:inline text-xs">{showTrueFavorites ? 'Vrais Favoris' : 'Vrais Favoris'}</span>
-            </button>
+            
+            <div className="flex gap-1.5 sm:gap-2">
+              <button
+                onClick={() => setShowTrueFavorites(!showTrueFavorites)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                  showTrueFavorites 
+                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
+                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                }`}
+                title="Vrais Favoris"
+              >
+                <ShieldCheck size={14} />
+                <span className="hidden xl:inline">Favoris</span>
+              </button>
+              
+              <button
+                onClick={() => setShowSuperSignals(!showSuperSignals)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                  showSuperSignals 
+                    ? 'bg-amber-500/10 border-amber-500/50 text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
+                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                }`}
+                title="Super Signaux (Elite)"
+              >
+                <Zap size={14} />
+                <span className="hidden xl:inline">Elite</span>
+              </button>
+              
+              <button
+                onClick={() => setShowHighConfidence(!showHighConfidence)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                  showHighConfidence 
+                    ? 'bg-blue-500/10 border-blue-500/50 text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
+                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                }`}
+                title="Haute Confiance (>65%)"
+              >
+                <Target size={14} />
+                <span className="hidden xl:inline">Confiance</span>
+              </button>
+
+              <button
+                onClick={() => setShowUltraSafe(!showUltraSafe)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                  showUltraSafe 
+                    ? 'bg-purple-500/10 border-purple-500/50 text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
+                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                }`}
+                title="Safe Pick 95% (Confiance > 65% + Vrai Favori + Tension Basse)"
+              >
+                <Lock size={14} />
+                <span className="hidden xl:inline">Safe Pick</span>
+              </button>
+
+              <button
+                onClick={() => setShowRegularity(!showRegularity)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                  showRegularity 
+                    ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
+                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                }`}
+                title="Haute Régularité (Trajectoire > 99% pour les deux équipes)"
+              >
+                <LineChart size={14} />
+                <span className="hidden xl:inline">Régularité</span>
+              </button>
+
+              <button
+                onClick={() => setShowSafeButs(!showSafeButs)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                  showSafeButs 
+                    ? 'bg-orange-500/10 border-orange-500/50 text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
+                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                }`}
+                title="Safe Buts (Confiance > 65% + Openness > 3.0)"
+              >
+                <Flame size={14} />
+                <span className="hidden xl:inline">Safe Buts</span>
+              </button>
+
+              <button
+                onClick={() => setShowTopForm(!showTopForm)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border ${
+                  showTopForm 
+                    ? 'bg-pink-500/10 border-pink-500/50 text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
+                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                }`}
+                title="Top Forme (Elite Top 6 + HOT + Trajectoire > 0.98 + FotMob > 6.8 + Avantage Gap)"
+              >
+                <TrendingUp size={14} />
+                <span className="hidden xl:inline">Top Forme</span>
+              </button>
+            </div>
           </div>
         </header>
 
