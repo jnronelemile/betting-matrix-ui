@@ -21,9 +21,9 @@ export default function TabCoreMarket({ match }) {
   };
 
   const renderProbOdds = (prob, oddsValue) => (
-    <span className="flex items-center justify-between w-[120px] sm:w-[140px]">
-      <span className="text-slate-200">{(prob * 100).toFixed(1)}%</span>
-      <span className="text-emerald-400">@{oddsValue?.toFixed(2) || '-'}</span>
+    <span className="flex items-center justify-end gap-6 sm:gap-8 min-w-[140px]">
+      <span className="text-slate-200 text-right w-12">{(prob * 100).toFixed(1)}%</span>
+      <span className="text-emerald-400 font-bold text-right w-16">@{oddsValue?.toFixed(2) || '-'}</span>
     </span>
   );
 
@@ -79,10 +79,10 @@ export default function TabCoreMarket({ match }) {
       <div className="flex flex-col gap-6">
         <Card title="Marchés des Buts & BTTS" titleIcon={<ShieldCheck size={16} />}>
           <div className="space-y-6 mt-2">
-            <ProgressBar label="Plus de 1.5 (Over)" value={probs.PROB_O15 || 0} colorClass={probs.PROB_O15 >= 0.75 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O15 || 0, odds.ODDS_O15)} />
-            <ProgressBar label="Plus de 2.5 (Over)" value={probs.PROB_O25 || 0} colorClass={probs.PROB_O25 >= 0.55 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O25 || 0, odds.ODDS_O25)} />
-            <ProgressBar label="Moins de 2.5 (Under)" value={probs.PROB_U25 || 0} colorClass={probs.PROB_U25 >= 0.55 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U25 || 0, odds.ODDS_U25)} />
-            <ProgressBar label="Moins de 3.5 (Under)" value={probs.PROB_U35 || 0} colorClass={probs.PROB_U35 >= 0.75 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U35 || 0, odds.ODDS_U35)} />
+            <ProgressBar label="Over 1.5" value={probs.PROB_O15 || 0} colorClass={probs.PROB_O15 >= 0.75 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O15 || 0, odds.ODDS_O15)} />
+            <ProgressBar label="Over 2.5" value={probs.PROB_O25 || 0} colorClass={probs.PROB_O25 >= 0.55 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O25 || 0, odds.ODDS_O25)} />
+            <ProgressBar label="Under 2.5" value={probs.PROB_U25 || 0} colorClass={probs.PROB_U25 >= 0.55 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U25 || 0, odds.ODDS_U25)} />
+            <ProgressBar label="Under 3.5" value={probs.PROB_U35 || 0} colorClass={probs.PROB_U35 >= 0.75 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U35 || 0, odds.ODDS_U35)} />
             <ProgressBar label="Les Deux Marquent (Oui)" value={probs.PROB_BTTS || 0} colorClass={probs.PROB_BTTS >= 0.60 ? "bg-indigo-500" : "bg-indigo-500/50"} displayValue={renderProbOdds(probs.PROB_BTTS || 0, odds.ODDS_BTTS)} />
           </div>
         </Card>
