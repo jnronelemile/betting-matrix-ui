@@ -124,8 +124,8 @@ export default function TabCalibration({ match }) {
             </div>
             <div className="flex justify-between items-center bg-slate-900 border border-slate-800 p-3 rounded-lg shadow-inner">
               <span className="text-[10px] uppercase tracking-widest text-slate-400">Gap de Classement</span>
-              <span className={`font-mono text-sm font-bold ${tactical.rank_gap_status === 'ELEVATED' ? 'text-amber-400' : 'text-slate-200'}`}>
-                 {tactical.rank_gap_status || 'N/A'}
+              <span className={`font-mono text-sm font-bold ${Math.abs((narrative.Home_Team?.rank_home || 0) - (narrative.Away_Team?.rank_away || 0)) >= 8 ? 'text-amber-400' : 'text-slate-200'}`}>
+                 {Math.abs((narrative.Home_Team?.rank_home || 0) - (narrative.Away_Team?.rank_away || 0))}
               </span>
             </div>
             <div className="flex justify-between items-center bg-slate-900 border border-slate-800 p-3 rounded-lg shadow-inner">
