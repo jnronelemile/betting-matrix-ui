@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
 import { Badge } from '../ui/Badge';
-import { Activity, Percent, AlertCircle, AlertTriangle, TrendingUp, ShieldCheck } from 'lucide-react';
+import { Percent, AlertCircle, AlertTriangle, TrendingUp, ShieldCheck } from 'lucide-react';
 
 export default function TabCoreMarket({ match }) {
   const probs = match.True_Probabilities || {};
