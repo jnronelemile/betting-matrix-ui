@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
@@ -165,13 +165,13 @@ export default function App() {
     fetchData();
   }, [selectedLeague]);
 
-  const availableDates = Array.from(new Set(data?.matches?.map(m => m.date || 'Date Inconnue') || [])).sort((a, b) => {
+  const availableDates = useMemo(() => Array.from(new Set(data?.matches?.map(m => m.date || 'Date Inconnue') || [])).sort((a, b) => {
     if (a === 'Date Inconnue') return 1;
     if (b === 'Date Inconnue') return -1;
     return a.localeCompare(b);
-  });
+  }), [data?.matches]);
 
-  const filteredMatches = data?.matches?.filter(match => {
+  const filteredMatches = useMemo(() => data?.matches?.filter(match => {
     const textMatch = match.Matchup.toLowerCase().includes(searchQuery.toLowerCase());
     const dateMatch = selectedDate === 'ALL' || match.date === selectedDate;
     const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
@@ -207,7 +207,7 @@ export default function App() {
     const topFormMatch = !showTopForm || homeIsTopForm || awayIsTopForm;
 
     return textMatch && dateMatch && favMatch && signalMatch && confidenceMatch && ultraSafeMatch && regularMatch && safeButsMatch && topFormMatch;
-  }) || [];
+  }) || [], [data?.matches, searchQuery, selectedDate, showTrueFavorites, showSuperSignals, showHighConfidence, showUltraSafe, showRegularity, showSafeButs, showTopForm]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-950 text-slate-200">
