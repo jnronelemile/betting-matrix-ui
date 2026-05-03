@@ -1,7 +1,8 @@
 import React from 'react';
+import { calculatePercentage } from './ProgressBar.logic';
 
 export function ProgressBar({ value, max = 1, label, colorClass = 'bg-emerald-400', displayValue }) {
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+  const percentage = calculatePercentage(value, max);
   
   return (
     <div className="w-full">
