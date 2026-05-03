@@ -147,14 +147,14 @@ export default function App() {
             });
           }
         } catch (err) {
-          console.error("Failed to merge dates:", err);
+          console.error("Failed to merge dates");
         }
 
         setData(json);
         setSelectedMatch(null);
       } catch (err) {
-        console.error(err);
-        setError(err.message);
+        console.error("An error occurred while fetching data");
+        setError("Failed to load match data. Please try again later.");
         setData(null);
         setSelectedMatch(null);
       } finally {
