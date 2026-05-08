@@ -26,11 +26,13 @@ export function MatchDashboard({ match }) {
   const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
 
   return (
-    <div className="flex flex-col gap-6 relative">
+    <div className="flex flex-col gap-4 relative">
       {/* Header */}
-      <div className="border-b border-slate-800 pb-4 mt-2">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-serif tracking-tight font-medium text-slate-100">{match.Matchup}</h2>
+      <div className="border-b border-slate-800 pb-4">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-tight font-bold text-white drop-shadow-md">
+            {match.Matchup}
+          </h2>
           
           <div className="flex flex-wrap gap-2 items-center mt-1 lg:mt-0">
             {match.Calibration_Diagnostics?.confidence_index !== undefined && (
@@ -63,27 +65,27 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Mobile Tab Select */}
-      <div className="block md:hidden border-b border-emerald-500/20 pb-4 mt-4 sticky top-[63px] z-30 bg-slate-950 pt-3 shadow-[0_10px_20px_rgba(2,6,23,1)]">
-        <div className="relative">
+      <div className="block md:hidden border-b border-emerald-500/10 pb-2 mt-1 sticky top-[63px] z-30 bg-slate-950/90 backdrop-blur-md pt-2 shadow-lg">
+        <div className="relative px-1">
           <select
             value={activeTab}
             onChange={(e) => setActiveTab(e.target.value)}
-            className="w-full bg-emerald-500/10 border-2 border-emerald-500/50 rounded-xl py-4 px-5 text-sm font-black uppercase tracking-[0.2em] text-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-all"
+            className="w-full bg-slate-900 border border-emerald-500/30 rounded-lg py-2.5 px-4 text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-400 focus:outline-none appearance-none cursor-pointer"
           >
             {TABS.map(tab => (
-              <option key={tab.id} value={tab.id} className="bg-slate-900 text-slate-100 py-4">
+              <option key={tab.id} value={tab.id} className="bg-slate-900 text-slate-100">
                 {tab.label}
               </option>
             ))}
           </select>
-          <div className="absolute right-5 top-1/2 -translate-y-1/2 text-emerald-400 pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500/70 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </div>
         </div>
       </div>
 
       {/* Desktop Tab Navigation */}
-      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0 sticky top-[-1px] z-20 bg-slate-950/95 backdrop-blur-sm pt-2 shadow-[0_2px_10px_rgba(2,6,23,1)]">
+      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0 sticky top-[-1px] z-20 bg-slate-950/95 backdrop-blur-sm pt-2 shadow-md">
         {TABS.map(tab => (
           <button
             key={tab.id}
