@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
+import teamMapping from '../team_mapping.json';
 
 const LEAGUES = [
   { id: 'ALL', name: 'Toutes les Ligues', code: 'ALL', flag: '🌍' },
@@ -490,6 +491,16 @@ export default function App() {
                 <div className="text-center max-w-xs">
                   <p className="font-bold text-slate-400 uppercase tracking-widest text-sm mb-2">En attente de sélection</p>
                   <p className="text-xs text-slate-500 leading-relaxed font-mono">Sélectionnez un match depuis la matrice pour charger son tableau de bord de gestion des risques et ses probabilités réelles.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+slate-500 leading-relaxed font-mono">Sélectionnez un match depuis la matrice pour charger son tableau de bord de gestion des risques et ses probabilités réelles.</p>
                 </div>
               </div>
             )}
