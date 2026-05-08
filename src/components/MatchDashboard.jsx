@@ -26,7 +26,7 @@ export function MatchDashboard({ match }) {
   const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 relative">
       {/* Header */}
       <div className="border-b border-slate-800 pb-4 mt-2">
         <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
@@ -63,7 +63,7 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Mobile Tab Select */}
-      <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 sticky top-0 z-10 bg-slate-950 pt-2">
+      <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 sticky top-[-1px] z-20 bg-slate-950 pt-2 shadow-[0_2px_10px_rgba(2,6,23,1)]">
         <select
             value={activeTab}
           onChange={(e) => setActiveTab(e.target.value)}
@@ -81,7 +81,7 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Desktop Tab Navigation */}
-      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0 sticky top-0 z-10 bg-slate-950/95 backdrop-blur-sm pt-2">
+      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0 sticky top-[-1px] z-20 bg-slate-950/95 backdrop-blur-sm pt-2 shadow-[0_2px_10px_rgba(2,6,23,1)]">
         {TABS.map(tab => (
           <button
             key={tab.id}

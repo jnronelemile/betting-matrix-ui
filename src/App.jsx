@@ -255,6 +255,9 @@ export default function App() {
                 onClick={() => {
                   setSelectedLeague(league);
                   setMatchListOpen(true); // Ensure match list is open when switching leagues
+                  if (window.innerWidth < 1024) {
+                    setSidebarOpen(false); // On mobile, close sidebar after league selection
+                  }
                 }}
                 className={`
                   flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-left
