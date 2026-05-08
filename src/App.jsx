@@ -32,6 +32,7 @@ export default function App() {
   const [showRegularity, setShowRegularity] = useState(false);
   const [showSafeButs, setShowSafeButs] = useState(false);
   const [showTopForm, setShowTopForm] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -285,152 +286,185 @@ export default function App() {
       <main className="flex-1 flex flex-col min-w-0 bg-slate-950 overflow-y-auto lg:overflow-hidden">
         {/* Header */}
         <header className="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-4 lg:px-6 sticky top-0 z-20">
-          <div className="flex items-center gap-4">
-            <button 
-              className="text-slate-400 hover:text-slate-200 transition-colors bg-slate-800 p-2 rounded-lg border border-slate-700"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
-            >
-              <Menu size={18} />
-            </button>
-            <button 
-              className="hidden lg:flex text-slate-400 hover:text-slate-200 transition-colors bg-slate-900 p-2 rounded-lg border border-slate-800"
-              onClick={() => setMatchListOpen(!matchListOpen)}
-              title={matchListOpen ? "Masquer la liste des matchs" : "Afficher la liste des matchs"}
-            >
-              {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
-            </button>
-            <div className="hidden lg:flex items-center gap-2 text-xs text-slate-400 font-medium uppercase tracking-widest bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-              <Activity size={14} className="text-emerald-500" />
-              <span>Engine <span className="text-emerald-400 font-mono ml-1">ACTIVE</span></span>
-            </div>
-          </div>
-
-          <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3 ml-2 sm:ml-4 min-w-0">
-            <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-500 transition-colors" size={16} />
-              <input 
-                type="text" 
-                placeholder="Filtrer..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono"
-              />
-            </div>
-            <select 
-              value={selectedDate}
-              onChange={e => setSelectedDate(e.target.value)}
-              className="bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-2 sm:px-3 text-xs sm:text-sm text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none shrink-0 cursor-pointer"
-            >
-              <option value="ALL">Toutes les dates</option>
-              {availableDates.map(date => {
-                let displayDate = date;
-                if (date !== 'Date Inconnue') {
-                  const d = new Date(`${date}T12:00:00`);
-                  displayDate = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
-                  displayDate = displayDate.charAt(0).toUpperCase() + displayDate.slice(1);
-                }
-                return (
-                  <option key={date} value={date}>
-                    {displayDate}
-                  </option>
-                );
-              })}
-            </select>
-            
-            <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-1 min-w-0 custom-scrollbar snap-x">
-              <button
-                onClick={() => setShowTrueFavorites(!showTrueFavorites)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                  showTrueFavorites 
-                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
-                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
-                }`}
-                title="Vrais Favoris"
+          {mobileSearchOpen ? (
+            <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
+                <input 
+                  type="text" 
+                  autoFocus
+                  placeholder="Chercher une équipe..."
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  className="w-full bg-slate-950 border border-emerald-500/50 rounded-lg py-2 pl-9 pr-3 text-sm text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
+                />
+              </div>
+              <button 
+                onClick={() => {
+                  setMobileSearchOpen(false);
+                  setSearchQuery('');
+                }}
+                className="p-2 text-slate-400 hover:text-rose-400 transition-colors"
               >
-                <ShieldCheck size={14} />
-                <span className="hidden xl:inline">Favoris</span>
-              </button>
-              
-              <button
-                onClick={() => setShowSuperSignals(!showSuperSignals)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                  showSuperSignals 
-                    ? 'bg-amber-500/10 border-amber-500/50 text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
-                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
-                }`}
-                title="Super Signaux (Elite)"
-              >
-                <Zap size={14} />
-                <span className="hidden xl:inline">Elite</span>
-              </button>
-              
-              <button
-                onClick={() => setShowHighConfidence(!showHighConfidence)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                  showHighConfidence 
-                    ? 'bg-blue-500/10 border-blue-500/50 text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
-                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
-                }`}
-                title="Haute Confiance (>65%)"
-              >
-                <Target size={14} />
-                <span className="hidden xl:inline">Confiance</span>
-              </button>
-
-              <button
-                onClick={() => setShowUltraSafe(!showUltraSafe)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                  showUltraSafe 
-                    ? 'bg-purple-500/10 border-purple-500/50 text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
-                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
-                }`}
-                title="Safe Pick 95% (Confiance > 65% + Vrai Favori + Tension Basse)"
-              >
-                <Lock size={14} />
-                <span className="hidden xl:inline">Safe Pick</span>
-              </button>
-
-              <button
-                onClick={() => setShowRegularity(!showRegularity)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                  showRegularity 
-                    ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
-                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
-                }`}
-                title="Haute Régularité (Trajectoire > 99% pour les deux équipes)"
-              >
-                <LineChart size={14} />
-                <span className="hidden xl:inline">Régularité</span>
-              </button>
-
-              <button
-                onClick={() => setShowSafeButs(!showSafeButs)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                  showSafeButs 
-                    ? 'bg-orange-500/10 border-orange-500/50 text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
-                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
-                }`}
-                title="Safe Buts (Confiance > 65% + Openness > 3.0)"
-              >
-                <Flame size={14} />
-                <span className="hidden xl:inline">Safe Buts</span>
-              </button>
-
-              <button
-                onClick={() => setShowTopForm(!showTopForm)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                  showTopForm 
-                    ? 'bg-pink-500/10 border-pink-500/50 text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
-                    : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
-                }`}
-                title="Top Forme (Elite Top 6 + HOT + Trajectoire > 0.98 + FotMob > 6.8 + Avantage Gap)"
-              >
-                <TrendingUp size={14} />
-                <span className="hidden xl:inline">Top Forme</span>
+                <X size={20} />
               </button>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="flex items-center gap-4">
+                <button 
+                  className="text-slate-400 hover:text-slate-200 transition-colors bg-slate-800 p-2 rounded-lg border border-slate-700"
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
+                >
+                  <Menu size={18} />
+                </button>
+                <button 
+                  className="hidden lg:flex text-slate-400 hover:text-slate-200 transition-colors bg-slate-900 p-2 rounded-lg border border-slate-800"
+                  onClick={() => setMatchListOpen(!matchListOpen)}
+                  title={matchListOpen ? "Masquer la liste des matchs" : "Afficher la liste des matchs"}
+                >
+                  {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+                </button>
+                <div className="hidden lg:flex items-center gap-2 text-xs text-slate-400 font-medium uppercase tracking-widest bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+                  <Activity size={14} className="text-emerald-500" />
+                  <span>Engine <span className="text-emerald-400 font-mono ml-1">ACTIVE</span></span>
+                </div>
+              </div>
+
+              <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3 ml-2 sm:ml-4 min-w-0">
+                <button 
+                  className="md:hidden text-slate-400 hover:text-emerald-400 transition-colors p-2"
+                  onClick={() => setMobileSearchOpen(true)}
+                >
+                  <Search size={20} />
+                </button>
+                <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-500 transition-colors" size={16} />
+                  <input 
+                    type="text" 
+                    placeholder="Filtrer..."
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono"
+                  />
+                </div>
+                <select 
+                  value={selectedDate}
+                  onChange={e => setSelectedDate(e.target.value)}
+                  className="bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-2 sm:px-3 text-xs sm:text-sm text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none shrink-0 cursor-pointer"
+                >
+                  <option value="ALL">Toutes les dates</option>
+                  {availableDates.map(date => {
+                    let displayDate = date;
+                    if (date !== 'Date Inconnue') {
+                      const d = new Date(`${date}T12:00:00`);
+                      displayDate = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+                      displayDate = displayDate.charAt(0).toUpperCase() + displayDate.slice(1);
+                    }
+                    return (
+                      <option key={date} value={date}>
+                        {displayDate}
+                      </option>
+                    );
+                  })}
+                </select>
+                
+                <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-1 min-w-0 custom-scrollbar snap-x">
+                  <button
+                    onClick={() => setShowTrueFavorites(!showTrueFavorites)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
+                      showTrueFavorites 
+                        ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
+                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    }`}
+                    title="Vrais Favoris"
+                  >
+                    <ShieldCheck size={14} />
+                    <span className="hidden xl:inline">Favoris</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => setShowSuperSignals(!showSuperSignals)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
+                      showSuperSignals 
+                        ? 'bg-amber-500/10 border-amber-500/50 text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
+                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    }`}
+                    title="Super Signaux (Elite)"
+                  >
+                    <Zap size={14} />
+                    <span className="hidden xl:inline">Elite</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => setShowHighConfidence(!showHighConfidence)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
+                      showHighConfidence 
+                        ? 'bg-blue-500/10 border-blue-500/50 text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
+                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    }`}
+                    title="Haute Confiance (>65%)"
+                  >
+                    <Target size={14} />
+                    <span className="hidden xl:inline">Confiance</span>
+                  </button>
+
+                  <button
+                    onClick={() => setShowUltraSafe(!showUltraSafe)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
+                      showUltraSafe 
+                        ? 'bg-purple-500/10 border-purple-500/50 text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
+                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    }`}
+                    title="Safe Pick 95% (Confiance > 65% + Vrai Favori + Tension Basse)"
+                  >
+                    <Lock size={14} />
+                    <span className="hidden xl:inline">Safe Pick</span>
+                  </button>
+
+                  <button
+                    onClick={() => setShowRegularity(!showRegularity)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
+                      showRegularity 
+                        ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
+                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    }`}
+                    title="Haute Régularité (Trajectoire > 99% pour les deux équipes)"
+                  >
+                    <LineChart size={14} />
+                    <span className="hidden xl:inline">Régularité</span>
+                  </button>
+
+                  <button
+                    onClick={() => setShowSafeButs(!showSafeButs)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
+                      showSafeButs 
+                        ? 'bg-orange-500/10 border-orange-500/50 text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
+                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    }`}
+                    title="Safe Buts (Confiance > 65% + Openness > 3.0)"
+                  >
+                    <Flame size={14} />
+                    <span className="hidden xl:inline">Safe Buts</span>
+                  </button>
+
+                  <button
+                    onClick={() => setShowTopForm(!showTopForm)}
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
+                      showTopForm 
+                        ? 'bg-pink-500/10 border-pink-500/50 text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
+                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    }`}
+                    title="Top Forme (Elite Top 6 + HOT + Trajectoire > 0.98 + FotMob > 6.8 + Avantage Gap)"
+                  >
+                    <TrendingUp size={14} />
+                    <span className="hidden xl:inline">Top Forme</span>
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </header>
 
         {/* Content Area */}
