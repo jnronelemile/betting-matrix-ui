@@ -70,7 +70,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 pb-20 lg:pb-4">
       {matches.length === 0 && (
         <div className="text-center py-10 text-slate-500 text-sm">
           Aucun match trouvé pour ce filtre.
