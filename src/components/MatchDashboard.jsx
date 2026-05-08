@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Badge } from './ui/Badge';
 import { BarChart3, Brain, Crosshair } from 'lucide-react';
 
@@ -12,19 +12,27 @@ import { Calculator, Activity, AlertTriangle } from 'lucide-react';
 export function MatchDashboard({ match }) {
   const [activeTab, setActiveTab] = useState('core');
   const [isScrolled, setIsScrolled] = useState(false);
+  const headerRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Show sticky matchup if scrolled more than 100px
-      const scrolled = window.scrollY > 100;
-      if (scrolled !== isScrolled) {
-        setIsScrolled(scrolled);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // When the main header is NOT intersecting, we are "scrolled"
+        setIsScrolled(!entry.isIntersecting);
+      },
+      { threshold: 0, rootMargin: '-64px 0px 0px 0px' } // -64px to account for the top sticky header
+    );
+
+    if (headerRef.current) {
+      observer.observe(headerRef.current);
+    }
+
+    return () => {
+      if (headerRef.current) {
+        observer.unobserve(headerRef.current);
       }
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isScrolled]);
+  }, [match]); // Re-run when match changes
 
   if (!match) return null;
 
@@ -39,15 +47,15 @@ export function MatchDashboard({ match }) {
   const probs = match.True_Probabilities || {};
   const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
 
-  // Short names fallback to full matchup if not available
+  // Use short names if available, otherwise cleanup the matchup string
   const displayMatchupShort = match.shortHome && match.shortAway 
     ? `${match.shortHome} vs ${match.shortAway}`
-    : match.Matchup;
+    : match.Matchup.split(' vs ').map(s => s.length > 12 ? s.substring(0, 10) + '..' : s).join(' vs ');
 
   return (
     <div className="flex flex-col gap-4 relative">
-      {/* Main Header (Scrolls away) */}
-      <div className="border-b border-slate-800 pb-6">
+      {/* Main Header (Used for intersection tracking) */}
+      <div ref={headerRef} className="border-b border-slate-800 pb-6">
         <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-tight font-bold text-white drop-shadow-md">
             {match.Matchup}
@@ -86,7 +94,7 @@ export function MatchDashboard({ match }) {
       {/* Persistent Matchup & Tab Header (Sticky) */}
       <div className="sticky top-[63px] z-30 flex flex-col bg-slate-950/95 backdrop-blur-md shadow-xl -mx-4 px-4 lg:-mx-8 lg:px-8 border-b border-emerald-500/10 transition-all duration-300">
         {/* Matchup Name (Visible only on scroll) */}
-        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isScrolled ? 'max-h-20 py-2 opacity-100 border-b border-slate-800/30' : 'max-h-0 py-0 opacity-0 border-b-0'}`}>
+        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isScrolled ? 'max-h-20 py-2 opacity-100 border-b border-slate-800/30' : 'max-h-0 py-0 opacity-0 border-b-0'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 overflow-hidden">
               <div className="w-1 h-4 bg-emerald-500 rounded-full shrink-0"></div>
