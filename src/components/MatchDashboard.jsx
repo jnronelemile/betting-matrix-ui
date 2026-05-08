@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Badge } from './ui/Badge';
 import { BarChart3, Brain, Crosshair } from 'lucide-react';
 
@@ -11,6 +11,20 @@ import { Calculator, Activity, AlertTriangle } from 'lucide-react';
 
 export function MatchDashboard({ match }) {
   const [activeTab, setActiveTab] = useState('core');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show sticky matchup if scrolled more than 100px
+      const scrolled = window.scrollY > 100;
+      if (scrolled !== isScrolled) {
+        setIsScrolled(scrolled);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isScrolled]);
 
   if (!match) return null;
 
@@ -24,6 +38,11 @@ export function MatchDashboard({ match }) {
 
   const probs = match.True_Probabilities || {};
   const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
+
+  // Short names fallback to full matchup if not available
+  const displayMatchupShort = match.shortHome && match.shortAway 
+    ? `${match.shortHome} vs ${match.shortAway}`
+    : match.Matchup;
 
   return (
     <div className="flex flex-col gap-4 relative">
@@ -65,20 +84,22 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Persistent Matchup & Tab Header (Sticky) */}
-      <div className="sticky top-[63px] z-30 flex flex-col bg-slate-950/95 backdrop-blur-md shadow-xl -mx-4 px-4 lg:-mx-8 lg:px-8 border-b border-emerald-500/10">
+      <div className="sticky top-[63px] z-30 flex flex-col bg-slate-950/95 backdrop-blur-md shadow-xl -mx-4 px-4 lg:-mx-8 lg:px-8 border-b border-emerald-500/10 transition-all duration-300">
         {/* Matchup Name (Visible only on scroll) */}
-        <div className="py-2 flex items-center justify-between border-b border-slate-800/30">
-          <div className="flex items-center gap-2 overflow-hidden">
-            <div className="w-1 h-4 bg-emerald-500 rounded-full shrink-0"></div>
-            <span className="text-xs sm:text-sm font-bold text-slate-200 truncate tracking-wide">
-              {match.Matchup}
-            </span>
+        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isScrolled ? 'max-h-20 py-2 opacity-100 border-b border-slate-800/30' : 'max-h-0 py-0 opacity-0 border-b-0'}`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 overflow-hidden">
+              <div className="w-1 h-4 bg-emerald-500 rounded-full shrink-0"></div>
+              <span className="text-xs sm:text-sm font-bold text-emerald-400 truncate tracking-wide">
+                {displayMatchupShort}
+              </span>
+            </div>
+            {match.hours && (
+              <span className="text-[10px] font-mono font-bold text-slate-400 shrink-0">
+                {match.hours}
+              </span>
+            )}
           </div>
-          {match.hours && (
-            <span className="text-[10px] font-mono font-bold text-emerald-400 shrink-0">
-              {match.hours}
-            </span>
-          )}
         </div>
 
         {/* Mobile Tab Select */}
