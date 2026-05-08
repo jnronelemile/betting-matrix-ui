@@ -27,8 +27,8 @@ export function MatchDashboard({ match }) {
 
   return (
     <div className="flex flex-col gap-4 relative">
-      {/* Header */}
-      <div className="border-b border-slate-800 pb-4">
+      {/* Main Header (Scrolls away) */}
+      <div className="border-b border-slate-800 pb-6">
         <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-tight font-bold text-white drop-shadow-md">
             {match.Matchup}
@@ -64,47 +64,67 @@ export function MatchDashboard({ match }) {
         </div>
       </div>
 
-      {/* Mobile Tab Select */}
-      <div className="block md:hidden border-b border-emerald-500/10 pb-2 mt-1 sticky top-[63px] z-30 bg-slate-950/90 backdrop-blur-md pt-2 shadow-lg">
-        <div className="relative px-1">
-          <select
-            value={activeTab}
-            onChange={(e) => setActiveTab(e.target.value)}
-            className="w-full bg-slate-900 border border-emerald-500/30 rounded-lg py-2.5 px-4 text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-400 focus:outline-none appearance-none cursor-pointer"
-          >
-            {TABS.map(tab => (
-              <option key={tab.id} value={tab.id} className="bg-slate-900 text-slate-100">
-                {tab.label}
-              </option>
-            ))}
-          </select>
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500/70 pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      {/* Persistent Matchup & Tab Header (Sticky) */}
+      <div className="sticky top-[63px] z-30 flex flex-col bg-slate-950/95 backdrop-blur-md shadow-xl -mx-4 px-4 lg:-mx-8 lg:px-8 border-b border-emerald-500/10">
+        {/* Matchup Name (Visible only on scroll) */}
+        <div className="py-2 flex items-center justify-between border-b border-slate-800/30">
+          <div className="flex items-center gap-2 overflow-hidden">
+            <div className="w-1 h-4 bg-emerald-500 rounded-full shrink-0"></div>
+            <span className="text-xs sm:text-sm font-bold text-slate-200 truncate tracking-wide">
+              {match.Matchup}
+            </span>
           </div>
+          {match.hours && (
+            <span className="text-[10px] font-mono font-bold text-emerald-400 shrink-0">
+              {match.hours}
+            </span>
+          )}
+        </div>
+
+        {/* Mobile Tab Select */}
+        <div className="block md:hidden pb-3 pt-2">
+          <div className="relative">
+            <select
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value)}
+              style={{ fontSize: '13px' }}
+              className="w-full bg-slate-900 border border-emerald-500/30 rounded-lg py-3 px-4 font-bold uppercase tracking-[0.1em] text-emerald-400 focus:outline-none appearance-none cursor-pointer shadow-inner"
+            >
+              {TABS.map(tab => (
+                <option key={tab.id} value={tab.id} className="bg-slate-900 text-slate-100">
+                  {tab.label}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500/70 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Tab Navigation */}
+        <div className="hidden md:flex gap-1 md:gap-4 overflow-x-auto custom-scrollbar pb-px pt-1">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{ fontSize: '13px' }}
+              className={`
+                flex items-center gap-2 px-4 py-3 font-bold uppercase tracking-widest whitespace-nowrap transition-all border-b-2
+                ${activeTab === tab.id 
+                  ? 'border-emerald-500 text-emerald-400 bg-slate-900/50 rounded-t-lg' 
+                  : 'border-transparent text-slate-500 hover:text-slate-300 hover:bg-slate-900/30'}
+              `}
+            >
+              {tab.icon}
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Desktop Tab Navigation */}
-      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0 sticky top-[-1px] z-20 bg-slate-950/95 backdrop-blur-sm pt-2 shadow-md">
-        {TABS.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`
-              flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-all border-b-2
-              ${activeTab === tab.id 
-                ? 'border-emerald-500 text-emerald-400 bg-slate-900/50 rounded-t-lg' 
-                : 'border-transparent text-slate-500 hover:text-slate-300 hover:bg-slate-900/30'}
-            `}
-          >
-            {tab.icon}
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
       {/* Tab Content */}
-      <div className="min-h-[500px]">
+      <div className="min-h-[500px] mt-4">
         {activeTab === 'core' && <TabCoreMarket match={match} />}
         {activeTab === 'risk' && <TabRiskContext match={match} />}
         {activeTab === 'narrative' && <TabNarrative match={match} />}
