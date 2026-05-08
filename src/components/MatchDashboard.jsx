@@ -63,20 +63,22 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Mobile Tab Select */}
-      <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 sticky top-[-1px] z-20 bg-slate-950 pt-2 shadow-[0_2px_10px_rgba(2,6,23,1)]">
-        <select
+      <div className="block md:hidden border-b border-emerald-500/20 pb-4 mt-4 sticky top-[63px] z-30 bg-slate-950 pt-3 shadow-[0_10px_20px_rgba(2,6,23,1)]">
+        <div className="relative">
+          <select
             value={activeTab}
-          onChange={(e) => setActiveTab(e.target.value)}
-          className="w-full bg-slate-900 border border-emerald-500/50 rounded-lg py-3 px-4 text-xs font-bold uppercase tracking-widest text-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.1)]"
-        >
-          {TABS.map(tab => (
-            <option key={tab.id} value={tab.id} className="bg-slate-900 text-slate-200">
-              {tab.label}
-            </option>
-          ))}
-        </select>
-        <div className="absolute right-4 top-[calc(50%+4px)] -translate-y-1/2 text-emerald-500 pointer-events-none">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            onChange={(e) => setActiveTab(e.target.value)}
+            className="w-full bg-emerald-500/10 border-2 border-emerald-500/50 rounded-xl py-4 px-5 text-sm font-black uppercase tracking-[0.2em] text-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-all"
+          >
+            {TABS.map(tab => (
+              <option key={tab.id} value={tab.id} className="bg-slate-900 text-slate-100 py-4">
+                {tab.label}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-5 top-1/2 -translate-y-1/2 text-emerald-400 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
         </div>
       </div>
 

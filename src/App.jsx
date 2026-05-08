@@ -479,7 +479,7 @@ export default function App() {
 
           {/* Match Dashboard Area */}
           <div className={`
-            flex-1 overflow-y-auto lg:overflow-y-auto bg-slate-950 custom-scrollbar
+            flex-1 overflow-y-visible lg:overflow-y-auto bg-slate-950 custom-scrollbar
             ${!selectedMatch ? 'hidden lg:flex' : 'flex'}
           `}>
             {selectedMatch ? (
