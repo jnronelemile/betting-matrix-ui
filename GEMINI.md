@@ -23,3 +23,10 @@ Ce projet est l'interface utilisateur (Dashboard) du moteur d'inférence **Titan
 - Amélioration de la vue mobile (Fix scrolling et overflow).
 - Sidebar responsive avec masquage automatique lors de la consultation d'un match.
 - Graphiques d'évolution des lambdas (Poisson distribution charts).
+
+## UI Navigation Rules
+
+- Le menu des matchs doit rester visible par défaut.
+- Le menu des matchs peut être masqué uniquement manuellement.
+- Le menu des ligues doit disparaître automatiquement lorsqu’un match est sélectionné.
+- Après sélection d’un match, le dashboard correspondant doit s’afficher immédiatement.

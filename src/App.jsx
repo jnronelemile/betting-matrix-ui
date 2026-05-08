@@ -22,7 +22,7 @@ export default function App() {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMatch, setSelectedMatch] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 1024 : false);
   const [matchListOpen, setMatchListOpen] = useState(true);
   const [showTrueFavorites, setShowTrueFavorites] = useState(false);
   const [showSuperSignals, setShowSuperSignals] = useState(false);
@@ -219,12 +219,14 @@ export default function App() {
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar (Leagues Menu) */}
       <aside className={`
-        fixed lg:static inset-y-0 left-0 z-30
-        w-64 bg-slate-900 border-r border-slate-800 flex flex-col
-        transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        fixed lg:static inset-y-0 left-0 z-40
+        bg-slate-900 border-slate-800 flex flex-col
+        transition-all duration-300 ease-in-out shadow-2xl lg:shadow-none
+        ${sidebarOpen 
+          ? 'translate-x-0 w-52 border-r opacity-100' 
+          : '-translate-x-full lg:translate-x-0 w-52 lg:w-0 border-r lg:border-r-0 opacity-100 lg:opacity-0 lg:overflow-hidden'}
       `}>
         <div className="p-5 flex items-center gap-3 border-b border-slate-800 bg-slate-900/50">
           <div className="bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20 shadow-inner">
@@ -244,8 +246,7 @@ export default function App() {
                 key={league.id}
                 onClick={() => {
                   setSelectedLeague(league);
-                  setSidebarOpen(false);
-                  setMatchListOpen(true);
+                  setMatchListOpen(true); // Ensure match list is open when switching leagues
                 }}
                 className={`
                   flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-left
@@ -275,8 +276,9 @@ export default function App() {
         <header className="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-4 lg:px-6 sticky top-0 z-20">
           <div className="flex items-center gap-4">
             <button 
-              className="lg:hidden text-slate-400 hover:text-slate-200 transition-colors bg-slate-800 p-2 rounded-lg border border-slate-700"
-              onClick={() => setSidebarOpen(true)}
+              className="text-slate-400 hover:text-slate-200 transition-colors bg-slate-800 p-2 rounded-lg border border-slate-700"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
             >
               <Menu size={18} />
             </button>
@@ -426,9 +428,9 @@ export default function App() {
           <div className={`
             border-r border-slate-800 flex-col bg-slate-950/50 transition-all duration-300 ease-in-out overflow-hidden shrink-0
             ${selectedMatch ? 'hidden lg:flex' : 'flex'}
-            ${matchListOpen ? 'w-full lg:w-96 opacity-100' : 'w-full lg:w-0 lg:border-r-0 lg:opacity-0'}
+            ${matchListOpen ? 'w-full lg:w-80 opacity-100' : 'w-full lg:w-0 lg:border-r-0 lg:opacity-0'}
           `}>
-            <div className="w-full lg:w-96 flex flex-col h-full min-h-[500px] lg:min-h-0">
+            <div className="w-full lg:w-80 flex flex-col h-full min-h-[500px] lg:min-h-0">
               <div className="p-5 border-b border-slate-800 bg-slate-900/30 flex justify-between items-center shrink-0">
               <div>
                 <h2 className="font-bold text-slate-200 text-sm tracking-wide">{selectedLeague.name}</h2>
@@ -456,9 +458,7 @@ export default function App() {
                   selectedMatch={selectedMatch}
                   onSelectMatch={(match) => {
                     setSelectedMatch(match);
-                    if (window.innerWidth >= 1024) { // Close sidebar on desktop when match is selected
-                      setMatchListOpen(false);
-                    }
+                    setSidebarOpen(false); // Rule: Leagues menu disappears automatically when match is selected
                   }}
                 />
               )}
