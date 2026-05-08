@@ -100,45 +100,52 @@ export default function App() {
             await Promise.all(fetchPromises);
           }
 
-          const ALIASES = {
-            "m'gladbach": "monchengladbach",
-            "hsv": "hamburger sv",
-            "man utd": "manchester united",
-            "man city": "manchester city",
-            "forest": "nottingham forest",
-            "psg": "paris saint-germain",
-            "atl. madrid": "atletico madrid",
-            "paris": "paris saint-germain",
-            "sporting": "sporting cp"
-          };
-          
           const normalize = (str) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
           
           const getAlias = (name) => {
+            const mapped = teamMapping[name];
+            if (mapped) return normalize(mapped);
+            
             const norm = normalize(name);
-            return ALIASES[norm] || norm;
+            return norm;
           };
 
           if (json.matches) {
             json.matches.forEach(m => {
               const parts = m.Matchup.split(' vs ');
               if (parts.length === 2) {
-                const mHome = normalize(parts[0]);
-                const mAway = normalize(parts[1]);
+                const homeTeamRaw = parts[0];
+                const awayTeamRaw = parts[1];
+                
+                const homeAlias = getAlias(homeTeamRaw);
+                const awayAlias = getAlias(awayTeamRaw);
                 
                 const found = allMatchups.find(mu => {
                   const muHome = getAlias(mu.home);
                   const muAway = getAlias(mu.away);
                   
-                  const homeMatch = mHome.includes(muHome) || muHome.includes(mHome);
-                  const awayMatch = mAway.includes(muAway) || muAway.includes(mAway);
+                  // Check for direct alias match OR inclusion
+                  const homeMatch = homeAlias === muHome || homeAlias.includes(muHome) || muHome.includes(homeAlias);
+                  const awayMatch = awayAlias === muAway || awayAlias.includes(muAway) || muAway.includes(awayAlias);
                   
                   return homeMatch && awayMatch;
                 });
-                m.date = found ? found.date : 'Date Inconnue';
-                m.hours = found && found.hours ? found.hours : null;
-                m.shortHome = found ? found.home : parts[0];
-                m.shortAway = found ? found.away : parts[1];
+
+                // FALLBACK: If still not found, try a very loose match on names
+                let finalFound = found;
+                if (!finalFound) {
+                  finalFound = allMatchups.find(mu => {
+                    const muHome = normalize(mu.home);
+                    const muAway = normalize(mu.away);
+                    return homeAlias.includes(muHome) || muHome.includes(homeAlias) || 
+                           awayAlias.includes(muAway) || muAway.includes(awayAlias);
+                  });
+                }
+
+                m.date = finalFound ? finalFound.date : 'Date Inconnue';
+                m.hours = finalFound && finalFound.hours ? finalFound.hours : null;
+                m.shortHome = finalFound ? finalFound.home : parts[0];
+                m.shortAway = finalFound ? finalFound.away : parts[1];
               } else {
                 m.date = 'Date Inconnue';
                 m.hours = null;
@@ -215,7 +222,7 @@ export default function App() {
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 z-20 lg:hidden backdrop-blur-sm transition-opacity"
+          className="fixed inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-sm transition-opacity"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -491,16 +498,6 @@ export default function App() {
                 <div className="text-center max-w-xs">
                   <p className="font-bold text-slate-400 uppercase tracking-widest text-sm mb-2">En attente de sélection</p>
                   <p className="text-xs text-slate-500 leading-relaxed font-mono">Sélectionnez un match depuis la matrice pour charger son tableau de bord de gestion des risques et ses probabilités réelles.</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-}
-slate-500 leading-relaxed font-mono">Sélectionnez un match depuis la matrice pour charger son tableau de bord de gestion des risques et ses probabilités réelles.</p>
                 </div>
               </div>
             )}

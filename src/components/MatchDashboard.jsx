@@ -63,25 +63,25 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Mobile Tab Select */}
-      <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 relative">
+      <div className="block md:hidden border-b border-slate-800/50 pb-3 mt-4 sticky top-0 z-10 bg-slate-950 pt-2">
         <select
             value={activeTab}
           onChange={(e) => setActiveTab(e.target.value)}
-          className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-xs font-bold uppercase tracking-widest text-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 appearance-none cursor-pointer shadow-sm"
+          className="w-full bg-slate-900 border border-emerald-500/50 rounded-lg py-3 px-4 text-xs font-bold uppercase tracking-widest text-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.1)]"
         >
           {TABS.map(tab => (
-            <option key={tab.id} value={tab.id}>
+            <option key={tab.id} value={tab.id} className="bg-slate-900 text-slate-200">
               {tab.label}
             </option>
           ))}
         </select>
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none mt-0.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        <div className="absolute right-4 top-[calc(50%+4px)] -translate-y-1/2 text-emerald-500 pointer-events-none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </div>
       </div>
 
       {/* Desktop Tab Navigation */}
-      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0">
+      <div className="hidden md:flex gap-1 md:gap-2 border-b border-slate-800/50 overflow-x-auto custom-scrollbar pb-px -mx-4 px-4 lg:mx-0 lg:px-0 mt-4 lg:mt-0 sticky top-0 z-10 bg-slate-950/95 backdrop-blur-sm pt-2">
         {TABS.map(tab => (
           <button
             key={tab.id}
