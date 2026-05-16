@@ -10,7 +10,7 @@ import TabRiskContext from './dashboard/TabRiskContext';
 import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target } from 'lucide-react';
 
 export function MatchDashboard({ match }) {
-  const [activeTab, setActiveTab] = useState('core');
+  const [activeTab, setActiveTab] = useState('tactical');
   const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef(null);
 
@@ -37,10 +37,10 @@ export function MatchDashboard({ match }) {
   if (!match) return null;
 
   const TABS = [
+    { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
     { id: 'core', label: 'Core Market', icon: <BarChart3 size={14} /> },
     { id: 'risk', label: 'Risk Context', icon: <Activity size={14} /> },
     { id: 'narrative', label: 'Narrative & Psych', icon: <Brain size={14} /> },
-    { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
     { id: 'calibration', label: 'Maths & Calibration', icon: <Calculator size={14} /> },
   ];
 
