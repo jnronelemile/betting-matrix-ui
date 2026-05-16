@@ -228,11 +228,7 @@ export function MatchDashboard({ match }) {
       <div className="min-h-[500px] mt-4 overflow-hidden relative">
         <div 
           key={activeTab}
-          className={`
-            w-full transition-all duration-300 ease-out
-            animate-in fade-in
-            ${slideDirection === 'right' ? 'slide-in-from-right-8' : 'slide-in-from-left-8'}
-          `}
+          className={`w-full ${slideDirection === 'right' ? 'animate-slide-right' : 'animate-slide-left'}`}
         >
           {activeTab === 'core' && <TabCoreMarket match={match} />}
           {activeTab === 'risk' && <TabRiskContext match={match} />}
