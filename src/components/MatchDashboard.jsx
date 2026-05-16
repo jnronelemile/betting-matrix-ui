@@ -13,8 +13,12 @@ export function MatchDashboard({ match }) {
   const [activeTab, setActiveTab] = useState('tactical');
   const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef(null);
-  const touchStartX = useRef(null);
-  const touchEndX = useRef(null);
+  
+  // Touch refs for swipe
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const touchEndX = useRef(0);
+  const touchEndY = useRef(0);
 
   const TABS = [
     { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
@@ -27,44 +31,40 @@ export function MatchDashboard({ match }) {
   // Swipe logic for mobile
   const handleTouchStart = (e) => {
     touchStartX.current = e.targetTouches[0].clientX;
+    touchStartY.current = e.targetTouches[0].clientY;
   };
 
   const handleTouchMove = (e) => {
     touchEndX.current = e.targetTouches[0].clientX;
+    touchEndY.current = e.targetTouches[0].clientY;
   };
 
   const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) return;
-    
-    const distance = touchStartX.current - touchEndX.current;
-    const minSwipeDistance = 50;
-    const currentIndex = TABS.findIndex(tab => tab.id === activeTab);
+    const deltaX = touchStartX.current - touchEndX.current;
+    const deltaY = touchStartY.current - touchEndY.current;
+    const minDistance = 50;
 
-    if (distance > minSwipeDistance) {
-      // Swiped left -> Next tab
-      if (currentIndex < TABS.length - 1) {
+    // Only swipe if horizontal movement is greater than vertical movement
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minDistance) {
+      const currentIndex = TABS.findIndex(tab => tab.id === activeTab);
+      if (deltaX > 0 && currentIndex < TABS.length - 1) {
+        // Swipe Left -> Next
         setActiveTab(TABS[currentIndex + 1].id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    } else if (distance < -minSwipeDistance) {
-      // Swiped right -> Previous tab
-      if (currentIndex > 0) {
+      } else if (deltaX < 0 && currentIndex > 0) {
+        // Swipe Right -> Previous
         setActiveTab(TABS[currentIndex - 1].id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
-
-    touchStartX.current = null;
-    touchEndX.current = null;
   };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // When the main header is NOT intersecting, we are "scrolled"
         setIsScrolled(!entry.isIntersecting);
       },
-      { threshold: 0, rootMargin: '-64px 0px 0px 0px' } // -64px to account for the top sticky header
+      { threshold: 0, rootMargin: '-64px 0px 0px 0px' }
     );
 
     if (headerRef.current) {
@@ -76,23 +76,14 @@ export function MatchDashboard({ match }) {
         observer.unobserve(headerRef.current);
       }
     };
-  }, [match]); // Re-run when match changes
+  }, [match]);
 
   if (!match) return null;
-
-  const TABS = [
-    { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
-    { id: 'core', label: 'Core Market', icon: <BarChart3 size={14} /> },
-    { id: 'risk', label: 'Risk Context', icon: <Activity size={14} /> },
-    { id: 'narrative', label: 'Narrative & Psych', icon: <Brain size={14} /> },
-    { id: 'calibration', label: 'Maths & Calibration', icon: <Calculator size={14} /> },
-  ];
 
   const probs = match.True_Probabilities || {};
   const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
   const isKillSwitch = investSignals.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
 
-  // Use short names if available, otherwise cleanup the matchup string
   const displayMatchupShort = match.shortHome && match.shortAway 
     ? `${match.shortHome} vs ${match.shortAway}`
     : match.Matchup.split(' vs ').map(s => s.length > 12 ? s.substring(0, 10) + '..' : s).join(' vs ');
@@ -103,8 +94,9 @@ export function MatchDashboard({ match }) {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      style={{ touchAction: 'pan-y' }}
     >
-      {/* Main Header (Used for intersection tracking) */}
+      {/* Main Header */}
       <div ref={headerRef} className="border-b border-slate-800 pb-6">
         <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-tight font-bold text-white drop-shadow-md">
