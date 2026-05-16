@@ -64,26 +64,49 @@ export default function TabRiskContext({ match }) {
 
             <div className="space-y-3">
               <h4 className="text-[10px] uppercase text-slate-500 font-bold tracking-widest px-1">Chaleur & Statut de Justice</h4>
-              <div className="flex justify-between items-center bg-slate-900 border border-slate-800 p-3 rounded-lg">
-                <span className="text-xs font-semibold text-slate-300 uppercase tracking-wide">Domicile</span>
-                <div className="flex gap-2">
-                  <Badge variant={getMomentumVariant(narrative.Home_Team?.momentum)}>
-                    {narrative.Home_Team?.momentum || 'INCONNU'}
-                  </Badge>
-                  <Badge variant={narrative.Home_Team?.justice_status === 'LUCKY' ? 'warning' : narrative.Home_Team?.justice_status === 'UNDERVALUED' ? 'success' : 'info'}>
-                    {narrative.Home_Team?.justice_status || 'INCONNU'}
-                  </Badge>
+              <div className="flex flex-col gap-3">
+                {/* Domicile */}
+                <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col gap-3">
+                  <div className="flex justify-between items-center">
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-xs font-semibold text-slate-300 uppercase tracking-wide">Domicile</span>
+                      <span className="text-[9px] text-slate-500 font-mono font-bold">{narrative.Home_Team?.objective?.replace(/_/g, ' ')}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Badge variant={getMomentumVariant(narrative.Home_Team?.momentum)}>
+                        {narrative.Home_Team?.momentum || 'INCONNU'}
+                      </Badge>
+                      <Badge variant={narrative.Home_Team?.justice_status === 'LUCKY' ? 'warning' : narrative.Home_Team?.justice_status === 'UNDERVALUED' ? 'success' : 'info'}>
+                        {narrative.Home_Team?.justice_status || 'INCONNU'}
+                      </Badge>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-slate-800/50 pt-2">
+                    <span className="text-[9px] text-slate-500 uppercase font-bold tracking-tighter">Indice Motivation</span>
+                    <span className="text-xs font-mono font-bold text-emerald-400">{psychology.motivation_home?.toFixed(3)}</span>
+                  </div>
                 </div>
-              </div>
-              <div className="flex justify-between items-center bg-slate-900 border border-slate-800 p-3 rounded-lg">
-                <span className="text-xs font-semibold text-slate-300 uppercase tracking-wide">Extérieur</span>
-                <div className="flex gap-2">
-                  <Badge variant={getMomentumVariant(narrative.Away_Team?.momentum)}>
-                    {narrative.Away_Team?.momentum || 'INCONNU'}
-                  </Badge>
-                  <Badge variant={narrative.Away_Team?.justice_status === 'LUCKY' ? 'warning' : narrative.Away_Team?.justice_status === 'UNDERVALUED' ? 'success' : 'info'}>
-                    {narrative.Away_Team?.justice_status || 'INCONNU'}
-                  </Badge>
+
+                {/* Extérieur */}
+                <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col gap-3">
+                  <div className="flex justify-between items-center">
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-xs font-semibold text-slate-300 uppercase tracking-wide">Extérieur</span>
+                      <span className="text-[9px] text-slate-500 font-mono font-bold">{narrative.Away_Team?.objective?.replace(/_/g, ' ')}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Badge variant={getMomentumVariant(narrative.Away_Team?.momentum)}>
+                        {narrative.Away_Team?.momentum || 'INCONNU'}
+                      </Badge>
+                      <Badge variant={narrative.Away_Team?.justice_status === 'LUCKY' ? 'warning' : narrative.Away_Team?.justice_status === 'UNDERVALUED' ? 'success' : 'info'}>
+                        {narrative.Away_Team?.justice_status || 'INCONNU'}
+                      </Badge>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-slate-800/50 pt-2">
+                    <span className="text-[9px] text-slate-500 uppercase font-bold tracking-tighter">Indice Motivation</span>
+                    <span className="text-xs font-mono font-bold text-emerald-400">{psychology.motivation_away?.toFixed(3)}</span>
+                  </div>
                 </div>
               </div>
             </div>

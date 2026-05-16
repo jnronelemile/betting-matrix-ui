@@ -91,6 +91,12 @@ export default function TabCoreMarket({ match }) {
                 <span className="text-[10px] font-bold text-emerald-400 tracking-widest uppercase">Tirs : Élite</span>
               </div>
             )}
+            {match.Super_Signals?.O_FOULS_ELITE && (
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
+                <AlertCircle className="text-emerald-400 shrink-0" size={16} />
+                <span className="text-[10px] font-bold text-emerald-400 tracking-widest uppercase">Fautes : Élite</span>
+              </div>
+            )}
 
             {Object.values(match.Super_Signals || {}).every(v => v === false) && (
               <div className="text-center py-6 px-4 text-slate-500/70 text-[10px] font-bold uppercase tracking-widest border border-dashed border-slate-800 rounded-xl">

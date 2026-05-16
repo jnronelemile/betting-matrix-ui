@@ -15,6 +15,7 @@ export default function TabTactical({ match }) {
     { key: 'shots', label: 'Tirs', prop: 'PROB_OVER_MEDIAN_SHOTS', lambda: 'LAMBDA_SHOTS_MATCH' },
     { key: 'sot', label: 'Tirs Cadrés', prop: 'PROB_OVER_MEDIAN_SOT', lambda: 'LAMBDA_SOT_MATCH' },
     { key: 'corners', label: 'Corners', prop: 'PROB_OVER_MEDIAN_CORNERS', lambda: 'LAMBDA_CORNERS_MATCH' },
+    { key: 'fouls', label: 'Fautes', prop: 'PROB_OVER_MEDIAN_FOULS', lambda: 'LAMBDA_FOULS_MATCH' },
   ];
 
   const getPropColor = (val) => {
