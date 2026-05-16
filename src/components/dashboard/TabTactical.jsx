@@ -82,17 +82,38 @@ export default function TabTactical({ match }) {
                 <span className="font-mono text-sm text-slate-400">Écart : {tactical.team_rating_gap?.toFixed(2) || 0}</span>
               </div>
               <div className="flex items-center gap-5">
-                <div className="flex-1 bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
+                <div className="flex-1 bg-slate-950 p-4 rounded-xl border border-slate-800 text-center relative overflow-hidden">
                   <div className="text-[11px] text-slate-500 uppercase tracking-widest mb-2">Domicile</div>
                   <div className="font-mono text-2xl text-blue-400">{tactical.fotmob_rating_home?.toFixed(2) || 'N/A'}</div>
+                  {tactical.home_wastefulness_score > 0 && (
+                    <div className="mt-2 pt-2 border-t border-slate-800/50 flex flex-col items-center">
+                      <span className="text-[8px] text-rose-400 uppercase font-bold tracking-tighter">Gaspillage</span>
+                      <span className="text-xs font-mono text-rose-500 font-bold">{tactical.home_wastefulness_score?.toFixed(3)}</span>
+                    </div>
+                  )}
                 </div>
                 <div className="text-slate-600 font-mono text-sm font-bold">VS</div>
-                <div className="flex-1 bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
+                <div className="flex-1 bg-slate-950 p-4 rounded-xl border border-slate-800 text-center relative overflow-hidden">
                   <div className="text-[11px] text-slate-500 uppercase tracking-widest mb-2">Extérieur</div>
                   <div className="font-mono text-2xl text-rose-400">{tactical.fotmob_rating_away?.toFixed(2) || 'N/A'}</div>
+                  {tactical.away_wastefulness_score > 0 && (
+                    <div className="mt-2 pt-2 border-t border-slate-800/50 flex flex-col items-center">
+                      <span className="text-[8px] text-rose-400 uppercase font-bold tracking-tighter">Gaspillage</span>
+                      <span className="text-xs font-mono text-rose-500 font-bold">{tactical.away_wastefulness_score?.toFixed(3)}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
+
+            {tactical.false_favorite_score > 0 && (
+              <div className="bg-slate-950 border border-slate-800 p-3 rounded-xl shadow-inner flex justify-between items-center">
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Score de Faux Favori</span>
+                <span className={`font-mono text-sm font-bold ${tactical.IS_FALSE_FAVORITE ? 'text-rose-400' : 'text-slate-500'}`}>
+                  {tactical.false_favorite_score?.toFixed(3)}
+                </span>
+              </div>
+            )}
 
             {match.Standard_Handicaps && (
               <div className="pt-2 border-t border-slate-800">

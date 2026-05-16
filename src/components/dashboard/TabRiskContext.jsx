@@ -79,6 +79,11 @@ export default function TabRiskContext({ match }) {
                       <Badge variant={narrative.Home_Team?.justice_status === 'LUCKY' ? 'warning' : narrative.Home_Team?.justice_status === 'UNDERVALUED' ? 'success' : 'info'}>
                         {narrative.Home_Team?.justice_status || 'INCONNU'}
                       </Badge>
+                      {psychology.home_justice_z_score !== undefined && (
+                        <div className={`px-1.5 py-0.5 rounded border font-mono text-[9px] font-bold ${psychology.home_justice_z_score > 1 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : psychology.home_justice_z_score < -1 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-slate-900 border-slate-700 text-slate-500'}`}>
+                          Z:{psychology.home_justice_z_score?.toFixed(2)}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center justify-between border-t border-slate-800/50 pt-2">
@@ -101,6 +106,11 @@ export default function TabRiskContext({ match }) {
                       <Badge variant={narrative.Away_Team?.justice_status === 'LUCKY' ? 'warning' : narrative.Away_Team?.justice_status === 'UNDERVALUED' ? 'success' : 'info'}>
                         {narrative.Away_Team?.justice_status || 'INCONNU'}
                       </Badge>
+                      {psychology.away_justice_z_score !== undefined && (
+                        <div className={`px-1.5 py-0.5 rounded border font-mono text-[9px] font-bold ${psychology.away_justice_z_score > 1 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : psychology.away_justice_z_score < -1 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-slate-900 border-slate-700 text-slate-500'}`}>
+                          Z:{psychology.away_justice_z_score?.toFixed(2)}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center justify-between border-t border-slate-800/50 pt-2">

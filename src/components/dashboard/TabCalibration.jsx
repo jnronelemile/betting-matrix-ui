@@ -72,11 +72,19 @@ export default function TabCalibration({ match }) {
                 <div className="absolute top-0 left-0 w-1 h-full bg-blue-500/50"></div>
                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 block">Lambda Home</span>
                 <span className="text-xl font-mono text-blue-400 font-bold">{diag.lambda_home?.toFixed(4)}</span>
+                <div className="mt-1 pt-1 border-t border-slate-800/50 flex flex-col">
+                  <span className="text-[8px] text-slate-600 uppercase">Composite Brut</span>
+                  <span className="text-xs font-mono text-slate-400">{diag.composite_home?.toFixed(4)}</span>
+                </div>
               </div>
               <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center shadow-inner flex flex-col justify-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-rose-500/50"></div>
                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 block">Lambda Away</span>
                 <span className="text-xl font-mono text-rose-400 font-bold">{diag.lambda_away?.toFixed(4)}</span>
+                <div className="mt-1 pt-1 border-t border-slate-800/50 flex flex-col">
+                  <span className="text-[8px] text-slate-600 uppercase">Composite Brut</span>
+                  <span className="text-xs font-mono text-slate-400">{diag.composite_away?.toFixed(4)}</span>
+                </div>
               </div>
             </div>
 

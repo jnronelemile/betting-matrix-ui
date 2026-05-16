@@ -139,6 +139,62 @@ export default function TabCoreMarket({ match }) {
                     </div>
                   </div>
                 )}
+
+                {/* Team Goals Quantitative Data (v8.5) */}
+                <div className="pt-4 border-t border-slate-800 mt-2 flex flex-col gap-4">
+                   <div className="flex justify-between items-center">
+                     <span className="text-[10px] uppercase text-slate-500 font-bold tracking-widest">Analyse par Entité</span>
+                     <Badge variant="default" className="text-[8px] px-1.5 py-0">Gap: {(teamGoals.Target_Entity?.Probability_Gap * 100).toFixed(1)}%</Badge>
+                   </div>
+                   
+                   {/* Favorite Goals */}
+                   <div className="bg-slate-950 border border-slate-800 p-3 rounded-xl shadow-inner">
+                     <div className="flex justify-between items-center mb-2 border-b border-slate-800/50 pb-1.5">
+                       <span className="text-[10px] font-bold text-sky-400 uppercase tracking-wider">FAV: {teamGoals.Target_Entity?.Favorite}</span>
+                       <span className="text-[9px] text-slate-500 font-mono">Projection Buts</span>
+                     </div>
+                     <div className="flex flex-col gap-2">
+                       <div className="flex justify-between items-center">
+                         <span className="text-[10px] text-slate-400 uppercase">Over 1.5</span>
+                         <div className="flex gap-3">
+                           <span className="text-xs font-bold text-slate-200">{(teamGoals.Favorite_Goals?.PROB_FAV_O15 * 100).toFixed(1)}%</span>
+                           <span className="text-xs font-bold text-emerald-400 font-mono">@{teamGoals.Favorite_Goals?.ODDS_FAV_O15?.toFixed(2)}</span>
+                         </div>
+                       </div>
+                       <div className="flex justify-between items-center">
+                         <span className="text-[10px] text-slate-400 uppercase">Over 2.5</span>
+                         <div className="flex gap-3">
+                           <span className="text-xs font-bold text-slate-200">{(teamGoals.Favorite_Goals?.PROB_FAV_O25 * 100).toFixed(1)}%</span>
+                           <span className="text-xs font-bold text-emerald-400 font-mono">@{teamGoals.Favorite_Goals?.ODDS_FAV_O25?.toFixed(2)}</span>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+
+                   {/* Outsider Goals */}
+                   <div className="bg-slate-950 border border-slate-800 p-3 rounded-xl shadow-inner">
+                     <div className="flex justify-between items-center mb-2 border-b border-slate-800/50 pb-1.5">
+                       <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">OUT: {teamGoals.Target_Entity?.Outsider}</span>
+                       <span className="text-[9px] text-slate-500 font-mono">Projection Buts</span>
+                     </div>
+                     <div className="flex flex-col gap-2">
+                       <div className="flex justify-between items-center">
+                         <span className="text-[10px] text-slate-400 uppercase">Over 0.5</span>
+                         <div className="flex gap-3">
+                           <span className="text-xs font-bold text-slate-200">{(teamGoals.Outsider_Goals?.PROB_OUT_O05 * 100).toFixed(1)}%</span>
+                           <span className="text-xs font-bold text-emerald-400 font-mono">@{teamGoals.Outsider_Goals?.ODDS_OUT_O05?.toFixed(2)}</span>
+                         </div>
+                       </div>
+                       <div className="flex justify-between items-center">
+                         <span className="text-[10px] text-slate-400 uppercase">Over 1.5</span>
+                         <div className="flex gap-3">
+                           <span className="text-xs font-bold text-slate-200">{(teamGoals.Outsider_Goals?.PROB_OUT_O15 * 100).toFixed(1)}%</span>
+                           <span className="text-xs font-bold text-emerald-400 font-mono">@{teamGoals.Outsider_Goals?.ODDS_OUT_O15?.toFixed(2)}</span>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                </div>
               </>
             )}
           </div>
