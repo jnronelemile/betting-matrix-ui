@@ -11,6 +11,7 @@ import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target } from 'l
 
 export function MatchDashboard({ match }) {
   const [activeTab, setActiveTab] = useState('tactical');
+  const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
   const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef(null);
   
@@ -49,10 +50,12 @@ export function MatchDashboard({ match }) {
       const currentIndex = TABS.findIndex(tab => tab.id === activeTab);
       if (deltaX > 0 && currentIndex < TABS.length - 1) {
         // Swipe Left -> Next
+        setSlideDirection('right');
         setActiveTab(TABS[currentIndex + 1].id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (deltaX < 0 && currentIndex > 0) {
         // Swipe Right -> Previous
+        setSlideDirection('left');
         setActiveTab(TABS[currentIndex - 1].id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -174,7 +177,12 @@ export function MatchDashboard({ match }) {
           <div className="relative">
             <select
               value={activeTab}
-              onChange={(e) => setActiveTab(e.target.value)}
+              onChange={(e) => {
+                const newIdx = TABS.findIndex(t => t.id === e.target.value);
+                const currentIdx = TABS.findIndex(t => t.id === activeTab);
+                setSlideDirection(newIdx > currentIdx ? 'right' : 'left');
+                setActiveTab(e.target.value);
+              }}
               style={{ fontSize: '13px' }}
               className="w-full bg-slate-900 border border-emerald-500/30 rounded-lg py-3 px-4 font-bold uppercase tracking-[0.1em] text-emerald-400 focus:outline-none appearance-none cursor-pointer shadow-inner"
             >
@@ -192,10 +200,15 @@ export function MatchDashboard({ match }) {
 
         {/* Desktop Tab Navigation */}
         <div className="hidden md:flex gap-1 md:gap-4 overflow-x-auto custom-scrollbar pb-px pt-1">
-          {TABS.map(tab => (
+          {TABS.map((tab, idx) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                const newIdx = TABS.findIndex(t => t.id === tab.id);
+                const currentIdx = TABS.findIndex(t => t.id === activeTab);
+                setSlideDirection(newIdx > currentIdx ? 'right' : 'left');
+                setActiveTab(tab.id);
+              }}
               style={{ fontSize: '13px' }}
               className={`
                 flex items-center gap-2 px-4 py-3 font-bold uppercase tracking-widest whitespace-nowrap transition-all border-b-2
@@ -211,13 +224,22 @@ export function MatchDashboard({ match }) {
         </div>
       </div>
 
-      {/* Tab Content */}
-      <div className="min-h-[500px] mt-4">
-        {activeTab === 'core' && <TabCoreMarket match={match} />}
-        {activeTab === 'risk' && <TabRiskContext match={match} />}
-        {activeTab === 'narrative' && <TabNarrative match={match} />}
-        {activeTab === 'tactical' && <TabTactical match={match} />}
-        {activeTab === 'calibration' && <TabCalibration match={match} />}
+      {/* Tab Content with Animation */}
+      <div className="min-h-[500px] mt-4 overflow-hidden relative">
+        <div 
+          key={activeTab}
+          className={`
+            w-full transition-all duration-300 ease-out
+            animate-in fade-in
+            ${slideDirection === 'right' ? 'slide-in-from-right-8' : 'slide-in-from-left-8'}
+          `}
+        >
+          {activeTab === 'core' && <TabCoreMarket match={match} />}
+          {activeTab === 'risk' && <TabRiskContext match={match} />}
+          {activeTab === 'narrative' && <TabNarrative match={match} />}
+          {activeTab === 'tactical' && <TabTactical match={match} />}
+          {activeTab === 'calibration' && <TabCalibration match={match} />}
+        </div>
       </div>
     </div>
   );
