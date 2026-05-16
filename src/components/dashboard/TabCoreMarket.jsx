@@ -165,50 +165,7 @@ export default function TabCoreMarket({ match }) {
         </Card>
       </div>
 
-      {/* Colonne 2: Vainqueur du Match (Priorité 2) */}
-      <div className="flex flex-col gap-6">
-        <Card title="Vainqueur du Match (1X2)" titleIcon={<Percent size={16} />}>
-          <div className="space-y-6 mt-2">
-            {is1X2Zero ? (
-              <div className="flex flex-col items-center justify-center p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-center gap-2">
-                <AlertTriangle className="text-rose-400 w-6 h-6 mb-1" />
-                <span className="text-xs font-bold text-rose-400 uppercase tracking-widest">Données Invalidées</span>
-                <span className="text-[10px] text-slate-500">Marché 1X2 à zéro (Kill-Switch)</span>
-              </div>
-            ) : (
-              <>
-                <ProgressBar label="Domicile (1)" value={probs.PROB_1 || 0} colorClass="bg-blue-500" displayValue={renderProbOdds(probs.PROB_1 || 0, odds.ODDS_1)} />
-                <ProgressBar label="Nul (X)" value={probs.PROB_X || 0} colorClass="bg-slate-500" displayValue={renderProbOdds(probs.PROB_X || 0, odds.ODDS_X)} />
-                <ProgressBar label="Extérieur (2)" value={probs.PROB_2 || 0} colorClass="bg-rose-500" displayValue={renderProbOdds(probs.PROB_2 || 0, odds.ODDS_2)} />
-              </>
-            )}
-          </div>
-        </Card>
-
-        {/* Asian/Standard Handicaps inside Column 2 to balance */}
-        {match.Standard_Handicaps && (
-          <Card title="Handicaps Standard" titleIcon={<TrendingUp size={16} />}>
-            <div className="space-y-4 mt-1">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                <Badge variant="info" className="text-[10px] px-2 py-0.5">Favori : {match.Standard_Handicaps.favorite}</Badge>
-              </div>
-              <div className="grid grid-cols-1 gap-3">
-                {Object.entries(match.Standard_Handicaps).filter(([k]) => k.startsWith('H_')).map(([k, v]) => (
-                  <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex justify-between items-center shadow-inner">
-                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">{k.replace('_', ' ')}</span>
-                    <div className="flex items-center gap-4">
-                      <span className="text-xs font-bold text-slate-300">{(v.prob * 100).toFixed(1)}%</span>
-                      <span className="font-mono text-xs text-emerald-400 font-bold">@{v.odds?.toFixed(2)}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Card>
-        )}
-      </div>
-
-      {/* Colonne 3: Over/Under Buts, BTTS (Priorité 3) */}
+      {/* Colonne 2: Marchés des Buts & BTTS (Priorité 2) */}
       <div className="flex flex-col gap-6">
         <Card title="Marchés des Buts & BTTS" titleIcon={<ShieldCheck size={16} />}>
           <div className="space-y-6 mt-2">
@@ -243,6 +200,49 @@ export default function TabCoreMarket({ match }) {
                   <span className="font-mono text-sm font-bold text-emerald-400">@{item.odds?.toFixed(2)}</span>
                 </div>
               ))}
+            </div>
+          </Card>
+        )}
+      </div>
+
+      {/* Colonne 3: Vainqueur du Match (Priorité 3) */}
+      <div className="flex flex-col gap-6">
+        <Card title="Vainqueur du Match (1X2)" titleIcon={<Percent size={16} />}>
+          <div className="space-y-6 mt-2">
+            {is1X2Zero ? (
+              <div className="flex flex-col items-center justify-center p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-center gap-2">
+                <AlertTriangle className="text-rose-400 w-6 h-6 mb-1" />
+                <span className="text-xs font-bold text-rose-400 uppercase tracking-widest">Données Invalidées</span>
+                <span className="text-[10px] text-slate-500">Marché 1X2 à zéro (Kill-Switch)</span>
+              </div>
+            ) : (
+              <>
+                <ProgressBar label="Domicile (1)" value={probs.PROB_1 || 0} colorClass="bg-blue-500" displayValue={renderProbOdds(probs.PROB_1 || 0, odds.ODDS_1)} />
+                <ProgressBar label="Nul (X)" value={probs.PROB_X || 0} colorClass="bg-slate-500" displayValue={renderProbOdds(probs.PROB_X || 0, odds.ODDS_X)} />
+                <ProgressBar label="Extérieur (2)" value={probs.PROB_2 || 0} colorClass="bg-rose-500" displayValue={renderProbOdds(probs.PROB_2 || 0, odds.ODDS_2)} />
+              </>
+            )}
+          </div>
+        </Card>
+
+        {/* Asian/Standard Handicaps inside Column 3 */}
+        {match.Standard_Handicaps && (
+          <Card title="Handicaps Standard" titleIcon={<TrendingUp size={16} />}>
+            <div className="space-y-4 mt-1">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                <Badge variant="info" className="text-[10px] px-2 py-0.5">Favori : {match.Standard_Handicaps.favorite}</Badge>
+              </div>
+              <div className="grid grid-cols-1 gap-3">
+                {Object.entries(match.Standard_Handicaps).filter(([k]) => k.startsWith('H_')).map(([k, v]) => (
+                  <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex justify-between items-center shadow-inner">
+                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">{k.replace('_', ' ')}</span>
+                    <div className="flex items-center gap-4">
+                      <span className="text-xs font-bold text-slate-300">{(v.prob * 100).toFixed(1)}%</span>
+                      <span className="font-mono text-xs text-emerald-400 font-bold">@{v.odds?.toFixed(2)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </Card>
         )}

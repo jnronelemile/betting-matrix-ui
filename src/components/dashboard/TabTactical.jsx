@@ -115,25 +115,20 @@ export default function TabTactical({ match }) {
               </div>
             )}
 
-            {match.Standard_Handicaps && (
-              <div className="pt-2 border-t border-slate-800">
-                <div className="text-[10px] uppercase text-slate-500 font-bold tracking-widest mb-3 flex items-center justify-between">
-                  Handicaps Standard
-                  <Badge variant="info">Fav: {match.Standard_Handicaps.favorite}</Badge>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {Object.entries(match.Standard_Handicaps).filter(([k]) => k.startsWith('H_')).map(([k, v]) => (
-                    <div key={k} className="bg-slate-900 border border-slate-800 p-2.5 rounded-lg flex flex-col items-center text-center shadow-inner">
-                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">{k.replace('_', ' ')}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-slate-300">{(v.prob * 100).toFixed(1)}%</span>
-                        <span className="font-mono text-xs text-emerald-400">@{v.odds?.toFixed(2)}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800">
+               <div className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex flex-col items-center justify-center text-center shadow-inner">
+                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-bold">Tension Justice</span>
+                 <span className={`font-mono text-xl font-bold ${risk.Team_Psychology?.net_justice_tension > 5 || risk.Team_Psychology?.net_justice_tension < -5 ? 'text-rose-400' : 'text-emerald-400'}`}>
+                   {risk.Team_Psychology?.net_justice_tension > 0 ? '+' : ''}{risk.Team_Psychology?.net_justice_tension?.toFixed(2)}
+                 </span>
+               </div>
+               <div className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex flex-col items-center justify-center text-center shadow-inner">
+                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-bold">Ouverture</span>
+                 <span className="font-mono text-xl font-bold text-slate-200">
+                   {tactical.match_openness_index?.toFixed(2)}
+                 </span>
+               </div>
+            </div>
             
             {tactical.MISSING_FOTMOB_DATA && (
               <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded-lg flex items-center gap-2 text-amber-400 text-xs uppercase tracking-wider mt-2">
