@@ -13,6 +13,50 @@ export function MatchDashboard({ match }) {
   const [activeTab, setActiveTab] = useState('tactical');
   const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef(null);
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
+
+  const TABS = [
+    { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
+    { id: 'core', label: 'Core Market', icon: <BarChart3 size={14} /> },
+    { id: 'risk', label: 'Risk Context', icon: <Activity size={14} /> },
+    { id: 'narrative', label: 'Narrative & Psych', icon: <Brain size={14} /> },
+    { id: 'calibration', label: 'Maths & Calibration', icon: <Calculator size={14} /> },
+  ];
+
+  // Swipe logic for mobile
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+    const currentIndex = TABS.findIndex(tab => tab.id === activeTab);
+
+    if (distance > minSwipeDistance) {
+      // Swiped left -> Next tab
+      if (currentIndex < TABS.length - 1) {
+        setActiveTab(TABS[currentIndex + 1].id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else if (distance < -minSwipeDistance) {
+      // Swiped right -> Previous tab
+      if (currentIndex > 0) {
+        setActiveTab(TABS[currentIndex - 1].id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,7 +98,12 @@ export function MatchDashboard({ match }) {
     : match.Matchup.split(' vs ').map(s => s.length > 12 ? s.substring(0, 10) + '..' : s).join(' vs ');
 
   return (
-    <div className="flex flex-col gap-4 relative">
+    <div 
+      className="flex flex-col gap-4 relative"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Main Header (Used for intersection tracking) */}
       <div ref={headerRef} className="border-b border-slate-800 pb-6">
         <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">

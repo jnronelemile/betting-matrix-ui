@@ -187,19 +187,24 @@ export default function TabCoreMarket({ match }) {
           </div>
         </Card>
 
-        {/* Top 3 Scores */}
-        {Object.keys(scores).length > 0 && (
-          <Card title="Top 3 Scores Exacts" titleIcon={<TrendingUp size={16} />}>
-            <div className="flex flex-col gap-3 mt-1">
-              {Object.values(scores).map((item, idx) => (
-                <div key={idx} className="flex flex-wrap gap-2 justify-between items-center bg-slate-950 border border-slate-800 p-3.5 rounded-xl shadow-inner">
-                  <div className="flex items-center gap-4">
-                    <span className="text-base font-bold text-slate-200 font-serif tracking-wider">{item.score}</span>
-                    <Badge variant="default" className="text-[10px] px-2 py-0.5">{(item.prob * 100).toFixed(1)}%</Badge>
+        {/* Standard Handicaps moved here to replace Top 3 Scores */}
+        {match.Standard_Handicaps && (
+          <Card title="Handicaps Standard" titleIcon={<TrendingUp size={16} />}>
+            <div className="space-y-4 mt-1">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                <Badge variant="info" className="text-[10px] px-2 py-0.5">Favori : {match.Standard_Handicaps.favorite}</Badge>
+              </div>
+              <div className="grid grid-cols-1 gap-3">
+                {Object.entries(match.Standard_Handicaps).filter(([k]) => k.startsWith('H_')).map(([k, v]) => (
+                  <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex justify-between items-center shadow-inner">
+                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">{k.replace('_', ' ')}</span>
+                    <div className="flex items-center gap-4">
+                      <span className="text-xs font-bold text-slate-300">{(v.prob * 100).toFixed(1)}%</span>
+                      <span className="font-mono text-xs text-emerald-400 font-bold">@{v.odds?.toFixed(2)}</span>
+                    </div>
                   </div>
-                  <span className="font-mono text-sm font-bold text-emerald-400">@{item.odds?.toFixed(2)}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </Card>
         )}
@@ -225,24 +230,19 @@ export default function TabCoreMarket({ match }) {
           </div>
         </Card>
 
-        {/* Asian/Standard Handicaps inside Column 3 */}
-        {match.Standard_Handicaps && (
-          <Card title="Handicaps Standard" titleIcon={<TrendingUp size={16} />}>
-            <div className="space-y-4 mt-1">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                <Badge variant="info" className="text-[10px] px-2 py-0.5">Favori : {match.Standard_Handicaps.favorite}</Badge>
-              </div>
-              <div className="grid grid-cols-1 gap-3">
-                {Object.entries(match.Standard_Handicaps).filter(([k]) => k.startsWith('H_')).map(([k, v]) => (
-                  <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex justify-between items-center shadow-inner">
-                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">{k.replace('_', ' ')}</span>
-                    <div className="flex items-center gap-4">
-                      <span className="text-xs font-bold text-slate-300">{(v.prob * 100).toFixed(1)}%</span>
-                      <span className="font-mono text-xs text-emerald-400 font-bold">@{v.odds?.toFixed(2)}</span>
-                    </div>
+        {/* Top 3 Scores Exacts moved here to the end */}
+        {Object.keys(scores).length > 0 && (
+          <Card title="Top 3 Scores Exacts" titleIcon={<TrendingUp size={16} />}>
+            <div className="flex flex-col gap-3 mt-1">
+              {Object.values(scores).map((item, idx) => (
+                <div key={idx} className="flex flex-wrap gap-2 justify-between items-center bg-slate-950 border border-slate-800 p-3.5 rounded-xl shadow-inner">
+                  <div className="flex items-center gap-4">
+                    <span className="text-base font-bold text-slate-200 font-serif tracking-wider">{item.score}</span>
+                    <Badge variant="default" className="text-[10px] px-2 py-0.5">{(item.prob * 100).toFixed(1)}%</Badge>
                   </div>
-                ))}
-              </div>
+                  <span className="font-mono text-sm font-bold text-emerald-400">@{item.odds?.toFixed(2)}</span>
+                </div>
+              ))}
             </div>
           </Card>
         )}
