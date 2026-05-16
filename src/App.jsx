@@ -192,28 +192,17 @@ export default function App() {
     const confidence = match.Calibration_Diagnostics?.confidence_index || 0;
     const confidenceMatch = !showHighConfidence || confidence >= 0.65;
 
-    const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
-    const hasData = match.Risk_Management_Context?.Tactical_Red_Flags?.MISSING_FOTMOB_DATA === false;
-    const ultraSafeMatch = !showUltraSafe || (confidence >= 0.65 && isFalseFav === false && tension <= 5 && hasData);
+    const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
+    const ultraSafeMatch = !showUltraSafe || investSignals.IS_ULTRA_SAFE;
 
     const trajH = match.Calibration_Diagnostics?.trajectory_home || 1;
     const trajA = match.Calibration_Diagnostics?.trajectory_away || 1;
     const isRegular = (1 - Math.abs(trajH - 1)) >= 0.99 && (1 - Math.abs(trajA - 1)) >= 0.99;
     const regularMatch = !showRegularity || isRegular;
 
-    const openness = match.Risk_Management_Context?.Tactical_Red_Flags?.match_openness_index || 0;
-    const safeButsMatch = !showSafeButs || (confidence >= 0.65 && openness >= 3.0 && hasData);
+    const safeButsMatch = !showSafeButs || investSignals.IS_SAFE_GOALS;
 
-    const homeNarrative = match.Risk_Management_Context?.Situational_Narrative?.Home_Team || {};
-    const awayNarrative = match.Risk_Management_Context?.Situational_Narrative?.Away_Team || {};
-    
-    const homeFotmob = match.Risk_Management_Context?.Tactical_Red_Flags?.fotmob_rating_home || 0;
-    const awayFotmob = match.Risk_Management_Context?.Tactical_Red_Flags?.fotmob_rating_away || 0;
-    const gap = match.Risk_Management_Context?.Tactical_Red_Flags?.team_rating_gap || 0;
-
-    const homeIsTopForm = homeNarrative.momentum === 'HOT' && trajH >= 0.98 && (homeNarrative.performance_analysis?.actual_league_position || 99) <= 6 && homeFotmob >= 6.8 && gap > 0;
-    const awayIsTopForm = awayNarrative.momentum === 'HOT' && trajA >= 0.98 && (awayNarrative.performance_analysis?.actual_league_position || 99) <= 6 && awayFotmob >= 6.8 && gap < 0;
-    const topFormMatch = !showTopForm || homeIsTopForm || awayIsTopForm;
+    const topFormMatch = !showTopForm || investSignals.IS_TOP_FORM_HOME || investSignals.IS_TOP_FORM_AWAY;
 
     return textMatch && dateMatch && favMatch && signalMatch && confidenceMatch && ultraSafeMatch && regularMatch && safeButsMatch && topFormMatch;
   }) || [];
@@ -243,7 +232,7 @@ export default function App() {
           </div>
           <div>
             <h1 className="font-bold text-sm text-slate-100 tracking-wide">ColdBetdrox Lab</h1>
-            <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase">Terminal v7.6.1</p>
+            <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase">Terminal v8.5.0</p>
           </div>
         </div>
 

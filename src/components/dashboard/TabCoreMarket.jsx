@@ -13,6 +13,7 @@ export default function TabCoreMarket({ match }) {
   const tactical = risk.Tactical_Red_Flags || {};
   const props = match.Prop_Bets || {};
   const scores = match.Top_3_Exact_Scores || {};
+  const teamGoals = match.Team_Goals_Markets || {};
 
   const is1X2Zero = probs.PROB_1 === 0 || probs.PROB_1 == null;
   const isGoalsZero = probs.PROB_O25 === 0 || probs.PROB_O25 == null;
@@ -53,35 +54,47 @@ export default function TabCoreMarket({ match }) {
         </Card>
 
         <Card title="Signaux Forts (>70%)" titleIcon={<TrendingUp size={16} />}>
-          <div className="flex flex-col gap-6 mt-2">
+          <div className="flex flex-col gap-4 mt-2">
             {match.Super_Signals?.O15_ELITE && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex gap-3 items-center shadow-sm">
-                <AlertCircle className="text-emerald-400 shrink-0" size={18} />
-                <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal O1.5 : Élite</span>
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
+                <AlertCircle className="text-emerald-400 shrink-0" size={16} />
+                <span className="text-[10px] font-bold text-emerald-400 tracking-widest uppercase">O1.5 : Élite</span>
+              </div>
+            )}
+            {match.Super_Signals?.U25_STERILE_DOMINATION && (
+              <div className="bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
+                <ShieldCheck className="text-amber-400 shrink-0" size={16} />
+                <span className="text-[10px] font-bold text-amber-400 tracking-widest uppercase">Domination Stérile (U2.5)</span>
+              </div>
+            )}
+            {match.Super_Signals?.FAV_O25_STORM && (
+              <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
+                <TrendingUp className="text-blue-400 shrink-0" size={16} />
+                <span className="text-[10px] font-bold text-blue-400 tracking-widest uppercase">Tempête de Buts Favori</span>
+              </div>
+            )}
+            {match.Super_Signals?.H_MINUS_25_ANNIHILATION && (
+              <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
+                <Activity className="text-rose-400 shrink-0" size={16} />
+                <span className="text-[10px] font-bold text-rose-400 tracking-widest uppercase">Annihilation H-2.5</span>
               </div>
             )}
             {match.Super_Signals?.O_CORNERS_ELITE && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex gap-3 items-center shadow-sm">
-                <AlertCircle className="text-emerald-400 shrink-0" size={18} />
-                <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Corners : Élite</span>
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
+                <AlertCircle className="text-emerald-400 shrink-0" size={16} />
+                <span className="text-[10px] font-bold text-emerald-400 tracking-widest uppercase">Corners : Élite</span>
               </div>
             )}
             {match.Super_Signals?.O_SHOTS_ELITE && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex gap-3 items-center shadow-sm">
-                <AlertCircle className="text-emerald-400 shrink-0" size={18} />
-                <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Tirs : Élite</span>
-              </div>
-            )}
-            {match.Super_Signals?.O_SOT_ELITE && (
-              <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex gap-3 items-center shadow-sm">
-                <AlertCircle className="text-emerald-400 shrink-0" size={18} />
-                <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Super Signal Cadrés : Élite</span>
+              <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
+                <AlertCircle className="text-emerald-400 shrink-0" size={16} />
+                <span className="text-[10px] font-bold text-emerald-400 tracking-widest uppercase">Tirs : Élite</span>
               </div>
             )}
 
-            {(!match.Super_Signals?.O15_ELITE && !match.Super_Signals?.O_CORNERS_ELITE && !match.Super_Signals?.O_SHOTS_ELITE && !match.Super_Signals?.O_SOT_ELITE) && (
-              <div className="text-center py-8 px-4 text-slate-500/70 text-xs font-bold uppercase tracking-widest border border-dashed border-slate-800 rounded-xl">
-                Aucun Super Signal Élite Actif
+            {Object.values(match.Super_Signals || {}).every(v => v === false) && (
+              <div className="text-center py-6 px-4 text-slate-500/70 text-[10px] font-bold uppercase tracking-widest border border-dashed border-slate-800 rounded-xl">
+                Aucun Super Signal Actif
               </div>
             )}
           </div>
@@ -90,7 +103,7 @@ export default function TabCoreMarket({ match }) {
 
       {/* Colonne 2: Marchés des Buts */}
       <div className="flex flex-col gap-6">
-        <Card title="Marchés des Buts & BTTS" titleIcon={<ShieldCheck size={16} />}>
+        <Card title="Buts & Signaux Alpha" titleIcon={<ShieldCheck size={16} />}>
           <div className="space-y-6 mt-2">
             {isGoalsZero ? (
               <div className="flex flex-col items-center justify-center p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-center gap-2">
@@ -104,7 +117,22 @@ export default function TabCoreMarket({ match }) {
                 <ProgressBar label="Over 2.5" value={probs.PROB_O25 || 0} colorClass={probs.PROB_O25 >= 0.55 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O25 || 0, odds.ODDS_O25)} />
                 <ProgressBar label="Under 2.5" value={probs.PROB_U25 || 0} colorClass={probs.PROB_U25 >= 0.55 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U25 || 0, odds.ODDS_U25)} />
                 <ProgressBar label="Under 3.5" value={probs.PROB_U35 || 0} colorClass={probs.PROB_U35 >= 0.75 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U35 || 0, odds.ODDS_U35)} />
-                <ProgressBar label="Les Deux Marquent (Oui)" value={probs.PROB_BTTS || 0} colorClass={probs.PROB_BTTS >= 0.60 ? "bg-indigo-500" : "bg-indigo-500/50"} displayValue={renderProbOdds(probs.PROB_BTTS || 0, odds.ODDS_BTTS)} />
+                <ProgressBar label="BTTS (Oui)" value={probs.PROB_BTTS || 0} colorClass={probs.PROB_BTTS >= 0.60 ? "bg-indigo-500" : "bg-indigo-500/50"} displayValue={renderProbOdds(probs.PROB_BTTS || 0, odds.ODDS_BTTS)} />
+                
+                {/* Alpha Signals Section */}
+                {(teamGoals.Favorite_Goals?.Alpha_Signals_Active?.length > 0 || teamGoals.Outsider_Goals?.Alpha_Signals_Active?.length > 0) && (
+                  <div className="pt-4 border-t border-slate-800 mt-2">
+                    <span className="text-[10px] uppercase text-slate-500 font-bold tracking-widest mb-3 block">Alpha Signals Actifs</span>
+                    <div className="flex flex-wrap gap-2">
+                      {teamGoals.Favorite_Goals?.Alpha_Signals_Active?.map(s => (
+                        <Badge key={s} variant="info" className="text-[9px] bg-sky-500/10 text-sky-400 border-sky-500/30 uppercase tracking-tighter">FAV: {s}</Badge>
+                      ))}
+                      {teamGoals.Outsider_Goals?.Alpha_Signals_Active?.map(s => (
+                        <Badge key={s} variant="warning" className="text-[9px] bg-amber-500/10 text-amber-400 border-amber-500/30 uppercase tracking-tighter">OUT: {s}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </div>
@@ -113,19 +141,19 @@ export default function TabCoreMarket({ match }) {
 
       {/* Colonne 3: Scénarios Précis */}
       <div className="flex flex-col gap-6">
-        <Card title="Scénarios Précis & Handicaps" titleIcon={<TrendingUp size={16} />}>
+        <Card title="Scénarios & Handicaps" titleIcon={<TrendingUp size={16} />}>
           <div className="flex flex-col gap-5 mt-1">
             
-            {/* Asian Handicaps */}
-            {match.Asian_Handicaps && (
+            {/* Standard Handicaps (v8.5) */}
+            {match.Standard_Handicaps && (
               <div className="mb-6">
                 <div className="text-xs uppercase text-slate-500 font-bold tracking-widest pb-2 mb-4 flex items-center justify-between border-b border-slate-800">
-                  <span>Handicaps Asiatiques</span>
-                  <Badge variant="info" className="text-[10px] px-2 py-0.5">Fav: {match.Asian_Handicaps.favorite}</Badge>
+                  <span>Handicaps Standard</span>
+                  <Badge variant="info" className="text-[10px] px-2 py-0.5">Fav: {match.Standard_Handicaps.favorite}</Badge>
                 </div>
                 <div className="overflow-x-auto pb-2 -mx-2 px-2 custom-scrollbar">
                   <div className="grid grid-cols-2 gap-3 min-w-[340px]">
-                    {Object.entries(match.Asian_Handicaps).filter(([k]) => k.startsWith('AH_')).map(([k, v]) => (
+                    {Object.entries(match.Standard_Handicaps).filter(([k]) => k.startsWith('H_')).map(([k, v]) => (
                       <div key={k} className="bg-slate-950 border border-slate-800 p-3 rounded-xl flex flex-col items-center text-center shadow-inner">
                         <span className="text-[10px] text-slate-400 uppercase tracking-widest mb-1.5">{k.replace('_', ' ')}</span>
                         <div className="flex items-center justify-between w-full px-2 mt-1 border-t border-slate-800/50 pt-2">

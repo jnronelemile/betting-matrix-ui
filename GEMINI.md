@@ -17,6 +17,7 @@ Ce projet est l'interface utilisateur (Dashboard) du moteur d'inférence **Titan
 ## Flux de Données
 - Le Dashboard charge `/data/index.json` pour connaître les fichiers de ligues disponibles.
 - Les détails d'un match sont récupérés via les fichiers dans `/data/matchups/`.
+- **Mapping des équipes** : Toujours utiliser `team_mapping.json` pour normaliser les noms d'équipes et assurer la correspondance avec le calendrier des matchs.
 - **Validation** : Toujours vérifier la structure de `selectedMatch` avant de rendre les composants dans `MatchDashboard`.
 
 ## Roadmap UI (V8.3)

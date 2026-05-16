@@ -7,7 +7,7 @@ import TabNarrative from './dashboard/TabNarrative';
 import TabTactical from './dashboard/TabTactical';
 import TabCalibration from './dashboard/TabCalibration';
 import TabRiskContext from './dashboard/TabRiskContext';
-import { Calculator, Activity, AlertTriangle } from 'lucide-react';
+import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target } from 'lucide-react';
 
 export function MatchDashboard({ match }) {
   const [activeTab, setActiveTab] = useState('core');
@@ -45,7 +45,8 @@ export function MatchDashboard({ match }) {
   ];
 
   const probs = match.True_Probabilities || {};
-  const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
+  const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
+  const isKillSwitch = investSignals.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
 
   // Use short names if available, otherwise cleanup the matchup string
   const displayMatchupShort = match.shortHome && match.shortAway 
@@ -65,6 +66,18 @@ export function MatchDashboard({ match }) {
             {match.Calibration_Diagnostics?.confidence_index !== undefined && (
               <Badge variant={match.Calibration_Diagnostics.confidence_index >= 0.5 ? 'success' : 'warning'} className="text-[10px] font-mono tracking-widest px-2 py-1">
                 CONFIANCE: {(match.Calibration_Diagnostics.confidence_index * 100).toFixed(1)}%
+              </Badge>
+            )}
+
+            {investSignals.IS_ULTRA_SAFE && (
+              <Badge variant="success" className="text-[10px] flex items-center gap-1.5 px-2 py-1 uppercase tracking-widest shadow-[0_0_10px_rgba(16,185,129,0.3)] border-emerald-500/50">
+                <ShieldCheck size={12} /> ULTRA SAFE
+              </Badge>
+            )}
+
+            {investSignals.IS_SAFE_GOALS && (
+              <Badge variant="info" className="text-[10px] flex items-center gap-1.5 px-2 py-1 uppercase tracking-widest border-sky-500/50">
+                <Target size={12} /> SAFE GOALS
               </Badge>
             )}
 
@@ -88,6 +101,11 @@ export function MatchDashboard({ match }) {
             }
             return <Badge key={idx} variant="info" className="text-[9px] opacity-80">{flag}</Badge>;
           })}
+          {match.Calibration_Diagnostics?.CONTRADICTION_CORNERS_FOULS && (
+            <Badge variant="warning" className="text-[9px] flex items-center gap-1 px-1.5 py-0.5 uppercase tracking-tighter">
+              <Zap size={10} /> CONTRADICTION CORNERS/FOULS
+            </Badge>
+          )}
         </div>
       </div>
 

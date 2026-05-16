@@ -53,14 +53,14 @@ export default function TabTactical({ match }) {
               </div>
             </div>
 
-            {match.Asian_Handicaps && (
+            {match.Standard_Handicaps && (
               <div className="pt-2 border-t border-slate-800">
                 <div className="text-[10px] uppercase text-slate-500 font-bold tracking-widest mb-3 flex items-center justify-between">
-                  Handicaps Asiatiques
-                  <Badge variant="info">Fav: {match.Asian_Handicaps.favorite}</Badge>
+                  Handicaps Standard
+                  <Badge variant="info">Fav: {match.Standard_Handicaps.favorite}</Badge>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {Object.entries(match.Asian_Handicaps).filter(([k]) => k.startsWith('AH_')).map(([k, v]) => (
+                  {Object.entries(match.Standard_Handicaps).filter(([k]) => k.startsWith('H_')).map(([k, v]) => (
                     <div key={k} className="bg-slate-900 border border-slate-800 p-2.5 rounded-lg flex flex-col items-center text-center shadow-inner">
                       <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">{k.replace('_', ' ')}</span>
                       <div className="flex items-center gap-2">

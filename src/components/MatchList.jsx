@@ -131,7 +131,8 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
             const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
             const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
             const probs = match.True_Probabilities || {};
-            const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
+            const isKillSwitch = match.Risk_Management_Context?.Investment_Signals?.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
+            const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
             
             return (
               <div 
@@ -160,6 +161,12 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                         <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/20 text-rose-400 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.3)]">
                           <AlertTriangle size={10} /> KILL-SWITCH
                         </Badge>
+                      )}
+                      {investSignals.IS_ULTRA_SAFE && (
+                        <Badge variant="success" className="text-[9px] px-1.5 py-0 shadow-[0_0_8px_rgba(16,185,129,0.2)]">ULTRA SAFE</Badge>
+                      )}
+                      {investSignals.IS_SAFE_GOALS && (
+                        <Badge variant="info" className="text-[9px] px-1.5 py-0">SAFE GOALS</Badge>
                       )}
                       {isFalseFav && !isKillSwitch && (
                         <Badge variant="danger" className="flex items-center gap-1">
@@ -228,7 +235,8 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                   const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
                   const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
                   const probs = match.True_Probabilities || {};
-                  const isKillSwitch = (probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null);
+                  const isKillSwitch = match.Risk_Management_Context?.Investment_Signals?.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
+                  const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
                   
                   return (
                     <div 
@@ -250,6 +258,12 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                               <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/20 text-rose-400 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.3)]">
                                 <AlertTriangle size={10} /> KILL-SWITCH
                               </Badge>
+                            )}
+                            {investSignals.IS_ULTRA_SAFE && (
+                              <Badge variant="success" className="text-[9px] px-1.5 py-0 shadow-[0_0_8px_rgba(16,185,129,0.2)]">ULTRA SAFE</Badge>
+                            )}
+                            {investSignals.IS_SAFE_GOALS && (
+                              <Badge variant="info" className="text-[9px] px-1.5 py-0">SAFE GOALS</Badge>
                             )}
                             {isFalseFav && !isKillSwitch && (
                               <Badge variant="danger" className="flex items-center gap-1">

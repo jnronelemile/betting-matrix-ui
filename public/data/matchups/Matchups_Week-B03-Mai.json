@@ -1,0 +1,97 @@
+{
+
+	"LaLiga": [
+		{ "home": "Sevilla", "away": "Real Madrid", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Atl. Madrid", "away": "Girona", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Athletic Club", "away": "Celta", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Rayo Vallecano", "away": "Villarreal", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Real Sociedad", "away": "Valencia", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Osasuna", "away": "Espanyol", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Levante", "away": "Mallorca", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Elche", "away": "Getafe", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Real Oviedo", "away": "Alavés", "date": "2026-05-17", "hours": "13:00" },
+		{ "home": "Barcelona", "away": "Real Betis", "date": "2026-05-17", "hours": "15:15" }
+
+	],
+
+	"PremierLeague": [
+		{ "home": "Aston Villa", "away": "Liverpool", "date": "2026-05-15", "hours": "15:00" },
+		{ "home": "Man Utd", "away": "Forest", "date": "2026-05-17", "hours": "07:30" },
+		{ "home": "Brentford", "away": "Crystal Palace", "date": "2026-05-17", "hours": "10:00" },
+		{ "home": "Leeds", "away": "Brighton", "date": "2026-05-17", "hours": "10:00" },
+		{ "home": "Everton", "away": "Sunderland", "date": "2026-05-17", "hours": "10:00" },
+		{ "home": "Wolves", "away": "Fulham", "date": "2026-05-17", "hours": "10:00" },
+		{ "home": "Newcastle", "away": "West Ham", "date": "2026-05-17", "hours": "12:30" },
+		{ "home": "Arsenal", "away": "Burnley", "date": "2026-05-18", "hours": "15:00" },
+		{ "home": "Bournemouth", "away": "Man City", "date": "2026-05-19", "hours": "14:30" },
+		{ "home": "Chelsea", "away": "Tottenham", "date": "2026-05-19", "hours": "15:15" }
+
+	],
+
+	"Bundesliga": [
+		{ "home": "Bayern", "away": "Köln", "date": "2026-05-16", "hours": "09:30" },
+		{ "home": "Bremen", "away": "Dortmund", "date": "2026-05-16", "hours": "09:30" },
+		{ "home": "Leverkusen", "away": "HSV", "date": "2026-05-16", "hours": "09:30" },
+		{ "home": "Freiburg", "away": "Leipzig", "date": "2026-05-16", "hours": "09:30" },
+		{ "home": "Frankfurt", "away": "Stuttgart", "date": "2026-05-16", "hours": "09:30" },
+		{ "home": "M'gladbach", "away": "Hoffenheim", "date": "2026-05-16", "hours": "09:30" },
+		{ "home": "Union Berlin", "away": "Augsburg", "date": "2026-05-16", "hours": "09:30" },
+		{ "home": "St. Pauli", "away": "Wolfsburg", "date": "2026-05-16", "hours": "09:30" },
+		{ "home": "Heidenheim", "away": "Mainz 05", "date": "2026-05-16", "hours": "09:30" }
+
+	],
+
+	"LigaPortugal": [
+		{ "home": "Porto", "away": "Santa Clara", "date": "2026-05-16", "hours": "10:30" },
+		{ "home": "Moreirense", "away": "AVS", "date": "2026-05-16", "hours": "10:30" },
+		{ "home": "Braga", "away": "Estrela Amadora", "date": "2026-05-16", "hours": "13:00" },
+		{ "home": "Nacional", "away": "Vitória", "date": "2026-05-16", "hours": "13:00" },
+		{ "home": "Casa Pia", "away": "Rio Ave", "date": "2026-05-16", "hours": "13:00" },
+		{ "home": "Arouca", "away": "Tondela", "date": "2026-05-16", "hours": "13:00" },
+		{ "home": "Estoril", "away": "Benfica", "date": "2026-05-16", "hours": "15:30" },
+		{ "home": "Sporting", "away": "Gil Vicente", "date": "2026-05-16", "hours": "15:30" },
+		{ "home": "Famalicão", "away": "Alverca", "date": "2026-05-16", "hours": "15:30" }
+
+	],
+
+	"SerieA": [
+		{ "home": "Genoa", "away": "Milan", "date": "2026-05-17", "hours": "06:30" },
+		{ "home": "Juventus", "away": "Fiorentina", "date": "2026-05-17", "hours": "06:30" },
+		{ "home": "Pisa", "away": "Napoli", "date": "2026-05-17", "hours": "06:30" },
+		{ "home": "Roma", "away": "Lazio", "date": "2026-05-17", "hours": "06:30" },
+		{ "home": "Como", "away": "Parma", "date": "2026-05-17", "hours": "06:30" },
+		{ "home": "Inter", "away": "Verona", "date": "2026-05-17", "hours": "09:00" },
+		{ "home": "Atalanta", "away": "Bologna", "date": "2026-05-17", "hours": "12:00" },
+		{ "home": "Cagliari", "away": "Torino", "date": "2026-05-17", "hours": "14:45" },
+		{ "home": "Sassuolo", "away": "Lecce", "date": "2026-05-17", "hours": "14:45" },
+		{ "home": "Udinese", "away": "Cremonese", "date": "2026-05-17", "hours": "14:45" }
+
+	],
+
+	"Ligue1": [
+		{ "home": "Paris", "away": "PSG", "date": "2026-05-17", "hours": "15:00" },
+		{ "home": "Marseille", "away": "Rennes", "date": "2026-05-17", "hours": "15:00" },
+		{ "home": "Lyon", "away": "Lens", "date": "2026-05-17", "hours": "15:00" },
+		{ "home": "Strasbourg", "away": "AS Monaco", "date": "2026-05-17", "hours": "15:00" },
+		{ "home": "Lille", "away": "Auxerre", "date": "2026-05-17", "hours": "15:00" },
+		{ "home": "Nice", "away": "Metz", "date": "2026-05-17", "hours": "15:00" },
+		{ "home": "Nantes", "away": "Toulouse", "date": "2026-05-17", "hours": "15:00" },
+		{ "home": "Brest", "away": "Angers", "date": "2026-05-17", "hours": "15:00" },
+		{ "home": "Lorient", "away": "Le Havre", "date": "2026-05-17", "hours": "15:00" }
+
+	],
+
+	"Eredivisie": [
+		{ "home": "PSV", "away": "Twente", "date": "2026-05-17", "hours": "08:30" },
+		{ "home": "Heerenveen", "away": "Ajax", "date": "2026-05-17", "hours": "08:30" },
+		{ "home": "Zwolle", "away": "Feyenoord", "date": "2026-05-17", "hours": "08:30" },
+		{ "home": "AZ", "away": "NAC Breda", "date": "2026-05-17", "hours": "08:30" },
+		{ "home": "NEC", "away": "GA Eagles", "date": "2026-05-17", "hours": "08:30" },
+		{ "home": "Utrecht", "away": "Fortuna", "date": "2026-05-17", "hours": "08:30" },
+		{ "home": "Sparta", "away": "Excelsior", "date": "2026-05-17", "hours": "08:30" },
+		{ "home": "Heracles", "away": "Groningen", "date": "2026-05-17", "hours": "08:30" },
+		{ "home": "Volendam", "away": "Telstar", "date": "2026-05-17", "hours": "08:30" }
+
+	]
+
+}

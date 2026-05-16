@@ -8,6 +8,7 @@ export default function TabRiskContext({ match }) {
   const narrative = risk.Situational_Narrative || {};
   const psychology = risk.Team_Psychology || {};
   const tactical = risk.Tactical_Red_Flags || {};
+  const investment = risk.Investment_Signals || {};
   
   const homePerf = narrative.Home_Team?.performance_analysis || {};
   const awayPerf = narrative.Away_Team?.performance_analysis || {};
@@ -43,6 +44,21 @@ export default function TabRiskContext({ match }) {
                 <span className="font-mono text-3xl font-bold text-slate-200">
                   {tactical.match_openness_index?.toFixed(2) || 'N/A'}
                 </span>
+              </div>
+            </div>
+
+            {/* Investment Signals Grid */}
+            <div className="space-y-3">
+              <h4 className="text-[10px] uppercase text-slate-500 font-bold tracking-widest px-1">Signaux d'Investissement (v8.5)</h4>
+              <div className="grid grid-cols-2 gap-2">
+                {Object.entries(investment).map(([key, value]) => (
+                  <div key={key} className={`flex justify-between items-center p-2 rounded border ${value ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-900/50 border-slate-800 opacity-60'}`}>
+                    <span className={`text-[8px] uppercase font-bold tracking-tighter ${value ? 'text-emerald-400' : 'text-slate-500'}`}>
+                      {key.replace('IS_', '').replace(/_/g, ' ')}
+                    </span>
+                    {value ? <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_5px_rgba(16,185,129,0.5)]"></div> : <div className="w-1.5 h-1.5 rounded-full bg-slate-700"></div>}
+                  </div>
+                ))}
               </div>
             </div>
 

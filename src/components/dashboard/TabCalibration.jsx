@@ -50,7 +50,7 @@ export default function TabCalibration({ match }) {
       
       {/* Colonne 1: Vue Globale */}
       <div className="flex flex-col gap-6">
-        <Card title="Diagnostics Moteur (V8.2)" titleIcon={<Calculator size={16} />}>
+        <Card title="Diagnostics Moteur (V8.5)" titleIcon={<Calculator size={16} />}>
           <div className="flex flex-col gap-5 mt-1">
             <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 text-center shadow-inner">
               <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-2 block">Indice de Confiance (Algorithm Confidence)</span>
@@ -118,6 +118,17 @@ export default function TabCalibration({ match }) {
 
         <Card title="Variables Croisées (Aide Décision)" titleIcon={<Activity size={16} />}>
           <div className="flex flex-col gap-4 mt-1">
+            {diag.CONTRADICTION_CORNERS_FOULS && (
+              <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg flex flex-col gap-1 shadow-sm">
+                <div className="flex items-center gap-2 text-rose-400">
+                   <Activity size={14} />
+                   <span className="text-[10px] uppercase font-bold tracking-widest">Contradiction Détectée</span>
+                </div>
+                <p className="text-[9px] text-rose-300/60 font-mono tracking-tight leading-relaxed">
+                  Divergence significative entre les projections de corners et de fautes.
+                </p>
+              </div>
+            )}
             <div className="flex justify-between items-center bg-slate-900 border border-slate-800 p-3 rounded-lg shadow-inner">
               <span className="text-[10px] uppercase tracking-widest text-slate-400">Indice d'Ouverture</span>
               <span className="font-mono text-sm font-bold text-slate-200">{tactical.match_openness_index?.toFixed(2) || 'N/A'}</span>
