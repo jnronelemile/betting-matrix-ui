@@ -425,6 +425,9 @@ export default function App() {
                         { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), color: 'amber' },
                         { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
                         { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
+                        { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), color: 'cyan' },
+                        { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), color: 'orange' },
+                        { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), color: 'pink' },
                       ].map(sig => (
                         <button
                           key={sig.id}
