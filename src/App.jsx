@@ -413,19 +413,19 @@ export default function App() {
             </div>
           </div>
 
-          {/* Sub-Header: Modern Date & Signal Filters - Compact Version */}
-          <div className="bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-2 flex flex-col gap-2">
+          {/* Sub-Header: Responsive Date & Signal Filters */}
+          <div className="bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-2 lg:py-3 flex flex-col gap-2 lg:gap-3">
             {/* Date Pills */}
-            <div className="flex overflow-x-auto no-scrollbar gap-1.5 px-4 lg:px-6 snap-x">
+            <div className="flex overflow-x-auto no-scrollbar gap-1.5 lg:gap-2 px-4 lg:px-6 snap-x">
               <button
                 onClick={() => setSelectedDate('ALL')}
-                className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
+                className={`px-3 lg:px-4 py-1 lg:py-1.5 rounded-lg lg:rounded-xl text-[10px] lg:text-[11px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
                   selectedDate === 'ALL'
                     ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
                     : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
-                Tout
+                Tout le calendrier
               </button>
               {availableDates.map(date => {
                 let displayDay = '???';
@@ -440,41 +440,42 @@ export default function App() {
                   <button
                     key={date}
                     onClick={() => setSelectedDate(date)}
-                    className={`flex flex-col items-center px-3 py-0.5 rounded-lg transition-all border min-w-[55px] snap-start ${
+                    className={`flex flex-col items-center px-3 lg:px-4 py-0.5 lg:py-1 rounded-lg lg:rounded-xl transition-all border min-w-[55px] lg:min-w-[65px] snap-start ${
                       selectedDate === date
                         ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
                         : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                     }`}
                   >
-                    <span className="text-[8px] uppercase font-bold tracking-tighter opacity-70 leading-tight">{displayDay}</span>
-                    <span className="text-[10px] font-mono font-bold leading-none">{displayNumber || date}</span>
+                    <span className="text-[8px] lg:text-[9px] uppercase font-bold tracking-tighter opacity-70 leading-tight">{displayDay}</span>
+                    <span className="text-[10px] lg:text-[11px] font-mono font-bold leading-none">{displayNumber || date}</span>
                   </button>
                 );
               })}
             </div>
 
             {/* Signal Toggles */}
-            <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 lg:px-6 snap-x pb-0.5">
+            <div className="flex gap-1.5 lg:gap-2 overflow-x-auto no-scrollbar px-4 lg:px-6 snap-x pb-0.5 lg:pb-1">
               {[
-                { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), color: 'emerald' },
+                { id: 'fav', label: 'FAVORIS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), color: 'emerald' },
                 { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), color: 'amber' },
-                { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
-                { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
-                { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), color: 'cyan' },
-                { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), color: 'orange' },
-                { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), color: 'pink' },
+                { id: 'conf', label: 'CONFIANCE', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
+                { id: 'safe', label: 'SAFE PICK', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
+                { id: 'reg', label: 'RÉGULARITÉ', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), color: 'cyan' },
+                { id: 'goals', label: 'SAFE BUTS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), color: 'orange' },
+                { id: 'top', label: 'TOP FORME', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), color: 'pink' },
               ].map(sig => (
                 <button
                   key={sig.id}
                   onClick={sig.toggle}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                  className={`flex items-center gap-1 lg:gap-1.5 px-2 lg:px-3 py-1 lg:py-1.5 rounded-md lg:rounded-lg text-[9px] lg:text-[10px] transition-all font-bold border shrink-0 snap-start ${
                     sig.active 
                       ? `bg-${sig.color}-500/10 border-${sig.color}-500/50 text-${sig.color}-600 dark:text-${sig.color}-400 shadow-sm` 
                       : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   {sig.icon}
-                  <span>{sig.label}</span>
+                  <span className="hidden sm:inline">{sig.label}</span>
+                  <span className="sm:hidden">{sig.label.split(' ')[0]}</span>
                 </button>
               ))}
             </div>
