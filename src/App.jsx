@@ -387,19 +387,19 @@ export default function App() {
             )}
           </div>
 
-          {/* Sub-Header: Modern Date & Signal Filters */}
-          <div className="bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-3 flex flex-col gap-3">
+          {/* Sub-Header: Modern Date & Signal Filters - Compact Version */}
+          <div className="bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-2 flex flex-col gap-2">
             {/* Date Pills */}
-            <div className="flex overflow-x-auto no-scrollbar gap-2 px-4 lg:px-6 snap-x">
+            <div className="flex overflow-x-auto no-scrollbar gap-1.5 px-4 lg:px-6 snap-x">
               <button
                 onClick={() => setSelectedDate('ALL')}
-                className={`px-6 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest whitespace-nowrap transition-all border snap-start ${
+                className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
                   selectedDate === 'ALL'
-                    ? 'bg-emerald-600 border-emerald-600 text-white shadow-md'
+                    ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
                     : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
-                Tout le calendrier
+                Tout
               </button>
               {availableDates.map(date => {
                 let displayDay = '???';
@@ -414,104 +414,43 @@ export default function App() {
                   <button
                     key={date}
                     onClick={() => setSelectedDate(date)}
-                    className={`flex flex-col items-center px-5 py-1.5 rounded-xl transition-all border min-w-[70px] snap-start ${
+                    className={`flex flex-col items-center px-3 py-0.5 rounded-lg transition-all border min-w-[55px] snap-start ${
                       selectedDate === date
-                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-md'
-                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700 shadow-sm'
+                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                     }`}
                   >
-                    <span className="text-[10px] uppercase font-bold tracking-tighter opacity-80">{displayDay}</span>
-                    <span className="text-[12px] font-mono font-bold leading-none">{displayNumber || date}</span>
+                    <span className="text-[8px] uppercase font-bold tracking-tighter opacity-70 leading-tight">{displayDay}</span>
+                    <span className="text-[10px] font-mono font-bold leading-none">{displayNumber || date}</span>
                   </button>
                 );
               })}
             </div>
 
             {/* Signal Toggles */}
-            <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 lg:px-6 snap-x pb-1">
-              <button
-                onClick={() => setShowTrueFavorites(!showTrueFavorites)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
-                  showTrueFavorites 
-                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
-                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
-                }`}
-              >
-                <ShieldCheck size={14} />
-                <span>FAVORIS</span>
-              </button>
-              
-              <button
-                onClick={() => setShowSuperSignals(!showSuperSignals)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
-                  showSuperSignals 
-                    ? 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
-                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
-                }`}
-              >
-                <Zap size={14} />
-                <span>ELITE</span>
-              </button>
-              
-              <button
-                onClick={() => setShowHighConfidence(!showHighConfidence)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
-                  showHighConfidence 
-                    ? 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
-                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
-                }`}
-              >
-                <Target size={14} />
-                <span>CONFIANCE</span>
-              </button>
-
-              <button
-                onClick={() => setShowUltraSafe(!showUltraSafe)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
-                  showUltraSafe 
-                    ? 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
-                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
-                }`}
-              >
-                <Lock size={14} />
-                <span>SAFE PICK</span>
-              </button>
-
-              <button
-                onClick={() => setShowRegularity(!showRegularity)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
-                  showRegularity 
-                    ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
-                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
-                }`}
-              >
-                <LineChart size={14} />
-                <span>RÉGULARITÉ</span>
-              </button>
-
-              <button
-                onClick={() => setShowSafeButs(!showSafeButs)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
-                  showSafeButs 
-                    ? 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
-                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
-                }`}
-              >
-                <Flame size={14} />
-                <span>SAFE BUTS</span>
-              </button>
-
-              <button
-                onClick={() => setShowTopForm(!showTopForm)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
-                  showTopForm 
-                    ? 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
-                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
-                }`}
-              >
-                <TrendingUp size={14} />
-                <span>TOP FORME</span>
-              </button>
+            <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 lg:px-6 snap-x pb-0.5">
+              {[
+                { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), color: 'emerald' },
+                { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), color: 'amber' },
+                { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
+                { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
+                { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), color: 'cyan' },
+                { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), color: 'orange' },
+                { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), color: 'pink' },
+              ].map(sig => (
+                <button
+                  key={sig.id}
+                  onClick={sig.toggle}
+                  className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                    sig.active 
+                      ? `bg-${sig.color}-500/10 border-${sig.color}-500/50 text-${sig.color}-600 dark:text-${sig.color}-400 shadow-sm` 
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  {sig.icon}
+                  <span>{sig.label}</span>
+                </button>
+              ))}
             </div>
           </div>
         </header>
