@@ -34,6 +34,30 @@ export default function App() {
   const [showSafeButs, setShowSafeButs] = useState(false);
   const [showTopForm, setShowTopForm] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = (e) => {
+      const currentScrollY = e.target.scrollTop;
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setHeaderVisible(false);
+      } else {
+        setHeaderVisible(true);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    const mainElement = document.querySelector('main');
+    if (mainElement) {
+      mainElement.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (mainElement) {
+        mainElement.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -308,83 +332,64 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-y-auto lg:overflow-hidden transition-colors duration-300">
         {/* Header */}
-        <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 z-20">
-          <div className="h-16 flex items-center justify-between px-4 lg:px-6">
-            {mobileSearchOpen ? (
-              <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
-                  <input 
-                    type="text" 
-                    autoFocus
-                    placeholder="Chercher une équipe..."
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full bg-white dark:bg-slate-950 border border-emerald-500/50 rounded-lg py-2 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
-                  />
-                </div>
-                <button 
-                  onClick={() => {
-                    setMobileSearchOpen(false);
-                    setSearchQuery('');
-                  }}
-                  className="p-2 text-slate-400 hover:text-rose-400 transition-colors"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center gap-4">
-                  <button 
-                    className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
-                    onClick={() => setSidebarOpen(!sidebarOpen)}
-                    title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
-                  >
-                    <Menu size={18} />
-                  </button>
-                  <button 
-                    className="hidden lg:flex text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
-                    onClick={() => setMatchListOpen(!matchListOpen)}
-                    title={matchListOpen ? "Masquer la liste des matchs" : "Afficher la liste des matchs"}
-                  >
-                    {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
-                  </button>
-                  <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
-                    <Activity size={14} className="text-emerald-600 dark:text-emerald-500" />
-                    <span className="hidden sm:inline">Engine <span className="text-emerald-600 dark:text-emerald-400 font-mono ml-1">ACTIVE</span></span>
+        <header className="sticky top-0 z-20 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-transform duration-300">
+          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${headerVisible ? 'h-16 opacity-100' : 'h-0 opacity-0'}`}>
+            <div className="h-16 flex items-center justify-between px-4 lg:px-6">
+              {mobileSearchOpen ? (
+...
+              ) : (
+                <>
+                  <div className="flex items-center gap-4">
+                    <button 
+                      className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                      onClick={() => setSidebarOpen(!sidebarOpen)}
+                      title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
+                    >
+                      <Menu size={18} />
+                    </button>
+                    <button 
+                      className="hidden lg:flex text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
+                      onClick={() => setMatchListOpen(!matchListOpen)}
+                      title={matchListOpen ? "Masquer la liste des matchs" : "Afficher la liste des matchs"}
+                    >
+                      {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+                    </button>
+                    <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
+                      <Activity size={14} className="text-emerald-600 dark:text-emerald-500" />
+                      <span className="hidden sm:inline">Engine <span className="text-emerald-600 dark:text-emerald-400 font-mono ml-1">ACTIVE</span></span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-3">
-                  <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={16} />
-                    <input 
-                      type="text" 
-                      placeholder="Filtrer..."
-                      value={searchQuery}
-                      onChange={e => setSearchQuery(e.target.value)}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono shadow-sm"
-                    />
+                  <div className="flex items-center gap-3">
+                    <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={16} />
+                      <input 
+                        type="text" 
+                        placeholder="Filtrer..."
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono shadow-sm"
+                      />
+                    </div>
+                    
+                    <button
+                      onClick={toggleTheme}
+                      className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                      title={theme === 'dark' ? "Passer en mode clair" : "Passer en mode sombre"}
+                    >
+                      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                    </button>
+                    
+                    <button 
+                      className="md:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2"
+                      onClick={() => setMobileSearchOpen(true)}
+                    >
+                      <Search size={20} />
+                    </button>
                   </div>
-                  
-                  <button
-                    onClick={toggleTheme}
-                    className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
-                    title={theme === 'dark' ? "Passer en mode clair" : "Passer en mode sombre"}
-                  >
-                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                  </button>
-                  
-                  <button 
-                    className="md:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2"
-                    onClick={() => setMobileSearchOpen(true)}
-                  >
-                    <Search size={20} />
-                  </button>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
 
           {/* Sub-Header: Modern Date & Signal Filters - Compact Version */}
@@ -464,14 +469,14 @@ export default function App() {
             ${matchListOpen ? 'w-full lg:w-80 opacity-100' : 'w-full lg:w-0 lg:border-r-0 lg:opacity-0'}
           `}>
             <div className="w-full lg:w-80 flex flex-col h-full min-h-[500px] lg:min-h-0">
-              <div className="p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/30 flex justify-between items-center shrink-0">
+              <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/30 flex justify-between items-center shrink-0">
               <div>
-                <h2 className="font-bold text-slate-900 dark:text-slate-200 text-sm tracking-wide">{selectedLeague.name}</h2>
-                <p className="text-[10px] text-slate-500 font-mono mt-1 tracking-widest">
+                <h2 className="font-bold text-slate-900 dark:text-slate-200 text-xs tracking-tight">{selectedLeague.name}</h2>
+                <p className="text-[9px] text-slate-500 font-mono tracking-tighter">
                   {data?.matches?.length || 0} MATCHS TROUVÉS
                 </p>
               </div>
-              {data && <div className="text-[10px] uppercase font-mono tracking-widest text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20 shadow-inner">Synchronisé</div>}
+              {data && <div className="text-[9px] uppercase font-mono tracking-tighter text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">Synchronisé</div>}
             </div>
             
             <div className="flex-1 overflow-y-auto p-4 custom-scrollbar relative">
