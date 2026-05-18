@@ -188,6 +188,26 @@ export default function App() {
     fetchData();
   }, [selectedLeague]);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      setSelectedMatch(null);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleSelectMatch = (match) => {
+    setSelectedMatch(match);
+    setSidebarOpen(false);
+    window.history.pushState({ matchSelected: true }, '');
+  };
+
+  const handleCloseMatch = () => {
+    if (selectedMatch) {
+      window.history.back();
+    }
+  };
+
   const availableDates = Array.from(new Set(data?.matches?.map(m => m.date || 'Date Inconnue') || [])).sort((a, b) => {
     if (a === 'Date Inconnue') return 1;
     if (b === 'Date Inconnue') return -1;
@@ -512,10 +532,7 @@ export default function App() {
                 <MatchList 
                   matches={filteredMatches} 
                   selectedMatch={selectedMatch}
-                  onSelectMatch={(match) => {
-                    setSelectedMatch(match);
-                    setSidebarOpen(false); // Rule: Leagues menu disappears automatically when match is selected
-                  }}
+                  onSelectMatch={handleSelectMatch}
                 />
               )}
             </div>
@@ -529,7 +546,7 @@ export default function App() {
           `}>
             {selectedMatch ? (
               <div className="p-4 lg:p-8 pb-24 lg:pb-8 w-full">
-                <MatchDashboard match={selectedMatch} onClose={() => setSelectedMatch(null)} />
+                <MatchDashboard match={selectedMatch} onClose={handleCloseMatch} />
               </div>
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-5 p-8 h-full">
