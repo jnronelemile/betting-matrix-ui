@@ -15,6 +15,7 @@ export function MatchDashboard({ match }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef(null);
   const tabsContainerRef = useRef(null);
+  const mobileTabsContainerRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
   
   // Touch refs for swipe
@@ -65,6 +66,7 @@ export function MatchDashboard({ match }) {
   };
 
   useEffect(() => {
+    // 1. Logic for Desktop (Liquid pill and centering)
     if (tabsContainerRef.current) {
       const activeTabElement = tabsContainerRef.current.querySelector(`[data-tab-id="${activeTab}"]`);
       if (activeTabElement) {
@@ -73,6 +75,22 @@ export function MatchDashboard({ match }) {
           width: activeTabElement.offsetWidth,
           opacity: 1
         });
+
+        const container = tabsContainerRef.current.parentElement;
+        if (container) {
+          const scrollLeft = activeTabElement.offsetLeft - (container.offsetWidth / 2) + (activeTabElement.offsetWidth / 2);
+          container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        }
+      }
+    }
+
+    // 2. Logic for Mobile (Only centering)
+    if (mobileTabsContainerRef.current) {
+      const activeTabElement = mobileTabsContainerRef.current.querySelector(`[data-tab-id="${activeTab}"]`);
+      if (activeTabElement) {
+        const container = mobileTabsContainerRef.current;
+        const scrollLeft = activeTabElement.offsetLeft - (container.offsetWidth / 2) + (activeTabElement.offsetWidth / 2);
+        container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
       }
     }
   }, [activeTab]);
@@ -170,10 +188,14 @@ export function MatchDashboard({ match }) {
 
         {/* Mobile Tab Select */}
         <div className="block md:hidden pb-3 pt-2">
-          <div className="flex gap-1 overflow-x-auto no-scrollbar pb-1 px-1">
+          <div 
+            ref={mobileTabsContainerRef}
+            className="flex gap-1 overflow-x-auto no-scrollbar pb-1 px-1"
+          >
             {TABS.map(tab => (
               <button
                 key={tab.id}
+                data-tab-id={tab.id}
                 onClick={() => {
                   const newIdx = TABS.findIndex(t => t.id === tab.id);
                   const currentIdx = TABS.findIndex(t => t.id === activeTab);
@@ -246,6 +268,12 @@ export function MatchDashboard({ match }) {
           {activeTab === 'narrative' && <TabNarrative match={match} />}
           {activeTab === 'tactical' && <TabTactical match={match} />}
           {activeTab === 'calibration' && <TabCalibration match={match} />}
+        </div>
+      </div>
+    </div>
+  );
+}
+bration' && <TabCalibration match={match} />}
         </div>
       </div>
     </div>
