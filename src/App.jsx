@@ -308,194 +308,212 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-y-auto lg:overflow-hidden transition-colors duration-300">
         {/* Header */}
-        <header className="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-4 lg:px-6 sticky top-0 z-20">
-          {mobileSearchOpen ? (
-            <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
-                <input 
-                  type="text" 
-                  autoFocus
-                  placeholder="Chercher une équipe..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-950 border border-emerald-500/50 rounded-lg py-2 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
-                />
-              </div>
-              <button 
-                onClick={() => {
-                  setMobileSearchOpen(false);
-                  setSearchQuery('');
-                }}
-                className="p-2 text-slate-400 hover:text-rose-400 transition-colors"
-              >
-                <X size={20} />
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center gap-4">
-                <button 
-                  className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
-                  onClick={() => setSidebarOpen(!sidebarOpen)}
-                  title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
-                >
-                  <Menu size={18} />
-                </button>
-                <button 
-                  className="hidden lg:flex text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
-                  onClick={() => setMatchListOpen(!matchListOpen)}
-                  title={matchListOpen ? "Masquer la liste des matchs" : "Afficher la liste des matchs"}
-                >
-                  {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
-                </button>
-                <div className="hidden lg:flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <Activity size={14} className="text-emerald-600 dark:text-emerald-500" />
-                  <span>Engine <span className="text-emerald-600 dark:text-emerald-400 font-mono ml-1">ACTIVE</span></span>
-                </div>
-              </div>
-
-              <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3 ml-2 sm:ml-4 min-w-0">
-                <button
-                  onClick={toggleTheme}
-                  className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
-                  title={theme === 'dark' ? "Passer en mode clair" : "Passer en mode sombre"}
-                >
-                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                </button>
-                
-                <button 
-                  className="md:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2"
-                  onClick={() => setMobileSearchOpen(true)}
-                >
-                  <Search size={20} />
-                </button>
-                <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={16} />
+        <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 z-20">
+          <div className="h-16 flex items-center justify-between px-4 lg:px-6">
+            {mobileSearchOpen ? (
+              <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
                   <input 
                     type="text" 
-                    placeholder="Filtrer..."
+                    autoFocus
+                    placeholder="Chercher une équipe..."
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono shadow-sm"
+                    className="w-full bg-white dark:bg-slate-950 border border-emerald-500/50 rounded-lg py-2 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
                   />
                 </div>
-                <select 
-                  value={selectedDate}
-                  onChange={e => setSelectedDate(e.target.value)}
-                  className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none shrink-0 cursor-pointer shadow-sm"
+                <button 
+                  onClick={() => {
+                    setMobileSearchOpen(false);
+                    setSearchQuery('');
+                  }}
+                  className="p-2 text-slate-400 hover:text-rose-400 transition-colors"
                 >
-                  <option value="ALL">Toutes les dates</option>
-                  {availableDates.map(date => {
-                    let displayDate = date;
-                    if (date !== 'Date Inconnue') {
-                      const d = new Date(`${date}T12:00:00`);
-                      displayDate = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
-                      displayDate = displayDate.charAt(0).toUpperCase() + displayDate.slice(1);
-                    }
-                    return (
-                      <option key={date} value={date}>
-                        {displayDate}
-                      </option>
-                    );
-                  })}
-                </select>
-                
-                <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-1 min-w-0 custom-scrollbar snap-x">
-                  <button
-                    onClick={() => setShowTrueFavorites(!showTrueFavorites)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                      showTrueFavorites 
-                        ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
-                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
-                    }`}
-                    title="Vrais Favoris"
+                  <X size={20} />
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center gap-4">
+                  <button 
+                    className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                    onClick={() => setSidebarOpen(!sidebarOpen)}
+                    title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
                   >
-                    <ShieldCheck size={14} />
-                    <span className="hidden xl:inline">Favoris</span>
+                    <Menu size={18} />
                   </button>
+                  <button 
+                    className="hidden lg:flex text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
+                    onClick={() => setMatchListOpen(!matchListOpen)}
+                    title={matchListOpen ? "Masquer la liste des matchs" : "Afficher la liste des matchs"}
+                  >
+                    {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+                  </button>
+                  <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
+                    <Activity size={14} className="text-emerald-600 dark:text-emerald-500" />
+                    <span className="hidden sm:inline">Engine <span className="text-emerald-600 dark:text-emerald-400 font-mono ml-1">ACTIVE</span></span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={16} />
+                    <input 
+                      type="text" 
+                      placeholder="Filtrer..."
+                      value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono shadow-sm"
+                    />
+                  </div>
                   
                   <button
-                    onClick={() => setShowSuperSignals(!showSuperSignals)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                      showSuperSignals 
-                        ? 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
-                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
-                    }`}
-                    title="Super Signaux (Elite)"
+                    onClick={toggleTheme}
+                    className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                    title={theme === 'dark' ? "Passer en mode clair" : "Passer en mode sombre"}
                   >
-                    <Zap size={14} />
-                    <span className="hidden xl:inline">Elite</span>
+                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                   </button>
                   
-                  <button
-                    onClick={() => setShowHighConfidence(!showHighConfidence)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                      showHighConfidence 
-                        ? 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
-                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
-                    }`}
-                    title="Haute Confiance (>65%)"
+                  <button 
+                    className="md:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2"
+                    onClick={() => setMobileSearchOpen(true)}
                   >
-                    <Target size={14} />
-                    <span className="hidden xl:inline">Confiance</span>
-                  </button>
-
-                  <button
-                    onClick={() => setShowUltraSafe(!showUltraSafe)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                      showUltraSafe 
-                        ? 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
-                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
-                    }`}
-                    title="Safe Pick 95% (Confiance > 65% + Vrai Favori + Tension Basse)"
-                  >
-                    <Lock size={14} />
-                    <span className="hidden xl:inline">Safe Pick</span>
-                  </button>
-
-                  <button
-                    onClick={() => setShowRegularity(!showRegularity)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                      showRegularity 
-                        ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
-                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
-                    }`}
-                    title="Haute Régularité (Trajectoire > 99% pour les deux équipes)"
-                  >
-                    <LineChart size={14} />
-                    <span className="hidden xl:inline">Régularité</span>
-                  </button>
-
-                  <button
-                    onClick={() => setShowSafeButs(!showSafeButs)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                      showSafeButs 
-                        ? 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
-                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
-                    }`}
-                    title="Safe Buts (Confiance > 65% + Openness > 3.0)"
-                  >
-                    <Flame size={14} />
-                    <span className="hidden xl:inline">Safe Buts</span>
-                  </button>
-
-                  <button
-                    onClick={() => setShowTopForm(!showTopForm)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
-                      showTopForm 
-                        ? 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
-                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
-                    }`}
-                    title="Top Forme (Elite Top 6 + HOT + Trajectoire > 0.98 + FotMob > 6.8 + Avantage Gap)"
-                  >
-                    <TrendingUp size={14} />
-                    <span className="hidden xl:inline">Top Forme</span>
+                    <Search size={20} />
                   </button>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
+
+          {/* Sub-Header: Modern Date & Signal Filters */}
+          <div className="bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-3 flex flex-col gap-3">
+            {/* Date Pills */}
+            <div className="flex overflow-x-auto no-scrollbar gap-2 px-4 lg:px-6 snap-x">
+              <button
+                onClick={() => setSelectedDate('ALL')}
+                className={`px-6 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest whitespace-nowrap transition-all border snap-start ${
+                  selectedDate === 'ALL'
+                    ? 'bg-emerald-600 border-emerald-600 text-white shadow-md'
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                Tout le calendrier
+              </button>
+              {availableDates.map(date => {
+                let displayDay = '???';
+                let displayNumber = '';
+                if (date !== 'Date Inconnue') {
+                  const d = new Date(`${date}T12:00:00`);
+                  displayDay = d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '');
+                  displayNumber = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+                }
+                
+                return (
+                  <button
+                    key={date}
+                    onClick={() => setSelectedDate(date)}
+                    className={`flex flex-col items-center px-5 py-1.5 rounded-xl transition-all border min-w-[70px] snap-start ${
+                      selectedDate === date
+                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-md'
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700 shadow-sm'
+                    }`}
+                  >
+                    <span className="text-[10px] uppercase font-bold tracking-tighter opacity-80">{displayDay}</span>
+                    <span className="text-[12px] font-mono font-bold leading-none">{displayNumber || date}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Signal Toggles */}
+            <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 lg:px-6 snap-x pb-1">
+              <button
+                onClick={() => setShowTrueFavorites(!showTrueFavorites)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
+                  showTrueFavorites 
+                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
+                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
+                }`}
+              >
+                <ShieldCheck size={14} />
+                <span>FAVORIS</span>
+              </button>
+              
+              <button
+                onClick={() => setShowSuperSignals(!showSuperSignals)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
+                  showSuperSignals 
+                    ? 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
+                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
+                }`}
+              >
+                <Zap size={14} />
+                <span>ELITE</span>
+              </button>
+              
+              <button
+                onClick={() => setShowHighConfidence(!showHighConfidence)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
+                  showHighConfidence 
+                    ? 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
+                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
+                }`}
+              >
+                <Target size={14} />
+                <span>CONFIANCE</span>
+              </button>
+
+              <button
+                onClick={() => setShowUltraSafe(!showUltraSafe)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
+                  showUltraSafe 
+                    ? 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
+                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
+                }`}
+              >
+                <Lock size={14} />
+                <span>SAFE PICK</span>
+              </button>
+
+              <button
+                onClick={() => setShowRegularity(!showRegularity)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
+                  showRegularity 
+                    ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
+                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
+                }`}
+              >
+                <LineChart size={14} />
+                <span>RÉGULARITÉ</span>
+              </button>
+
+              <button
+                onClick={() => setShowSafeButs(!showSafeButs)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
+                  showSafeButs 
+                    ? 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
+                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
+                }`}
+              >
+                <Flame size={14} />
+                <span>SAFE BUTS</span>
+              </button>
+
+              <button
+                onClick={() => setShowTopForm(!showTopForm)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] transition-all font-mono border shrink-0 snap-start ${
+                  showTopForm 
+                    ? 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
+                    : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm'
+                }`}
+              >
+                <TrendingUp size={14} />
+                <span>TOP FORME</span>
+              </button>
+            </div>
+          </div>
         </header>
 
         {/* Content Area */}
