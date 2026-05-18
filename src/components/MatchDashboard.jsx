@@ -14,6 +14,8 @@ export function MatchDashboard({ match }) {
   const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
   const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef(null);
+  const tabsContainerRef = useRef(null);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
   
   // Touch refs for swipe
   const touchStartX = useRef(0);
@@ -63,23 +65,17 @@ export function MatchDashboard({ match }) {
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsScrolled(!entry.isIntersecting);
-      },
-      { threshold: 0, rootMargin: '-64px 0px 0px 0px' }
-    );
-
-    if (headerRef.current) {
-      observer.observe(headerRef.current);
-    }
-
-    return () => {
-      if (headerRef.current) {
-        observer.unobserve(headerRef.current);
+    if (tabsContainerRef.current) {
+      const activeTabElement = tabsContainerRef.current.querySelector(`[data-tab-id="${activeTab}"]`);
+      if (activeTabElement) {
+        setIndicatorStyle({
+          left: activeTabElement.offsetLeft,
+          width: activeTabElement.offsetWidth,
+          opacity: 1
+        });
       }
-    };
-  }, [match]);
+    }
+  }, [activeTab]);
 
   if (!match) return null;
 
@@ -200,10 +196,24 @@ export function MatchDashboard({ match }) {
 
         {/* Desktop Tab Navigation */}
         <div className="hidden md:flex gap-2 overflow-x-auto no-scrollbar pb-3 pt-2">
-          <div className="flex bg-slate-100 dark:bg-slate-900/50 p-1.5 rounded-full border border-slate-200 dark:border-slate-800 shadow-inner">
+          <div 
+            ref={tabsContainerRef}
+            className="flex relative bg-slate-100 dark:bg-slate-900/50 p-1 rounded-full border border-slate-200 dark:border-slate-800 shadow-inner"
+          >
+            {/* Sliding Indicator */}
+            <div 
+              className="absolute h-[calc(100%-8px)] top-1 bg-white dark:bg-slate-800 rounded-full shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={{ 
+                left: `${indicatorStyle.left}px`, 
+                width: `${indicatorStyle.width}px`,
+                opacity: indicatorStyle.opacity
+              }}
+            />
+
             {TABS.map((tab) => (
               <button
                 key={tab.id}
+                data-tab-id={tab.id}
                 onClick={() => {
                   const newIdx = TABS.findIndex(t => t.id === tab.id);
                   const currentIdx = TABS.findIndex(t => t.id === activeTab);
@@ -211,9 +221,9 @@ export function MatchDashboard({ match }) {
                   setActiveTab(tab.id);
                 }}
                 className={`
-                  flex items-center gap-2 px-6 py-2.5 rounded-full font-bold uppercase tracking-widest text-[11px] transition-all duration-300
+                  relative z-10 flex items-center gap-2 px-6 py-2 rounded-full font-bold uppercase tracking-widest text-[11px] transition-colors duration-500
                   ${activeTab === tab.id 
-                    ? 'bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50 scale-[1.02]' 
+                    ? 'text-emerald-600 dark:text-emerald-400' 
                     : 'text-slate-500 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}
                 `}
               >
