@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp } from 'lucide-react';
+import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
 import teamMapping from '../team_mapping.json';
@@ -208,7 +208,7 @@ export default function App() {
   }) || [];
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-950 text-slate-200">
+    <div className="flex h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
@@ -220,18 +220,18 @@ export default function App() {
       {/* Sidebar (Leagues Menu) */}
       <aside className={`
         fixed lg:static inset-y-0 left-0 z-40
-        bg-slate-900 border-slate-800 flex flex-col
+        bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 flex flex-col
         transition-all duration-300 ease-in-out shadow-2xl lg:shadow-none
         ${sidebarOpen 
           ? 'translate-x-0 w-52 border-r opacity-100' 
           : '-translate-x-full lg:translate-x-0 w-52 lg:w-0 border-r lg:border-r-0 opacity-100 lg:opacity-0 lg:overflow-hidden'}
       `}>
-        <div className="p-5 flex items-center gap-3 border-b border-slate-800 bg-slate-900/50">
+        <div className="p-5 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
           <div className="bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20 shadow-inner">
-            <Terminal className="text-emerald-400" size={20} />
+            <Terminal className="text-emerald-600 dark:text-emerald-400" size={20} />
           </div>
           <div>
-            <h1 className="font-bold text-sm text-slate-100 tracking-wide">ColdBetdrox Lab</h1>
+            <h1 className="font-bold text-sm text-slate-900 dark:text-slate-100 tracking-wide">ColdBetdrox Lab</h1>
             <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase">Terminal v8.5.0</p>
           </div>
         </div>
@@ -252,8 +252,8 @@ export default function App() {
                 className={`
                   flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-left
                   ${selectedLeague.id === league.id 
-                    ? 'bg-slate-800 text-emerald-400 font-medium shadow-sm ring-1 ring-slate-700/50' 
-                    : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}
+                    ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-medium shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50' 
+                    : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200'}
                 `}
               >
                 <span className="text-lg">{league.flag}</span>
@@ -263,7 +263,7 @@ export default function App() {
           </nav>
         </div>
         
-        <div className="p-4 border-t border-slate-800 flex flex-col gap-1">
+        <div className="p-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-1">
           <div className="flex items-center gap-2 text-[10px] text-slate-500 font-mono">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
             SYSTÈME EN LIGNE
@@ -272,9 +272,9 @@ export default function App() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 bg-slate-950 overflow-y-auto lg:overflow-hidden">
+      <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-y-auto lg:overflow-hidden transition-colors duration-300">
         {/* Header */}
-        <header className="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-4 lg:px-6 sticky top-0 z-20">
+        <header className="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-4 lg:px-6 sticky top-0 z-20">
           {mobileSearchOpen ? (
             <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200">
               <div className="relative flex-1">
@@ -285,7 +285,7 @@ export default function App() {
                   placeholder="Chercher une équipe..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-950 border border-emerald-500/50 rounded-lg py-2 pl-9 pr-3 text-sm text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
+                  className="w-full bg-white dark:bg-slate-950 border border-emerald-500/50 rounded-lg py-2 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
                 />
               </div>
               <button 
@@ -302,46 +302,54 @@ export default function App() {
             <>
               <div className="flex items-center gap-4">
                 <button 
-                  className="text-slate-400 hover:text-slate-200 transition-colors bg-slate-800 p-2 rounded-lg border border-slate-700"
+                  className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
                   onClick={() => setSidebarOpen(!sidebarOpen)}
                   title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
                 >
                   <Menu size={18} />
                 </button>
                 <button 
-                  className="hidden lg:flex text-slate-400 hover:text-slate-200 transition-colors bg-slate-900 p-2 rounded-lg border border-slate-800"
+                  className="hidden lg:flex text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
                   onClick={() => setMatchListOpen(!matchListOpen)}
                   title={matchListOpen ? "Masquer la liste des matchs" : "Afficher la liste des matchs"}
                 >
                   {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
                 </button>
-                <div className="hidden lg:flex items-center gap-2 text-xs text-slate-400 font-medium uppercase tracking-widest bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-                  <Activity size={14} className="text-emerald-500" />
-                  <span>Engine <span className="text-emerald-400 font-mono ml-1">ACTIVE</span></span>
+                <div className="hidden lg:flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <Activity size={14} className="text-emerald-600 dark:text-emerald-500" />
+                  <span>Engine <span className="text-emerald-600 dark:text-emerald-400 font-mono ml-1">ACTIVE</span></span>
                 </div>
               </div>
 
               <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3 ml-2 sm:ml-4 min-w-0">
+                <button
+                  onClick={toggleTheme}
+                  className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                  title={theme === 'dark' ? "Passer en mode clair" : "Passer en mode sombre"}
+                >
+                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                </button>
+                
                 <button 
-                  className="md:hidden text-slate-400 hover:text-emerald-400 transition-colors p-2"
+                  className="md:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2"
                   onClick={() => setMobileSearchOpen(true)}
                 >
                   <Search size={20} />
                 </button>
                 <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-500 transition-colors" size={16} />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={16} />
                   <input 
                     type="text" 
                     placeholder="Filtrer..."
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono shadow-sm"
                   />
                 </div>
                 <select 
                   value={selectedDate}
                   onChange={e => setSelectedDate(e.target.value)}
-                  className="bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-2 sm:px-3 text-xs sm:text-sm text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none shrink-0 cursor-pointer"
+                  className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono appearance-none shrink-0 cursor-pointer shadow-sm"
                 >
                   <option value="ALL">Toutes les dates</option>
                   {availableDates.map(date => {
@@ -364,8 +372,8 @@ export default function App() {
                     onClick={() => setShowTrueFavorites(!showTrueFavorites)}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                       showTrueFavorites 
-                        ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
-                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                        ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]' 
+                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
                     title="Vrais Favoris"
                   >
@@ -377,8 +385,8 @@ export default function App() {
                     onClick={() => setShowSuperSignals(!showSuperSignals)}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                       showSuperSignals 
-                        ? 'bg-amber-500/10 border-amber-500/50 text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
-                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                        ? 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]' 
+                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
                     title="Super Signaux (Elite)"
                   >
@@ -390,8 +398,8 @@ export default function App() {
                     onClick={() => setShowHighConfidence(!showHighConfidence)}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                       showHighConfidence 
-                        ? 'bg-blue-500/10 border-blue-500/50 text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
-                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                        ? 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
+                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
                     title="Haute Confiance (>65%)"
                   >
@@ -403,8 +411,8 @@ export default function App() {
                     onClick={() => setShowUltraSafe(!showUltraSafe)}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                       showUltraSafe 
-                        ? 'bg-purple-500/10 border-purple-500/50 text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
-                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                        ? 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]' 
+                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
                     title="Safe Pick 95% (Confiance > 65% + Vrai Favori + Tension Basse)"
                   >
@@ -416,8 +424,8 @@ export default function App() {
                     onClick={() => setShowRegularity(!showRegularity)}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                       showRegularity 
-                        ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
-                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                        ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
+                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
                     title="Haute Régularité (Trajectoire > 99% pour les deux équipes)"
                   >
@@ -429,8 +437,8 @@ export default function App() {
                     onClick={() => setShowSafeButs(!showSafeButs)}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                       showSafeButs 
-                        ? 'bg-orange-500/10 border-orange-500/50 text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
-                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                        ? 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.2)]' 
+                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
                     title="Safe Buts (Confiance > 65% + Openness > 3.0)"
                   >
@@ -442,8 +450,8 @@ export default function App() {
                     onClick={() => setShowTopForm(!showTopForm)}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all font-mono border shrink-0 snap-start ${
                       showTopForm 
-                        ? 'bg-pink-500/10 border-pink-500/50 text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
-                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                        ? 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)]' 
+                        : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900'
                     }`}
                     title="Top Forme (Elite Top 6 + HOT + Trajectoire > 0.98 + FotMob > 6.8 + Avantage Gap)"
                   >
@@ -460,29 +468,29 @@ export default function App() {
         <div className="flex-1 flex flex-col lg:flex-row overflow-visible lg:overflow-hidden">
           {/* Match List Area */}
           <div className={`
-            border-r border-slate-800 flex-col bg-slate-950/50 transition-all duration-300 ease-in-out overflow-hidden shrink-0
+            border-r border-slate-200 dark:border-slate-800 flex-col bg-white/50 dark:bg-slate-950/50 transition-all duration-300 ease-in-out overflow-hidden shrink-0
             ${selectedMatch ? 'hidden lg:flex' : 'flex'}
             ${matchListOpen ? 'w-full lg:w-80 opacity-100' : 'w-full lg:w-0 lg:border-r-0 lg:opacity-0'}
           `}>
             <div className="w-full lg:w-80 flex flex-col h-full min-h-[500px] lg:min-h-0">
-              <div className="p-5 border-b border-slate-800 bg-slate-900/30 flex justify-between items-center shrink-0">
+              <div className="p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/30 flex justify-between items-center shrink-0">
               <div>
-                <h2 className="font-bold text-slate-200 text-sm tracking-wide">{selectedLeague.name}</h2>
+                <h2 className="font-bold text-slate-900 dark:text-slate-200 text-sm tracking-wide">{selectedLeague.name}</h2>
                 <p className="text-[10px] text-slate-500 font-mono mt-1 tracking-widest">
                   {data?.matches?.length || 0} MATCHS TROUVÉS
                 </p>
               </div>
-              {data && <div className="text-[10px] uppercase font-mono tracking-widest text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20 shadow-inner">Synchronisé</div>}
+              {data && <div className="text-[10px] uppercase font-mono tracking-widest text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20 shadow-inner">Synchronisé</div>}
             </div>
             
             <div className="flex-1 overflow-y-auto p-4 custom-scrollbar relative">
               {loading ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-slate-500 bg-slate-950/50 backdrop-blur-sm z-10">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-slate-500 bg-white/50 dark:bg-slate-950/50 backdrop-blur-sm z-10">
                   <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
                   <span className="text-[10px] uppercase tracking-widest font-mono">Chargement de la Matrice...</span>
                 </div>
               ) : error ? (
-                <div className="p-4 border border-rose-500/30 bg-rose-500/10 rounded-xl text-rose-400 text-sm flex flex-col gap-2 shadow-inner">
+                <div className="p-4 border border-rose-500/30 bg-rose-500/10 rounded-xl text-rose-600 dark:text-rose-400 text-sm flex flex-col gap-2 shadow-inner">
                   <span className="font-bold uppercase tracking-wider text-xs">Erreur Système</span>
                   <span className="text-xs leading-relaxed opacity-90">{error}</span>
                 </div>
@@ -502,13 +510,13 @@ export default function App() {
 
           {/* Match Dashboard Area */}
           <div className={`
-            flex-1 overflow-y-visible lg:overflow-y-auto bg-slate-950 custom-scrollbar
+            flex-1 overflow-y-visible lg:overflow-y-auto bg-slate-50 dark:bg-slate-950 custom-scrollbar transition-colors duration-300
             ${!selectedMatch ? 'hidden lg:flex' : 'flex'}
           `}>
             {selectedMatch ? (
               <div className="p-4 lg:p-8 pb-24 lg:pb-8 w-full">
                 <button 
-                  className="lg:hidden mb-6 text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2 hover:text-slate-200 transition-colors bg-slate-900 px-4 py-2 rounded-lg border border-slate-800 w-full justify-center"
+                  className="lg:hidden mb-6 text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-2 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-900 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-800 w-full justify-center shadow-sm"
                   onClick={() => setSelectedMatch(null)}
                 >
                   <X size={14} /> Fermer le tableau de bord
@@ -516,14 +524,14 @@ export default function App() {
                 <MatchDashboard match={selectedMatch} />
               </div>
             ) : (
-              <div className="flex-1 flex flex-col items-center justify-center text-slate-500 gap-5 p-8 h-full">
-                <div className="w-20 h-20 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-inner relative overflow-hidden">
+              <div className="flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-5 p-8 h-full">
+                <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shadow-sm relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 to-transparent"></div>
-                  <Activity size={32} className="text-slate-700 relative z-10" />
+                  <Activity size={32} className="text-slate-300 dark:text-slate-700 relative z-10" />
                 </div>
                 <div className="text-center max-w-xs">
-                  <p className="font-bold text-slate-400 uppercase tracking-widest text-sm mb-2">En attente de sélection</p>
-                  <p className="text-xs text-slate-500 leading-relaxed font-mono">Sélectionnez un match depuis la matrice pour charger son tableau de bord de gestion des risques et ses probabilités réelles.</p>
+                  <p className="font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest text-sm mb-2">En attente de sélection</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 leading-relaxed font-mono">Sélectionnez un match depuis la matrice pour charger son tableau de bord de gestion des risques et ses probabilités réelles.</p>
                 </div>
               </div>
             )}

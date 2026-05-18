@@ -25,23 +25,23 @@ export default function TabRiskContext({ match }) {
       <div className="flex flex-col gap-6">
         <Card title="Métriques de Risque" titleIcon={<Activity size={16} />}>
           <div className="flex flex-col gap-6 mt-1">
-             <div className="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-800">
-               <span className="text-xs text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1.5"><AlertCircle size={14}/> Intégrité des Données</span>
+             <div className="flex justify-between items-center bg-slate-100/50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-200 dark:border-slate-800">
+               <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1.5"><AlertCircle size={14}/> Intégrité des Données</span>
                <Badge variant={match.Data_Integrity?.[0] === 'COMPLETE' ? 'success' : 'warning'} className="text-[10px]">
                  {match.Data_Integrity?.[0] || 'UNKNOWN'}
                </Badge>
              </div>
              
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
-                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Tension de Justice</span>
-                <span className={`font-mono text-3xl font-bold ${psychology.net_justice_tension > 5 || psychology.net_justice_tension < -5 ? 'text-rose-400' : 'text-emerald-400'}`}>
+              <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Tension de Justice</span>
+                <span className={`font-mono text-3xl font-bold ${psychology.net_justice_tension > 5 || psychology.net_justice_tension < -5 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                   {psychology.net_justice_tension > 0 ? '+' : ''}{psychology.net_justice_tension?.toFixed(2) || 'N/A'}
                 </span>
               </div>
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
-                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Indice d'Ouverture</span>
-                <span className="font-mono text-3xl font-bold text-slate-200">
+              <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center shadow-inner">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-widest mb-1.5">Indice d'Ouverture</span>
+                <span className="font-mono text-3xl font-bold text-slate-800 dark:text-slate-200">
                   {tactical.match_openness_index?.toFixed(2) || 'N/A'}
                 </span>
               </div>
@@ -49,14 +49,14 @@ export default function TabRiskContext({ match }) {
 
             {/* Investment Signals Grid */}
             <div className="space-y-3">
-              <h4 className="text-[10px] uppercase text-slate-500 font-bold tracking-widest px-1">Signaux d'Investissement (v8.5)</h4>
+              <h4 className="text-[10px] uppercase text-slate-500 dark:text-slate-500 font-bold tracking-widest px-1">Signaux d'Investissement (v8.5)</h4>
               <div className="grid grid-cols-2 gap-2">
                 {Object.entries(investment).map(([key, value]) => (
-                  <div key={key} className={`flex justify-between items-center p-2 rounded border ${value ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-900/50 border-slate-800 opacity-60'}`}>
-                    <span className={`text-[8px] uppercase font-bold tracking-tighter ${value ? 'text-emerald-400' : 'text-slate-500'}`}>
+                  <div key={key} className={`flex justify-between items-center p-2 rounded border ${value ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-100/50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 opacity-60 shadow-sm'}`}>
+                    <span className={`text-[8px] uppercase font-bold tracking-tighter ${value ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500'}`}>
                       {key.replace('IS_', '').replace(/_/g, ' ')}
                     </span>
-                    {value ? <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_5px_rgba(16,185,129,0.5)]"></div> : <div className="w-1.5 h-1.5 rounded-full bg-slate-700"></div>}
+                    {value ? <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_5px_rgba(16,185,129,0.5)]"></div> : <div className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></div>}
                   </div>
                 ))}
               </div>
@@ -66,10 +66,10 @@ export default function TabRiskContext({ match }) {
               <h4 className="text-[10px] uppercase text-slate-500 font-bold tracking-widest px-1">Chaleur & Statut de Justice</h4>
               <div className="flex flex-col gap-3">
                 {/* Domicile */}
-                <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col gap-3">
+                <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-lg flex flex-col gap-3 shadow-sm">
                   <div className="flex justify-between items-center">
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-xs font-semibold text-slate-300 uppercase tracking-wide">Domicile</span>
+                      <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Domicile</span>
                       <span className="text-[9px] text-slate-500 font-mono font-bold">{narrative.Home_Team?.objective?.replace(/_/g, ' ')}</span>
                     </div>
                     <div className="flex gap-2">
@@ -80,23 +80,23 @@ export default function TabRiskContext({ match }) {
                         {narrative.Home_Team?.justice_status || 'INCONNU'}
                       </Badge>
                       {psychology.home_justice_z_score !== undefined && (
-                        <div className={`px-1.5 py-0.5 rounded border font-mono text-[9px] font-bold ${psychology.home_justice_z_score > 1 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : psychology.home_justice_z_score < -1 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-slate-900 border-slate-700 text-slate-500'}`}>
+                        <div className={`px-1.5 py-0.5 rounded border font-mono text-[9px] font-bold ${psychology.home_justice_z_score > 1 ? 'bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400' : psychology.home_justice_z_score < -1 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-500'}`}>
                           Z:{psychology.home_justice_z_score?.toFixed(2)}
                         </div>
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center justify-between border-t border-slate-800/50 pt-2">
+                  <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800/50 pt-2">
                     <span className="text-[9px] text-slate-500 uppercase font-bold tracking-tighter">Indice Motivation</span>
-                    <span className="text-xs font-mono font-bold text-emerald-400">{psychology.motivation_home?.toFixed(3)}</span>
+                    <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">{psychology.motivation_home?.toFixed(3)}</span>
                   </div>
                 </div>
 
                 {/* Extérieur */}
-                <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col gap-3">
+                <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-lg flex flex-col gap-3 shadow-sm">
                   <div className="flex justify-between items-center">
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-xs font-semibold text-slate-300 uppercase tracking-wide">Extérieur</span>
+                      <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Extérieur</span>
                       <span className="text-[9px] text-slate-500 font-mono font-bold">{narrative.Away_Team?.objective?.replace(/_/g, ' ')}</span>
                     </div>
                     <div className="flex gap-2">
@@ -107,15 +107,15 @@ export default function TabRiskContext({ match }) {
                         {narrative.Away_Team?.justice_status || 'INCONNU'}
                       </Badge>
                       {psychology.away_justice_z_score !== undefined && (
-                        <div className={`px-1.5 py-0.5 rounded border font-mono text-[9px] font-bold ${psychology.away_justice_z_score > 1 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : psychology.away_justice_z_score < -1 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-slate-900 border-slate-700 text-slate-500'}`}>
+                        <div className={`px-1.5 py-0.5 rounded border font-mono text-[9px] font-bold ${psychology.away_justice_z_score > 1 ? 'bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400' : psychology.away_justice_z_score < -1 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-500'}`}>
                           Z:{psychology.away_justice_z_score?.toFixed(2)}
                         </div>
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center justify-between border-t border-slate-800/50 pt-2">
+                  <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800/50 pt-2">
                     <span className="text-[9px] text-slate-500 uppercase font-bold tracking-tighter">Indice Motivation</span>
-                    <span className="text-xs font-mono font-bold text-emerald-400">{psychology.motivation_away?.toFixed(3)}</span>
+                    <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">{psychology.motivation_away?.toFixed(3)}</span>
                   </div>
                 </div>
               </div>
@@ -126,14 +126,14 @@ export default function TabRiskContext({ match }) {
         {match.Alternative_Domination_Score && (
           <Card title="Rupture Alternative" titleIcon={<AlertCircle size={16} />} className="border-amber-500/30">
             <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-xl flex flex-col gap-3 shadow-sm mt-1">
-              <div className="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-amber-500/20">
-                <span className="text-slate-300 text-[11px] uppercase tracking-wider font-bold">Avantage ({match.Alternative_Domination_Score.dominant_side})</span>
+              <div className="flex justify-between items-center bg-slate-100/50 dark:bg-slate-900/50 p-3 rounded-lg border border-amber-500/20">
+                <span className="text-slate-700 dark:text-slate-300 text-[11px] uppercase tracking-wider font-bold">Avantage ({match.Alternative_Domination_Score.dominant_side})</span>
                 <div className="flex items-center gap-3">
-                  <span className="font-serif font-bold text-amber-400 text-2xl">{match.Alternative_Domination_Score.score}</span>
+                  <span className="font-serif font-bold text-amber-600 dark:text-amber-400 text-2xl">{match.Alternative_Domination_Score.score}</span>
                   <Badge variant="warning" className="font-mono text-[11px]">@{match.Alternative_Domination_Score.odds?.toFixed(2)}</Badge>
                 </div>
               </div>
-              <p className="text-[10px] text-amber-300/80 font-mono tracking-tight leading-relaxed px-1">
+              <p className="text-[10px] text-amber-700 dark:text-amber-300/80 font-mono tracking-tight leading-relaxed px-1">
                 Déclencheur d'alerte : {match.Alternative_Domination_Score.trigger}
               </p>
             </div>
@@ -144,57 +144,57 @@ export default function TabRiskContext({ match }) {
       {/* Colonne 2 : Delta de Performance */}
       <div className="flex flex-col gap-6">
         <Card title="Justification : Delta de Performance (Attendu vs Réel)" titleIcon={<LineChart size={16} />}>
-          <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950 mt-1">
+          <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 mt-1 shadow-sm">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-900/80 text-[10px] uppercase tracking-widest text-slate-400 border-b border-slate-800">
+              <thead className="bg-slate-100/80 dark:bg-slate-900/80 text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Métrique</th>
-                  <th className="px-4 py-3 font-semibold text-center border-l border-slate-800">Domicile</th>
-                  <th className="px-4 py-3 font-semibold text-center border-l border-slate-800">Extérieur</th>
+                  <th className="px-4 py-3 font-semibold text-center border-l border-slate-200 dark:border-slate-800">Domicile</th>
+                  <th className="px-4 py-3 font-semibold text-center border-l border-slate-200 dark:border-slate-800">Extérieur</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/50 text-xs font-mono">
-                <tr className="hover:bg-slate-800/30 transition-colors">
-                  <td className="px-4 py-3 text-slate-300 font-sans uppercase tracking-wider text-[10px] font-bold">Différence de Position</td>
-                  <td className={`px-4 py-3 text-center border-l border-slate-800 ${homePerf.position_diff > 0 ? 'text-rose-400' : homePerf.position_diff < 0 ? 'text-emerald-400' : 'text-slate-500'}`}>
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800/50 text-xs font-mono">
+                <tr className="hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors">
+                  <td className="px-4 py-3 text-slate-700 dark:text-slate-300 font-sans uppercase tracking-wider text-[10px] font-bold">Différence de Position</td>
+                  <td className={`px-4 py-3 text-center border-l border-slate-200 dark:border-slate-800 ${homePerf.position_diff > 0 ? 'text-rose-600 dark:text-rose-400' : homePerf.position_diff < 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500'}`}>
                     {homePerf.position_diff > 0 ? '+' : ''}{homePerf.position_diff || 0}
                   </td>
-                  <td className={`px-4 py-3 text-center border-l border-slate-800 ${awayPerf.position_diff > 0 ? 'text-rose-400' : awayPerf.position_diff < 0 ? 'text-emerald-400' : 'text-slate-500'}`}>
+                  <td className={`px-4 py-3 text-center border-l border-slate-200 dark:border-slate-800 ${awayPerf.position_diff > 0 ? 'text-rose-600 dark:text-rose-400' : awayPerf.position_diff < 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500'}`}>
                     {awayPerf.position_diff > 0 ? '+' : ''}{awayPerf.position_diff || 0}
                   </td>
                 </tr>
-                <tr className="hover:bg-slate-800/30 transition-colors">
-                  <td className="px-4 py-3 text-slate-300 font-sans uppercase tracking-wider text-[10px] font-bold">Différence de Points (xPts)</td>
-                  <td className={`px-4 py-3 text-center border-l border-slate-800 ${homePerf.points_diff > 0 ? 'text-emerald-400' : homePerf.points_diff < 0 ? 'text-rose-400' : 'text-slate-500'}`}>
+                <tr className="hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors">
+                  <td className="px-4 py-3 text-slate-700 dark:text-slate-300 font-sans uppercase tracking-wider text-[10px] font-bold">Différence de Points (xPts)</td>
+                  <td className={`px-4 py-3 text-center border-l border-slate-200 dark:border-slate-800 ${homePerf.points_diff > 0 ? 'text-emerald-600 dark:text-emerald-400' : homePerf.points_diff < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'}`}>
                     {homePerf.points_diff > 0 ? '+' : ''}{homePerf.points_diff?.toFixed(2) || 0}
                   </td>
-                  <td className={`px-4 py-3 text-center border-l border-slate-800 ${awayPerf.points_diff > 0 ? 'text-emerald-400' : awayPerf.points_diff < 0 ? 'text-rose-400' : 'text-slate-500'}`}>
+                  <td className={`px-4 py-3 text-center border-l border-slate-200 dark:border-slate-800 ${awayPerf.points_diff > 0 ? 'text-emerald-600 dark:text-emerald-400' : awayPerf.points_diff < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'}`}>
                     {awayPerf.points_diff > 0 ? '+' : ''}{awayPerf.points_diff?.toFixed(2) || 0}
                   </td>
                 </tr>
-                <tr className="hover:bg-slate-800/30 transition-colors">
-                  <td className="px-4 py-3 text-slate-300 font-sans uppercase tracking-wider text-[10px] font-bold">Diff. Buts Marqués (xG)</td>
-                  <td className={`px-4 py-3 text-center border-l border-slate-800 ${homePerf.goals_for_diff > 0 ? 'text-emerald-400' : homePerf.goals_for_diff < 0 ? 'text-rose-400' : 'text-slate-500'}`}>
+                <tr className="hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors">
+                  <td className="px-4 py-3 text-slate-700 dark:text-slate-300 font-sans uppercase tracking-wider text-[10px] font-bold">Diff. Buts Marqués (xG)</td>
+                  <td className={`px-4 py-3 text-center border-l border-slate-200 dark:border-slate-800 ${homePerf.goals_for_diff > 0 ? 'text-emerald-600 dark:text-emerald-400' : homePerf.goals_for_diff < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'}`}>
                     {homePerf.goals_for_diff > 0 ? '+' : ''}{homePerf.goals_for_diff?.toFixed(2) || 0}
                   </td>
-                  <td className={`px-4 py-3 text-center border-l border-slate-800 ${awayPerf.goals_for_diff > 0 ? 'text-emerald-400' : awayPerf.goals_for_diff < 0 ? 'text-rose-400' : 'text-slate-500'}`}>
+                  <td className={`px-4 py-3 text-center border-l border-slate-200 dark:border-slate-800 ${awayPerf.goals_for_diff > 0 ? 'text-emerald-600 dark:text-emerald-400' : awayPerf.goals_for_diff < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'}`}>
                     {awayPerf.goals_for_diff > 0 ? '+' : ''}{awayPerf.goals_for_diff?.toFixed(2) || 0}
                   </td>
                 </tr>
-                <tr className="hover:bg-slate-800/30 transition-colors">
-                  <td className="px-4 py-3 text-slate-300 font-sans uppercase tracking-wider text-[10px] font-bold">Diff. Buts Encaissés (xGA)</td>
-                  <td className={`px-4 py-3 text-center border-l border-slate-800 ${homePerf.goals_against_diff < 0 ? 'text-emerald-400' : homePerf.goals_against_diff > 0 ? 'text-rose-400' : 'text-slate-500'}`}>
+                <tr className="hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors">
+                  <td className="px-4 py-3 text-slate-700 dark:text-slate-300 font-sans uppercase tracking-wider text-[10px] font-bold">Diff. Buts Encaissés (xGA)</td>
+                  <td className={`px-4 py-3 text-center border-l border-slate-200 dark:border-slate-800 ${homePerf.goals_against_diff < 0 ? 'text-emerald-600 dark:text-emerald-400' : homePerf.goals_against_diff > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'}`}>
                     {homePerf.goals_against_diff > 0 ? '+' : ''}{homePerf.goals_against_diff?.toFixed(2) || 0}
                   </td>
-                  <td className={`px-4 py-3 text-center border-l border-slate-800 ${awayPerf.goals_against_diff < 0 ? 'text-emerald-400' : awayPerf.goals_against_diff > 0 ? 'text-rose-400' : 'text-slate-500'}`}>
+                  <td className={`px-4 py-3 text-center border-l border-slate-200 dark:border-slate-800 ${awayPerf.goals_against_diff < 0 ? 'text-emerald-600 dark:text-emerald-400' : awayPerf.goals_against_diff > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'}`}>
                     {awayPerf.goals_against_diff > 0 ? '+' : ''}{awayPerf.goals_against_diff?.toFixed(2) || 0}
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="mt-4 text-[10px] text-slate-500 uppercase tracking-widest flex gap-2 items-start bg-slate-900/50 p-3 rounded-lg border border-slate-800">
-            <Scale size={14} className="shrink-0 text-slate-400" />
+          <div className="mt-4 text-[10px] text-slate-500 dark:text-slate-500 uppercase tracking-widest flex gap-2 items-start bg-slate-100/50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+            <Scale size={14} className="shrink-0 text-slate-400 dark:text-slate-400" />
             <p>Ces deltas quantifient la Tension de Justice. S'ils sont élevés, l'équipe sur-performe sa véritable force algorithmique (LUCKY).</p>
           </div>
         </Card>

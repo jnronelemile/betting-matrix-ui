@@ -93,16 +93,16 @@ export function MatchDashboard({ match }) {
 
   return (
     <div 
-      className="flex flex-col gap-4 relative"
+      className="flex flex-col gap-4 relative transition-colors duration-300"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       style={{ touchAction: 'pan-y' }}
     >
       {/* Main Header */}
-      <div ref={headerRef} className="border-b border-slate-800 pb-6">
+      <div ref={headerRef} className="border-b border-slate-200 dark:border-slate-800 pb-6">
         <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-tight font-bold text-white drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-tight font-bold text-slate-900 dark:text-white drop-shadow-sm">
             {match.Matchup}
           </h2>
           
@@ -132,7 +132,7 @@ export function MatchDashboard({ match }) {
             )}
 
             {isKillSwitch && (
-              <Badge variant="danger" className="text-[10px] flex items-center gap-1.5 px-2 py-1 uppercase tracking-widest shadow-[0_0_10px_rgba(244,63,94,0.3)] bg-rose-500/20 text-rose-400 border-rose-500/50">
+              <Badge variant="danger" className="text-[10px] flex items-center gap-1.5 px-2 py-1 uppercase tracking-widest shadow-[0_0_10px_rgba(244,63,94,0.3)] bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50">
                 <AlertTriangle size={12} /> KILL-SWITCH ACTIVÉ
               </Badge>
             )}
@@ -141,7 +141,7 @@ export function MatchDashboard({ match }) {
         <div className="flex flex-wrap gap-2 mt-3">
           {match.Data_Integrity?.map((flag, idx) => {
             if (flag === 'COMPLETE') {
-              return <span key={idx} className="px-1.5 py-0.5 text-[8px] bg-slate-800/40 text-slate-500 border border-slate-700/50 rounded-sm uppercase tracking-widest">{flag}</span>;
+              return <span key={idx} className="px-1.5 py-0.5 text-[8px] bg-slate-100 dark:bg-slate-800/40 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700/50 rounded-sm uppercase tracking-widest">{flag}</span>;
             }
             return <Badge key={idx} variant="info" className="text-[9px] opacity-80">{flag}</Badge>;
           })}
@@ -154,18 +154,18 @@ export function MatchDashboard({ match }) {
       </div>
 
       {/* Persistent Matchup & Tab Header (Sticky) */}
-      <div className="sticky top-[63px] z-30 flex flex-col bg-slate-950/95 backdrop-blur-md shadow-xl -mx-4 px-4 lg:-mx-8 lg:px-8 border-b border-emerald-500/10 transition-all duration-300">
+      <div className="sticky top-[63px] z-30 flex flex-col bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md shadow-xl -mx-4 px-4 lg:-mx-8 lg:px-8 border-b border-emerald-500/10 transition-all duration-300">
         {/* Matchup Name (Visible only on scroll) */}
-        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isScrolled ? 'max-h-20 py-2 opacity-100 border-b border-slate-800/30' : 'max-h-0 py-0 opacity-0 border-b-0'}`}>
+        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isScrolled ? 'max-h-20 py-2 opacity-100 border-b border-slate-200 dark:border-slate-800/30' : 'max-h-0 py-0 opacity-0 border-b-0'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 overflow-hidden">
               <div className="w-1 h-4 bg-rose-500 rounded-full shrink-0"></div>
-              <span className="text-xs sm:text-sm font-bold text-rose-400 truncate tracking-wide">
+              <span className="text-xs sm:text-sm font-bold text-rose-600 dark:text-rose-400 truncate tracking-wide">
                 {displayMatchupShort}
               </span>
             </div>
             {match.hours && (
-              <span className="text-[10px] font-mono font-bold text-slate-400 shrink-0">
+              <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 shrink-0">
                 {match.hours}
               </span>
             )}
@@ -184,15 +184,15 @@ export function MatchDashboard({ match }) {
                 setActiveTab(e.target.value);
               }}
               style={{ fontSize: '13px' }}
-              className="w-full bg-slate-900 border border-emerald-500/30 rounded-lg py-3 px-4 font-bold uppercase tracking-[0.1em] text-emerald-400 focus:outline-none appearance-none cursor-pointer shadow-inner"
+              className="w-full bg-white dark:bg-slate-900 border border-emerald-500/30 rounded-lg py-3 px-4 font-bold uppercase tracking-[0.1em] text-emerald-600 dark:text-emerald-400 focus:outline-none appearance-none cursor-pointer shadow-sm"
             >
               {TABS.map(tab => (
-                <option key={tab.id} value={tab.id} className="bg-slate-900 text-slate-100">
+                <option key={tab.id} value={tab.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
                   {tab.label}
                 </option>
               ))}
             </select>
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500/70 pointer-events-none">
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-600 dark:text-emerald-500/70 pointer-events-none">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </div>
           </div>
@@ -213,8 +213,8 @@ export function MatchDashboard({ match }) {
               className={`
                 flex items-center gap-2 px-4 py-3 font-bold uppercase tracking-widest whitespace-nowrap transition-all border-b-2
                 ${activeTab === tab.id 
-                  ? 'border-emerald-500 text-emerald-400 bg-slate-900/50 rounded-t-lg' 
-                  : 'border-transparent text-slate-500 hover:text-slate-300 hover:bg-slate-900/30'}
+                  ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400 bg-white dark:bg-slate-900/50 rounded-t-lg shadow-inner' 
+                  : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900/30'}
               `}
             >
               {tab.icon}
