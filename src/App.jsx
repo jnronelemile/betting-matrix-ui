@@ -421,20 +421,20 @@ export default function App() {
                     {/* Integrated Signal Toggles */}
                     <div className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x shrink-0">
                       {[
-                        { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), color: 'emerald' },
-                        { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), color: 'amber' },
-                        { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
-                        { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
-                        { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), color: 'cyan' },
-                        { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), color: 'orange' },
-                        { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), color: 'pink' },
+                        { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
+                        { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
+                        { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
+                        { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
+                        { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
+                        { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
+                        { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
                       ].map(sig => (
                         <button
                           key={sig.id}
                           onClick={sig.toggle}
                           className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 snap-start ${
                             sig.active 
-                              ? `bg-${sig.color}-500/10 border-${sig.color}-500/50 text-${sig.color}-600 dark:text-${sig.color}-400 shadow-sm` 
+                              ? `${sig.activeClass} shadow-sm` 
                               : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                           }`}
                         >
@@ -518,20 +518,20 @@ export default function App() {
             {/* Mobile Signal Toggles */}
             <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 snap-x pb-0.5">
               {[
-                { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), color: 'emerald' },
-                { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), color: 'amber' },
-                { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
-                { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
-                { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), color: 'cyan' },
-                { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), color: 'orange' },
-                { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), color: 'pink' },
+                { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
+                { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
+                { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
+                { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
+                { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
+                { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
+                { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
               ].map(sig => (
                 <button
                   key={sig.id}
                   onClick={sig.toggle}
                   className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
                     sig.active 
-                      ? `bg-${sig.color}-500/10 border-${sig.color}-500/50 text-${sig.color}-600 dark:text-${sig.color}-400 shadow-sm` 
+                      ? `${sig.activeClass} shadow-sm` 
                       : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
