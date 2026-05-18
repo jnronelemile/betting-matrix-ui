@@ -473,8 +473,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* Sub-Header: Only for Mobile Version */}
-          <div className={`lg:hidden bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-2 flex flex-col gap-2 transition-all duration-300 ${headerVisible ? 'opacity-100' : 'h-0 opacity-0 overflow-hidden'}`}>
+          {/* Sub-Header: Only for Mobile Version - Always Visible & Sticky */}
+          <div className="lg:hidden bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-2 flex flex-col gap-2 shadow-sm">
             {/* Mobile Date Pills */}
             <div className="flex overflow-x-auto no-scrollbar gap-1.5 px-4 snap-x">
               <button
