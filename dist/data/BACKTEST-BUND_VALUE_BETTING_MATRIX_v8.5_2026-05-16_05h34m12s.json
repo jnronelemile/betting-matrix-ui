@@ -1,0 +1,1685 @@
+{
+    "_METADATA_": {
+        "league_folder": "BACKTEST-BUND",
+        "Engine_Version": "8.5",
+        "timestamp_analysis": "2026-05-16_T05:34:12.572489"
+    },
+    "matches": [
+        {
+            "Matchup": "Bayern Munich vs 1. FC Köln",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 2.1434,
+                "lambda_away": 0.8511,
+                "composite_home": 0.332,
+                "composite_away": -0.1194,
+                "trg_multiplier_home": 1.1285,
+                "trg_multiplier_away": 0.8715,
+                "home_fortress_multiplier": 0.9704,
+                "defensive_shield": 1.0,
+                "press_mult_home": 1.07,
+                "press_mult_away": 0.93,
+                "conv_mult_home": 1.0234,
+                "conv_mult_away": 0.9766,
+                "sp_mult_home": 1.05,
+                "sp_mult_away": 0.95,
+                "trajectory_home": 0.9586,
+                "trajectory_away": 0.975,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1362,
+                "confidence_index": 0.7603,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 1,
+                        "objective": "TITLE_DEFENSE",
+                        "momentum": "FIRE",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 1,
+                            "position_diff": 0,
+                            "points_diff": -10.11,
+                            "goals_for_diff": 19.31,
+                            "goals_against_diff": -5.97
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 14,
+                        "objective": "SURVIVAL",
+                        "momentum": "COLD",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 14,
+                            "position_diff": -5,
+                            "points_diff": 11.65,
+                            "goals_for_diff": -3.79,
+                            "goals_against_diff": 5.57
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.047,
+                    "motivation_away": 1.094,
+                    "net_justice_tension": -21.76,
+                    "home_justice_z_score": -1.339,
+                    "away_justice_z_score": 1.393
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 4.53,
+                    "fotmob_rating_home": 7.35,
+                    "fotmob_rating_away": 6.74,
+                    "team_rating_gap": 0.61,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": true,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.6316,
+                "PROB_X": 0.217,
+                "PROB_2": 0.1514,
+                "PROB_O25": 0.5755,
+                "PROB_U25": 0.4245,
+                "PROB_O15": 0.8124,
+                "PROB_U35": 0.6485,
+                "PROB_BTTS": 0.5183
+            },
+            "True_Odds": {
+                "ODDS_1": 1.58,
+                "ODDS_X": 4.61,
+                "ODDS_2": 6.61,
+                "ODDS_O25": 1.74,
+                "ODDS_U25": 2.36,
+                "ODDS_O15": 1.23,
+                "ODDS_U35": 1.54,
+                "ODDS_BTTS": 1.93
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "2-0",
+                    "prob": 0.115,
+                    "odds": 8.7
+                },
+                "Score_2": {
+                    "score": "1-1",
+                    "prob": 0.1038,
+                    "odds": 9.64
+                },
+                "Score_3": {
+                    "score": "2-1",
+                    "prob": 0.0979,
+                    "odds": 10.22
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "HOME",
+                "H_-1.5": {
+                    "prob": 0.4305,
+                    "odds": 2.32
+                },
+                "H_-2.5": {
+                    "prob": 0.2275,
+                    "odds": 4.4
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "Bayern Munich",
+                    "Outsider": "1. FC Köln",
+                    "Probability_Gap": 0.4802
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.7261,
+                    "ODDS_FAV_O15": 1.38,
+                    "PROB_FAV_O25": 0.4163,
+                    "ODDS_FAV_O25": 2.4,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_RELIEF_CRITICAL"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.573,
+                    "ODDS_OUT_O05": 1.75,
+                    "PROB_OUT_O15": 0.2097,
+                    "ODDS_OUT_O15": 4.77,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.5379,
+                "LAMBDA_SOT_MATCH": 9.9671,
+                "PROB_OVER_MEDIAN_CORNERS": 0.4755,
+                "LAMBDA_CORNERS_MATCH": 9.4791,
+                "PROB_OVER_MEDIAN_SHOTS": 0.6682,
+                "LAMBDA_SHOTS_MATCH": 27.9324,
+                "LAMBDA_FOULS_MATCH": 18.36,
+                "PROB_OVER_MEDIAN_FOULS": 0.3812,
+                "PROP_HOME_MORE_CORNERS": 0.6271,
+                "PROP_HOME_MORE_SHOTS": 0.5352,
+                "PROP_HOME_MORE_SOT": 0.5613,
+                "PROP_HOME_MORE_FOULS": 0.42
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": true,
+                "O_SHOTS_ELITE": true,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": true,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": true,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "Werder Bremen vs Borussia Dortmund",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.1719,
+                "lambda_away": 1.4733,
+                "composite_home": -0.1123,
+                "composite_away": 0.0207,
+                "trg_multiplier_home": 0.9219,
+                "trg_multiplier_away": 1.0781,
+                "home_fortress_multiplier": 1.0451,
+                "defensive_shield": 0.9627,
+                "press_mult_home": 0.988,
+                "press_mult_away": 1.012,
+                "conv_mult_home": 0.9778,
+                "conv_mult_away": 1.0222,
+                "sp_mult_home": 0.95,
+                "sp_mult_away": 1.05,
+                "trajectory_home": 1.0109,
+                "trajectory_away": 0.9983,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1813,
+                "confidence_index": 0.1606,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 14,
+                        "objective": "SURVIVAL",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 15,
+                            "position_diff": -3,
+                            "points_diff": 8.06,
+                            "goals_for_diff": -4.37,
+                            "goals_against_diff": 4.82
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 2,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 2,
+                            "position_diff": 0,
+                            "points_diff": -11.63,
+                            "goals_for_diff": 6.95,
+                            "goals_against_diff": -5.21
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.094,
+                    "motivation_away": 1.047,
+                    "net_justice_tension": 19.69,
+                    "home_justice_z_score": 0.942,
+                    "away_justice_z_score": -1.53
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 3.11,
+                    "fotmob_rating_home": 6.78,
+                    "fotmob_rating_away": 7.11,
+                    "team_rating_gap": -0.33,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3241,
+                "PROB_X": 0.2898,
+                "PROB_2": 0.3861,
+                "PROB_O25": 0.4928,
+                "PROB_U25": 0.5072,
+                "PROB_O15": 0.7634,
+                "PROB_U35": 0.7262,
+                "PROB_BTTS": 0.5542
+            },
+            "True_Odds": {
+                "ODDS_1": 3.09,
+                "ODDS_X": 3.45,
+                "ODDS_2": 2.59,
+                "ODDS_O25": 2.03,
+                "ODDS_U25": 1.97,
+                "ODDS_O15": 1.31,
+                "ODDS_U35": 1.38,
+                "ODDS_BTTS": 1.8
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1448,
+                    "odds": 6.91
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.0932,
+                    "odds": 10.73
+                },
+                "Score_3": {
+                    "score": "1-2",
+                    "prob": 0.0903,
+                    "odds": 11.08
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.216,
+                    "odds": 4.63
+                },
+                "H_-2.5": {
+                    "prob": 0.0838,
+                    "odds": 11.93
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "Borussia Dortmund",
+                    "Outsider": "Werder Bremen",
+                    "Probability_Gap": 0.062
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.4332,
+                    "ODDS_FAV_O15": 2.31,
+                    "PROB_FAV_O25": 0.1845,
+                    "ODDS_FAV_O25": 5.42,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.6902,
+                    "ODDS_OUT_O05": 1.45,
+                    "PROB_OUT_O15": 0.3272,
+                    "ODDS_OUT_O15": 3.06,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4152,
+                "LAMBDA_SOT_MATCH": 9.0198,
+                "PROB_OVER_MEDIAN_CORNERS": 0.45,
+                "LAMBDA_CORNERS_MATCH": 9.2841,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4668,
+                "LAMBDA_SHOTS_MATCH": 25.2478,
+                "LAMBDA_FOULS_MATCH": 19.76,
+                "PROB_OVER_MEDIAN_FOULS": 0.5083,
+                "PROP_HOME_MORE_CORNERS": 0.4548,
+                "PROP_HOME_MORE_SHOTS": 0.4976,
+                "PROP_HOME_MORE_SOT": 0.4885,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "Bayer Leverkusen vs Hamburger SV",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.6864,
+                "lambda_away": 1.0039,
+                "composite_home": 0.1564,
+                "composite_away": -0.1557,
+                "trg_multiplier_home": 1.0673,
+                "trg_multiplier_away": 0.9327,
+                "home_fortress_multiplier": 0.992,
+                "defensive_shield": 1.0,
+                "press_mult_home": 1.036,
+                "press_mult_away": 0.964,
+                "conv_mult_home": 1.0117,
+                "conv_mult_away": 0.9883,
+                "sp_mult_home": 1.0228,
+                "sp_mult_away": 0.9772,
+                "trajectory_home": 0.9889,
+                "trajectory_away": 1.0441,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1816,
+                "confidence_index": 0.5927,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 6,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 6,
+                            "position_diff": -3,
+                            "points_diff": -1.61,
+                            "goals_for_diff": 4.56,
+                            "goals_against_diff": 1.64
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 16,
+                        "objective": "SURVIVAL",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 11,
+                            "position_diff": 6,
+                            "points_diff": -1.41,
+                            "goals_for_diff": -0.86,
+                            "goals_against_diff": -5.15
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.047,
+                    "motivation_away": 1.031,
+                    "net_justice_tension": -0.2,
+                    "home_justice_z_score": -0.272,
+                    "away_justice_z_score": -0.247
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 3.1,
+                    "fotmob_rating_home": 7.04,
+                    "fotmob_rating_away": 6.76,
+                    "team_rating_gap": 0.28,
+                    "home_wastefulness_score": 0.085,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.085,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": true,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.5158,
+                "PROB_X": 0.274,
+                "PROB_2": 0.2101,
+                "PROB_O25": 0.504,
+                "PROB_U25": 0.496,
+                "PROB_O15": 0.7704,
+                "PROB_U35": 0.7162,
+                "PROB_BTTS": 0.5371
+            },
+            "True_Odds": {
+                "ODDS_1": 1.94,
+                "ODDS_X": 3.65,
+                "ODDS_2": 4.76,
+                "ODDS_O25": 1.98,
+                "ODDS_U25": 2.02,
+                "ODDS_O15": 1.3,
+                "ODDS_U35": 1.4,
+                "ODDS_BTTS": 1.86
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1357,
+                    "odds": 7.37
+                },
+                "Score_2": {
+                    "score": "2-1",
+                    "prob": 0.0969,
+                    "odds": 10.32
+                },
+                "Score_3": {
+                    "score": "2-0",
+                    "prob": 0.0965,
+                    "odds": 10.36
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "HOME",
+                "H_-1.5": {
+                    "prob": 0.2909,
+                    "odds": 3.44
+                },
+                "H_-2.5": {
+                    "prob": 0.127,
+                    "odds": 7.87
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "Bayer Leverkusen",
+                    "Outsider": "Hamburger SV",
+                    "Probability_Gap": 0.3057
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.5779,
+                    "ODDS_FAV_O15": 1.73,
+                    "PROB_FAV_O25": 0.2751,
+                    "ODDS_FAV_O25": 3.64,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_RELIEF_CRITICAL"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.6336,
+                    "ODDS_OUT_O05": 1.58,
+                    "PROB_OUT_O15": 0.2657,
+                    "ODDS_OUT_O15": 3.76,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4152,
+                "LAMBDA_SOT_MATCH": 9.0198,
+                "PROB_OVER_MEDIAN_CORNERS": 0.464,
+                "LAMBDA_CORNERS_MATCH": 9.3916,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4888,
+                "LAMBDA_SHOTS_MATCH": 25.5257,
+                "LAMBDA_FOULS_MATCH": 19.77,
+                "PROB_OVER_MEDIAN_FOULS": 0.5091,
+                "PROP_HOME_MORE_CORNERS": 0.6308,
+                "PROP_HOME_MORE_SHOTS": 0.5205,
+                "PROP_HOME_MORE_SOT": 0.513,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "SC Freiburg vs RB Leipzig",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.3564,
+                "lambda_away": 1.4103,
+                "composite_home": -0.2735,
+                "composite_away": 0.2092,
+                "trg_multiplier_home": 0.9076,
+                "trg_multiplier_away": 1.0094,
+                "home_fortress_multiplier": 1.1,
+                "defensive_shield": 0.9948,
+                "press_mult_home": 0.967,
+                "press_mult_away": 1.033,
+                "conv_mult_home": 0.9976,
+                "conv_mult_away": 1.0024,
+                "sp_mult_home": 0.95,
+                "sp_mult_away": 1.05,
+                "trajectory_home": 0.9914,
+                "trajectory_away": 1.0002,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1705,
+                "confidence_index": 0.0797,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 7,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 7,
+                            "position_diff": 1,
+                            "points_diff": 1.07,
+                            "goals_for_diff": -0.73,
+                            "goals_against_diff": 8.41
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 5,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "FIRE",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 3,
+                            "position_diff": 1,
+                            "points_diff": -9.48,
+                            "goals_for_diff": -1.11,
+                            "goals_against_diff": -6.77
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.007,
+                    "motivation_away": 1.047,
+                    "net_justice_tension": 10.55,
+                    "home_justice_z_score": 0.065,
+                    "away_justice_z_score": -1.26
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 3.45,
+                    "fotmob_rating_home": 6.69,
+                    "fotmob_rating_away": 7.09,
+                    "team_rating_gap": -0.4,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 1.0,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": true,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3677,
+                "PROB_X": 0.2939,
+                "PROB_2": 0.3384,
+                "PROB_O25": 0.5226,
+                "PROB_U25": 0.4774,
+                "PROB_O15": 0.7837,
+                "PROB_U35": 0.6993,
+                "PROB_BTTS": 0.5817
+            },
+            "True_Odds": {
+                "ODDS_1": 2.72,
+                "ODDS_X": 3.4,
+                "ODDS_2": 2.96,
+                "ODDS_O25": 1.91,
+                "ODDS_U25": 2.09,
+                "ODDS_O15": 1.28,
+                "ODDS_U35": 1.43,
+                "ODDS_BTTS": 1.72
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1408,
+                    "odds": 7.1
+                },
+                "Score_2": {
+                    "score": "1-2",
+                    "prob": 0.0848,
+                    "odds": 11.79
+                },
+                "Score_3": {
+                    "score": "0-0",
+                    "prob": 0.0834,
+                    "odds": 11.99
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.1798,
+                    "odds": 5.56
+                },
+                "H_-2.5": {
+                    "prob": 0.0666,
+                    "odds": 15.02
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "RB Leipzig",
+                    "Outsider": "SC Freiburg",
+                    "Probability_Gap": 0.0293
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.4117,
+                    "ODDS_FAV_O15": 2.43,
+                    "PROB_FAV_O25": 0.169,
+                    "ODDS_FAV_O25": 5.92,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.7424,
+                    "ODDS_OUT_O05": 1.35,
+                    "PROB_OUT_O15": 0.393,
+                    "ODDS_OUT_O15": 2.54,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4515,
+                "LAMBDA_SOT_MATCH": 9.2957,
+                "PROB_OVER_MEDIAN_CORNERS": 0.4744,
+                "LAMBDA_CORNERS_MATCH": 9.471,
+                "PROB_OVER_MEDIAN_SHOTS": 0.5472,
+                "LAMBDA_SHOTS_MATCH": 26.2727,
+                "LAMBDA_FOULS_MATCH": 19.42,
+                "PROB_OVER_MEDIAN_FOULS": 0.478,
+                "PROP_HOME_MORE_CORNERS": 0.3946,
+                "PROP_HOME_MORE_SHOTS": 0.4662,
+                "PROP_HOME_MORE_SOT": 0.4629,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": true,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "Eintracht Frankfurt vs VfB Stuttgart",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.2397,
+                "lambda_away": 1.3376,
+                "composite_home": -0.1927,
+                "composite_away": 0.1832,
+                "trg_multiplier_home": 0.9262,
+                "trg_multiplier_away": 1.0277,
+                "home_fortress_multiplier": 1.0169,
+                "defensive_shield": 0.9923,
+                "press_mult_home": 0.976,
+                "press_mult_away": 1.024,
+                "conv_mult_home": 1.0039,
+                "conv_mult_away": 0.9961,
+                "sp_mult_home": 0.9865,
+                "sp_mult_away": 1.0135,
+                "trajectory_home": 1.0014,
+                "trajectory_away": 1.013,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1816,
+                "confidence_index": 0.0006,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 10,
+                        "objective": "MID_TABLE",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 8,
+                            "position_diff": 3,
+                            "points_diff": -1.19,
+                            "goals_for_diff": 15.76,
+                            "goals_against_diff": 13.51
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 6,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 4,
+                            "position_diff": 1,
+                            "points_diff": -6.84,
+                            "goals_for_diff": 9.89,
+                            "goals_against_diff": -1.45
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.987,
+                    "motivation_away": 1.047,
+                    "net_justice_tension": 5.65,
+                    "home_justice_z_score": -0.219,
+                    "away_justice_z_score": -0.929
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 3.1,
+                    "fotmob_rating_home": 6.77,
+                    "fotmob_rating_away": 7.08,
+                    "team_rating_gap": -0.31,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.009,
+                    "false_favorite_score": 0.009,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": true,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3473,
+                "PROB_X": 0.3052,
+                "PROB_2": 0.3475,
+                "PROB_O25": 0.4759,
+                "PROB_U25": 0.5241,
+                "PROB_O15": 0.7511,
+                "PROB_U35": 0.7409,
+                "PROB_BTTS": 0.5469
+            },
+            "True_Odds": {
+                "ODDS_1": 2.88,
+                "ODDS_X": 3.28,
+                "ODDS_2": 2.88,
+                "ODDS_O25": 2.1,
+                "ODDS_U25": 1.91,
+                "ODDS_O15": 1.33,
+                "ODDS_U35": 1.35,
+                "ODDS_BTTS": 1.83
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1489,
+                    "odds": 6.72
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.0989,
+                    "odds": 10.12
+                },
+                "Score_3": {
+                    "score": "1-2",
+                    "prob": 0.0843,
+                    "odds": 11.87
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.1779,
+                    "odds": 5.62
+                },
+                "H_-2.5": {
+                    "prob": 0.0636,
+                    "odds": 15.71
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "VfB Stuttgart",
+                    "Outsider": "Eintracht Frankfurt",
+                    "Probability_Gap": 0.0002
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.3864,
+                    "ODDS_FAV_O15": 2.59,
+                    "PROB_FAV_O25": 0.1516,
+                    "ODDS_FAV_O25": 6.59,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.7105,
+                    "ODDS_OUT_O05": 1.41,
+                    "PROB_OUT_O15": 0.3517,
+                    "ODDS_OUT_O15": 2.84,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4242,
+                "LAMBDA_SOT_MATCH": 9.0877,
+                "PROB_OVER_MEDIAN_CORNERS": 0.4702,
+                "LAMBDA_CORNERS_MATCH": 9.4391,
+                "PROB_OVER_MEDIAN_SHOTS": 0.499,
+                "LAMBDA_SHOTS_MATCH": 25.6551,
+                "LAMBDA_FOULS_MATCH": 19.77,
+                "PROB_OVER_MEDIAN_FOULS": 0.5091,
+                "PROP_HOME_MORE_CORNERS": 0.4133,
+                "PROP_HOME_MORE_SHOTS": 0.4715,
+                "PROP_HOME_MORE_SOT": 0.4682,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "Borussia Monchengladbach vs TSG Hoffenheim",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.2364,
+                "lambda_away": 1.3018,
+                "composite_home": -0.15,
+                "composite_away": 0.1011,
+                "trg_multiplier_home": 0.9487,
+                "trg_multiplier_away": 0.9483,
+                "home_fortress_multiplier": 1.049,
+                "defensive_shield": 1.0,
+                "press_mult_home": 0.93,
+                "press_mult_away": 1.07,
+                "conv_mult_home": 0.9877,
+                "conv_mult_away": 1.0123,
+                "sp_mult_home": 1.0047,
+                "sp_mult_away": 0.9953,
+                "trajectory_home": 1.0022,
+                "trajectory_away": 1.0141,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1879,
+                "confidence_index": 0.0974,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 11,
+                        "objective": "SURVIVAL",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 13,
+                            "position_diff": 0,
+                            "points_diff": 4.17,
+                            "goals_for_diff": -3.62,
+                            "goals_against_diff": 2.03
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 3,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "FIRE",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 5,
+                            "position_diff": 1,
+                            "points_diff": -11.19,
+                            "goals_for_diff": 10.91,
+                            "goals_against_diff": -1.63
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.057,
+                    "motivation_away": 1.047,
+                    "net_justice_tension": 15.36,
+                    "home_justice_z_score": 0.454,
+                    "away_justice_z_score": -1.475
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.9,
+                    "fotmob_rating_home": 6.79,
+                    "fotmob_rating_away": 7.0,
+                    "team_rating_gap": -0.21,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 1.0,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": true,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3664,
+                "PROB_X": 0.3029,
+                "PROB_2": 0.3307,
+                "PROB_O25": 0.466,
+                "PROB_U25": 0.534,
+                "PROB_O15": 0.7444,
+                "PROB_U35": 0.7494,
+                "PROB_BTTS": 0.5405
+            },
+            "True_Odds": {
+                "ODDS_1": 2.73,
+                "ODDS_X": 3.3,
+                "ODDS_2": 3.02,
+                "ODDS_O25": 2.15,
+                "ODDS_U25": 1.87,
+                "ODDS_O15": 1.34,
+                "ODDS_U35": 1.33,
+                "ODDS_BTTS": 1.85
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1511,
+                    "odds": 6.62
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.1029,
+                    "odds": 9.72
+                },
+                "Score_3": {
+                    "score": "1-2",
+                    "prob": 0.0828,
+                    "odds": 12.08
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.1707,
+                    "odds": 5.86
+                },
+                "H_-2.5": {
+                    "prob": 0.0598,
+                    "odds": 16.73
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "TSG Hoffenheim",
+                    "Outsider": "Borussia Monchengladbach",
+                    "Probability_Gap": 0.0357
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.3738,
+                    "ODDS_FAV_O15": 2.68,
+                    "PROB_FAV_O25": 0.1433,
+                    "ODDS_FAV_O25": 6.98,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.7096,
+                    "ODDS_OUT_O05": 1.41,
+                    "PROB_OUT_O15": 0.3505,
+                    "ODDS_OUT_O15": 2.85,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4064,
+                "LAMBDA_SOT_MATCH": 8.9527,
+                "PROB_OVER_MEDIAN_CORNERS": 0.4627,
+                "LAMBDA_CORNERS_MATCH": 9.3812,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4625,
+                "LAMBDA_SHOTS_MATCH": 25.1942,
+                "LAMBDA_FOULS_MATCH": 19.97,
+                "PROB_OVER_MEDIAN_FOULS": 0.5268,
+                "PROP_HOME_MORE_CORNERS": 0.371,
+                "PROP_HOME_MORE_SHOTS": 0.4813,
+                "PROP_HOME_MORE_SOT": 0.4756,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "1. FC Union Berlin vs FC Augsburg",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.3087,
+                "lambda_away": 1.2164,
+                "composite_home": -0.0695,
+                "composite_away": 0.1317,
+                "trg_multiplier_home": 0.9678,
+                "trg_multiplier_away": 1.0198,
+                "home_fortress_multiplier": 0.9983,
+                "defensive_shield": 1.0,
+                "press_mult_home": 0.97,
+                "press_mult_away": 1.03,
+                "conv_mult_home": 0.9985,
+                "conv_mult_away": 1.0015,
+                "sp_mult_home": 1.041,
+                "sp_mult_away": 0.959,
+                "trajectory_home": 1.0139,
+                "trajectory_away": 1.0109,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1949,
+                "confidence_index": 0.2671,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 13,
+                        "objective": "SURVIVAL",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 12,
+                            "position_diff": -2,
+                            "points_diff": 7.2,
+                            "goals_for_diff": -2.25,
+                            "goals_against_diff": 6.11
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 9,
+                        "objective": "LATE_PUSH",
+                        "momentum": "FIRE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 9,
+                            "position_diff": 5,
+                            "points_diff": -4.4,
+                            "goals_for_diff": -1.11,
+                            "goals_against_diff": -3.11
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.044,
+                    "motivation_away": 1.033,
+                    "net_justice_tension": 11.6,
+                    "home_justice_z_score": 0.834,
+                    "away_justice_z_score": -0.622
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.68,
+                    "fotmob_rating_home": 6.67,
+                    "fotmob_rating_away": 6.8,
+                    "team_rating_gap": -0.13,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.933,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": true,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.4009,
+                "PROB_X": 0.3053,
+                "PROB_2": 0.2938,
+                "PROB_O25": 0.4626,
+                "PROB_U25": 0.5374,
+                "PROB_O15": 0.7427,
+                "PROB_U35": 0.7522,
+                "PROB_BTTS": 0.5384
+            },
+            "True_Odds": {
+                "ODDS_1": 2.49,
+                "ODDS_X": 3.28,
+                "ODDS_2": 3.4,
+                "ODDS_O25": 2.16,
+                "ODDS_U25": 1.86,
+                "ODDS_O15": 1.35,
+                "ODDS_U35": 1.33,
+                "ODDS_BTTS": 1.86
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1523,
+                    "odds": 6.57
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.1049,
+                    "odds": 9.53
+                },
+                "Score_3": {
+                    "score": "2-1",
+                    "prob": 0.0834,
+                    "odds": 11.99
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "HOME",
+                "H_-1.5": {
+                    "prob": 0.1744,
+                    "odds": 5.73
+                },
+                "H_-2.5": {
+                    "prob": 0.0614,
+                    "odds": 16.29
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "1. FC Union Berlin",
+                    "Outsider": "FC Augsburg",
+                    "Probability_Gap": 0.1071
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.3763,
+                    "ODDS_FAV_O15": 2.66,
+                    "PROB_FAV_O25": 0.1449,
+                    "ODDS_FAV_O25": 6.9,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.7882,
+                    "ODDS_OUT_O05": 1.27,
+                    "PROB_OUT_O15": 0.3845,
+                    "ODDS_OUT_O15": 2.6,
+                    "Alpha_Signals_Active": [
+                        "SNIPER_PASSING",
+                        "PRESSURE_COLLAPSE"
+                    ]
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.3894,
+                "LAMBDA_SOT_MATCH": 8.8236,
+                "PROB_OVER_MEDIAN_CORNERS": 0.4575,
+                "LAMBDA_CORNERS_MATCH": 9.3419,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4275,
+                "LAMBDA_SHOTS_MATCH": 24.7535,
+                "LAMBDA_FOULS_MATCH": 20.18,
+                "PROB_OVER_MEDIAN_FOULS": 0.546,
+                "PROP_HOME_MORE_CORNERS": 0.5193,
+                "PROP_HOME_MORE_SHOTS": 0.4879,
+                "PROP_HOME_MORE_SOT": 0.4785,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "FC St. Pauli vs VfL Wolfsburg",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.5227,
+                "lambda_away": 1.1411,
+                "composite_home": -0.173,
+                "composite_away": 0.0591,
+                "trg_multiplier_home": 1.0,
+                "trg_multiplier_away": 1.0,
+                "home_fortress_multiplier": 1.0992,
+                "defensive_shield": 1.0,
+                "press_mult_home": 0.994,
+                "press_mult_away": 1.006,
+                "conv_mult_home": 0.9922,
+                "conv_mult_away": 1.0078,
+                "sp_mult_home": 1.0045,
+                "sp_mult_away": 0.9955,
+                "trajectory_home": 1.0031,
+                "trajectory_away": 1.0016,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.2086,
+                "confidence_index": 0.0,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 17,
+                        "objective": "SURVIVAL",
+                        "momentum": "ICE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 18,
+                            "position_diff": 0,
+                            "points_diff": 4.3,
+                            "goals_for_diff": -1.66,
+                            "goals_against_diff": 3.31
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 11,
+                        "objective": "SURVIVAL",
+                        "momentum": "COLD",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 16,
+                            "position_diff": -1,
+                            "points_diff": 11.55,
+                            "goals_for_diff": -2.49,
+                            "goals_against_diff": 7.74
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.019,
+                    "motivation_away": 1.019,
+                    "net_justice_tension": -7.25,
+                    "home_justice_z_score": 0.47,
+                    "away_justice_z_score": 1.38
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.25,
+                    "fotmob_rating_home": 6.7,
+                    "fotmob_rating_away": 6.7,
+                    "team_rating_gap": 0.0,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.041,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": true,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": true
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.0,
+                "PROB_X": 0.0,
+                "PROB_2": 0.0,
+                "PROB_O25": 0.0,
+                "PROB_U25": 0.0,
+                "PROB_O15": 0.0,
+                "PROB_U35": 0.0,
+                "PROB_BTTS": 0.0
+            },
+            "True_Odds": {
+                "ODDS_1": 100.0,
+                "ODDS_X": 100.0,
+                "ODDS_2": 100.0,
+                "ODDS_O25": 100.0,
+                "ODDS_U25": 100.0,
+                "ODDS_O15": 100.0,
+                "ODDS_U35": 100.0,
+                "ODDS_BTTS": 100.0
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1463,
+                    "odds": 6.83
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.0949,
+                    "odds": 10.53
+                },
+                "Score_3": {
+                    "score": "2-1",
+                    "prob": 0.0922,
+                    "odds": 10.85
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "HOME",
+                "H_-1.5": {
+                    "prob": 0.2314,
+                    "odds": 4.32
+                },
+                "H_-2.5": {
+                    "prob": 0.0924,
+                    "odds": 10.83
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "FC St. Pauli",
+                    "Outsider": "VfL Wolfsburg",
+                    "Probability_Gap": 0.0
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.0,
+                    "ODDS_FAV_O15": 100.0,
+                    "PROB_FAV_O25": 0.0,
+                    "ODDS_FAV_O25": 100.0,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_RELIEF_CRITICAL"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.0,
+                    "ODDS_OUT_O05": 100.0,
+                    "PROB_OUT_O15": 0.0,
+                    "ODDS_OUT_O15": 100.0,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.3563,
+                "LAMBDA_SOT_MATCH": 8.5716,
+                "PROB_OVER_MEDIAN_CORNERS": 0.467,
+                "LAMBDA_CORNERS_MATCH": 9.4146,
+                "PROB_OVER_MEDIAN_SHOTS": 0.3916,
+                "LAMBDA_SHOTS_MATCH": 24.2996,
+                "LAMBDA_FOULS_MATCH": 20.61,
+                "PROB_OVER_MEDIAN_FOULS": 0.5827,
+                "PROP_HOME_MORE_CORNERS": 0.4946,
+                "PROP_HOME_MORE_SHOTS": 0.4756,
+                "PROP_HOME_MORE_SOT": 0.484,
+                "PROP_HOME_MORE_FOULS": 0.44
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "1. FC Heidenheim vs FSV Mainz 05",
+            "League": "Bundesliga",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.4758,
+                "lambda_away": 1.3089,
+                "composite_home": -0.0381,
+                "composite_away": 0.126,
+                "trg_multiplier_home": 0.951,
+                "trg_multiplier_away": 1.049,
+                "home_fortress_multiplier": 1.0992,
+                "defensive_shield": 0.9864,
+                "press_mult_home": 0.97,
+                "press_mult_away": 1.03,
+                "conv_mult_home": 1.0012,
+                "conv_mult_away": 0.9988,
+                "sp_mult_home": 1.0135,
+                "sp_mult_away": 0.9865,
+                "trajectory_home": 0.9914,
+                "trajectory_away": 0.9948,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1873,
+                "confidence_index": 0.2778,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 25.27,
+                    "median_sot": 9.0,
+                    "median_corners": 9.27,
+                    "median_fouls": 19.72
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 16,
+                        "objective": "SURVIVAL",
+                        "momentum": "HOT",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 17,
+                            "position_diff": -1,
+                            "points_diff": 10.96,
+                            "goals_for_diff": -4.35,
+                            "goals_against_diff": 9.5
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 7,
+                        "objective": "SURVIVAL",
+                        "momentum": "COLD",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 10,
+                            "position_diff": -3,
+                            "points_diff": 8.91,
+                            "goals_for_diff": -9.08,
+                            "goals_against_diff": -1.39
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.019,
+                    "motivation_away": 1.031,
+                    "net_justice_tension": 2.05,
+                    "home_justice_z_score": 1.306,
+                    "away_justice_z_score": 1.049
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.92,
+                    "fotmob_rating_home": 6.62,
+                    "fotmob_rating_away": 6.82,
+                    "team_rating_gap": -0.2,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.023,
+                    "false_favorite_score": 1.0,
+                    "IS_FALSE_FAVORITE": true,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.4103,
+                "PROB_X": 0.2934,
+                "PROB_2": 0.2963,
+                "PROB_O25": 0.5269,
+                "PROB_U25": 0.4731,
+                "PROB_O15": 0.7886,
+                "PROB_U35": 0.6953,
+                "PROB_BTTS": 0.5854
+            },
+            "True_Odds": {
+                "ODDS_1": 2.44,
+                "ODDS_X": 3.41,
+                "ODDS_2": 3.37,
+                "ODDS_O25": 1.9,
+                "ODDS_U25": 2.11,
+                "ODDS_O15": 1.27,
+                "ODDS_U35": 1.44,
+                "ODDS_BTTS": 1.71
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1416,
+                    "odds": 7.06
+                },
+                "Score_2": {
+                    "score": "2-1",
+                    "prob": 0.088,
+                    "odds": 11.36
+                },
+                "Score_3": {
+                    "score": "0-0",
+                    "prob": 0.0841,
+                    "odds": 11.89
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "HOME",
+                "H_-1.5": {
+                    "prob": 0.1991,
+                    "odds": 5.02
+                },
+                "H_-2.5": {
+                    "prob": 0.0766,
+                    "odds": 13.05
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "1. FC Heidenheim",
+                    "Outsider": "FSV Mainz 05",
+                    "Probability_Gap": 0.114
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.434,
+                    "ODDS_FAV_O15": 2.3,
+                    "PROB_FAV_O25": 0.1851,
+                    "ODDS_FAV_O25": 5.4,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.7883,
+                    "ODDS_OUT_O05": 1.27,
+                    "PROB_OUT_O15": 0.4064,
+                    "ODDS_OUT_O15": 2.46,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_COLLAPSE"
+                    ]
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4012,
+                "LAMBDA_SOT_MATCH": 8.9131,
+                "PROB_OVER_MEDIAN_CORNERS": 0.4586,
+                "LAMBDA_CORNERS_MATCH": 9.3501,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4582,
+                "LAMBDA_SHOTS_MATCH": 25.1396,
+                "LAMBDA_FOULS_MATCH": 19.95,
+                "PROB_OVER_MEDIAN_FOULS": 0.525,
+                "PROP_HOME_MORE_CORNERS": 0.4482,
+                "PROP_HOME_MORE_SHOTS": 0.4865,
+                "PROP_HOME_MORE_SOT": 0.4896,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        }
+    ]
+}

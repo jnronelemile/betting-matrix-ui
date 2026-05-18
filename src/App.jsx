@@ -16,6 +16,7 @@ const LEAGUES = [
 ];
 
 export default function App() {
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
   const [selectedLeague, setSelectedLeague] = useState(LEAGUES[0]);
   const [selectedDate, setSelectedDate] = useState('ALL');
   const [data, setData] = useState(null);
@@ -33,6 +34,19 @@ export default function App() {
   const [showSafeButs, setShowSafeButs] = useState(false);
   const [showTopForm, setShowTopForm] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   useEffect(() => {
     async function fetchData() {
