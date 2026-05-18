@@ -273,9 +273,3 @@ export function MatchDashboard({ match }) {
     </div>
   );
 }
-bration' && <TabCalibration match={match} />}
-        </div>
-      </div>
-    </div>
-  );
-}
