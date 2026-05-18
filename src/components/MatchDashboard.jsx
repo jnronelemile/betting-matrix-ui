@@ -7,9 +7,9 @@ import TabNarrative from './dashboard/TabNarrative';
 import TabTactical from './dashboard/TabTactical';
 import TabCalibration from './dashboard/TabCalibration';
 import TabRiskContext from './dashboard/TabRiskContext';
-import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target } from 'lucide-react';
+import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target, ChevronLeft } from 'lucide-react';
 
-export function MatchDashboard({ match }) {
+export function MatchDashboard({ match, onClose }) {
   const [activeTab, setActiveTab] = useState('tactical');
   const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
   const [isScrolled, setIsScrolled] = useState(false);
@@ -118,9 +118,20 @@ export function MatchDashboard({ match }) {
         {/* Main Header (Title & Badges) */}
         <div ref={headerRef} className="pt-4 pb-3 lg:pb-6">
           <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
-            <h2 className="text-xl sm:text-2xl lg:text-4xl font-serif tracking-tight font-bold text-slate-900 dark:text-white">
-              {match.Matchup}
-            </h2>
+            <div className="flex items-center gap-2">
+              {onClose && (
+                <button 
+                  onClick={onClose}
+                  className="lg:hidden p-1.5 -ml-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                  title="Retour"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+              )}
+              <h2 className="text-xl sm:text-2xl lg:text-4xl font-serif tracking-tight font-bold text-slate-900 dark:text-white">
+                {match.Matchup}
+              </h2>
+            </div>
             
             <div className="flex flex-wrap gap-2 items-center">
               {match.Calibration_Diagnostics?.confidence_index !== undefined && (

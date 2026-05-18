@@ -529,13 +529,7 @@ export default function App() {
           `}>
             {selectedMatch ? (
               <div className="p-4 lg:p-8 pb-24 lg:pb-8 w-full">
-                <button 
-                  className="lg:hidden mb-6 text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-2 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-900 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-800 w-full justify-center shadow-sm"
-                  onClick={() => setSelectedMatch(null)}
-                >
-                  <X size={14} /> Fermer le tableau de bord
-                </button>
-                <MatchDashboard match={selectedMatch} />
+                <MatchDashboard match={selectedMatch} onClose={() => setSelectedMatch(null)} />
               </div>
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-5 p-8 h-full">
