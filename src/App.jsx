@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
