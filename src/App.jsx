@@ -336,7 +336,28 @@ export default function App() {
           <div className={`overflow-hidden transition-all duration-300 ease-in-out ${headerVisible ? 'h-16 opacity-100' : 'h-0 opacity-0'}`}>
             <div className="h-16 flex items-center justify-between px-4 lg:px-6">
               {mobileSearchOpen ? (
-...
+                <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
+                    <input 
+                      type="text" 
+                      autoFocus
+                      placeholder="Chercher une équipe..."
+                      value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)}
+                      className="w-full bg-white dark:bg-slate-950 border border-emerald-500/50 rounded-lg py-2 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
+                    />
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setMobileSearchOpen(false);
+                      setSearchQuery('');
+                    }}
+                    className="p-2 text-slate-400 hover:text-rose-400 transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
               ) : (
                 <>
                   <div className="flex items-center gap-4">
