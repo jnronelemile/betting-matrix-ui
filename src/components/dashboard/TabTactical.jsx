@@ -12,10 +12,10 @@ export default function TabTactical({ match }) {
 
   const propBetsKeys = Object.keys(props).filter(k => k.startsWith('PROP_HOME_MORE_'));
   const anchorKeys = [
-    { key: 'shots', label: 'Tirs', prop: 'PROB_OVER_MEDIAN_SHOTS', lambda: 'LAMBDA_SHOTS_MATCH' },
-    { key: 'sot', label: 'Tirs Cadrés', prop: 'PROB_OVER_MEDIAN_SOT', lambda: 'LAMBDA_SOT_MATCH' },
+    { key: 'shots', label: 'Shots', prop: 'PROB_OVER_MEDIAN_SHOTS', lambda: 'LAMBDA_SHOTS_MATCH' },
+    { key: 'sot', label: 'Shots on Target', prop: 'PROB_OVER_MEDIAN_SOT', lambda: 'LAMBDA_SOT_MATCH' },
     { key: 'corners', label: 'Corners', prop: 'PROB_OVER_MEDIAN_CORNERS', lambda: 'LAMBDA_CORNERS_MATCH' },
-    { key: 'fouls', label: 'Fautes', prop: 'PROB_OVER_MEDIAN_FOULS', lambda: 'LAMBDA_FOULS_MATCH' },
+    { key: 'fouls', label: 'Fouls', prop: 'PROB_OVER_MEDIAN_FOULS', lambda: 'LAMBDA_FOULS_MATCH' },
   ];
 
   const getPropColor = (val) => {
@@ -34,14 +34,14 @@ export default function TabTactical({ match }) {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* League Anchors */}
       <div className="lg:col-span-1">
-        <Card title="Match vs Moyennes Ligue" titleIcon={<Layers size={16} />}>
+        <Card title="Match vs League Averages" titleIcon={<Layers size={16} />}>
           <div className="space-y-4 mt-2">
             <div className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest pb-2 border-b border-slate-200 dark:border-slate-800 flex justify-between">
-              <span>Métrique</span>
+              <span>Metric</span>
               <div className="flex gap-5">
-                <span>Médiane</span>
-                <span>Lambda Match</span>
-                <span>Prob &gt; Méd</span>
+                <span>Median</span>
+                <span>Match Lambda</span>
+                <span>Prob &gt; Med</span>
               </div>
             </div>
             
@@ -74,31 +74,31 @@ export default function TabTactical({ match }) {
 
       {/* Tactical Matchup */}
       <div className="lg:col-span-1">
-        <Card title="Notes Tactiques & Écarts" titleIcon={<Crosshair size={16} />}>
+        <Card title="Tactical Ratings & Gaps" titleIcon={<Crosshair size={16} />}>
           <div className="space-y-6">
             <div>
               <div className="flex justify-between items-end mb-3">
-                <span className="text-xs uppercase text-slate-500 dark:text-slate-400 font-bold tracking-widest">Notes FotMob</span>
-                <span className="font-mono text-sm text-slate-400">Écart : {tactical.team_rating_gap?.toFixed(2) || 0}</span>
+                <span className="text-xs uppercase text-slate-500 dark:text-slate-400 font-bold tracking-widest">FotMob Ratings</span>
+                <span className="font-mono text-sm text-slate-400">Gap: {tactical.team_rating_gap?.toFixed(2) || 0}</span>
               </div>
               <div className="flex items-center gap-5">
                 <div className="flex-1 bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative overflow-hidden shadow-sm">
-                  <div className="text-[11px] text-slate-500 uppercase tracking-widest mb-2">Domicile</div>
+                  <div className="text-[11px] text-slate-500 uppercase tracking-widest mb-2">Home</div>
                   <div className="font-mono text-2xl text-blue-600 dark:text-blue-400">{tactical.fotmob_rating_home?.toFixed(2) || 'N/A'}</div>
                   {tactical.home_wastefulness_score > 0 && (
                     <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50 flex flex-col items-center">
-                      <span className="text-[8px] text-rose-500 dark:text-rose-400 uppercase font-bold tracking-tighter">Gaspillage</span>
+                      <span className="text-[8px] text-rose-500 dark:text-rose-400 uppercase font-bold tracking-tighter">Wastefulness</span>
                       <span className="text-xs font-mono text-rose-600 dark:text-rose-500 font-bold">{tactical.home_wastefulness_score?.toFixed(3)}</span>
                     </div>
                   )}
                 </div>
                 <div className="text-slate-400 dark:text-slate-600 font-mono text-sm font-bold">VS</div>
                 <div className="flex-1 bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative overflow-hidden shadow-sm">
-                  <div className="text-[11px] text-slate-500 uppercase tracking-widest mb-2">Extérieur</div>
+                  <div className="text-[11px] text-slate-500 uppercase tracking-widest mb-2">Away</div>
                   <div className="font-mono text-2xl text-rose-600 dark:text-rose-400">{tactical.fotmob_rating_away?.toFixed(2) || 'N/A'}</div>
                   {tactical.away_wastefulness_score > 0 && (
                     <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50 flex flex-col items-center">
-                      <span className="text-[8px] text-rose-500 dark:text-rose-400 uppercase font-bold tracking-tighter">Gaspillage</span>
+                      <span className="text-[8px] text-rose-500 dark:text-rose-400 uppercase font-bold tracking-tighter">Wastefulness</span>
                       <span className="text-xs font-mono text-rose-600 dark:text-rose-500 font-bold">{tactical.away_wastefulness_score?.toFixed(3)}</span>
                     </div>
                   )}
@@ -108,7 +108,7 @@ export default function TabTactical({ match }) {
 
             {tactical.false_favorite_score > 0 && (
               <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 rounded-xl shadow-inner flex justify-between items-center">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold">Score de Faux Favori</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold">False Favorite Score</span>
                 <span className={`font-mono text-sm font-bold ${tactical.IS_FALSE_FAVORITE ? 'text-rose-600 dark:text-rose-400' : 'text-slate-400 dark:text-slate-500'}`}>
                   {tactical.false_favorite_score?.toFixed(3)}
                 </span>
@@ -117,13 +117,13 @@ export default function TabTactical({ match }) {
 
             <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-200 dark:border-slate-800">
                <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 rounded-xl flex flex-col items-center justify-center text-center shadow-inner">
-                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-bold">Tension Justice</span>
+                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-bold">Justice Tension</span>
                  <span className={`font-mono text-xl font-bold ${risk.Team_Psychology?.net_justice_tension > 5 || risk.Team_Psychology?.net_justice_tension < -5 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                    {risk.Team_Psychology?.net_justice_tension > 0 ? '+' : ''}{risk.Team_Psychology?.net_justice_tension?.toFixed(2)}
                  </span>
                </div>
                <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 rounded-xl flex flex-col items-center justify-center text-center shadow-inner">
-                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-bold">Ouverture</span>
+                 <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-bold">Openness</span>
                  <span className="font-mono text-xl font-bold text-slate-800 dark:text-slate-200">
                    {tactical.match_openness_index?.toFixed(2)}
                  </span>
@@ -132,7 +132,7 @@ export default function TabTactical({ match }) {
             
             {tactical.MISSING_FOTMOB_DATA && (
               <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded-lg flex items-center gap-2 text-amber-600 dark:text-amber-400 text-xs uppercase tracking-wider mt-2">
-                <Flag size={14} /> Données FotMob partielles
+                <Flag size={14} /> Partial FotMob Data
               </div>
             )}
           </div>
@@ -141,7 +141,7 @@ export default function TabTactical({ match }) {
 
       {/* Full Props Grid */}
       <div className="lg:col-span-1">
-        <Card title="Marché des Propositions" titleIcon={<Target size={16} />}>
+        <Card title="Proposition Market" titleIcon={<Target size={16} />}>
           <div className="flex flex-col gap-4 mt-2">
             {propBetsKeys.map(key => {
               const val = props[key];
@@ -150,7 +150,7 @@ export default function TabTactical({ match }) {
               return (
                 <div key={key} className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                   <div className="flex justify-between items-center mb-3">
-                    <span className="text-xs font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">Dom &gt; Ext : {label}</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">Home &gt; Away : {label}</span>
                     <span className={`font-mono text-sm font-bold ${getPropTextColor(val)}`}>
                       {(val * 100).toFixed(1)}%
                     </span>

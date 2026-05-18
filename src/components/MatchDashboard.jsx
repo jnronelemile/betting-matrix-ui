@@ -123,7 +123,7 @@ export function MatchDashboard({ match, onClose }) {
                 <button 
                   onClick={onClose}
                   className="lg:hidden p-1.5 -ml-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
-                  title="Retour"
+                  title="Back"
                 >
                   <ChevronLeft size={24} />
                 </button>
@@ -136,7 +136,7 @@ export function MatchDashboard({ match, onClose }) {
             <div className="flex flex-wrap gap-2 items-center">
               {match.Calibration_Diagnostics?.confidence_index !== undefined && (
                 <Badge variant={match.Calibration_Diagnostics.confidence_index >= 0.5 ? 'success' : 'warning'} className="text-[9px] font-mono tracking-widest px-2 py-0.5">
-                  {(match.Calibration_Diagnostics.confidence_index * 100).toFixed(0)}%
+                  CONFIDENCE: {(match.Calibration_Diagnostics.confidence_index * 100).toFixed(0)}%
                 </Badge>
               )}
 
@@ -151,13 +151,18 @@ export function MatchDashboard({ match, onClose }) {
                   <Target size={10} /> SAFE GOALS
                 </Badge>
               )}
-              
-              {isKillSwitch && (
-                <Badge variant="danger" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50">
-                  <AlertTriangle size={10} /> KILL-SWITCH
+
+              {match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE && (
+                <Badge variant="danger" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest border-rose-500/50">
+                  <AlertTriangle size={10} /> FALSE FAVORITE
                 </Badge>
               )}
-            </div>
+
+              {isKillSwitch && (
+                <Badge variant="danger" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50">
+                  <AlertTriangle size={10} /> KILL-SWITCH ACTIVE
+                </Badge>
+              )}            </div>
           </div>
           
           {/* Subtle details line - hidden on very small mobile if scrolled? Or just compact */}
@@ -214,14 +219,13 @@ export function MatchDashboard({ match, onClose }) {
             >
               {/* Sliding Indicator */}
               <div 
-                className="absolute h-[calc(100%-8px)] top-1 bg-white dark:bg-slate-800 rounded-full shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                className="absolute h-[calc(100%-8px)] top-1 bg-white dark:bg-slate-800 rounded-full shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
                 style={{ 
                   left: `${indicatorStyle.left}px`, 
                   width: `${indicatorStyle.width}px`,
                   opacity: indicatorStyle.opacity
                 }}
               />
-
               {TABS.map((tab) => (
                 <button
                   key={tab.id}

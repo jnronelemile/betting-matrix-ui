@@ -391,7 +391,7 @@ export default function App() {
                             : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                         }`}
                       >
-                        Tout
+                        ALL
                       </button>
                       {availableDates.map(date => {
                         let displayDay = '???';
@@ -421,13 +421,13 @@ export default function App() {
                     {/* Integrated Signal Toggles */}
                     <div className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x shrink-0">
                       {[
-                        { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
-                        { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
-                        { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
-                        { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
-                        { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
-                        { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
-                        { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
+                        { id: 'fav', label: 'TRUE FAVS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
+                        { id: 'elite', label: 'ELITE SIGNALS', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
+                        { id: 'conf', label: 'HIGH CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
+                        { id: 'safe', label: 'SAFE PICK', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
+                        { id: 'reg', label: 'REGULARITY', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
+                        { id: 'goals', label: 'SAFE GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
+                        { id: 'top', label: 'TOP FORM', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
                       ].map(sig => (
                         <button
                           key={sig.id}
@@ -450,7 +450,7 @@ export default function App() {
                       <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={14} />
                       <input 
                         type="text" 
-                        placeholder="Filtrer..."
+                        placeholder="Filter..."
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
                         className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-8 pr-3 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
@@ -488,7 +488,7 @@ export default function App() {
                     : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
-                Tout
+                ALL
               </button>
               {availableDates.map(date => {
                 let displayDay = '???';
@@ -518,13 +518,13 @@ export default function App() {
             {/* Mobile Signal Toggles */}
             <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 snap-x pb-0.5">
               {[
-                { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
+                { id: 'fav', label: 'TRUE FAVS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
                 { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
-                { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
-                { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
-                { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
-                { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
-                { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
+                { id: 'conf', label: 'HIGH CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
+                { id: 'safe', label: 'SAFE PICK', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
+                { id: 'reg', label: 'REGULARITY', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
+                { id: 'goals', label: 'SAFE GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
+                { id: 'top', label: 'TOP FORM', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
               ].map(sig => (
                 <button
                   key={sig.id}
@@ -556,21 +556,21 @@ export default function App() {
               <div>
                 <h2 className="font-bold text-slate-900 dark:text-slate-200 text-xs tracking-tight">{selectedLeague.name}</h2>
                 <p className="text-[9px] text-slate-500 font-mono tracking-tighter">
-                  {data?.matches?.length || 0} MATCHS TROUVÉS
+                  {data?.matches?.length || 0} MATCHES FOUND
                 </p>
-              </div>
-              {data && <div className="text-[9px] uppercase font-mono tracking-tighter text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">Synchronisé</div>}
+                </div>
+                {data && <div className="text-[9px] uppercase font-mono tracking-tighter text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">Synchronized</div>}
             </div>
             
             <div className="flex-1 overflow-y-auto p-4 custom-scrollbar relative">
               {loading ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-slate-500 bg-white/50 dark:bg-slate-950/50 backdrop-blur-sm z-10">
                   <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-                  <span className="text-[10px] uppercase tracking-widest font-mono">Chargement de la Matrice...</span>
+                  <span className="text-[10px] uppercase tracking-widest font-mono">Loading Matrix...</span>
                 </div>
               ) : error ? (
                 <div className="p-4 border border-rose-500/30 bg-rose-500/10 rounded-xl text-rose-600 dark:text-rose-400 text-sm flex flex-col gap-2 shadow-inner">
-                  <span className="font-bold uppercase tracking-wider text-xs">Erreur Système</span>
+                  <span className="font-bold uppercase tracking-wider text-xs">System Error</span>
                   <span className="text-xs leading-relaxed opacity-90">{error}</span>
                 </div>
               ) : (
@@ -600,8 +600,8 @@ export default function App() {
                   <Activity size={32} className="text-slate-300 dark:text-slate-700 relative z-10" />
                 </div>
                 <div className="text-center max-w-xs">
-                  <p className="font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest text-sm mb-2">En attente de sélection</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-500 leading-relaxed font-mono">Sélectionnez un match depuis la matrice pour charger son tableau de bord de gestion des risques et ses probabilités réelles.</p>
+                  <p className="font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest text-sm mb-2">Awaiting Selection</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 leading-relaxed font-mono">Select a match from the matrix to load its risk management dashboard and true probabilities.</p>
                 </div>
               </div>
             )}

@@ -8,7 +8,7 @@ export default function TabCalibration({ match }) {
   const narrative = match.Risk_Management_Context?.Situational_Narrative || {};
 
   if (!match.Calibration_Diagnostics) {
-    return <div className="text-slate-500 text-sm italic">Aucune donnée de calibration disponible.</div>;
+    return <div className="text-slate-500 text-sm italic">No calibration data available.</div>;
   }
   
   // Format paired multipliers for clarity
@@ -23,11 +23,11 @@ export default function TabCalibration({ match }) {
            <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center font-bold leading-tight">{label}</span>
         </div>
         <div className="w-1/3 p-2.5 flex flex-col items-center border-r border-slate-200 dark:border-slate-800/50">
-           <span className="text-[8px] text-slate-400 dark:text-slate-600 uppercase mb-1">Domicile</span>
+           <span className="text-[8px] text-slate-400 dark:text-slate-600 uppercase mb-1">Home</span>
            <span className={`font-mono text-sm font-bold ${colorHome}`}>{homeVal.toFixed(4)}</span>
         </div>
         <div className="w-1/3 p-2.5 flex flex-col items-center">
-           <span className="text-[8px] text-slate-400 dark:text-slate-600 uppercase mb-1">Extérieur</span>
+           <span className="text-[8px] text-slate-400 dark:text-slate-600 uppercase mb-1">Away</span>
            <span className={`font-mono text-sm font-bold ${colorAway}`}>{awayVal.toFixed(4)}</span>
         </div>
       </div>
@@ -48,12 +48,12 @@ export default function TabCalibration({ match }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* Colonne 1: Vue Globale */}
+      {/* Column 1: Global View */}
       <div className="flex flex-col gap-6">
-        <Card title="Diagnostics Moteur (V8.5)" titleIcon={<Calculator size={16} />}>
+        <Card title="Engine Diagnostics (V8.5)" titleIcon={<Calculator size={16} />}>
           <div className="flex flex-col gap-5 mt-1">
             <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 text-center shadow-inner">
-              <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-2 block">Indice de Confiance (Algorithm Confidence)</span>
+              <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-2 block">Algorithm Confidence Index</span>
               <div className="flex items-center justify-center gap-4">
                 <span className={`text-4xl font-mono font-bold tracking-tight ${diag.confidence_index >= 0.5 ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>
                   {(diag.confidence_index * 100).toFixed(1)}%
@@ -70,19 +70,19 @@ export default function TabCalibration({ match }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center shadow-inner flex flex-col justify-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-blue-500/50"></div>
-                <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 block">Lambda Home</span>
+                <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 block">Home Lambda</span>
                 <span className="text-xl font-mono text-blue-600 dark:text-blue-400 font-bold">{diag.lambda_home?.toFixed(4)}</span>
                 <div className="mt-1 pt-1 border-t border-slate-200 dark:border-slate-800/50 flex flex-col">
-                  <span className="text-[8px] text-slate-400 dark:text-slate-600 uppercase">Composite Brut</span>
+                  <span className="text-[8px] text-slate-400 dark:text-slate-600 uppercase">Raw Composite</span>
                   <span className="text-xs font-mono text-slate-500 dark:text-slate-400">{diag.composite_home?.toFixed(4)}</span>
                 </div>
               </div>
               <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center shadow-inner flex flex-col justify-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-rose-500/50"></div>
-                <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 block">Lambda Away</span>
+                <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 block">Away Lambda</span>
                 <span className="text-xl font-mono text-rose-600 dark:text-rose-400 font-bold">{diag.lambda_away?.toFixed(4)}</span>
                 <div className="mt-1 pt-1 border-t border-slate-200 dark:border-slate-800/50 flex flex-col">
-                  <span className="text-[8px] text-slate-400 dark:text-slate-600 uppercase">Composite Brut</span>
+                  <span className="text-[8px] text-slate-400 dark:text-slate-600 uppercase">Raw Composite</span>
                   <span className="text-xs font-mono text-slate-500 dark:text-slate-400">{diag.composite_away?.toFixed(4)}</span>
                 </div>
               </div>
@@ -90,8 +90,8 @@ export default function TabCalibration({ match }) {
 
             <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex justify-between items-center shadow-inner">
               <div className="flex flex-col">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold">Rho Dynamic (Corrélation)</span>
-                <span className="text-[9px] text-slate-400 dark:text-slate-600 mt-0.5">Ajustement structurel des buts</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold">Dynamic Rho (Correlation)</span>
+                <span className="text-[9px] text-slate-400 dark:text-slate-600 mt-0.5">Structural goals adjustment</span>
               </div>
               <span className={`font-mono text-lg font-bold ${diag.rho_dynamic < 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                 {diag.rho_dynamic?.toFixed(4)}
@@ -101,48 +101,48 @@ export default function TabCalibration({ match }) {
         </Card>
       </div>
 
-      {/* Colonne 2: Multiplicateurs */}
+      {/* Column 2: Multipliers */}
       <div className="flex flex-col gap-6">
-        <Card title="Matrice des Multiplicateurs (H2H)" titleIcon={<Sigma size={16} />}>
+        <Card title="Multipliers Matrix (H2H)" titleIcon={<Sigma size={16} />}>
           <div className="mt-1">
-            {renderPairedMulti('TRG (Qualité)', diag.trg_multiplier_home, diag.trg_multiplier_away)}
+            {renderPairedMulti('TRG (Quality)', diag.trg_multiplier_home, diag.trg_multiplier_away)}
             {renderPairedMulti('Pressing', diag.press_mult_home, diag.press_mult_away)}
             {renderPairedMulti('Conversion', diag.conv_mult_home, diag.conv_mult_away)}
-            {renderPairedMulti('Coups Francs', diag.sp_mult_home, diag.sp_mult_away)}
-            {renderPairedMulti('Trajectoire', diag.trajectory_home, diag.trajectory_away)}
+            {renderPairedMulti('Free Kicks', diag.sp_mult_home, diag.sp_mult_away)}
+            {renderPairedMulti('Trajectory', diag.trajectory_home, diag.trajectory_away)}
           </div>
         </Card>
       </div>
 
-      {/* Colonne 3: Facteurs & Aide Décision */}
+      {/* Column 3: Factors & Decision Support */}
       <div className="flex flex-col gap-6">
-        <Card title="Facteurs Structurels" titleIcon={<Building size={16} />} className="border-indigo-500/30">
+        <Card title="Structural Factors" titleIcon={<Building size={16} />} className="border-indigo-500/30">
           <div className="flex flex-col gap-4 mt-1">
-            {renderSingleMulti('Forteresse Domicile', diag.home_fortress_multiplier)}
-            {renderSingleMulti('Bouclier Défensif', diag.defensive_shield)}
-            {renderSingleMulti('Biais d\'Efficacité', diag.efficiency_bias_correction)}
+            {renderSingleMulti('Home Fortress', diag.home_fortress_multiplier)}
+            {renderSingleMulti('Defensive Shield', diag.defensive_shield)}
+            {renderSingleMulti('Efficiency Bias Correction', diag.efficiency_bias_correction)}
           </div>
         </Card>
 
-        <Card title="Variables Croisées (Aide Décision)" titleIcon={<Activity size={16} />}>
+        <Card title="Cross Variables (Decision Support)" titleIcon={<Activity size={16} />}>
           <div className="flex flex-col gap-4 mt-1">
             {diag.CONTRADICTION_CORNERS_FOULS && (
               <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg flex flex-col gap-1 shadow-sm">
                 <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400">
                    <Activity size={14} />
-                   <span className="text-[10px] uppercase font-bold tracking-widest">Contradiction Détectée</span>
+                   <span className="text-[10px] uppercase font-bold tracking-widest">Contradiction Detected</span>
                 </div>
                 <p className="text-[9px] text-rose-700 dark:text-rose-300/60 font-mono tracking-tight leading-relaxed">
-                  Divergence significative entre les projections de corners et de fautes.
+                  Significant divergence between corners and fouls projections.
                 </p>
               </div>
             )}
             <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-lg shadow-inner">
-              <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400">Indice d'Ouverture</span>
+              <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400">Openness Index</span>
               <span className="font-mono text-sm font-bold text-slate-800 dark:text-slate-200">{tactical.match_openness_index?.toFixed(2) || 'N/A'}</span>
             </div>
             <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-lg shadow-inner">
-              <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400">Gap de Classement</span>
+              <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400">Ranking Gap</span>
               <span className={`font-mono text-sm font-bold ${Math.abs((narrative.Home_Team?.rank_home || 0) - (narrative.Away_Team?.rank_away || 0)) >= 8 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-800 dark:text-slate-200'}`}>
                  {Math.abs((narrative.Home_Team?.rank_home || 0) - (narrative.Away_Team?.rank_away || 0))}
               </span>

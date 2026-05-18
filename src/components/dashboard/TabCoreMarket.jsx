@@ -26,20 +26,20 @@ export default function TabCoreMarket({ match }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* Colonne 1: Buts des Équipes (Priorité 1) */}
+      {/* Column 1: Entity Analysis (Goals) (Priority 1) */}
       <div className="flex flex-col gap-6">
-        <Card title="Analyse par Entité (Buts)" titleIcon={<Activity size={16} />}>
+        <Card title="Entity Analysis (Goals)" titleIcon={<Activity size={16} />}>
           <div className="space-y-6 mt-2">
             {isGoalsZero ? (
               <div className="flex flex-col items-center justify-center p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-center gap-2">
                 <AlertTriangle className="text-rose-600 dark:text-rose-400 w-6 h-6 mb-1" />
-                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Données Invalidées</span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">Marchés des Buts à zéro</span>
+                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Invalidated Data</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Zero Goals Market</span>
               </div>
             ) : (
               <div className="flex flex-col gap-5">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] uppercase text-slate-500 dark:text-slate-400 font-bold tracking-widest">Projection v8.5</span>
+                  <span className="text-[10px] uppercase text-slate-500 dark:text-slate-400 font-bold tracking-widest">v8.5 Projection</span>
                   <Badge variant="default" className="text-[8px] px-1.5 py-0">Gap: {(teamGoals.Target_Entity?.Probability_Gap * 100).toFixed(1)}%</Badge>
                 </div>
                 
@@ -123,24 +123,24 @@ export default function TabCoreMarket({ match }) {
           </div>
         </Card>
 
-        <Card title="Signaux Forts (>70%)" titleIcon={<TrendingUp size={16} />}>
+        <Card title="Strong Signals (>70%)" titleIcon={<TrendingUp size={16} />}>
           <div className="flex flex-col gap-4 mt-2">
             {match.Super_Signals?.O15_ELITE && (
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
                 <AlertCircle className="text-emerald-600 dark:text-emerald-400 shrink-0" size={16} />
-                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-widest uppercase">O1.5 : Élite</span>
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-widest uppercase">O1.5 : Elite</span>
               </div>
             )}
             {match.Super_Signals?.U25_STERILE_DOMINATION && (
               <div className="bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
                 <ShieldCheck className="text-amber-600 dark:text-amber-400 shrink-0" size={16} />
-                <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 tracking-widest uppercase">Domination Stérile (U2.5)</span>
+                <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 tracking-widest uppercase">Sterile Domination (U2.5)</span>
               </div>
             )}
             {match.Super_Signals?.FAV_O25_STORM && (
               <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
                 <TrendingUp className="text-blue-600 dark:text-blue-400 shrink-0" size={16} />
-                <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 tracking-widest uppercase">Tempête de Buts Favori</span>
+                <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 tracking-widest uppercase">Favorite Goals Storm</span>
               </div>
             )}
             {match.Super_Signals?.H_MINUS_25_ANNIHILATION && (
@@ -152,28 +152,28 @@ export default function TabCoreMarket({ match }) {
             {match.Super_Signals?.O_FOULS_ELITE && (
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex gap-3 items-center shadow-sm">
                 <AlertCircle className="text-emerald-600 dark:text-emerald-400 shrink-0" size={16} />
-                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-widest uppercase">Fautes : Élite</span>
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-widest uppercase">Fouls : Elite</span>
               </div>
             )}
 
             {Object.values(match.Super_Signals || {}).every(v => v === false) && (
               <div className="text-center py-6 px-4 text-slate-400 dark:text-slate-500/70 text-[10px] font-bold uppercase tracking-widest border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
-                Aucun Super Signal Actif
+                No Active Super Signal
               </div>
             )}
           </div>
         </Card>
       </div>
 
-      {/* Colonne 2: Marchés des Buts & BTTS (Priorité 2) */}
+      {/* Column 2: Goals Markets & BTTS (Priority 2) */}
       <div className="flex flex-col gap-6">
-        <Card title="Marchés des Buts & BTTS" titleIcon={<ShieldCheck size={16} />}>
+        <Card title="Goals Markets & BTTS" titleIcon={<ShieldCheck size={16} />}>
           <div className="space-y-6 mt-2">
             {isGoalsZero ? (
               <div className="flex flex-col items-center justify-center p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-center gap-2">
                 <AlertTriangle className="text-rose-600 dark:text-rose-400 w-6 h-6 mb-1" />
-                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Données Invalidées</span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">Marchés des Buts à zéro</span>
+                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Invalidated Data</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Zero Goals Market</span>
               </div>
             ) : (
               <>
@@ -181,7 +181,7 @@ export default function TabCoreMarket({ match }) {
                 <ProgressBar label="Over 2.5" value={probs.PROB_O25 || 0} colorClass={probs.PROB_O25 >= 0.55 ? "bg-emerald-500" : "bg-emerald-500/50"} displayValue={renderProbOdds(probs.PROB_O25 || 0, odds.ODDS_O25)} />
                 <ProgressBar label="Under 2.5" value={probs.PROB_U25 || 0} colorClass={probs.PROB_U25 >= 0.55 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U25 || 0, odds.ODDS_U25)} />
                 <ProgressBar label="Under 3.5" value={probs.PROB_U35 || 0} colorClass={probs.PROB_U35 >= 0.75 ? "bg-amber-500" : "bg-amber-500/50"} displayValue={renderProbOdds(probs.PROB_U35 || 0, odds.ODDS_U35)} />
-                <ProgressBar label="BTTS (Oui)" value={probs.PROB_BTTS || 0} colorClass={probs.PROB_BTTS >= 0.60 ? "bg-indigo-500" : "bg-indigo-500/50"} displayValue={renderProbOdds(probs.PROB_BTTS || 0, odds.ODDS_BTTS)} />
+                <ProgressBar label="BTTS (Yes)" value={probs.PROB_BTTS || 0} colorClass={probs.PROB_BTTS >= 0.60 ? "bg-indigo-500" : "bg-indigo-500/50"} displayValue={renderProbOdds(probs.PROB_BTTS || 0, odds.ODDS_BTTS)} />
               </>
             )}
           </div>
@@ -189,10 +189,10 @@ export default function TabCoreMarket({ match }) {
 
         {/* Standard Handicaps moved here to replace Top 3 Scores */}
         {match.Standard_Handicaps && (
-          <Card title="Handicaps Standard" titleIcon={<TrendingUp size={16} />}>
+          <Card title="Standard Handicaps" titleIcon={<TrendingUp size={16} />}>
             <div className="space-y-4 mt-1">
               <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
-                <Badge variant="info" className="text-[10px] px-2 py-0.5">Favori : {match.Standard_Handicaps.favorite}</Badge>
+                <Badge variant="info" className="text-[10px] px-2 py-0.5">Favorite : {match.Standard_Handicaps.favorite}</Badge>
               </div>
               <div className="grid grid-cols-1 gap-3">
                 {Object.entries(match.Standard_Handicaps).filter(([k]) => k.startsWith('H_')).map(([k, v]) => (
@@ -210,29 +210,29 @@ export default function TabCoreMarket({ match }) {
         )}
       </div>
 
-      {/* Colonne 3: Vainqueur du Match (Priorité 3) */}
+      {/* Column 3: Match Winner (Priority 3) */}
       <div className="flex flex-col gap-6">
-        <Card title="Vainqueur du Match (1X2)" titleIcon={<Percent size={16} />}>
+        <Card title="Match Winner (1X2)" titleIcon={<Percent size={16} />}>
           <div className="space-y-6 mt-2">
             {is1X2Zero ? (
               <div className="flex flex-col items-center justify-center p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-center gap-2">
                 <AlertTriangle className="text-rose-600 dark:text-rose-400 w-6 h-6 mb-1" />
-                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Données Invalidées</span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">Marché 1X2 à zéro (Kill-Switch)</span>
+                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Invalidated Data</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">1X2 Market at zero (Kill-Switch)</span>
               </div>
             ) : (
               <>
-                <ProgressBar label="Domicile (1)" value={probs.PROB_1 || 0} colorClass="bg-blue-500" displayValue={renderProbOdds(probs.PROB_1 || 0, odds.ODDS_1)} />
-                <ProgressBar label="Nul (X)" value={probs.PROB_X || 0} colorClass="bg-slate-500" displayValue={renderProbOdds(probs.PROB_X || 0, odds.ODDS_X)} />
-                <ProgressBar label="Extérieur (2)" value={probs.PROB_2 || 0} colorClass="bg-rose-500" displayValue={renderProbOdds(probs.PROB_2 || 0, odds.ODDS_2)} />
+                <ProgressBar label="Home (1)" value={probs.PROB_1 || 0} colorClass="bg-blue-500" displayValue={renderProbOdds(probs.PROB_1 || 0, odds.ODDS_1)} />
+                <ProgressBar label="Draw (X)" value={probs.PROB_X || 0} colorClass="bg-slate-500" displayValue={renderProbOdds(probs.PROB_X || 0, odds.ODDS_X)} />
+                <ProgressBar label="Away (2)" value={probs.PROB_2 || 0} colorClass="bg-rose-500" displayValue={renderProbOdds(probs.PROB_2 || 0, odds.ODDS_2)} />
               </>
             )}
           </div>
         </Card>
 
-        {/* Top 3 Scores Exacts moved here to the end */}
+        {/* Top 3 Correct Scores moved here to the end */}
         {Object.keys(scores).length > 0 && (
-          <Card title="Top 3 Scores Exacts" titleIcon={<TrendingUp size={16} />}>
+          <Card title="Top 3 Correct Scores" titleIcon={<TrendingUp size={16} />}>
             <div className="flex flex-col gap-3 mt-1">
               {Object.values(scores).map((item, idx) => (
                 <div key={idx} className="flex flex-wrap gap-2 justify-between items-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3.5 rounded-xl shadow-sm">

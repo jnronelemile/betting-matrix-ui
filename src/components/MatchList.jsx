@@ -61,11 +61,11 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
   };
 
   const formatDate = (dateStr) => {
-    if (dateStr === 'Date Inconnue') return dateStr;
+    if (dateStr === 'Unknown Date') return dateStr;
     const date = new Date(`${dateStr}T12:00:00`);
     
     const options = { weekday: 'long', day: 'numeric', month: 'long' };
-    let formatted = date.toLocaleDateString('fr-FR', options);
+    let formatted = date.toLocaleDateString('en-GB', options);
     return formatted.charAt(0).toUpperCase() + formatted.slice(1);
   };
 
@@ -73,30 +73,30 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
     <div className="flex flex-col gap-4 pb-20 lg:pb-4 transition-colors duration-300">
       {matches.length === 0 && (
         <div className="text-center py-10 text-slate-500 dark:text-slate-400 text-sm">
-          Aucun match trouvé pour ce filtre.
+          No matches found for this filter.
         </div>
       )}
 
       {sortedDates.length > 0 && (
         <div className="flex items-center justify-between mb-1 px-1">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Calendrier</span>
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Calendar</span>
           <div className="flex items-center gap-3">
             {sortedDates.length > 1 && (
               <>
                 <button 
                   onClick={expandAll} 
                   className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                  title="Déplier Tout"
+                  title="Expand All"
                 >
-                  <Maximize2 size={12} /> <span className="hidden xl:inline">Déplier Tout</span>
+                  <Maximize2 size={12} /> <span className="hidden xl:inline">Expand All</span>
                 </button>
                 <div className="w-px h-3 bg-slate-200 dark:bg-slate-800"></div>
                 <button 
                   onClick={collapseAll} 
                   className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-                  title="Replier Tout"
+                  title="Collapse All"
                 >
-                  <Minimize2 size={12} /> <span className="hidden xl:inline">Replier Tout</span>
+                  <Minimize2 size={12} /> <span className="hidden xl:inline">Collapse All</span>
                 </button>
                 <div className="w-px h-3 bg-slate-200 dark:bg-slate-800"></div>
               </>
@@ -104,14 +104,14 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
             <button 
               onClick={() => setSortByTime(!sortByTime)} 
               className={`flex items-center p-1 rounded transition-colors ${sortByTime ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400' : 'text-slate-500 hover:text-blue-600 dark:hover:text-blue-400'}`}
-              title="Trier par heure"
+              title="Sort by time"
             >
               <Clock size={14} />
             </button>
             <button 
               onClick={() => setShowLiveOnly(!showLiveOnly)} 
               className={`flex items-center p-1 rounded transition-colors ${showLiveOnly ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)]' : 'text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
-              title="Afficher les matchs en cours"
+              title="Show live matches only"
             >
               <Radio size={14} className={showLiveOnly ? "animate-pulse" : ""} />
             </button>
