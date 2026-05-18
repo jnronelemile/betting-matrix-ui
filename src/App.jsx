@@ -332,11 +332,11 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-y-auto lg:overflow-hidden transition-colors duration-300">
         {/* Header */}
-        <header className="sticky top-0 z-20 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-transform duration-300">
-          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${headerVisible ? 'h-16 opacity-100' : 'h-0 opacity-0'}`}>
-            <div className="h-16 flex items-center justify-between px-4 lg:px-6">
+        <header className="sticky top-0 z-20 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300">
+          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${headerVisible ? 'h-auto lg:h-16 opacity-100' : 'h-0 opacity-0 lg:h-16 lg:opacity-100'}`}>
+            <div className="h-16 lg:h-16 flex items-center justify-between px-4 lg:px-6 gap-4">
               {mobileSearchOpen ? (
-                <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200">
+                <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200 lg:hidden">
                   <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
                     <input 
@@ -360,49 +360,109 @@ export default function App() {
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 lg:gap-4 shrink-0">
                     <button 
                       className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
                       onClick={() => setSidebarOpen(!sidebarOpen)}
-                      title={sidebarOpen ? "Masquer les ligues" : "Afficher les ligues"}
                     >
                       <Menu size={18} />
                     </button>
                     <button 
                       className="hidden lg:flex text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
                       onClick={() => setMatchListOpen(!matchListOpen)}
-                      title={matchListOpen ? "Masquer la liste des matchs" : "Afficher la liste des matchs"}
                     >
                       {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
                     </button>
-                    <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
-                      <Activity size={14} className="text-emerald-600 dark:text-emerald-500" />
-                      <span className="hidden sm:inline">Engine <span className="text-emerald-600 dark:text-emerald-400 font-mono ml-1">ACTIVE</span></span>
+                    <div className="hidden xl:flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
+                      <Activity size={12} className="text-emerald-600 dark:text-emerald-500" />
+                      <span>Engine <span className="text-emerald-600 dark:text-emerald-400 font-mono ml-1">ACTIVE</span></span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="relative group w-full max-w-[180px] hidden md:block shrink-0">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={16} />
+                  {/* Desktop Integrated Navigation */}
+                  <div className="hidden lg:flex flex-1 items-center gap-4 min-w-0">
+                    {/* Integrated Date Pills */}
+                    <div className="flex-1 flex overflow-x-auto no-scrollbar gap-1.5 snap-x max-w-2xl border-x border-slate-100 dark:border-slate-800/50 px-4">
+                      <button
+                        onClick={() => setSelectedDate('ALL')}
+                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
+                          selectedDate === 'ALL'
+                            ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+                        }`}
+                      >
+                        Tout
+                      </button>
+                      {availableDates.map(date => {
+                        let displayDay = '???';
+                        let displayNumber = '';
+                        if (date !== 'Date Inconnue') {
+                          const d = new Date(`${date}T12:00:00`);
+                          displayDay = d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '');
+                          displayNumber = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+                        }
+                        return (
+                          <button
+                            key={date}
+                            onClick={() => setSelectedDate(date)}
+                            className={`flex flex-col items-center px-3 py-1 rounded-lg transition-all border min-w-[55px] snap-start ${
+                              selectedDate === date
+                                ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
+                                : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+                            }`}
+                          >
+                            <span className="text-[8px] uppercase font-bold tracking-tighter opacity-70 leading-none mb-0.5">{displayDay}</span>
+                            <span className="text-[10px] font-mono font-bold leading-none">{displayNumber}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Integrated Signal Toggles */}
+                    <div className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x shrink-0">
+                      {[
+                        { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), color: 'emerald' },
+                        { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), color: 'amber' },
+                        { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
+                        { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
+                      ].map(sig => (
+                        <button
+                          key={sig.id}
+                          onClick={sig.toggle}
+                          className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                            sig.active 
+                              ? `bg-${sig.color}-500/10 border-${sig.color}-500/50 text-${sig.color}-600 dark:text-${sig.color}-400 shadow-sm` 
+                              : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                          }`}
+                        >
+                          {sig.icon}
+                          <span>{sig.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 lg:gap-3 shrink-0 ml-auto">
+                    <div className="relative group w-full max-w-[140px] hidden lg:block">
+                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={14} />
                       <input 
                         type="text" 
                         placeholder="Filtrer..."
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-mono shadow-sm"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-8 pr-3 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
                       />
                     </div>
                     
                     <button
                       onClick={toggleTheme}
                       className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
-                      title={theme === 'dark' ? "Passer en mode clair" : "Passer en mode sombre"}
                     >
                       {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                     </button>
                     
                     <button 
-                      className="md:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2"
+                      className="lg:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2"
                       onClick={() => setMobileSearchOpen(true)}
                     >
                       <Search size={20} />
@@ -413,19 +473,19 @@ export default function App() {
             </div>
           </div>
 
-          {/* Sub-Header: Responsive Date & Signal Filters */}
-          <div className="bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-2 lg:py-3 flex flex-col gap-2 lg:gap-3">
-            {/* Date Pills */}
-            <div className="flex overflow-x-auto no-scrollbar gap-1.5 lg:gap-2 px-4 lg:px-6 snap-x">
+          {/* Sub-Header: Only for Mobile Version */}
+          <div className={`lg:hidden bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-2 flex flex-col gap-2 transition-all duration-300 ${headerVisible ? 'opacity-100' : 'h-0 opacity-0 overflow-hidden'}`}>
+            {/* Mobile Date Pills */}
+            <div className="flex overflow-x-auto no-scrollbar gap-1.5 px-4 snap-x">
               <button
                 onClick={() => setSelectedDate('ALL')}
-                className={`px-3 lg:px-4 py-1 lg:py-1.5 rounded-lg lg:rounded-xl text-[10px] lg:text-[11px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
+                className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
                   selectedDate === 'ALL'
                     ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
                     : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
-                Tout le calendrier
+                Tout
               </button>
               {availableDates.map(date => {
                 let displayDay = '???';
@@ -435,47 +495,45 @@ export default function App() {
                   displayDay = d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '');
                   displayNumber = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
                 }
-                
                 return (
                   <button
                     key={date}
                     onClick={() => setSelectedDate(date)}
-                    className={`flex flex-col items-center px-3 lg:px-4 py-0.5 lg:py-1 rounded-lg lg:rounded-xl transition-all border min-w-[55px] lg:min-w-[65px] snap-start ${
+                    className={`flex flex-col items-center px-3 py-0.5 rounded-lg transition-all border min-w-[55px] snap-start ${
                       selectedDate === date
                         ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
                         : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                     }`}
                   >
-                    <span className="text-[8px] lg:text-[9px] uppercase font-bold tracking-tighter opacity-70 leading-tight">{displayDay}</span>
-                    <span className="text-[10px] lg:text-[11px] font-mono font-bold leading-none">{displayNumber || date}</span>
+                    <span className="text-[8px] uppercase font-bold tracking-tighter opacity-70 leading-tight">{displayDay}</span>
+                    <span className="text-[10px] font-mono font-bold leading-none">{displayNumber}</span>
                   </button>
                 );
               })}
             </div>
 
-            {/* Signal Toggles */}
-            <div className="flex gap-1.5 lg:gap-2 overflow-x-auto no-scrollbar px-4 lg:px-6 snap-x pb-0.5 lg:pb-1">
+            {/* Mobile Signal Toggles */}
+            <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 snap-x pb-0.5">
               {[
-                { id: 'fav', label: 'FAVORIS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), color: 'emerald' },
+                { id: 'fav', label: 'FAV', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), color: 'emerald' },
                 { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), color: 'amber' },
-                { id: 'conf', label: 'CONFIANCE', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
-                { id: 'safe', label: 'SAFE PICK', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
-                { id: 'reg', label: 'RÉGULARITÉ', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), color: 'cyan' },
-                { id: 'goals', label: 'SAFE BUTS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), color: 'orange' },
-                { id: 'top', label: 'TOP FORME', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), color: 'pink' },
+                { id: 'conf', label: 'CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), color: 'blue' },
+                { id: 'safe', label: 'SAFE', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), color: 'purple' },
+                { id: 'reg', label: 'REG', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), color: 'cyan' },
+                { id: 'goals', label: 'GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), color: 'orange' },
+                { id: 'top', label: 'TOP', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), color: 'pink' },
               ].map(sig => (
                 <button
                   key={sig.id}
                   onClick={sig.toggle}
-                  className={`flex items-center gap-1 lg:gap-1.5 px-2 lg:px-3 py-1 lg:py-1.5 rounded-md lg:rounded-lg text-[9px] lg:text-[10px] transition-all font-bold border shrink-0 snap-start ${
+                  className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
                     sig.active 
                       ? `bg-${sig.color}-500/10 border-${sig.color}-500/50 text-${sig.color}-600 dark:text-${sig.color}-400 shadow-sm` 
                       : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   {sig.icon}
-                  <span className="hidden sm:inline">{sig.label}</span>
-                  <span className="sm:hidden">{sig.label.split(' ')[0]}</span>
+                  <span>{sig.label}</span>
                 </button>
               ))}
             </div>
