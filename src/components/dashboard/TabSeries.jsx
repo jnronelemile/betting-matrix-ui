@@ -62,7 +62,7 @@ export default function TabSeries({ stats, match, loading }) {
             <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide leading-tight">{cleanLabel}</span>
           </div>
           <div className="flex flex-col items-end shrink-0">
-             <span className="text-base font-black font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20 shadow-sm">
+             <span className="text-[10px] sm:text-xs font-black font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20 shadow-sm">
                 {value}
              </span>
           </div>
