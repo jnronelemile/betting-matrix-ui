@@ -57,12 +57,12 @@ export default function TabSeries({ stats, match, loading }) {
         <div className="flex items-center justify-between gap-4">
           <div className="flex flex-col">
             {teamPrefix && (
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter mb-0.5">{teamPrefix}</span>
+              <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter mb-0.5">{teamPrefix}</span>
             )}
-            <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide leading-tight">{cleanLabel}</span>
+            <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide leading-tight">{cleanLabel}</span>
           </div>
           <div className="flex flex-col items-end shrink-0">
-             <span className="text-lg font-black font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-0.5 rounded-lg border border-emerald-500/20 shadow-sm">
+             <span className="text-base font-black font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20 shadow-sm">
                 {value}
              </span>
           </div>

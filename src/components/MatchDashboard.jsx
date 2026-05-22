@@ -29,8 +29,8 @@ export function MatchDashboard({ match, onClose }) {
 
   const TABS = [
     { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
-    { id: 'series', label: 'Series Stats', icon: <TrendingUp size={14} /> },
     { id: 'core', label: 'Core Market', icon: <BarChart3 size={14} /> },
+    { id: 'series', label: 'Series Stats', icon: <TrendingUp size={14} /> },
     { id: 'risk', label: 'Risk Context', icon: <Activity size={14} /> },
     { id: 'narrative', label: 'Narrative & Psych', icon: <Brain size={14} /> },
     { id: 'calibration', label: 'Maths & Calibration', icon: <Calculator size={14} /> },
