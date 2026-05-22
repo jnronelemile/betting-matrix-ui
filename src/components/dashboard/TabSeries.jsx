@@ -127,20 +127,23 @@ export default function TabSeries({ stats, match, loading }) {
       {/* 1. Team Streaks (Home & Away) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Home Streaks */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
-                <CheckCircle2 size={24} className="text-emerald-600 dark:text-emerald-400" />
+              <div className="p-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                <CheckCircle2 size={18} className="text-emerald-600 dark:text-emerald-400" />
               </div>
-              <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-lg leading-none">{homeTeam} Trends</h3>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-widest">Team Trends</span>
+                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-tight">{homeTeam}</h3>
+              </div>
             </div>
-            <Badge variant="success" className="font-mono px-3 py-1">HOME</Badge>
+            <Badge variant="success" className="font-mono text-[9px] px-2 py-0.5">HOME</Badge>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             {streaks.team_streaks.home.map((streak, idx) => (
-              <div key={idx} className="bg-slate-50 dark:bg-slate-950/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-800/50 hover:border-emerald-500/30 transition-all group">
+              <div key={idx} className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800/50 hover:border-emerald-500/30 transition-all group">
                 {formatStreak(streak)}
               </div>
             ))}
@@ -148,20 +151,23 @@ export default function TabSeries({ stats, match, loading }) {
         </div>
 
         {/* Away Streaks */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-blue-500/10 rounded-2xl border border-blue-500/20">
-                <CheckCircle2 size={24} className="text-blue-600 dark:text-blue-400" />
+              <div className="p-2 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                <CheckCircle2 size={18} className="text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-lg leading-none">{awayTeam} Trends</h3>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">Team Trends</span>
+                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-tight">{awayTeam}</h3>
+              </div>
             </div>
-            <Badge variant="info" className="font-mono px-3 py-1">AWAY</Badge>
+            <Badge variant="info" className="font-mono text-[9px] px-2 py-0.5">AWAY</Badge>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             {streaks.team_streaks.away.map((streak, idx) => (
-              <div key={idx} className="bg-slate-50 dark:bg-slate-950/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-800/50 hover:border-blue-500/30 transition-all group">
+              <div key={idx} className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800/50 hover:border-blue-500/30 transition-all group">
                 {formatStreak(streak)}
               </div>
             ))}
@@ -170,19 +176,19 @@ export default function TabSeries({ stats, match, loading }) {
       </div>
 
       {/* 2. H2H Streaks */}
-      <div className="bg-slate-900 dark:bg-slate-950 rounded-3xl p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
+      <div className="bg-slate-900 dark:bg-slate-950 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-5 text-white">
-          <Users size={120} />
+          <Users size={100} />
         </div>
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2.5 bg-indigo-500/20 rounded-2xl border border-indigo-500/30">
-            <Users size={24} className="text-indigo-400" />
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-indigo-500/20 rounded-xl border border-indigo-500/30">
+            <Users size={18} className="text-indigo-400" />
           </div>
-          <h3 className="font-black text-white uppercase tracking-tighter text-lg leading-none">Head-to-Head History</h3>
+          <h3 className="font-black text-white uppercase tracking-tighter text-sm leading-none">Head-to-Head History</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {streaks.h2h_streaks.map((streak, idx) => (
-            <div key={idx} className="bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-indigo-500/50 transition-all group backdrop-blur-sm">
+            <div key={idx} className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-indigo-500/50 transition-all group backdrop-blur-sm">
               {formatStreak(streak)}
             </div>
           ))}
@@ -190,13 +196,13 @@ export default function TabSeries({ stats, match, loading }) {
       </div>
 
       {/* 3. Goal Distribution Comparison */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-10">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-rose-500/10 rounded-2xl border border-rose-500/20">
-              <Goal size={24} className="text-rose-600 dark:text-rose-400" />
+            <div className="p-2 bg-rose-500/10 rounded-xl border border-rose-500/20">
+              <Goal size={18} className="text-rose-600 dark:text-rose-400" />
             </div>
-            <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-lg leading-none">Goal Distribution Comparison</h3>
+            <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-none">Goal Distribution Comparison</h3>
           </div>
           <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 bg-slate-50 dark:bg-slate-950/50 p-2 sm:p-0 rounded-xl sm:bg-transparent self-start sm:self-auto">
              <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-emerald-500/60 shadow-inner"></div> SCORED</div>
