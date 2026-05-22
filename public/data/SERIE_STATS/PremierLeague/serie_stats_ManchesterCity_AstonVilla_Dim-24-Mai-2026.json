@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "competition": "Premier League",
+    "fixture": "Manchester City vs Aston Villa"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Manchester City) Without clean sheet: 10",
+      "Both teams scoring: 8/10"
+    ],
+    "team_streaks": {
+      "away": [
+        "No losses: 4",
+        "More than 2.5 goals: 5/5",
+        "Less than 4.5 cards: 9/10",
+        "Less than 10.5 corners: 8/10"
+      ],
+      "home": [
+        "No losses: 11",
+        "First to score: 8/10",
+        "More than 10.5 corners: 8/9"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      6,
+      2,
+      4,
+      6,
+      4,
+      4
+    ],
+    "away_scored": [
+      1,
+      3,
+      4,
+      4,
+      4,
+      6
+    ],
+    "home_conceded": [
+      0,
+      3,
+      3,
+      3,
+      1,
+      2
+    ],
+    "home_scored": [
+      5,
+      8,
+      12,
+      4,
+      10,
+      5
+    ]
+  }
+}

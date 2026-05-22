@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "competition": "LaLiga",
+    "fixture": "Real Madrid vs Athletic Club"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Athletic Club) Without clean sheet: 7",
+      "Less than 2.5 goals: 7/9",
+      "(Real Madrid) First to score: 4/5",
+      "Less than 4.5 cards: 5/6",
+      "More than 10.5 corners: 7/8"
+    ],
+    "team_streaks": {
+      "away": [
+        "No wins: 3",
+        "Without clean sheet: 5",
+        "First to concede: 4/5"
+      ],
+      "home": [
+        "Less than 2.5 goals: 5/5",
+        "First to score: 7/8",
+        "First half winner: 5/7",
+        "More than 10.5 corners: 7/9"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      5,
+      1,
+      6,
+      7,
+      4,
+      10
+    ],
+    "away_scored": [
+      2,
+      1,
+      4,
+      4,
+      3,
+      5
+    ],
+    "home_conceded": [
+      0,
+      2,
+      3,
+      2,
+      4,
+      3
+    ],
+    "home_scored": [
+      2,
+      6,
+      10,
+      11,
+      4,
+      8
+    ]
+  }
+}

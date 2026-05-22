@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "competition": "Premier League",
+    "fixture": "Brighton & Hove Albion vs Manchester United"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Brighton & Hove Albion) Without clean sheet: 6",
+      "(Manchester United) Without clean sheet: 4",
+      "More than 2.5 goals: 5/6",
+      "Both teams scoring: 5/6",
+      "(Brighton & Hove Albion) First to score: 5/7",
+      "Less than 10.5 corners: 5/6"
+    ],
+    "team_streaks": {
+      "away": [
+        "No losses: 5",
+        "More than 2.5 goals: 8/10",
+        "Both teams scoring: 8/10",
+        "First to score: 4/5",
+        "First half winner: 4/5",
+        "Less than 4.5 cards: 4/5",
+        "More than 10.5 corners: 6/8"
+      ],
+      "home": [
+        "More than 2.5 goals: 4/5",
+        "More than 10.5 corners: 4/5"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      2,
+      3,
+      4,
+      5,
+      5,
+      7
+    ],
+    "away_scored": [
+      1,
+      2,
+      6,
+      6,
+      6,
+      6
+    ],
+    "home_conceded": [
+      2,
+      2,
+      5,
+      1,
+      2,
+      5
+    ],
+    "home_scored": [
+      9,
+      2,
+      2,
+      4,
+      5,
+      8
+    ]
+  }
+}

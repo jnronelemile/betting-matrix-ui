@@ -10,11 +10,13 @@ Ce projet est l'interface utilisateur (Dashboard) du moteur d'inférence **Titan
 
 ## Principes de Développement UI
 1. **Fidélité au Moteur** : L'interface doit refléter précisément les données produites par `engine_v85.py`. Ne jamais arrondir ou modifier les probabilités côté client sans justification statistique.
-2. **Visualisation de la Confiance** : Utiliser les codes couleurs et les icônes pour différencier les types de signaux (Ultra Safe, Safe Goals, etc.).
-3. **Navigation Mobile-First** :
-    - Navigation entre les onglets par balayage horizontal (Swipe).
-    - Transitions directionnelles animées pour un meilleur feedback utilisateur.
-4. **Performance de Filtrage** : Les filtres utilisent désormais les indicateurs natifs `Investment_Signals` du moteur v8.5.
+2. **Terminologie Standard (Anglais)** : Pour garantir une traçabilité parfaite avec le moteur, tous les labels de signaux, indicateurs techniques et noms de filtres doivent rester en **Anglais original** (ex: TRUE FAVS, HIGH CONF, JUSTICE TENSION).
+3. **Système de Thèmes** : L'interface supporte nativement un mode **Sombre** et un mode **Clair Élégant** via une classe racine `dark` et un état persistant.
+4. **Visualisation de la Confiance** : Utiliser les codes couleurs et les icônes pour différencier les types de signaux (Ultra Safe, Safe Goals, etc.).
+5. **Navigation Mobile-First** :
+    - Navigation entre les onglets par balayage horizontal (Swipe) et menu auto-centré.
+    - Transitions directionnelles fluides (300ms).
+    - Support du bouton de retour système du téléphone.
 
 ## Flux de Données
 - Le Dashboard charge `/data/index.json` pour connaître les fichiers de ligues disponibles (Backtests v8.5).
@@ -26,5 +28,6 @@ Ce projet est l'interface utilisateur (Dashboard) du moteur d'inférence **Titan
 - [x] Migration Titanium v8.5.
 - [x] Navigation Swipe & Animations.
 - [x] Exploitation 100% des données JSON (Team Goals, Justice Z-Scores).
+- [x] Onglet "Series Stats" (H2H & Team Streaks).
 - [ ] Graphiques d'évolution des lambdas (Poisson distribution charts).
 

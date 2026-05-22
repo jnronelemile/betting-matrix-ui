@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "competition": "Premier League",
+    "fixture": "Fulham vs Newcastle United"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Fulham) Without clean sheet: 12",
+      "(Newcastle United) Without clean sheet: 4",
+      "More than 2.5 goals: 4/5",
+      "Both teams scoring: 4/5",
+      "(Newcastle United) First to score: 9/10",
+      "Less than 4.5 cards: 8/10",
+      "Less than 10.5 corners: 4/5"
+    ],
+    "team_streaks": {
+      "away": [
+        "No losses: 3",
+        "Without clean sheet: 8",
+        "More than 2.5 goals: 6/8",
+        "Both teams scoring: 7/8",
+        "First to score: 5/7",
+        "Less than 10.5 corners: 5/6"
+      ],
+      "home": [
+        "No wins: 3",
+        "Without clean sheet: 3",
+        "Less than 2.5 goals: 5/6",
+        "First to concede: 5/7",
+        "Less than 4.5 cards: 5/6"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      2,
+      3,
+      5,
+      2,
+      3,
+      8
+    ],
+    "away_scored": [
+      4,
+      4,
+      4,
+      1,
+      2,
+      2
+    ],
+    "home_conceded": [
+      0,
+      4,
+      2,
+      7,
+      4,
+      3
+    ],
+    "home_scored": [
+      2,
+      2,
+      7,
+      3,
+      7,
+      7
+    ]
+  }
+}

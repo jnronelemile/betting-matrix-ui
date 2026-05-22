@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "competition": "LaLiga",
+    "fixture": "Villarreal vs Atlético Madrid"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Atlético Madrid) No losses: 6",
+      "(Villarreal) Without clean sheet: 6",
+      "Both teams scoring: 5/6",
+      "(Villarreal) First to score: 5/7",
+      "More than 4.5 cards: 6/7"
+    ],
+    "team_streaks": {
+      "away": [
+        "Less than 2.5 goals: 5/6",
+        "Less than 4.5 cards: 5/7",
+        "Less than 10.5 corners: 5/7"
+      ],
+      "home": [
+        "No wins: 3",
+        "Without clean sheet: 13",
+        "Both teams scoring: 6/7",
+        "First to score: 6/7",
+        "Less than 4.5 cards: 5/6",
+        "Less than 10.5 corners: 5/6"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      2,
+      2,
+      4,
+      3,
+      5,
+      6
+    ],
+    "away_scored": [
+      6,
+      1,
+      6,
+      1,
+      3,
+      5
+    ],
+    "home_conceded": [
+      2,
+      1,
+      3,
+      3,
+      4,
+      5
+    ],
+    "home_scored": [
+      6,
+      8,
+      10,
+      6,
+      8,
+      5
+    ]
+  }
+}

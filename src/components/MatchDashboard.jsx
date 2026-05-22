@@ -7,12 +7,15 @@ import TabNarrative from './dashboard/TabNarrative';
 import TabTactical from './dashboard/TabTactical';
 import TabCalibration from './dashboard/TabCalibration';
 import TabRiskContext from './dashboard/TabRiskContext';
-import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target, ChevronLeft } from 'lucide-react';
+import TabSeries from './dashboard/TabSeries';
+import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target, ChevronLeft, TrendingUp } from 'lucide-react';
 
 export function MatchDashboard({ match, onClose }) {
   const [activeTab, setActiveTab] = useState('tactical');
   const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
   const [isScrolled, setIsScrolled] = useState(false);
+  const [serieStats, setSerieStats] = useState(null);
+  const [loadingStats, setLoadingStats] = useState(false);
   const headerRef = useRef(null);
   const tabsContainerRef = useRef(null);
   const mobileTabsContainerRef = useRef(null);
@@ -26,11 +29,97 @@ export function MatchDashboard({ match, onClose }) {
 
   const TABS = [
     { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
+    { id: 'series', label: 'Series Stats', icon: <TrendingUp size={14} /> },
     { id: 'core', label: 'Core Market', icon: <BarChart3 size={14} /> },
     { id: 'risk', label: 'Risk Context', icon: <Activity size={14} /> },
     { id: 'narrative', label: 'Narrative & Psych', icon: <Brain size={14} /> },
     { id: 'calibration', label: 'Maths & Calibration', icon: <Calculator size={14} /> },
   ];
+
+  useEffect(() => {
+    async function fetchSerieStats() {
+      if (!match) return;
+      setSerieStats(null);
+      setLoadingStats(true);
+      try {
+        const indexRes = await fetch('/data/SERIE_STATS/index.json');
+        if (!indexRes.ok) throw new Error('Failed to fetch index');
+        const files = await indexRes.json();
+        
+        const normalizeForFile = (str) => str.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9]/g, "");
+
+        const matchupParts = match.Matchup.split(' vs ');
+        if (matchupParts.length < 2) return;
+
+        const homeNorm = normalizeForFile(matchupParts[0]);
+        const awayNorm = normalizeForFile(matchupParts[1]);
+        const leagueNorm = normalizeForFile(match.League || '');
+
+        let bestFile = null;
+        let maxScore = 0;
+        
+        files.forEach(f => {
+          const fileNameOnly = f.split('/').pop().toLowerCase();
+          const folderName = f.includes('/') ? f.split('/')[0].toLowerCase() : '';
+          
+          let score = 0;
+          
+          // League match
+          const isPL = leagueNorm.includes('premier') || leagueNorm === 'pl' || folderName.includes('premier');
+          const isSA = leagueNorm.includes('seriea') || leagueNorm.includes('italy') || folderName.includes('seriea');
+          const isLL = leagueNorm.includes('liga') || leagueNorm.includes('spain') || folderName.includes('laliga');
+          
+          if (isPL && folderName.includes('premier')) score += 15;
+          else if (isSA && folderName.includes('seriea')) score += 15;
+          else if (isLL && (folderName.includes('laliga') || folderName.includes('liga'))) score += 15;
+          else if (leagueNorm && (folderName.includes(leagueNorm) || leagueNorm.includes(folderName))) score += 10;
+          
+          // Check home team
+          const hPart = fileNameOnly.split('_')[2]?.toLowerCase() || '';
+          const aPart = fileNameOnly.split('_')[3]?.toLowerCase() || '';
+
+          if (fileNameOnly.includes(homeNorm) || (hPart && (homeNorm.includes(hPart) || hPart.includes(homeNorm)))) {
+            score += 10;
+          } else if (homeNorm.length > 3 && fileNameOnly.includes(homeNorm.substring(0, 4))) {
+            score += 5;
+          }
+          
+          // Check away team
+          if (fileNameOnly.includes(awayNorm) || (aPart && (awayNorm.includes(aPart) || aPart.includes(awayNorm)))) {
+            score += 10;
+          } else if (awayNorm.length > 3 && fileNameOnly.includes(awayNorm.substring(0, 4))) {
+            score += 5;
+          }
+          
+          if (score > maxScore) {
+            maxScore = score;
+            bestFile = f;
+          }
+        });
+
+        // Threshold: Must match at least league + some team part, OR both teams
+        if (bestFile && (maxScore >= 15)) {
+          const res = await fetch(`/data/SERIE_STATS/${bestFile}`);
+          if (res.ok) {
+            const stats = await res.json();
+            // Basic validation
+            if (stats && stats.streaks && stats.goal_distribution) {
+              setSerieStats(stats);
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Error fetching serie stats:", e);
+      } finally {
+        setLoadingStats(false);
+      }
+    }
+
+    fetchSerieStats();
+  }, [match]);
 
   // Swipe logic for mobile
   const handleTouchStart = (e) => {
@@ -258,6 +347,7 @@ export function MatchDashboard({ match, onClose }) {
           key={activeTab}
           className={`w-full ${slideDirection === 'right' ? 'animate-slide-right' : 'animate-slide-left'}`}
         >
+          {activeTab === 'series' && <TabSeries stats={serieStats} match={match} loading={loadingStats} />}
           {activeTab === 'core' && <TabCoreMarket match={match} />}
           {activeTab === 'risk' && <TabRiskContext match={match} />}
           {activeTab === 'narrative' && <TabNarrative match={match} />}

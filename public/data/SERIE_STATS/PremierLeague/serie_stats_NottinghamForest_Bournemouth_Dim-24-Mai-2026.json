@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "competition": "Premier League",
+    "fixture": "Nottingham Forest vs Bournemouth"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Bournemouth) No losses: 11",
+      "(Nottingham Forest) Without clean sheet: 9",
+      "Both teams scoring: 5/7",
+      "More than 4.5 cards: 4/5"
+    ],
+    "team_streaks": {
+      "away": [
+        "No losses: 16",
+        "Both teams scoring: 5/7",
+        "First to score: 6/6",
+        "More than 10.5 corners: 6/8"
+      ],
+      "home": [
+        "No wins: 3",
+        "Without clean sheet: 4",
+        "Less than 4.5 cards: 5/5"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      3,
+      4,
+      8,
+      5,
+      4,
+      9
+    ],
+    "away_scored": [
+      5,
+      4,
+      5,
+      3,
+      5,
+      6
+    ],
+    "home_conceded": [
+      1,
+      2,
+      5,
+      3,
+      1,
+      10
+    ],
+    "home_scored": [
+      3,
+      1,
+      3,
+      4,
+      3,
+      5
+    ]
+  }
+}

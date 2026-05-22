@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "competition": "Serie A",
+    "fixture": "Fiorentina vs Atalanta"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "Less than 10.5 corners: 5/5"
+    ],
+    "team_streaks": {
+      "away": [
+        "Less than 2.5 goals: 5/7",
+        "Less than 4.5 cards: 9/10",
+        "Less than 10.5 corners: 4/5"
+      ],
+      "home": [
+        "Less than 2.5 goals: 4/5",
+        "Less than 10.5 corners: 5/6"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      2,
+      4,
+      5,
+      1,
+      2,
+      6
+    ],
+    "away_scored": [
+      2,
+      3,
+      7,
+      5,
+      1,
+      7
+    ],
+    "home_conceded": [
+      3,
+      5,
+      3,
+      3,
+      2,
+      4
+    ],
+    "home_scored": [
+      3,
+      2,
+      2,
+      4,
+      5,
+      4
+    ]
+  }
+}

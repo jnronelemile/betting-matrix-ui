@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "competition": "Premier League",
+    "fixture": "West Ham United vs Leeds United"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(West Ham United) Without clean sheet: 5",
+      "(Leeds United) Without clean sheet: 11",
+      "More than 2.5 goals: 5/5",
+      "Both teams scoring: 5/5",
+      "(Leeds United) First to score: 5/5",
+      "Less than 10.5 corners: 5/6"
+    ],
+    "team_streaks": {
+      "away": [
+        "No losses: 3",
+        "More than 10.5 corners: 5/7"
+      ],
+      "home": [
+        "Losses: 3",
+        "Without clean sheet: 4",
+        "More than 2.5 goals: 5/7",
+        "Less than 4.5 cards: 8/10",
+        "Less than 10.5 corners: 7/7"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      4,
+      4,
+      3,
+      6,
+      6,
+      9
+    ],
+    "away_scored": [
+      2,
+      2,
+      6,
+      2,
+      5,
+      3
+    ],
+    "home_conceded": [
+      3,
+      1,
+      6,
+      7,
+      4,
+      9
+    ],
+    "home_scored": [
+      5,
+      2,
+      7,
+      3,
+      2,
+      5
+    ]
+  }
+}

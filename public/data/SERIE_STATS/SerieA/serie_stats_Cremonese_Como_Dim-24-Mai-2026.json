@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "competition": "Serie A",
+    "fixture": "Cremonese vs Como"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Cremonese) No losses: 7",
+      "(Cremonese) Without clean sheet: 4",
+      "(Como) Without clean sheet: 7",
+      "More than 2.5 goals: 5/7",
+      "Both teams scoring: 6/7",
+      "(Cremonese) First to score: 5/6",
+      "(Cremonese) First half winner: 5/6",
+      "More than 4.5 cards: 4/5"
+    ],
+    "team_streaks": {
+      "away": [
+        "No losses: 4",
+        "No goals conceded: 4",
+        "Less than 2.5 goals: 4/5",
+        "First to score: 4/5",
+        "Less than 4.5 cards: 5/5"
+      ],
+      "home": [
+        "Less than 4.5 cards: 5/6",
+        "Less than 10.5 corners: 8/10"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      3,
+      0,
+      3,
+      4,
+      1,
+      2
+    ],
+    "away_scored": [
+      4,
+      3,
+      3,
+      2,
+      8,
+      6
+    ],
+    "home_conceded": [
+      3,
+      4,
+      3,
+      4,
+      6,
+      5
+    ],
+    "home_scored": [
+      2,
+      2,
+      3,
+      3,
+      0,
+      7
+    ]
+  }
+}
