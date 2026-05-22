@@ -191,14 +191,14 @@ export default function TabSeries({ stats, match, loading }) {
 
       {/* 3. Goal Distribution Comparison */}
       <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-10">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-rose-500/10 rounded-2xl border border-rose-500/20">
               <Goal size={24} className="text-rose-600 dark:text-rose-400" />
             </div>
             <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-lg leading-none">Goal Distribution Comparison</h3>
           </div>
-          <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+          <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 bg-slate-50 dark:bg-slate-950/50 p-2 sm:p-0 rounded-xl sm:bg-transparent self-start sm:self-auto">
              <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-emerald-500/60 shadow-inner"></div> SCORED</div>
              <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-rose-500/60 shadow-inner"></div> CONCEDED</div>
           </div>
