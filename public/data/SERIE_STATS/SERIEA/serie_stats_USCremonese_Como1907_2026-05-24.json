@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "competition": "SERIEA",
+    "fixture": "US Cremonese vs Como 1907",
+    "date": "2026-05-24",
+    "generated_at": "2026-05-23T19:00:52.551847",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Cremonese) No losses: 7",
+      "(Cremonese) No Clean Sheet: 4",
+      "(Como) No Clean Sheet: 7",
+      "Over 2.5 goals: 5/7",
+      "BTTS Yes: 6/7",
+      "(Cremonese) First to score: 5/6",
+      "(Cremonese) First half winner: 5/6",
+      "Over 4.5 cards: 4/5"
+    ],
+    "team_streaks": {
+      "home": [
+        "Scoring: 3",
+        "Under 1.5 Team Goals: 8/10",
+        "Over 0.5 Team Goals: 7/10",
+        "BTTS No: 6/8",
+        "Under 10.5 Corners: 8/10",
+        "Over 4.5 Corners (Team): 5/7",
+        "Under 8.5 SOT: 7/10",
+        "Over 3.5 SOT (Team): 7/10",
+        "Under 22.5 Shots: 7/10",
+        "Under 10.5 Shots (Team): 7/10",
+        "Under 11.5 Fouls (Team): 4/5"
+      ],
+      "away": [
+        "No losses: 5",
+        "Clean Sheet: 5",
+        "Under 2.5 Goals: 6/8",
+        "Under 1.5 Team Goals: 6/8",
+        "Over 0.5 Team Goals: 7/10",
+        "BTTS No: 7/10",
+        "Over 3.5 SOT (Team): 7/10",
+        "Over 22.5 Shots: 5/7",
+        "Over 10.5 Shots (Team): 8/10",
+        "First to score: 4/5"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      3,
+      0,
+      3,
+      4,
+      1,
+      2
+    ],
+    "away_scored": [
+      4,
+      3,
+      3,
+      2,
+      8,
+      6
+    ],
+    "home_conceded": [
+      3,
+      4,
+      3,
+      4,
+      6,
+      5
+    ],
+    "home_scored": [
+      2,
+      2,
+      3,
+      3,
+      0,
+      7
+    ]
+  }
+}

@@ -21,7 +21,7 @@ export default function TabSeries({ stats, match, loading }) {
     );
   }
 
-  const { streaks, goal_distribution } = stats;
+  const { streaks, goal_distribution, metadata } = stats;
   const homeTeam = match.shortHome || match.Matchup?.split(' vs ')[0] || 'Home';
   const awayTeam = match.shortAway || match.Matchup?.split(' vs ')[1] || 'Away';
 
@@ -39,6 +39,10 @@ export default function TabSeries({ stats, match, loading }) {
   const awayAttackScore = awayScoredArr.map((val, i) => val + (homeConcededArr[i] || 0));
   const maxAwayAttackIdx = awayAttackScore.indexOf(Math.max(...awayAttackScore));
 
+  // Dynamic max for scaling
+  const allGoalValues = [...homeScoredArr, ...homeConcededArr, ...awayScoredArr, ...awayConcededArr];
+  const maxGoalVal = Math.max(...allGoalValues, 5);
+
   const formatStreak = (streakStr) => {
     if (!streakStr) return null;
     const parts = streakStr.split(':');
@@ -52,13 +56,22 @@ export default function TabSeries({ stats, match, loading }) {
     const cleanLabel = label.replace(/\([^)]+\)/, '').trim();
     const teamPrefix = teamMatch ? teamMatch[1] : null;
 
+    // Detect icon based on label
+    let icon = <TrendingUp size={10} />;
+    if (cleanLabel.toLowerCase().includes('corner')) icon = <Zap size={10} className="text-blue-500" />;
+    if (cleanLabel.toLowerCase().includes('card')) icon = <ShieldAlert size={10} className="text-amber-500" />;
+    if (cleanLabel.toLowerCase().includes('goal') || cleanLabel.toLowerCase().includes('score')) icon = <Goal size={10} className="text-emerald-500" />;
+
     return (
       <div className="flex flex-col gap-1 w-full">
         <div className="flex items-center justify-between gap-4">
           <div className="flex flex-col">
-            {teamPrefix && (
-              <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter mb-0.5">{teamPrefix}</span>
-            )}
+            <div className="flex items-center gap-1">
+               {teamPrefix && (
+                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter mb-0.5">[{teamPrefix}]</span>
+              )}
+              {icon}
+            </div>
             <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide leading-tight">{cleanLabel}</span>
           </div>
           <div className="flex flex-col items-end shrink-0">
@@ -71,7 +84,7 @@ export default function TabSeries({ stats, match, loading }) {
     );
   };
 
-  const renderGoalBarGroup = (scoredArr, concededArr, maxIdx, label) => {
+  const renderGoalBarGroup = (scoredArr, fullConcededArr, maxIdx, label) => {
     if (!scoredArr || !Array.isArray(scoredArr)) return null;
     
     return (
@@ -82,12 +95,11 @@ export default function TabSeries({ stats, match, loading }) {
         <div className="flex items-end gap-2 h-32 relative">
           {scoredArr.map((val, localIdx) => {
             const globalIdx = label === "1st Half" ? localIdx : localIdx + 3;
-            const con = concededArr && concededArr[globalIdx] !== undefined ? concededArr[globalIdx] : 0;
+            const con = fullConcededArr && fullConcededArr[globalIdx] !== undefined ? fullConcededArr[globalIdx] : 0;
             const isPriority = globalIdx === maxIdx && maxIdx !== -1;
             
             return (
               <div key={globalIdx} className="flex-1 flex flex-col justify-end gap-1 h-full group relative">
-                {/* Values on top */}
                 <div className="flex justify-center gap-1 mb-1">
                   <span className={`text-[7px] font-bold ${val > 0 ? 'text-emerald-500' : 'text-slate-300'}`}>{val}</span>
                   <span className="text-[7px] text-slate-300">/</span>
@@ -97,11 +109,11 @@ export default function TabSeries({ stats, match, loading }) {
                 <div className="flex items-end gap-0.5 h-full max-h-[80%]">
                   <div 
                     className={`flex-1 bg-emerald-500/40 rounded-t-sm transition-all group-hover:bg-emerald-500/70 ${isPriority ? 'ring-2 ring-emerald-500 ring-offset-1 dark:ring-offset-slate-900 bg-emerald-500/60' : ''}`} 
-                    style={{ height: `${Math.max((val / 15) * 100, 5)}%` }}
+                    style={{ height: `${Math.max((val / maxGoalVal) * 100, 5)}%` }}
                   />
                   <div 
                     className={`flex-1 bg-rose-500/40 rounded-t-sm transition-all group-hover:bg-rose-500/70 ${isPriority ? 'ring-2 ring-rose-500 ring-offset-1 dark:ring-offset-slate-900 bg-rose-500/60' : ''}`} 
-                    style={{ height: `${Math.max((con / 15) * 100, 5)}%` }}
+                    style={{ height: `${Math.max((con / maxGoalVal) * 100, 5)}%` }}
                   />
                 </div>
                 
@@ -109,7 +121,6 @@ export default function TabSeries({ stats, match, loading }) {
                   {timeSlots[globalIdx] || '--'}
                 </span>
 
-                {/* Hover Tooltip */}
                 <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[8px] px-2 py-1 rounded shadow-xl z-20 whitespace-nowrap pointer-events-none border border-slate-700">
                   <span className="text-emerald-400">S:{val}</span> <span className="mx-1 opacity-30">|</span> <span className="text-rose-400">C:{con}</span>
                 </div>
@@ -136,7 +147,7 @@ export default function TabSeries({ stats, match, loading }) {
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-widest">Team Trends</span>
-                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-tight">{homeTeam}</h3>
+                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-tight truncate max-w-[150px]">{homeTeam}</h3>
               </div>
             </div>
             <Badge variant="success" className="font-mono text-[9px] px-2 py-0.5">HOME</Badge>
@@ -160,7 +171,7 @@ export default function TabSeries({ stats, match, loading }) {
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">Team Trends</span>
-                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-tight">{awayTeam}</h3>
+                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-tight truncate max-w-[150px]">{awayTeam}</h3>
               </div>
             </div>
             <Badge variant="info" className="font-mono text-[9px] px-2 py-0.5">AWAY</Badge>
@@ -269,6 +280,20 @@ export default function TabSeries({ stats, match, loading }) {
         </div>
       </div>
 
+      {/* Metadata & Source */}
+      {metadata && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-4 py-3 bg-slate-50 dark:bg-slate-950/40 rounded-2xl border border-slate-100 dark:border-slate-800/50 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
+          <div className="flex items-center gap-2">
+            <Clock size={12} />
+            <span>Generated: {new Date(metadata.generated_at).toLocaleString()}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ShieldAlert size={12} />
+            <span>Source: {metadata.source}</span>
+          </div>
+        </div>
+      )}
+
       {/* Narrative Context integration hint */}
       <div className="bg-amber-500/5 border border-amber-500/20 rounded-3xl p-6 flex items-start gap-4 shadow-inner">
         <div className="p-2 bg-amber-500/10 rounded-xl">
@@ -282,3 +307,4 @@ export default function TabSeries({ stats, match, loading }) {
     </div>
   );
 }
+

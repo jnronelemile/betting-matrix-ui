@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "competition": "PREMIERLEAGUE",
+    "fixture": "Liverpool vs Brentford",
+    "date": "2026-05-24",
+    "generated_at": "2026-05-23T19:00:51.858493",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Brentford) No Clean Sheet: 9",
+      "(Liverpool FC) First to score: 5/6"
+    ],
+    "team_streaks": {
+      "home": [
+        "No wins: 3",
+        "Scoring: 5",
+        "No Clean Sheet: 6",
+        "Over 2.5 Goals: 4/5",
+        "Over 1.5 Team Goals: 5/7",
+        "Over 0.5 Team Goals: 7/10",
+        "BTTS Yes: 5/7",
+        "Over 4.5 Corners (Team): 7/10",
+        "Over 8.5 SOT: 8/10",
+        "Over 3.5 SOT (Team): 7/10",
+        "Over 22.5 Shots: 7/10",
+        "Over 10.5 Shots (Team): 7/10",
+        "Under 22.5 Fouls: 7/10",
+        "Under 11.5 Fouls (Team): 7/10"
+      ],
+      "away": [
+        "Over 2.5 Goals: 7/10",
+        "Over 9.5 Corners: 4/5",
+        "Over 10.5 Corners: 4/5",
+        "Over 22.5 Shots: 8/10",
+        "Over 10.5 Shots (Team): 5/7",
+        "Under 22.5 Fouls: 9/10",
+        "Under 11.5 Fouls (Team): 7/10"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      3,
+      4,
+      7,
+      5,
+      3,
+      8
+    ],
+    "away_scored": [
+      2,
+      3,
+      5,
+      2,
+      1,
+      8
+    ],
+    "home_conceded": [
+      1,
+      0,
+      3,
+      4,
+      5,
+      6
+    ],
+    "home_scored": [
+      4,
+      3,
+      12,
+      3,
+      3,
+      8
+    ]
+  }
+}

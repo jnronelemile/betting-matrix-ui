@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "competition": "SERIEA",
+    "fixture": "AC Fiorentina vs Atalanta BC",
+    "date": "2026-05-22",
+    "generated_at": "2026-05-23T19:00:52.352665",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "Under 10.5 corners: 5/5"
+    ],
+    "team_streaks": {
+      "home": [
+        "Under 2.5 Goals: 7/10",
+        "BTTS No: 7/10",
+        "Under 9.5 Corners: 7/10",
+        "Under 10.5 Corners: 8/10",
+        "Over 11.5 Fouls (Team): 5/7"
+      ],
+      "away": [
+        "Under 2.5 Goals: 5/7",
+        "Under 1.5 Team Goals: 7/10",
+        "Under 10.5 Corners: 7/10",
+        "Over 22.5 Fouls: 4/5",
+        "Over 11.5 Fouls (Team): 7/10"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      2,
+      4,
+      5,
+      1,
+      2,
+      6
+    ],
+    "away_scored": [
+      2,
+      3,
+      7,
+      5,
+      1,
+      7
+    ],
+    "home_conceded": [
+      3,
+      5,
+      3,
+      3,
+      2,
+      4
+    ],
+    "home_scored": [
+      3,
+      2,
+      2,
+      4,
+      5,
+      4
+    ]
+  }
+}
