@@ -23,6 +23,15 @@ export default function TicketsView({ assembled, finals, loading }) {
     );
   }
 
+  if (!assembled && !finals) {
+    return (
+      <div className="flex flex-col items-center justify-center p-20 text-slate-400 bg-white/50 dark:bg-slate-900/50 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
+        <Trophy size={48} className="mb-4 opacity-20" />
+        <p className="text-sm font-mono uppercase tracking-widest text-center">No Master Selections Available<br/><span className="text-[10px] opacity-50">Check data synchronization</span></p>
+      </div>
+    );
+  }
+
   const tickets = assembled ? Object.entries(assembled) : [];
 
   return (
@@ -102,17 +111,17 @@ export default function TicketsView({ assembled, finals, loading }) {
                    <div className="flex items-center gap-4">
                       <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                         <PieChart size={12} className="text-emerald-500" />
-                        {ticket.legs.length} Selections
+                        {ticket.legs?.length || 0} Selections
                       </div>
                       <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                         <ShieldCheck size={12} className="text-blue-500" />
-                        {ticket.metrics.fiabilite_moyenne}% Reliability
+                        {ticket.metrics?.fiabilite_moyenne || '0'}% Reliability
                       </div>
                    </div>
                  </div>
                  <div className="flex flex-col items-end">
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Odds</span>
-                    <span className="text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400">@{ticket.metrics.cote_totale.toFixed(2)}</span>
+                    <span className="text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400">@{ticket.metrics?.cote_totale?.toFixed(2) || '0.00'}</span>
                  </div>
                </div>
 
@@ -120,18 +129,18 @@ export default function TicketsView({ assembled, finals, loading }) {
                <div className="grid grid-cols-3 gap-4 mb-2">
                   <div className="bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
                     <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Potential Gain (10U)</span>
-                    <span className="text-base font-black text-slate-900 dark:text-white font-mono">{ticket.metrics.gain_10u}U</span>
+                    <span className="text-base font-black text-slate-900 dark:text-white font-mono">{ticket.metrics?.gain_10u || '0'}U</span>
                   </div>
                   <div className="bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
                     <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Implic. Prob</span>
-                    <span className="text-base font-black text-slate-900 dark:text-white font-mono">{(ticket.metrics.prob_implicite * 100).toFixed(2)}%</span>
+                    <span className="text-base font-black text-slate-900 dark:text-white font-mono">{(ticket.metrics?.prob_implicite ? (ticket.metrics.prob_implicite * 100).toFixed(2) : '0.00')}%</span>
                   </div>
                   <div className="bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800 relative overflow-hidden group/item">
                     <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover/item:opacity-100 transition-opacity"></div>
                     <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Correlation</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tighter">{ticket.metrics.badge_name}</span>
-                      <span className="text-lg">{ticket.metrics.badge_correlation}</span>
+                      <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tighter">{ticket.metrics?.badge_name || 'N/A'}</span>
+                      <span className="text-lg">{ticket.metrics?.badge_correlation || ''}</span>
                     </div>
                   </div>
                </div>
@@ -139,10 +148,10 @@ export default function TicketsView({ assembled, finals, loading }) {
 
             {/* Ticket Legs */}
             <div className="p-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col gap-3">
-              {ticket.legs.map((leg, lidx) => (
+              {ticket.legs?.map((leg, lidx) => (
                 <div key={lidx} className="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between group/leg hover:border-emerald-500/30 transition-all shadow-sm">
                   <div className="flex items-center gap-4">
-                    <div className="text-xl">{leg.confidence_badge}</div>
+                    <div className="text-xl">{leg.confidence_badge || '🎯'}</div>
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2">
                         <span className="text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight leading-tight">{leg.Match}</span>
@@ -151,15 +160,15 @@ export default function TicketsView({ assembled, finals, loading }) {
                       <div className="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
                         <span>{leg.League}</span>
                         <span className="text-slate-200 dark:text-slate-800">|</span>
-                        <span className="text-emerald-500/70">{leg.family_name}</span>
+                        <span className="text-emerald-500/70">{leg.family_name || 'Pick'}</span>
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col items-end">
                     <span className="text-[10px] font-black text-slate-800 dark:text-emerald-400 uppercase tracking-tighter">{leg.Marche}</span>
                     <div className="flex items-center gap-1">
-                      <span className="text-[9px] font-bold text-slate-400 font-mono">@{leg.Cote_Ref}</span>
-                      <span className="text-[9px] font-black text-emerald-500 font-mono">{(leg.Prob * 100).toFixed(0)}%</span>
+                      <span className="text-[9px] font-bold text-slate-400 font-mono">@{leg.Cote_Ref || '0.00'}</span>
+                      <span className="text-[9px] font-black text-emerald-500 font-mono">{((leg.Prob || 0) * 100).toFixed(0)}%</span>
                     </div>
                   </div>
                 </div>

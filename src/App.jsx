@@ -77,16 +77,24 @@ export default function App() {
 
   useEffect(() => {
     async function fetchTickets() {
+      console.log("Starting to fetch tickets...");
       setTicketsData(prev => ({ ...prev, loading: true }));
       try {
         const [assembledRes, finalsRes] = await Promise.all([
           fetch('/data/Tickets_JSON/TICKETS_ASSEMBLES.json'),
           fetch('/data/Tickets_JSON/CHOIX_FINAUX.json')
         ]);
+        
+        console.log("Fetch status:", assembledRes.status, finalsRes.status);
+        
         if (assembledRes.ok && finalsRes.ok) {
           const assembled = await assembledRes.json();
           const finals = await finalsRes.json();
+          console.log("Tickets loaded successfully");
           setTicketsData({ assembled, finals, loading: false });
+        } else {
+          console.error("Failed to load ticket files:", assembledRes.status, finalsRes.status);
+          setTicketsData(prev => ({ ...prev, loading: false }));
         }
       } catch (e) {
         console.error("Error fetching tickets:", e);
