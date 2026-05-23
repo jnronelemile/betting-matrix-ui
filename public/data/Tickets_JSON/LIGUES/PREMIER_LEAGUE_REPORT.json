@@ -1,0 +1,728 @@
+[
+  {
+    "Match": "Liverpool vs Brentford",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Liverpool",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5728,
+    "Cote_Ref": 1.83,
+    "Score_EV": 0.9222,
+    "Super_Signal": false,
+    "Alpha": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        4,
+        7,
+        5,
+        3,
+        8
+      ],
+      "away_scored": [
+        2,
+        3,
+        5,
+        2,
+        1,
+        8
+      ],
+      "home_conceded": [
+        1,
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "home_scored": [
+        4,
+        3,
+        12,
+        3,
+        3,
+        8
+      ]
+    },
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+        "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+        "Force": 0.7
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Série offensive favorable : Over 1.5 Team Goals: 5/7",
+    "Score_EV_Original": 0.8019
+  },
+  {
+    "Match": "Manchester City vs Aston Villa",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Manchester City",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5973,
+    "Cote_Ref": 1.76,
+    "Score_EV": 0.8362,
+    "Super_Signal": false,
+    "Alpha": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        6,
+        2,
+        4,
+        6,
+        4,
+        4
+      ],
+      "away_scored": [
+        1,
+        3,
+        4,
+        4,
+        4,
+        6
+      ],
+      "home_conceded": [
+        0,
+        3,
+        3,
+        3,
+        1,
+        2
+      ],
+      "home_scored": [
+        5,
+        8,
+        12,
+        4,
+        10,
+        5
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.8362
+  },
+  {
+    "Match": "Brighton & Hove Albion vs Manchester United",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Brighton & Hove Albion",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5694,
+    "Cote_Ref": 1.84,
+    "Score_EV": 0.7972,
+    "Super_Signal": false,
+    "Alpha": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        2,
+        3,
+        4,
+        5,
+        5,
+        7
+      ],
+      "away_scored": [
+        1,
+        2,
+        6,
+        6,
+        6,
+        6
+      ],
+      "home_conceded": [
+        2,
+        2,
+        5,
+        1,
+        2,
+        5
+      ],
+      "home_scored": [
+        9,
+        2,
+        2,
+        4,
+        5,
+        8
+      ]
+    },
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+        "Force": 0.54
+      }
+    ],
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.7972
+  },
+  {
+    "Match": "Crystal Palace vs Arsenal",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Arsenal",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5981,
+    "Cote_Ref": 1.76,
+    "Score_EV": 0.785,
+    "Super_Signal": false,
+    "Alpha": true,
+    "Goal_Distribution": {
+      "away_conceded": [
+        1,
+        1,
+        4,
+        1,
+        3,
+        5
+      ],
+      "away_scored": [
+        4,
+        4,
+        3,
+        7,
+        5,
+        5
+      ],
+      "home_conceded": [
+        2,
+        0,
+        8,
+        4,
+        3,
+        4
+      ],
+      "home_scored": [
+        1,
+        2,
+        5,
+        1,
+        2,
+        7
+      ]
+    },
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+        "Force": 0.72
+      }
+    ],
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Faible volume de buts du favori : Under 1.5 Team Goals: 9/10",
+    "Score_EV_Original": 1.0467
+  },
+  {
+    "Match": "Liverpool vs Brentford",
+    "League": "Premier League",
+    "Marche": "Over 9.5 CORNERS",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.5599,
+    "Cote_Ref": 1.88,
+    "Score_EV": 0.7727,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        4,
+        7,
+        5,
+        3,
+        8
+      ],
+      "away_scored": [
+        2,
+        3,
+        5,
+        2,
+        1,
+        8
+      ],
+      "home_conceded": [
+        1,
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "home_scored": [
+        4,
+        3,
+        12,
+        3,
+        3,
+        8
+      ]
+    },
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+        "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+        "Force": 0.7
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Tendance de match favorable : Over 9.5 Corners: 4/5",
+    "Score_EV_Original": 0.6719
+  },
+  {
+    "Match": "Manchester City vs Aston Villa",
+    "League": "Premier League",
+    "Marche": "Victoire Home (1)",
+    "Type": "CLASSIQUE_1X2",
+    "Tier": 5,
+    "Prob": 0.6207,
+    "Cote_Ref": 1.61,
+    "Score_EV": 0.7138,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        6,
+        2,
+        4,
+        6,
+        4,
+        4
+      ],
+      "away_scored": [
+        1,
+        3,
+        4,
+        4,
+        4,
+        6
+      ],
+      "home_conceded": [
+        0,
+        3,
+        3,
+        3,
+        1,
+        2
+      ],
+      "home_scored": [
+        5,
+        8,
+        12,
+        4,
+        10,
+        5
+      ]
+    },
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Série d'invincibilité : No losses: 10",
+    "Score_EV_Original": 0.6207
+  },
+  {
+    "Match": "Fulham vs Newcastle United",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Fulham",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5359,
+    "Cote_Ref": 1.96,
+    "Score_EV": 0.5627,
+    "Super_Signal": false,
+    "Alpha": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        2,
+        3,
+        5,
+        2,
+        3,
+        8
+      ],
+      "away_scored": [
+        4,
+        4,
+        4,
+        1,
+        2,
+        2
+      ],
+      "home_conceded": [
+        0,
+        4,
+        2,
+        7,
+        4,
+        3
+      ],
+      "home_scored": [
+        2,
+        2,
+        7,
+        3,
+        7,
+        7
+      ]
+    },
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+        "Force": 0.6
+      }
+    ],
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Faible volume de buts du favori : Under 1.5 Team Goals: 8/10",
+    "Score_EV_Original": 0.7503
+  },
+  {
+    "Match": "Sunderland AFC vs Chelsea",
+    "League": "Premier League",
+    "Marche": "Over 9.5 CORNERS",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.5507,
+    "Cote_Ref": 1.91,
+    "Score_EV": 0.4956,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        7,
+        2,
+        5,
+        3,
+        3,
+        5
+      ],
+      "away_scored": [
+        2,
+        1,
+        10,
+        8,
+        5,
+        5
+      ],
+      "home_conceded": [
+        3,
+        2,
+        3,
+        4,
+        4,
+        3
+      ],
+      "home_scored": [
+        1,
+        3,
+        3,
+        3,
+        7,
+        6
+      ]
+    },
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Tendance de match défavorable : Under 9.5 Corners: 5/7",
+    "Score_EV_Original": 0.6608
+  },
+  {
+    "Match": "Liverpool vs Brentford",
+    "League": "Premier League",
+    "Marche": "Victoire Home (1)",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.501,
+    "Cote_Ref": 2.0,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        4,
+        7,
+        5,
+        3,
+        8
+      ],
+      "away_scored": [
+        2,
+        3,
+        5,
+        2,
+        1,
+        8
+      ],
+      "home_conceded": [
+        1,
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "home_scored": [
+        4,
+        3,
+        12,
+        3,
+        3,
+        8
+      ]
+    },
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+        "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+        "Force": 0.7
+      }
+    ],
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "Sunderland AFC vs Chelsea",
+    "League": "Premier League",
+    "Marche": "Away + de FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.58,
+    "Cote_Ref": 1.81,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        7,
+        2,
+        5,
+        3,
+        3,
+        5
+      ],
+      "away_scored": [
+        2,
+        1,
+        10,
+        8,
+        5,
+        5
+      ],
+      "home_conceded": [
+        3,
+        2,
+        3,
+        4,
+        4,
+        3
+      ],
+      "home_scored": [
+        1,
+        3,
+        3,
+        3,
+        7,
+        6
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "Tottenham Hotspur vs Everton",
+    "League": "Premier League",
+    "Marche": "Over 20.5 FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.5585,
+    "Cote_Ref": 1.88,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        2,
+        4,
+        3,
+        3,
+        2,
+        8
+      ],
+      "away_scored": [
+        3,
+        4,
+        2,
+        4,
+        1,
+        7
+      ],
+      "home_conceded": [
+        5,
+        0,
+        11,
+        3,
+        5,
+        7
+      ],
+      "home_scored": [
+        2,
+        2,
+        4,
+        4,
+        4,
+        5
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "Fulham vs Newcastle United",
+    "League": "Premier League",
+    "Marche": "Away + de FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.56,
+    "Cote_Ref": 1.88,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        2,
+        3,
+        5,
+        2,
+        3,
+        8
+      ],
+      "away_scored": [
+        4,
+        4,
+        4,
+        1,
+        2,
+        2
+      ],
+      "home_conceded": [
+        0,
+        4,
+        2,
+        7,
+        4,
+        3
+      ],
+      "home_scored": [
+        2,
+        2,
+        7,
+        3,
+        7,
+        7
+      ]
+    },
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+        "Force": 0.6
+      }
+    ],
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "Burnley vs Wolverhampton Wanderers",
+    "League": "Premier League",
+    "Marche": "Away + de FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.58,
+    "Cote_Ref": 1.81,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        5,
+        7,
+        5,
+        1,
+        8,
+        7
+      ],
+      "away_scored": [
+        0,
+        0,
+        2,
+        2,
+        1,
+        2
+      ],
+      "home_conceded": [
+        8,
+        2,
+        8,
+        4,
+        0,
+        6
+      ],
+      "home_scored": [
+        2,
+        4,
+        2,
+        4,
+        2,
+        3
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "Burnley vs Wolverhampton Wanderers",
+    "League": "Premier League",
+    "Marche": "Over 20.5 FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.6062,
+    "Cote_Ref": 1.73,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        5,
+        7,
+        5,
+        1,
+        8,
+        7
+      ],
+      "away_scored": [
+        0,
+        0,
+        2,
+        2,
+        1,
+        2
+      ],
+      "home_conceded": [
+        8,
+        2,
+        8,
+        4,
+        0,
+        6
+      ],
+      "home_scored": [
+        2,
+        4,
+        2,
+        4,
+        2,
+        3
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  }
+]

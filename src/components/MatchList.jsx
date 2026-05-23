@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Badge } from './ui/Badge';
-import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Clock, Radio } from 'lucide-react';
+import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Clock, Radio, Trophy } from 'lucide-react';
 
 export function MatchList({ matches, selectedMatch, onSelectMatch }) {
   const [collapsedDates, setCollapsedDates] = useState({});
@@ -157,6 +157,11 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                       )}
                     </div>
                     <div className="flex flex-wrap items-center gap-2 mt-1">
+                      {match.isFinalPick && (
+                        <Badge variant="success" className="bg-emerald-600 text-white border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.4)] animate-pulse flex items-center gap-1">
+                          <Trophy size={10} /> MASTER PICK
+                        </Badge>
+                      )}
                       {isKillSwitch && (
                         <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.3)]">
                           <AlertTriangle size={10} /> KILL-SWITCH
@@ -254,6 +259,11 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                             {match.shortAway ? `${match.shortHome} vs ${match.shortAway}` : match.Matchup}
                           </h4>
                           <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                            {match.isFinalPick && (
+                              <Badge variant="success" className="bg-emerald-600 text-white border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.4)] animate-pulse flex items-center gap-1">
+                                <Trophy size={10} /> MASTER PICK
+                              </Badge>
+                            )}
                             {isKillSwitch && (
                               <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.3)]">
                                 <AlertTriangle size={10} /> KILL-SWITCH

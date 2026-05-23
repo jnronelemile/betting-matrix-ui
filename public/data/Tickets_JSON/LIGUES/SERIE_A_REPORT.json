@@ -1,0 +1,818 @@
+[
+  {
+    "Match": "Torino FC vs Juventus",
+    "League": "Serie A",
+    "Marche": "Away + de CORNERS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.6442,
+    "Cote_Ref": 1.63,
+    "Score_EV": 1.1112,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        1,
+        2,
+        3,
+        2,
+        5
+      ],
+      "away_scored": [
+        3,
+        3,
+        3,
+        4,
+        7,
+        4
+      ],
+      "home_conceded": [
+        2,
+        6,
+        5,
+        4,
+        6,
+        4
+      ],
+      "home_scored": [
+        3,
+        5,
+        4,
+        4,
+        5,
+        4
+      ]
+    },
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+    "Score_EV_Original": 0.9663
+  },
+  {
+    "Match": "Bologna FC vs Inter Milan",
+    "League": "Serie A",
+    "Marche": "Away + de CORNERS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.6312,
+    "Cote_Ref": 1.66,
+    "Score_EV": 1.0888,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        1,
+        0,
+        6,
+        1,
+        3,
+        5
+      ],
+      "away_scored": [
+        6,
+        6,
+        5,
+        5,
+        6,
+        8
+      ],
+      "home_conceded": [
+        1,
+        2,
+        6,
+        5,
+        4,
+        2
+      ],
+      "home_scored": [
+        0,
+        2,
+        3,
+        5,
+        3,
+        3
+      ]
+    },
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+    "Score_EV_Original": 0.9468
+  },
+  {
+    "Match": "AC Fiorentina vs Atalanta BC",
+    "League": "Serie A",
+    "Marche": "Away + de CORNERS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.9047,
+    "Cote_Ref": 1.16,
+    "Score_EV": 1.0177,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        2,
+        4,
+        5,
+        1,
+        2,
+        6
+      ],
+      "away_scored": [
+        2,
+        3,
+        7,
+        5,
+        1,
+        7
+      ],
+      "home_conceded": [
+        3,
+        5,
+        3,
+        3,
+        2,
+        4
+      ],
+      "home_scored": [
+        3,
+        2,
+        2,
+        4,
+        5,
+        4
+      ]
+    },
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+    "Score_EV_Original": 1.357
+  },
+  {
+    "Match": "Hellas Verona vs AS Roma",
+    "League": "Serie A",
+    "Marche": "Away + de CORNERS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.5876,
+    "Cote_Ref": 1.79,
+    "Score_EV": 1.0136,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        0,
+        4,
+        6,
+        2,
+        6
+      ],
+      "away_scored": [
+        4,
+        6,
+        3,
+        2,
+        7,
+        2
+      ],
+      "home_conceded": [
+        2,
+        6,
+        2,
+        1,
+        4,
+        11
+      ],
+      "home_scored": [
+        1,
+        3,
+        3,
+        1,
+        4,
+        0
+      ]
+    },
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+    "Score_EV_Original": 0.8814
+  },
+  {
+    "Match": "SSC Napoli vs Udinese Calcio",
+    "League": "Serie A",
+    "Marche": "Home + de CORNERS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.5715,
+    "Cote_Ref": 1.84,
+    "Score_EV": 0.9859,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        5,
+        4,
+        3,
+        2,
+        5,
+        7
+      ],
+      "away_scored": [
+        2,
+        5,
+        4,
+        6,
+        5,
+        5
+      ],
+      "home_conceded": [
+        4,
+        2,
+        2,
+        6,
+        1,
+        3
+      ],
+      "home_scored": [
+        5,
+        1,
+        8,
+        7,
+        5,
+        6
+      ]
+    },
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 8/10",
+    "Score_EV_Original": 0.8573
+  },
+  {
+    "Match": "US Cremonese vs Como 1907",
+    "League": "Serie A",
+    "Marche": "Away + de SHOTS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.5534,
+    "Cote_Ref": 1.9,
+    "Score_EV": 0.9546,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        0,
+        3,
+        4,
+        1,
+        2
+      ],
+      "away_scored": [
+        4,
+        3,
+        3,
+        2,
+        8,
+        6
+      ],
+      "home_conceded": [
+        3,
+        4,
+        3,
+        4,
+        6,
+        5
+      ],
+      "home_scored": [
+        2,
+        2,
+        3,
+        3,
+        0,
+        7
+      ]
+    },
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Volume statistique élevé : Over 10.5 Shots (Team): 8/10",
+    "Score_EV_Original": 0.8301
+  },
+  {
+    "Match": "US Cremonese vs Como 1907",
+    "League": "Serie A",
+    "Marche": "Away + de CORNERS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.6228,
+    "Cote_Ref": 1.69,
+    "Score_EV": 0.9342,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        0,
+        3,
+        4,
+        1,
+        2
+      ],
+      "away_scored": [
+        4,
+        3,
+        3,
+        2,
+        8,
+        6
+      ],
+      "home_conceded": [
+        3,
+        4,
+        3,
+        4,
+        6,
+        5
+      ],
+      "home_scored": [
+        2,
+        2,
+        3,
+        3,
+        0,
+        7
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.9342
+  },
+  {
+    "Match": "Torino FC vs Juventus",
+    "League": "Serie A",
+    "Marche": "Over 23.5 SHOTS",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.5933,
+    "Cote_Ref": 1.77,
+    "Score_EV": 0.8188,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        1,
+        2,
+        3,
+        2,
+        5
+      ],
+      "away_scored": [
+        3,
+        3,
+        3,
+        4,
+        7,
+        4
+      ],
+      "home_conceded": [
+        2,
+        6,
+        5,
+        4,
+        6,
+        4
+      ],
+      "home_scored": [
+        3,
+        5,
+        4,
+        4,
+        5,
+        4
+      ]
+    },
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Tendance de match favorable : Over 22.5 Shots: 6/8",
+    "Score_EV_Original": 0.712
+  },
+  {
+    "Match": "AC Milan vs Cagliari Calcio",
+    "League": "Serie A",
+    "Marche": "Home + de CORNERS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.5635,
+    "Cote_Ref": 1.86,
+    "Score_EV": 0.634,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        5,
+        5,
+        1,
+        7,
+        4,
+        7
+      ],
+      "away_scored": [
+        0,
+        3,
+        3,
+        2,
+        5,
+        3
+      ],
+      "home_conceded": [
+        2,
+        4,
+        3,
+        4,
+        2,
+        4
+      ],
+      "home_scored": [
+        2,
+        0,
+        7,
+        6,
+        3,
+        6
+      ]
+    },
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 10/10",
+    "Score_EV_Original": 0.8453
+  },
+  {
+    "Match": "Bologna FC vs Inter Milan",
+    "League": "Serie A",
+    "Marche": "Over 23.5 SHOTS",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.5865,
+    "Cote_Ref": 1.79,
+    "Score_EV": 0.5278,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        1,
+        0,
+        6,
+        1,
+        3,
+        5
+      ],
+      "away_scored": [
+        6,
+        6,
+        5,
+        5,
+        6,
+        8
+      ],
+      "home_conceded": [
+        1,
+        2,
+        6,
+        5,
+        4,
+        2
+      ],
+      "home_scored": [
+        0,
+        2,
+        3,
+        5,
+        3,
+        3
+      ]
+    },
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Tendance de match défavorable : Under 22.5 Shots: 5/7",
+    "Score_EV_Original": 0.7038
+  },
+  {
+    "Match": "Bologna FC vs Inter Milan",
+    "League": "Serie A",
+    "Marche": "Over 7.5 SOT",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.5629,
+    "Cote_Ref": 1.87,
+    "Score_EV": 0.5066,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        1,
+        0,
+        6,
+        1,
+        3,
+        5
+      ],
+      "away_scored": [
+        6,
+        6,
+        5,
+        5,
+        6,
+        8
+      ],
+      "home_conceded": [
+        1,
+        2,
+        6,
+        5,
+        4,
+        2
+      ],
+      "home_scored": [
+        0,
+        2,
+        3,
+        5,
+        3,
+        3
+      ]
+    },
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Tendance de match défavorable : Under 8.5 SOT: 6/8",
+    "Score_EV_Original": 0.6755
+  },
+  {
+    "Match": "Torino FC vs Juventus",
+    "League": "Serie A",
+    "Marche": "Over 7.5 SOT",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.5592,
+    "Cote_Ref": 1.88,
+    "Score_EV": 0.5032,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        1,
+        2,
+        3,
+        2,
+        5
+      ],
+      "away_scored": [
+        3,
+        3,
+        3,
+        4,
+        7,
+        4
+      ],
+      "home_conceded": [
+        2,
+        6,
+        5,
+        4,
+        6,
+        4
+      ],
+      "home_scored": [
+        3,
+        5,
+        4,
+        4,
+        5,
+        4
+      ]
+    },
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Tendance de match défavorable : Under 8.5 SOT: 5/7",
+    "Score_EV_Original": 0.671
+  },
+  {
+    "Match": "AC Fiorentina vs Atalanta BC",
+    "League": "Serie A",
+    "Marche": "Over 25.5 FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.6801,
+    "Cote_Ref": 1.54,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        2,
+        4,
+        5,
+        1,
+        2,
+        6
+      ],
+      "away_scored": [
+        2,
+        3,
+        7,
+        5,
+        1,
+        7
+      ],
+      "home_conceded": [
+        3,
+        5,
+        3,
+        3,
+        2,
+        4
+      ],
+      "home_scored": [
+        3,
+        2,
+        2,
+        4,
+        5,
+        4
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "SS Lazio vs Pisa SC",
+    "League": "Serie A",
+    "Marche": "Away + de FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.58,
+    "Cote_Ref": 1.81,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        6,
+        3,
+        11,
+        7,
+        6,
+        10
+      ],
+      "away_scored": [
+        4,
+        3,
+        2,
+        2,
+        1,
+        4
+      ],
+      "home_conceded": [
+        4,
+        3,
+        6,
+        3,
+        3,
+        5
+      ],
+      "home_scored": [
+        4,
+        3,
+        3,
+        3,
+        2,
+        10
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "SSC Napoli vs Udinese Calcio",
+    "League": "Serie A",
+    "Marche": "Away + de FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.56,
+    "Cote_Ref": 1.88,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        5,
+        4,
+        3,
+        2,
+        5,
+        7
+      ],
+      "away_scored": [
+        2,
+        5,
+        4,
+        6,
+        5,
+        5
+      ],
+      "home_conceded": [
+        4,
+        2,
+        2,
+        6,
+        1,
+        3
+      ],
+      "home_scored": [
+        5,
+        1,
+        8,
+        7,
+        5,
+        6
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "AC Milan vs Cagliari Calcio",
+    "League": "Serie A",
+    "Marche": "Away + de FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.56,
+    "Cote_Ref": 1.88,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        5,
+        5,
+        1,
+        7,
+        4,
+        7
+      ],
+      "away_scored": [
+        0,
+        3,
+        3,
+        2,
+        5,
+        3
+      ],
+      "home_conceded": [
+        2,
+        4,
+        3,
+        4,
+        2,
+        4
+      ],
+      "home_scored": [
+        2,
+        0,
+        7,
+        6,
+        3,
+        6
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  },
+  {
+    "Match": "US Lecce vs Genoa CFC",
+    "League": "Serie A",
+    "Marche": "Away + de FOULS",
+    "Type": "WATCHLIST_LIVE",
+    "Tier": 7,
+    "Prob": 0.56,
+    "Cote_Ref": 1.88,
+    "Score_EV": 0.0,
+    "Super_Signal": false,
+    "Goal_Distribution": {
+      "away_conceded": [
+        3,
+        3,
+        4,
+        4,
+        6,
+        4
+      ],
+      "away_scored": [
+        1,
+        3,
+        4,
+        1,
+        4,
+        6
+      ],
+      "home_conceded": [
+        2,
+        4,
+        2,
+        3,
+        11,
+        2
+      ],
+      "home_scored": [
+        4,
+        3,
+        1,
+        0,
+        2,
+        2
+      ]
+    },
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.0
+  }
+]

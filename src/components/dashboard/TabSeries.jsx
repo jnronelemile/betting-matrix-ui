@@ -57,27 +57,45 @@ export default function TabSeries({ stats, match, loading }) {
     const teamPrefix = teamMatch ? teamMatch[1] : null;
 
     // Detect icon based on label
-    let icon = <TrendingUp size={10} />;
-    if (cleanLabel.toLowerCase().includes('corner')) icon = <Zap size={10} className="text-blue-500" />;
-    if (cleanLabel.toLowerCase().includes('card')) icon = <ShieldAlert size={10} className="text-amber-500" />;
-    if (cleanLabel.toLowerCase().includes('goal') || cleanLabel.toLowerCase().includes('score')) icon = <Goal size={10} className="text-emerald-500" />;
+    let icon = <TrendingUp size={12} className="text-slate-400" />;
+    if (cleanLabel.toLowerCase().includes('corner')) icon = <Zap size={12} className="text-blue-500" />;
+    if (cleanLabel.toLowerCase().includes('card')) icon = <ShieldAlert size={12} className="text-amber-500" />;
+    if (cleanLabel.toLowerCase().includes('goal') || cleanLabel.toLowerCase().includes('score')) icon = <Goal size={12} className="text-emerald-500" />;
+
+    // Team matching for coloring
+    const isHome = teamPrefix && (homeTeam.toLowerCase().includes(teamPrefix.toLowerCase()) || teamPrefix.toLowerCase().includes(homeTeam.toLowerCase()));
+    const isAway = teamPrefix && (awayTeam.toLowerCase().includes(teamPrefix.toLowerCase()) || teamPrefix.toLowerCase().includes(awayTeam.toLowerCase()));
 
     return (
       <div className="flex flex-col gap-1 w-full">
         <div className="flex items-center justify-between gap-4">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1">
-               {teamPrefix && (
-                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter mb-0.5">[{teamPrefix}]</span>
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-2">
+              {teamPrefix && (
+                <span className={`
+                  text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border shadow-sm
+                  ${isHome 
+                    ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' 
+                    : isAway 
+                      ? 'bg-blue-500/10 text-blue-600 border-blue-500/20'
+                      : 'bg-slate-500/10 text-slate-500 border-slate-500/20'}
+                `}>
+                  {teamPrefix}
+                </span>
               )}
-              {icon}
+              <div className="p-1 bg-slate-100 dark:bg-slate-900 rounded-md border border-slate-200/50 dark:border-slate-800/50">
+                {icon}
+              </div>
             </div>
-            <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide leading-tight">{cleanLabel}</span>
+            <span className="text-[11px] sm:text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-wide leading-tight">{cleanLabel}</span>
           </div>
           <div className="flex flex-col items-end shrink-0">
-             <span className="text-[10px] sm:text-xs font-black font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20 shadow-sm">
-                {value}
-             </span>
+             <div className="flex items-center gap-1.5 bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/20 shadow-sm group-hover:scale-105 transition-transform">
+               <span className="text-[11px] sm:text-xs font-black font-mono text-emerald-600 dark:text-emerald-400">
+                  {value}
+               </span>
+               <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+             </div>
           </div>
         </div>
       </div>
@@ -146,11 +164,11 @@ export default function TabSeries({ stats, match, loading }) {
                 <CheckCircle2 size={18} className="text-emerald-600 dark:text-emerald-400" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-widest">Team Trends</span>
-                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-tight truncate max-w-[150px]">{homeTeam}</h3>
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-[0.2em] mb-0.5">Team Trends</span>
+                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-base sm:text-lg leading-none">{homeTeam}</h3>
               </div>
             </div>
-            <Badge variant="success" className="font-mono text-[9px] px-2 py-0.5">HOME</Badge>
+            <Badge variant="success" className="font-mono text-[10px] px-3 py-1 shadow-sm border-emerald-500/30">HOME</Badge>
           </div>
           <div className="flex flex-col gap-3">
             {streaks.team_streaks.home.map((streak, idx) => (
@@ -170,11 +188,11 @@ export default function TabSeries({ stats, match, loading }) {
                 <CheckCircle2 size={18} className="text-blue-600 dark:text-blue-400" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">Team Trends</span>
-                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-tight truncate max-w-[150px]">{awayTeam}</h3>
+                <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.2em] mb-0.5">Team Trends</span>
+                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-base sm:text-lg leading-none">{awayTeam}</h3>
               </div>
             </div>
-            <Badge variant="info" className="font-mono text-[9px] px-2 py-0.5">AWAY</Badge>
+            <Badge variant="info" className="font-mono text-[10px] px-3 py-1 shadow-sm border-blue-500/30">AWAY</Badge>
           </div>
           <div className="flex flex-col gap-3">
             {streaks.team_streaks.away.map((streak, idx) => (

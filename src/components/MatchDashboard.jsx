@@ -8,7 +8,7 @@ import TabTactical from './dashboard/TabTactical';
 import TabCalibration from './dashboard/TabCalibration';
 import TabRiskContext from './dashboard/TabRiskContext';
 import TabSeries from './dashboard/TabSeries';
-import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target, ChevronLeft, TrendingUp } from 'lucide-react';
+import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target, ChevronLeft, TrendingUp, Trophy } from 'lucide-react';
 
 export function MatchDashboard({ match, onClose }) {
   const [activeTab, setActiveTab] = useState('tactical');
@@ -223,6 +223,12 @@ export function MatchDashboard({ match, onClose }) {
             </div>
             
             <div className="flex flex-wrap gap-2 items-center">
+              {match.isFinalPick && (
+                <Badge variant="success" className="text-[9px] flex items-center gap-1.5 px-3 py-1 uppercase tracking-widest bg-emerald-600 text-white border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-pulse">
+                  <Trophy size={12} /> MASTER PICK
+                </Badge>
+              )}
+
               {match.Calibration_Diagnostics?.confidence_index !== undefined && (
                 <Badge variant={match.Calibration_Diagnostics.confidence_index >= 0.5 ? 'success' : 'warning'} className="text-[9px] font-mono tracking-widest px-2 py-0.5">
                   CONFIDENCE: {(match.Calibration_Diagnostics.confidence_index * 100).toFixed(0)}%
