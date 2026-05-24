@@ -25,7 +25,12 @@ import {
   Activity,
   ShieldAlert,
   BarChart,
-  Layers
+  Layers,
+  Globe,
+  Database,
+  Code,
+  Box,
+  Fingerprint
 } from 'lucide-react';
 
 const LEAGUE_NAME_TO_CODE = {
@@ -62,11 +67,12 @@ const TicketLeg = ({ leg, onNavigate }) => {
             <div className="flex items-center gap-2">
               <span className="text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight leading-tight">{leg.Match}</span>
               {leg.Super_Signal && <Zap size={10} className="text-amber-500 fill-amber-500 animate-pulse" />}
+              {leg.Alpha && <span className="text-[8px] px-1 bg-amber-500 text-white font-black rounded">ALPHA</span>}
             </div>
             <div className="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
               <span>{leg.League}</span>
               <span className="text-slate-200 dark:text-slate-800">|</span>
-              <span className="text-emerald-500/70 group-hover/leg:text-emerald-500 transition-colors">Click to {expanded ? 'collapse' : 'expand details'}</span>
+              <span className="text-emerald-500/70 group-hover/leg:text-emerald-500 transition-colors">{leg.family_name || 'Selection'}</span>
             </div>
           </div>
         </div>
@@ -87,12 +93,28 @@ const TicketLeg = ({ leg, onNavigate }) => {
       {expanded && (
         <div className="px-4 pb-4 pt-2 border-t border-slate-50 dark:border-slate-900/50 bg-slate-50/30 dark:bg-slate-900/30 animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="flex flex-col gap-3">
+            {/* Technical Metadata */}
+            <div className="flex flex-wrap gap-2">
+               <Badge className="bg-slate-900 dark:bg-white text-white dark:text-black text-[8px] px-2 py-0.5 rounded-lg font-black uppercase">{leg.confidence_category || 'STANDARD'}</Badge>
+               <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20 text-[8px] px-2 py-0.5 rounded-lg font-black uppercase">{leg.Type}</Badge>
+            </div>
+
             {leg.Streak_Reason && (
               <div className="flex items-start gap-2 bg-white dark:bg-slate-950 p-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
                 <Info size={14} className="text-emerald-500 mt-0.5 shrink-0" />
                 <p className="text-[10px] font-medium text-slate-600 dark:text-slate-400 leading-relaxed italic">
                   {leg.Streak_Reason}
                 </p>
+              </div>
+            )}
+
+            {leg.Score_Exact_Confirmation && (
+              <div className="bg-emerald-500/5 p-3 rounded-xl border border-emerald-500/10 flex items-center gap-3">
+                 <ShieldCheck size={14} className="text-emerald-500" />
+                 <div className="flex flex-col">
+                    <span className="text-[8px] font-black text-emerald-600 uppercase tracking-widest">Tactical Proof</span>
+                    <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">{leg.Score_Exact_Confirmation}</span>
+                 </div>
               </div>
             )}
             
@@ -122,7 +144,7 @@ const TicketLeg = ({ leg, onNavigate }) => {
                 e.stopPropagation();
                 onNavigate(leg.Match, leagueCode);
               }}
-              className="w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center justify-center gap-2 shadow-lg"
             >
               Analysis Matrix <ArrowUpRight size={12} />
             </button>
@@ -140,10 +162,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const [filterLeague, setFilterLeague] = useState('ALL');
   const [filterMarket, setFilterMarket] = useState('ALL');
   const [sortBy, setSortBy] = useState('prob'); // 'prob', 'odds', 'ev'
-  
+  const [auditMode, setAuditMode] = useState(false);
+
   // Strategy specific filters
   const [filterStratCat, setFilterStratCat] = useState('ALL');
-  const [stratSortBy, setStratSortBy] = useState('reliability'); // 'reliability', 'odds', 'gain'
+  const [stratSortBy, setStratSortBy] = useState('reliability'); 
 
   const tickets = assembled ? Object.entries(assembled) : [];
   
@@ -152,7 +175,6 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     
     const flattened = [];
     Object.entries(assembled).forEach(([key, t]) => {
-      // If the ticket has variants, explode them into individual entries
       if (t.variantes && Array.isArray(t.variantes)) {
         t.variantes.forEach((variant, vIdx) => {
           flattened.push([
@@ -236,9 +258,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
         const matchName = p.Match || '';
         const leagueName = p.League || '';
         const marketName = p.Marche || '';
+        const reason = p.Streak_Reason || '';
         
         const matchesSearch = matchName.toLowerCase().includes(searchQuery.toLowerCase()) || 
                              leagueName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             reason.toLowerCase().includes(searchQuery.toLowerCase()) ||
                              p.Profile?.some(prof => prof.toLowerCase().includes(searchQuery.toLowerCase()));
         
         const matchesTier = filterTier === 'ALL' || p.Tier === parseInt(filterTier);
@@ -290,10 +314,12 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const getProfileColor = (p) => {
     const colors = {
       'FORCE_DOMINANTE_AWAY': 'bg-blue-500/10 text-blue-600 border-blue-500/20',
+      'FORCE_DOMINANTE_HOME': 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
       'BUTS_GARANTIS': 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
       'FAUX_FAVORI': 'bg-rose-500/10 text-rose-600 border-rose-500/20',
       'MATCH_DE_PEUR': 'bg-amber-500/10 text-amber-600 border-amber-500/20',
-      'SURVALUATION_MARCHE': 'bg-purple-500/10 text-purple-600 border-purple-500/20'
+      'SURVALUATION_MARCHE': 'bg-purple-500/10 text-purple-600 border-purple-500/20',
+      'MATCH_FERME': 'bg-slate-500/10 text-slate-600 border-slate-500/20'
     };
     return colors[p] || 'bg-slate-100 text-slate-500 border-slate-200';
   };
@@ -311,7 +337,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     <div className="flex flex-col gap-8 max-w-7xl mx-auto w-full pb-32">
       
       {/* 1. INTERNAL NAVIGATION MENU */}
-      <div className="sticky top-0 z-40 -mx-4 px-4 lg:mx-0 lg:px-0 py-4 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl border-b lg:border-none border-slate-200 dark:border-slate-800">
+      <div className="sticky top-0 z-40 -mx-4 px-4 lg:mx-0 lg:px-0 py-4 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl border-b lg:border-none border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2 p-1 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm w-fit mx-auto lg:mx-0">
           {[
             { id: 'summary', label: 'Overview', icon: <BarChart3 size={16} /> },
@@ -333,6 +359,13 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             </button>
           ))}
         </div>
+
+        <button 
+          onClick={() => setAuditMode(!auditMode)}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${auditMode ? 'bg-amber-500/10 border-amber-500/30 text-amber-600' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'}`}
+        >
+          <Code size={14} /> Audit Mode: {auditMode ? 'ON' : 'OFF'}
+        </button>
       </div>
 
       {/* VIEW: SUMMARY */}
@@ -355,35 +388,35 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <h2 className="text-5xl lg:text-7xl font-serif font-black text-white tracking-tighter leading-tight">
                   Titanium <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Master</span>
                 </h2>
-                <p className="text-slate-400 max-w-xl text-sm lg:text-base leading-relaxed font-medium italic">
-                  "Combinant algorithmes de variance négative et calibration engine V8.5. Chaque sélection est le fruit d'une triple validation : Probabilité Pure, Situational Streak et Justice Tension."
+                <p className="text-slate-400 max-w-xl text-sm lg:text-base leading-relaxed font-medium italic uppercase tracking-wider opacity-80">
+                  {finals?.Methode || "Validé par Séries Statistiques V8.5"}
                 </p>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] flex flex-col gap-1">
-                  <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Active Picks</span>
+                  <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Selections</span>
                   <div className="flex items-baseline gap-2">
                     <span className="text-4xl font-black text-white font-mono">{totalSelections}</span>
-                    <span className="text-xs text-slate-500 font-bold">TOTAL</span>
+                    <span className="text-[9px] text-slate-500 font-bold">/ {finals?.Total_Bets_Evalues || '???'} ANALYZED</span>
                   </div>
                 </div>
                 <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] flex flex-col gap-1">
-                  <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">Avg Probability</span>
+                  <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">Pool Potential</span>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-black text-white font-mono">{avgProb}%</span>
+                    <span className="text-3xl font-black text-white font-mono">{finals?.Gain_Potentiel_10U ? Math.floor(finals.Gain_Potentiel_10U) : '0'}U</span>
                   </div>
                 </div>
 
                 {/* Profile Breakdown */}
                 <div className="col-span-full bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] flex flex-col gap-4">
                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Strategic Focus</span>
-                      <span className="text-[9px] font-bold text-emerald-500 uppercase">Live Engine Distribution</span>
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Strategic Focus Distribution</span>
+                      <span className="text-[9px] font-bold text-emerald-500 uppercase flex items-center gap-2"><Database size={10} /> Live Data Feed</span>
                    </div>
                    <div className="flex flex-wrap gap-2">
                       {profileStats.map(([p, count]) => (
-                        <div key={p} className={`px-3 py-1.5 rounded-xl border text-[9px] font-black uppercase tracking-wider flex items-center gap-2 ${getProfileColor(p)}`}>
+                        <div key={p} className={`px-3 py-1.5 rounded-xl border text-[9px] font-black uppercase tracking-wider flex items-center gap-2 ${getProfileColor(p)} shadow-sm`}>
                           {p.replace(/_/g, ' ')}
                           <span className="bg-white/20 px-1.5 py-0.5 rounded-lg">{count}</span>
                         </div>
@@ -398,7 +431,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Strategy Check</span>
-                      <span className="text-lg font-bold text-white uppercase tracking-widest">{tickets.length} Strategies Active</span>
+                      <span className="text-lg font-bold text-white uppercase tracking-widest">{tickets.length} Strategies Calibrated</span>
                     </div>
                   </div>
                   <ArrowUpRight size={24} className="text-emerald-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -410,8 +443,12 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
           {/* Quick Selection: Top Tiers */}
           <div className="flex flex-col gap-6">
              <div className="flex items-center justify-between px-2">
-                <h3 className="text-xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Elite Picks (Tier 1)</h3>
-                <button onClick={() => setActiveView('picks')} className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest hover:underline">View Database</button>
+                <h3 className="text-xl font-black uppercase tracking-tighter text-slate-900 dark:text-white flex items-center gap-3">
+                  <Zap size={20} className="text-amber-500 fill-amber-500" /> Session Alpha Picks
+                </h3>
+                <button onClick={() => setActiveView('picks')} className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest hover:underline flex items-center gap-2">
+                  Explore full Database <ArrowUpRight size={12} />
+                </button>
              </div>
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {finals?.Selections ? finals.Selections.filter(s => s.Tier === 1).slice(0, 3).map((sel, idx) => (
@@ -424,26 +461,28 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       <Trophy size={100} />
                     </div>
                     <div className="flex justify-between items-start mb-6">
-                       <Badge variant="success" className="bg-emerald-500 text-white shadow-lg">ELITE TIER 1</Badge>
+                       <Badge variant="success" className="bg-emerald-500 text-white shadow-lg flex items-center gap-1.5"><ShieldCheck size={12} /> ELITE TIER 1</Badge>
                        <div className="text-xl font-black text-emerald-500 font-mono">{((sel.Prob || 0) * 100).toFixed(1)}%</div>
                     </div>
-                    <h4 className="text-lg font-black text-slate-900 dark:text-white mb-2 leading-tight">{sel.Match || 'Unknown Match'}</h4>
-                    <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-6">{sel.League || 'Unknown League'} | {sel.Heure || '--:--'}</p>
+                    <h4 className="text-lg font-black text-slate-900 dark:text-white mb-2 leading-tight uppercase tracking-tight">{sel.Match || 'Unknown Match'}</h4>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-6 flex items-center gap-2">
+                      <Globe size={10} /> {sel.League} <span className="opacity-30">|</span> <Clock size={10} /> {sel.Heure}
+                    </p>
                     
                     <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
                       <div className="flex flex-col">
-                        <span className="text-[8px] font-black text-slate-400 uppercase">Market</span>
-                        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">{sel.Marche || 'N/A'}</span>
+                        <span className="text-[8px] font-black text-slate-400 uppercase mb-1">Target Market</span>
+                        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase">{sel.Marche || 'N/A'}</span>
                       </div>
                       <div className="text-right">
-                        <span className="text-[8px] font-black text-slate-400 uppercase">Odds</span>
+                        <span className="text-[8px] font-black text-slate-400 uppercase mb-1">Live Odds</span>
                         <div className="text-lg font-black font-mono">@{sel.Cote_Ref || '0.00'}</div>
                       </div>
                     </div>
                   </div>
                 )) : (
                   <div className="col-span-full py-20 text-center text-slate-400 font-mono text-xs uppercase tracking-widest bg-white dark:bg-slate-900 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
-                    No Elite Picks Found
+                    No Elite Picks Found in this Session
                   </div>
                 )}
              </div>
@@ -451,7 +490,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
         </div>
       )}
 
-      {/* VIEW: STRATEGIES - Professional Execution Dashboard */}
+      {/* VIEW: STRATEGIES */}
       {activeView === 'strategies' && (
         <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div className="px-2 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
@@ -460,7 +499,6 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               <p className="text-slate-500 text-sm font-medium mt-1">Multi-market strategies optimized for long-term mathematical edge.</p>
             </div>
             
-            {/* Quick Performance Highlights */}
             <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 lg:pb-0">
                <div className="bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-2xl shrink-0 flex items-center gap-3">
                   <div className="p-1.5 bg-emerald-500 rounded-lg"><ShieldCheck size={14} className="text-white" /></div>
@@ -524,9 +562,22 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             {filteredStrategies.map(([key, ticket]) => (
-              <div key={key} className="flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl transition-all hover:shadow-emerald-500/10 group active:scale-[0.99] border-t-4 border-t-emerald-500/20">
+              <div key={key} className="flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl transition-all hover:shadow-emerald-500/10 group active:scale-[0.99] border-t-4 border-t-emerald-500/20 relative">
+                
+                {/* Audit Mode Data Display */}
+                {auditMode && (
+                   <div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-6 overflow-y-auto animate-in fade-in duration-300">
+                      <div className="flex justify-between items-center mb-4">
+                         <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest flex items-center gap-2"><Code size={12}/> Technical JSON Audit</span>
+                         <button onClick={() => setAuditMode(false)} className="text-slate-400 hover:text-white"><Code size={20}/></button>
+                      </div>
+                      <pre className="text-[9px] font-mono text-emerald-400 whitespace-pre-wrap bg-black/40 p-4 rounded-xl border border-white/10">
+                         {JSON.stringify(ticket, null, 2)}
+                      </pre>
+                   </div>
+                )}
+
                 <div className="p-8 border-b border-slate-100 dark:border-slate-800/50 relative">
-                   {/* Background Glow */}
                    <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl -mr-16 -mt-16 rounded-full group-hover:bg-emerald-500/10 transition-all"></div>
                    
                    <div className="flex items-start justify-between mb-6 relative z-10">
@@ -537,14 +588,18 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                          </span>
                          <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-none">{ticket.nom}</h3>
                        </div>
-                       <div className="flex items-center gap-4">
+                       <div className="flex flex-wrap items-center gap-4">
                           <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                            <PieChart size={12} className="text-emerald-500" />
-                            {ticket.legs?.length || 0} SELECTIONS
+                            <Box size={12} className="text-emerald-500" />
+                            {ticket.metrics?.nb_legs || ticket.size || 0} SELECTIONS
                           </div>
                           <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                             <Activity size={12} className="text-blue-500" />
                             {ticket.metrics?.fiabilite_moyenne || '0'}% RELIABILITY
+                          </div>
+                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                            <Globe size={12} className="text-amber-500" />
+                            {ticket.metrics?.nb_ligues || ticket.metrics?.ligues?.length || 0} LIGUES
                           </div>
                        </div>
                      </div>
@@ -571,11 +626,29 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                         </div>
                       </div>
                    </div>
+
+                   {/* Diversification Visual Bar */}
+                   <div className="mt-4 flex flex-col gap-1 px-1">
+                      <div className="flex justify-between items-center text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                         <span>Risk Diversification</span>
+                         <span className="text-emerald-500">{(ticket.metrics?.diversification * 100).toFixed(0)}%</span>
+                      </div>
+                      <div className="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                         <div className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full" style={{ width: `${(ticket.metrics?.diversification || 0) * 100}%` }}></div>
+                      </div>
+                   </div>
                 </div>
 
                 <div className="p-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col gap-3">
-                  <div className="flex items-center gap-2 px-2 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
-                     <List size={12} /> Strategy Composition
+                  <div className="flex items-center justify-between px-2 mb-1">
+                    <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                       <List size={12} /> Strategy Composition
+                    </div>
+                    <div className="flex flex-wrap gap-1 justify-end max-w-[200px]">
+                       {ticket.metrics?.ligues?.map(l => (
+                          <span key={l} className="text-[7px] font-black bg-slate-200 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded uppercase tracking-tighter">{l}</span>
+                       ))}
+                    </div>
                   </div>
                   {ticket.legs?.map((leg, lidx) => (
                     <TicketLeg key={lidx} leg={leg} onNavigate={onNavigateToMatch} />
@@ -653,7 +726,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                </div>
              </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
                    <ShieldAlert size={14} className="text-slate-400" />
                    <select 
@@ -669,7 +742,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 </div>
 
                 <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <Target size={14} className="text-slate-400" />
+                   <Globe size={14} className="text-slate-400" />
                    <select 
                     value={filterLeague}
                     onChange={e => setFilterLeague(e.target.value)}
@@ -677,6 +750,18 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                    >
                      <option value="ALL">All Leagues</option>
                      {uniqueLeagues.map(l => <option key={l} value={l}>{l}</option>)}
+                   </select>
+                </div>
+
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
+                   <Target size={14} className="text-slate-400" />
+                   <select 
+                    value={filterFamily}
+                    onChange={e => setFilterFamily(e.target.value)}
+                    className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"
+                   >
+                     <option value="ALL">All Families</option>
+                     {uniqueFamilies.map(f => <option key={f} value={f}>{f}</option>)}
                    </select>
                 </div>
 
@@ -702,6 +787,19 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
                   className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer group relative overflow-hidden"
                 >
+                   {/* Audit Mode Data Display */}
+                   {auditMode && (
+                      <div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-6 overflow-y-auto animate-in fade-in duration-300">
+                          <div className="flex justify-between items-center mb-4">
+                            <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest flex items-center gap-2"><Code size={12}/> Pick Technical Audit</span>
+                            <button onClick={(e) => { e.stopPropagation(); setAuditMode(false); }} className="text-slate-400 hover:text-white"><Code size={20}/></button>
+                          </div>
+                          <pre className="text-[9px] font-mono text-emerald-400 whitespace-pre-wrap bg-black/40 p-4 rounded-xl border border-white/10">
+                            {JSON.stringify(sel, null, 2)}
+                          </pre>
+                      </div>
+                   )}
+
                   <div className="flex flex-col lg:flex-row gap-6 lg:items-center relative z-10">
                     {/* 1. Identity & Status */}
                     <div className="flex-1 flex flex-col gap-2 min-w-0">
@@ -711,8 +809,9 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                             {sel.Streak_Status === 'STREAK_CONFIRMED' ? <ShieldCheck size={10} /> : <Info size={10} />}
                             {sel.Streak_Status?.replace('STREAK_', '')}
                          </span>
-                         <span className="text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700 uppercase tracking-widest">{sel.Type}</span>
+                         <span className="text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700 uppercase tracking-widest">{sel.family_name || sel.Type}</span>
                          {sel.Super_Signal && <Zap size={12} className="text-amber-500 fill-amber-500 animate-pulse" />}
+                         {sel.Alpha && <span className="text-[8px] px-1.5 bg-amber-500 text-white font-black rounded border border-amber-400">ALPHA</span>}
                       </div>
                       <div>
                         <h4 className="text-xl font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight truncate">{sel.Match}</h4>
@@ -725,6 +824,13 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic bg-slate-50 dark:bg-slate-950/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">
                         {sel.Streak_Reason}
                       </p>
+
+                      {/* Tactical Proof Extension */}
+                      {sel.Score_Exact_Confirmation && (
+                         <div className="flex items-center gap-2 text-[9px] font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+                            <Fingerprint size={12} /> Proof: {sel.Score_Exact_Confirmation}
+                         </div>
+                      )}
                     </div>
 
                     {/* 2. Profiles (Badges) */}
@@ -746,7 +852,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                                 {sel.Score_EV?.toFixed(3)}
                              </span>
                           </div>
-                          <span className="text-[8px] font-bold text-slate-400 mt-1 uppercase">Titanium Calibration</span>
+                          <span className="text-[8px] font-bold text-slate-400 mt-1 uppercase">V8.5 Calibration</span>
                        </div>
                     </div>
 
