@@ -7,7 +7,6 @@ import teamMapping from '../team_mapping.json';
 
 const LEAGUES = [
   { id: 'ALL', name: 'Toutes les Ligues', code: 'ALL', flag: '🌍' },
-  { id: 'TICKETS', name: 'Master Selections', code: 'TICKETS', flag: '🏆' },
   { id: 'EDV', name: 'Eredivisie', code: 'EDV', flag: '🇳🇱' },
   { id: 'PL', name: 'Premier League', code: 'PL', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
   { id: 'POR1', name: 'Primeira Liga', code: 'POR1', flag: '🇵🇹' },
@@ -16,6 +15,8 @@ const LEAGUES = [
   { id: 'BUND', name: 'Bundesliga', code: 'BUND', flag: '🇩🇪' },
   { id: 'SERIEA', name: 'Serie A', code: 'SERIEA', flag: '🇮🇹' },
 ];
+
+const MASTER_HUB_LEAGUE = { id: 'TICKETS', name: 'Master Selections', code: 'TICKETS', flag: '🏆' };
 
 export default function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
@@ -478,10 +479,16 @@ export default function App() {
              
              <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setSelectedLeague(LEAGUES.find(l => l.id === 'TICKETS'))}
+                  onClick={() => {
+                    setSelectedLeague(MASTER_HUB_LEAGUE);
+                    setSelectedMatch(null);
+                    setSidebarOpen(false);
+                  }}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]' : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'}`}
                 >
-                  <Trophy size={14} className={selectedLeague.id === 'TICKETS' ? 'animate-bounce' : ''} /> HUB
+                  <Trophy size={14} className={selectedLeague.id === 'TICKETS' ? 'animate-bounce' : ''} /> 
+                  <span className="hidden xs:inline">HUB</span>
+                  <span className="xs:hidden">HUB</span>
                 </button>
                 <button
                   onClick={toggleTheme}
@@ -618,12 +625,18 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 lg:gap-3 shrink-0 ml-auto">
+                  <div className="flex items-center gap-1.5 lg:gap-3 shrink-0 ml-auto">
                     <button
-                      onClick={() => setSelectedLeague(LEAGUES.find(l => l.id === 'TICKETS'))}
-                      className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-emerald-500'}`}
+                      onClick={() => {
+                        setSelectedLeague(MASTER_HUB_LEAGUE);
+                        setSelectedMatch(null); 
+                        if (window.innerWidth < 1024) setSidebarOpen(false);
+                      }}
+                      className={`flex items-center gap-2 px-3 lg:px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest lg:tracking-[0.2em] border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-emerald-500'}`}
                     >
-                      <Trophy size={14} /> Master Hub
+                      <Trophy size={14} className={selectedLeague.id === 'TICKETS' ? 'animate-bounce' : ''} /> 
+                      <span className="hidden xs:inline">{selectedLeague.id === 'TICKETS' ? 'HUB ACTIVE' : 'MASTER HUB'}</span>
+                      <span className="xs:hidden">HUB</span>
                     </button>
 
                     <div className="relative group w-full max-w-[140px] hidden lg:block">
