@@ -97,7 +97,6 @@ const TicketLeg = ({ leg, onNavigate }) => {
               </p>
             )}
 
-            {/* Live Recommendation within Leg */}
             {leg.Live_Betting_Recommendation?.[0] && (
                <div className="bg-rose-500/5 border border-rose-500/10 rounded-xl p-2.5 flex flex-col gap-1.5">
                   <div className="flex items-center justify-between">
@@ -116,7 +115,7 @@ const TicketLeg = ({ leg, onNavigate }) => {
                 e.stopPropagation();
                 onNavigate(leg.Match, leagueCode);
               }}
-              className="w-full py-1.5 bg-slate-900 dark:bg-white text-white dark:text-black rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center justify-center gap-1.5"
+              className="w-full py-1.5 bg-slate-900 dark:bg-white text-white dark:text-black rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center justify-center gap-1.5 shadow-md"
             >
               Matrix <ArrowUpRight size={10} />
             </button>
@@ -191,10 +190,17 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   }, [finals]);
 
   const totalSelections = finals?.Selections?.length || 0;
+  
   const avgProb = useMemo(() => {
     if (totalSelections === 0) return 0;
     const sum = finals.Selections.reduce((acc, s) => acc + (s.Prob || 0), 0);
     return (sum / totalSelections * 100).toFixed(1);
+  }, [finals, totalSelections]);
+
+  const avgOdds = useMemo(() => {
+    if (totalSelections === 0) return 0;
+    const sum = finals.Selections.reduce((acc, s) => acc + (s.Cote_Ref || 0), 0);
+    return (sum / totalSelections).toFixed(2);
   }, [finals, totalSelections]);
 
   const profileStats = useMemo(() => {
@@ -266,7 +272,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   return (
     <div className="flex flex-col gap-6 max-w-7xl mx-auto w-full pb-32">
       
-      {/* 1. INTERNAL NAVIGATION MENU - Responsive Scroll */}
+      {/* 1. INTERNAL NAVIGATION MENU */}
       <div className="sticky top-0 z-40 -mx-4 px-4 lg:mx-0 lg:px-0 py-3 bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-md border-b lg:border-none border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4 overflow-hidden">
         <div className="flex items-center gap-1 p-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto no-scrollbar max-w-full">
           {[
@@ -313,7 +319,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <h2 className="text-3xl lg:text-5xl font-serif font-black text-white tracking-tighter leading-none">Titanium <span className="text-emerald-400">Master</span></h2>
                 <p className="text-slate-400 max-w-md text-xs lg:text-sm leading-relaxed font-medium italic opacity-80">{finals?.Methode || "V8.5 Calibrated"}</p>
               </div>
-          <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex flex-col gap-1">
                   <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest">Selections</span>
                   <span className="text-2xl font-black text-white font-mono">{totalSelections}</span>
@@ -329,8 +335,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   </div>
                   <ArrowUpRight size={18} className="text-emerald-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
-
-                {/* Profile Breakdown - RESTORED */}
+                {/* Profile Breakdown */}
                 <div className="col-span-full bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex flex-col gap-3">
                    <div className="flex items-center justify-between">
                       <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Strategic Distribution</span>
@@ -348,8 +353,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               </div>
             </div>
           </div>
-
-          {/* Elite Picks Selection */}
+          {/* Alpha Picks */}
           <div className="flex flex-col gap-4">
              <div className="flex items-center justify-between px-1">
                 <h3 className="text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
@@ -359,46 +363,34 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
              </div>
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {finals?.Selections ? finals.Selections.filter(s => s.Tier === 1).slice(0, 3).map((sel, idx) => (
-                   <div 
-                    key={idx}
-                    className="bg-white dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 shadow-xl group relative overflow-hidden flex flex-col"
-                  >
+                   <div key={idx} className="bg-white dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 shadow-xl group relative overflow-hidden flex flex-col">
                     <div className="flex justify-between items-start mb-4">
                        <Badge variant="success" className="bg-emerald-500 text-white text-[8px] px-2 py-0.5 shadow-md">ELITE T1</Badge>
                        <div className="text-lg font-black text-emerald-500 font-mono">{((sel.Prob || 0) * 100).toFixed(0)}%</div>
                     </div>
                     <h4 className="text-sm font-black text-slate-900 dark:text-white mb-1 uppercase truncate">{sel.Match}</h4>
                     <p className="text-[8px] text-slate-400 uppercase font-black mb-4">{sel.League} | {sel.Heure}</p>
-                    
                     <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 mb-4">
                        <span className="text-[9px] font-black text-emerald-600 dark:text-emerald-400 truncate max-w-[100px]">{sel.Marche}</span>
                        <div className="flex items-center gap-1.5 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
                           <span className="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400">@{sel.Cote_Ref}</span>
                        </div>
                     </div>
-
-                    {/* Live Alert for Elite Pick */}
                     {sel.Live_Betting_Recommendation?.[0] && (
                        <div className="mb-4 bg-rose-500/5 border border-rose-500/10 rounded-xl p-2 flex items-center gap-2">
                           <Zap size={10} className="text-rose-500 fill-rose-500" />
                           <span className="text-[9px] font-bold text-slate-700 dark:text-slate-300 truncate">{sel.Live_Betting_Recommendation[0].Signal}</span>
                        </div>
                     )}
-
-                    <button 
-                      onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
-                      className="mt-auto w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-500 transition-all flex items-center justify-center gap-2"
-                    >
+                    <button onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')} className="mt-auto w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all flex items-center justify-center gap-2">
                       Analyze <ArrowUpRight size={12} />
                     </button>
                   </div>
-                )) : (
-                  <div className="col-span-full py-10 text-center text-slate-400 font-mono text-[10px] uppercase bg-white dark:bg-slate-900/60 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
-                    No Alpha Picks Active
-                  </div>
-                )}
+                )) : <div className="col-span-full py-10 text-center text-slate-400 font-mono text-[10px] uppercase bg-white dark:bg-slate-900/60 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">No Alpha Picks Active</div>}
              </div>
           </div>
+        </div>
+      )}
 
       {/* VIEW: STRATEGIES */}
       {activeView === 'strategies' && (
@@ -407,40 +399,22 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Active Combinations</h3>
             <p className="text-slate-500 text-[10px] font-medium mt-0.5">Strategies optimized for long-term mathematical edge.</p>
           </div>
-
           <div className="flex flex-col gap-4 bg-white dark:bg-slate-900 p-4 rounded-[1.5rem] border border-slate-200 dark:border-slate-800 shadow-lg">
              <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <input 
-                  type="text" 
-                  placeholder="Filter name..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl py-2 pl-10 pr-3 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500/50"
-                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} /><input type="text" placeholder="Filter name..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl py-2 pl-10 pr-3 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500/50" />
              </div>
              <div className="grid grid-cols-2 gap-2">
                 <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-950 px-3 py-2 rounded-xl border border-slate-100 dark:border-slate-800">
-                   <Filter size={12} className="text-slate-400 shrink-0" />
-                   <select value={filterStratCat} onChange={e => setFilterStratCat(e.target.value)} className="bg-transparent text-[9px] font-black uppercase tracking-tight focus:outline-none w-full">
-                     <option value="ALL">All Types</option>
-                     {Object.entries(STRATEGY_CAT_MAPPING).map(([id, data]) => (<option key={id} value={id}>{data.label}</option>))}
-                   </select>
+                   <Filter size={12} className="text-slate-400 shrink-0" /><select value={filterStratCat} onChange={e => setFilterStratCat(e.target.value)} className="bg-transparent text-[9px] font-black uppercase tracking-tight focus:outline-none w-full"><option value="ALL">All Types</option>{Object.entries(STRATEGY_CAT_MAPPING).map(([id, data]) => (<option key={id} value={id}>{data.label}</option>))}</select>
                 </div>
                 <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-950 px-3 py-2 rounded-xl border border-slate-100 dark:border-slate-800">
-                   <TrendingUp size={12} className="text-slate-400 shrink-0" />
-                   <select value={stratSortBy} onChange={e => setStratSortBy(e.target.value)} className="bg-transparent text-[9px] font-black uppercase tracking-tight focus:outline-none w-full">
-                     <option value="reliability">Reliability</option>
-                     <option value="odds">Highest Odds</option>
-                     <option value="gain">Pot. Gain</option>
-                   </select>
+                   <TrendingUp size={12} className="text-slate-400 shrink-0" /><select value={stratSortBy} onChange={e => setStratSortBy(e.target.value)} className="bg-transparent text-[9px] font-black uppercase tracking-tight focus:outline-none w-full"><option value="reliability">Reliability</option><option value="odds">Highest Odds</option><option value="gain">Pot. Gain</option></select>
                 </div>
              </div>
           </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {filteredStrategies.map(([key, ticket]) => (
-              <div key={key} className="flex flex-col bg-white dark:bg-slate-900/60 backdrop-blur-sm rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-700/50 shadow-xl transition-all hover:shadow-emerald-500/10 group active:scale-[0.99] border-t-2 border-t-emerald-500/20 relative">
+              <div key={key} className="flex flex-col bg-white dark:bg-slate-900/60 backdrop-blur-sm rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-700/50 shadow-xl transition-all hover:shadow-emerald-500/30 group active:scale-[0.99] border-t-2 border-t-emerald-500/20 relative">
                 {auditMode && (<div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-300"><pre className="text-[8px] font-mono text-emerald-400 whitespace-pre-wrap">{JSON.stringify(ticket, null, 2)}</pre></div>)}
                 <div className="p-6 border-b border-slate-100 dark:border-slate-800/80">
                    <div className="flex items-start justify-between mb-4 gap-4">
@@ -493,103 +467,39 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                <span className="text-xs font-black font-mono text-emerald-600 dark:text-emerald-400">{(filteredPicks.reduce((acc, s) => acc + (s.Score_EV || 0), 0) / (filteredPicks.length || 1)).toFixed(3)}</span>
             </div>
           </div>
-
           <div className="flex flex-col gap-3 bg-white dark:bg-slate-900 p-4 rounded-[1.5rem] border border-slate-200 dark:border-slate-800 shadow-lg">
              <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <input type="text" placeholder="Search team, profile..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl py-2 pl-10 pr-3 text-xs font-medium" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} /><input type="text" placeholder="Search team, profile..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl py-2 pl-10 pr-3 text-xs font-medium" />
              </div>
              <div className="grid grid-cols-2 xs:grid-cols-4 gap-2">
-                <div className="bg-slate-50 dark:bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800">
-                   <select value={filterTier} onChange={e => setFilterTier(e.target.value)} className="bg-transparent text-[8px] font-black uppercase w-full focus:outline-none">
-                     <option value="ALL">All Tiers</option>
-                     <option value="1">Tier 1</option><option value="2">Tier 2</option><option value="5">Tier 5</option>
-                   </select>
-                </div>
-                <div className="bg-slate-50 dark:bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800">
-                   <select value={filterLeague} onChange={e => setFilterLeague(e.target.value)} className="bg-transparent text-[8px] font-black uppercase w-full focus:outline-none">
-                     <option value="ALL">All Leagues</option>
-                     {uniqueLeagues.map(l => <option key={l} value={l}>{l}</option>)}
-                   </select>
-                </div>
-                <div className="bg-slate-50 dark:bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800">
-                   <select value={filterFamily} onChange={e => setFilterFamily(e.target.value)} className="bg-transparent text-[8px] font-black uppercase w-full focus:outline-none">
-                     <option value="ALL">All Families</option>
-                     {uniqueFamilies.map(f => <option key={f} value={f}>{f}</option>)}
-                   </select>
-                </div>
-                <div className="bg-slate-50 dark:bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800">
-                   <select value={sortBy} onChange={e => setSortBy(e.target.value)} className="bg-transparent text-[8px] font-black uppercase w-full focus:outline-none">
-                     <option value="prob">By Prob</option><option value="odds">By Odds</option><option value="ev">By EV</option>
-                   </select>
-                </div>
+                <div className="bg-slate-50 dark:bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800"><select value={filterTier} onChange={e => setFilterTier(e.target.value)} className="bg-transparent text-[8px] font-black uppercase w-full focus:outline-none"><option value="ALL">All Tiers</option><option value="1">Tier 1</option><option value="2">Tier 2</option><option value="5">Tier 5</option></select></div>
+                <div className="bg-slate-50 dark:bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800"><select value={filterLeague} onChange={e => setFilterLeague(e.target.value)} className="bg-transparent text-[8px] font-black uppercase w-full focus:outline-none"><option value="ALL">All Leagues</option>{uniqueLeagues.map(l => <option key={l} value={l}>{l}</option>)}</select></div>
+                <div className="bg-slate-50 dark:bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800"><select value={filterFamily} onChange={e => setFilterFamily(e.target.value)} className="bg-transparent text-[8px] font-black uppercase w-full focus:outline-none"><option value="ALL">All Families</option>{uniqueFamilies.map(f => <option key={f} value={f}>{f}</option>)}</select></div>
+                <div className="bg-slate-50 dark:bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800"><select value={sortBy} onChange={e => setSortBy(e.target.value)} className="bg-transparent text-[8px] font-black uppercase w-full focus:outline-none"><option value="prob">By Prob</option><option value="odds">By Odds</option><option value="ev">By EV</option></select></div>
              </div>
           </div>
-
           <div className="flex flex-col gap-3">
              {filteredPicks.map((sel, idx) => (
                 <div key={idx} className="bg-white dark:bg-slate-900/60 backdrop-blur-sm p-4 rounded-2xl border border-slate-200 dark:border-slate-700/50 shadow-lg hover:border-emerald-500/40 transition-all group relative overflow-hidden flex flex-col gap-4">
                   {auditMode && (<div className="absolute inset-0 z-50 bg-slate-900/95 p-4 overflow-y-auto"><pre className="text-[8px] font-mono text-emerald-400 whitespace-pre-wrap">{JSON.stringify(sel, null, 2)}</pre></div>)}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
-                        <Badge className={`${getTierColor(sel.Tier)} text-[7px] px-1.5 py-0.5 rounded-md`}>T{sel.Tier}</Badge>
-                        <span className={`text-[7px] font-black px-1.5 py-0.5 rounded-md border flex items-center gap-1 ${sel.Streak_Status === 'STREAK_CONFIRMED' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-100 text-slate-500'}`}>{sel.Streak_Status?.replace('STREAK_', '')}</span>
-                        <span className="text-[7px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 uppercase tracking-tighter truncate max-w-[80px]">{sel.family_name || sel.Type}</span>
-                        {sel.Alpha && <span className="text-[7px] px-1.5 bg-amber-500 text-white font-black rounded">ALPHA</span>}
-                      </div>
+                      <div className="flex flex-wrap items-center gap-1.5 mb-1.5"><Badge className={`${getTierColor(sel.Tier)} text-[7px] px-1.5 py-0.5 rounded-md`}>T{sel.Tier}</Badge><span className={`text-[7px] font-black px-1.5 py-0.5 rounded-md border flex items-center gap-1 ${sel.Streak_Status === 'STREAK_CONFIRMED' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-100 text-slate-500'}`}>{sel.Streak_Status?.replace('STREAK_', '')}</span><span className="text-[7px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 uppercase tracking-tighter truncate max-w-[80px]">{sel.family_name || sel.Type}</span>{sel.Alpha && <span className="text-[7px] px-1.5 bg-amber-500 text-white font-black rounded">ALPHA</span>}</div>
                       <h4 className="text-sm font-black text-slate-900 dark:text-slate-100 uppercase truncate">{sel.Match}</h4>
                       <p className="text-[8px] text-slate-400 font-bold uppercase flex items-center gap-1.5 mt-0.5"><Globe size={10} /> {sel.League} | <Clock size={10} /> {sel.Heure}</p>
-                      
-                      {/* Restored Reason */}
-                      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic bg-slate-50 dark:bg-slate-800/40 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-2">
-                        {sel.Streak_Reason}
-                      </p>
-
-                      {/* Restored Tactical Proof */}
-                      {sel.Score_Exact_Confirmation && (
-                        <div className="flex items-center gap-2 text-[9px] font-bold text-emerald-600 dark:text-emerald-400 mt-1.5 ml-1">
-                           <Fingerprint size={12} /> Proof: {sel.Score_Exact_Confirmation}
-                        </div>
-                      )}
+                      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic bg-slate-50 dark:bg-slate-800/40 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-2">{sel.Streak_Reason}</p>
+                      {sel.Score_Exact_Confirmation && (<div className="flex items-center gap-2 text-[9px] font-bold text-emerald-600 dark:text-emerald-400 mt-1.5 ml-1"><Fingerprint size={12} /> Proof: {sel.Score_Exact_Confirmation}</div>)}
                     </div>
-
                     <div className="flex items-center justify-between sm:justify-end gap-3 border-t sm:border-t-0 pt-3 sm:pt-0">
-                      <div className="flex flex-col items-end">
-                         <span className="text-[8px] font-black text-slate-400 uppercase mb-0.5">EV Score</span>
-                         <span className={`text-base font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'}`}>{sel.Score_EV?.toFixed(3)}</span>
-                         {sel.Score_EV_Original && (
-                            <span className="text-[7px] text-slate-400 opacity-60 font-mono">Base: {sel.Score_EV_Original.toFixed(3)}</span>
-                         )}
-                      </div>
+                      <div className="flex flex-col items-end"><span className="text-[8px] font-black text-slate-400 uppercase mb-0.5">EV Score</span><span className={`text-base font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'}`}>{sel.Score_EV?.toFixed(3)}</span>{sel.Score_EV_Original && (<span className="text-[7px] text-slate-400 opacity-60 font-mono">Base: {sel.Score_EV_Original.toFixed(3)}</span>)}</div>
                       <div className="flex items-center gap-2">
-                        <div className="flex items-center gap-1.5 bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-1.5 rounded-lg border border-emerald-500/20">
-                           <span className="text-[7px] font-black uppercase text-emerald-600 dark:text-emerald-400">ODDS</span>
-                           <span className="text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400">@{sel.Cote_Ref}</span>
-                        </div>
+                        <div className="flex items-center gap-1.5 bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-1.5 rounded-lg border border-emerald-500/20"><span className="text-[7px] font-black uppercase text-emerald-600 dark:text-emerald-400">ODDS</span><span className="text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400">@{sel.Cote_Ref}</span></div>
                         <button onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')} className="p-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-lg shadow-md hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-all"><ArrowUpRight size={14} /></button>
                       </div>
                     </div>
                   </div>
-
-                  <div className="flex flex-wrap gap-1.5">
-                    {sel.Profile?.map(p => (<span key={p} className={`px-2 py-0.5 rounded-md border text-[7px] font-black uppercase tracking-tighter ${getProfileColor(p)}`}>{p.replace(/_/g, ' ')}</span>))}
-                  </div>
-
-                  {sel.Live_Betting_Recommendation?.[0] && (
-                     <div className="bg-rose-500/5 border border-rose-500/10 rounded-xl p-3 flex flex-col gap-2">
-                        <div className="flex items-center justify-between">
-                           <div className="flex items-center gap-2">
-                              <Zap size={10} className="text-rose-500 fill-rose-500 shrink-0" />
-                              <span className="text-[10px] font-black text-rose-500 uppercase tracking-widest">{sel.Live_Betting_Recommendation[0].Signal}</span>
-                           </div>
-                           <span className="text-[9px] font-black font-mono text-rose-500">{ (sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0) }% FORCE</span>
-                        </div>
-                        <p className="text-[10px] font-medium text-slate-600 dark:text-slate-400 italic leading-relaxed">
-                           {sel.Live_Betting_Recommendation[0].Argument}
-                        </p>
-                     </div>
-                  )}
+                  <div className="flex flex-wrap gap-1.5">{sel.Profile?.map(p => (<span key={p} className={`px-2 py-0.5 rounded-md border text-[7px] font-black uppercase tracking-tighter ${getProfileColor(p)}`}>{p.replace(/_/g, ' ')}</span>))}</div>
+                  {sel.Live_Betting_Recommendation?.[0] && (<div className="bg-rose-500/5 border border-rose-500/10 rounded-xl p-3 flex flex-col gap-2"><div className="flex items-center justify-between"><div className="flex items-center gap-2"><Zap size={10} className="text-rose-500 fill-rose-500 shrink-0" /><span className="text-[10px] font-black text-rose-500 uppercase tracking-widest">{sel.Live_Betting_Recommendation[0].Signal}</span></div><span className="text-[9px] font-black font-mono text-rose-500">{(sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0)}% FORCE</span></div><p className="text-[10px] font-medium text-slate-600 dark:text-slate-400 italic leading-relaxed">{sel.Live_Betting_Recommendation[0].Argument}</p></div>)}
                 </div>
              ))}
           </div>
