@@ -97,6 +97,20 @@ const TicketLeg = ({ leg, onNavigate }) => {
               </p>
             )}
 
+            {/* Live Recommendation within Leg */}
+            {leg.Live_Betting_Recommendation?.[0] && (
+               <div className="bg-rose-500/5 border border-rose-500/10 rounded-xl p-2.5 flex flex-col gap-1.5">
+                  <div className="flex items-center justify-between">
+                     <span className="text-[8px] font-black text-rose-500 uppercase tracking-widest flex items-center gap-1.5">
+                        <Zap size={10} className="fill-rose-500" /> Live Signal
+                     </span>
+                     <span className="text-[8px] font-black font-mono text-rose-500">{ (leg.Live_Betting_Recommendation[0].Force * 100).toFixed(0) }%</span>
+                  </div>
+                  <p className="text-[9px] font-bold text-slate-700 dark:text-slate-300 leading-tight">{leg.Live_Betting_Recommendation[0].Signal}</p>
+                  <p className="text-[8px] font-medium text-slate-500 dark:text-slate-400 italic">{leg.Live_Betting_Recommendation[0].Argument}</p>
+               </div>
+            )}
+
             <button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -299,7 +313,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <h2 className="text-3xl lg:text-5xl font-serif font-black text-white tracking-tighter leading-none">Titanium <span className="text-emerald-400">Master</span></h2>
                 <p className="text-slate-400 max-w-md text-xs lg:text-sm leading-relaxed font-medium italic opacity-80">{finals?.Methode || "V8.5 Calibrated"}</p>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3">
                 <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex flex-col gap-1">
                   <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest">Selections</span>
                   <span className="text-2xl font-black text-white font-mono">{totalSelections}</span>
@@ -315,11 +329,76 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   </div>
                   <ArrowUpRight size={18} className="text-emerald-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
+
+                {/* Profile Breakdown - RESTORED */}
+                <div className="col-span-full bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex flex-col gap-3">
+                   <div className="flex items-center justify-between">
+                      <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Strategic Distribution</span>
+                      <span className="text-[8px] font-bold text-emerald-500 uppercase flex items-center gap-1"><Database size={10} /> Live Feed</span>
+                   </div>
+                   <div className="flex flex-wrap gap-1.5">
+                      {profileStats.map(([p, count]) => (
+                        <div key={p} className={`px-2 py-1 rounded-lg border text-[8px] font-black uppercase tracking-tight flex items-center gap-1.5 ${getProfileColor(p)} shadow-sm`}>
+                          {p.replace(/_/g, ' ')}
+                          <span className="bg-white/20 px-1 rounded-md">{count}</span>
+                        </div>
+                      ))}
+                   </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+
+          {/* Elite Picks Selection */}
+          <div className="flex flex-col gap-4">
+             <div className="flex items-center justify-between px-1">
+                <h3 className="text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                  <Zap size={18} className="text-amber-500 fill-amber-500" /> Alpha Picks
+                </h3>
+                <button onClick={() => setActiveView('picks')} className="text-[9px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest hover:underline">View All</button>
+             </div>
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {finals?.Selections ? finals.Selections.filter(s => s.Tier === 1).slice(0, 3).map((sel, idx) => (
+                   <div 
+                    key={idx}
+                    className="bg-white dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 shadow-xl group relative overflow-hidden flex flex-col"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                       <Badge variant="success" className="bg-emerald-500 text-white text-[8px] px-2 py-0.5 shadow-md">ELITE T1</Badge>
+                       <div className="text-lg font-black text-emerald-500 font-mono">{((sel.Prob || 0) * 100).toFixed(0)}%</div>
+                    </div>
+                    <h4 className="text-sm font-black text-slate-900 dark:text-white mb-1 uppercase truncate">{sel.Match}</h4>
+                    <p className="text-[8px] text-slate-400 uppercase font-black mb-4">{sel.League} | {sel.Heure}</p>
+                    
+                    <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 mb-4">
+                       <span className="text-[9px] font-black text-emerald-600 dark:text-emerald-400 truncate max-w-[100px]">{sel.Marche}</span>
+                       <div className="flex items-center gap-1.5 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                          <span className="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400">@{sel.Cote_Ref}</span>
+                       </div>
+                    </div>
+
+                    {/* Live Alert for Elite Pick */}
+                    {sel.Live_Betting_Recommendation?.[0] && (
+                       <div className="mb-4 bg-rose-500/5 border border-rose-500/10 rounded-xl p-2 flex items-center gap-2">
+                          <Zap size={10} className="text-rose-500 fill-rose-500" />
+                          <span className="text-[9px] font-bold text-slate-700 dark:text-slate-300 truncate">{sel.Live_Betting_Recommendation[0].Signal}</span>
+                       </div>
+                    )}
+
+                    <button 
+                      onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
+                      className="mt-auto w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-500 transition-all flex items-center justify-center gap-2"
+                    >
+                      Analyze <ArrowUpRight size={12} />
+                    </button>
+                  </div>
+                )) : (
+                  <div className="col-span-full py-10 text-center text-slate-400 font-mono text-[10px] uppercase bg-white dark:bg-slate-900/60 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+                    No Alpha Picks Active
+                  </div>
+                )}
+             </div>
+          </div>
 
       {/* VIEW: STRATEGIES */}
       {activeView === 'strategies' && (
