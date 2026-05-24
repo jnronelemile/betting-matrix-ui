@@ -389,6 +389,8 @@ export default function App() {
     return textMatch && dateMatch && favMatch && signalMatch && confidenceMatch && ultraSafeMatch && regularMatch && safeButsMatch && topFormMatch && masterMatch;
   }) || [];
 
+  console.log("App Rendering - Selected League:", selectedLeague.id);
+
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300">
       {/* Mobile Sidebar Overlay */}
