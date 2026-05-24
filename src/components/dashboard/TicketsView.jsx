@@ -76,10 +76,10 @@ const TicketLeg = ({ leg, onNavigate }) => {
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <div className="flex flex-col items-end">
-            <span className="text-[9px] font-black text-slate-800 dark:text-emerald-400 uppercase tracking-tighter truncate max-w-[60px]">{leg.Marche}</span>
-            <span className="text-[9px] font-black font-mono text-emerald-500">@{leg.Cote_Ref || '0.00'}</span>
+            <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-tight">{leg.Marche}</span>
+            <span className="text-[10px] font-black font-mono text-slate-400 dark:text-slate-500">@{leg.Cote_Ref || '0.00'}</span>
           </div>
-          {expanded ? <ChevronUp size={12} className="text-slate-400" /> : <ChevronDown size={12} className="text-slate-400" />}
+          {expanded ? <ChevronUp size={14} className="text-slate-400" /> : <ChevronDown size={14} className="text-slate-400" />}
         </div>
       </div>
       
@@ -486,6 +486,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-1.5 mb-1.5"><Badge className={`${getTierColor(sel.Tier)} text-[7px] px-1.5 py-0.5 rounded-md`}>T{sel.Tier}</Badge><span className={`text-[7px] font-black px-1.5 py-0.5 rounded-md border flex items-center gap-1 ${sel.Streak_Status === 'STREAK_CONFIRMED' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-100 text-slate-500'}`}>{sel.Streak_Status?.replace('STREAK_', '')}</span><span className="text-[7px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 uppercase tracking-tighter truncate max-w-[80px]">{sel.family_name || sel.Type}</span>{sel.Alpha && <span className="text-[7px] px-1.5 bg-amber-500 text-white font-black rounded">ALPHA</span>}</div>
                       <h4 className="text-sm font-black text-slate-900 dark:text-slate-100 uppercase truncate">{sel.Match}</h4>
+                      <p className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-tight">{sel.Marche}</p>
                       <p className="text-[8px] text-slate-400 font-bold uppercase flex items-center gap-1.5 mt-0.5"><Globe size={10} /> {sel.League} | <Clock size={10} /> {sel.Heure}</p>
                       <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic bg-slate-50 dark:bg-slate-800/40 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-2">{sel.Streak_Reason}</p>
                       {sel.Score_Exact_Confirmation && (<div className="flex items-center gap-2 text-[9px] font-bold text-emerald-600 dark:text-emerald-400 mt-1.5 ml-1"><Fingerprint size={12} /> Proof: {sel.Score_Exact_Confirmation}</div>)}
