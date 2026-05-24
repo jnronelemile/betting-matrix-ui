@@ -376,8 +376,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                        </div>
                      </div>
                      <div className="flex flex-col items-end shrink-0">
-                        <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Odds</span>
-                        <span className="text-2xl font-black font-mono text-emerald-600 dark:text-emerald-400">@{ticket.metrics?.cote_totale?.toFixed(2) || '0.00'}</span>
+                        <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Est. Odds</span>
+                        <span className="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-500 tracking-tighter">@{ticket.metrics?.cote_totale?.toFixed(2) || '0.00'}</span>
                      </div>
                    </div>
                    <div className="grid grid-cols-3 gap-2">
@@ -469,11 +469,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                          <span className={`text-base font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'}`}>{sel.Score_EV?.toFixed(3)}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="flex flex-col items-center bg-slate-900 dark:bg-white text-white dark:text-black px-3 py-1.5 rounded-xl min-w-[70px]">
-                           <span className="text-[7px] font-black uppercase opacity-60">Odds</span>
-                           <span className="text-sm font-black font-mono">@{sel.Cote_Ref}</span>
+                        <div className="flex items-center gap-1.5 bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-1.5 rounded-lg border border-emerald-500/20">
+                           <span className="text-[7px] font-black uppercase text-emerald-600 dark:text-emerald-400">ODDS</span>
+                           <span className="text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400">@{sel.Cote_Ref}</span>
                         </div>
-                        <button onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')} className="p-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-lg transition-all"><ArrowUpRight size={16} /></button>
+                        <button onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')} className="p-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-lg shadow-md hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-all"><ArrowUpRight size={14} /></button>
                       </div>
                     </div>
                   </div>

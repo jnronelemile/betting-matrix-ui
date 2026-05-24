@@ -96,8 +96,9 @@ export default function TabDeepDive({ match }) {
                       </div>
                       <h4 className="text-sm font-black text-slate-900 dark:text-slate-100 uppercase truncate">{bet.Marche}</h4>
                    </div>
-                   <div className="bg-slate-900 dark:bg-white text-white dark:text-black px-2 py-1 rounded-lg font-mono font-black text-xs shrink-0">
-                      @{bet.Cote_Ref}
+                   <div className="flex items-center gap-1.5 bg-emerald-500/10 dark:bg-emerald-500/20 px-2 py-1 rounded-lg border border-emerald-500/20 shrink-0">
+                      <span className="text-[7px] font-black text-emerald-600 dark:text-emerald-400">ODDS</span>
+                      <span className="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400">@{bet.Cote_Ref}</span>
                    </div>
                  </div>
 
