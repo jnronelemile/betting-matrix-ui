@@ -461,12 +461,27 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       </div>
                       <h4 className="text-sm font-black text-slate-900 dark:text-slate-100 uppercase truncate">{sel.Match}</h4>
                       <p className="text-[8px] text-slate-400 font-bold uppercase flex items-center gap-1.5 mt-0.5"><Globe size={10} /> {sel.League} | <Clock size={10} /> {sel.Heure}</p>
+                      
+                      {/* Restored Reason */}
+                      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic bg-slate-50 dark:bg-slate-800/40 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-2">
+                        {sel.Streak_Reason}
+                      </p>
+
+                      {/* Restored Tactical Proof */}
+                      {sel.Score_Exact_Confirmation && (
+                        <div className="flex items-center gap-2 text-[9px] font-bold text-emerald-600 dark:text-emerald-400 mt-1.5 ml-1">
+                           <Fingerprint size={12} /> Proof: {sel.Score_Exact_Confirmation}
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex items-center justify-between sm:justify-end gap-3 border-t sm:border-t-0 pt-3 sm:pt-0">
                       <div className="flex flex-col items-end">
                          <span className="text-[8px] font-black text-slate-400 uppercase mb-0.5">EV Score</span>
                          <span className={`text-base font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'}`}>{sel.Score_EV?.toFixed(3)}</span>
+                         {sel.Score_EV_Original && (
+                            <span className="text-[7px] text-slate-400 opacity-60 font-mono">Base: {sel.Score_EV_Original.toFixed(3)}</span>
+                         )}
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1.5 bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-1.5 rounded-lg border border-emerald-500/20">
@@ -483,12 +498,17 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   </div>
 
                   {sel.Live_Betting_Recommendation?.[0] && (
-                     <div className="bg-rose-500/5 border border-rose-500/10 rounded-xl p-2 flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2 min-w-0">
-                           <Zap size={10} className="text-rose-500 fill-rose-500 shrink-0" />
-                           <span className="text-[9px] font-bold text-slate-700 dark:text-slate-300 truncate">{sel.Live_Betting_Recommendation[0].Signal}</span>
+                     <div className="bg-rose-500/5 border border-rose-500/10 rounded-xl p-3 flex flex-col gap-2">
+                        <div className="flex items-center justify-between">
+                           <div className="flex items-center gap-2">
+                              <Zap size={10} className="text-rose-500 fill-rose-500 shrink-0" />
+                              <span className="text-[10px] font-black text-rose-500 uppercase tracking-widest">{sel.Live_Betting_Recommendation[0].Signal}</span>
+                           </div>
+                           <span className="text-[9px] font-black font-mono text-rose-500">{ (sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0) }% FORCE</span>
                         </div>
-                        <span className="text-[9px] font-black font-mono text-rose-500 shrink-0">{ (sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0) }%</span>
+                        <p className="text-[10px] font-medium text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                           {sel.Live_Betting_Recommendation[0].Argument}
+                        </p>
                      </div>
                   )}
                 </div>
