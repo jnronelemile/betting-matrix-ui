@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertCircle, CheckCircle2, Ban, Zap, Info, ShieldCheck, Fingerprint } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Ban, Zap, Info, ShieldCheck, Fingerprint, Trophy } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 
 export default function TabDeepDive({ match }) {
@@ -7,8 +7,9 @@ export default function TabDeepDive({ match }) {
   const rejectedBets = leagueReport.filter(r => r.Streak_Status === 'STREAK_WARNING');
   const validatedBets = leagueReport.filter(r => r.Streak_Status === 'STREAK_CONFIRMED');
   const neutralBets = leagueReport.filter(r => r.Streak_Status === 'STREAK_NEUTRAL');
+  const masterReason = match.masterReason || null;
 
-  if (leagueReport.length === 0) {
+  if (leagueReport.length === 0 && !match.isFinalPick) {
     return (
       <div className="flex flex-col items-center justify-center p-20 text-slate-400 bg-white/50 dark:bg-slate-900/50 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800 animate-in fade-in duration-500">
         <Info size={48} className="mb-4 opacity-20" />
@@ -19,7 +20,39 @@ export default function TabDeepDive({ match }) {
 
   return (
     <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* 1. Header Information */}
+      
+      {/* 1. MASTER SELECTION HERO (Relocated from Tactical) */}
+      {match.isFinalPick && (
+        <div className="relative rounded-[2.5rem] p-8 lg:p-10 overflow-hidden bg-emerald-600 dark:bg-emerald-900 border border-emerald-400/30 shadow-2xl">
+          <div className="absolute top-0 right-0 p-8 opacity-10 text-white pointer-events-none">
+            <Trophy size={150} />
+          </div>
+          <div className="relative z-10 flex flex-col gap-6">
+            <div className="flex items-center gap-3">
+               <div className="p-2.5 bg-white/20 rounded-2xl backdrop-blur-md border border-white/20">
+                 <Trophy size={24} className="text-white" />
+               </div>
+               <span className="text-[11px] font-black text-emerald-50 uppercase tracking-[0.4em]">Titanium Master Selection</span>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-2xl lg:text-4xl font-serif font-black text-white uppercase tracking-tighter leading-tight">Strategic Validation Confirmed</h3>
+              <p className="text-emerald-50 max-w-4xl text-sm lg:text-base leading-relaxed font-medium italic bg-black/20 p-6 rounded-[2rem] border border-white/10 shadow-inner">
+                {masterReason || "This match has been identified by the Titanium Engine as a High-Reliability situational pick. It combines positive justice tension with elite regularity streaks and verified value odds."}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2 text-[10px] font-black text-emerald-100 uppercase tracking-widest bg-emerald-700/40 px-4 py-2 rounded-full border border-emerald-400/20">
+                <ShieldCheck size={14} /> Tier 1 Validated
+              </div>
+              <div className="flex items-center gap-2 text-[10px] font-black text-emerald-100 uppercase tracking-widest bg-emerald-700/40 px-4 py-2 rounded-full border border-emerald-400/20">
+                <Zap size={14} /> Elite Signal Synergy
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 2. Header Information */}
       <div className="bg-slate-900 dark:bg-black rounded-[2.5rem] p-8 lg:p-10 border border-white/10 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-5 text-white pointer-events-none">
           <Fingerprint size={120} />
@@ -35,7 +68,7 @@ export default function TabDeepDive({ match }) {
             Analytical <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Deep-Dive</span>
           </h2>
           <p className="text-slate-400 max-w-2xl text-sm leading-relaxed font-medium italic">
-            "Audit complet de tous les marchés analysés par le moteur. Visualisez les sélections validées, les vetos de sécurité et les preuves tactiques."
+            Audit complet de tous les marchés analysés par le moteur. Visualisez les sélections validées, les vetos de sécurité et les preuves tactiques.
           </p>
         </div>
       </div>

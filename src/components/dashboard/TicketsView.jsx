@@ -93,7 +93,6 @@ const TicketLeg = ({ leg, onNavigate }) => {
       {expanded && (
         <div className="px-4 pb-4 pt-2 border-t border-slate-50 dark:border-slate-900/50 bg-slate-50/30 dark:bg-slate-900/30 animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="flex flex-col gap-3">
-            {/* Technical Metadata */}
             <div className="flex flex-wrap gap-2">
                <Badge className="bg-slate-900 dark:bg-white text-white dark:text-black text-[8px] px-2 py-0.5 rounded-lg font-black uppercase">{leg.confidence_category || 'STANDARD'}</Badge>
                <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20 text-[8px] px-2 py-0.5 rounded-lg font-black uppercase">{leg.Type}</Badge>
@@ -156,15 +155,15 @@ const TicketLeg = ({ leg, onNavigate }) => {
 };
 
 export default function TicketsView({ assembled, finals, loading, onNavigateToMatch }) {
-  const [activeView, setActiveView] = useState('summary'); // 'summary', 'strategies', 'picks'
+  const [activeView, setActiveView] = useState('summary'); 
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTier, setFilterTier] = useState('ALL');
   const [filterLeague, setFilterLeague] = useState('ALL');
   const [filterMarket, setFilterMarket] = useState('ALL');
-  const [sortBy, setSortBy] = useState('prob'); // 'prob', 'odds', 'ev'
+  const [filterFamily, setFilterFamily] = useState('ALL');
+  const [sortBy, setSortBy] = useState('prob'); 
   const [auditMode, setAuditMode] = useState(false);
 
-  // Strategy specific filters
   const [filterStratCat, setFilterStratCat] = useState('ALL');
   const [stratSortBy, setStratSortBy] = useState('reliability'); 
 
@@ -172,47 +171,38 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   
   const filteredStrategies = useMemo(() => {
     if (!assembled) return [];
-    
     const flattened = [];
     Object.entries(assembled).forEach(([key, t]) => {
       if (t.variantes && Array.isArray(t.variantes)) {
         t.variantes.forEach((variant, vIdx) => {
-          flattened.push([
-            `${key}_v${vIdx}`, 
-            { 
-              ...t, 
-              nom: `${t.nom} #${vIdx + 1}`,
-              legs: variant.legs, 
-              metrics: variant.metrics,
-              isVariant: true 
-            }
-          ]);
+          flattened.push([`${key}_v${vIdx}`, { ...t, nom: `${t.nom} #${vIdx + 1}`, legs: variant.legs, metrics: variant.metrics, isVariant: true }]);
         });
       } else {
         flattened.push([key, t]);
       }
     });
-
-    return flattened
-      .filter(([key, t]) => {
-        const matchesCat = filterStratCat === 'ALL' || t.categorie === filterStratCat;
-        const matchesSearch = t.nom?.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCat && matchesSearch;
-      })
-      .sort((a, b) => {
-        const stratA = a[1];
-        const stratB = b[1];
-        if (stratSortBy === 'reliability') return (stratB.metrics?.fiabilite_moyenne || 0) - (stratA.metrics?.fiabilite_moyenne || 0);
-        if (stratSortBy === 'odds') return (stratB.metrics?.cote_totale || 0) - (stratA.metrics?.cote_totale || 0);
-        if (stratSortBy === 'gain') return (stratB.metrics?.gain_10u || 0) - (stratA.metrics?.gain_10u || 0);
-        return 0;
-      });
+    return flattened.filter(([key, t]) => {
+      const matchesCat = filterStratCat === 'ALL' || t.categorie === filterStratCat;
+      const matchesSearch = t.nom?.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCat && matchesSearch;
+    }).sort((a, b) => {
+      const stratA = a[1]; const stratB = b[1];
+      if (stratSortBy === 'reliability') return (stratB.metrics?.fiabilite_moyenne || 0) - (stratA.metrics?.fiabilite_moyenne || 0);
+      if (stratSortBy === 'odds') return (stratB.metrics?.cote_totale || 0) - (stratA.metrics?.cote_totale || 0);
+      if (stratSortBy === 'gain') return (stratB.metrics?.gain_10u || 0) - (stratA.metrics?.gain_10u || 0);
+      return 0;
+    });
   }, [assembled, filterStratCat, stratSortBy, searchQuery]);
 
-  // Extract unique filter options
   const uniqueLeagues = useMemo(() => {
     if (!finals?.Selections) return [];
     return Array.from(new Set(finals.Selections.map(s => s.League).filter(Boolean))).sort();
+  }, [finals]);
+
+  const uniqueFamilies = useMemo(() => {
+    if (!finals?.Selections) return [];
+    const names = finals.Selections.map(s => s.family_name || s.Type).filter(Boolean);
+    return Array.from(new Set(names)).sort();
   }, [finals]);
 
   const uniqueMarkets = useMemo(() => {
@@ -227,7 +217,6 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     return Array.from(new Set(baseMarkets)).sort();
   }, [finals]);
 
-  // Memoized calculations
   const totalSelections = finals?.Selections?.length || 0;
   const avgProb = useMemo(() => {
     if (totalSelections === 0) return 0;
@@ -244,54 +233,40 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const profileStats = useMemo(() => {
     const stats = {};
     finals?.Selections?.forEach(s => {
-      s.Profile?.forEach(p => {
-        stats[p] = (stats[p] || 0) + 1;
-      });
+      s.Profile?.forEach(p => { stats[p] = (stats[p] || 0) + 1; });
     });
     return Object.entries(stats).sort((a, b) => b[1] - a[1]);
   }, [finals]);
 
   const filteredPicks = useMemo(() => {
     if (!finals?.Selections) return [];
-    return finals.Selections
-      .filter(p => {
-        const matchName = p.Match || '';
-        const leagueName = p.League || '';
-        const marketName = p.Marche || '';
-        const reason = p.Streak_Reason || '';
-        
-        const matchesSearch = matchName.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                             leagueName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                             reason.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                             p.Profile?.some(prof => prof.toLowerCase().includes(searchQuery.toLowerCase()));
-        
-        const matchesTier = filterTier === 'ALL' || p.Tier === parseInt(filterTier);
-        const matchesLeague = filterLeague === 'ALL' || p.League === filterLeague;
-        
-        let matchesMarket = true;
-        if (filterMarket !== 'ALL') {
-           if (filterMarket === 'Over Goals') matchesMarket = marketName.includes('Over');
-           else if (filterMarket === 'Under Goals') matchesMarket = marketName.includes('Under');
-           else if (filterMarket === 'BTTS') matchesMarket = marketName.includes('BTTS');
-           else matchesMarket = !marketName.includes('Over') && !marketName.includes('Under') && !marketName.includes('BTTS');
-        }
-
-        return matchesSearch && matchesTier && matchesLeague && matchesMarket;
-      })
-      .sort((a, b) => {
-        const probA = a.Prob || 0;
-        const probB = b.Prob || 0;
-        const oddsA = a.Cote_Ref || 0;
-        const oddsB = b.Cote_Ref || 0;
-        const evA = a.Score_EV || 0;
-        const evB = b.Score_EV || 0;
-
-        if (sortBy === 'prob') return probB - probA;
-        if (sortBy === 'odds') return oddsB - oddsA;
-        if (sortBy === 'ev') return evB - evA;
-        return 0;
-      });
-  }, [finals, searchQuery, filterTier, filterLeague, filterMarket, sortBy]);
+    return finals.Selections.filter(p => {
+      if (!p) return false;
+      const familyRef = p.family_name || p.Type || '';
+      const matchSearch = (p.Match || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          (p.League || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          (p.Streak_Reason || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          familyRef.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          (p.Profile && p.Profile.some(prof => prof.toLowerCase().includes(searchQuery.toLowerCase())));
+      const matchesTier = filterTier === 'ALL' || p.Tier === parseInt(filterTier);
+      const matchesLeague = filterLeague === 'ALL' || p.League === filterLeague;
+      const matchesFamily = filterFamily === 'ALL' || familyRef === filterFamily;
+      let matchesMarket = true;
+      if (filterMarket !== 'ALL') {
+        const m = p.Marche || '';
+        if (filterMarket === 'Over Goals') matchesMarket = m.includes('Over');
+        else if (filterMarket === 'Under Goals') matchesMarket = m.includes('Under');
+        else if (filterMarket === 'BTTS') matchesMarket = m.includes('BTTS');
+        else matchesMarket = !m.includes('Over') && !m.includes('Under') && !m.includes('BTTS');
+      }
+      return matchSearch && matchesTier && matchesLeague && matchesFamily && matchesMarket;
+    }).sort((a, b) => {
+      if (sortBy === 'prob') return (b.Prob || 0) - (a.Prob || 0);
+      if (sortBy === 'odds') return (b.Cote_Ref || 0) - (a.Cote_Ref || 0);
+      if (sortBy === 'ev') return (b.Score_EV || 0) - (a.Score_EV || 0);
+      return 0;
+    });
+  }, [finals, searchQuery, filterTier, filterLeague, filterMarket, filterFamily, sortBy]);
 
   const categories = useMemo(() => {
     const cats = {};
@@ -335,8 +310,6 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
   return (
     <div className="flex flex-col gap-8 max-w-7xl mx-auto w-full pb-32">
-      
-      {/* 1. INTERNAL NAVIGATION MENU */}
       <div className="sticky top-0 z-40 -mx-4 px-4 lg:mx-0 lg:px-0 py-4 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl border-b lg:border-none border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2 p-1 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm w-fit mx-auto lg:mx-0">
           {[
@@ -344,582 +317,173 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             { id: 'strategies', label: 'Strategies', icon: <PieChart size={16} /> },
             { id: 'picks', label: 'Master Database', icon: <Layers size={16} /> },
           ].map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveView(tab.id)}
-              className={`
-                flex items-center gap-2 px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all
-                ${activeView === tab.id 
-                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 scale-[1.02]' 
-                  : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}
-              `}
-            >
-              {tab.icon}
-              {tab.label}
+            <button key={tab.id} onClick={() => setActiveView(tab.id)} className={`flex items-center gap-2 px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeView === tab.id ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 scale-[1.02]' : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+              {tab.icon} {tab.label}
             </button>
           ))}
         </div>
-
-        <button 
-          onClick={() => setAuditMode(!auditMode)}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${auditMode ? 'bg-amber-500/10 border-amber-500/30 text-amber-600' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'}`}
-        >
+        <button onClick={() => setAuditMode(!auditMode)} className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${auditMode ? 'bg-amber-500/10 border-amber-500/30 text-amber-600' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'}`}>
           <Code size={14} /> Audit Mode: {auditMode ? 'ON' : 'OFF'}
         </button>
       </div>
 
-      {/* VIEW: SUMMARY */}
       {activeView === 'summary' && (
         <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          {/* Hero Stats */}
           <div className="relative rounded-[2.5rem] p-8 lg:p-12 overflow-hidden bg-slate-900 dark:bg-black border border-white/10 shadow-2xl">
-            <div className="absolute top-0 right-0 p-12 opacity-10 text-white pointer-events-none">
-              <Trophy size={200} />
-            </div>
-            
+            <div className="absolute top-0 right-0 p-12 opacity-10 text-white pointer-events-none"><Trophy size={200} /></div>
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex flex-col gap-6">
                 <div className="flex items-center gap-3">
-                   <div className="p-2 bg-emerald-500/20 rounded-xl border border-emerald-500/30">
-                     <Trophy size={24} className="text-emerald-400" />
-                   </div>
+                   <div className="p-2 bg-emerald-500/20 rounded-xl border border-emerald-500/30"><Trophy size={24} className="text-emerald-400" /></div>
                    <span className="text-xs font-black text-emerald-500 uppercase tracking-[0.4em]">Proprietary Master Hub</span>
                 </div>
-                <h2 className="text-5xl lg:text-7xl font-serif font-black text-white tracking-tighter leading-tight">
-                  Titanium <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Master</span>
-                </h2>
-                <p className="text-slate-400 max-w-xl text-sm lg:text-base leading-relaxed font-medium italic uppercase tracking-wider opacity-80">
-                  {finals?.Methode || "Validé par Séries Statistiques V8.5"}
-                </p>
+                <h2 className="text-5xl lg:text-7xl font-serif font-black text-white tracking-tighter leading-tight">Titanium <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Master</span></h2>
+                <p className="text-slate-400 max-w-xl text-sm lg:text-base leading-relaxed font-medium italic uppercase tracking-wider opacity-80">{finals?.Methode || "Validé par Séries Statistiques V8.5"}</p>
               </div>
-              
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] flex flex-col gap-1">
                   <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Selections</span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-black text-white font-mono">{totalSelections}</span>
-                    <span className="text-[9px] text-slate-500 font-bold">/ {finals?.Total_Bets_Evalues || '???'} ANALYZED</span>
-                  </div>
+                  <div className="flex items-baseline gap-2"><span className="text-4xl font-black text-white font-mono">{totalSelections}</span><span className="text-[9px] text-slate-500 font-bold">/ {finals?.Total_Bets_Evalues || '???'} ANALYZED</span></div>
                 </div>
                 <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] flex flex-col gap-1">
                   <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">Pool Potential</span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-black text-white font-mono">{finals?.Gain_Potentiel_10U ? Math.floor(finals.Gain_Potentiel_10U) : '0'}U</span>
-                  </div>
+                  <div className="flex items-baseline gap-2"><span className="text-3xl font-black text-white font-mono">{finals?.Gain_Potentiel_10U ? Math.floor(finals.Gain_Potentiel_10U) : '0'}U</span></div>
                 </div>
-
-                {/* Profile Breakdown */}
                 <div className="col-span-full bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-[2rem] flex flex-col gap-4">
-                   <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Strategic Focus Distribution</span>
-                      <span className="text-[9px] font-bold text-emerald-500 uppercase flex items-center gap-2"><Database size={10} /> Live Data Feed</span>
-                   </div>
-                   <div className="flex flex-wrap gap-2">
-                      {profileStats.map(([p, count]) => (
-                        <div key={p} className={`px-3 py-1.5 rounded-xl border text-[9px] font-black uppercase tracking-wider flex items-center gap-2 ${getProfileColor(p)} shadow-sm`}>
-                          {p.replace(/_/g, ' ')}
-                          <span className="bg-white/20 px-1.5 py-0.5 rounded-lg">{count}</span>
-                        </div>
-                      ))}
-                   </div>
+                   <div className="flex items-center justify-between"><span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Strategic Focus Distribution</span><span className="text-[9px] font-bold text-emerald-500 uppercase flex items-center gap-2"><Database size={10} /> Live Data Feed</span></div>
+                   <div className="flex flex-wrap gap-2">{profileStats.map(([p, count]) => (<div key={p} className={`px-3 py-1.5 rounded-xl border text-[9px] font-black uppercase tracking-wider flex items-center gap-2 ${getProfileColor(p)} shadow-sm`}>{p.replace(/_/g, ' ')} <span className="bg-white/20 px-1.5 py-0.5 rounded-lg">{count}</span></div>))}</div>
                 </div>
-
                 <div className="col-span-full bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-[2rem] flex items-center justify-between group cursor-pointer hover:bg-emerald-500/20 transition-all" onClick={() => setActiveView('strategies')}>
                   <div className="flex items-center gap-4">
-                    <div className="p-3 bg-emerald-500/20 rounded-2xl">
-                      <ShieldCheck size={28} className="text-emerald-400" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Strategy Check</span>
-                      <span className="text-lg font-bold text-white uppercase tracking-widest">{tickets.length} Strategies Calibrated</span>
-                    </div>
+                    <div className="p-3 bg-emerald-500/20 rounded-2xl"><ShieldCheck size={28} className="text-emerald-400" /></div>
+                    <div className="flex flex-col"><span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Strategy Check</span><span className="text-lg font-bold text-white uppercase tracking-widest">{tickets.length} Strategies Calibrated</span></div>
                   </div>
                   <ArrowUpRight size={24} className="text-emerald-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Quick Selection: Top Tiers */}
           <div className="flex flex-col gap-6">
-             <div className="flex items-center justify-between px-2">
-                <h3 className="text-xl font-black uppercase tracking-tighter text-slate-900 dark:text-white flex items-center gap-3">
-                  <Zap size={20} className="text-amber-500 fill-amber-500" /> Session Alpha Picks
-                </h3>
-                <button onClick={() => setActiveView('picks')} className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest hover:underline flex items-center gap-2">
-                  Explore full Database <ArrowUpRight size={12} />
-                </button>
-             </div>
+             <div className="flex items-center justify-between px-2"><h3 className="text-xl font-black uppercase tracking-tighter text-slate-900 dark:text-white flex items-center gap-3"><Zap size={20} className="text-amber-500 fill-amber-500" /> Session Alpha Picks</h3><button onClick={() => setActiveView('picks')} className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest hover:underline flex items-center gap-2">Explore full Database <ArrowUpRight size={12} /></button></div>
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {finals?.Selections ? finals.Selections.filter(s => s.Tier === 1).slice(0, 3).map((sel, idx) => (
-                   <div 
-                    key={idx}
-                    onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
-                    className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl hover:border-emerald-500/50 transition-all group cursor-pointer relative overflow-hidden"
-                  >
-                    <div className="absolute -right-4 -top-4 opacity-5 text-emerald-50 group-hover:scale-110 transition-transform">
-                      <Trophy size={100} />
-                    </div>
-                    <div className="flex justify-between items-start mb-6">
-                       <Badge variant="success" className="bg-emerald-500 text-white shadow-lg flex items-center gap-1.5"><ShieldCheck size={12} /> ELITE TIER 1</Badge>
-                       <div className="text-xl font-black text-emerald-500 font-mono">{((sel.Prob || 0) * 100).toFixed(1)}%</div>
-                    </div>
+                   <div key={idx} onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')} className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl hover:border-emerald-500/50 transition-all group cursor-pointer relative overflow-hidden">
+                    <div className="absolute -right-4 -top-4 opacity-5 text-emerald-50 group-hover:scale-110 transition-transform"><Trophy size={100} /></div>
+                    <div className="flex justify-between items-start mb-6"><Badge variant="success" className="bg-emerald-500 text-white shadow-lg flex items-center gap-1.5"><ShieldCheck size={12} /> ELITE TIER 1</Badge><div className="text-xl font-black text-emerald-500 font-mono">{((sel.Prob || 0) * 100).toFixed(1)}%</div></div>
                     <h4 className="text-lg font-black text-slate-900 dark:text-white mb-2 leading-tight uppercase tracking-tight">{sel.Match || 'Unknown Match'}</h4>
-                    <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-6 flex items-center gap-2">
-                      <Globe size={10} /> {sel.League} <span className="opacity-30">|</span> <Clock size={10} /> {sel.Heure}
-                    </p>
-                    
+                    <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-6 flex items-center gap-2"><Globe size={10} /> {sel.League} <span className="opacity-30">|</span> <Clock size={10} /> {sel.Heure}</p>
                     <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
-                      <div className="flex flex-col">
-                        <span className="text-[8px] font-black text-slate-400 uppercase mb-1">Target Market</span>
-                        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase">{sel.Marche || 'N/A'}</span>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-[8px] font-black text-slate-400 uppercase mb-1">Live Odds</span>
-                        <div className="text-lg font-black font-mono">@{sel.Cote_Ref || '0.00'}</div>
-                      </div>
+                      <div className="flex flex-col"><span className="text-[8px] font-black text-slate-400 uppercase mb-1">Target Market</span><span className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase">{sel.Marche || 'N/A'}</span></div>
+                      <div className="text-right"><span className="text-[8px] font-black text-slate-400 uppercase mb-1">Live Odds</span><div className="text-lg font-black font-mono">@{sel.Cote_Ref || '0.00'}</div></div>
                     </div>
                   </div>
-                )) : (
-                  <div className="col-span-full py-20 text-center text-slate-400 font-mono text-xs uppercase tracking-widest bg-white dark:bg-slate-900 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
-                    No Elite Picks Found in this Session
-                  </div>
-                )}
+                )) : <div className="col-span-full py-20 text-center text-slate-400 font-mono text-xs uppercase tracking-widest bg-white dark:bg-slate-900 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">No Elite Picks Found in this Session</div>}
              </div>
           </div>
         </div>
       )}
 
-      {/* VIEW: STRATEGIES */}
       {activeView === 'strategies' && (
         <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div className="px-2 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            <div>
-              <h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Active Combinations</h3>
-              <p className="text-slate-500 text-sm font-medium mt-1">Multi-market strategies optimized for long-term mathematical edge.</p>
-            </div>
-            
+            <div><h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Active Combinations</h3><p className="text-slate-500 text-sm font-medium mt-1">Multi-market strategies optimized for long-term mathematical edge.</p></div>
             <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 lg:pb-0">
-               <div className="bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-2xl shrink-0 flex items-center gap-3">
-                  <div className="p-1.5 bg-emerald-500 rounded-lg"><ShieldCheck size={14} className="text-white" /></div>
-                  <div className="flex flex-col">
-                    <span className="text-[8px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Top Reliability</span>
-                    <span className="text-xs font-black font-mono">{Math.max(...filteredStrategies.map(s => s[1].metrics?.fiabilite_moyenne || 0))}%</span>
-                  </div>
-               </div>
-               <div className="bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-2xl shrink-0 flex items-center gap-3">
-                  <div className="p-1.5 bg-blue-500 rounded-lg"><TrendingUp size={14} className="text-white" /></div>
-                  <div className="flex flex-col">
-                    <span className="text-[8px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">Max Total Odds</span>
-                    <span className="text-xs font-black font-mono">@{Math.max(...filteredStrategies.map(s => s[1].metrics?.cote_totale || 0)).toFixed(2)}</span>
-                  </div>
-               </div>
+               <div className="bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-2xl shrink-0 flex items-center gap-3"><div className="p-1.5 bg-emerald-500 rounded-lg"><ShieldCheck size={14} className="text-white" /></div><div className="flex flex-col"><span className="text-[8px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Top Reliability</span><span className="text-xs font-black font-mono">{Math.max(...filteredStrategies.map(s => s[1].metrics?.fiabilite_moyenne || 0))}%</span></div></div>
+               <div className="bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-2xl shrink-0 flex items-center gap-3"><div className="p-1.5 bg-blue-500 rounded-lg"><TrendingUp size={14} className="text-white" /></div><div className="flex flex-col"><span className="text-[8px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">Max Total Odds</span><span className="text-xs font-black font-mono">@{Math.max(...filteredStrategies.map(s => s[1].metrics?.cote_totale || 0)).toFixed(2)}</span></div></div>
             </div>
           </div>
-
-          {/* Strategy Filter Bar */}
           <div className="flex flex-col lg:flex-row items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl">
-             <div className="relative flex-1 w-full">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                <input 
-                  type="text" 
-                  placeholder="Search by strategy name..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium"
-                />
-             </div>
-             
+             <div className="relative flex-1 w-full"><Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} /><input type="text" placeholder="Search by strategy name..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium" /></div>
              <div className="flex items-center gap-3 w-full lg:w-auto">
-                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <Filter size={14} className="text-slate-400" />
-                   <select 
-                    value={filterStratCat}
-                    onChange={e => setFilterStratCat(e.target.value)}
-                    className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"
-                   >
-                     <option value="ALL">All Strategy Types</option>
-                     {Object.entries(STRATEGY_CAT_MAPPING).map(([id, data]) => (
-                       <option key={id} value={id}>{data.label} ({data.desc})</option>
-                     ))}
-                   </select>
-                </div>
-                
-                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <TrendingUp size={14} className="text-slate-400" />
-                   <select 
-                    value={stratSortBy}
-                    onChange={e => setStratSortBy(e.target.value)}
-                    className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"
-                   >
-                     <option value="reliability">Sort: Reliability</option>
-                     <option value="odds">Sort: High Odds</option>
-                     <option value="gain">Sort: Potentiel Gain</option>
-                   </select>
-                </div>
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800"><Filter size={14} className="text-slate-400" /><select value={filterStratCat} onChange={e => setFilterStratCat(e.target.value)} className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"><option value="ALL">All Strategy Types</option>{Object.entries(STRATEGY_CAT_MAPPING).map(([id, data]) => (<option key={id} value={id}>{data.label} ({data.desc})</option>))}</select></div>
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800"><TrendingUp size={14} className="text-slate-400" /><select value={stratSortBy} onChange={e => setStratSortBy(e.target.value)} className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"><option value="reliability">Sort: Reliability</option><option value="odds">Sort: High Odds</option><option value="gain">Sort: Potentiel Gain</option></select></div>
              </div>
           </div>
-
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             {filteredStrategies.map(([key, ticket]) => (
               <div key={key} className="flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl transition-all hover:shadow-emerald-500/10 group active:scale-[0.99] border-t-4 border-t-emerald-500/20 relative">
-                
-                {/* Audit Mode Data Display */}
-                {auditMode && (
-                   <div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-6 overflow-y-auto animate-in fade-in duration-300">
-                      <div className="flex justify-between items-center mb-4">
-                         <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest flex items-center gap-2"><Code size={12}/> Technical JSON Audit</span>
-                         <button onClick={() => setAuditMode(false)} className="text-slate-400 hover:text-white"><Code size={20}/></button>
-                      </div>
-                      <pre className="text-[9px] font-mono text-emerald-400 whitespace-pre-wrap bg-black/40 p-4 rounded-xl border border-white/10">
-                         {JSON.stringify(ticket, null, 2)}
-                      </pre>
-                   </div>
-                )}
-
-                <div className="p-8 border-b border-slate-100 dark:border-slate-800/50 relative">
-                   <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl -mr-16 -mt-16 rounded-full group-hover:bg-emerald-500/10 transition-all"></div>
-                   
-                   <div className="flex items-start justify-between mb-6 relative z-10">
-                     <div className="flex flex-col gap-2">
-                       <div className="flex items-center gap-2">
-                         <span className={`px-2.5 py-1 ${STRATEGY_CAT_MAPPING[ticket.categorie]?.color || 'bg-slate-900'} text-white text-[10px] font-black rounded-lg shadow-lg`}>
-                           {STRATEGY_CAT_MAPPING[ticket.categorie]?.label || `CAT ${ticket.categorie}`}
-                         </span>
-                         <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-none">{ticket.nom}</h3>
-                       </div>
-                       <div className="flex flex-wrap items-center gap-4">
-                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                            <Box size={12} className="text-emerald-500" />
-                            {ticket.metrics?.nb_legs || ticket.size || 0} SELECTIONS
-                          </div>
-                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                            <Activity size={12} className="text-blue-500" />
-                            {ticket.metrics?.fiabilite_moyenne || '0'}% RELIABILITY
-                          </div>
-                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                            <Globe size={12} className="text-amber-500" />
-                            {ticket.metrics?.nb_ligues || ticket.metrics?.ligues?.length || 0} LIGUES
-                          </div>
-                       </div>
-                     </div>
-                     <div className="flex flex-col items-end">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Estimated Odds</span>
-                        <span className="text-4xl font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tighter">@{ticket.metrics?.cote_totale?.toFixed(2) || '0.00'}</span>
-                     </div>
-                   </div>
-
-                   <div className="grid grid-cols-3 gap-3 relative z-10">
-                      <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-                        <span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Pot. Gain (10U)</span>
-                        <span className="text-xl font-black text-slate-900 dark:text-white font-mono">{ticket.metrics?.gain_10u || '0'}U</span>
-                      </div>
-                      <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-                        <span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Implic. Prob</span>
-                        <span className="text-xl font-black text-slate-900 dark:text-white font-mono">{(ticket.metrics?.prob_implicite ? (ticket.metrics.prob_implicite * 100).toFixed(1) : '0.0')}%</span>
-                      </div>
-                      <div className={`p-4 rounded-2xl border flex flex-col items-center justify-center text-center transition-all ${ticket.metrics?.badge_correlation === '🟢' ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800'}`}>
-                        <span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Correlation</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tighter">{ticket.metrics?.badge_name?.replace('Anti-Variance', 'AV-SHIELD') || 'N/A'}</span>
-                          <span className="text-lg">{ticket.metrics?.badge_correlation || ''}</span>
-                        </div>
-                      </div>
-                   </div>
-
-                   {/* Diversification Visual Bar */}
-                   <div className="mt-4 flex flex-col gap-1 px-1">
-                      <div className="flex justify-between items-center text-[8px] font-black text-slate-400 uppercase tracking-widest">
-                         <span>Risk Diversification</span>
-                         <span className="text-emerald-500">{(ticket.metrics?.diversification * 100).toFixed(0)}%</span>
-                      </div>
-                      <div className="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                         <div className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full" style={{ width: `${(ticket.metrics?.diversification || 0) * 100}%` }}></div>
-                      </div>
-                   </div>
-                </div>
-
-                <div className="p-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col gap-3">
-                  <div className="flex items-center justify-between px-2 mb-1">
-                    <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                       <List size={12} /> Strategy Composition
-                    </div>
-                    <div className="flex flex-wrap gap-1 justify-end max-w-[200px]">
-                       {ticket.metrics?.ligues?.map(l => (
-                          <span key={l} className="text-[7px] font-black bg-slate-200 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded uppercase tracking-tighter">{l}</span>
-                       ))}
-                    </div>
-                  </div>
-                  {ticket.legs?.map((leg, lidx) => (
-                    <TicketLeg key={lidx} leg={leg} onNavigate={onNavigateToMatch} />
-                  ))}
-                </div>
-
-                <div className="p-6 mt-auto border-t border-slate-100 dark:border-slate-800/50 bg-white dark:bg-slate-900 flex items-center justify-between">
-                   <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1.5 text-[9px] font-black text-slate-400 uppercase">
-                         <BarChart size={12} /> Diversification: {ticket.metrics?.diversification || '0.00'}
-                      </div>
-                   </div>
-                   <button 
-                    onClick={() => onNavigateToMatch(ticket.legs[0]?.Match, LEAGUE_NAME_TO_CODE[ticket.legs[0]?.League] || 'ALL')}
-                    className="flex items-center gap-2 bg-emerald-500 text-white px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20"
-                   >
-                     Inspect Anchor <ArrowUpRight size={14} />
-                   </button>
-                </div>
+                {auditMode && (<div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-6 overflow-y-auto animate-in fade-in duration-300"><div className="flex justify-between items-center mb-4"><span className="text-[10px] font-black text-amber-500 uppercase tracking-widest flex items-center gap-2"><Code size={12}/> Technical JSON Audit</span><button onClick={() => setAuditMode(false)} className="text-slate-400 hover:text-white"><Code size={20}/></button></div><pre className="text-[9px] font-mono text-emerald-400 whitespace-pre-wrap bg-black/40 p-4 rounded-xl border border-white/10">{JSON.stringify(ticket, null, 2)}</pre></div>)}
+                <div className="p-8 border-b border-slate-100 dark:border-slate-800/50 relative"><div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl -mr-16 -mt-16 rounded-full group-hover:bg-emerald-500/10 transition-all"></div><div className="flex items-start justify-between mb-6 relative z-10"><div className="flex flex-col gap-2"><div className="flex items-center gap-2"><span className={`px-2.5 py-1 ${STRATEGY_CAT_MAPPING[ticket.categorie]?.color || 'bg-slate-900'} text-white text-[10px] font-black rounded-lg shadow-lg`}>{STRATEGY_CAT_MAPPING[ticket.categorie]?.label || `CAT ${ticket.categorie}`}</span><h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-none">{ticket.nom}</h3></div><div className="flex flex-wrap items-center gap-4"><div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest"><Box size={12} className="text-emerald-500" />{ticket.metrics?.nb_legs || ticket.size || 0} SELECTIONS</div><div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest"><Activity size={12} className="text-blue-500" />{ticket.metrics?.fiabilite_moyenne || '0'}% RELIABILITY</div><div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest"><Globe size={12} className="text-amber-500" />{ticket.metrics?.nb_ligues || ticket.metrics?.ligues?.length || 0} LIGUES</div></div></div><div className="flex flex-col items-end"><span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Estimated Odds</span><span className="text-4xl font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tighter">@{ticket.metrics?.cote_totale?.toFixed(2) || '0.00'}</span></div></div><div className="grid grid-cols-3 gap-3 relative z-10"><div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center"><span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Pot. Gain (10U)</span><span className="text-xl font-black text-slate-900 dark:text-white font-mono">{ticket.metrics?.gain_10u || '0'}U</span></div><div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center"><span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Implic. Prob</span><span className="text-xl font-black text-slate-900 dark:text-white font-mono">{(ticket.metrics?.prob_implicite ? (ticket.metrics.prob_implicite * 100).toFixed(1) : '0.0')}%</span></div><div className={`p-4 rounded-2xl border flex flex-col items-center justify-center text-center transition-all ${ticket.metrics?.badge_correlation === '🟢' ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800'}`}><span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Correlation</span><div className="flex items-center gap-2"><span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tighter">{ticket.metrics?.badge_name?.replace('Anti-Variance', 'AV-SHIELD') || 'N/A'}</span><span className="text-lg">{ticket.metrics?.badge_correlation || ''}</span></div></div></div><div className="mt-4 flex flex-col gap-1 px-1"><div className="flex justify-between items-center text-[8px] font-black text-slate-400 uppercase tracking-widest"><span>Risk Diversification</span><span className="text-emerald-500">{(ticket.metrics?.diversification * 100).toFixed(0)}%</span></div><div className="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full" style={{ width: `${(ticket.metrics?.diversification || 0) * 100}%` }}></div></div></div></div>
+                <div className="p-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col gap-3"><div className="flex items-center justify-between px-2 mb-1"><div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest"><List size={12} /> Strategy Composition</div><div className="flex flex-wrap gap-1 justify-end max-w-[200px]">{ticket.metrics?.ligues?.map(l => (<span key={l} className="text-[7px] font-black bg-slate-200 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded uppercase tracking-tighter">{l}</span>))}</div></div>{ticket.legs?.map((leg, lidx) => (<TicketLeg key={lidx} leg={leg} onNavigate={onNavigateToMatch} />))}</div>
+                <div className="p-6 mt-auto border-t border-slate-100 dark:border-slate-800/50 bg-white dark:bg-slate-900 flex items-center justify-between"><div className="flex items-center gap-4"><div className="flex items-center gap-1.5 text-[9px] font-black text-slate-400 uppercase"><BarChart size={12} /> Diversification: {ticket.metrics?.diversification || '0.00'}</div></div><button onClick={() => onNavigateToMatch(ticket.legs[0]?.Match, LEAGUE_NAME_TO_CODE[ticket.legs[0]?.League] || 'ALL')} className="flex items-center gap-2 bg-emerald-500 text-white px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20">Inspect Anchor <ArrowUpRight size={14} /></button></div>
               </div>
             ))}
           </div>
-
-          {filteredStrategies.length === 0 && (
-            <div className="flex flex-col items-center justify-center p-20 text-slate-400 bg-white/50 dark:bg-slate-900/50 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
-              <Search size={48} className="mb-4 opacity-20" />
-              <p className="text-sm font-mono uppercase tracking-widest">No strategies match your criteria</p>
-            </div>
-          )}
+          {filteredStrategies.length === 0 && <div className="flex flex-col items-center justify-center p-20 text-slate-400 bg-white/50 dark:bg-slate-900/50 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800"><Search size={48} className="mb-4 opacity-20" /><p className="text-sm font-mono uppercase tracking-widest">No strategies match your criteria</p></div>}
         </div>
       )}
 
-      {/* VIEW: MASTER DATABASE - Full Data Exploitation */}
       {activeView === 'picks' && (
         <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div className="px-2 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
-            <div>
-              <h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Master Database</h3>
-              <p className="text-slate-500 text-sm font-medium mt-1">Exploitation intégrale des métriques Titanium Engine V8.5.</p>
-            </div>
-            <div className="flex items-center gap-3">
-               <div className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center gap-3">
-                  <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Global EV Avg:</span>
-                  <span className="text-lg font-black font-mono text-emerald-600 dark:text-emerald-400">
-                    {(filteredPicks.reduce((acc, s) => acc + (s.Score_EV || 0), 0) / (filteredPicks.length || 1)).toFixed(3)}
-                  </span>
-               </div>
-            </div>
+            <div><h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Master Database</h3><p className="text-slate-500 text-sm font-medium mt-1">Exploitation intégrale des métriques Titanium Engine V8.5.</p></div>
+            <div className="flex items-center gap-3"><div className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center gap-3"><span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Global EV Avg:</span><span className="text-lg font-black font-mono text-emerald-600 dark:text-emerald-400">{(filteredPicks.reduce((acc, s) => acc + (s.Score_EV || 0), 0) / (filteredPicks.length || 1)).toFixed(3)}</span></div></div>
           </div>
-
-          {/* Filters Bar - ADVANCED */}
           <div className="flex flex-col gap-4 bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl">
-             <div className="flex flex-col lg:flex-row items-center gap-4">
-               <div className="relative flex-1 w-full">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                  <input 
-                    type="text" 
-                    placeholder="Search team, profiles or streak reason..."
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium"
-                  />
-               </div>
-               <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800 w-full lg:w-auto">
-                  <TrendingUp size={14} className="text-slate-400" />
-                  <select 
-                   value={sortBy}
-                   onChange={e => setSortBy(e.target.value)}
-                   className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none w-full"
-                  >
-                    <option value="prob">Sort: Probability</option>
-                    <option value="odds">Sort: Highest Odds</option>
-                    <option value="ev">Sort: High Expected Value</option>
-                  </select>
-               </div>
-             </div>
-
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <ShieldAlert size={14} className="text-slate-400" />
-                   <select 
-                    value={filterTier}
-                    onChange={e => setFilterTier(e.target.value)}
-                    className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"
-                   >
-                     <option value="ALL">All Tiers</option>
-                     <option value="1">Tier 1 Elite</option>
-                     <option value="2">Tier 2 High</option>
-                     <option value="5">Tier 5 Standard</option>
-                   </select>
-                </div>
-
-                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <Globe size={14} className="text-slate-400" />
-                   <select 
-                    value={filterLeague}
-                    onChange={e => setFilterLeague(e.target.value)}
-                    className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"
-                   >
-                     <option value="ALL">All Leagues</option>
-                     {uniqueLeagues.map(l => <option key={l} value={l}>{l}</option>)}
-                   </select>
-                </div>
-
-                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <Target size={14} className="text-slate-400" />
-                   <select 
-                    value={filterFamily}
-                    onChange={e => setFilterFamily(e.target.value)}
-                    className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"
-                   >
-                     <option value="ALL">All Families</option>
-                     {uniqueFamilies.map(f => <option key={f} value={f}>{f}</option>)}
-                   </select>
-                </div>
-
-                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <MousePointer2 size={14} className="text-slate-400" />
-                   <select 
-                    value={filterMarket}
-                    onChange={e => setFilterMarket(e.target.value)}
-                    className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"
-                   >
-                     <option value="ALL">All Markets</option>
-                     {uniqueMarkets.map(m => <option key={m} value={m}>{m}</option>)}
-                   </select>
-                </div>
-             </div>
+             <div className="flex flex-col lg:flex-row items-center gap-4"><div className="relative flex-1 w-full"><Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} /><input type="text" placeholder="Search team, profiles or streak reason..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium" /></div><div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800 w-full lg:w-auto"><TrendingUp size={14} className="text-slate-400" /><select value={sortBy} onChange={e => setSortBy(e.target.value)} className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none w-full"><option value="prob">Sort: Probability</option><option value="odds">Sort: Highest Odds</option><option value="ev">Sort: High Expected Value</option></select></div></div>
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"><div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800"><ShieldAlert size={14} className="text-slate-400" /><select value={filterTier} onChange={e => setFilterTier(e.target.value)} className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"><option value="ALL">All Tiers</option><option value="1">Tier 1 Elite</option><option value="2">Tier 2 High</option><option value="5">Tier 5 Standard</option></select></div><div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800"><Globe size={14} className="text-slate-400" /><select value={filterLeague} onChange={e => setFilterLeague(e.target.value)} className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"><option value="ALL">All Leagues</option>{uniqueLeagues.map(l => <option key={l} value={l}>{l}</option>)}</select></div><div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800"><Target size={14} className="text-slate-400" /><select value={filterFamily} onChange={e => setFilterFamily(e.target.value)} className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"><option value="ALL">All Families</option>{uniqueFamilies.map(f => <option key={f} value={f}>{f}</option>)}</select></div><div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800"><MousePointer2 size={14} className="text-slate-400" /><select value={filterMarket} onChange={e => setFilterMarket(e.target.value)} className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"><option value="ALL">All Markets</option>{uniqueMarkets.map(m => <option key={m} value={m}>{m}</option>)}</select></div></div>
           </div>
-
-          {/* Results Grid - High Density Analytical Mode */}
           <div className="grid grid-cols-1 gap-4">
              {filteredPicks.map((sel, idx) => (
-                <div 
-                  key={idx}
-                  onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
-                  className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer group relative overflow-hidden"
-                >
-                   {/* Audit Mode Data Display */}
-                   {auditMode && (
-                      <div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-6 overflow-y-auto animate-in fade-in duration-300">
-                          <div className="flex justify-between items-center mb-4">
-                            <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest flex items-center gap-2"><Code size={12}/> Pick Technical Audit</span>
-                            <button onClick={(e) => { e.stopPropagation(); setAuditMode(false); }} className="text-slate-400 hover:text-white"><Code size={20}/></button>
-                          </div>
-                          <pre className="text-[9px] font-mono text-emerald-400 whitespace-pre-wrap bg-black/40 p-4 rounded-xl border border-white/10">
-                            {JSON.stringify(sel, null, 2)}
-                          </pre>
-                      </div>
-                   )}
-
+                <div key={idx} className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 transition-all group relative overflow-hidden">
+                   {auditMode && (<div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-6 overflow-y-auto animate-in fade-in duration-300"><div className="flex justify-between items-center mb-4"><span className="text-[10px] font-black text-amber-500 uppercase tracking-widest flex items-center gap-2"><Code size={12}/> Pick Technical Audit</span><button onClick={(e) => { e.stopPropagation(); setAuditMode(false); }} className="text-slate-400 hover:text-white"><Code size={20}/></button></div><pre className="text-[9px] font-mono text-emerald-400 whitespace-pre-wrap bg-black/40 p-4 rounded-xl border border-white/10">{JSON.stringify(sel, null, 2)}</pre></div>)}
                   <div className="flex flex-col lg:flex-row gap-6 lg:items-center relative z-10">
-                    {/* 1. Identity & Status */}
                     <div className="flex-1 flex flex-col gap-2 min-w-0">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                         <Badge className={`${getTierColor(sel.Tier)} text-[9px] px-2 py-0.5 rounded-lg border shadow-sm`}>T{sel.Tier}</Badge>
-                         <span className={`text-[9px] font-black px-2 py-0.5 rounded-lg border flex items-center gap-1 ${sel.Streak_Status === 'STREAK_CONFIRMED' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
-                            {sel.Streak_Status === 'STREAK_CONFIRMED' ? <ShieldCheck size={10} /> : <Info size={10} />}
-                            {sel.Streak_Status?.replace('STREAK_', '')}
-                         </span>
-                         <span className="text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700 uppercase tracking-widest">{sel.family_name || sel.Type}</span>
-                         {sel.Super_Signal && <Zap size={12} className="text-amber-500 fill-amber-500 animate-pulse" />}
-                         {sel.Alpha && <span className="text-[8px] px-1.5 bg-amber-500 text-white font-black rounded border border-amber-400">ALPHA</span>}
+                        <Badge className={`${getTierColor(sel.Tier)} text-[9px] px-2 py-0.5 rounded-lg border shadow-sm`}>T{sel.Tier}</Badge>
+                        <span className={`text-[9px] font-black px-2 py-0.5 rounded-lg border flex items-center gap-1 ${sel.Streak_Status === 'STREAK_CONFIRMED' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>{sel.Streak_Status === 'STREAK_CONFIRMED' ? <ShieldCheck size={10} /> : <Info size={10} />}{sel.Streak_Status?.replace('STREAK_', '')}</span>
+                        <span className="text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700 uppercase tracking-widest">{sel.family_name || sel.Type}</span>
+                        {sel.Super_Signal && <Zap size={12} className="text-amber-500 fill-amber-500 animate-pulse" />}
+                        {sel.Alpha && <span className="text-[8px] px-1.5 bg-amber-500 text-white font-black rounded border border-amber-400">ALPHA</span>}
                       </div>
                       <div>
                         <h4 className="text-xl font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight truncate">{sel.Match}</h4>
-                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                          {sel.League} <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800"></span> {sel.Date} @ {sel.Heure}
-                        </p>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">{sel.League} <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800"></span> {sel.Date} @ {sel.Heure}</p>
                       </div>
-                      
-                      {/* Reason (Visible in Database Mode) */}
-                      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic bg-slate-50 dark:bg-slate-950/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">
-                        {sel.Streak_Reason}
-                      </p>
-
-                      {/* Tactical Proof Extension */}
-                      {sel.Score_Exact_Confirmation && (
-                         <div className="flex items-center gap-2 text-[9px] font-bold text-emerald-600 dark:text-emerald-400 mt-1">
-                            <Fingerprint size={12} /> Proof: {sel.Score_Exact_Confirmation}
-                         </div>
-                      )}
+                      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic bg-slate-50 dark:bg-slate-950/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">{sel.Streak_Reason}</p>
+                      {sel.Score_Exact_Confirmation && (<div className="flex items-center gap-2 text-[9px] font-bold text-emerald-600 dark:text-emerald-400 mt-1"><Fingerprint size={12} /> Proof: {sel.Score_Exact_Confirmation}</div>)}
                     </div>
 
-                    {/* 2. Profiles (Badges) */}
-                    <div className="flex flex-wrap gap-1.5 max-w-[200px] lg:max-w-xs">
-                      {sel.Profile?.map(p => (
-                        <span key={p} className={`px-2 py-0.5 rounded-lg border text-[8px] font-black uppercase tracking-tighter ${getProfileColor(p)}`}>
-                          {p.replace(/_/g, ' ')}
-                        </span>
-                      ))}
-                    </div>
+                    <div className="flex flex-wrap gap-1.5 max-w-[200px] lg:max-w-xs">{sel.Profile?.map(p => (<span key={p} className={`px-2 py-0.5 rounded-lg border text-[8px] font-black uppercase tracking-tighter ${getProfileColor(p)}`}>{p.replace(/_/g, ' ')}</span>))}</div>
 
-                    {/* 3. Expected Value Section */}
                     <div className="flex items-center gap-6 px-6 border-l border-slate-100 dark:border-slate-800 hidden xl:flex">
                        <div className="flex flex-col items-center">
                           <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">EV Score</span>
                           <div className="flex items-center gap-2">
-                             <TrendingUp size={16} className={sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'} />
-                             <span className={`text-2xl font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-600' : 'text-blue-600'}`}>
-                                {sel.Score_EV?.toFixed(3)}
-                             </span>
+                             <TrendingUp size={16} className={sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'} /><span className={`text-2xl font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-600' : 'text-blue-600'}`}>{sel.Score_EV?.toFixed(3)}</span>
                           </div>
                           <span className="text-[8px] font-bold text-slate-400 mt-1 uppercase">V8.5 Calibration</span>
                        </div>
                     </div>
 
-                    {/* 4. Market & Live Odds */}
                     <div className="flex items-center gap-6 lg:ml-auto shrink-0 border-t lg:border-t-0 pt-4 lg:pt-0">
                       <div className="flex flex-col items-end">
                          <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Target Market</span>
                          <span className="text-sm font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-tight">{sel.Marche}</span>
                       </div>
-                      <div className="flex flex-col items-center bg-slate-900 dark:bg-white text-white dark:text-black p-4 rounded-3xl min-w-[100px] shadow-2xl group-hover:scale-110 transition-transform">
-                         <span className="text-[8px] font-black uppercase tracking-widest opacity-60">Entry Odds</span>
-                         <span className="text-xl font-black font-mono">@{sel.Cote_Ref}</span>
-                         <div className="text-[10px] font-black text-emerald-500">{(sel.Prob * 100).toFixed(0)}%</div>
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="flex flex-col items-center bg-slate-900 dark:bg-white text-white dark:text-black p-3 rounded-2xl min-w-[90px] shadow-2xl transition-transform">
+                           <span className="text-[8px] font-black uppercase tracking-widest opacity-60">Odds</span>
+                           <span className="text-xl font-black font-mono">@{sel.Cote_Ref}</span>
+                        </div>
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL'); }}
+                          className="w-full py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20"
+                        >
+                          Analyze <ArrowUpRight size={12} />
+                        </button>
                       </div>
                     </div>
-                  </div>
-
-                  {/* 5. Live Betting Alert Overlay (If exists) */}
-                  {sel.Live_Betting_Recommendation && sel.Live_Betting_Recommendation.length > 0 && (
-                     <div className="mt-4 bg-rose-500/5 border border-rose-500/10 rounded-2xl p-3 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                           <div className="p-1.5 bg-rose-500 rounded-lg shadow-[0_0_12px_rgba(244,63,94,0.4)]">
-                              <Zap size={14} className="text-white fill-white" />
-                           </div>
-                           <div className="flex flex-col">
-                              <span className="text-[9px] font-black text-rose-500 uppercase tracking-widest">Live Strategic Alert</span>
-                              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{sel.Live_Betting_Recommendation[0].Signal}</span>
-                           </div>
-                        </div>
-                        <div className="text-right">
-                           <span className="text-xs font-black font-mono text-rose-500">{(sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0)}% Force</span>
-                        </div>
-                     </div>
-                  )}
-                </div>
+                  </div>{sel.Live_Betting_Recommendation && sel.Live_Betting_Recommendation.length > 0 && (<div className="mt-4 bg-rose-500/5 border border-rose-500/10 rounded-2xl p-3 flex items-center justify-between"><div className="flex items-center gap-3"><div className="p-1.5 bg-rose-500 rounded-lg shadow-[0_0_12px_rgba(244,63,94,0.4)]"><Zap size={14} className="text-white fill-white" /></div><div className="flex flex-col"><span className="text-[9px] font-black text-rose-500 uppercase tracking-widest">Live Strategic Alert</span><span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{sel.Live_Betting_Recommendation[0].Signal}</span></div></div><div className="text-right"><span className="text-xs font-black font-mono text-rose-500">{(sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0)}% Force</span></div></div>)}</div>
              ))}
           </div>
-
-          {filteredPicks.length === 0 && (
-            <div className="flex flex-col items-center justify-center p-20 text-slate-400 bg-white/50 dark:bg-slate-900/50 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
-              <Search size={48} className="mb-4 opacity-20" />
-              <p className="text-sm font-mono uppercase tracking-widest">No matching records in the Titanium Database</p>
-            </div>
-          )}
+          {filteredPicks.length === 0 && <div className="flex flex-col items-center justify-center p-20 text-slate-400 bg-white/50 dark:bg-slate-900/50 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800"><Search size={48} className="mb-4 opacity-20" /><p className="text-sm font-mono uppercase tracking-widest">No matching records in the Titanium Database</p></div>}
         </div>
       )}
 
-      {/* Strategic Footer Context */}
       <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-[2.5rem] p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-10 shadow-inner mt-10">
-        <div className="w-32 h-32 rounded-[2.5rem] bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 shrink-0 relative">
-          <div className="absolute inset-0 bg-emerald-500/5 animate-ping rounded-[2.5rem]"></div>
-          <Flame size={64} className="text-emerald-500 relative z-10" />
-        </div>
-        <div className="flex flex-col gap-4 text-center lg:text-left">
-          <h4 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">ColdBetdrox Logic: Anti-Variance Shield</h4>
-          <p className="text-sm lg:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-            Notre "Master Selection" n'est pas une simple liste de paris, c'est une architecture de gestion du risque. Chaque ticket assemblé utilise des corrélations négatives pour minimiser l'impact de la variance sur le long terme.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center lg:justify-start mt-2">
-            <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-              <ShieldCheck size={16} className="text-emerald-500" /> Situational Proof
-            </div>
-            <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-               <Activity size={16} className="text-blue-500" /> Titanium Calibration
-            </div>
-          </div>
-        </div>
+        <div className="w-32 h-32 rounded-[2.5rem] bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 shrink-0 relative"><div className="absolute inset-0 bg-emerald-500/5 animate-ping rounded-[2.5rem]"></div><Flame size={64} className="text-emerald-500 relative z-10" /></div>
+        <div className="flex flex-col gap-4 text-center lg:text-left"><h4 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">ColdBetdrox Logic: Anti-Variance Shield</h4><p className="text-sm lg:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium">Notre "Master Selection" n'est pas une simple liste de paris, c'est une architecture de gestion du risque. Chaque ticket assemblé utilise des corrélations négatives pour minimiser l'impact de la variance sur le long terme.</p><div className="flex flex-wrap gap-4 justify-center lg:justify-start mt-2"><div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest"><ShieldCheck size={16} className="text-emerald-500" /> Situational Proof</div><div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest"><Activity size={16} className="text-blue-500" /> Titanium Calibration</div></div></div>
       </div>
     </div>
   );
