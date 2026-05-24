@@ -131,32 +131,45 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   
   // Memoized calculations
   const totalSelections = finals?.Selections?.length || 0;
-  const avgProb = totalSelections > 0 
-    ? (finals.Selections.reduce((acc, s) => acc + (s.Prob || 0), 0) / totalSelections * 100).toFixed(1)
-    : 0;
-  const avgOdds = totalSelections > 0
-    ? (finals.Selections.reduce((acc, s) => acc + (s.Cote_Ref || 0), 0) / totalSelections).toFixed(2)
-    : 0;
+  const avgProb = useMemo(() => {
+    if (totalSelections === 0) return 0;
+    const sum = finals.Selections.reduce((acc, s) => acc + (s.Prob || 0), 0);
+    return (sum / totalSelections * 100).toFixed(1);
+  }, [finals, totalSelections]);
+
+  const avgOdds = useMemo(() => {
+    if (totalSelections === 0) return 0;
+    const sum = finals.Selections.reduce((acc, s) => acc + (s.Cote_Ref || 0), 0);
+    return (sum / totalSelections).toFixed(2);
+  }, [finals, totalSelections]);
 
   const filteredPicks = useMemo(() => {
     if (!finals?.Selections) return [];
     return finals.Selections
       .filter(p => {
-        const matchesSearch = p.Match.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                             p.League.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchName = p.Match || '';
+        const leagueName = p.League || '';
+        const matchesSearch = matchName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                             leagueName.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesTier = filterTier === 'ALL' || p.Tier === parseInt(filterTier);
         return matchesSearch && matchesTier;
       })
       .sort((a, b) => {
-        if (sortBy === 'prob') return b.Prob - a.Prob;
-        if (sortBy === 'odds') return b.Cote_Ref - a.Cote_Ref;
+        const probA = a.Prob || 0;
+        const probB = b.Prob || 0;
+        const oddsA = a.Cote_Ref || 0;
+        const oddsB = b.Cote_Ref || 0;
+        if (sortBy === 'prob') return probB - probA;
+        if (sortBy === 'odds') return oddsB - oddsA;
         return 0;
       });
   }, [finals, searchQuery, filterTier, sortBy]);
 
   const categories = useMemo(() => {
     const cats = {};
+    if (!tickets || tickets.length === 0) return cats;
     tickets.forEach(([key, t]) => {
+      if (!t) return;
       const c = t.categorie || 'Other';
       if (!cats[c]) cats[c] = [];
       cats[c].push([key, t]);
@@ -263,34 +276,38 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <button onClick={() => setActiveView('picks')} className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest hover:underline">View All Picks</button>
              </div>
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {finals?.Selections?.filter(s => s.Tier === 1).slice(0, 3).map((sel, idx) => (
+                {finals?.Selections ? finals.Selections.filter(s => s.Tier === 1).slice(0, 3).map((sel, idx) => (
                    <div 
                     key={idx}
                     onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
                     className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl hover:border-emerald-500/50 transition-all group cursor-pointer relative overflow-hidden"
                   >
-                    <div className="absolute -right-4 -top-4 opacity-5 text-emerald-500 group-hover:scale-110 transition-transform">
+                    <div className="absolute -right-4 -top-4 opacity-5 text-emerald-50 group-hover:scale-110 transition-transform">
                       <Trophy size={100} />
                     </div>
                     <div className="flex justify-between items-start mb-6">
                        <Badge variant="success" className="bg-emerald-500 text-white shadow-lg">ELITE TIER 1</Badge>
-                       <div className="text-xl font-black text-emerald-500 font-mono">{(sel.Prob * 100).toFixed(1)}%</div>
+                       <div className="text-xl font-black text-emerald-500 font-mono">{((sel.Prob || 0) * 100).toFixed(1)}%</div>
                     </div>
-                    <h4 className="text-lg font-black text-slate-900 dark:text-white mb-2 leading-tight">{sel.Match}</h4>
-                    <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-6">{sel.League} | {sel.Heure}</p>
+                    <h4 className="text-lg font-black text-slate-900 dark:text-white mb-2 leading-tight">{sel.Match || 'Unknown Match'}</h4>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-6">{sel.League || 'Unknown League'} | {sel.Heure || '--:--'}</p>
                     
                     <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
                       <div className="flex flex-col">
                         <span className="text-[8px] font-black text-slate-400 uppercase">Market</span>
-                        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">{sel.Marche}</span>
+                        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">{sel.Marche || 'N/A'}</span>
                       </div>
                       <div className="text-right">
                         <span className="text-[8px] font-black text-slate-400 uppercase">Odds</span>
-                        <div className="text-lg font-black font-mono">@{sel.Cote_Ref}</div>
+                        <div className="text-lg font-black font-mono">@{sel.Cote_Ref || '0.00'}</div>
                       </div>
                     </div>
                   </div>
-                ))}
+                )) : (
+                  <div className="col-span-full py-20 text-center text-slate-400 font-mono text-xs uppercase tracking-widest bg-white dark:bg-slate-900 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
+                    No Elite Picks Found in this Session
+                  </div>
+                )}
              </div>
           </div>
         </div>
