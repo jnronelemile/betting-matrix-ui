@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
 import { Badge } from '../ui/Badge';
-import { Crosshair, Target, Flag, Layers, Trophy, ShieldCheck, Zap } from 'lucide-react';
+import { Crosshair, Target, Flag, Layers, Trophy, ShieldCheck, Zap, AlertCircle, Ban, CheckCircle2 } from 'lucide-react';
 
 export default function TabTactical({ match }) {
   const risk = match.Risk_Management_Context || {};
@@ -10,6 +10,11 @@ export default function TabTactical({ match }) {
   const anchors = risk.League_Anchors || {};
   const props = match.Prop_Bets || {};
   
+  // Data from league report (Deep-Dive)
+  const leagueReport = match.leagueReport || [];
+  const rejectedBets = leagueReport.filter(r => r.Streak_Status === 'STREAK_WARNING');
+  const validatedBets = leagueReport.filter(r => r.Streak_Status === 'STREAK_CONFIRMED');
+
   // Try to find reason if it's a final pick
   const masterReason = match.masterReason || null;
 
@@ -62,6 +67,74 @@ export default function TabTactical({ match }) {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Deep-Dive: Tactical Analysis & Vetos */}
+      {leagueReport.length > 0 && (
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 lg:p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
+           <div className="flex items-center gap-3 mb-8">
+             <div className="p-2 bg-blue-500/10 rounded-xl">
+               <AlertCircle size={20} className="text-blue-500" />
+             </div>
+             <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Titanium Deep-Dive: Decision Engine</h3>
+           </div>
+
+           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+              {/* Validated Analysis */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase tracking-widest px-1">
+                   <CheckCircle2 size={14} /> Validated Insights
+                </div>
+                <div className="flex flex-col gap-3">
+                  {validatedBets.map((bet, idx) => (
+                    <div key={idx} className="bg-emerald-50/50 dark:bg-emerald-500/5 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-500/20 group hover:border-emerald-500/40 transition-all shadow-sm">
+                       <div className="flex items-center justify-between mb-2">
+                         <span className="text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight">{bet.Marche}</span>
+                         <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 font-mono">@{bet.Cote_Ref}</span>
+                       </div>
+                       <p className="text-[10px] font-medium text-slate-600 dark:text-slate-400 leading-relaxed italic mb-3">
+                         {bet.Streak_Reason}
+                       </p>
+                       {bet.Score_Exact_Confirmation && (
+                         <div className="flex items-center gap-2 bg-white dark:bg-slate-950 p-2 rounded-lg border border-emerald-100 dark:border-emerald-500/10">
+                            <Zap size={12} className="text-amber-500" />
+                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tight">Tactical Score:</span>
+                            <span className="text-[9px] font-black text-emerald-600 dark:text-emerald-400">{bet.Score_Exact_Confirmation}</span>
+                         </div>
+                       )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Engine VETOS (Rejected Bets) */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-2 text-[10px] font-black text-rose-500 uppercase tracking-widest px-1">
+                   <Ban size={14} /> Engine Vetos (Security Filter)
+                </div>
+                <div className="flex flex-col gap-3">
+                  {rejectedBets.length > 0 ? rejectedBets.map((bet, idx) => (
+                    <div key={idx} className="bg-slate-50/80 dark:bg-slate-950/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-800/50 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all shadow-sm">
+                       <div className="flex items-center justify-between mb-2">
+                         <div className="flex items-center gap-2">
+                           <Badge variant="danger" className="text-[8px] px-1 py-0 font-black tracking-tighter">VETO</Badge>
+                           <span className="text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight">{bet.Marche}</span>
+                         </div>
+                         <span className="text-[10px] font-black text-slate-500 font-mono">@{bet.Cote_Ref}</span>
+                       </div>
+                       <p className="text-[10px] font-medium text-slate-600 dark:text-slate-400 leading-relaxed italic">
+                         <strong className="text-rose-500 not-italic mr-1">REASON:</strong> {bet.Streak_Reason}
+                       </p>
+                    </div>
+                  )) : (
+                    <div className="flex items-center justify-center p-12 border border-dashed border-slate-200 dark:border-slate-800 rounded-3xl text-slate-400 text-[10px] uppercase tracking-widest font-black">
+                       No Tactical Vetos for this Match
+                    </div>
+                  )}
+                </div>
+              </div>
+           </div>
         </div>
       )}
 

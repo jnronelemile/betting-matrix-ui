@@ -23,7 +23,34 @@ Ce projet est l'interface utilisateur (Dashboard) du moteur d'inférence **Titan
 - Les détails d'un match sont récupérés via les fichiers dans `/data/matchups/`.
 - **Mapping des équipes** : Toujours utiliser `team_mapping.json` pour normaliser les noms d'équipes.
 - **Handicaps** : Utiliser `Standard_Handicaps` (v8.5) au lieu des anciens formats asiatiques.
+
 ---
+
+## Guide d'Intégration Données (Titanium V8.5)
+
+### 1. Sources de données (Points d'entrée)
+- **`CHOIX_FINAUX.json`** : Liste plate des meilleurs choix individuels (paris simples).
+- **`TICKETS_ASSEMBLES.json`** : Structure complète des combinés (thématiques ou journaliers).
+- **`LIGUES/[NOM_LIGUE]_REPORT.json`** : Base de données complète par ligue (Deep-dive & Vetos).
+
+### 2. Règles d'affichage UI
+
+#### Section A : "Choix de la Session" (Simple Bets)
+- **Status Statistique** (`Streak_Status`) : 
+    - `STREAK_CONFIRMED` ➔ Badge Vert (`🟢 Confirmé`) + Tooltip `Streak_Reason`.
+    - `STREAK_NEUTRAL` ➔ Badge Jaune (`🟡 Neutre`).
+- **Indicateur Live** : Si `Live_Betting_Recommendation` existe, afficher une alerte avec `Signal`, `Argument` et jauge de confiance (`Force`).
+
+#### Section B : "Combinés & Sélections Multiples"
+- **En-tête** : Afficher `metrics.cote_totale`, `metrics.badge_correlation` (🟢 Anti-Variance, 🔴 High, 🟡 Mixte) et `metrics.fiabilite_moyenne`.
+- **Legs** : Itérer sur `legs` (Match, Marché, Cote, Statut).
+
+#### Section C : "Deep-Dive / Analyse de Match"
+- **Visualisation des Veto** : Si `Streak_Status == "STREAK_WARNING"`, afficher en grisé avec libellé `"VETO"` et `Streak_Reason`.
+- **Confirmation Tactique** : Afficher `Score_Exact_Confirmation` pour expliquer la validation/rejet du modèle.
+
+---
+
 ## Roadmap UI (V8.5+)
 - [x] Migration Titanium v8.5.
 - [x] Navigation Swipe & Animations.

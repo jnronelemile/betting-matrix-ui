@@ -218,21 +218,41 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             <div 
               key={idx}
               onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
-              className="min-w-[280px] snap-start bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl hover:border-emerald-500/50 transition-all group relative overflow-hidden cursor-pointer active:scale-[0.98]"
+              className="min-w-[320px] snap-start bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl hover:border-emerald-500/50 transition-all group relative overflow-hidden cursor-pointer active:scale-[0.98] flex flex-col gap-4"
             >
               <div className="absolute -right-2 -top-2 opacity-5 text-slate-900 dark:text-white group-hover:opacity-10 transition-opacity">
                 <Trophy size={80} />
               </div>
               
-              <div className="flex items-center justify-between mb-4 relative z-10">
-                <Badge variant={sel.Tier === 1 ? 'success' : 'info'} className="text-[9px] px-2 py-0.5">TIER {sel.Tier}</Badge>
+              <div className="flex items-center justify-between relative z-10">
+                <div className="flex gap-2">
+                  <Badge variant={sel.Tier === 1 ? 'success' : 'info'} className="text-[9px] px-2 py-0.5">TIER {sel.Tier}</Badge>
+                  {sel.Streak_Status === 'STREAK_CONFIRMED' ? (
+                    <Badge variant="success" className="text-[9px] px-2 py-0.5 bg-emerald-500/20 text-emerald-600 border-emerald-500/30 flex items-center gap-1">
+                      <ShieldCheck size={10} /> CONFIRMÉ
+                    </Badge>
+                  ) : (
+                    <Badge variant="warning" className="text-[9px] px-2 py-0.5 flex items-center gap-1">
+                      <Info size={10} /> NEUTRE
+                    </Badge>
+                  )}
+                </div>
                 <div className="text-xs font-black text-emerald-600 dark:text-emerald-400 font-mono">
                   {((sel.Prob || 0) * 100).toFixed(1)}%
                 </div>
               </div>
               
-              <h4 className="font-black text-slate-900 dark:text-slate-100 text-sm mb-1 leading-tight relative z-10">{sel.Match}</h4>
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-4 font-bold">{sel.League}</p>
+              <div className="relative z-10">
+                <h4 className="font-black text-slate-900 dark:text-slate-100 text-sm mb-1 leading-tight">{sel.Match}</h4>
+                <div className="flex items-center gap-2 text-[9px] text-slate-400 uppercase tracking-widest font-bold">
+                  <span>{sel.League}</span>
+                  {sel.Heure && (
+                    <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                      <Clock size={10} /> {sel.Heure}
+                    </span>
+                  )}
+                </div>
+              </div>
               
               <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-950/50 p-3 rounded-2xl border border-slate-100 dark:border-slate-800 relative z-10">
                 <div className="flex flex-col">
@@ -244,8 +264,31 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   <span className="text-sm font-black font-mono">@{sel.Cote_Ref}</span>
                 </div>
               </div>
+
+              {/* Live Recommendation Section */}
+              {sel.Live_Betting_Recommendation && sel.Live_Betting_Recommendation.length > 0 && (
+                <div className="mt-auto relative z-10 bg-rose-500/5 dark:bg-rose-500/10 border border-rose-500/20 rounded-2xl p-3 flex flex-col gap-2">
+                   <div className="flex items-center justify-between">
+                     <span className="text-[9px] font-black text-rose-500 uppercase tracking-widest flex items-center gap-1.5">
+                       <Zap size={10} className="fill-rose-500" /> Live Signal
+                     </span>
+                     <span className="text-[10px] font-bold text-rose-600 dark:text-rose-400 font-mono">
+                       {(sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0)}%
+                     </span>
+                   </div>
+                   <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300 leading-tight">
+                     {sel.Live_Betting_Recommendation[0].Signal}
+                   </p>
+                   <div className="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-rose-500 rounded-full shadow-[0_0_8px_rgba(244,63,94,0.5)]" 
+                        style={{ width: `${sel.Live_Betting_Recommendation[0].Force * 100}%` }}
+                      />
+                   </div>
+                </div>
+              )}
               
-              <div className="mt-4 w-full py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-[9px] font-black uppercase tracking-widest group-hover:bg-slate-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all text-center">
+              <div className="mt-2 w-full py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-[9px] font-black uppercase tracking-widest group-hover:bg-slate-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all text-center">
                 Analysis Matrix
               </div>
             </div>

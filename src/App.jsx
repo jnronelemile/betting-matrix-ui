@@ -285,9 +285,28 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const handleSelectMatch = (match) => {
+  const handleSelectMatch = async (match) => {
     setSelectedMatch(match);
     setSidebarOpen(false);
+    
+    // Fetch league report for Deep-Dive (Page C)
+    if (match.League) {
+      const leagueReportFile = match.League.toUpperCase().replace(/\s/g, '_') + '_REPORT.json';
+      try {
+        const res = await fetch(`/data/Tickets_JSON/LIGUES/${leagueReportFile}`);
+        if (res.ok) {
+          const report = await res.json();
+          const matchDetails = report.filter(r => {
+             const normalize = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+             return normalize(r.Match) === normalize(match.Matchup);
+          });
+          match.leagueReport = matchDetails;
+        }
+      } catch (e) {
+        console.error("Error fetching league report:", e);
+      }
+    }
+
     window.history.pushState({ matchSelected: true }, '');
   };
 
