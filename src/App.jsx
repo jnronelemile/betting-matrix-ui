@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon } from 'lucide-react';
+import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon, Trophy, PieChart } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
 import TicketsView from './components/dashboard/TicketsView';
@@ -388,8 +388,6 @@ export default function App() {
 
     return textMatch && dateMatch && favMatch && signalMatch && confidenceMatch && ultraSafeMatch && regularMatch && safeButsMatch && topFormMatch && masterMatch;
   }) || [];
-
-  console.log("App Rendering - Selected League:", selectedLeague.id);
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300">

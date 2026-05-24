@@ -122,7 +122,6 @@ const TicketLeg = ({ leg, onNavigate }) => {
 };
 
 export default function TicketsView({ assembled, finals, loading, onNavigateToMatch }) {
-  console.log("TicketsView Rendering - Loading:", loading, "Finals:", !!finals, "Assembled:", !!assembled);
   const [activeView, setActiveView] = useState('summary'); // 'summary', 'strategies', 'picks'
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTier, setFilterTier] = useState('ALL');
