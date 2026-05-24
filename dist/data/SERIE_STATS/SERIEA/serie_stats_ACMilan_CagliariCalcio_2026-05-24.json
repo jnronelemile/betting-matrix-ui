@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "competition": "SERIEA",
+    "fixture": "AC Milan vs Cagliari Calcio",
+    "date": "2026-05-24",
+    "generated_at": "2026-05-23T19:00:52.477794",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Milan) No losses: 16",
+      "(Cagliari) No Clean Sheet: 8",
+      "BTTS Yes: 5/6",
+      "(Milan) First to score: 4/5",
+      "Under 4.5 cards: 7/7",
+      "Under 10.5 corners: 5/6"
+    ],
+    "team_streaks": {
+      "home": [
+        "No Clean Sheet: 3",
+        "Under 9.5 Corners: 8/10",
+        "Under 10.5 Corners: 10/10",
+        "Under 4.5 Corners (Team): 9/10",
+        "Under 8.5 SOT: 7/10",
+        "Under 22.5 Shots: 5/7",
+        "Under 10.5 Shots (Team): 5/7"
+      ],
+      "away": [
+        "Under 10.5 Corners: 7/10",
+        "Under 8.5 SOT: 7/10",
+        "Under 11.5 Fouls (Team): 6/8"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      5,
+      5,
+      1,
+      7,
+      4,
+      7
+    ],
+    "away_scored": [
+      0,
+      3,
+      3,
+      2,
+      5,
+      3
+    ],
+    "home_conceded": [
+      2,
+      4,
+      3,
+      4,
+      2,
+      4
+    ],
+    "home_scored": [
+      2,
+      0,
+      7,
+      6,
+      3,
+      6
+    ]
+  }
+}

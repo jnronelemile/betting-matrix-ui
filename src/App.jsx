@@ -37,30 +37,6 @@ export default function App() {
   const [showSafeButs, setShowSafeButs] = useState(false);
   const [showTopForm, setShowTopForm] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(true);
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = (e) => {
-      const currentScrollY = e.target.scrollTop;
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        setHeaderVisible(false);
-      } else {
-        setHeaderVisible(true);
-      }
-      lastScrollY.current = currentScrollY;
-    };
-
-    const mainElement = document.querySelector('main');
-    if (mainElement) {
-      mainElement.addEventListener('scroll', handleScroll);
-    }
-    return () => {
-      if (mainElement) {
-        mainElement.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -389,7 +365,7 @@ export default function App() {
       <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-y-auto lg:overflow-hidden transition-colors duration-300">
         {/* Header */}
         <header className="sticky top-0 z-20 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300">
-          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${headerVisible ? 'h-auto lg:h-16 opacity-100' : 'h-0 opacity-0 lg:h-16 lg:opacity-100'}`}>
+          <div className="overflow-hidden transition-all duration-300 ease-in-out h-auto lg:h-16 opacity-100">
             <div className="h-16 lg:h-16 flex items-center justify-between px-4 lg:px-6 gap-4">
               {mobileSearchOpen ? (
                 <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200 lg:hidden">

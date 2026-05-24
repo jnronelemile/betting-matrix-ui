@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "competition": "PREMIERLEAGUE",
+    "fixture": "Crystal Palace vs Arsenal",
+    "date": "2026-05-24",
+    "generated_at": "2026-05-23T19:00:51.885922",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Arsenal) No losses: 9",
+      "(Crystal Palace) No Clean Sheet: 9",
+      "BTTS Yes: 4/5",
+      "(Arsenal) First to score: 8/9",
+      "Under 4.5 cards: 6/6",
+      "Under 10.5 corners: 5/5"
+    ],
+    "team_streaks": {
+      "home": [
+        "No wins: 3",
+        "No Clean Sheet: 7",
+        "Over 2.5 Goals: 9/10",
+        "Over 0.5 Team Goals: 7/10",
+        "BTTS Yes: 7/10",
+        "Over 9.5 Corners: 6/8",
+        "Over 10.5 Corners: 5/7",
+        "Under 4.5 Corners (Team): 8/10",
+        "Over 3.5 SOT (Team): 5/7",
+        "Over 22.5 Shots: 7/10",
+        "Under 22.5 Fouls: 7/10",
+        "Under 11.5 Fouls (Team): 6/8"
+      ],
+      "away": [
+        "No losses: 6",
+        "Wins: 4",
+        "Scoring: 7",
+        "Clean Sheet: 4",
+        "Under 2.5 Goals: 7/10",
+        "Under 1.5 Team Goals: 9/10",
+        "Over 0.5 Team Goals: 9/10",
+        "BTTS No: 7/10",
+        "Under 9.5 Corners: 7/10",
+        "Under 10.5 Corners: 7/10",
+        "Under 4.5 Corners (Team): 4/5",
+        "Under 8.5 SOT: 8/10",
+        "Over 10.5 Shots (Team): 8/10",
+        "Under 11.5 Fouls (Team): 4/5",
+        "First to score: 6/6",
+        "First half winner: 5/6"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      1,
+      1,
+      4,
+      1,
+      3,
+      5
+    ],
+    "away_scored": [
+      4,
+      4,
+      3,
+      7,
+      5,
+      5
+    ],
+    "home_conceded": [
+      2,
+      0,
+      8,
+      4,
+      3,
+      4
+    ],
+    "home_scored": [
+      1,
+      2,
+      5,
+      1,
+      2,
+      7
+    ]
+  }
+}

@@ -1,0 +1,7258 @@
+{
+  "A1_ROULEAU_COMPRESSEUR": {
+    "nom": "Rouleau Compresseur (100% H2H)",
+    "categorie": "A",
+    "legs": [
+      {
+        "Match": "Torino FC vs Juventus",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6442,
+        "Cote_Ref": 1.63,
+        "Score_EV": 1.1112,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            1,
+            2,
+            3,
+            2,
+            5
+          ],
+          "away_scored": [
+            3,
+            3,
+            3,
+            4,
+            7,
+            4
+          ],
+          "home_conceded": [
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+        "Score_EV_Original": 0.9663,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6312,
+        "Cote_Ref": 1.66,
+        "Score_EV": 1.0888,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+        "Score_EV_Original": 0.9468,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Hellas Verona vs AS Roma",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5876,
+        "Cote_Ref": 1.79,
+        "Score_EV": 1.0136,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            4,
+            6,
+            2,
+            6
+          ],
+          "away_scored": [
+            4,
+            6,
+            3,
+            2,
+            7,
+            2
+          ],
+          "home_conceded": [
+            2,
+            6,
+            2,
+            1,
+            4,
+            11
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            1,
+            4,
+            0
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+        "Score_EV_Original": 0.8814,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "SSC Napoli vs Udinese Calcio",
+        "League": "Serie A",
+        "Marche": "Home + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5715,
+        "Cote_Ref": 1.84,
+        "Score_EV": 0.9859,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            3,
+            2,
+            5,
+            7
+          ],
+          "away_scored": [
+            2,
+            5,
+            4,
+            6,
+            5,
+            5
+          ],
+          "home_conceded": [
+            4,
+            2,
+            2,
+            6,
+            1,
+            3
+          ],
+          "home_scored": [
+            5,
+            1,
+            8,
+            7,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 8/10",
+        "Score_EV_Original": 0.8573,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "US Cremonese vs Como 1907",
+        "League": "Serie A",
+        "Marche": "Away + de SHOTS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5534,
+        "Cote_Ref": 1.9,
+        "Score_EV": 0.9546,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            3,
+            4,
+            1,
+            2
+          ],
+          "away_scored": [
+            4,
+            3,
+            3,
+            2,
+            8,
+            6
+          ],
+          "home_conceded": [
+            3,
+            4,
+            3,
+            4,
+            6,
+            5
+          ],
+          "home_scored": [
+            2,
+            2,
+            3,
+            3,
+            0,
+            7
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Shots (Team): 8/10",
+        "Score_EV_Original": 0.8301,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Villarreal CF vs Atletico Madrid",
+        "League": "LaLiga",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6264,
+        "Cote_Ref": 1.68,
+        "Score_EV": 0.9396,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            2,
+            4,
+            3,
+            5,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            6,
+            1,
+            3,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            3,
+            3,
+            4,
+            5
+          ],
+          "home_scored": [
+            6,
+            8,
+            10,
+            6,
+            8,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.9396,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "US Cremonese vs Como 1907",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6228,
+        "Cote_Ref": 1.69,
+        "Score_EV": 0.9342,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            3,
+            4,
+            1,
+            2
+          ],
+          "away_scored": [
+            4,
+            3,
+            3,
+            2,
+            8,
+            6
+          ],
+          "home_conceded": [
+            3,
+            4,
+            3,
+            4,
+            6,
+            5
+          ],
+          "home_scored": [
+            2,
+            2,
+            3,
+            3,
+            0,
+            7
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.9342,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Away + de SOT",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5768,
+        "Cote_Ref": 1.82,
+        "Score_EV": 0.8652,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.8652,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 8,
+      "cote_totale": 87.5,
+      "gain_10u": 874.96,
+      "prob_implicite": 0.0114,
+      "fiabilite_moyenne": 60.2,
+      "nb_ligues": 2,
+      "ligues": [
+        "LaLiga",
+        "Serie A"
+      ],
+      "diversification": 0.25,
+      "badge_correlation": "🟢",
+      "badge_name": "Anti-Variance"
+    }
+  },
+  "A2_SNIPER_TEAM_GOALS": {
+    "nom": "Sniper Team Goals",
+    "categorie": "A",
+    "legs": [
+      {
+        "Match": "RCD Espanyol vs Real Sociedad",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Real Sociedad",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7362,
+        "Cote_Ref": 1.43,
+        "Score_EV": 1.3208,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            5,
+            6,
+            3,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            4,
+            2,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            7,
+            3,
+            5,
+            5
+          ],
+          "home_scored": [
+            2,
+            1,
+            3,
+            4,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 1.1485,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Valencia CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7185,
+        "Cote_Ref": 1.46,
+        "Score_EV": 1.289,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+        "Score_EV_Original": 1.1209,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Girona FC vs Elche CF",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Elche CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7159,
+        "Cote_Ref": 1.47,
+        "Score_EV": 1.2843,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            3,
+            5,
+            3,
+            6,
+            13
+          ],
+          "away_scored": [
+            3,
+            2,
+            3,
+            1,
+            3,
+            6
+          ],
+          "home_conceded": [
+            1,
+            5,
+            5,
+            7,
+            4,
+            4
+          ],
+          "home_scored": [
+            2,
+            2,
+            4,
+            1,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.1168,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Villarreal CF vs Atletico Madrid",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Atletico Madrid",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6901,
+        "Cote_Ref": 1.52,
+        "Score_EV": 1.0317,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            2,
+            4,
+            3,
+            5,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            6,
+            1,
+            3,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            3,
+            3,
+            4,
+            5
+          ],
+          "home_scored": [
+            6,
+            8,
+            10,
+            6,
+            8,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8971,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Deportivo Alaves vs Rayo Vallecano",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Rayo Vallecano",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6752,
+        "Cote_Ref": 1.56,
+        "Score_EV": 1.0095,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            3,
+            5,
+            4,
+            5,
+            6
+          ],
+          "away_scored": [
+            1,
+            4,
+            4,
+            2,
+            2,
+            2
+          ],
+          "home_conceded": [
+            3,
+            2,
+            1,
+            5,
+            5,
+            7
+          ],
+          "home_scored": [
+            5,
+            1,
+            6,
+            2,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 0.8778,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Real Betis vs Levante UD",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Levante UD",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6321,
+        "Cote_Ref": 1.66,
+        "Score_EV": 0.945,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            5,
+            5,
+            4,
+            11
+          ],
+          "away_scored": [
+            0,
+            4,
+            4,
+            3,
+            4,
+            5
+          ],
+          "home_conceded": [
+            5,
+            3,
+            5,
+            2,
+            1,
+            2
+          ],
+          "home_scored": [
+            4,
+            7,
+            5,
+            7,
+            3,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8217,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Liverpool vs Brentford",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Liverpool",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5728,
+        "Cote_Ref": 1.83,
+        "Score_EV": 0.9222,
+        "Super_Signal": false,
+        "Alpha": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            4,
+            7,
+            5,
+            3,
+            8
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            2,
+            1,
+            8
+          ],
+          "home_conceded": [
+            1,
+            0,
+            3,
+            4,
+            5,
+            6
+          ],
+          "home_scored": [
+            4,
+            3,
+            12,
+            3,
+            3,
+            8
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+            "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+            "Force": 0.7
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série offensive favorable : Over 1.5 Team Goals: 5/7",
+        "Score_EV_Original": 0.8019,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 7,
+      "cote_totale": 22.11,
+      "gain_10u": 221.07,
+      "prob_implicite": 0.0452,
+      "fiabilite_moyenne": 67.7,
+      "nb_ligues": 2,
+      "ligues": [
+        "LaLiga",
+        "Premier League"
+      ],
+      "diversification": 0.29,
+      "badge_correlation": "🟡",
+      "badge_name": "Mixte"
+    }
+  },
+  "A3_PROP_TOTAUX": {
+    "nom": "Prop Bets Totaux",
+    "categorie": "A",
+    "legs": [
+      {
+        "Match": "Torino FC vs Juventus",
+        "League": "Serie A",
+        "Marche": "Over 23.5 SHOTS",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.5933,
+        "Cote_Ref": 1.77,
+        "Score_EV": 0.8188,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            1,
+            2,
+            3,
+            2,
+            5
+          ],
+          "away_scored": [
+            3,
+            3,
+            3,
+            4,
+            7,
+            4
+          ],
+          "home_conceded": [
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Tendance de match favorable : Over 22.5 Shots: 6/8",
+        "Score_EV_Original": 0.712,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      },
+      {
+        "Match": "Real Madrid vs Athletic Club",
+        "League": "LaLiga",
+        "Marche": "Over 24.5 SHOTS",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.5876,
+        "Cote_Ref": 1.79,
+        "Score_EV": 0.8109,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            1,
+            6,
+            7,
+            4,
+            10
+          ],
+          "away_scored": [
+            2,
+            1,
+            4,
+            4,
+            3,
+            5
+          ],
+          "home_conceded": [
+            0,
+            2,
+            3,
+            2,
+            4,
+            3
+          ],
+          "home_scored": [
+            2,
+            6,
+            10,
+            11,
+            4,
+            8
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Tendance de match favorable : Over 22.5 Shots: 8/10",
+        "Score_EV_Original": 0.7051,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Over 24.5 SHOTS",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.6307,
+        "Cote_Ref": 1.66,
+        "Score_EV": 0.7947,
+        "Super_Signal": true,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Tendance de match défavorable : Under 22.5 Shots: 4/5",
+        "Score_EV_Original": 1.0596,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      },
+      {
+        "Match": "Liverpool vs Brentford",
+        "League": "Premier League",
+        "Marche": "Over 9.5 CORNERS",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.5599,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.7727,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            4,
+            7,
+            5,
+            3,
+            8
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            2,
+            1,
+            8
+          ],
+          "home_conceded": [
+            1,
+            0,
+            3,
+            4,
+            5,
+            6
+          ],
+          "home_scored": [
+            4,
+            3,
+            12,
+            3,
+            3,
+            8
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+            "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+            "Force": 0.7
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Tendance de match favorable : Over 9.5 Corners: 4/5",
+        "Score_EV_Original": 0.6719,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Over 23.5 SHOTS",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.5865,
+        "Cote_Ref": 1.79,
+        "Score_EV": 0.5278,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Tendance de match défavorable : Under 22.5 Shots: 5/7",
+        "Score_EV_Original": 0.7038,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Over 7.5 SOT",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.5629,
+        "Cote_Ref": 1.87,
+        "Score_EV": 0.5066,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Tendance de match défavorable : Under 8.5 SOT: 6/8",
+        "Score_EV_Original": 0.6755,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 6,
+      "cote_totale": 33.1,
+      "gain_10u": 330.97,
+      "prob_implicite": 0.0302,
+      "fiabilite_moyenne": 58.7,
+      "nb_ligues": 3,
+      "ligues": [
+        "LaLiga",
+        "Premier League",
+        "Serie A"
+      ],
+      "diversification": 0.5,
+      "badge_correlation": "🟢",
+      "badge_name": "Anti-Variance"
+    }
+  },
+  "A5_WATCHLIST_FOULS": {
+    "nom": "Watchlist Live — Fautes",
+    "categorie": "A",
+    "legs": [
+      {
+        "Match": "Real Madrid vs Athletic Club",
+        "League": "LaLiga",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.58,
+        "Cote_Ref": 1.81,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            1,
+            6,
+            7,
+            4,
+            10
+          ],
+          "away_scored": [
+            2,
+            1,
+            4,
+            4,
+            3,
+            5
+          ],
+          "home_conceded": [
+            0,
+            2,
+            3,
+            2,
+            4,
+            3
+          ],
+          "home_scored": [
+            2,
+            6,
+            10,
+            11,
+            4,
+            8
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Real Madrid vs Athletic Club",
+        "League": "LaLiga",
+        "Marche": "Victoire Home (1)",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.5857,
+        "Cote_Ref": 1.71,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            1,
+            6,
+            7,
+            4,
+            10
+          ],
+          "away_scored": [
+            2,
+            1,
+            4,
+            4,
+            3,
+            5
+          ],
+          "home_conceded": [
+            0,
+            2,
+            3,
+            2,
+            4,
+            3
+          ],
+          "home_scored": [
+            2,
+            6,
+            10,
+            11,
+            4,
+            8
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Real Betis vs Levante UD",
+        "League": "LaLiga",
+        "Marche": "Victoire Home (1)",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.5092,
+        "Cote_Ref": 1.96,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            5,
+            5,
+            4,
+            11
+          ],
+          "away_scored": [
+            0,
+            4,
+            4,
+            3,
+            4,
+            5
+          ],
+          "home_conceded": [
+            5,
+            3,
+            5,
+            2,
+            1,
+            2
+          ],
+          "home_scored": [
+            4,
+            7,
+            5,
+            7,
+            3,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "BRONZE",
+        "confidence_badge": "🥉",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "RCD Espanyol vs Real Sociedad",
+        "League": "LaLiga",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.56,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            5,
+            6,
+            3,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            4,
+            2,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            7,
+            3,
+            5,
+            5
+          ],
+          "home_scored": [
+            2,
+            1,
+            3,
+            4,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Getafe CF vs CA Osasuna",
+        "League": "LaLiga",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.58,
+        "Cote_Ref": 1.81,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            0,
+            4,
+            5,
+            6,
+            6,
+            4
+          ],
+          "away_scored": [
+            3,
+            1,
+            2,
+            0,
+            0,
+            7
+          ],
+          "home_conceded": [
+            0,
+            1,
+            3,
+            1,
+            5,
+            6
+          ],
+          "home_scored": [
+            2,
+            1,
+            5,
+            3,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Getafe CF vs CA Osasuna",
+        "League": "LaLiga",
+        "Marche": "Over 24.5 FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.5636,
+        "Cote_Ref": 1.86,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            0,
+            4,
+            5,
+            6,
+            6,
+            4
+          ],
+          "away_scored": [
+            3,
+            1,
+            2,
+            0,
+            0,
+            7
+          ],
+          "home_conceded": [
+            0,
+            1,
+            3,
+            1,
+            5,
+            6
+          ],
+          "home_scored": [
+            2,
+            1,
+            5,
+            3,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "RCD Mallorca vs Real Oviedo",
+        "League": "LaLiga",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.56,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            7,
+            8,
+            6,
+            6,
+            8
+          ],
+          "away_scored": [
+            2,
+            0,
+            5,
+            5,
+            1,
+            4
+          ],
+          "home_conceded": [
+            2,
+            5,
+            7,
+            0,
+            2,
+            5
+          ],
+          "home_scored": [
+            3,
+            1,
+            6,
+            2,
+            7,
+            9
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "RCD Mallorca vs Real Oviedo",
+        "League": "LaLiga",
+        "Marche": "Over 24.5 FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.5598,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            7,
+            8,
+            6,
+            6,
+            8
+          ],
+          "away_scored": [
+            2,
+            0,
+            5,
+            5,
+            1,
+            4
+          ],
+          "home_conceded": [
+            2,
+            5,
+            7,
+            0,
+            2,
+            5
+          ],
+          "home_scored": [
+            3,
+            1,
+            6,
+            2,
+            7,
+            9
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Liverpool vs Brentford",
+        "League": "Premier League",
+        "Marche": "Victoire Home (1)",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.501,
+        "Cote_Ref": 2.0,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            4,
+            7,
+            5,
+            3,
+            8
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            2,
+            1,
+            8
+          ],
+          "home_conceded": [
+            1,
+            0,
+            3,
+            4,
+            5,
+            6
+          ],
+          "home_scored": [
+            4,
+            3,
+            12,
+            3,
+            3,
+            8
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+            "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+            "Force": 0.7
+          }
+        ],
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "BRONZE",
+        "confidence_badge": "🥉",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Sunderland AFC vs Chelsea",
+        "League": "Premier League",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.58,
+        "Cote_Ref": 1.81,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            2,
+            5,
+            3,
+            3,
+            5
+          ],
+          "away_scored": [
+            2,
+            1,
+            10,
+            8,
+            5,
+            5
+          ],
+          "home_conceded": [
+            3,
+            2,
+            3,
+            4,
+            4,
+            3
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            3,
+            7,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Tottenham Hotspur vs Everton",
+        "League": "Premier League",
+        "Marche": "Over 20.5 FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.5585,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            4,
+            3,
+            3,
+            2,
+            8
+          ],
+          "away_scored": [
+            3,
+            4,
+            2,
+            4,
+            1,
+            7
+          ],
+          "home_conceded": [
+            5,
+            0,
+            11,
+            3,
+            5,
+            7
+          ],
+          "home_scored": [
+            2,
+            2,
+            4,
+            4,
+            4,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Fulham vs Newcastle United",
+        "League": "Premier League",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.56,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            3,
+            5,
+            2,
+            3,
+            8
+          ],
+          "away_scored": [
+            4,
+            4,
+            4,
+            1,
+            2,
+            2
+          ],
+          "home_conceded": [
+            0,
+            4,
+            2,
+            7,
+            4,
+            3
+          ],
+          "home_scored": [
+            2,
+            2,
+            7,
+            3,
+            7,
+            7
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+            "Force": 0.6
+          }
+        ],
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Burnley vs Wolverhampton Wanderers",
+        "League": "Premier League",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.58,
+        "Cote_Ref": 1.81,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            7,
+            5,
+            1,
+            8,
+            7
+          ],
+          "away_scored": [
+            0,
+            0,
+            2,
+            2,
+            1,
+            2
+          ],
+          "home_conceded": [
+            8,
+            2,
+            8,
+            4,
+            0,
+            6
+          ],
+          "home_scored": [
+            2,
+            4,
+            2,
+            4,
+            2,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "Burnley vs Wolverhampton Wanderers",
+        "League": "Premier League",
+        "Marche": "Over 20.5 FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.6062,
+        "Cote_Ref": 1.73,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            7,
+            5,
+            1,
+            8,
+            7
+          ],
+          "away_scored": [
+            0,
+            0,
+            2,
+            2,
+            1,
+            2
+          ],
+          "home_conceded": [
+            8,
+            2,
+            8,
+            4,
+            0,
+            6
+          ],
+          "home_scored": [
+            2,
+            4,
+            2,
+            4,
+            2,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "AC Fiorentina vs Atalanta BC",
+        "League": "Serie A",
+        "Marche": "Over 25.5 FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.6801,
+        "Cote_Ref": 1.54,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            4,
+            5,
+            1,
+            2,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            7,
+            5,
+            1,
+            7
+          ],
+          "home_conceded": [
+            3,
+            5,
+            3,
+            3,
+            2,
+            4
+          ],
+          "home_scored": [
+            3,
+            2,
+            2,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "SS Lazio vs Pisa SC",
+        "League": "Serie A",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.58,
+        "Cote_Ref": 1.81,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            6,
+            3,
+            11,
+            7,
+            6,
+            10
+          ],
+          "away_scored": [
+            4,
+            3,
+            2,
+            2,
+            1,
+            4
+          ],
+          "home_conceded": [
+            4,
+            3,
+            6,
+            3,
+            3,
+            5
+          ],
+          "home_scored": [
+            4,
+            3,
+            3,
+            3,
+            2,
+            10
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "SSC Napoli vs Udinese Calcio",
+        "League": "Serie A",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.56,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            3,
+            2,
+            5,
+            7
+          ],
+          "away_scored": [
+            2,
+            5,
+            4,
+            6,
+            5,
+            5
+          ],
+          "home_conceded": [
+            4,
+            2,
+            2,
+            6,
+            1,
+            3
+          ],
+          "home_scored": [
+            5,
+            1,
+            8,
+            7,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "AC Milan vs Cagliari Calcio",
+        "League": "Serie A",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.56,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            5,
+            1,
+            7,
+            4,
+            7
+          ],
+          "away_scored": [
+            0,
+            3,
+            3,
+            2,
+            5,
+            3
+          ],
+          "home_conceded": [
+            2,
+            4,
+            3,
+            4,
+            2,
+            4
+          ],
+          "home_scored": [
+            2,
+            0,
+            7,
+            6,
+            3,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      },
+      {
+        "Match": "US Lecce vs Genoa CFC",
+        "League": "Serie A",
+        "Marche": "Away + de FOULS",
+        "Type": "WATCHLIST_LIVE",
+        "Tier": 7,
+        "Prob": 0.56,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.0,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            3,
+            4,
+            4,
+            6,
+            4
+          ],
+          "away_scored": [
+            1,
+            3,
+            4,
+            1,
+            4,
+            6
+          ],
+          "home_conceded": [
+            2,
+            4,
+            2,
+            3,
+            11,
+            2
+          ],
+          "home_scored": [
+            4,
+            3,
+            1,
+            0,
+            2,
+            2
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.0,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PFOUL",
+        "family_name": "Prop Fouls (Live)"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 19,
+      "cote_totale": 0,
+      "gain_10u": 0,
+      "badge_correlation": "🟠",
+      "badge_name": "Live Only",
+      "fiabilite_moyenne": 57.0,
+      "nb_ligues": 3,
+      "ligues": [
+        "LaLiga",
+        "Premier League",
+        "Serie A"
+      ],
+      "diversification": 0,
+      "prob_implicite": 0
+    }
+  },
+  "B1_MICRO_COMBINES": {
+    "nom": "Micro-Combinés",
+    "categorie": "B",
+    "variantes": [
+      {
+        "legs": [
+          {
+            "Match": "RCD Espanyol vs Real Sociedad",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Real Sociedad",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7362,
+            "Cote_Ref": 1.43,
+            "Score_EV": 1.3208,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                5,
+                4,
+                5,
+                6,
+                3,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                5,
+                4,
+                2,
+                5
+              ],
+              "home_conceded": [
+                2,
+                1,
+                7,
+                3,
+                5,
+                5
+              ],
+              "home_scored": [
+                2,
+                1,
+                3,
+                4,
+                4,
+                6
+              ]
+            },
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+            "Score_EV_Original": 1.1485,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "AC Fiorentina vs Atalanta BC",
+            "League": "Serie A",
+            "Marche": "Away + de CORNERS",
+            "Type": "H2H_PROP",
+            "Tier": 1,
+            "Prob": 0.9047,
+            "Cote_Ref": 1.16,
+            "Score_EV": 1.0177,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                2,
+                4,
+                5,
+                1,
+                2,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                7,
+                5,
+                1,
+                7
+              ],
+              "home_conceded": [
+                3,
+                5,
+                3,
+                3,
+                2,
+                4
+              ],
+              "home_scored": [
+                3,
+                2,
+                2,
+                4,
+                5,
+                4
+              ]
+            },
+            "Streak_Status": "STREAK_WARNING",
+            "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+            "Score_EV_Original": 1.357,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "PH2H",
+            "family_name": "Prop H2H"
+          }
+        ],
+        "metrics": {
+          "nb_legs": 2,
+          "cote_totale": 1.66,
+          "gain_10u": 16.59,
+          "prob_implicite": 0.6028,
+          "fiabilite_moyenne": 82.0,
+          "nb_ligues": 2,
+          "ligues": [
+            "LaLiga",
+            "Serie A"
+          ],
+          "diversification": 1.0,
+          "badge_correlation": "🟡",
+          "badge_name": "Mixte"
+        },
+        "size": 2
+      },
+      {
+        "legs": [
+          {
+            "Match": "Valencia CF vs FC Barcelona",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Valencia CF",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7185,
+            "Cote_Ref": 1.46,
+            "Score_EV": 1.289,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                4,
+                2,
+                8,
+                0,
+                3,
+                6
+              ],
+              "away_scored": [
+                6,
+                1,
+                10,
+                5,
+                7,
+                8
+              ],
+              "home_conceded": [
+                1,
+                2,
+                1,
+                6,
+                6,
+                6
+              ],
+              "home_scored": [
+                3,
+                1,
+                1,
+                7,
+                2,
+                10
+              ]
+            },
+            "Live_Betting_Recommendation": [
+              {
+                "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+                "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+                "Force": 0.68
+              }
+            ],
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+            "Score_EV_Original": 1.1209,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "AC Fiorentina vs Atalanta BC",
+            "League": "Serie A",
+            "Marche": "Away + de CORNERS",
+            "Type": "H2H_PROP",
+            "Tier": 1,
+            "Prob": 0.9047,
+            "Cote_Ref": 1.16,
+            "Score_EV": 1.0177,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                2,
+                4,
+                5,
+                1,
+                2,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                7,
+                5,
+                1,
+                7
+              ],
+              "home_conceded": [
+                3,
+                5,
+                3,
+                3,
+                2,
+                4
+              ],
+              "home_scored": [
+                3,
+                2,
+                2,
+                4,
+                5,
+                4
+              ]
+            },
+            "Streak_Status": "STREAK_WARNING",
+            "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+            "Score_EV_Original": 1.357,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "PH2H",
+            "family_name": "Prop H2H"
+          }
+        ],
+        "metrics": {
+          "nb_legs": 2,
+          "cote_totale": 1.69,
+          "gain_10u": 16.94,
+          "prob_implicite": 0.5905,
+          "fiabilite_moyenne": 81.2,
+          "nb_ligues": 2,
+          "ligues": [
+            "LaLiga",
+            "Serie A"
+          ],
+          "diversification": 1.0,
+          "badge_correlation": "🟡",
+          "badge_name": "Mixte"
+        },
+        "size": 2
+      },
+      {
+        "legs": [
+          {
+            "Match": "Girona FC vs Elche CF",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Elche CF",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7159,
+            "Cote_Ref": 1.47,
+            "Score_EV": 1.2843,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                7,
+                3,
+                5,
+                3,
+                6,
+                13
+              ],
+              "away_scored": [
+                3,
+                2,
+                3,
+                1,
+                3,
+                6
+              ],
+              "home_conceded": [
+                1,
+                5,
+                5,
+                7,
+                4,
+                4
+              ],
+              "home_scored": [
+                2,
+                2,
+                4,
+                1,
+                5,
+                6
+              ]
+            },
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+            "Score_EV_Original": 1.1168,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "AC Fiorentina vs Atalanta BC",
+            "League": "Serie A",
+            "Marche": "Away + de CORNERS",
+            "Type": "H2H_PROP",
+            "Tier": 1,
+            "Prob": 0.9047,
+            "Cote_Ref": 1.16,
+            "Score_EV": 1.0177,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                2,
+                4,
+                5,
+                1,
+                2,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                7,
+                5,
+                1,
+                7
+              ],
+              "home_conceded": [
+                3,
+                5,
+                3,
+                3,
+                2,
+                4
+              ],
+              "home_scored": [
+                3,
+                2,
+                2,
+                4,
+                5,
+                4
+              ]
+            },
+            "Streak_Status": "STREAK_WARNING",
+            "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+            "Score_EV_Original": 1.357,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "PH2H",
+            "family_name": "Prop H2H"
+          }
+        ],
+        "metrics": {
+          "nb_legs": 2,
+          "cote_totale": 1.71,
+          "gain_10u": 17.05,
+          "prob_implicite": 0.5864,
+          "fiabilite_moyenne": 81.0,
+          "nb_ligues": 2,
+          "ligues": [
+            "LaLiga",
+            "Serie A"
+          ],
+          "diversification": 1.0,
+          "badge_correlation": "🟡",
+          "badge_name": "Mixte"
+        },
+        "size": 2
+      },
+      {
+        "legs": [
+          {
+            "Match": "RCD Espanyol vs Real Sociedad",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Real Sociedad",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7362,
+            "Cote_Ref": 1.43,
+            "Score_EV": 1.3208,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                5,
+                4,
+                5,
+                6,
+                3,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                5,
+                4,
+                2,
+                5
+              ],
+              "home_conceded": [
+                2,
+                1,
+                7,
+                3,
+                5,
+                5
+              ],
+              "home_scored": [
+                2,
+                1,
+                3,
+                4,
+                4,
+                6
+              ]
+            },
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+            "Score_EV_Original": 1.1485,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "Valencia CF vs FC Barcelona",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Valencia CF",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7185,
+            "Cote_Ref": 1.46,
+            "Score_EV": 1.289,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                4,
+                2,
+                8,
+                0,
+                3,
+                6
+              ],
+              "away_scored": [
+                6,
+                1,
+                10,
+                5,
+                7,
+                8
+              ],
+              "home_conceded": [
+                1,
+                2,
+                1,
+                6,
+                6,
+                6
+              ],
+              "home_scored": [
+                3,
+                1,
+                1,
+                7,
+                2,
+                10
+              ]
+            },
+            "Live_Betting_Recommendation": [
+              {
+                "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+                "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+                "Force": 0.68
+              }
+            ],
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+            "Score_EV_Original": 1.1209,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "AC Fiorentina vs Atalanta BC",
+            "League": "Serie A",
+            "Marche": "Away + de CORNERS",
+            "Type": "H2H_PROP",
+            "Tier": 1,
+            "Prob": 0.9047,
+            "Cote_Ref": 1.16,
+            "Score_EV": 1.0177,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                2,
+                4,
+                5,
+                1,
+                2,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                7,
+                5,
+                1,
+                7
+              ],
+              "home_conceded": [
+                3,
+                5,
+                3,
+                3,
+                2,
+                4
+              ],
+              "home_scored": [
+                3,
+                2,
+                2,
+                4,
+                5,
+                4
+              ]
+            },
+            "Streak_Status": "STREAK_WARNING",
+            "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+            "Score_EV_Original": 1.357,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "PH2H",
+            "family_name": "Prop H2H"
+          }
+        ],
+        "metrics": {
+          "nb_legs": 3,
+          "cote_totale": 2.42,
+          "gain_10u": 24.22,
+          "prob_implicite": 0.4129,
+          "fiabilite_moyenne": 78.6,
+          "nb_ligues": 2,
+          "ligues": [
+            "LaLiga",
+            "Serie A"
+          ],
+          "diversification": 0.67,
+          "badge_correlation": "🟡",
+          "badge_name": "Mixte"
+        },
+        "size": 3
+      },
+      {
+        "legs": [
+          {
+            "Match": "RCD Espanyol vs Real Sociedad",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Real Sociedad",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7362,
+            "Cote_Ref": 1.43,
+            "Score_EV": 1.3208,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                5,
+                4,
+                5,
+                6,
+                3,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                5,
+                4,
+                2,
+                5
+              ],
+              "home_conceded": [
+                2,
+                1,
+                7,
+                3,
+                5,
+                5
+              ],
+              "home_scored": [
+                2,
+                1,
+                3,
+                4,
+                4,
+                6
+              ]
+            },
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+            "Score_EV_Original": 1.1485,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "Girona FC vs Elche CF",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Elche CF",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7159,
+            "Cote_Ref": 1.47,
+            "Score_EV": 1.2843,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                7,
+                3,
+                5,
+                3,
+                6,
+                13
+              ],
+              "away_scored": [
+                3,
+                2,
+                3,
+                1,
+                3,
+                6
+              ],
+              "home_conceded": [
+                1,
+                5,
+                5,
+                7,
+                4,
+                4
+              ],
+              "home_scored": [
+                2,
+                2,
+                4,
+                1,
+                5,
+                6
+              ]
+            },
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+            "Score_EV_Original": 1.1168,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "AC Fiorentina vs Atalanta BC",
+            "League": "Serie A",
+            "Marche": "Away + de CORNERS",
+            "Type": "H2H_PROP",
+            "Tier": 1,
+            "Prob": 0.9047,
+            "Cote_Ref": 1.16,
+            "Score_EV": 1.0177,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                2,
+                4,
+                5,
+                1,
+                2,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                7,
+                5,
+                1,
+                7
+              ],
+              "home_conceded": [
+                3,
+                5,
+                3,
+                3,
+                2,
+                4
+              ],
+              "home_scored": [
+                3,
+                2,
+                2,
+                4,
+                5,
+                4
+              ]
+            },
+            "Streak_Status": "STREAK_WARNING",
+            "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+            "Score_EV_Original": 1.357,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "PH2H",
+            "family_name": "Prop H2H"
+          }
+        ],
+        "metrics": {
+          "nb_legs": 3,
+          "cote_totale": 2.44,
+          "gain_10u": 24.38,
+          "prob_implicite": 0.4101,
+          "fiabilite_moyenne": 78.6,
+          "nb_ligues": 2,
+          "ligues": [
+            "LaLiga",
+            "Serie A"
+          ],
+          "diversification": 0.67,
+          "badge_correlation": "🟡",
+          "badge_name": "Mixte"
+        },
+        "size": 3
+      },
+      {
+        "legs": [
+          {
+            "Match": "RCD Espanyol vs Real Sociedad",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Real Sociedad",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7362,
+            "Cote_Ref": 1.43,
+            "Score_EV": 1.3208,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                5,
+                4,
+                5,
+                6,
+                3,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                5,
+                4,
+                2,
+                5
+              ],
+              "home_conceded": [
+                2,
+                1,
+                7,
+                3,
+                5,
+                5
+              ],
+              "home_scored": [
+                2,
+                1,
+                3,
+                4,
+                4,
+                6
+              ]
+            },
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+            "Score_EV_Original": 1.1485,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "Valencia CF vs FC Barcelona",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Valencia CF",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7185,
+            "Cote_Ref": 1.46,
+            "Score_EV": 1.289,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                4,
+                2,
+                8,
+                0,
+                3,
+                6
+              ],
+              "away_scored": [
+                6,
+                1,
+                10,
+                5,
+                7,
+                8
+              ],
+              "home_conceded": [
+                1,
+                2,
+                1,
+                6,
+                6,
+                6
+              ],
+              "home_scored": [
+                3,
+                1,
+                1,
+                7,
+                2,
+                10
+              ]
+            },
+            "Live_Betting_Recommendation": [
+              {
+                "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+                "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+                "Force": 0.68
+              }
+            ],
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+            "Score_EV_Original": 1.1209,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "Girona FC vs Elche CF",
+            "League": "LaLiga",
+            "Marche": "Over 0.5 Elche CF",
+            "Type": "TEAM_GOALS",
+            "Tier": 2,
+            "Prob": 0.7159,
+            "Cote_Ref": 1.47,
+            "Score_EV": 1.2843,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                7,
+                3,
+                5,
+                3,
+                6,
+                13
+              ],
+              "away_scored": [
+                3,
+                2,
+                3,
+                1,
+                3,
+                6
+              ],
+              "home_conceded": [
+                1,
+                5,
+                5,
+                7,
+                4,
+                4
+              ],
+              "home_scored": [
+                2,
+                2,
+                4,
+                1,
+                5,
+                6
+              ]
+            },
+            "Streak_Status": "STREAK_CONFIRMED",
+            "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+            "Score_EV_Original": 1.1168,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "TG",
+            "family_name": "Team Goals"
+          },
+          {
+            "Match": "AC Fiorentina vs Atalanta BC",
+            "League": "Serie A",
+            "Marche": "Away + de CORNERS",
+            "Type": "H2H_PROP",
+            "Tier": 1,
+            "Prob": 0.9047,
+            "Cote_Ref": 1.16,
+            "Score_EV": 1.0177,
+            "Super_Signal": false,
+            "Goal_Distribution": {
+              "away_conceded": [
+                2,
+                4,
+                5,
+                1,
+                2,
+                6
+              ],
+              "away_scored": [
+                2,
+                3,
+                7,
+                5,
+                1,
+                7
+              ],
+              "home_conceded": [
+                3,
+                5,
+                3,
+                3,
+                2,
+                4
+              ],
+              "home_scored": [
+                3,
+                2,
+                2,
+                4,
+                5,
+                4
+              ]
+            },
+            "Streak_Status": "STREAK_WARNING",
+            "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+            "Score_EV_Original": 1.357,
+            "confidence_category": "PLATINUM",
+            "confidence_badge": "💎",
+            "family_code": "PH2H",
+            "family_name": "Prop H2H"
+          }
+        ],
+        "metrics": {
+          "nb_legs": 4,
+          "cote_totale": 3.56,
+          "gain_10u": 35.6,
+          "prob_implicite": 0.2809,
+          "fiabilite_moyenne": 76.9,
+          "nb_ligues": 2,
+          "ligues": [
+            "LaLiga",
+            "Serie A"
+          ],
+          "diversification": 0.5,
+          "badge_correlation": "🟡",
+          "badge_name": "Mixte"
+        },
+        "size": 4
+      }
+    ]
+  },
+  "B2_STANDARD": {
+    "nom": "Combiné Standard (5-8 legs)",
+    "categorie": "B",
+    "legs": [
+      {
+        "Match": "RCD Espanyol vs Real Sociedad",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Real Sociedad",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7362,
+        "Cote_Ref": 1.43,
+        "Score_EV": 1.3208,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            5,
+            6,
+            3,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            4,
+            2,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            7,
+            3,
+            5,
+            5
+          ],
+          "home_scored": [
+            2,
+            1,
+            3,
+            4,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 1.1485,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Valencia CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7185,
+        "Cote_Ref": 1.46,
+        "Score_EV": 1.289,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+        "Score_EV_Original": 1.1209,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Girona FC vs Elche CF",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Elche CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7159,
+        "Cote_Ref": 1.47,
+        "Score_EV": 1.2843,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            3,
+            5,
+            3,
+            6,
+            13
+          ],
+          "away_scored": [
+            3,
+            2,
+            3,
+            1,
+            3,
+            6
+          ],
+          "home_conceded": [
+            1,
+            5,
+            5,
+            7,
+            4,
+            4
+          ],
+          "home_scored": [
+            2,
+            2,
+            4,
+            1,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.1168,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Torino FC vs Juventus",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6442,
+        "Cote_Ref": 1.63,
+        "Score_EV": 1.1112,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            1,
+            2,
+            3,
+            2,
+            5
+          ],
+          "away_scored": [
+            3,
+            3,
+            3,
+            4,
+            7,
+            4
+          ],
+          "home_conceded": [
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+        "Score_EV_Original": 0.9663,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6312,
+        "Cote_Ref": 1.66,
+        "Score_EV": 1.0888,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+        "Score_EV_Original": 0.9468,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Villarreal CF vs Atletico Madrid",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Atletico Madrid",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6901,
+        "Cote_Ref": 1.52,
+        "Score_EV": 1.0317,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            2,
+            4,
+            3,
+            5,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            6,
+            1,
+            3,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            3,
+            3,
+            4,
+            5
+          ],
+          "home_scored": [
+            6,
+            8,
+            10,
+            6,
+            8,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8971,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "AC Fiorentina vs Atalanta BC",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.9047,
+        "Cote_Ref": 1.16,
+        "Score_EV": 1.0177,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            4,
+            5,
+            1,
+            2,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            7,
+            5,
+            1,
+            7
+          ],
+          "home_conceded": [
+            3,
+            5,
+            3,
+            3,
+            2,
+            4
+          ],
+          "home_scored": [
+            3,
+            2,
+            2,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+        "Score_EV_Original": 1.357,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 7,
+      "cote_totale": 14.64,
+      "gain_10u": 146.42,
+      "prob_implicite": 0.0683,
+      "fiabilite_moyenne": 72.0,
+      "nb_ligues": 2,
+      "ligues": [
+        "LaLiga",
+        "Serie A"
+      ],
+      "diversification": 0.29,
+      "badge_correlation": "🟡",
+      "badge_name": "Mixte"
+    }
+  },
+  "B3_ETENDU": {
+    "nom": "Combiné Étendu (9-12 legs)",
+    "categorie": "B",
+    "legs": [
+      {
+        "Match": "RCD Espanyol vs Real Sociedad",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Real Sociedad",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7362,
+        "Cote_Ref": 1.43,
+        "Score_EV": 1.3208,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            5,
+            6,
+            3,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            4,
+            2,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            7,
+            3,
+            5,
+            5
+          ],
+          "home_scored": [
+            2,
+            1,
+            3,
+            4,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 1.1485,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Valencia CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7185,
+        "Cote_Ref": 1.46,
+        "Score_EV": 1.289,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+        "Score_EV_Original": 1.1209,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Girona FC vs Elche CF",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Elche CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7159,
+        "Cote_Ref": 1.47,
+        "Score_EV": 1.2843,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            3,
+            5,
+            3,
+            6,
+            13
+          ],
+          "away_scored": [
+            3,
+            2,
+            3,
+            1,
+            3,
+            6
+          ],
+          "home_conceded": [
+            1,
+            5,
+            5,
+            7,
+            4,
+            4
+          ],
+          "home_scored": [
+            2,
+            2,
+            4,
+            1,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.1168,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Torino FC vs Juventus",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6442,
+        "Cote_Ref": 1.63,
+        "Score_EV": 1.1112,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            1,
+            2,
+            3,
+            2,
+            5
+          ],
+          "away_scored": [
+            3,
+            3,
+            3,
+            4,
+            7,
+            4
+          ],
+          "home_conceded": [
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+        "Score_EV_Original": 0.9663,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6312,
+        "Cote_Ref": 1.66,
+        "Score_EV": 1.0888,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+        "Score_EV_Original": 0.9468,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Villarreal CF vs Atletico Madrid",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Atletico Madrid",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6901,
+        "Cote_Ref": 1.52,
+        "Score_EV": 1.0317,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            2,
+            4,
+            3,
+            5,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            6,
+            1,
+            3,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            3,
+            3,
+            4,
+            5
+          ],
+          "home_scored": [
+            6,
+            8,
+            10,
+            6,
+            8,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8971,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "AC Fiorentina vs Atalanta BC",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.9047,
+        "Cote_Ref": 1.16,
+        "Score_EV": 1.0177,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            4,
+            5,
+            1,
+            2,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            7,
+            5,
+            1,
+            7
+          ],
+          "home_conceded": [
+            3,
+            5,
+            3,
+            3,
+            2,
+            4
+          ],
+          "home_scored": [
+            3,
+            2,
+            2,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+        "Score_EV_Original": 1.357,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Hellas Verona vs AS Roma",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5876,
+        "Cote_Ref": 1.79,
+        "Score_EV": 1.0136,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            4,
+            6,
+            2,
+            6
+          ],
+          "away_scored": [
+            4,
+            6,
+            3,
+            2,
+            7,
+            2
+          ],
+          "home_conceded": [
+            2,
+            6,
+            2,
+            1,
+            4,
+            11
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            1,
+            4,
+            0
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+        "Score_EV_Original": 0.8814,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Deportivo Alaves vs Rayo Vallecano",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Rayo Vallecano",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6752,
+        "Cote_Ref": 1.56,
+        "Score_EV": 1.0095,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            3,
+            5,
+            4,
+            5,
+            6
+          ],
+          "away_scored": [
+            1,
+            4,
+            4,
+            2,
+            2,
+            2
+          ],
+          "home_conceded": [
+            3,
+            2,
+            1,
+            5,
+            5,
+            7
+          ],
+          "home_scored": [
+            5,
+            1,
+            6,
+            2,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 0.8778,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 9,
+      "cote_totale": 40.89,
+      "gain_10u": 408.87,
+      "prob_implicite": 0.0245,
+      "fiabilite_moyenne": 70.0,
+      "nb_ligues": 2,
+      "ligues": [
+        "LaLiga",
+        "Serie A"
+      ],
+      "diversification": 0.22,
+      "badge_correlation": "🟡",
+      "badge_name": "Mixte"
+    }
+  },
+  "B4_PROFOND": {
+    "nom": "Combiné Profond (13-15 legs)",
+    "categorie": "B",
+    "legs": [
+      {
+        "Match": "RCD Espanyol vs Real Sociedad",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Real Sociedad",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7362,
+        "Cote_Ref": 1.43,
+        "Score_EV": 1.3208,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            5,
+            6,
+            3,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            4,
+            2,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            7,
+            3,
+            5,
+            5
+          ],
+          "home_scored": [
+            2,
+            1,
+            3,
+            4,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 1.1485,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Valencia CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7185,
+        "Cote_Ref": 1.46,
+        "Score_EV": 1.289,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+        "Score_EV_Original": 1.1209,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Girona FC vs Elche CF",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Elche CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7159,
+        "Cote_Ref": 1.47,
+        "Score_EV": 1.2843,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            3,
+            5,
+            3,
+            6,
+            13
+          ],
+          "away_scored": [
+            3,
+            2,
+            3,
+            1,
+            3,
+            6
+          ],
+          "home_conceded": [
+            1,
+            5,
+            5,
+            7,
+            4,
+            4
+          ],
+          "home_scored": [
+            2,
+            2,
+            4,
+            1,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.1168,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Torino FC vs Juventus",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6442,
+        "Cote_Ref": 1.63,
+        "Score_EV": 1.1112,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            1,
+            2,
+            3,
+            2,
+            5
+          ],
+          "away_scored": [
+            3,
+            3,
+            3,
+            4,
+            7,
+            4
+          ],
+          "home_conceded": [
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+        "Score_EV_Original": 0.9663,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6312,
+        "Cote_Ref": 1.66,
+        "Score_EV": 1.0888,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+        "Score_EV_Original": 0.9468,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Villarreal CF vs Atletico Madrid",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Atletico Madrid",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6901,
+        "Cote_Ref": 1.52,
+        "Score_EV": 1.0317,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            2,
+            4,
+            3,
+            5,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            6,
+            1,
+            3,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            3,
+            3,
+            4,
+            5
+          ],
+          "home_scored": [
+            6,
+            8,
+            10,
+            6,
+            8,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8971,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "AC Fiorentina vs Atalanta BC",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.9047,
+        "Cote_Ref": 1.16,
+        "Score_EV": 1.0177,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            4,
+            5,
+            1,
+            2,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            7,
+            5,
+            1,
+            7
+          ],
+          "home_conceded": [
+            3,
+            5,
+            3,
+            3,
+            2,
+            4
+          ],
+          "home_scored": [
+            3,
+            2,
+            2,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+        "Score_EV_Original": 1.357,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Hellas Verona vs AS Roma",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5876,
+        "Cote_Ref": 1.79,
+        "Score_EV": 1.0136,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            4,
+            6,
+            2,
+            6
+          ],
+          "away_scored": [
+            4,
+            6,
+            3,
+            2,
+            7,
+            2
+          ],
+          "home_conceded": [
+            2,
+            6,
+            2,
+            1,
+            4,
+            11
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            1,
+            4,
+            0
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+        "Score_EV_Original": 0.8814,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Deportivo Alaves vs Rayo Vallecano",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Rayo Vallecano",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6752,
+        "Cote_Ref": 1.56,
+        "Score_EV": 1.0095,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            3,
+            5,
+            4,
+            5,
+            6
+          ],
+          "away_scored": [
+            1,
+            4,
+            4,
+            2,
+            2,
+            2
+          ],
+          "home_conceded": [
+            3,
+            2,
+            1,
+            5,
+            5,
+            7
+          ],
+          "home_scored": [
+            5,
+            1,
+            6,
+            2,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 0.8778,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "SSC Napoli vs Udinese Calcio",
+        "League": "Serie A",
+        "Marche": "Home + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5715,
+        "Cote_Ref": 1.84,
+        "Score_EV": 0.9859,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            3,
+            2,
+            5,
+            7
+          ],
+          "away_scored": [
+            2,
+            5,
+            4,
+            6,
+            5,
+            5
+          ],
+          "home_conceded": [
+            4,
+            2,
+            2,
+            6,
+            1,
+            3
+          ],
+          "home_scored": [
+            5,
+            1,
+            8,
+            7,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 8/10",
+        "Score_EV_Original": 0.8573,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "US Cremonese vs Como 1907",
+        "League": "Serie A",
+        "Marche": "Away + de SHOTS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5534,
+        "Cote_Ref": 1.9,
+        "Score_EV": 0.9546,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            3,
+            4,
+            1,
+            2
+          ],
+          "away_scored": [
+            4,
+            3,
+            3,
+            2,
+            8,
+            6
+          ],
+          "home_conceded": [
+            3,
+            4,
+            3,
+            4,
+            6,
+            5
+          ],
+          "home_scored": [
+            2,
+            2,
+            3,
+            3,
+            0,
+            7
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Shots (Team): 8/10",
+        "Score_EV_Original": 0.8301,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 11,
+      "cote_totale": 142.94,
+      "gain_10u": 1429.4,
+      "prob_implicite": 0.007,
+      "fiabilite_moyenne": 67.5,
+      "nb_ligues": 2,
+      "ligues": [
+        "LaLiga",
+        "Serie A"
+      ],
+      "diversification": 0.18,
+      "badge_correlation": "🟡",
+      "badge_name": "Mixte"
+    }
+  },
+  "B5_BIG_TICKET": {
+    "nom": "Big Ticket (15-30 legs) 🎰",
+    "categorie": "B",
+    "legs": [
+      {
+        "Match": "RCD Espanyol vs Real Sociedad",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Real Sociedad",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7362,
+        "Cote_Ref": 1.43,
+        "Score_EV": 1.3208,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            5,
+            6,
+            3,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            4,
+            2,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            7,
+            3,
+            5,
+            5
+          ],
+          "home_scored": [
+            2,
+            1,
+            3,
+            4,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 1.1485,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Valencia CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7185,
+        "Cote_Ref": 1.46,
+        "Score_EV": 1.289,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+        "Score_EV_Original": 1.1209,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Girona FC vs Elche CF",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Elche CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7159,
+        "Cote_Ref": 1.47,
+        "Score_EV": 1.2843,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            3,
+            5,
+            3,
+            6,
+            13
+          ],
+          "away_scored": [
+            3,
+            2,
+            3,
+            1,
+            3,
+            6
+          ],
+          "home_conceded": [
+            1,
+            5,
+            5,
+            7,
+            4,
+            4
+          ],
+          "home_scored": [
+            2,
+            2,
+            4,
+            1,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.1168,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Torino FC vs Juventus",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6442,
+        "Cote_Ref": 1.63,
+        "Score_EV": 1.1112,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            1,
+            2,
+            3,
+            2,
+            5
+          ],
+          "away_scored": [
+            3,
+            3,
+            3,
+            4,
+            7,
+            4
+          ],
+          "home_conceded": [
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+        "Score_EV_Original": 0.9663,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6312,
+        "Cote_Ref": 1.66,
+        "Score_EV": 1.0888,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+        "Score_EV_Original": 0.9468,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Villarreal CF vs Atletico Madrid",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Atletico Madrid",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6901,
+        "Cote_Ref": 1.52,
+        "Score_EV": 1.0317,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            2,
+            4,
+            3,
+            5,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            6,
+            1,
+            3,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            3,
+            3,
+            4,
+            5
+          ],
+          "home_scored": [
+            6,
+            8,
+            10,
+            6,
+            8,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8971,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "AC Fiorentina vs Atalanta BC",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.9047,
+        "Cote_Ref": 1.16,
+        "Score_EV": 1.0177,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            4,
+            5,
+            1,
+            2,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            7,
+            5,
+            1,
+            7
+          ],
+          "home_conceded": [
+            3,
+            5,
+            3,
+            3,
+            2,
+            4
+          ],
+          "home_scored": [
+            3,
+            2,
+            2,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+        "Score_EV_Original": 1.357,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Hellas Verona vs AS Roma",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5876,
+        "Cote_Ref": 1.79,
+        "Score_EV": 1.0136,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            4,
+            6,
+            2,
+            6
+          ],
+          "away_scored": [
+            4,
+            6,
+            3,
+            2,
+            7,
+            2
+          ],
+          "home_conceded": [
+            2,
+            6,
+            2,
+            1,
+            4,
+            11
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            1,
+            4,
+            0
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+        "Score_EV_Original": 0.8814,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Deportivo Alaves vs Rayo Vallecano",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Rayo Vallecano",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6752,
+        "Cote_Ref": 1.56,
+        "Score_EV": 1.0095,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            3,
+            5,
+            4,
+            5,
+            6
+          ],
+          "away_scored": [
+            1,
+            4,
+            4,
+            2,
+            2,
+            2
+          ],
+          "home_conceded": [
+            3,
+            2,
+            1,
+            5,
+            5,
+            7
+          ],
+          "home_scored": [
+            5,
+            1,
+            6,
+            2,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 0.8778,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "SSC Napoli vs Udinese Calcio",
+        "League": "Serie A",
+        "Marche": "Home + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5715,
+        "Cote_Ref": 1.84,
+        "Score_EV": 0.9859,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            3,
+            2,
+            5,
+            7
+          ],
+          "away_scored": [
+            2,
+            5,
+            4,
+            6,
+            5,
+            5
+          ],
+          "home_conceded": [
+            4,
+            2,
+            2,
+            6,
+            1,
+            3
+          ],
+          "home_scored": [
+            5,
+            1,
+            8,
+            7,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 8/10",
+        "Score_EV_Original": 0.8573,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "US Cremonese vs Como 1907",
+        "League": "Serie A",
+        "Marche": "Away + de SHOTS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5534,
+        "Cote_Ref": 1.9,
+        "Score_EV": 0.9546,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            3,
+            4,
+            1,
+            2
+          ],
+          "away_scored": [
+            4,
+            3,
+            3,
+            2,
+            8,
+            6
+          ],
+          "home_conceded": [
+            3,
+            4,
+            3,
+            4,
+            6,
+            5
+          ],
+          "home_scored": [
+            2,
+            2,
+            3,
+            3,
+            0,
+            7
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Shots (Team): 8/10",
+        "Score_EV_Original": 0.8301,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Real Betis vs Levante UD",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Levante UD",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6321,
+        "Cote_Ref": 1.66,
+        "Score_EV": 0.945,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            5,
+            5,
+            4,
+            11
+          ],
+          "away_scored": [
+            0,
+            4,
+            4,
+            3,
+            4,
+            5
+          ],
+          "home_conceded": [
+            5,
+            3,
+            5,
+            2,
+            1,
+            2
+          ],
+          "home_scored": [
+            4,
+            7,
+            5,
+            7,
+            3,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8217,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Liverpool vs Brentford",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Liverpool",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5728,
+        "Cote_Ref": 1.83,
+        "Score_EV": 0.9222,
+        "Super_Signal": false,
+        "Alpha": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            4,
+            7,
+            5,
+            3,
+            8
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            2,
+            1,
+            8
+          ],
+          "home_conceded": [
+            1,
+            0,
+            3,
+            4,
+            5,
+            6
+          ],
+          "home_scored": [
+            4,
+            3,
+            12,
+            3,
+            3,
+            8
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+            "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+            "Force": 0.7
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série offensive favorable : Over 1.5 Team Goals: 5/7",
+        "Score_EV_Original": 0.8019,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Manchester City vs Aston Villa",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Manchester City",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5973,
+        "Cote_Ref": 1.76,
+        "Score_EV": 0.8362,
+        "Super_Signal": false,
+        "Alpha": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            6,
+            2,
+            4,
+            6,
+            4,
+            4
+          ],
+          "away_scored": [
+            1,
+            3,
+            4,
+            4,
+            4,
+            6
+          ],
+          "home_conceded": [
+            0,
+            3,
+            3,
+            3,
+            1,
+            2
+          ],
+          "home_scored": [
+            5,
+            8,
+            12,
+            4,
+            10,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.8362,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Real Madrid vs Athletic Club",
+        "League": "LaLiga",
+        "Marche": "Home + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5572,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.8358,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            1,
+            6,
+            7,
+            4,
+            10
+          ],
+          "away_scored": [
+            2,
+            1,
+            4,
+            4,
+            3,
+            5
+          ],
+          "home_conceded": [
+            0,
+            2,
+            3,
+            2,
+            4,
+            3
+          ],
+          "home_scored": [
+            2,
+            6,
+            10,
+            11,
+            4,
+            8
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.8358,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Celta Vigo vs Sevilla FC",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Sevilla FC",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6174,
+        "Cote_Ref": 1.7,
+        "Score_EV": 0.8026,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            6,
+            8,
+            5,
+            2,
+            10
+          ],
+          "away_scored": [
+            1,
+            2,
+            4,
+            3,
+            7,
+            5
+          ],
+          "home_conceded": [
+            5,
+            0,
+            7,
+            5,
+            5,
+            6
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            7,
+            1,
+            8
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.8026,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Brighton & Hove Albion vs Manchester United",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Brighton & Hove Albion",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5694,
+        "Cote_Ref": 1.84,
+        "Score_EV": 0.7972,
+        "Super_Signal": false,
+        "Alpha": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            3,
+            4,
+            5,
+            5,
+            7
+          ],
+          "away_scored": [
+            1,
+            2,
+            6,
+            6,
+            6,
+            6
+          ],
+          "home_conceded": [
+            2,
+            2,
+            5,
+            1,
+            2,
+            5
+          ],
+          "home_scored": [
+            9,
+            2,
+            2,
+            4,
+            5,
+            8
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+            "Force": 0.54
+          }
+        ],
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.7972,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Crystal Palace vs Arsenal",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Arsenal",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5981,
+        "Cote_Ref": 1.76,
+        "Score_EV": 0.785,
+        "Super_Signal": false,
+        "Alpha": true,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            1,
+            4,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            4,
+            4,
+            3,
+            7,
+            5,
+            5
+          ],
+          "home_conceded": [
+            2,
+            0,
+            8,
+            4,
+            3,
+            4
+          ],
+          "home_scored": [
+            1,
+            2,
+            5,
+            1,
+            2,
+            7
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+            "Force": 0.72
+          }
+        ],
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Faible volume de buts du favori : Under 1.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.0467,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "AC Milan vs Cagliari Calcio",
+        "League": "Serie A",
+        "Marche": "Home + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5635,
+        "Cote_Ref": 1.86,
+        "Score_EV": 0.634,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            5,
+            1,
+            7,
+            4,
+            7
+          ],
+          "away_scored": [
+            0,
+            3,
+            3,
+            2,
+            5,
+            3
+          ],
+          "home_conceded": [
+            2,
+            4,
+            3,
+            4,
+            2,
+            4
+          ],
+          "home_scored": [
+            2,
+            0,
+            7,
+            6,
+            3,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 10/10",
+        "Score_EV_Original": 0.8453,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Sunderland AFC vs Chelsea",
+        "League": "Premier League",
+        "Marche": "Over 9.5 CORNERS",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.5507,
+        "Cote_Ref": 1.91,
+        "Score_EV": 0.4956,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            2,
+            5,
+            3,
+            3,
+            5
+          ],
+          "away_scored": [
+            2,
+            1,
+            10,
+            8,
+            5,
+            5
+          ],
+          "home_conceded": [
+            3,
+            2,
+            3,
+            4,
+            4,
+            3
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            3,
+            7,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Tendance de match défavorable : Under 9.5 Corners: 5/7",
+        "Score_EV_Original": 0.6608,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 20,
+      "cote_totale": 28100.11,
+      "gain_10u": 281001.07,
+      "prob_implicite": 0.0,
+      "fiabilite_moyenne": 63.4,
+      "nb_ligues": 3,
+      "ligues": [
+        "LaLiga",
+        "Premier League",
+        "Serie A"
+      ],
+      "diversification": 0.15,
+      "badge_correlation": "🟡",
+      "badge_name": "Mixte"
+    }
+  },
+  "C_LALIGA": {
+    "nom": "Ticket LaLiga",
+    "categorie": "C",
+    "legs": [
+      {
+        "Match": "RCD Espanyol vs Real Sociedad",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Real Sociedad",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7362,
+        "Cote_Ref": 1.43,
+        "Score_EV": 1.3208,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            5,
+            6,
+            3,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            4,
+            2,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            7,
+            3,
+            5,
+            5
+          ],
+          "home_scored": [
+            2,
+            1,
+            3,
+            4,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 1.1485,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Valencia CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7185,
+        "Cote_Ref": 1.46,
+        "Score_EV": 1.289,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+        "Score_EV_Original": 1.1209,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Girona FC vs Elche CF",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Elche CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7159,
+        "Cote_Ref": 1.47,
+        "Score_EV": 1.2843,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            3,
+            5,
+            3,
+            6,
+            13
+          ],
+          "away_scored": [
+            3,
+            2,
+            3,
+            1,
+            3,
+            6
+          ],
+          "home_conceded": [
+            1,
+            5,
+            5,
+            7,
+            4,
+            4
+          ],
+          "home_scored": [
+            2,
+            2,
+            4,
+            1,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.1168,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Villarreal CF vs Atletico Madrid",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Atletico Madrid",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6901,
+        "Cote_Ref": 1.52,
+        "Score_EV": 1.0317,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            2,
+            4,
+            3,
+            5,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            6,
+            1,
+            3,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            3,
+            3,
+            4,
+            5
+          ],
+          "home_scored": [
+            6,
+            8,
+            10,
+            6,
+            8,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8971,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Deportivo Alaves vs Rayo Vallecano",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Rayo Vallecano",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6752,
+        "Cote_Ref": 1.56,
+        "Score_EV": 1.0095,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            3,
+            5,
+            4,
+            5,
+            6
+          ],
+          "away_scored": [
+            1,
+            4,
+            4,
+            2,
+            2,
+            2
+          ],
+          "home_conceded": [
+            3,
+            2,
+            1,
+            5,
+            5,
+            7
+          ],
+          "home_scored": [
+            5,
+            1,
+            6,
+            2,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 0.8778,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Real Betis vs Levante UD",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Levante UD",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6321,
+        "Cote_Ref": 1.66,
+        "Score_EV": 0.945,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            5,
+            5,
+            4,
+            11
+          ],
+          "away_scored": [
+            0,
+            4,
+            4,
+            3,
+            4,
+            5
+          ],
+          "home_conceded": [
+            5,
+            3,
+            5,
+            2,
+            1,
+            2
+          ],
+          "home_scored": [
+            4,
+            7,
+            5,
+            7,
+            3,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8217,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 6,
+      "cote_totale": 12.08,
+      "gain_10u": 120.8,
+      "prob_implicite": 0.0828,
+      "fiabilite_moyenne": 69.5,
+      "nb_ligues": 1,
+      "ligues": [
+        "LaLiga"
+      ],
+      "diversification": 0.17,
+      "badge_correlation": "🟡",
+      "badge_name": "Mixte"
+    }
+  },
+  "C_PREMIER_LEAGUE": {
+    "nom": "Ticket Premier League",
+    "categorie": "C",
+    "legs": [
+      {
+        "Match": "Liverpool vs Brentford",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Liverpool",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5728,
+        "Cote_Ref": 1.83,
+        "Score_EV": 0.9222,
+        "Super_Signal": false,
+        "Alpha": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            4,
+            7,
+            5,
+            3,
+            8
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            2,
+            1,
+            8
+          ],
+          "home_conceded": [
+            1,
+            0,
+            3,
+            4,
+            5,
+            6
+          ],
+          "home_scored": [
+            4,
+            3,
+            12,
+            3,
+            3,
+            8
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+            "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+            "Force": 0.7
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série offensive favorable : Over 1.5 Team Goals: 5/7",
+        "Score_EV_Original": 0.8019,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Manchester City vs Aston Villa",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Manchester City",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5973,
+        "Cote_Ref": 1.76,
+        "Score_EV": 0.8362,
+        "Super_Signal": false,
+        "Alpha": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            6,
+            2,
+            4,
+            6,
+            4,
+            4
+          ],
+          "away_scored": [
+            1,
+            3,
+            4,
+            4,
+            4,
+            6
+          ],
+          "home_conceded": [
+            0,
+            3,
+            3,
+            3,
+            1,
+            2
+          ],
+          "home_scored": [
+            5,
+            8,
+            12,
+            4,
+            10,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.8362,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Brighton & Hove Albion vs Manchester United",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Brighton & Hove Albion",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5694,
+        "Cote_Ref": 1.84,
+        "Score_EV": 0.7972,
+        "Super_Signal": false,
+        "Alpha": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            3,
+            4,
+            5,
+            5,
+            7
+          ],
+          "away_scored": [
+            1,
+            2,
+            6,
+            6,
+            6,
+            6
+          ],
+          "home_conceded": [
+            2,
+            2,
+            5,
+            1,
+            2,
+            5
+          ],
+          "home_scored": [
+            9,
+            2,
+            2,
+            4,
+            5,
+            8
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+            "Force": 0.54
+          }
+        ],
+        "Streak_Status": "STREAK_NEUTRAL",
+        "Streak_Reason": "Aucune série statistique déterminante",
+        "Score_EV_Original": 0.7972,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Crystal Palace vs Arsenal",
+        "League": "Premier League",
+        "Marche": "Over 1.5 Arsenal",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.5981,
+        "Cote_Ref": 1.76,
+        "Score_EV": 0.785,
+        "Super_Signal": false,
+        "Alpha": true,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            1,
+            4,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            4,
+            4,
+            3,
+            7,
+            5,
+            5
+          ],
+          "home_conceded": [
+            2,
+            0,
+            8,
+            4,
+            3,
+            4
+          ],
+          "home_scored": [
+            1,
+            2,
+            5,
+            1,
+            2,
+            7
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+            "Force": 0.72
+          }
+        ],
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Faible volume de buts du favori : Under 1.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.0467,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Liverpool vs Brentford",
+        "League": "Premier League",
+        "Marche": "Over 9.5 CORNERS",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.5599,
+        "Cote_Ref": 1.88,
+        "Score_EV": 0.7727,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            4,
+            7,
+            5,
+            3,
+            8
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            2,
+            1,
+            8
+          ],
+          "home_conceded": [
+            1,
+            0,
+            3,
+            4,
+            5,
+            6
+          ],
+          "home_scored": [
+            4,
+            3,
+            12,
+            3,
+            3,
+            8
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+            "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+            "Force": 0.7
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Tendance de match favorable : Over 9.5 Corners: 4/5",
+        "Score_EV_Original": 0.6719,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      },
+      {
+        "Match": "Sunderland AFC vs Chelsea",
+        "League": "Premier League",
+        "Marche": "Over 9.5 CORNERS",
+        "Type": "PROP_BET",
+        "Tier": 3,
+        "Prob": 0.5507,
+        "Cote_Ref": 1.91,
+        "Score_EV": 0.4956,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            2,
+            5,
+            3,
+            3,
+            5
+          ],
+          "away_scored": [
+            2,
+            1,
+            10,
+            8,
+            5,
+            5
+          ],
+          "home_conceded": [
+            3,
+            2,
+            3,
+            4,
+            4,
+            3
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            3,
+            7,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Tendance de match défavorable : Under 9.5 Corners: 5/7",
+        "Score_EV_Original": 0.6608,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PTOT",
+        "family_name": "Prop Totaux"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 6,
+      "cote_totale": 37.45,
+      "gain_10u": 374.53,
+      "prob_implicite": 0.0267,
+      "fiabilite_moyenne": 57.5,
+      "nb_ligues": 1,
+      "ligues": [
+        "Premier League"
+      ],
+      "diversification": 0.17,
+      "badge_correlation": "🟡",
+      "badge_name": "Mixte"
+    }
+  },
+  "C_SERIE_A": {
+    "nom": "Ticket Serie A",
+    "categorie": "C",
+    "legs": [
+      {
+        "Match": "Torino FC vs Juventus",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6442,
+        "Cote_Ref": 1.63,
+        "Score_EV": 1.1112,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            1,
+            2,
+            3,
+            2,
+            5
+          ],
+          "away_scored": [
+            3,
+            3,
+            3,
+            4,
+            7,
+            4
+          ],
+          "home_conceded": [
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+        "Score_EV_Original": 0.9663,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6312,
+        "Cote_Ref": 1.66,
+        "Score_EV": 1.0888,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+        "Score_EV_Original": 0.9468,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "AC Fiorentina vs Atalanta BC",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.9047,
+        "Cote_Ref": 1.16,
+        "Score_EV": 1.0177,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            4,
+            5,
+            1,
+            2,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            7,
+            5,
+            1,
+            7
+          ],
+          "home_conceded": [
+            3,
+            5,
+            3,
+            3,
+            2,
+            4
+          ],
+          "home_scored": [
+            3,
+            2,
+            2,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_WARNING",
+        "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
+        "Score_EV_Original": 1.357,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Hellas Verona vs AS Roma",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5876,
+        "Cote_Ref": 1.79,
+        "Score_EV": 1.0136,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            4,
+            6,
+            2,
+            6
+          ],
+          "away_scored": [
+            4,
+            6,
+            3,
+            2,
+            7,
+            2
+          ],
+          "home_conceded": [
+            2,
+            6,
+            2,
+            1,
+            4,
+            11
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            1,
+            4,
+            0
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+        "Score_EV_Original": 0.8814,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "SSC Napoli vs Udinese Calcio",
+        "League": "Serie A",
+        "Marche": "Home + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5715,
+        "Cote_Ref": 1.84,
+        "Score_EV": 0.9859,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            3,
+            2,
+            5,
+            7
+          ],
+          "away_scored": [
+            2,
+            5,
+            4,
+            6,
+            5,
+            5
+          ],
+          "home_conceded": [
+            4,
+            2,
+            2,
+            6,
+            1,
+            3
+          ],
+          "home_scored": [
+            5,
+            1,
+            8,
+            7,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 8/10",
+        "Score_EV_Original": 0.8573,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "US Cremonese vs Como 1907",
+        "League": "Serie A",
+        "Marche": "Away + de SHOTS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5534,
+        "Cote_Ref": 1.9,
+        "Score_EV": 0.9546,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            3,
+            4,
+            1,
+            2
+          ],
+          "away_scored": [
+            4,
+            3,
+            3,
+            2,
+            8,
+            6
+          ],
+          "home_conceded": [
+            3,
+            4,
+            3,
+            4,
+            6,
+            5
+          ],
+          "home_scored": [
+            2,
+            2,
+            3,
+            3,
+            0,
+            7
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Shots (Team): 8/10",
+        "Score_EV_Original": 0.8301,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 6,
+      "cote_totale": 19.64,
+      "gain_10u": 196.42,
+      "prob_implicite": 0.0509,
+      "fiabilite_moyenne": 64.9,
+      "nb_ligues": 1,
+      "ligues": [
+        "Serie A"
+      ],
+      "diversification": 0.17,
+      "badge_correlation": "🟢",
+      "badge_name": "Anti-Variance"
+    }
+  },
+  "D1_BEST_OF_BOTH": {
+    "nom": "Best of Both Worlds (H2H + Team Goals)",
+    "categorie": "D",
+    "legs": [
+      {
+        "Match": "RCD Espanyol vs Real Sociedad",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Real Sociedad",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7362,
+        "Cote_Ref": 1.43,
+        "Score_EV": 1.3208,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            4,
+            5,
+            6,
+            3,
+            6
+          ],
+          "away_scored": [
+            2,
+            3,
+            5,
+            4,
+            2,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            7,
+            3,
+            5,
+            5
+          ],
+          "home_scored": [
+            2,
+            1,
+            3,
+            4,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 1.1485,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Valencia CF vs FC Barcelona",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Valencia CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7185,
+        "Cote_Ref": 1.46,
+        "Score_EV": 1.289,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            4,
+            2,
+            8,
+            0,
+            3,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            10,
+            5,
+            7,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            1,
+            6,
+            6,
+            6
+          ],
+          "home_scored": [
+            3,
+            1,
+            1,
+            7,
+            2,
+            10
+          ]
+        },
+        "Live_Betting_Recommendation": [
+          {
+            "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+            "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+            "Force": 0.68
+          }
+        ],
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+        "Score_EV_Original": 1.1209,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Girona FC vs Elche CF",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Elche CF",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.7159,
+        "Cote_Ref": 1.47,
+        "Score_EV": 1.2843,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            7,
+            3,
+            5,
+            3,
+            6,
+            13
+          ],
+          "away_scored": [
+            3,
+            2,
+            3,
+            1,
+            3,
+            6
+          ],
+          "home_conceded": [
+            1,
+            5,
+            5,
+            7,
+            4,
+            4
+          ],
+          "home_scored": [
+            2,
+            2,
+            4,
+            1,
+            5,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 1.1168,
+        "confidence_category": "PLATINUM",
+        "confidence_badge": "💎",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Torino FC vs Juventus",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6442,
+        "Cote_Ref": 1.63,
+        "Score_EV": 1.1112,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            1,
+            2,
+            3,
+            2,
+            5
+          ],
+          "away_scored": [
+            3,
+            3,
+            3,
+            4,
+            7,
+            4
+          ],
+          "home_conceded": [
+            2,
+            6,
+            5,
+            4,
+            6,
+            4
+          ],
+          "home_scored": [
+            3,
+            5,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+        "Score_EV_Original": 0.9663,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Bologna FC vs Inter Milan",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.6312,
+        "Cote_Ref": 1.66,
+        "Score_EV": 1.0888,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            1,
+            0,
+            6,
+            1,
+            3,
+            5
+          ],
+          "away_scored": [
+            6,
+            6,
+            5,
+            5,
+            6,
+            8
+          ],
+          "home_conceded": [
+            1,
+            2,
+            6,
+            5,
+            4,
+            2
+          ],
+          "home_scored": [
+            0,
+            2,
+            3,
+            5,
+            3,
+            3
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+        "Score_EV_Original": 0.9468,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Villarreal CF vs Atletico Madrid",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Atletico Madrid",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6901,
+        "Cote_Ref": 1.52,
+        "Score_EV": 1.0317,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            2,
+            2,
+            4,
+            3,
+            5,
+            6
+          ],
+          "away_scored": [
+            6,
+            1,
+            6,
+            1,
+            3,
+            5
+          ],
+          "home_conceded": [
+            2,
+            1,
+            3,
+            3,
+            4,
+            5
+          ],
+          "home_scored": [
+            6,
+            8,
+            10,
+            6,
+            8,
+            5
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+        "Score_EV_Original": 0.8971,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      },
+      {
+        "Match": "Hellas Verona vs AS Roma",
+        "League": "Serie A",
+        "Marche": "Away + de CORNERS",
+        "Type": "H2H_PROP",
+        "Tier": 1,
+        "Prob": 0.5876,
+        "Cote_Ref": 1.79,
+        "Score_EV": 1.0136,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            3,
+            0,
+            4,
+            6,
+            2,
+            6
+          ],
+          "away_scored": [
+            4,
+            6,
+            3,
+            2,
+            7,
+            2
+          ],
+          "home_conceded": [
+            2,
+            6,
+            2,
+            1,
+            4,
+            11
+          ],
+          "home_scored": [
+            1,
+            3,
+            3,
+            1,
+            4,
+            0
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+        "Score_EV_Original": 0.8814,
+        "confidence_category": "SILVER",
+        "confidence_badge": "🥈",
+        "family_code": "PH2H",
+        "family_name": "Prop H2H"
+      },
+      {
+        "Match": "Deportivo Alaves vs Rayo Vallecano",
+        "League": "LaLiga",
+        "Marche": "Over 0.5 Rayo Vallecano",
+        "Type": "TEAM_GOALS",
+        "Tier": 2,
+        "Prob": 0.6752,
+        "Cote_Ref": 1.56,
+        "Score_EV": 1.0095,
+        "Super_Signal": false,
+        "Goal_Distribution": {
+          "away_conceded": [
+            5,
+            3,
+            5,
+            4,
+            5,
+            6
+          ],
+          "away_scored": [
+            1,
+            4,
+            4,
+            2,
+            2,
+            2
+          ],
+          "home_conceded": [
+            3,
+            2,
+            1,
+            5,
+            5,
+            7
+          ],
+          "home_scored": [
+            5,
+            1,
+            6,
+            2,
+            4,
+            6
+          ]
+        },
+        "Streak_Status": "STREAK_CONFIRMED",
+        "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+        "Score_EV_Original": 0.8778,
+        "confidence_category": "GOLD",
+        "confidence_badge": "🥇",
+        "family_code": "TG",
+        "family_name": "Team Goals"
+      }
+    ],
+    "metrics": {
+      "nb_legs": 8,
+      "cote_totale": 35.25,
+      "gain_10u": 352.47,
+      "prob_implicite": 0.0284,
+      "fiabilite_moyenne": 67.5,
+      "nb_ligues": 2,
+      "ligues": [
+        "LaLiga",
+        "Serie A"
+      ],
+      "diversification": 0.25,
+      "badge_correlation": "🟡",
+      "badge_name": "Mixte"
+    }
+  }
+}

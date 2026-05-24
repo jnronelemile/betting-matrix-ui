@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "competition": "LaLiga",
+    "fixture": "Getafe CF vs CA Osasuna",
+    "date": "2026-05-23",
+    "generated_at": "2026-05-23T19:00:52.254637",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Getafe) No Clean Sheet: 6",
+      "(Osasuna) No Clean Sheet: 9",
+      "Over 2.5 goals: 5/6",
+      "BTTS Yes: 6/6",
+      "Over 4.5 cards: 8/8",
+      "Under 10.5 corners: 10/10"
+    ],
+    "team_streaks": {
+      "home": [
+        "Under 2.5 Goals: 8/10",
+        "Under 1.5 Team Goals: 7/10",
+        "Under 0.5 Team Goals: 5/7",
+        "BTTS No: 8/10",
+        "Under 9.5 Corners: 6/8",
+        "Under 10.5 Corners: 8/10",
+        "Under 4.5 Corners (Team): 7/10",
+        "Under 8.5 SOT: 8/10",
+        "Under 3.5 SOT (Team): 5/7",
+        "Under 10.5 Shots (Team): 8/10",
+        "Over 22.5 Fouls: 8/10",
+        "Over 11.5 Fouls (Team): 7/10"
+      ],
+      "away": [
+        "Losses: 4",
+        "No wins: 4",
+        "Scoring: 5",
+        "No Clean Sheet: 8",
+        "Over 2.5 Goals: 7/10",
+        "Under 1.5 Team Goals: 7/10",
+        "Over 0.5 Team Goals: 9/10",
+        "BTTS Yes: 8/10",
+        "Over 9.5 Corners: 4/5",
+        "Over 8.5 SOT: 7/10",
+        "Over 3.5 SOT (Team): 8/10",
+        "Over 22.5 Shots: 7/10",
+        "Over 22.5 Fouls: 9/10",
+        "First to concede: 6/7"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      0,
+      4,
+      5,
+      6,
+      6,
+      4
+    ],
+    "away_scored": [
+      3,
+      1,
+      2,
+      0,
+      0,
+      7
+    ],
+    "home_conceded": [
+      0,
+      1,
+      3,
+      1,
+      5,
+      6
+    ],
+    "home_scored": [
+      2,
+      1,
+      5,
+      3,
+      3,
+      3
+    ]
+  }
+}

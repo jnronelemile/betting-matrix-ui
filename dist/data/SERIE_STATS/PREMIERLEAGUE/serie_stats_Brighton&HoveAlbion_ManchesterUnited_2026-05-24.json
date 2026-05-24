@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "competition": "PREMIERLEAGUE",
+    "fixture": "Brighton & Hove Albion vs Manchester United",
+    "date": "2026-05-24",
+    "generated_at": "2026-05-23T19:00:51.913608",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Brighton & Hove Albion) No Clean Sheet: 6",
+      "(Manchester United) No Clean Sheet: 4",
+      "Over 2.5 goals: 5/6",
+      "BTTS Yes: 5/6",
+      "(Brighton & Hove Albion) First to score: 5/7",
+      "Under 10.5 corners: 5/6"
+    ],
+    "team_streaks": {
+      "home": [
+        "Over 9.5 Corners: 7/10",
+        "Over 10.5 Corners: 5/7",
+        "Over 4.5 Corners (Team): 5/7",
+        "Over 8.5 SOT: 7/10",
+        "Over 3.5 SOT (Team): 8/10",
+        "Over 22.5 Shots: 7/10",
+        "Over 10.5 Shots (Team): 9/10",
+        "Under 22.5 Fouls: 7/10"
+      ],
+      "away": [
+        "No losses: 5",
+        "Over 2.5 Goals: 8/10",
+        "Over 0.5 Team Goals: 9/10",
+        "BTTS Yes: 8/10",
+        "Over 9.5 Corners: 6/8",
+        "Over 10.5 Corners: 6/8",
+        "Over 4.5 Corners (Team): 7/10",
+        "Over 8.5 SOT: 7/10",
+        "Over 3.5 SOT (Team): 8/10",
+        "Over 22.5 Shots: 10/10",
+        "Over 10.5 Shots (Team): 9/10",
+        "First to score: 4/5",
+        "First half winner: 4/5"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      2,
+      3,
+      4,
+      5,
+      5,
+      7
+    ],
+    "away_scored": [
+      1,
+      2,
+      6,
+      6,
+      6,
+      6
+    ],
+    "home_conceded": [
+      2,
+      2,
+      5,
+      1,
+      2,
+      5
+    ],
+    "home_scored": [
+      9,
+      2,
+      2,
+      4,
+      5,
+      8
+    ]
+  }
+}

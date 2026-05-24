@@ -1,0 +1,45 @@
+{
+
+	"PremierLeague": [
+		{ "home": "Man City", "away": "Aston Villa", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "Liverpool", "away": "Brentford", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "Crystal Palace", "away": "Arsenal", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "Brighton", "away": "Man Utd", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "Sunderland", "away": "Chelsea", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "Tottenham", "away": "Everton", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "Fulham", "away": "Newcastle", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "West Ham", "away": "Leeds", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "Forest", "away": "Bournemouth", "date": "2026-05-24", "hours": "11:00" },
+		{ "home": "Burnley", "away": "Wolves", "date": "2026-05-24", "hours": "11:00" }
+
+	],
+
+	"LaLiga": [
+		{ "home": "Real Madrid", "away": "Athletic ClCCub", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Valencia", "away": "Barcelona", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Real Betis", "away": "Levante", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Celta", "away": "Sevilla", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Espanyol", "away": "Real Sociedad", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Girona", "away": "Elche", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Getafe", "away": "Osasuna", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Alavés", "away": "Rayo Vallecano", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Mallorca", "away": "Real Oviedo", "date": "2026-05-23", "hours": "15:00" },
+		{ "home": "Villarreal", "away": "Atl. Madrid", "date": "2026-05-24", "hours": "15:00" }
+
+	],
+
+	"SerieA": [
+		{ "home": "Fiorentina", "away": "Atalanta", "date": "2026-05-22", "hours": "14:45" },
+		{ "home": "Bologna", "away": "Inter", "date": "2026-05-23", "hours": "12:00" },
+		{ "home": "Lazio", "away": "Pisa", "date": "2026-05-23", "hours": "14:45" },
+		{ "home": "Parma", "away": "Sassuolo", "date": "2026-05-24", "hours": "09:00" },
+		{ "home": "Napoli", "away": "Udinese", "date": "2026-05-24", "hours": "12:00" },
+		{ "home": "Milan", "away": "Cagliari", "date": "2026-05-24", "hours": "14:45" },
+		{ "home": "Torino", "away": "Juventus", "date": "2026-05-24", "hours": "14:45" },
+		{ "home": "Verona", "away": "Roma", "date": "2026-05-24", "hours": "14:45" },
+		{ "home": "Cremonese", "away": "Como", "date": "2026-05-24", "hours": "14:45" },
+		{ "home": "Lecce", "away": "Genoa", "date": "2026-05-24", "hours": "14:45" }
+
+	]
+
+}

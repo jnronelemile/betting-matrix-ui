@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "competition": "PREMIERLEAGUE",
+    "fixture": "Tottenham Hotspur vs Everton",
+    "date": "2026-05-24",
+    "generated_at": "2026-05-23T19:00:51.963643",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Everton) No Clean Sheet: 8",
+      "Over 2.5 goals: 5/5",
+      "(Tottenham Hotspur) First to score: 7/8",
+      "(Tottenham Hotspur) First half winner: 4/5",
+      "Under 4.5 cards: 4/5",
+      "Over 10.5 corners: 5/5"
+    ],
+    "team_streaks": {
+      "home": [
+        "Scoring: 5",
+        "No Clean Sheet: 3",
+        "Under 1.5 Team Goals: 5/7",
+        "Over 0.5 Team Goals: 8/10",
+        "BTTS Yes: 7/10",
+        "Under 8.5 SOT: 4/5",
+        "Over 22.5 Fouls: 7/10",
+        "Over 11.5 Fouls (Team): 10/10",
+        "First to score: 4/5"
+      ],
+      "away": [
+        "No wins: 6",
+        "Scoring: 7",
+        "No Clean Sheet: 6",
+        "Over 2.5 Goals: 8/10",
+        "Over 0.5 Team Goals: 9/10",
+        "BTTS Yes: 7/10",
+        "Under 4.5 Corners (Team): 7/10",
+        "Over 3.5 SOT (Team): 8/10"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      2,
+      4,
+      3,
+      3,
+      2,
+      8
+    ],
+    "away_scored": [
+      3,
+      4,
+      2,
+      4,
+      1,
+      7
+    ],
+    "home_conceded": [
+      5,
+      0,
+      11,
+      3,
+      5,
+      7
+    ],
+    "home_scored": [
+      2,
+      2,
+      4,
+      4,
+      4,
+      5
+    ]
+  }
+}
