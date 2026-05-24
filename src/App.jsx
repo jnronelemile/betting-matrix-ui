@@ -36,6 +36,7 @@ export default function App() {
   const [showRegularity, setShowRegularity] = useState(false);
   const [showSafeButs, setShowSafeButs] = useState(false);
   const [showTopForm, setShowTopForm] = useState(false);
+  const [showMasterPicks, setShowMasterPicks] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
@@ -161,7 +162,7 @@ export default function App() {
         // Tag matches from CHOIX_FINAUX
         if (json.matches && ticketsData.finals?.Selections) {
           json.matches = json.matches.map(m => {
-            const isFinalPick = ticketsData.finals.Selections.some(sel => {
+            const finalPick = ticketsData.finals.Selections.find(sel => {
               const selParts = sel.Match.split(' vs ');
               const matchParts = m.Matchup.split(' vs ');
               if (selParts.length < 2 || matchParts.length < 2) return false;
@@ -174,7 +175,7 @@ export default function App() {
 
               return (selH.includes(matchH) || matchH.includes(selH)) && (selA.includes(matchA) || matchA.includes(selA));
             });
-            return { ...m, isFinalPick };
+            return { ...m, isFinalPick: !!finalPick, masterReason: finalPick?.Streak_Reason };
           });
         }
 
@@ -288,6 +289,33 @@ export default function App() {
     }
   };
 
+  const handleNavigateToMatch = async (matchName, leagueCode) => {
+    // 1. Find the league
+    const league = LEAGUES.find(l => l.code === leagueCode) || LEAGUES[0];
+    setSelectedLeague(league);
+    
+    // 2. We need to wait for data to load. 
+    // This is handled by a temporary state or by checking data in useEffect.
+    // For simplicity, we'll use a ref to store the pending match name.
+    pendingMatchSelection.current = matchName;
+  };
+
+  const pendingMatchSelection = useRef(null);
+
+  useEffect(() => {
+    if (data?.matches && pendingMatchSelection.current) {
+      const match = data.matches.find(m => {
+        const normalize = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+        return normalize(m.Matchup).includes(normalize(pendingMatchSelection.current)) || 
+               normalize(pendingMatchSelection.current).includes(normalize(m.Matchup));
+      });
+      if (match) {
+        handleSelectMatch(match);
+        pendingMatchSelection.current = null;
+      }
+    }
+  }, [data]);
+
   const availableDates = Array.from(new Set(data?.matches?.map(m => m.date || 'Date Inconnue') || [])).sort((a, b) => {
     if (a === 'Date Inconnue') return 1;
     if (b === 'Date Inconnue') return -1;
@@ -318,7 +346,9 @@ export default function App() {
 
     const topFormMatch = !showTopForm || investSignals.IS_TOP_FORM_HOME || investSignals.IS_TOP_FORM_AWAY;
 
-    return textMatch && dateMatch && favMatch && signalMatch && confidenceMatch && ultraSafeMatch && regularMatch && safeButsMatch && topFormMatch;
+    const masterMatch = !showMasterPicks || match.isFinalPick === true;
+
+    return textMatch && dateMatch && favMatch && signalMatch && confidenceMatch && ultraSafeMatch && regularMatch && safeButsMatch && topFormMatch && masterMatch;
   }) || [];
 
   return (
@@ -477,6 +507,7 @@ export default function App() {
                     {/* Integrated Signal Toggles */}
                     <div className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x shrink-0">
                       {[
+                        { id: 'master', label: 'MASTER PICKS', icon: <Trophy size={12} />, active: showMasterPicks, toggle: () => setShowMasterPicks(!showMasterPicks), activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]' },
                         { id: 'fav', label: 'TRUE FAVS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
                         { id: 'elite', label: 'ELITE SIGNALS', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
                         { id: 'conf', label: 'HIGH CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
@@ -574,6 +605,7 @@ export default function App() {
             {/* Mobile Signal Toggles */}
             <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 snap-x pb-0.5">
               {[
+                { id: 'master', label: 'MASTER', icon: <Trophy size={12} />, active: showMasterPicks, toggle: () => setShowMasterPicks(!showMasterPicks), activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_8px_rgba(16,185,129,0.3)]' },
                 { id: 'fav', label: 'TRUE FAVS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
                 { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
                 { id: 'conf', label: 'HIGH CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
@@ -607,7 +639,8 @@ export default function App() {
                <TicketsView 
                  assembled={ticketsData.assembled} 
                  finals={ticketsData.finals} 
-                 loading={ticketsData.loading} 
+                 loading={ticketsData.loading}
+                 onNavigateToMatch={handleNavigateToMatch}
                />
              </div>
           ) : (
