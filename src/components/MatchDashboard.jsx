@@ -1,6 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Badge } from './ui/Badge';
-import { BarChart3, Brain, Crosshair } from 'lucide-react';
+import { 
+  BarChart3, 
+  Brain, 
+  Crosshair, 
+  Calculator, 
+  Activity, 
+  AlertTriangle, 
+  ShieldCheck, 
+  Zap, 
+  Target, 
+  ChevronLeft, 
+  TrendingUp, 
+  Trophy, 
+  Fingerprint 
+} from 'lucide-react';
 
 import TabCoreMarket from './dashboard/TabCoreMarket';
 import TabNarrative from './dashboard/TabNarrative';
@@ -8,7 +22,7 @@ import TabTactical from './dashboard/TabTactical';
 import TabCalibration from './dashboard/TabCalibration';
 import TabRiskContext from './dashboard/TabRiskContext';
 import TabSeries from './dashboard/TabSeries';
-import { Calculator, Activity, AlertTriangle, ShieldCheck, Zap, Target, ChevronLeft, TrendingUp, Trophy } from 'lucide-react';
+import TabDeepDive from './dashboard/TabDeepDive';
 
 export function MatchDashboard({ match, onClose }) {
   const [activeTab, setActiveTab] = useState('tactical');
@@ -29,6 +43,7 @@ export function MatchDashboard({ match, onClose }) {
 
   const TABS = [
     { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
+    { id: 'deepdive', label: 'Analytical Deep-Dive', icon: <Fingerprint size={14} /> },
     { id: 'core', label: 'Core Market', icon: <BarChart3 size={14} /> },
     { id: 'series', label: 'Series Stats', icon: <TrendingUp size={14} /> },
     { id: 'risk', label: 'Risk Context', icon: <Activity size={14} /> },
@@ -190,10 +205,6 @@ export function MatchDashboard({ match, onClose }) {
   const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
   const isKillSwitch = investSignals.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
 
-  const displayMatchupShort = match.shortHome && match.shortAway 
-    ? `${match.shortHome} vs ${match.shortAway}`
-    : match.Matchup.split(' vs ').map(s => s.length > 12 ? s.substring(0, 10) + '..' : s).join(' vs ');
-
   return (
     <div 
       className="flex flex-col gap-4 relative transition-colors duration-300"
@@ -203,7 +214,7 @@ export function MatchDashboard({ match, onClose }) {
       style={{ touchAction: 'pan-y' }}
     >
       {/* Unified Sticky Header Section */}
-      <div className="sticky top-[-1px] lg:top-[-33px] z-30 -mx-4 px-4 lg:-mx-8 lg:px-8 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all duration-300 shadow-sm">
+      <div className="sticky top-0 z-30 -mx-4 px-4 lg:-mx-8 lg:px-8 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all duration-300 shadow-sm">
         {/* Main Header (Title & Badges) */}
         <div ref={headerRef} className="pt-4 pb-3 lg:pb-6">
           <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
@@ -217,7 +228,7 @@ export function MatchDashboard({ match, onClose }) {
                   <ChevronLeft size={24} />
                 </button>
               )}
-              <h2 className="text-xl sm:text-2xl lg:text-4xl font-serif tracking-tight font-bold text-slate-900 dark:text-white">
+              <h2 className="text-xl sm:text-2xl lg:text-4xl font-serif tracking-tight font-bold text-slate-900 dark:text-white uppercase">
                 {match.Matchup}
               </h2>
             </div>
@@ -241,26 +252,14 @@ export function MatchDashboard({ match, onClose }) {
                 </Badge>
               )}
 
-              {investSignals.IS_SAFE_GOALS && (
-                <Badge variant="info" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest border-sky-500/50">
-                  <Target size={10} /> SAFE GOALS
-                </Badge>
-              )}
-
-              {match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE && (
-                <Badge variant="danger" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest border-rose-500/50">
-                  <AlertTriangle size={10} /> FALSE FAVORITE
-                </Badge>
-              )}
-
               {isKillSwitch && (
                 <Badge variant="danger" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50">
                   <AlertTriangle size={10} /> KILL-SWITCH ACTIVE
                 </Badge>
-              )}            </div>
+              )}
+            </div>
           </div>
           
-          {/* Subtle details line - hidden on very small mobile if scrolled? Or just compact */}
           <div className={`flex flex-wrap gap-2 mt-2 transition-all duration-300 ${isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'h-auto opacity-100'}`}>
             {match.Data_Integrity?.map((flag, idx) => {
               if (flag === 'COMPLETE') return null;
@@ -274,14 +273,9 @@ export function MatchDashboard({ match, onClose }) {
           </div>
         </div>
 
-        {/* Persistent Tab Navigation (Integrated into same sticky block) */}
+        {/* Persistent Tab Navigation */}
         <div className="pb-3 pt-1 border-t border-slate-100 dark:border-slate-900/50">
-          {/* Mobile Tab Select */}
-          <div className="block md:hidden">
-            <div 
-              ref={mobileTabsContainerRef}
-              className="flex gap-1 overflow-x-auto no-scrollbar py-1"
-            >
+          <div className="flex gap-1 overflow-x-auto no-scrollbar py-1" ref={mobileTabsContainerRef}>
               {TABS.map(tab => (
                 <button
                   key={tab.id}
@@ -293,9 +287,9 @@ export function MatchDashboard({ match, onClose }) {
                     setActiveTab(tab.id);
                   }}
                   className={`
-                    flex items-center gap-2 px-4 py-2 rounded-full font-bold uppercase tracking-wider whitespace-nowrap transition-all text-[10px]
+                    flex items-center gap-2 px-5 py-2.5 rounded-full font-black uppercase tracking-wider whitespace-nowrap transition-all text-[10px]
                     ${activeTab === tab.id 
-                      ? 'bg-emerald-600 text-white shadow-md' 
+                      ? 'bg-slate-900 dark:bg-white text-white dark:text-black shadow-xl scale-[1.05]' 
                       : 'bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'}
                   `}
                 >
@@ -303,52 +297,12 @@ export function MatchDashboard({ match, onClose }) {
                   {tab.label}
                 </button>
               ))}
-            </div>
-          </div>
-
-          {/* Desktop Tab Navigation */}
-          <div className="hidden md:flex gap-2 overflow-x-auto no-scrollbar py-1">
-            <div 
-              ref={tabsContainerRef}
-              className="flex relative bg-slate-200/50 dark:bg-slate-900/50 p-1 rounded-full border border-slate-200 dark:border-slate-800 shadow-inner"
-            >
-              {/* Sliding Indicator */}
-              <div 
-                className="absolute h-[calc(100%-8px)] top-1 bg-white dark:bg-slate-800 rounded-full shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
-                style={{ 
-                  left: `${indicatorStyle.left}px`, 
-                  width: `${indicatorStyle.width}px`,
-                  opacity: indicatorStyle.opacity
-                }}
-              />
-              {TABS.map((tab) => (
-                <button
-                  key={tab.id}
-                  data-tab-id={tab.id}
-                  onClick={() => {
-                    const newIdx = TABS.findIndex(t => t.id === tab.id);
-                    const currentIdx = TABS.findIndex(t => t.id === activeTab);
-                    setSlideDirection(newIdx > currentIdx ? 'right' : 'left');
-                    setActiveTab(tab.id);
-                  }}
-                  className={`
-                    relative z-10 flex items-center gap-2 px-6 py-2 rounded-full font-bold uppercase tracking-widest text-[10px] transition-colors duration-500
-                    ${activeTab === tab.id 
-                      ? 'text-emerald-600 dark:text-emerald-400' 
-                      : 'text-slate-500 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}
-                  `}
-                >
-                  {tab.icon}
-                  {tab.label}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       </div>
 
       {/* Tab Content with Animation */}
-      <div className="min-h-[500px] mt-4 overflow-hidden relative">
+      <div className="min-h-[600px] mt-4 overflow-hidden relative">
         <div 
           key={activeTab}
           className={`w-full ${slideDirection === 'right' ? 'animate-slide-right' : 'animate-slide-left'}`}
@@ -358,6 +312,7 @@ export function MatchDashboard({ match, onClose }) {
           {activeTab === 'risk' && <TabRiskContext match={match} />}
           {activeTab === 'narrative' && <TabNarrative match={match} />}
           {activeTab === 'tactical' && <TabTactical match={match} />}
+          {activeTab === 'deepdive' && <TabDeepDive match={match} />}
           {activeTab === 'calibration' && <TabCalibration match={match} />}
         </div>
       </div>
