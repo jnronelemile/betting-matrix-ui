@@ -361,9 +361,9 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {filteredStrategies.map(([key, ticket]) => (
-              <div key={key} className="flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl transition-all hover:border-emerald-500/30 group active:scale-[0.99] border-t-2 border-t-emerald-500/20 relative">
+              <div key={key} className="flex flex-col bg-white dark:bg-slate-900/60 backdrop-blur-sm rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-700/50 shadow-xl transition-all hover:shadow-emerald-500/10 group active:scale-[0.99] border-t-2 border-t-emerald-500/20 relative">
                 {auditMode && (<div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-300"><pre className="text-[8px] font-mono text-emerald-400 whitespace-pre-wrap">{JSON.stringify(ticket, null, 2)}</pre></div>)}
-                <div className="p-6 border-b border-slate-100 dark:border-slate-800/50">
+                <div className="p-6 border-b border-slate-100 dark:border-slate-800/80">
                    <div className="flex items-start justify-between mb-4 gap-4">
                      <div className="flex flex-col gap-1.5 min-w-0">
                        <div className="flex items-center gap-2">
@@ -449,7 +449,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
           <div className="flex flex-col gap-3">
              {filteredPicks.map((sel, idx) => (
-                <div key={idx} className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 transition-all group relative overflow-hidden flex flex-col gap-4">
+                <div key={idx} className="bg-white dark:bg-slate-900/60 backdrop-blur-sm p-4 rounded-2xl border border-slate-200 dark:border-slate-700/50 shadow-lg hover:border-emerald-500/40 transition-all group relative overflow-hidden flex flex-col gap-4">
                   {auditMode && (<div className="absolute inset-0 z-50 bg-slate-900/95 p-4 overflow-y-auto"><pre className="text-[8px] font-mono text-emerald-400 whitespace-pre-wrap">{JSON.stringify(sel, null, 2)}</pre></div>)}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex-1 min-w-0">
