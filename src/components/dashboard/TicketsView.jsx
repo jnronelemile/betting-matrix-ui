@@ -141,7 +141,29 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   
   const filteredStrategies = useMemo(() => {
     if (!assembled) return [];
-    return Object.entries(assembled)
+    
+    const flattened = [];
+    Object.entries(assembled).forEach(([key, t]) => {
+      // If the ticket has variants, explode them into individual entries
+      if (t.variantes && Array.isArray(t.variantes)) {
+        t.variantes.forEach((variant, vIdx) => {
+          flattened.push([
+            `${key}_v${vIdx}`, 
+            { 
+              ...t, 
+              nom: `${t.nom} #${vIdx + 1}`,
+              legs: variant.legs, 
+              metrics: variant.metrics,
+              isVariant: true 
+            }
+          ]);
+        });
+      } else {
+        flattened.push([key, t]);
+      }
+    });
+
+    return flattened
       .filter(([key, t]) => {
         const matchesCat = filterStratCat === 'ALL' || t.categorie === filterStratCat;
         const matchesSearch = t.nom?.toLowerCase().includes(searchQuery.toLowerCase());
