@@ -132,9 +132,31 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const [filterLeague, setFilterLeague] = useState('ALL');
   const [filterMarket, setFilterMarket] = useState('ALL');
   const [sortBy, setSortBy] = useState('prob'); // 'prob', 'odds', 'ev'
+  
+  // Strategy specific filters
+  const [filterStratCat, setFilterStratCat] = useState('ALL');
+  const [stratSortBy, setStratSortBy] = useState('reliability'); // 'reliability', 'odds', 'gain'
 
   const tickets = assembled ? Object.entries(assembled) : [];
   
+  const filteredStrategies = useMemo(() => {
+    if (!assembled) return [];
+    return Object.entries(assembled)
+      .filter(([key, t]) => {
+        const matchesCat = filterStratCat === 'ALL' || t.categorie === filterStratCat;
+        const matchesSearch = t.nom?.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCat && matchesSearch;
+      })
+      .sort((a, b) => {
+        const stratA = a[1];
+        const stratB = b[1];
+        if (stratSortBy === 'reliability') return (stratB.metrics?.fiabilite_moyenne || 0) - (stratA.metrics?.fiabilite_moyenne || 0);
+        if (stratSortBy === 'odds') return (stratB.metrics?.cote_totale || 0) - (stratA.metrics?.cote_totale || 0);
+        if (stratSortBy === 'gain') return (stratB.metrics?.gain_10u || 0) - (stratA.metrics?.gain_10u || 0);
+        return 0;
+      });
+  }, [assembled, filterStratCat, stratSortBy, searchQuery]);
+
   // Extract unique filter options
   const uniqueLeagues = useMemo(() => {
     if (!finals?.Selections) return [];
@@ -399,80 +421,158 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
         </div>
       )}
 
-      {/* VIEW: STRATEGIES */}
+      {/* VIEW: STRATEGIES - Professional Execution Dashboard */}
       {activeView === 'strategies' && (
         <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <div className="px-2">
-            <h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Assembled Strategies</h3>
-            <p className="text-slate-500 text-sm font-medium mt-1">Algorithmic combinations grouped by risk profile and mathematical synergy.</p>
+          <div className="px-2 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <div>
+              <h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Active Combinations</h3>
+              <p className="text-slate-500 text-sm font-medium mt-1">Multi-market strategies optimized for long-term mathematical edge.</p>
+            </div>
+            
+            {/* Quick Performance Highlights */}
+            <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 lg:pb-0">
+               <div className="bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-2xl shrink-0 flex items-center gap-3">
+                  <div className="p-1.5 bg-emerald-500 rounded-lg"><ShieldCheck size={14} className="text-white" /></div>
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Top Reliability</span>
+                    <span className="text-xs font-black font-mono">{Math.max(...filteredStrategies.map(s => s[1].metrics?.fiabilite_moyenne || 0))}%</span>
+                  </div>
+               </div>
+               <div className="bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-2xl shrink-0 flex items-center gap-3">
+                  <div className="p-1.5 bg-blue-500 rounded-lg"><TrendingUp size={14} className="text-white" /></div>
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">Max Total Odds</span>
+                    <span className="text-xs font-black font-mono">@{Math.max(...filteredStrategies.map(s => s[1].metrics?.cote_totale || 0)).toFixed(2)}</span>
+                  </div>
+               </div>
+            </div>
           </div>
 
-          <div className="flex flex-col gap-16">
-            {Object.entries(categories).sort().map(([cat, items]) => (
-              <div key={cat} className="flex flex-col gap-8">
-                <div className="flex items-center gap-4">
-                   <div className="h-px flex-1 bg-slate-200 dark:border-slate-800"></div>
-                   <span className="px-6 py-2 bg-slate-900 dark:bg-white text-white dark:text-black text-xs font-black rounded-full uppercase tracking-[0.3em]">Category {cat}</span>
-                   <div className="h-px flex-1 bg-slate-200 dark:border-slate-800"></div>
+          {/* Strategy Filter Bar */}
+          <div className="flex flex-col lg:flex-row items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl">
+             <div className="relative flex-1 w-full">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <input 
+                  type="text" 
+                  placeholder="Search by strategy name..."
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium"
+                />
+             </div>
+             
+             <div className="flex items-center gap-3 w-full lg:w-auto">
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800">
+                   <Filter size={14} className="text-slate-400" />
+                   <select 
+                    value={filterStratCat}
+                    onChange={e => setFilterStratCat(e.target.value)}
+                    className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"
+                   >
+                     <option value="ALL">All Categories</option>
+                     {Array.from(new Set(Object.values(assembled || {}).map(t => t.categorie).filter(Boolean))).sort().map(cat => (
+                       <option key={cat} value={cat}>Category {cat}</option>
+                     ))}
+                   </select>
+                </div>
+                
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800">
+                   <TrendingUp size={14} className="text-slate-400" />
+                   <select 
+                    value={stratSortBy}
+                    onChange={e => setStratSortBy(e.target.value)}
+                    className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"
+                   >
+                     <option value="reliability">Sort: Reliability</option>
+                     <option value="odds">Sort: High Odds</option>
+                     <option value="gain">Sort: Potentiel Gain</option>
+                   </select>
+                </div>
+             </div>
+          </div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            {filteredStrategies.map(([key, ticket]) => (
+              <div key={key} className="flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl transition-all hover:shadow-emerald-500/10 group active:scale-[0.99] border-t-4 border-t-emerald-500/20">
+                <div className="p-8 border-b border-slate-100 dark:border-slate-800/50 relative">
+                   {/* Background Glow */}
+                   <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl -mr-16 -mt-16 rounded-full group-hover:bg-emerald-500/10 transition-all"></div>
+                   
+                   <div className="flex items-start justify-between mb-6 relative z-10">
+                     <div className="flex flex-col gap-2">
+                       <div className="flex items-center gap-2">
+                         <span className="px-2.5 py-1 bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-black rounded-lg shadow-lg">CAT {ticket.categorie}</span>
+                         <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-none">{ticket.nom}</h3>
+                       </div>
+                       <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                            <PieChart size={12} className="text-emerald-500" />
+                            {ticket.legs?.length || 0} SELECTIONS
+                          </div>
+                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                            <Activity size={12} className="text-blue-500" />
+                            {ticket.metrics?.fiabilite_moyenne || '0'}% RELIABILITY
+                          </div>
+                       </div>
+                     </div>
+                     <div className="flex flex-col items-end">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Estimated Odds</span>
+                        <span className="text-4xl font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tighter">@{ticket.metrics?.cote_totale?.toFixed(2) || '0.00'}</span>
+                     </div>
+                   </div>
+
+                   <div className="grid grid-cols-3 gap-3 relative z-10">
+                      <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                        <span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Pot. Gain (10U)</span>
+                        <span className="text-xl font-black text-slate-900 dark:text-white font-mono">{ticket.metrics?.gain_10u || '0'}U</span>
+                      </div>
+                      <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                        <span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Implic. Prob</span>
+                        <span className="text-xl font-black text-slate-900 dark:text-white font-mono">{(ticket.metrics?.prob_implicite ? (ticket.metrics.prob_implicite * 100).toFixed(1) : '0.0')}%</span>
+                      </div>
+                      <div className={`p-4 rounded-2xl border flex flex-col items-center justify-center text-center transition-all ${ticket.metrics?.badge_correlation === '🟢' ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800'}`}>
+                        <span className="text-[8px] font-black text-slate-400 uppercase block mb-1 tracking-widest">Correlation</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tighter">{ticket.metrics?.badge_name?.replace('Anti-Variance', 'AV-SHIELD') || 'N/A'}</span>
+                          <span className="text-lg">{ticket.metrics?.badge_correlation || ''}</span>
+                        </div>
+                      </div>
+                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                  {items.map(([key, ticket]) => (
-                    <div key={key} className="flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl transition-all hover:shadow-emerald-500/5 group">
-                      <div className="p-8 border-b border-slate-100 dark:border-slate-800/50 relative">
-                         <div className="flex items-start justify-between mb-6">
-                           <div className="flex flex-col gap-2">
-                             <div className="flex items-center gap-2">
-                               <span className="px-2 py-1 bg-emerald-500 text-white text-[10px] font-black rounded-lg shadow-lg">CAT {ticket.categorie}</span>
-                               <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tighter uppercase">{ticket.nom}</h3>
-                             </div>
-                             <div className="flex items-center gap-4">
-                                <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                                  <PieChart size={12} className="text-emerald-500" />
-                                  {ticket.legs?.length || 0} Selections
-                                </div>
-                                <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                                  <ShieldCheck size={12} className="text-blue-500" />
-                                  {ticket.metrics?.fiabilite_moyenne || '0'}% Reliability
-                                </div>
-                             </div>
-                           </div>
-                           <div className="flex flex-col items-end">
-                              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Odds</span>
-                              <span className="text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400">@{ticket.metrics?.cote_totale?.toFixed(2) || '0.00'}</span>
-                           </div>
-                         </div>
-
-                         <div className="grid grid-cols-3 gap-4 mb-2">
-                            <div className="bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
-                              <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Gain (10U)</span>
-                              <span className="text-base font-black text-slate-900 dark:text-white font-mono">{ticket.metrics?.gain_10u || '0'}U</span>
-                            </div>
-                            <div className="bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
-                              <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Implic. Prob</span>
-                              <span className="text-base font-black text-slate-900 dark:text-white font-mono">{(ticket.metrics?.prob_implicite ? (ticket.metrics.prob_implicite * 100).toFixed(2) : '0.00')}%</span>
-                            </div>
-                            <div className="bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
-                              <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Correlation</span>
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tighter">{ticket.metrics?.badge_name || 'N/A'}</span>
-                                <span className="text-lg">{ticket.metrics?.badge_correlation || ''}</span>
-                              </div>
-                            </div>
-                         </div>
-                      </div>
-
-                      <div className="p-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col gap-3">
-                        {ticket.legs?.map((leg, lidx) => (
-                          <TicketLeg key={lidx} leg={leg} onNavigate={onNavigateToMatch} />
-                        ))}
-                      </div>
-                    </div>
+                <div className="p-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col gap-3">
+                  <div className="flex items-center gap-2 px-2 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                     <List size={12} /> Strategy Composition
+                  </div>
+                  {ticket.legs?.map((leg, lidx) => (
+                    <TicketLeg key={lidx} leg={leg} onNavigate={onNavigateToMatch} />
                   ))}
+                </div>
+
+                <div className="p-6 mt-auto border-t border-slate-100 dark:border-slate-800/50 bg-white dark:bg-slate-900 flex items-center justify-between">
+                   <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1.5 text-[9px] font-black text-slate-400 uppercase">
+                         <BarChart size={12} /> Diversification: {ticket.metrics?.diversification || '0.00'}
+                      </div>
+                   </div>
+                   <button 
+                    onClick={() => onNavigateToMatch(ticket.legs[0]?.Match, LEAGUE_NAME_TO_CODE[ticket.legs[0]?.League] || 'ALL')}
+                    className="flex items-center gap-2 bg-emerald-500 text-white px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20"
+                   >
+                     Inspect Anchor <ArrowUpRight size={14} />
+                   </button>
                 </div>
               </div>
             ))}
           </div>
+
+          {filteredStrategies.length === 0 && (
+            <div className="flex flex-col items-center justify-center p-20 text-slate-400 bg-white/50 dark:bg-slate-900/50 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
+              <Search size={48} className="mb-4 opacity-20" />
+              <p className="text-sm font-mono uppercase tracking-widest">No strategies match your criteria</p>
+            </div>
+          )}
         </div>
       )}
 
