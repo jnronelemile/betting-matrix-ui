@@ -38,6 +38,14 @@ const LEAGUE_NAME_TO_CODE = {
   'Primeira Liga': 'POR1'
 };
 
+const STRATEGY_CAT_MAPPING = {
+  'A': { label: 'Alpha Core', desc: 'Elite / High Confidence', color: 'bg-emerald-500' },
+  'B': { label: 'System & Accas', desc: 'Volume / Multi-Legs', color: 'bg-blue-500' },
+  'C': { label: 'Prop-H2H Mastery', desc: 'Situational Metrics', color: 'bg-purple-500' },
+  'D': { label: 'Universal Pool', desc: 'Global Market Mix', color: 'bg-amber-500' },
+  'E': { label: 'Diversified', desc: 'High Variance Specials', color: 'bg-rose-500' }
+};
+
 const TicketLeg = ({ leg, onNavigate }) => {
   const [expanded, setExpanded] = useState(false);
   const leagueCode = LEAGUE_NAME_TO_CODE[leg.League] || 'ALL';
@@ -492,9 +500,9 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                     onChange={e => setFilterStratCat(e.target.value)}
                     className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"
                    >
-                     <option value="ALL">All Categories</option>
-                     {Array.from(new Set(Object.values(assembled || {}).map(t => t.categorie).filter(Boolean))).sort().map(cat => (
-                       <option key={cat} value={cat}>Category {cat}</option>
+                     <option value="ALL">All Strategy Types</option>
+                     {Object.entries(STRATEGY_CAT_MAPPING).map(([id, data]) => (
+                       <option key={id} value={id}>{data.label} ({data.desc})</option>
                      ))}
                    </select>
                 </div>
@@ -524,7 +532,9 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                    <div className="flex items-start justify-between mb-6 relative z-10">
                      <div className="flex flex-col gap-2">
                        <div className="flex items-center gap-2">
-                         <span className="px-2.5 py-1 bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-black rounded-lg shadow-lg">CAT {ticket.categorie}</span>
+                         <span className={`px-2.5 py-1 ${STRATEGY_CAT_MAPPING[ticket.categorie]?.color || 'bg-slate-900'} text-white text-[10px] font-black rounded-lg shadow-lg`}>
+                           {STRATEGY_CAT_MAPPING[ticket.categorie]?.label || `CAT ${ticket.categorie}`}
+                         </span>
                          <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-none">{ticket.nom}</h3>
                        </div>
                        <div className="flex items-center gap-4">
