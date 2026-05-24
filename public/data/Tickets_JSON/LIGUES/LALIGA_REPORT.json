@@ -9,40 +9,12 @@
     "Cote_Ref": 1.43,
     "Score_EV": 1.3208,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        4,
-        5,
-        6,
-        3,
-        6
-      ],
-      "away_scored": [
-        2,
-        3,
-        5,
-        4,
-        2,
-        5
-      ],
-      "home_conceded": [
-        2,
-        1,
-        7,
-        3,
-        5,
-        5
-      ],
-      "home_scored": [
-        2,
-        1,
-        3,
-        4,
-        4,
-        6
-      ]
-    },
+    "Profile": [
+      "FAUX_FAVORI",
+      "MATCH_DE_PEUR"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
     "Score_EV_Original": 1.1485
@@ -57,40 +29,12 @@
     "Cote_Ref": 1.46,
     "Score_EV": 1.289,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        2,
-        8,
-        0,
-        3,
-        6
-      ],
-      "away_scored": [
-        6,
-        1,
-        10,
-        5,
-        7,
-        8
-      ],
-      "home_conceded": [
-        1,
-        2,
-        1,
-        6,
-        6,
-        6
-      ],
-      "home_scored": [
-        3,
-        1,
-        1,
-        7,
-        2,
-        10
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "BUTS_GARANTIS"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
@@ -112,40 +56,11 @@
     "Cote_Ref": 1.47,
     "Score_EV": 1.2843,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        7,
-        3,
-        5,
-        3,
-        6,
-        13
-      ],
-      "away_scored": [
-        3,
-        2,
-        3,
-        1,
-        3,
-        6
-      ],
-      "home_conceded": [
-        1,
-        5,
-        5,
-        7,
-        4,
-        4
-      ],
-      "home_scored": [
-        2,
-        2,
-        4,
-        1,
-        5,
-        6
-      ]
-    },
+    "Profile": [
+      "MATCH_DE_PEUR"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
     "Score_EV_Original": 1.1168
@@ -158,45 +73,17 @@
     "Tier": 2,
     "Prob": 0.6901,
     "Cote_Ref": 1.52,
-    "Score_EV": 1.0317,
+    "Score_EV": 1.2381,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        2,
-        2,
-        4,
-        3,
-        5,
-        6
-      ],
-      "away_scored": [
-        6,
-        1,
-        6,
-        1,
-        3,
-        5
-      ],
-      "home_conceded": [
-        2,
-        1,
-        3,
-        3,
-        4,
-        5
-      ],
-      "home_scored": [
-        6,
-        8,
-        10,
-        6,
-        8,
-        5
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
-    "Score_EV_Original": 0.8971
+    "Score_EV_Original": 1.0766
   },
   {
     "Match": "Deportivo Alaves vs Rayo Vallecano",
@@ -206,45 +93,211 @@
     "Tier": 2,
     "Prob": 0.6752,
     "Cote_Ref": 1.56,
-    "Score_EV": 1.0095,
+    "Score_EV": 1.2113,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        3,
-        5,
-        4,
-        5,
-        6
-      ],
-      "away_scored": [
-        1,
-        4,
-        4,
-        2,
-        2,
-        2
-      ],
-      "home_conceded": [
-        3,
-        2,
-        1,
-        5,
-        5,
-        7
-      ],
-      "home_scored": [
-        5,
-        1,
-        6,
-        2,
-        4,
-        6
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI",
+      "MATCH_DE_PEUR"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
-    "Score_EV_Original": 0.8778
+    "Score_EV_Original": 1.0533
+  },
+  {
+    "Match": "Real Madrid vs Athletic Club",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Real Madrid",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5919,
+    "Cote_Ref": 1.77,
+    "Score_EV": 1.1436,
+    "Super_Signal": false,
+    "Alpha": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME",
+      "BUTS_GARANTIS"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 1.1436
+  },
+  {
+    "Match": "Villarreal CF vs Atletico Madrid",
+    "League": "LaLiga",
+    "Marche": "Away + de CORNERS",
+    "Type": "H2H_PROP",
+    "Tier": 1,
+    "Prob": 0.6264,
+    "Cote_Ref": 1.68,
+    "Score_EV": 1.1275,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 1.1275
+  },
+  {
+    "Match": "Girona FC vs Elche CF",
+    "League": "LaLiga",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7452,
+    "Cote_Ref": 1.34,
+    "Score_EV": 1.0841,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.9427
+  },
+  {
+    "Match": "Deportivo Alaves vs Rayo Vallecano",
+    "League": "LaLiga",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7143,
+    "Cote_Ref": 1.4,
+    "Score_EV": 1.0391,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.9036
+  },
+  {
+    "Match": "Real Betis vs Levante UD",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.78,
+    "Cote_Ref": 1.28,
+    "Score_EV": 0.9867,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 6/8",
+    "Score_EV_Original": 0.858
+  },
+  {
+    "Match": "Getafe CF vs CA Osasuna",
+    "League": "LaLiga",
+    "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.7934,
+    "Cote_Ref": 1.26,
+    "Score_EV": 0.9792,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.9792
+  },
+  {
+    "Match": "Valencia CF vs FC Barcelona",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.77,
+    "Cote_Ref": 1.3,
+    "Score_EV": 0.974,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "BUTS_GARANTIS"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+        "Force": 0.68
+      }
+    ],
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.974
+  },
+  {
+    "Match": "Villarreal CF vs Atletico Madrid",
+    "League": "LaLiga",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7515,
+    "Cote_Ref": 1.33,
+    "Score_EV": 0.9506,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.8266
+  },
+  {
+    "Match": "RCD Espanyol vs Real Sociedad",
+    "League": "LaLiga",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7506,
+    "Cote_Ref": 1.33,
+    "Score_EV": 0.9495,
+    "Super_Signal": false,
+    "Profile": [
+      "FAUX_FAVORI",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.9495
   },
   {
     "Match": "Real Betis vs Levante UD",
@@ -256,136 +309,90 @@
     "Cote_Ref": 1.66,
     "Score_EV": 0.945,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        2,
-        5,
-        5,
-        4,
-        11
-      ],
-      "away_scored": [
-        0,
-        4,
-        4,
-        3,
-        4,
-        5
-      ],
-      "home_conceded": [
-        5,
-        3,
-        5,
-        2,
-        1,
-        2
-      ],
-      "home_scored": [
-        4,
-        7,
-        5,
-        7,
-        3,
-        6
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
     "Score_EV_Original": 0.8217
   },
   {
-    "Match": "Villarreal CF vs Atletico Madrid",
+    "Match": "RCD Mallorca vs Real Oviedo",
     "League": "LaLiga",
-    "Marche": "Away + de CORNERS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.6264,
-    "Cote_Ref": 1.68,
-    "Score_EV": 0.9396,
+    "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.7145,
+    "Cote_Ref": 1.4,
+    "Score_EV": 0.9219,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        2,
-        2,
-        4,
-        3,
-        5,
-        6
-      ],
-      "away_scored": [
-        6,
-        1,
-        6,
-        1,
-        3,
-        5
-      ],
-      "home_conceded": [
-        2,
-        1,
-        3,
-        3,
-        4,
-        5
-      ],
-      "home_scored": [
-        6,
-        8,
-        10,
-        6,
-        8,
-        5
-      ]
-    },
+    "Profile": [
+      "MATCH_FERME",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "Aucune confirmation",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.9396
+    "Score_EV_Original": 0.9219
+  },
+  {
+    "Match": "Celta Vigo vs Sevilla FC",
+    "League": "LaLiga",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.813,
+    "Cote_Ref": 1.23,
+    "Score_EV": 0.8943,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.8943
+  },
+  {
+    "Match": "Real Betis vs Levante UD",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Real Betis",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5222,
+    "Cote_Ref": 2.01,
+    "Score_EV": 0.8773,
+    "Super_Signal": false,
+    "Alpha": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.8773
   },
   {
     "Match": "Valencia CF vs FC Barcelona",
     "League": "LaLiga",
-    "Marche": "Away + de SOT",
+    "Marche": "Away + de CORNERS",
     "Type": "H2H_PROP",
     "Tier": 1,
-    "Prob": 0.5768,
-    "Cote_Ref": 1.82,
-    "Score_EV": 0.8652,
+    "Prob": 0.6362,
+    "Cote_Ref": 1.65,
+    "Score_EV": 0.8589,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        2,
-        8,
-        0,
-        3,
-        6
-      ],
-      "away_scored": [
-        6,
-        1,
-        10,
-        5,
-        7,
-        8
-      ],
-      "home_conceded": [
-        1,
-        2,
-        1,
-        6,
-        6,
-        6
-      ],
-      "home_scored": [
-        3,
-        1,
-        1,
-        7,
-        2,
-        10
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "BUTS_GARANTIS"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
@@ -393,106 +400,9 @@
         "Force": 0.68
       }
     ],
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.8652
-  },
-  {
-    "Match": "Real Madrid vs Athletic Club",
-    "League": "LaLiga",
-    "Marche": "Home + de CORNERS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.5572,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.8358,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        1,
-        6,
-        7,
-        4,
-        10
-      ],
-      "away_scored": [
-        2,
-        1,
-        4,
-        4,
-        3,
-        5
-      ],
-      "home_conceded": [
-        0,
-        2,
-        3,
-        2,
-        4,
-        3
-      ],
-      "home_scored": [
-        2,
-        6,
-        10,
-        11,
-        4,
-        8
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.8358
-  },
-  {
-    "Match": "Real Madrid vs Athletic Club",
-    "League": "LaLiga",
-    "Marche": "Over 1.5 Real Madrid",
-    "Type": "TEAM_GOALS",
-    "Tier": 2,
-    "Prob": 0.5919,
-    "Cote_Ref": 1.77,
-    "Score_EV": 0.8287,
-    "Super_Signal": false,
-    "Alpha": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        1,
-        6,
-        7,
-        4,
-        10
-      ],
-      "away_scored": [
-        2,
-        1,
-        4,
-        4,
-        3,
-        5
-      ],
-      "home_conceded": [
-        0,
-        2,
-        3,
-        2,
-        4,
-        3
-      ],
-      "home_scored": [
-        2,
-        6,
-        10,
-        11,
-        4,
-        8
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.8287
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 8/10",
+    "Score_EV_Original": 1.1452
   },
   {
     "Match": "Real Madrid vs Athletic Club",
@@ -504,40 +414,12 @@
     "Cote_Ref": 1.79,
     "Score_EV": 0.8109,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        1,
-        6,
-        7,
-        4,
-        10
-      ],
-      "away_scored": [
-        2,
-        1,
-        4,
-        4,
-        3,
-        5
-      ],
-      "home_conceded": [
-        0,
-        2,
-        3,
-        2,
-        4,
-        3
-      ],
-      "home_scored": [
-        2,
-        6,
-        10,
-        11,
-        4,
-        8
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_HOME",
+      "BUTS_GARANTIS"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Tendance de match favorable : Over 22.5 Shots: 8/10",
     "Score_EV_Original": 0.7051
@@ -552,40 +434,9 @@
     "Cote_Ref": 1.7,
     "Score_EV": 0.8026,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        6,
-        8,
-        5,
-        2,
-        10
-      ],
-      "away_scored": [
-        1,
-        2,
-        4,
-        3,
-        7,
-        5
-      ],
-      "home_conceded": [
-        5,
-        0,
-        7,
-        5,
-        5,
-        6
-      ],
-      "home_scored": [
-        3,
-        5,
-        4,
-        7,
-        1,
-        8
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.8026
@@ -600,40 +451,12 @@
     "Cote_Ref": 1.66,
     "Score_EV": 0.7947,
     "Super_Signal": true,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        2,
-        8,
-        0,
-        3,
-        6
-      ],
-      "away_scored": [
-        6,
-        1,
-        10,
-        5,
-        7,
-        8
-      ],
-      "home_conceded": [
-        1,
-        2,
-        1,
-        6,
-        6,
-        6
-      ],
-      "home_scored": [
-        3,
-        1,
-        1,
-        7,
-        2,
-        10
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "BUTS_GARANTIS"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
@@ -646,98 +469,22 @@
     "Score_EV_Original": 1.0596
   },
   {
-    "Match": "Real Betis vs Levante UD",
-    "League": "LaLiga",
-    "Marche": "Over 1.5 Real Betis",
-    "Type": "TEAM_GOALS",
-    "Tier": 2,
-    "Prob": 0.5222,
-    "Cote_Ref": 2.01,
-    "Score_EV": 0.7311,
-    "Super_Signal": false,
-    "Alpha": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        2,
-        5,
-        5,
-        4,
-        11
-      ],
-      "away_scored": [
-        0,
-        4,
-        4,
-        3,
-        4,
-        5
-      ],
-      "home_conceded": [
-        5,
-        3,
-        5,
-        2,
-        1,
-        2
-      ],
-      "home_scored": [
-        4,
-        7,
-        5,
-        7,
-        3,
-        6
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.7311
-  },
-  {
     "Match": "Valencia CF vs FC Barcelona",
     "League": "LaLiga",
-    "Marche": "Away + de CORNERS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.6362,
-    "Cote_Ref": 1.65,
-    "Score_EV": 0.7157,
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7131,
+    "Cote_Ref": 1.4,
+    "Score_EV": 0.7844,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        2,
-        8,
-        0,
-        3,
-        6
-      ],
-      "away_scored": [
-        6,
-        1,
-        10,
-        5,
-        7,
-        8
-      ],
-      "home_conceded": [
-        1,
-        2,
-        1,
-        6,
-        6,
-        6
-      ],
-      "home_scored": [
-        3,
-        1,
-        1,
-        7,
-        2,
-        10
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "BUTS_GARANTIS"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
@@ -745,9 +492,86 @@
         "Force": 0.68
       }
     ],
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.7844
+  },
+  {
+    "Match": "Real Madrid vs Athletic Club",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.801,
+    "Cote_Ref": 1.25,
+    "Score_EV": 0.76,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME",
+      "BUTS_GARANTIS"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 8/10",
-    "Score_EV_Original": 0.9543
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+    "Score_EV_Original": 1.0133
+  },
+  {
+    "Match": "Celta Vigo vs Sevilla FC",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6786,
+    "Cote_Ref": 1.47,
+    "Score_EV": 0.7465,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.7465
+  },
+  {
+    "Match": "Getafe CF vs CA Osasuna",
+    "League": "LaLiga",
+    "Marche": "Under 2.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.5883,
+    "Cote_Ref": 1.7,
+    "Score_EV": 0.7261,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.7261
+  },
+  {
+    "Match": "Celta Vigo vs Sevilla FC",
+    "League": "LaLiga",
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6141,
+    "Cote_Ref": 1.63,
+    "Score_EV": 0.6755,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6755
   },
   {
     "Match": "Celta Vigo vs Sevilla FC",
@@ -759,139 +583,228 @@
     "Cote_Ref": 1.8,
     "Score_EV": 0.6547,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        6,
-        8,
-        5,
-        2,
-        10
-      ],
-      "away_scored": [
-        1,
-        2,
-        4,
-        3,
-        7,
-        5
-      ],
-      "home_conceded": [
-        5,
-        0,
-        7,
-        5,
-        5,
-        6
-      ],
-      "home_scored": [
-        3,
-        5,
-        4,
-        7,
-        1,
-        8
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_WARNING",
     "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 8/10",
     "Score_EV_Original": 0.873
   },
   {
-    "Match": "Deportivo Alaves vs Rayo Vallecano",
-    "League": "LaLiga",
-    "Marche": "Away + de CORNERS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.5614,
-    "Cote_Ref": 1.87,
-    "Score_EV": 0.6316,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        3,
-        5,
-        4,
-        5,
-        6
-      ],
-      "away_scored": [
-        1,
-        4,
-        4,
-        2,
-        2,
-        2
-      ],
-      "home_conceded": [
-        3,
-        2,
-        1,
-        5,
-        5,
-        7
-      ],
-      "home_scored": [
-        5,
-        1,
-        6,
-        2,
-        4,
-        6
-      ]
-    },
-    "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 5/7",
-    "Score_EV_Original": 0.8421
-  },
-  {
     "Match": "RCD Espanyol vs Real Sociedad",
     "League": "LaLiga",
-    "Marche": "Away + de CORNERS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.5523,
-    "Cote_Ref": 1.9,
-    "Score_EV": 0.6214,
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7417,
+    "Cote_Ref": 1.35,
+    "Score_EV": 0.6527,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        4,
-        5,
-        6,
-        3,
-        6
-      ],
-      "away_scored": [
-        2,
-        3,
-        5,
-        4,
-        2,
-        5
-      ],
-      "home_conceded": [
-        2,
-        1,
-        7,
-        3,
-        5,
-        5
-      ],
-      "home_scored": [
-        2,
-        1,
-        3,
-        4,
-        4,
-        6
-      ]
-    },
+    "Profile": [
+      "FAUX_FAVORI",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6527
+  },
+  {
+    "Match": "Getafe CF vs CA Osasuna",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.6758,
+    "Cote_Ref": 1.48,
+    "Score_EV": 0.6319,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6319
+  },
+  {
+    "Match": "Valencia CF vs FC Barcelona",
+    "League": "LaLiga",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5656,
+    "Cote_Ref": 1.77,
+    "Score_EV": 0.6222,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "BUTS_GARANTIS"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+        "Force": 0.68
+      }
+    ],
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6222
+  },
+  {
+    "Match": "Villarreal CF vs Atletico Madrid",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7388,
+    "Cote_Ref": 1.35,
+    "Score_EV": 0.6095,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
-    "Score_EV_Original": 0.8285
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.8127
+  },
+  {
+    "Match": "Real Betis vs Levante UD",
+    "League": "LaLiga",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.703,
+    "Cote_Ref": 1.42,
+    "Score_EV": 0.58,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 6/8",
+    "Score_EV_Original": 0.7733
+  },
+  {
+    "Match": "RCD Mallorca vs Real Oviedo",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.751,
+    "Cote_Ref": 1.33,
+    "Score_EV": 0.5617,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "Aucune confirmation",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.5617
+  },
+  {
+    "Match": "Real Madrid vs Athletic Club",
+    "League": "LaLiga",
+    "Marche": "Over 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5544,
+    "Cote_Ref": 1.8,
+    "Score_EV": 0.526,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME",
+      "BUTS_GARANTIS"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+    "Score_EV_Original": 0.7013
+  },
+  {
+    "Match": "Deportivo Alaves vs Rayo Vallecano",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7729,
+    "Cote_Ref": 1.29,
+    "Score_EV": 0.5101,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.6802
+  },
+  {
+    "Match": "Girona FC vs Elche CF",
+    "League": "LaLiga",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7479,
+    "Cote_Ref": 1.34,
+    "Score_EV": 0.4937,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.6582
+  },
+  {
+    "Match": "Deportivo Alaves vs Rayo Vallecano",
+    "League": "LaLiga",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5571,
+    "Cote_Ref": 1.8,
+    "Score_EV": 0.4902,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "15:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.4902
   },
   {
     "Match": "Real Madrid vs Athletic Club",
@@ -903,40 +816,12 @@
     "Cote_Ref": 1.81,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        1,
-        6,
-        7,
-        4,
-        10
-      ],
-      "away_scored": [
-        2,
-        1,
-        4,
-        4,
-        3,
-        5
-      ],
-      "home_conceded": [
-        0,
-        2,
-        3,
-        2,
-        4,
-        3
-      ],
-      "home_scored": [
-        2,
-        6,
-        10,
-        11,
-        4,
-        8
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_HOME",
+      "BUTS_GARANTIS"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -951,40 +836,12 @@
     "Cote_Ref": 1.71,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        1,
-        6,
-        7,
-        4,
-        10
-      ],
-      "away_scored": [
-        2,
-        1,
-        4,
-        4,
-        3,
-        5
-      ],
-      "home_conceded": [
-        0,
-        2,
-        3,
-        2,
-        4,
-        3
-      ],
-      "home_scored": [
-        2,
-        6,
-        10,
-        11,
-        4,
-        8
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_HOME",
+      "BUTS_GARANTIS"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -999,88 +856,11 @@
     "Cote_Ref": 1.96,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        2,
-        5,
-        5,
-        4,
-        11
-      ],
-      "away_scored": [
-        0,
-        4,
-        4,
-        3,
-        4,
-        5
-      ],
-      "home_conceded": [
-        5,
-        3,
-        5,
-        2,
-        1,
-        2
-      ],
-      "home_scored": [
-        4,
-        7,
-        5,
-        7,
-        3,
-        6
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.0
-  },
-  {
-    "Match": "RCD Espanyol vs Real Sociedad",
-    "League": "LaLiga",
-    "Marche": "Away + de FOULS",
-    "Type": "WATCHLIST_LIVE",
-    "Tier": 7,
-    "Prob": 0.56,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.0,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        4,
-        5,
-        6,
-        3,
-        6
-      ],
-      "away_scored": [
-        2,
-        3,
-        5,
-        4,
-        2,
-        5
-      ],
-      "home_conceded": [
-        2,
-        1,
-        7,
-        3,
-        5,
-        5
-      ],
-      "home_scored": [
-        2,
-        1,
-        3,
-        4,
-        4,
-        6
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -1095,40 +875,11 @@
     "Cote_Ref": 1.81,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        0,
-        4,
-        5,
-        6,
-        6,
-        4
-      ],
-      "away_scored": [
-        3,
-        1,
-        2,
-        0,
-        0,
-        7
-      ],
-      "home_conceded": [
-        0,
-        1,
-        3,
-        1,
-        5,
-        6
-      ],
-      "home_scored": [
-        2,
-        1,
-        5,
-        3,
-        3,
-        3
-      ]
-    },
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -1143,88 +894,11 @@
     "Cote_Ref": 1.86,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        0,
-        4,
-        5,
-        6,
-        6,
-        4
-      ],
-      "away_scored": [
-        3,
-        1,
-        2,
-        0,
-        0,
-        7
-      ],
-      "home_conceded": [
-        0,
-        1,
-        3,
-        1,
-        5,
-        6
-      ],
-      "home_scored": [
-        2,
-        1,
-        5,
-        3,
-        3,
-        3
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.0
-  },
-  {
-    "Match": "RCD Mallorca vs Real Oviedo",
-    "League": "LaLiga",
-    "Marche": "Away + de FOULS",
-    "Type": "WATCHLIST_LIVE",
-    "Tier": 7,
-    "Prob": 0.56,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.0,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        7,
-        8,
-        6,
-        6,
-        8
-      ],
-      "away_scored": [
-        2,
-        0,
-        5,
-        5,
-        1,
-        4
-      ],
-      "home_conceded": [
-        2,
-        5,
-        7,
-        0,
-        2,
-        5
-      ],
-      "home_scored": [
-        3,
-        1,
-        6,
-        2,
-        7,
-        9
-      ]
-    },
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -1239,40 +913,12 @@
     "Cote_Ref": 1.88,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        4,
-        7,
-        8,
-        6,
-        6,
-        8
-      ],
-      "away_scored": [
-        2,
-        0,
-        5,
-        5,
-        1,
-        4
-      ],
-      "home_conceded": [
-        2,
-        5,
-        7,
-        0,
-        2,
-        5
-      ],
-      "home_scored": [
-        3,
-        1,
-        6,
-        2,
-        7,
-        9
-      ]
-    },
+    "Profile": [
+      "MATCH_FERME",
+      "MATCH_DE_PEUR"
+    ],
+    "Date": "2026-05-23",
+    "Heure": "15:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0

@@ -1,5 +1,259 @@
 [
   {
+    "Match": "Brighton & Hove Albion vs Manchester United",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8674,
+    "Cote_Ref": 1.15,
+    "Score_EV": 1.0972,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+        "Force": 0.54
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 8/10",
+    "Score_EV_Original": 0.9541
+  },
+  {
+    "Match": "Liverpool vs Brentford",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8371,
+    "Cote_Ref": 1.19,
+    "Score_EV": 1.0589,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+        "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+        "Force": 0.7
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 4/5",
+    "Score_EV_Original": 0.9208
+  },
+  {
+    "Match": "Manchester City vs Aston Villa",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8155,
+    "Cote_Ref": 1.23,
+    "Score_EV": 1.0317,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.8971
+  },
+  {
+    "Match": "Crystal Palace vs Arsenal",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.804,
+    "Cote_Ref": 1.24,
+    "Score_EV": 1.0171,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "DYNAMIQUE_ECRASANTE_AWAY"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+        "Force": 0.72
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 9/10",
+    "Score_EV_Original": 0.8844
+  },
+  {
+    "Match": "Manchester City vs Aston Villa",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Manchester City",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5973,
+    "Cote_Ref": 1.76,
+    "Score_EV": 1.0035,
+    "Super_Signal": false,
+    "Alpha": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 1.0035
+  },
+  {
+    "Match": "West Ham United vs Leeds United",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7852,
+    "Cote_Ref": 1.27,
+    "Score_EV": 0.9933,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.8637
+  },
+  {
+    "Match": "Nottingham Forest vs AFC Bournemouth",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.781,
+    "Cote_Ref": 1.28,
+    "Score_EV": 0.988,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 27%. Appuyé par un Momentum global HOT.",
+        "Force": 0.54
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.8591
+  },
+  {
+    "Match": "Burnley vs Wolverhampton Wanderers",
+    "League": "Premier League",
+    "Marche": "Under 9.5 SOT [SELECT_UNDER_PROP]",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.6484,
+    "Cote_Ref": 1.62,
+    "Score_EV": 0.9786,
+    "Super_Signal": false,
+    "Profile": "['MATCH_FERME', 'MATCH_DE_PEUR'] | Lambda Gap=0.50 >= 0.5 & TacScore=5 >= 3",
+    "Score_Exact_Confirmation": "0-0 dans Top3",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Tendance Under validée par les séries : Under 8.5 SOT: 5/7",
+    "Score_EV_Original": 0.851
+  },
+  {
+    "Match": "Burnley vs Wolverhampton Wanderers",
+    "League": "Premier League",
+    "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.7072,
+    "Cote_Ref": 1.41,
+    "Score_EV": 0.9581,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "0-0 dans Top3",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.9581
+  },
+  {
+    "Match": "Crystal Palace vs Arsenal",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Arsenal",
+    "Type": "TEAM_GOALS",
+    "Tier": 2,
+    "Prob": 0.5981,
+    "Cote_Ref": 1.76,
+    "Score_EV": 0.942,
+    "Super_Signal": false,
+    "Alpha": true,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "DYNAMIQUE_ECRASANTE_AWAY"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+        "Force": 0.72
+      }
+    ],
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Faible volume de buts du favori : Under 1.5 Team Goals: 9/10",
+    "Score_EV_Original": 1.256
+  },
+  {
+    "Match": "Tottenham Hotspur vs Everton",
+    "League": "Premier League",
+    "Marche": "Under 9.5 SOT [SELECT_UNDER_PROP]",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.6128,
+    "Cote_Ref": 1.71,
+    "Score_EV": 0.9249,
+    "Super_Signal": false,
+    "Profile": "['MATCH_FERME'] | Lambda Gap=0.25 (tight) & TacScore=6 >= 5 (exceptional)",
+    "Score_Exact_Confirmation": "0-0 dans Top3",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Tendance Under validée par les séries : Under 8.5 SOT: 4/5",
+    "Score_EV_Original": 0.8043
+  },
+  {
     "Match": "Liverpool vs Brentford",
     "League": "Premier League",
     "Marche": "Over 1.5 Liverpool",
@@ -10,40 +264,9 @@
     "Score_EV": 0.9222,
     "Super_Signal": false,
     "Alpha": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        4,
-        7,
-        5,
-        3,
-        8
-      ],
-      "away_scored": [
-        2,
-        3,
-        5,
-        2,
-        1,
-        8
-      ],
-      "home_conceded": [
-        1,
-        0,
-        3,
-        4,
-        5,
-        6
-      ],
-      "home_scored": [
-        4,
-        3,
-        12,
-        3,
-        3,
-        8
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
@@ -56,53 +279,125 @@
     "Score_EV_Original": 0.8019
   },
   {
-    "Match": "Manchester City vs Aston Villa",
+    "Match": "Tottenham Hotspur vs Everton",
     "League": "Premier League",
-    "Marche": "Over 1.5 Manchester City",
-    "Type": "TEAM_GOALS",
-    "Tier": 2,
-    "Prob": 0.5973,
-    "Cote_Ref": 1.76,
-    "Score_EV": 0.8362,
+    "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.7446,
+    "Cote_Ref": 1.34,
+    "Score_EV": 0.8772,
     "Super_Signal": false,
-    "Alpha": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        6,
-        2,
-        4,
-        6,
-        4,
-        4
-      ],
-      "away_scored": [
-        1,
-        3,
-        4,
-        4,
-        4,
-        6
-      ],
-      "home_conceded": [
-        0,
-        3,
-        3,
-        3,
-        1,
-        2
-      ],
-      "home_scored": [
-        5,
-        8,
-        12,
-        4,
-        10,
-        5
-      ]
-    },
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "0-0 dans Top3",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.8362
+    "Score_EV_Original": 0.8772
+  },
+  {
+    "Match": "Sunderland AFC vs Chelsea",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7881,
+    "Cote_Ref": 1.27,
+    "Score_EV": 0.8669,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.8669
+  },
+  {
+    "Match": "Brighton & Hove Albion vs Manchester United",
+    "League": "Premier League",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6731,
+    "Cote_Ref": 1.49,
+    "Score_EV": 0.8515,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+        "Force": 0.54
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "BTTS fréquent : BTTS Yes: 8/10",
+    "Score_EV_Original": 0.7404
+  },
+  {
+    "Match": "Fulham vs Newcastle United",
+    "League": "Premier League",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6593,
+    "Cote_Ref": 1.52,
+    "Score_EV": 0.834,
+    "Super_Signal": false,
+    "Profile": [
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+        "Force": 0.6
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "BTTS fréquent : BTTS Yes: 8/10",
+    "Score_EV_Original": 0.7252
+  },
+  {
+    "Match": "Brighton & Hove Albion vs Manchester United",
+    "League": "Premier League",
+    "Marche": "Over 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6578,
+    "Cote_Ref": 1.52,
+    "Score_EV": 0.8321,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+        "Force": 0.54
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 8/10",
+    "Score_EV_Original": 0.7236
   },
   {
     "Match": "Brighton & Hove Albion vs Manchester United",
@@ -115,40 +410,12 @@
     "Score_EV": 0.7972,
     "Super_Signal": false,
     "Alpha": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        2,
-        3,
-        4,
-        5,
-        5,
-        7
-      ],
-      "away_scored": [
-        1,
-        2,
-        6,
-        6,
-        6,
-        6
-      ],
-      "home_conceded": [
-        2,
-        2,
-        5,
-        1,
-        2,
-        5
-      ],
-      "home_scored": [
-        9,
-        2,
-        2,
-        4,
-        5,
-        8
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
@@ -161,105 +428,19 @@
     "Score_EV_Original": 0.7972
   },
   {
-    "Match": "Crystal Palace vs Arsenal",
-    "League": "Premier League",
-    "Marche": "Over 1.5 Arsenal",
-    "Type": "TEAM_GOALS",
-    "Tier": 2,
-    "Prob": 0.5981,
-    "Cote_Ref": 1.76,
-    "Score_EV": 0.785,
-    "Super_Signal": false,
-    "Alpha": true,
-    "Goal_Distribution": {
-      "away_conceded": [
-        1,
-        1,
-        4,
-        1,
-        3,
-        5
-      ],
-      "away_scored": [
-        4,
-        4,
-        3,
-        7,
-        5,
-        5
-      ],
-      "home_conceded": [
-        2,
-        0,
-        8,
-        4,
-        3,
-        4
-      ],
-      "home_scored": [
-        1,
-        2,
-        5,
-        1,
-        2,
-        7
-      ]
-    },
-    "Live_Betting_Recommendation": [
-      {
-        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
-        "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
-        "Force": 0.72
-      }
-    ],
-    "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Faible volume de buts du favori : Under 1.5 Team Goals: 9/10",
-    "Score_EV_Original": 1.0467
-  },
-  {
     "Match": "Liverpool vs Brentford",
     "League": "Premier League",
-    "Marche": "Over 9.5 CORNERS",
-    "Type": "PROP_BET",
-    "Tier": 3,
-    "Prob": 0.5599,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.7727,
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6166,
+    "Cote_Ref": 1.62,
+    "Score_EV": 0.78,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        4,
-        7,
-        5,
-        3,
-        8
-      ],
-      "away_scored": [
-        2,
-        3,
-        5,
-        2,
-        1,
-        8
-      ],
-      "home_conceded": [
-        1,
-        0,
-        3,
-        4,
-        5,
-        6
-      ],
-      "home_scored": [
-        4,
-        3,
-        12,
-        3,
-        3,
-        8
-      ]
-    },
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
@@ -268,8 +449,108 @@
       }
     ],
     "Streak_Status": "STREAK_CONFIRMED",
-    "Streak_Reason": "Tendance de match favorable : Over 9.5 Corners: 4/5",
-    "Score_EV_Original": 0.6719
+    "Streak_Reason": "BTTS fréquent : BTTS Yes: 5/7",
+    "Score_EV_Original": 0.6783
+  },
+  {
+    "Match": "Liverpool vs Brentford",
+    "League": "Premier League",
+    "Marche": "Over 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6063,
+    "Cote_Ref": 1.65,
+    "Score_EV": 0.7669,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+        "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+        "Force": 0.7
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 4/5",
+    "Score_EV_Original": 0.6669
+  },
+  {
+    "Match": "Crystal Palace vs Arsenal",
+    "League": "Premier League",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5843,
+    "Cote_Ref": 1.71,
+    "Score_EV": 0.7391,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "DYNAMIQUE_ECRASANTE_AWAY"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+        "Force": 0.72
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "BTTS fréquent : BTTS Yes: 7/10",
+    "Score_EV_Original": 0.6427
+  },
+  {
+    "Match": "Nottingham Forest vs AFC Bournemouth",
+    "League": "Premier League",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5753,
+    "Cote_Ref": 1.74,
+    "Score_EV": 0.7277,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 27%. Appuyé par un Momentum global HOT.",
+        "Force": 0.54
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "BTTS fréquent : BTTS Yes: 5/7",
+    "Score_EV_Original": 0.6328
+  },
+  {
+    "Match": "Manchester City vs Aston Villa",
+    "League": "Premier League",
+    "Marche": "Over 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5738,
+    "Cote_Ref": 1.74,
+    "Score_EV": 0.7259,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.6312
   },
   {
     "Match": "Manchester City vs Aston Villa",
@@ -281,43 +562,217 @@
     "Cote_Ref": 1.61,
     "Score_EV": 0.7138,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        6,
-        2,
-        4,
-        6,
-        4,
-        4
-      ],
-      "away_scored": [
-        1,
-        3,
-        4,
-        4,
-        4,
-        6
-      ],
-      "home_conceded": [
-        0,
-        3,
-        3,
-        3,
-        1,
-        2
-      ],
-      "home_scored": [
-        5,
-        8,
-        12,
-        4,
-        10,
-        5
-      ]
-    },
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Série d'invincibilité : No losses: 10",
     "Score_EV_Original": 0.6207
+  },
+  {
+    "Match": "Fulham vs Newcastle United",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8547,
+    "Cote_Ref": 1.17,
+    "Score_EV": 0.7052,
+    "Super_Signal": false,
+    "Profile": [
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+        "Force": 0.6
+      }
+    ],
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.9402
+  },
+  {
+    "Match": "Crystal Palace vs Arsenal",
+    "League": "Premier League",
+    "Marche": "Over 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5544,
+    "Cote_Ref": 1.8,
+    "Score_EV": 0.7013,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "DYNAMIQUE_ECRASANTE_AWAY"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+        "Force": 0.72
+      }
+    ],
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 9/10",
+    "Score_EV_Original": 0.6098
+  },
+  {
+    "Match": "Tottenham Hotspur vs Everton",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.7249,
+    "Cote_Ref": 1.38,
+    "Score_EV": 0.6778,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "0-0 dans Top3",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6778
+  },
+  {
+    "Match": "Sunderland AFC vs Chelsea",
+    "League": "Premier League",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5865,
+    "Cote_Ref": 1.71,
+    "Score_EV": 0.6452,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6452
+  },
+  {
+    "Match": "West Ham United vs Leeds United",
+    "League": "Premier League",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5831,
+    "Cote_Ref": 1.71,
+    "Score_EV": 0.6414,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6414
+  },
+  {
+    "Match": "Manchester City vs Aston Villa",
+    "League": "Premier League",
+    "Marche": "Both Teams to Score (BTTS Yes)",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.556,
+    "Cote_Ref": 1.8,
+    "Score_EV": 0.6116,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_HOME"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6116
+  },
+  {
+    "Match": "Nottingham Forest vs AFC Bournemouth",
+    "League": "Premier League",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.704,
+    "Cote_Ref": 1.42,
+    "Score_EV": 0.5808,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 27%. Appuyé par un Momentum global HOT.",
+        "Force": 0.54
+      }
+    ],
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.7744
+  },
+  {
+    "Match": "West Ham United vs Leeds United",
+    "League": "Premier League",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7001,
+    "Cote_Ref": 1.43,
+    "Score_EV": 0.5776,
+    "Super_Signal": false,
+    "Profile": [
+      "FORCE_DOMINANTE_AWAY",
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.7701
+  },
+  {
+    "Match": "Burnley vs Wolverhampton Wanderers",
+    "League": "Premier League",
+    "Marche": "Over 1.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.7569,
+    "Cote_Ref": 1.32,
+    "Score_EV": 0.5662,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME",
+      "MATCH_DE_PEUR"
+    ],
+    "Score_Exact_Confirmation": "0-0 dans Top3",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.5662
   },
   {
     "Match": "Fulham vs Newcastle United",
@@ -330,40 +785,11 @@
     "Score_EV": 0.5627,
     "Super_Signal": false,
     "Alpha": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        2,
-        3,
-        5,
-        2,
-        3,
-        8
-      ],
-      "away_scored": [
-        4,
-        4,
-        4,
-        1,
-        2,
-        2
-      ],
-      "home_conceded": [
-        0,
-        4,
-        2,
-        7,
-        4,
-        3
-      ],
-      "home_scored": [
-        2,
-        2,
-        7,
-        3,
-        7,
-        7
-      ]
-    },
+    "Profile": [
+      "FAUX_FAVORI"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
@@ -376,52 +802,31 @@
     "Score_EV_Original": 0.7503
   },
   {
-    "Match": "Sunderland AFC vs Chelsea",
+    "Match": "Fulham vs Newcastle United",
     "League": "Premier League",
-    "Marche": "Over 9.5 CORNERS",
-    "Type": "PROP_BET",
-    "Tier": 3,
-    "Prob": 0.5507,
-    "Cote_Ref": 1.91,
-    "Score_EV": 0.4956,
+    "Marche": "Over 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6324,
+    "Cote_Ref": 1.58,
+    "Score_EV": 0.5217,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        7,
-        2,
-        5,
-        3,
-        3,
-        5
-      ],
-      "away_scored": [
-        2,
-        1,
-        10,
-        8,
-        5,
-        5
-      ],
-      "home_conceded": [
-        3,
-        2,
-        3,
-        4,
-        4,
-        3
-      ],
-      "home_scored": [
-        1,
-        3,
-        3,
-        3,
-        7,
-        6
-      ]
-    },
+    "Profile": [
+      "FAUX_FAVORI"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "11:00",
+    "Live_Betting_Recommendation": [
+      {
+        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+        "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+        "Force": 0.6
+      }
+    ],
     "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Tendance de match défavorable : Under 9.5 Corners: 5/7",
-    "Score_EV_Original": 0.6608
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.6956
   },
   {
     "Match": "Liverpool vs Brentford",
@@ -433,40 +838,9 @@
     "Cote_Ref": 2.0,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        4,
-        7,
-        5,
-        3,
-        8
-      ],
-      "away_scored": [
-        2,
-        3,
-        5,
-        2,
-        1,
-        8
-      ],
-      "home_conceded": [
-        1,
-        0,
-        3,
-        4,
-        5,
-        6
-      ],
-      "home_scored": [
-        4,
-        3,
-        12,
-        3,
-        3,
-        8
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Live_Betting_Recommendation": [
       {
         "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
@@ -488,40 +862,9 @@
     "Cote_Ref": 1.81,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        7,
-        2,
-        5,
-        3,
-        3,
-        5
-      ],
-      "away_scored": [
-        2,
-        1,
-        10,
-        8,
-        5,
-        5
-      ],
-      "home_conceded": [
-        3,
-        2,
-        3,
-        4,
-        4,
-        3
-      ],
-      "home_scored": [
-        1,
-        3,
-        3,
-        3,
-        7,
-        6
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -536,95 +879,11 @@
     "Cote_Ref": 1.88,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        2,
-        4,
-        3,
-        3,
-        2,
-        8
-      ],
-      "away_scored": [
-        3,
-        4,
-        2,
-        4,
-        1,
-        7
-      ],
-      "home_conceded": [
-        5,
-        0,
-        11,
-        3,
-        5,
-        7
-      ],
-      "home_scored": [
-        2,
-        2,
-        4,
-        4,
-        4,
-        5
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.0
-  },
-  {
-    "Match": "Fulham vs Newcastle United",
-    "League": "Premier League",
-    "Marche": "Away + de FOULS",
-    "Type": "WATCHLIST_LIVE",
-    "Tier": 7,
-    "Prob": 0.56,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.0,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        2,
-        3,
-        5,
-        2,
-        3,
-        8
-      ],
-      "away_scored": [
-        4,
-        4,
-        4,
-        1,
-        2,
-        2
-      ],
-      "home_conceded": [
-        0,
-        4,
-        2,
-        7,
-        4,
-        3
-      ],
-      "home_scored": [
-        2,
-        2,
-        7,
-        3,
-        7,
-        7
-      ]
-    },
-    "Live_Betting_Recommendation": [
-      {
-        "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
-        "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
-        "Force": 0.6
-      }
+    "Profile": [
+      "MATCH_FERME"
     ],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -639,40 +898,12 @@
     "Cote_Ref": 1.81,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        7,
-        5,
-        1,
-        8,
-        7
-      ],
-      "away_scored": [
-        0,
-        0,
-        2,
-        2,
-        1,
-        2
-      ],
-      "home_conceded": [
-        8,
-        2,
-        8,
-        4,
-        0,
-        6
-      ],
-      "home_scored": [
-        2,
-        4,
-        2,
-        4,
-        2,
-        3
-      ]
-    },
+    "Profile": [
+      "MATCH_FERME",
+      "MATCH_DE_PEUR"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -687,40 +918,12 @@
     "Cote_Ref": 1.73,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        7,
-        5,
-        1,
-        8,
-        7
-      ],
-      "away_scored": [
-        0,
-        0,
-        2,
-        2,
-        1,
-        2
-      ],
-      "home_conceded": [
-        8,
-        2,
-        8,
-        4,
-        0,
-        6
-      ],
-      "home_scored": [
-        2,
-        4,
-        2,
-        4,
-        2,
-        3
-      ]
-    },
+    "Profile": [
+      "MATCH_FERME",
+      "MATCH_DE_PEUR"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "11:00",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0

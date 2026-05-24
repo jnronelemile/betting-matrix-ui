@@ -1,5 +1,45 @@
 [
   {
+    "Match": "AC Fiorentina vs Atalanta BC",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.9058,
+    "Cote_Ref": 1.1,
+    "Score_EV": 1.2196,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-22",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 1.2196
+  },
+  {
+    "Match": "Parma Calcio 1913 vs US Sassuolo",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.8662,
+    "Cote_Ref": 1.15,
+    "Score_EV": 1.1663,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "Top3 cumul 46% | 0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-24",
+    "Heure": "09:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 1.1663
+  },
+  {
     "Match": "Torino FC vs Juventus",
     "League": "Serie A",
     "Marche": "Away + de CORNERS",
@@ -9,43 +49,32 @@
     "Cote_Ref": 1.63,
     "Score_EV": 1.1112,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        1,
-        2,
-        3,
-        2,
-        5
-      ],
-      "away_scored": [
-        3,
-        3,
-        3,
-        4,
-        7,
-        4
-      ],
-      "home_conceded": [
-        2,
-        6,
-        5,
-        4,
-        6,
-        4
-      ],
-      "home_scored": [
-        3,
-        5,
-        4,
-        4,
-        5,
-        4
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-24",
+    "Heure": "14:45",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
     "Score_EV_Original": 0.9663
+  },
+  {
+    "Match": "Hellas Verona vs AS Roma",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.863,
+    "Cote_Ref": 1.16,
+    "Score_EV": 1.0917,
+    "Super_Signal": false,
+    "Profile": [
+      "DYNAMIQUE_ECRASANTE_AWAY"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 8/10",
+    "Score_EV_Original": 0.9493
   },
   {
     "Match": "Bologna FC vs Inter Milan",
@@ -57,91 +86,104 @@
     "Cote_Ref": 1.66,
     "Score_EV": 1.0888,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        1,
-        0,
-        6,
-        1,
-        3,
-        5
-      ],
-      "away_scored": [
-        6,
-        6,
-        5,
-        5,
-        6,
-        8
-      ],
-      "home_conceded": [
-        1,
-        2,
-        6,
-        5,
-        4,
-        2
-      ],
-      "home_scored": [
-        0,
-        2,
-        3,
-        5,
-        3,
-        3
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-23",
+    "Heure": "12:00",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
     "Score_EV_Original": 0.9468
   },
   {
+    "Match": "SS Lazio vs Pisa SC",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8324,
+    "Cote_Ref": 1.2,
+    "Score_EV": 1.0529,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.9156
+  },
+  {
+    "Match": "SSC Napoli vs Udinese Calcio",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8317,
+    "Cote_Ref": 1.2,
+    "Score_EV": 1.0521,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "12:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.9149
+  },
+  {
+    "Match": "US Cremonese vs Como 1907",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8312,
+    "Cote_Ref": 1.2,
+    "Score_EV": 1.0514,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+    "Score_EV_Original": 0.9143
+  },
+  {
+    "Match": "Bologna FC vs Inter Milan",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8289,
+    "Cote_Ref": 1.21,
+    "Score_EV": 1.0486,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "12:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.9118
+  },
+  {
     "Match": "AC Fiorentina vs Atalanta BC",
     "League": "Serie A",
-    "Marche": "Away + de CORNERS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.9047,
-    "Cote_Ref": 1.16,
-    "Score_EV": 1.0177,
+    "Marche": "Under 2.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.7554,
+    "Cote_Ref": 1.32,
+    "Score_EV": 1.0171,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        2,
-        4,
-        5,
-        1,
-        2,
-        6
-      ],
-      "away_scored": [
-        2,
-        3,
-        7,
-        5,
-        1,
-        7
-      ],
-      "home_conceded": [
-        3,
-        5,
-        3,
-        3,
-        2,
-        4
-      ],
-      "home_scored": [
-        3,
-        2,
-        2,
-        4,
-        5,
-        4
-      ]
-    },
-    "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 7/10",
-    "Score_EV_Original": 1.357
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-22",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 1.0171
   },
   {
     "Match": "Hellas Verona vs AS Roma",
@@ -153,139 +195,32 @@
     "Cote_Ref": 1.79,
     "Score_EV": 1.0136,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        0,
-        4,
-        6,
-        2,
-        6
-      ],
-      "away_scored": [
-        4,
-        6,
-        3,
-        2,
-        7,
-        2
-      ],
-      "home_conceded": [
-        2,
-        6,
-        2,
-        1,
-        4,
-        11
-      ],
-      "home_scored": [
-        1,
-        3,
-        3,
-        1,
-        4,
-        0
-      ]
-    },
+    "Profile": [
+      "DYNAMIQUE_ECRASANTE_AWAY"
+    ],
+    "Date": "2026-05-24",
+    "Heure": "14:45",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
     "Score_EV_Original": 0.8814
   },
   {
-    "Match": "SSC Napoli vs Udinese Calcio",
+    "Match": "US Lecce vs Genoa CFC",
     "League": "Serie A",
-    "Marche": "Home + de CORNERS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.5715,
-    "Cote_Ref": 1.84,
-    "Score_EV": 0.9859,
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8574,
+    "Cote_Ref": 1.17,
+    "Score_EV": 0.9431,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        4,
-        3,
-        2,
-        5,
-        7
-      ],
-      "away_scored": [
-        2,
-        5,
-        4,
-        6,
-        5,
-        5
-      ],
-      "home_conceded": [
-        4,
-        2,
-        2,
-        6,
-        1,
-        3
-      ],
-      "home_scored": [
-        5,
-        1,
-        8,
-        7,
-        5,
-        6
-      ]
-    },
-    "Streak_Status": "STREAK_CONFIRMED",
-    "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 8/10",
-    "Score_EV_Original": 0.8573
-  },
-  {
-    "Match": "US Cremonese vs Como 1907",
-    "League": "Serie A",
-    "Marche": "Away + de SHOTS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.5534,
-    "Cote_Ref": 1.9,
-    "Score_EV": 0.9546,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        0,
-        3,
-        4,
-        1,
-        2
-      ],
-      "away_scored": [
-        4,
-        3,
-        3,
-        2,
-        8,
-        6
-      ],
-      "home_conceded": [
-        3,
-        4,
-        3,
-        4,
-        6,
-        5
-      ],
-      "home_scored": [
-        2,
-        2,
-        3,
-        3,
-        0,
-        7
-      ]
-    },
-    "Streak_Status": "STREAK_CONFIRMED",
-    "Streak_Reason": "Volume statistique élevé : Over 10.5 Shots (Team): 8/10",
-    "Score_EV_Original": 0.8301
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.9431
   },
   {
     "Match": "US Cremonese vs Como 1907",
@@ -297,43 +232,106 @@
     "Cote_Ref": 1.69,
     "Score_EV": 0.9342,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        0,
-        3,
-        4,
-        1,
-        2
-      ],
-      "away_scored": [
-        4,
-        3,
-        3,
-        2,
-        8,
-        6
-      ],
-      "home_conceded": [
-        3,
-        4,
-        3,
-        4,
-        6,
-        5
-      ],
-      "home_scored": [
-        2,
-        2,
-        3,
-        3,
-        0,
-        7
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-24",
+    "Heure": "14:45",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.9342
+  },
+  {
+    "Match": "Parma Calcio 1913 vs US Sassuolo",
+    "League": "Serie A",
+    "Marche": "Under 2.5 Goals [KILL_SWITCH_RECOVERY]",
+    "Type": "CLASSIQUE_BUTS_RECOVERED",
+    "Tier": 5,
+    "Prob": 0.6904,
+    "Cote_Ref": 1.45,
+    "Score_EV": 0.9296,
+    "Super_Signal": false,
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Score_Exact_Confirmation": "Top3 cumul 46% | 0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-24",
+    "Heure": "09:00",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.9296
+  },
+  {
+    "Match": "Torino FC vs Juventus",
+    "League": "Serie A",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7203,
+    "Cote_Ref": 1.39,
+    "Score_EV": 0.9111,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.7923
+  },
+  {
+    "Match": "AC Milan vs Cagliari Calcio",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.8242,
+    "Cote_Ref": 1.21,
+    "Score_EV": 0.9066,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.9066
+  },
+  {
+    "Match": "AC Fiorentina vs Atalanta BC",
+    "League": "Serie A",
+    "Marche": "Under 24.5 SHOTS [SELECT_UNDER_PROP]",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.7937,
+    "Cote_Ref": 1.32,
+    "Score_EV": 0.8929,
+    "Super_Signal": false,
+    "Profile": "['MATCH_FERME'] | Lambda Gap=3.49 >= 0.5 & TacScore=8 >= 3",
+    "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-22",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Veto : Pari Under non validé par les séries statistiques de match",
+    "Score_EV_Original": 1.1905
+  },
+  {
+    "Match": "Hellas Verona vs AS Roma",
+    "League": "Serie A",
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6855,
+    "Cote_Ref": 1.46,
+    "Score_EV": 0.8672,
+    "Super_Signal": false,
+    "Profile": [
+      "DYNAMIQUE_ECRASANTE_AWAY"
+    ],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 8/10",
+    "Score_EV_Original": 0.7541
   },
   {
     "Match": "Torino FC vs Juventus",
@@ -345,91 +343,246 @@
     "Cote_Ref": 1.77,
     "Score_EV": 0.8188,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        1,
-        2,
-        3,
-        2,
-        5
-      ],
-      "away_scored": [
-        3,
-        3,
-        3,
-        4,
-        7,
-        4
-      ],
-      "home_conceded": [
-        2,
-        6,
-        5,
-        4,
-        6,
-        4
-      ],
-      "home_scored": [
-        3,
-        5,
-        4,
-        4,
-        5,
-        4
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-24",
+    "Heure": "14:45",
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Tendance de match favorable : Over 22.5 Shots: 6/8",
     "Score_EV_Original": 0.712
   },
   {
+    "Match": "SS Lazio vs Pisa SC",
+    "League": "Serie A",
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6408,
+    "Cote_Ref": 1.56,
+    "Score_EV": 0.8106,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.7049
+  },
+  {
+    "Match": "SSC Napoli vs Udinese Calcio",
+    "League": "Serie A",
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6398,
+    "Cote_Ref": 1.56,
+    "Score_EV": 0.8094,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "12:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.7038
+  },
+  {
+    "Match": "US Cremonese vs Como 1907",
+    "League": "Serie A",
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6391,
+    "Cote_Ref": 1.56,
+    "Score_EV": 0.8084,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+    "Score_EV_Original": 0.703
+  },
+  {
+    "Match": "Bologna FC vs Inter Milan",
+    "League": "Serie A",
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6359,
+    "Cote_Ref": 1.57,
+    "Score_EV": 0.8044,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "12:00",
+    "Streak_Status": "STREAK_CONFIRMED",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.6995
+  },
+  {
+    "Match": "AC Fiorentina vs Atalanta BC",
+    "League": "Serie A",
+    "Marche": "Under 8.5 SOT [SELECT_UNDER_PROP]",
+    "Type": "PROP_BET",
+    "Tier": 3,
+    "Prob": 0.6654,
+    "Cote_Ref": 1.58,
+    "Score_EV": 0.7486,
+    "Super_Signal": false,
+    "Profile": "['MATCH_FERME'] | Lambda Gap=1.15 >= 0.5 & TacScore=8 >= 3",
+    "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
+    "Date": "2026-05-22",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Veto : Pari Under non validé par les séries statistiques de match",
+    "Score_EV_Original": 0.9981
+  },
+  {
+    "Match": "US Lecce vs Genoa CFC",
+    "League": "Serie A",
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.677,
+    "Cote_Ref": 1.48,
+    "Score_EV": 0.7447,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.7447
+  },
+  {
     "Match": "AC Milan vs Cagliari Calcio",
     "League": "Serie A",
-    "Marche": "Home + de CORNERS",
-    "Type": "H2H_PROP",
-    "Tier": 1,
-    "Prob": 0.5635,
-    "Cote_Ref": 1.86,
-    "Score_EV": 0.634,
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6622,
+    "Cote_Ref": 1.51,
+    "Score_EV": 0.7284,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        5,
-        1,
-        7,
-        4,
-        7
-      ],
-      "away_scored": [
-        0,
-        3,
-        3,
-        2,
-        5,
-        3
-      ],
-      "home_conceded": [
-        2,
-        4,
-        3,
-        4,
-        2,
-        4
-      ],
-      "home_scored": [
-        2,
-        0,
-        7,
-        6,
-        3,
-        6
-      ]
-    },
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.7284
+  },
+  {
+    "Match": "AC Milan vs Cagliari Calcio",
+    "League": "Serie A",
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6294,
+    "Cote_Ref": 1.59,
+    "Score_EV": 0.6923,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_NEUTRAL",
+    "Streak_Reason": "Aucune série statistique déterminante",
+    "Score_EV_Original": 0.6923
+  },
+  {
+    "Match": "Torino FC vs Juventus",
+    "League": "Serie A",
+    "Marche": "Under 3.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.7708,
+    "Cote_Ref": 1.3,
+    "Score_EV": 0.6359,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
     "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 10/10",
-    "Score_EV_Original": 0.8453
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.8479
+  },
+  {
+    "Match": "Bologna FC vs Inter Milan",
+    "League": "Serie A",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6538,
+    "Cote_Ref": 1.53,
+    "Score_EV": 0.5394,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "12:00",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+    "Score_EV_Original": 0.7192
+  },
+  {
+    "Match": "SS Lazio vs Pisa SC",
+    "League": "Serie A",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6535,
+    "Cote_Ref": 1.53,
+    "Score_EV": 0.5391,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-23",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.7188
+  },
+  {
+    "Match": "SSC Napoli vs Udinese Calcio",
+    "League": "Serie A",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6535,
+    "Cote_Ref": 1.53,
+    "Score_EV": 0.5391,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "12:00",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.7188
+  },
+  {
+    "Match": "US Cremonese vs Como 1907",
+    "League": "Serie A",
+    "Marche": "Over 1.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.6535,
+    "Cote_Ref": 1.53,
+    "Score_EV": 0.5391,
+    "Super_Signal": false,
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
+    "Streak_Status": "STREAK_WARNING",
+    "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+    "Score_EV_Original": 0.7188
   },
   {
     "Match": "Bologna FC vs Inter Milan",
@@ -441,139 +594,30 @@
     "Cote_Ref": 1.79,
     "Score_EV": 0.5278,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        1,
-        0,
-        6,
-        1,
-        3,
-        5
-      ],
-      "away_scored": [
-        6,
-        6,
-        5,
-        5,
-        6,
-        8
-      ],
-      "home_conceded": [
-        1,
-        2,
-        6,
-        5,
-        4,
-        2
-      ],
-      "home_scored": [
-        0,
-        2,
-        3,
-        5,
-        3,
-        3
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-23",
+    "Heure": "12:00",
     "Streak_Status": "STREAK_WARNING",
     "Streak_Reason": "Tendance de match défavorable : Under 22.5 Shots: 5/7",
     "Score_EV_Original": 0.7038
   },
   {
-    "Match": "Bologna FC vs Inter Milan",
-    "League": "Serie A",
-    "Marche": "Over 7.5 SOT",
-    "Type": "PROP_BET",
-    "Tier": 3,
-    "Prob": 0.5629,
-    "Cote_Ref": 1.87,
-    "Score_EV": 0.5066,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        1,
-        0,
-        6,
-        1,
-        3,
-        5
-      ],
-      "away_scored": [
-        6,
-        6,
-        5,
-        5,
-        6,
-        8
-      ],
-      "home_conceded": [
-        1,
-        2,
-        6,
-        5,
-        4,
-        2
-      ],
-      "home_scored": [
-        0,
-        2,
-        3,
-        5,
-        3,
-        3
-      ]
-    },
-    "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Tendance de match défavorable : Under 8.5 SOT: 6/8",
-    "Score_EV_Original": 0.6755
-  },
-  {
     "Match": "Torino FC vs Juventus",
     "League": "Serie A",
-    "Marche": "Over 7.5 SOT",
-    "Type": "PROP_BET",
-    "Tier": 3,
-    "Prob": 0.5592,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.5032,
+    "Marche": "Under 2.5 Goals",
+    "Type": "CLASSIQUE_BUTS",
+    "Tier": 5,
+    "Prob": 0.5598,
+    "Cote_Ref": 1.79,
+    "Score_EV": 0.4618,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        1,
-        2,
-        3,
-        2,
-        5
-      ],
-      "away_scored": [
-        3,
-        3,
-        3,
-        4,
-        7,
-        4
-      ],
-      "home_conceded": [
-        2,
-        6,
-        5,
-        4,
-        6,
-        4
-      ],
-      "home_scored": [
-        3,
-        5,
-        4,
-        4,
-        5,
-        4
-      ]
-    },
+    "Profile": [],
+    "Score_Exact_Confirmation": "",
+    "Date": "2026-05-24",
+    "Heure": "14:45",
     "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Tendance de match défavorable : Under 8.5 SOT: 5/7",
-    "Score_EV_Original": 0.671
+    "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+    "Score_EV_Original": 0.6158
   },
   {
     "Match": "AC Fiorentina vs Atalanta BC",
@@ -585,40 +629,11 @@
     "Cote_Ref": 1.54,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        2,
-        4,
-        5,
-        1,
-        2,
-        6
-      ],
-      "away_scored": [
-        2,
-        3,
-        7,
-        5,
-        1,
-        7
-      ],
-      "home_conceded": [
-        3,
-        5,
-        3,
-        3,
-        2,
-        4
-      ],
-      "home_scored": [
-        3,
-        2,
-        2,
-        4,
-        5,
-        4
-      ]
-    },
+    "Profile": [
+      "MATCH_FERME"
+    ],
+    "Date": "2026-05-22",
+    "Heure": "14:45",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0
@@ -633,184 +648,9 @@
     "Cote_Ref": 1.81,
     "Score_EV": 0.0,
     "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        6,
-        3,
-        11,
-        7,
-        6,
-        10
-      ],
-      "away_scored": [
-        4,
-        3,
-        2,
-        2,
-        1,
-        4
-      ],
-      "home_conceded": [
-        4,
-        3,
-        6,
-        3,
-        3,
-        5
-      ],
-      "home_scored": [
-        4,
-        3,
-        3,
-        3,
-        2,
-        10
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.0
-  },
-  {
-    "Match": "SSC Napoli vs Udinese Calcio",
-    "League": "Serie A",
-    "Marche": "Away + de FOULS",
-    "Type": "WATCHLIST_LIVE",
-    "Tier": 7,
-    "Prob": 0.56,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.0,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        4,
-        3,
-        2,
-        5,
-        7
-      ],
-      "away_scored": [
-        2,
-        5,
-        4,
-        6,
-        5,
-        5
-      ],
-      "home_conceded": [
-        4,
-        2,
-        2,
-        6,
-        1,
-        3
-      ],
-      "home_scored": [
-        5,
-        1,
-        8,
-        7,
-        5,
-        6
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.0
-  },
-  {
-    "Match": "AC Milan vs Cagliari Calcio",
-    "League": "Serie A",
-    "Marche": "Away + de FOULS",
-    "Type": "WATCHLIST_LIVE",
-    "Tier": 7,
-    "Prob": 0.56,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.0,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        5,
-        5,
-        1,
-        7,
-        4,
-        7
-      ],
-      "away_scored": [
-        0,
-        3,
-        3,
-        2,
-        5,
-        3
-      ],
-      "home_conceded": [
-        2,
-        4,
-        3,
-        4,
-        2,
-        4
-      ],
-      "home_scored": [
-        2,
-        0,
-        7,
-        6,
-        3,
-        6
-      ]
-    },
-    "Streak_Status": "STREAK_NEUTRAL",
-    "Streak_Reason": "Aucune série statistique déterminante",
-    "Score_EV_Original": 0.0
-  },
-  {
-    "Match": "US Lecce vs Genoa CFC",
-    "League": "Serie A",
-    "Marche": "Away + de FOULS",
-    "Type": "WATCHLIST_LIVE",
-    "Tier": 7,
-    "Prob": 0.56,
-    "Cote_Ref": 1.88,
-    "Score_EV": 0.0,
-    "Super_Signal": false,
-    "Goal_Distribution": {
-      "away_conceded": [
-        3,
-        3,
-        4,
-        4,
-        6,
-        4
-      ],
-      "away_scored": [
-        1,
-        3,
-        4,
-        1,
-        4,
-        6
-      ],
-      "home_conceded": [
-        2,
-        4,
-        2,
-        3,
-        11,
-        2
-      ],
-      "home_scored": [
-        4,
-        3,
-        1,
-        0,
-        2,
-        2
-      ]
-    },
+    "Profile": [],
+    "Date": "2026-05-23",
+    "Heure": "14:45",
     "Streak_Status": "STREAK_NEUTRAL",
     "Streak_Reason": "Aucune série statistique déterminante",
     "Score_EV_Original": 0.0

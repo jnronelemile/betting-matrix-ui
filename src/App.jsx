@@ -40,15 +40,23 @@ export default function App() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
+  const isTransitioning = useRef(false);
 
   useEffect(() => {
     const handleScroll = (e) => {
       const currentScrollY = e.target.scrollTop;
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        setHeaderVisible(false);
+      const delta = currentScrollY - lastScrollY.current;
+
+      if (Math.abs(delta) < 15) return;
+
+      if (currentScrollY > lastScrollY.current) {
+        // Scrolling Down
+        if (headerVisible) setHeaderVisible(false);
       } else {
-        setHeaderVisible(true);
+        // Scrolling Up
+        if (!headerVisible) setHeaderVisible(true);
       }
+
       lastScrollY.current = currentScrollY;
     };
 
@@ -292,11 +300,22 @@ export default function App() {
   const handleNavigateToMatch = async (matchName, leagueCode) => {
     // 1. Find the league
     const league = LEAGUES.find(l => l.code === leagueCode) || LEAGUES[0];
-    setSelectedLeague(league);
     
-    // 2. We need to wait for data to load. 
-    // This is handled by a temporary state or by checking data in useEffect.
-    // For simplicity, we'll use a ref to store the pending match name.
+    // 2. If it's already the selected league and data is there, select immediately
+    if (selectedLeague.id === league.id && data?.matches) {
+      const match = data.matches.find(m => {
+        const normalize = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+        return normalize(m.Matchup).includes(normalize(matchName)) || 
+               normalize(matchName).includes(normalize(m.Matchup));
+      });
+      if (match) {
+        handleSelectMatch(match);
+        return;
+      }
+    }
+
+    // 3. Otherwise, switch league and wait for data load
+    setSelectedLeague(league);
     pendingMatchSelection.current = matchName;
   };
 
@@ -417,10 +436,52 @@ export default function App() {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-y-auto lg:overflow-hidden transition-colors duration-300">
-        {/* Header */}
-        <header className="sticky top-0 z-20 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300">
-          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${headerVisible ? 'h-auto lg:h-16 opacity-100' : 'h-0 opacity-0 lg:h-16 lg:opacity-100'}`}>
-            <div className="h-16 lg:h-16 flex items-center justify-between px-4 lg:px-6 gap-4">
+        
+        {/* Mobile Smart Floating Header (Fixed Overlay - Appears on Scroll Up) */}
+        <div className={`
+          lg:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-lg
+          transition-all duration-300 ease-out transform
+          ${headerVisible && lastScrollY.current > 200 ? 'translate-y-0' : '-translate-y-full'}
+        `}>
+          <div className="h-16 flex items-center justify-between px-4 gap-4">
+             <div className="flex items-center gap-2 shrink-0">
+                <button 
+                  className="text-slate-500 dark:text-slate-400 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                  onClick={() => setSidebarOpen(true)}
+                >
+                  <Menu size={18} />
+                </button>
+                <div className="flex flex-col">
+                  <h1 className="font-bold text-xs text-slate-900 dark:text-slate-100 tracking-tight">ColdBetdrox</h1>
+                  <p className="text-[8px] text-emerald-500 font-mono tracking-widest uppercase">Live Matrix</p>
+                </div>
+             </div>
+             
+             <div className="flex items-center gap-2">
+                <button
+                  onClick={toggleTheme}
+                  className="text-slate-500 dark:text-slate-400 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700"
+                >
+                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                </button>
+                <button 
+                  className="text-emerald-500 p-2"
+                  onClick={() => {
+                    setMobileSearchOpen(true);
+                    setHeaderVisible(true);
+                  }}
+                >
+                  <Search size={20} />
+                </button>
+             </div>
+          </div>
+        </div>
+
+        {/* Static Header Section (Scrolls naturally) */}
+        <header className="relative z-20 bg-white dark:bg-slate-900 transition-colors duration-300">
+          {/* Desktop Header & Mobile Static Top Part */}
+          <div className="border-b border-slate-200 dark:border-slate-800">
+            <div className="h-16 flex items-center justify-between px-4 lg:px-6 gap-4">
               {mobileSearchOpen ? (
                 <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200 lg:hidden">
                   <div className="relative flex-1">
@@ -465,7 +526,7 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Desktop Integrated Navigation */}
+                  {/* Desktop Integrated Navigation (Hidden on Mobile) */}
                   <div className="hidden lg:flex flex-1 items-center gap-4 min-w-0">
                     {/* Integrated Date Pills */}
                     <div className="flex-1 flex overflow-x-auto no-scrollbar gap-1.5 snap-x max-w-2xl border-x border-slate-100 dark:border-slate-800/50 px-4">
@@ -562,74 +623,74 @@ export default function App() {
               )}
             </div>
           </div>
+        </header>
 
-          {/* Sub-Header: Only for Mobile Version - Always Visible & Sticky */}
-          <div className="lg:hidden bg-slate-50/50 dark:bg-slate-950/30 border-t border-slate-200 dark:border-slate-800 py-2 flex flex-col gap-2 shadow-sm">
-            {/* Mobile Date Pills */}
-            <div className="flex overflow-x-auto no-scrollbar gap-1.5 px-4 snap-x">
-              <button
-                onClick={() => setSelectedDate('ALL')}
-                className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
-                  selectedDate === 'ALL'
-                    ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
-                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
-              >
-                ALL
-              </button>
-              {availableDates.map(date => {
-                let displayDay = '???';
-                let displayNumber = '';
-                if (date !== 'Date Inconnue') {
-                  const d = new Date(`${date}T12:00:00`);
-                  displayDay = d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '');
-                  displayNumber = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-                }
-                return (
-                  <button
-                    key={date}
-                    onClick={() => setSelectedDate(date)}
-                    className={`flex flex-col items-center px-3 py-0.5 rounded-lg transition-all border min-w-[55px] snap-start ${
-                      selectedDate === date
-                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
-                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
-                    }`}
-                  >
-                    <span className="text-[8px] uppercase font-bold tracking-tighter opacity-70 leading-tight">{displayDay}</span>
-                    <span className="text-[10px] font-mono font-bold leading-none">{displayNumber}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Mobile Signal Toggles */}
-            <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 snap-x pb-0.5">
-              {[
-                { id: 'master', label: 'MASTER', icon: <Trophy size={12} />, active: showMasterPicks, toggle: () => setShowMasterPicks(!showMasterPicks), activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_8px_rgba(16,185,129,0.3)]' },
-                { id: 'fav', label: 'TRUE FAVS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
-                { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
-                { id: 'conf', label: 'HIGH CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
-                { id: 'safe', label: 'SAFE PICK', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
-                { id: 'reg', label: 'REGULARITY', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
-                { id: 'goals', label: 'SAFE GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
-                { id: 'top', label: 'TOP FORM', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
-              ].map(sig => (
+        {/* Sticky Filters: This div stays at the top on Mobile, but doesn't cause content jumps */}
+        <div className="sticky top-0 z-30 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-2 flex flex-col gap-2 shadow-sm lg:hidden transition-colors duration-300">
+          {/* Mobile Date Pills */}
+          <div className="flex overflow-x-auto no-scrollbar gap-1.5 px-4 snap-x">
+            <button
+              onClick={() => setSelectedDate('ALL')}
+              className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
+                selectedDate === 'ALL'
+                  ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
+                  : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+            >
+              ALL
+            </button>
+            {availableDates.map(date => {
+              let displayDay = '???';
+              let displayNumber = '';
+              if (date !== 'Date Inconnue') {
+                const d = new Date(`${date}T12:00:00`);
+                displayDay = d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '');
+                displayNumber = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+              }
+              return (
                 <button
-                  key={sig.id}
-                  onClick={sig.toggle}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
-                    sig.active 
-                      ? `${sig.activeClass} shadow-sm` 
-                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  key={date}
+                  onClick={() => setSelectedDate(date)}
+                  className={`flex flex-col items-center px-3 py-0.5 rounded-lg transition-all border min-w-[55px] snap-start ${
+                    selectedDate === date
+                      ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
-                  {sig.icon}
-                  <span>{sig.label}</span>
+                  <span className="text-[8px] uppercase font-bold tracking-tighter opacity-70 leading-tight">{displayDay}</span>
+                  <span className="text-[10px] font-mono font-bold leading-none">{displayNumber}</span>
                 </button>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        </header>
+
+          {/* Mobile Signal Toggles */}
+          <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 snap-x pb-0.5">
+            {[
+              { id: 'master', label: 'MASTER', icon: <Trophy size={12} />, active: showMasterPicks, toggle: () => setShowMasterPicks(!showMasterPicks), activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_8px_rgba(16,185,129,0.3)]' },
+              { id: 'fav', label: 'TRUE FAVS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
+              { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
+              { id: 'conf', label: 'HIGH CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
+              { id: 'safe', label: 'SAFE PICK', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
+              { id: 'reg', label: 'REGULARITY', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
+              { id: 'goals', label: 'SAFE GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
+              { id: 'top', label: 'TOP FORM', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
+            ].map(sig => (
+              <button
+                key={sig.id}
+                onClick={sig.toggle}
+                className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                  sig.active 
+                    ? `${sig.activeClass} shadow-sm` 
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                }`}
+              >
+                {sig.icon}
+                <span>{sig.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Content Area */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-visible lg:overflow-hidden">

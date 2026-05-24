@@ -37,7 +37,7 @@ const TicketLeg = ({ leg, onNavigate }) => {
   return (
     <div className="bg-white dark:bg-slate-950 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col group/leg hover:border-emerald-500/30 transition-all shadow-sm overflow-hidden">
       <div 
-        className="p-4 flex items-center justify-between cursor-pointer"
+        className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-center gap-4">
@@ -50,7 +50,7 @@ const TicketLeg = ({ leg, onNavigate }) => {
             <div className="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
               <span>{leg.League}</span>
               <span className="text-slate-200 dark:text-slate-800">|</span>
-              <span className="text-emerald-500/70">{leg.family_name || 'Pick'}</span>
+              <span className="text-emerald-500/70 group-hover/leg:text-emerald-500 transition-colors">Click to {expanded ? 'collapse' : 'expand details'}</span>
             </div>
           </div>
         </div>
@@ -217,7 +217,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
           {finals?.Selections?.map((sel, idx) => (
             <div 
               key={idx}
-              className="min-w-[280px] snap-start bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl hover:border-emerald-500/50 transition-all group relative overflow-hidden"
+              onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
+              className="min-w-[280px] snap-start bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl hover:border-emerald-500/50 transition-all group relative overflow-hidden cursor-pointer active:scale-[0.98]"
             >
               <div className="absolute -right-2 -top-2 opacity-5 text-slate-900 dark:text-white group-hover:opacity-10 transition-opacity">
                 <Trophy size={80} />
@@ -244,12 +245,9 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 </div>
               </div>
               
-              <button 
-                onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
-                className="mt-4 w-full py-2 border border-slate-200 dark:border-slate-800 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all"
-              >
-                Full Matrix Analysis
-              </button>
+              <div className="mt-4 w-full py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-[9px] font-black uppercase tracking-widest group-hover:bg-slate-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all text-center">
+                Analysis Matrix
+              </div>
             </div>
           ))}
         </div>
