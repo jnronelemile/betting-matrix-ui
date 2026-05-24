@@ -21,7 +21,11 @@ import {
   Filter,
   List,
   BarChart3,
-  MousePointer2
+  MousePointer2,
+  Activity,
+  ShieldAlert,
+  BarChart,
+  Layers
 } from 'lucide-react';
 
 const LEAGUE_NAME_TO_CODE = {
@@ -125,10 +129,30 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const [activeView, setActiveView] = useState('summary'); // 'summary', 'strategies', 'picks'
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTier, setFilterTier] = useState('ALL');
-  const [sortBy, setSortBy] = useState('prob'); // 'prob', 'odds'
+  const [filterLeague, setFilterLeague] = useState('ALL');
+  const [filterMarket, setFilterMarket] = useState('ALL');
+  const [sortBy, setSortBy] = useState('prob'); // 'prob', 'odds', 'ev'
 
   const tickets = assembled ? Object.entries(assembled) : [];
   
+  // Extract unique filter options
+  const uniqueLeagues = useMemo(() => {
+    if (!finals?.Selections) return [];
+    return Array.from(new Set(finals.Selections.map(s => s.League).filter(Boolean))).sort();
+  }, [finals]);
+
+  const uniqueMarkets = useMemo(() => {
+    if (!finals?.Selections) return [];
+    const baseMarkets = finals.Selections.map(s => {
+      const m = s.Marche || '';
+      if (m.includes('Over')) return 'Over Goals';
+      if (m.includes('Under')) return 'Under Goals';
+      if (m.includes('BTTS')) return 'BTTS';
+      return 'Others';
+    });
+    return Array.from(new Set(baseMarkets)).sort();
+  }, [finals]);
+
   // Memoized calculations
   const totalSelections = finals?.Selections?.length || 0;
   const avgProb = useMemo(() => {
@@ -159,21 +183,39 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
       .filter(p => {
         const matchName = p.Match || '';
         const leagueName = p.League || '';
+        const marketName = p.Marche || '';
+        
         const matchesSearch = matchName.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                             leagueName.toLowerCase().includes(searchQuery.toLowerCase());
+                             leagueName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             p.Profile?.some(prof => prof.toLowerCase().includes(searchQuery.toLowerCase()));
+        
         const matchesTier = filterTier === 'ALL' || p.Tier === parseInt(filterTier);
-        return matchesSearch && matchesTier;
+        const matchesLeague = filterLeague === 'ALL' || p.League === filterLeague;
+        
+        let matchesMarket = true;
+        if (filterMarket !== 'ALL') {
+           if (filterMarket === 'Over Goals') matchesMarket = marketName.includes('Over');
+           else if (filterMarket === 'Under Goals') matchesMarket = marketName.includes('Under');
+           else if (filterMarket === 'BTTS') matchesMarket = marketName.includes('BTTS');
+           else matchesMarket = !marketName.includes('Over') && !marketName.includes('Under') && !marketName.includes('BTTS');
+        }
+
+        return matchesSearch && matchesTier && matchesLeague && matchesMarket;
       })
       .sort((a, b) => {
         const probA = a.Prob || 0;
         const probB = b.Prob || 0;
         const oddsA = a.Cote_Ref || 0;
         const oddsB = b.Cote_Ref || 0;
+        const evA = a.Score_EV || 0;
+        const evB = b.Score_EV || 0;
+
         if (sortBy === 'prob') return probB - probA;
         if (sortBy === 'odds') return oddsB - oddsA;
+        if (sortBy === 'ev') return evB - evA;
         return 0;
       });
-  }, [finals, searchQuery, filterTier, sortBy]);
+  }, [finals, searchQuery, filterTier, filterLeague, filterMarket, sortBy]);
 
   const categories = useMemo(() => {
     const cats = {};
@@ -222,7 +264,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
           {[
             { id: 'summary', label: 'Overview', icon: <BarChart3 size={16} /> },
             { id: 'strategies', label: 'Strategies', icon: <PieChart size={16} /> },
-            { id: 'picks', label: 'All Picks', icon: <List size={16} /> },
+            { id: 'picks', label: 'Master Database', icon: <Layers size={16} /> },
           ].map(tab => (
             <button
               key={tab.id}
@@ -317,7 +359,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
           <div className="flex flex-col gap-6">
              <div className="flex items-center justify-between px-2">
                 <h3 className="text-xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Elite Picks (Tier 1)</h3>
-                <button onClick={() => setActiveView('picks')} className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest hover:underline">View All Picks</button>
+                <button onClick={() => setActiveView('picks')} className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest hover:underline">View Database</button>
              </div>
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {finals?.Selections ? finals.Selections.filter(s => s.Tier === 1).slice(0, 3).map((sel, idx) => (
@@ -349,7 +391,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   </div>
                 )) : (
                   <div className="col-span-full py-20 text-center text-slate-400 font-mono text-xs uppercase tracking-widest bg-white dark:bg-slate-900 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
-                    No Elite Picks Found in this Session
+                    No Elite Picks Found
                   </div>
                 )}
              </div>
@@ -434,7 +476,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
         </div>
       )}
 
-      {/* VIEW: ALL PICKS - Data Beast Mode */}
+      {/* VIEW: MASTER DATABASE - Full Data Exploitation */}
       {activeView === 'picks' && (
         <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div className="px-2 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
@@ -444,7 +486,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             </div>
             <div className="flex items-center gap-3">
                <div className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center gap-3">
-                  <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Global EV:</span>
+                  <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Global EV Avg:</span>
                   <span className="text-lg font-black font-mono text-emerald-600 dark:text-emerald-400">
                     {(filteredPicks.reduce((acc, s) => acc + (s.Score_EV || 0), 0) / (filteredPicks.length || 1)).toFixed(3)}
                   </span>
@@ -452,26 +494,40 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             </div>
           </div>
 
-          {/* Filters Bar */}
-          <div className="flex flex-col lg:flex-row items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl">
-             <div className="relative flex-1 w-full">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                <input 
-                  type="text" 
-                  placeholder="Search team, league or profile..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium"
-                />
+          {/* Filters Bar - ADVANCED */}
+          <div className="flex flex-col gap-4 bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl">
+             <div className="flex flex-col lg:flex-row items-center gap-4">
+               <div className="relative flex-1 w-full">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                  <input 
+                    type="text" 
+                    placeholder="Search team, profiles or streak reason..."
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all font-medium"
+                  />
+               </div>
+               <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800 w-full lg:w-auto">
+                  <TrendingUp size={14} className="text-slate-400" />
+                  <select 
+                   value={sortBy}
+                   onChange={e => setSortBy(e.target.value)}
+                   className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none w-full"
+                  >
+                    <option value="prob">Sort: Probability</option>
+                    <option value="odds">Sort: Highest Odds</option>
+                    <option value="ev">Sort: High Expected Value</option>
+                  </select>
+               </div>
              </div>
-             
-             <div className="flex items-center gap-3 w-full lg:w-auto">
-                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <Filter size={14} className="text-slate-400" />
+
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
+                   <ShieldAlert size={14} className="text-slate-400" />
                    <select 
                     value={filterTier}
                     onChange={e => setFilterTier(e.target.value)}
-                    className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"
+                    className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"
                    >
                      <option value="ALL">All Tiers</option>
                      <option value="1">Tier 1 Elite</option>
@@ -479,102 +535,120 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                      <option value="5">Tier 5 Standard</option>
                    </select>
                 </div>
-                
-                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-2xl border border-slate-100 dark:border-slate-800">
-                   <TrendingUp size={14} className="text-slate-400" />
+
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
+                   <Target size={14} className="text-slate-400" />
                    <select 
-                    value={sortBy}
-                    onChange={e => setSortBy(e.target.value)}
-                    className="bg-transparent text-xs font-black uppercase tracking-widest focus:outline-none"
+                    value={filterLeague}
+                    onChange={e => setFilterLeague(e.target.value)}
+                    className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"
                    >
-                     <option value="prob">Highest Probability</option>
-                     <option value="odds">Highest Odds</option>
-                     <option value="ev">Highest Expected Value</option>
+                     <option value="ALL">All Leagues</option>
+                     {uniqueLeagues.map(l => <option key={l} value={l}>{l}</option>)}
+                   </select>
+                </div>
+
+                <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-100 dark:border-slate-800">
+                   <MousePointer2 size={14} className="text-slate-400" />
+                   <select 
+                    value={filterMarket}
+                    onChange={e => setFilterMarket(e.target.value)}
+                    className="bg-transparent text-[10px] font-black uppercase tracking-widest focus:outline-none w-full"
+                   >
+                     <option value="ALL">All Markets</option>
+                     {uniqueMarkets.map(m => <option key={m} value={m}>{m}</option>)}
                    </select>
                 </div>
              </div>
           </div>
 
-          {/* Results Grid */}
+          {/* Results Grid - High Density Analytical Mode */}
           <div className="grid grid-cols-1 gap-4">
              {filteredPicks.map((sel, idx) => (
                 <div 
                   key={idx}
                   onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')}
-                  className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer group flex flex-col lg:flex-row gap-6 items-start lg:items-center relative overflow-hidden"
+                  className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer group relative overflow-hidden"
                 >
-                  {/* Background Trophy for High Tiers */}
-                  {sel.Tier === 1 && <div className="absolute -right-4 -bottom-4 opacity-5 text-emerald-500 pointer-events-none"><Trophy size={120} /></div>}
-
-                  {/* 1. Main Info */}
-                  <div className="flex-1 flex flex-col gap-2 min-w-0">
-                    <div className="flex items-center gap-3">
-                       <Badge className={`${getTierColor(sel.Tier)} text-[9px] px-2 py-0.5 rounded-lg border shadow-sm`}>T{sel.Tier}</Badge>
-                       <span className={`text-[10px] font-black px-2 py-0.5 rounded-lg border flex items-center gap-1 ${sel.Streak_Status === 'STREAK_CONFIRMED' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
-                          {sel.Streak_Status === 'STREAK_CONFIRMED' ? <ShieldCheck size={10} /> : <Info size={10} />}
-                          {sel.Streak_Status?.replace('STREAK_', '')}
-                       </span>
-                       <span className="text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700 uppercase tracking-widest">{sel.Type?.replace(/_/g, ' ')}</span>
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight truncate">{sel.Match}</h4>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                        {sel.League} <span className="w-1 h-1 rounded-full bg-slate-300"></span> {sel.Date} @ {sel.Heure}
+                  <div className="flex flex-col lg:flex-row gap-6 lg:items-center relative z-10">
+                    {/* 1. Identity & Status */}
+                    <div className="flex-1 flex flex-col gap-2 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                         <Badge className={`${getTierColor(sel.Tier)} text-[9px] px-2 py-0.5 rounded-lg border shadow-sm`}>T{sel.Tier}</Badge>
+                         <span className={`text-[9px] font-black px-2 py-0.5 rounded-lg border flex items-center gap-1 ${sel.Streak_Status === 'STREAK_CONFIRMED' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
+                            {sel.Streak_Status === 'STREAK_CONFIRMED' ? <ShieldCheck size={10} /> : <Info size={10} />}
+                            {sel.Streak_Status?.replace('STREAK_', '')}
+                         </span>
+                         <span className="text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700 uppercase tracking-widest">{sel.Type}</span>
+                         {sel.Super_Signal && <Zap size={12} className="text-amber-500 fill-amber-500 animate-pulse" />}
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight truncate">{sel.Match}</h4>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
+                          {sel.League} <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800"></span> {sel.Date} @ {sel.Heure}
+                        </p>
+                      </div>
+                      
+                      {/* Reason (Visible in Database Mode) */}
+                      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400 italic bg-slate-50 dark:bg-slate-950/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">
+                        {sel.Streak_Reason}
                       </p>
                     </div>
-                  </div>
 
-                  {/* 2. Profiles */}
-                  <div className="flex flex-wrap gap-2 max-w-sm">
-                    {sel.Profile?.map(p => (
-                      <span key={p} className={`px-2.5 py-1 rounded-xl border text-[8px] font-black uppercase tracking-wider ${getProfileColor(p)}`}>
-                        {p.replace(/_/g, ' ')}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* 3. Expected Value Section */}
-                  <div className="flex items-center gap-4 px-6 border-x border-slate-100 dark:border-slate-800 hidden xl:flex">
-                     <div className="flex flex-col items-center">
-                        <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">EV Score</span>
-                        <div className="flex items-center gap-2">
-                           <TrendingUp size={14} className={sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'} />
-                           <span className={`text-xl font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-600' : 'text-blue-600'}`}>
-                              {sel.Score_EV?.toFixed(3)}
-                           </span>
-                        </div>
-                        {sel.Score_EV_Original && (
-                           <span className="text-[8px] font-bold text-slate-400 mt-1">Base: {sel.Score_EV_Original.toFixed(3)}</span>
-                        )}
-                     </div>
-                  </div>
-
-                  {/* 4. Market & Odds */}
-                  <div className="flex items-center gap-6 lg:ml-auto shrink-0">
-                    <div className="flex flex-col items-end">
-                       <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Target Market</span>
-                       <span className="text-sm font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-tight">{sel.Marche}</span>
+                    {/* 2. Profiles (Badges) */}
+                    <div className="flex flex-wrap gap-1.5 max-w-[200px] lg:max-w-xs">
+                      {sel.Profile?.map(p => (
+                        <span key={p} className={`px-2 py-0.5 rounded-lg border text-[8px] font-black uppercase tracking-tighter ${getProfileColor(p)}`}>
+                          {p.replace(/_/g, ' ')}
+                        </span>
+                      ))}
                     </div>
-                    <div className="flex flex-col items-center bg-slate-900 dark:bg-white text-white dark:text-black p-3 rounded-2xl min-w-[90px] shadow-lg group-hover:scale-105 transition-transform">
-                       <span className="text-[8px] font-black uppercase tracking-widest opacity-70">Live Odds</span>
-                       <span className="text-lg font-black font-mono">@{sel.Cote_Ref}</span>
-                       <div className="text-[9px] font-bold opacity-80">{(sel.Prob * 100).toFixed(1)}% Prob</div>
-                    </div>
-                  </div>
 
-                  {/* 5. Quick Insight - Streak Reason & Live Recommendation */}
-                  <div className="w-full lg:hidden mt-2 p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-100 dark:border-slate-800">
-                    <p className="text-[10px] font-medium text-slate-600 dark:text-slate-400 italic mb-2">
-                       <span className="text-emerald-500 not-italic font-black uppercase mr-2">Reason:</span>
-                       {sel.Streak_Reason}
-                    </p>
-                    {sel.Live_Betting_Recommendation && (
-                       <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                          <Zap size={12} className="text-rose-500 fill-rose-500" />
-                          <span className="text-[9px] font-black text-rose-500 uppercase tracking-widest">Live Alert Available</span>
+                    {/* 3. Expected Value Section */}
+                    <div className="flex items-center gap-6 px-6 border-l border-slate-100 dark:border-slate-800 hidden xl:flex">
+                       <div className="flex flex-col items-center">
+                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">EV Score</span>
+                          <div className="flex items-center gap-2">
+                             <TrendingUp size={16} className={sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'} />
+                             <span className={`text-2xl font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-600' : 'text-blue-600'}`}>
+                                {sel.Score_EV?.toFixed(3)}
+                             </span>
+                          </div>
+                          <span className="text-[8px] font-bold text-slate-400 mt-1 uppercase">Titanium Calibration</span>
                        </div>
-                    )}
+                    </div>
+
+                    {/* 4. Market & Live Odds */}
+                    <div className="flex items-center gap-6 lg:ml-auto shrink-0 border-t lg:border-t-0 pt-4 lg:pt-0">
+                      <div className="flex flex-col items-end">
+                         <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Target Market</span>
+                         <span className="text-sm font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-tight">{sel.Marche}</span>
+                      </div>
+                      <div className="flex flex-col items-center bg-slate-900 dark:bg-white text-white dark:text-black p-4 rounded-3xl min-w-[100px] shadow-2xl group-hover:scale-110 transition-transform">
+                         <span className="text-[8px] font-black uppercase tracking-widest opacity-60">Entry Odds</span>
+                         <span className="text-xl font-black font-mono">@{sel.Cote_Ref}</span>
+                         <div className="text-[10px] font-black text-emerald-500">{(sel.Prob * 100).toFixed(0)}%</div>
+                      </div>
+                    </div>
                   </div>
+
+                  {/* 5. Live Betting Alert Overlay (If exists) */}
+                  {sel.Live_Betting_Recommendation && sel.Live_Betting_Recommendation.length > 0 && (
+                     <div className="mt-4 bg-rose-500/5 border border-rose-500/10 rounded-2xl p-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                           <div className="p-1.5 bg-rose-500 rounded-lg shadow-[0_0_12px_rgba(244,63,94,0.4)]">
+                              <Zap size={14} className="text-white fill-white" />
+                           </div>
+                           <div className="flex flex-col">
+                              <span className="text-[9px] font-black text-rose-500 uppercase tracking-widest">Live Strategic Alert</span>
+                              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{sel.Live_Betting_Recommendation[0].Signal}</span>
+                           </div>
+                        </div>
+                        <div className="text-right">
+                           <span className="text-xs font-black font-mono text-rose-500">{(sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0)}% Force</span>
+                        </div>
+                     </div>
+                  )}
                 </div>
              ))}
           </div>
@@ -582,7 +656,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
           {filteredPicks.length === 0 && (
             <div className="flex flex-col items-center justify-center p-20 text-slate-400 bg-white/50 dark:bg-slate-900/50 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
               <Search size={48} className="mb-4 opacity-20" />
-              <p className="text-sm font-mono uppercase tracking-widest">No matching picks found in the Titanium Database</p>
+              <p className="text-sm font-mono uppercase tracking-widest">No matching records in the Titanium Database</p>
             </div>
           )}
         </div>
@@ -604,7 +678,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               <ShieldCheck size={16} className="text-emerald-500" /> Situational Proof
             </div>
             <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-              <Target size={16} className="text-blue-500" /> Justice Calibration
+               <Activity size={16} className="text-blue-500" /> Titanium Calibration
             </div>
           </div>
         </div>

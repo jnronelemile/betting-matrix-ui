@@ -1,6 +1,6 @@
 {
   "Methode": "POOL UNIVERSEL V9.1 — Validé par Séries Statistiques",
-  "Total_Bets_Evalues": 120,
+  "Total_Bets_Evalues": 116,
   "Total_Selectionnes": 25,
   "Cote_Totale_Estimee": 2925.33,
   "Gain_Potentiel_10U": 29253.26,
@@ -1128,24 +1128,6 @@
       "Score_EV_Original": 0.9792
     },
     {
-      "Match": "Burnley vs Wolverhampton Wanderers",
-      "League": "Premier League",
-      "Marche": "Under 9.5 SOT [SELECT_UNDER_PROP]",
-      "Type": "PROP_BET",
-      "Tier": 3,
-      "Prob": 0.6484,
-      "Cote_Ref": 1.62,
-      "Score_EV": 0.9786,
-      "Super_Signal": false,
-      "Profile": "['MATCH_FERME', 'MATCH_DE_PEUR'] | Lambda Gap=0.50 >= 0.5 & TacScore=5 >= 3",
-      "Score_Exact_Confirmation": "0-0 dans Top3",
-      "Date": "2026-05-24",
-      "Heure": "11:00",
-      "Streak_Status": "STREAK_CONFIRMED",
-      "Streak_Reason": "Tendance Under validée par les séries : Under 8.5 SOT: 5/7",
-      "Score_EV_Original": 0.851
-    },
-    {
       "Match": "Valencia CF vs FC Barcelona",
       "League": "LaLiga",
       "Marche": "Over 1.5 Goals",
@@ -1339,24 +1321,6 @@
       "Score_EV_Original": 0.9296
     },
     {
-      "Match": "Tottenham Hotspur vs Everton",
-      "League": "Premier League",
-      "Marche": "Under 9.5 SOT [SELECT_UNDER_PROP]",
-      "Type": "PROP_BET",
-      "Tier": 3,
-      "Prob": 0.6128,
-      "Cote_Ref": 1.71,
-      "Score_EV": 0.9249,
-      "Super_Signal": false,
-      "Profile": "['MATCH_FERME'] | Lambda Gap=0.25 (tight) & TacScore=6 >= 5 (exceptional)",
-      "Score_Exact_Confirmation": "0-0 dans Top3",
-      "Date": "2026-05-24",
-      "Heure": "11:00",
-      "Streak_Status": "STREAK_CONFIRMED",
-      "Streak_Reason": "Tendance Under validée par les séries : Under 8.5 SOT: 4/5",
-      "Score_EV_Original": 0.8043
-    },
-    {
       "Match": "Liverpool vs Brentford",
       "League": "Premier League",
       "Marche": "Over 1.5 Liverpool",
@@ -1455,24 +1419,6 @@
       "Streak_Status": "STREAK_NEUTRAL",
       "Streak_Reason": "Aucune série statistique déterminante",
       "Score_EV_Original": 0.8943
-    },
-    {
-      "Match": "AC Fiorentina vs Atalanta BC",
-      "League": "Serie A",
-      "Marche": "Under 24.5 SHOTS [SELECT_UNDER_PROP]",
-      "Type": "PROP_BET",
-      "Tier": 3,
-      "Prob": 0.7937,
-      "Cote_Ref": 1.32,
-      "Score_EV": 0.8929,
-      "Super_Signal": false,
-      "Profile": "['MATCH_FERME'] | Lambda Gap=3.49 >= 0.5 & TacScore=8 >= 3",
-      "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
-      "Date": "2026-05-22",
-      "Heure": "14:45",
-      "Streak_Status": "STREAK_WARNING",
-      "Streak_Reason": "Veto : Pari Under non validé par les séries statistiques de match",
-      "Score_EV_Original": 1.1905
     },
     {
       "Match": "Real Betis vs Levante UD",
@@ -1941,24 +1887,6 @@
       "Streak_Status": "STREAK_WARNING",
       "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
       "Score_EV_Original": 1.0133
-    },
-    {
-      "Match": "AC Fiorentina vs Atalanta BC",
-      "League": "Serie A",
-      "Marche": "Under 8.5 SOT [SELECT_UNDER_PROP]",
-      "Type": "PROP_BET",
-      "Tier": 3,
-      "Prob": 0.6654,
-      "Cote_Ref": 1.58,
-      "Score_EV": 0.7486,
-      "Super_Signal": false,
-      "Profile": "['MATCH_FERME'] | Lambda Gap=1.15 >= 0.5 & TacScore=8 >= 3",
-      "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
-      "Date": "2026-05-22",
-      "Heure": "14:45",
-      "Streak_Status": "STREAK_WARNING",
-      "Streak_Reason": "Veto : Pari Under non validé par les séries statistiques de match",
-      "Score_EV_Original": 0.9981
     },
     {
       "Match": "Celta Vigo vs Sevilla FC",

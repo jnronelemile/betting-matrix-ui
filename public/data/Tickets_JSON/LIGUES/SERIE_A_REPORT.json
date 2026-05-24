@@ -296,24 +296,6 @@
     "Score_EV_Original": 0.9066
   },
   {
-    "Match": "AC Fiorentina vs Atalanta BC",
-    "League": "Serie A",
-    "Marche": "Under 24.5 SHOTS [SELECT_UNDER_PROP]",
-    "Type": "PROP_BET",
-    "Tier": 3,
-    "Prob": 0.7937,
-    "Cote_Ref": 1.32,
-    "Score_EV": 0.8929,
-    "Super_Signal": false,
-    "Profile": "['MATCH_FERME'] | Lambda Gap=3.49 >= 0.5 & TacScore=8 >= 3",
-    "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
-    "Date": "2026-05-22",
-    "Heure": "14:45",
-    "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Veto : Pari Under non validé par les séries statistiques de match",
-    "Score_EV_Original": 1.1905
-  },
-  {
     "Match": "Hellas Verona vs AS Roma",
     "League": "Serie A",
     "Marche": "Under 2.5 Goals",
@@ -421,24 +403,6 @@
     "Streak_Status": "STREAK_CONFIRMED",
     "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
     "Score_EV_Original": 0.6995
-  },
-  {
-    "Match": "AC Fiorentina vs Atalanta BC",
-    "League": "Serie A",
-    "Marche": "Under 8.5 SOT [SELECT_UNDER_PROP]",
-    "Type": "PROP_BET",
-    "Tier": 3,
-    "Prob": 0.6654,
-    "Cote_Ref": 1.58,
-    "Score_EV": 0.7486,
-    "Super_Signal": false,
-    "Profile": "['MATCH_FERME'] | Lambda Gap=1.15 >= 0.5 & TacScore=8 >= 3",
-    "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
-    "Date": "2026-05-22",
-    "Heure": "14:45",
-    "Streak_Status": "STREAK_WARNING",
-    "Streak_Reason": "Veto : Pari Under non validé par les séries statistiques de match",
-    "Score_EV_Original": 0.9981
   },
   {
     "Match": "US Lecce vs Genoa CFC",
