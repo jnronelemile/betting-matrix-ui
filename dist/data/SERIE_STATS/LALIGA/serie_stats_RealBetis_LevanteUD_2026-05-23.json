@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "competition": "LaLiga",
+    "fixture": "Real Betis vs Levante UD",
+    "date": "2026-05-23",
+    "generated_at": "2026-05-23T19:00:52.144254",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Real Betis) No losses: 4",
+      "(Real Betis) No Clean Sheet: 3",
+      "(Levante UD) No Clean Sheet: 7",
+      "Over 2.5 goals: 8/9",
+      "BTTS Yes: 6/7",
+      "(Levante UD) First to score: 7/9"
+    ],
+    "team_streaks": {
+      "home": [
+        "Scoring: 9",
+        "No Clean Sheet: 3",
+        "Over 2.5 Goals: 6/8",
+        "Over 0.5 Team Goals: 9/10",
+        "BTTS Yes: 8/10",
+        "Under 10.5 Corners: 9/10",
+        "Over 8.5 SOT: 7/10",
+        "Under 22.5 Fouls: 4/5",
+        "Under 11.5 Fouls (Team): 4/5"
+      ],
+      "away": [
+        "No losses: 3",
+        "Wins: 3",
+        "Scoring: 4",
+        "Over 0.5 Team Goals: 8/10",
+        "Under 10.5 Corners: 7/10",
+        "Under 4.5 Corners (Team): 5/7",
+        "Over 22.5 Shots: 8/10",
+        "Over 10.5 Shots (Team): 7/10",
+        "Over 22.5 Fouls: 8/10",
+        "Under 11.5 Fouls (Team): 4/5"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      4,
+      2,
+      5,
+      5,
+      4,
+      11
+    ],
+    "away_scored": [
+      0,
+      4,
+      4,
+      3,
+      4,
+      5
+    ],
+    "home_conceded": [
+      5,
+      3,
+      5,
+      2,
+      1,
+      2
+    ],
+    "home_scored": [
+      4,
+      7,
+      5,
+      7,
+      3,
+      6
+    ]
+  }
+}

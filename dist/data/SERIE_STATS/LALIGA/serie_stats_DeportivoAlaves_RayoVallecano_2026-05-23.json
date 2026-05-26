@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "competition": "LaLiga",
+    "fixture": "Deportivo Alaves vs Rayo Vallecano",
+    "date": "2026-05-23",
+    "generated_at": "2026-05-23T19:00:52.277714",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "Under 2.5 goals: 9/9",
+      "Over 4.5 cards: 5/7",
+      "Over 10.5 corners: 4/5"
+    ],
+    "team_streaks": {
+      "home": [
+        "No losses: 3",
+        "Scoring: 11",
+        "Over 0.5 Team Goals: 10/10",
+        "Under 8.5 SOT: 5/7",
+        "Under 22.5 Shots: 4/5",
+        "Over 22.5 Fouls: 8/10",
+        "Over 11.5 Fouls (Team): 8/10",
+        "First to score: 4/5"
+      ],
+      "away": [
+        "No losses: 8",
+        "Scoring: 9",
+        "Under 2.5 Goals: 7/10",
+        "Over 0.5 Team Goals: 9/10",
+        "Over 9.5 Corners: 7/10",
+        "Under 10.5 Corners: 5/7",
+        "Over 8.5 SOT: 7/10",
+        "Over 3.5 SOT (Team): 8/10",
+        "Over 22.5 Shots: 9/10",
+        "Over 10.5 Shots (Team): 7/10",
+        "Over 11.5 Fouls (Team): 8/10",
+        "First to score: 6/6"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      5,
+      3,
+      5,
+      4,
+      5,
+      6
+    ],
+    "away_scored": [
+      1,
+      4,
+      4,
+      2,
+      2,
+      2
+    ],
+    "home_conceded": [
+      3,
+      2,
+      1,
+      5,
+      5,
+      7
+    ],
+    "home_scored": [
+      5,
+      1,
+      6,
+      2,
+      4,
+      6
+    ]
+  }
+}
