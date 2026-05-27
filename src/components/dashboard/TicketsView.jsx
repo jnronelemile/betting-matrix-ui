@@ -380,13 +380,13 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                           <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-end">
                             <span className="text-[10px] font-bold text-slate-900 dark:text-white truncate text-right">{homeInfo.shortName}</span>
                             <div className="w-5 h-5 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 shadow-sm border border-slate-200 dark:border-slate-700">
-                              <img src={homeInfo.logoPath} alt={homeInfo.shortName} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                              <img src={homeInfo.logoPath} alt={homeInfo.shortName} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.webp'; }} />
                             </div>
                           </div>
                           <span className="text-[9px] font-mono text-slate-400 shrink-0">VS</span>
                           <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-start">
                             <div className="w-5 h-5 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 shadow-sm border border-slate-200 dark:border-slate-700">
-                              <img src={awayInfo.logoPath} alt={awayInfo.shortName} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                              <img src={awayInfo.logoPath} alt={awayInfo.shortName} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.webp'; }} />
                             </div>
                             <span className="text-[10px] font-bold text-slate-900 dark:text-white truncate text-left">{awayInfo.shortName}</span>
                           </div>
@@ -528,14 +528,14 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                             <div className="flex items-center gap-3">
                                 <div className="flex items-center gap-2">
                                   <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-slate-700">
-                                    <img src={homeInfo.logoPath} alt={homeInfo.shortName} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                                    <img src={homeInfo.logoPath} alt={homeInfo.shortName} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.webp'; }} />
                                   </div>
                                   <span className="text-sm font-bold text-slate-900 dark:text-white truncate max-w-[100px] sm:max-w-none">{homeInfo.shortName}</span>
                                 </div>
                                 <span className="text-[10px] font-mono text-slate-400 font-bold bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">VS</span>
                                 <div className="flex items-center gap-2">
                                   <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-slate-700">
-                                    <img src={awayInfo.logoPath} alt={awayInfo.shortName} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                                    <img src={awayInfo.logoPath} alt={awayInfo.shortName} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.webp'; }} />
                                   </div>
                                   <span className="text-sm font-bold text-slate-900 dark:text-white truncate max-w-[100px] sm:max-w-none">{awayInfo.shortName}</span>
                                 </div>

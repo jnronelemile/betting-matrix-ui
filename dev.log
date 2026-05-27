@@ -9,5 +9,3 @@ Re-optimizing dependencies because vite config has changed
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
-11:11:16 PM [vite] hmr update /src/components/dashboard/TicketsView.jsx, /src/index.css
-11:11:16 PM [vite] hmr update /src/index.css, /src/components/dashboard/TicketsView.jsx
