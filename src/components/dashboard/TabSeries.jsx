@@ -1,13 +1,28 @@
-import React from 'react';
-import { TrendingUp, Users, ShieldAlert, Goal, Clock, Zap, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  TrendingUp, 
+  Users, 
+  ShieldAlert, 
+  Goal, 
+  Clock, 
+  Zap, 
+  CheckCircle2, 
+  BatteryCharging, 
+  Activity, 
+  Scale 
+} from 'lucide-react';
 import { Badge } from '../ui/Badge';
 
 export default function TabSeries({ stats, match, loading }) {
+  const [distMode, setDistMode] = useState('season'); // 'season', 'venue', 'recent_form'
+  const [liveScope, setLiveScope] = useState('season'); // 'season' or 'venue'
+  const [gameStateScope, setGameStateScope] = useState('season'); // 'season' or 'venue'
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center p-12 text-slate-400 dark:text-slate-500 bg-white/50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
         <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-sm font-mono uppercase tracking-widest">Searching Series Data...</p>
+        <p className="text-sm font-mono uppercase tracking-widest">Recherche des séries statistiques v10.0...</p>
       </div>
     );
   }
@@ -16,22 +31,38 @@ export default function TabSeries({ stats, match, loading }) {
     return (
       <div className="flex flex-col items-center justify-center p-12 text-slate-400 dark:text-slate-500 bg-white/50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
         <TrendingUp size={48} className="mb-4 opacity-20" />
-        <p className="text-sm font-mono uppercase tracking-widest">Incomplete Series Data</p>
+        <p className="text-sm font-mono uppercase tracking-widest">Séries statistiques non disponibles pour ce match</p>
       </div>
     );
   }
 
-  const { streaks, goal_distribution, metadata } = stats;
+  const { streaks, goal_distribution, metadata, fatigue_profile, live_indices, game_state_distribution } = stats;
   const homeTeam = match.shortHome || match.Matchup?.split(' vs ')[0] || 'Home';
   const awayTeam = match.shortAway || match.Matchup?.split(' vs ')[1] || 'Away';
 
   const timeSlots = ["0-15'", "15-30'", "30-45'", "45-60'", "60-75'", "75-90'"];
 
   // Priority detection: Slot where Home Scored + Away Conceded is max
-  const homeScoredArr = goal_distribution.home_scored || [0,0,0,0,0,0];
-  const awayConcededArr = goal_distribution.away_conceded || [0,0,0,0,0,0];
-  const awayScoredArr = goal_distribution.away_scored || [0,0,0,0,0,0];
-  const homeConcededArr = goal_distribution.home_conceded || [0,0,0,0,0,0];
+  const rawDist = goal_distribution || {};
+  const hasSeason = !!rawDist.season;
+  const hasVenue = !!rawDist.venue;
+  const hasRecentForm = !!(rawDist.recent_form && Array.isArray(rawDist.recent_form.home_scored));
+
+  let dist = {};
+  if (distMode === 'recent_form' && hasRecentForm) {
+    dist = rawDist.recent_form;
+  } else if (distMode === 'venue' && hasVenue) {
+    dist = rawDist.venue;
+  } else if (rawDist.season) {
+    dist = rawDist.season;
+  } else {
+    dist = rawDist;
+  }
+
+  const homeScoredArr = dist.home_scored || [0,0,0,0,0,0];
+  const awayConcededArr = dist.away_conceded || [0,0,0,0,0,0];
+  const awayScoredArr = dist.away_scored || [0,0,0,0,0,0];
+  const homeConcededArr = dist.home_conceded || [0,0,0,0,0,0];
 
   const homeAttackScore = homeScoredArr.map((val, i) => val + (awayConcededArr[i] || 0));
   const maxHomeAttackIdx = homeAttackScore.indexOf(Math.max(...homeAttackScore));
@@ -153,7 +184,70 @@ export default function TabSeries({ stats, match, loading }) {
   return (
     <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* 1. Team Streaks (Home & Away) */}
+      {/* 1. Physical Fatigue & Rest Profiles (v10.0) */}
+      {fatigue_profile && (
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl">
+          <div className="flex items-center gap-3 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+              <BatteryCharging size={18} />
+            </div>
+            <div className="flex flex-col">
+              <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">
+                Physical Fatigue & Recovery Profile (v10.0)
+              </h3>
+              <span className="text-[9px] text-slate-400 font-mono uppercase tracking-widest">
+                Charge physique et jours de récupération pré-match
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Home Fatigue */}
+            {fatigue_profile.home && (
+              <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{homeTeam}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold font-mono text-slate-900 dark:text-slate-100">{fatigue_profile.home.days_rest}</span>
+                    <span className="text-[10px] text-slate-500 uppercase">jours de repos</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <Badge variant={fatigue_profile.home.index_score > 0.5 ? 'warning' : 'success'} className="text-[9px] uppercase tracking-wider">
+                    {fatigue_profile.home.label || 'Reposé'}
+                  </Badge>
+                  <span className="text-[9px] font-mono text-slate-400">
+                    Indice: {(fatigue_profile.home.index_score || 0).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Away Fatigue */}
+            {fatigue_profile.away && (
+              <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">{awayTeam}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold font-mono text-slate-900 dark:text-slate-100">{fatigue_profile.away.days_rest}</span>
+                    <span className="text-[10px] text-slate-500 uppercase">jours de repos</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <Badge variant={fatigue_profile.away.index_score > 0.5 ? 'warning' : 'success'} className="text-[9px] uppercase tracking-wider">
+                    {fatigue_profile.away.label || 'Reposé'}
+                  </Badge>
+                  <span className="text-[9px] font-mono text-slate-400">
+                    Indice: {(fatigue_profile.away.index_score || 0).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* 2. Team Streaks (Home & Away) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Home Streaks */}
         <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden">
@@ -171,11 +265,13 @@ export default function TabSeries({ stats, match, loading }) {
             <Badge variant="success" className="font-mono text-[10px] px-3 py-1 shadow-sm border-emerald-500/30">HOME</Badge>
           </div>
           <div className="flex flex-col gap-3">
-            {streaks.team_streaks.home.map((streak, idx) => (
+            {streaks.team_streaks?.home?.length > 0 ? streaks.team_streaks.home.map((streak, idx) => (
               <div key={idx} className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800/50 hover:border-emerald-500/30 transition-all group">
                 {formatStreak(streak)}
               </div>
-            ))}
+            )) : (
+              <div className="p-6 text-center text-slate-400 text-xs italic">Aucune série notable domicile</div>
+            )}
           </div>
         </div>
 
@@ -195,16 +291,18 @@ export default function TabSeries({ stats, match, loading }) {
             <Badge variant="info" className="font-mono text-[10px] px-3 py-1 shadow-sm border-blue-500/30">AWAY</Badge>
           </div>
           <div className="flex flex-col gap-3">
-            {streaks.team_streaks.away.map((streak, idx) => (
+            {streaks.team_streaks?.away?.length > 0 ? streaks.team_streaks.away.map((streak, idx) => (
               <div key={idx} className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800/50 hover:border-blue-500/30 transition-all group">
                 {formatStreak(streak)}
               </div>
-            ))}
+            )) : (
+              <div className="p-6 text-center text-slate-400 text-xs italic">Aucune série notable extérieur</div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* 2. H2H Streaks */}
+      {/* 3. H2H Streaks */}
       <div className="bg-slate-900 dark:bg-slate-950 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-5 text-white">
           <Users size={100} />
@@ -216,26 +314,73 @@ export default function TabSeries({ stats, match, loading }) {
           <h3 className="font-black text-white uppercase tracking-tighter text-sm leading-none">Head-to-Head History</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {streaks.h2h_streaks.map((streak, idx) => (
+          {streaks.h2h_streaks?.length > 0 ? streaks.h2h_streaks.map((streak, idx) => (
             <div key={idx} className="bg-white/5 p-4 rounded-xl border border-white/10 hover:border-indigo-500/50 transition-all group backdrop-blur-sm">
               {formatStreak(streak)}
             </div>
-          ))}
+          )) : (
+            <div className="col-span-full p-6 text-center text-slate-400 text-xs italic">
+              Aucune confrontation directe récente enregistrée
+            </div>
+          )}
         </div>
       </div>
 
-      {/* 3. Goal Distribution Comparison */}
+      {/* 4. Goal Distribution Comparison with Recent Form selector */}
       <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-rose-500/10 rounded-xl border border-rose-500/20">
               <Goal size={18} className="text-rose-600 dark:text-rose-400" />
             </div>
-            <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-none">Goal Distribution Comparison</h3>
+            <div className="flex flex-col gap-0.5">
+              <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter text-sm leading-none">Goal Distribution Comparison</h3>
+              <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Scope: {distMode.toUpperCase()}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 bg-slate-50 dark:bg-slate-950/50 p-2 sm:p-0 rounded-xl sm:bg-transparent self-start sm:self-auto">
-             <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-emerald-500/60 shadow-inner"></div> SCORED</div>
-             <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-rose-500/60 shadow-inner"></div> CONCEDED</div>
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700/60">
+              {hasSeason && (
+                <button
+                  onClick={() => setDistMode('season')}
+                  className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
+                    distMode === 'season'
+                      ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  Season
+                </button>
+              )}
+              {hasVenue && (
+                <button
+                  onClick={() => setDistMode('venue')}
+                  className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
+                    distMode === 'venue'
+                      ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  Venue
+                </button>
+              )}
+              {hasRecentForm && (
+                <button
+                  onClick={() => setDistMode('recent_form')}
+                  className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
+                    distMode === 'recent_form'
+                      ? 'bg-white dark:bg-slate-900 text-purple-600 dark:text-purple-400 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  Recent Form
+                </button>
+              )}
+            </div>
+            <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 bg-slate-50 dark:bg-slate-950/50 p-2 sm:p-0 rounded-xl sm:bg-transparent self-start sm:self-auto">
+               <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-emerald-500/60 shadow-inner"></div> SCORED</div>
+               <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-rose-500/60 shadow-inner"></div> CONCEDED</div>
+            </div>
           </div>
         </div>
         
@@ -298,31 +443,223 @@ export default function TabSeries({ stats, match, loading }) {
         </div>
       </div>
 
+      {/* 5. Historical Late-Game Profiles (Indices à 75' - Pré-match) */}
+      {live_indices && (
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-600 dark:text-indigo-400">
+                <Clock size={18} />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">
+                  Historical Late-Game Indices (75' - Pre-match Analysis)
+                </h3>
+                <span className="text-[9px] text-slate-400 italic">
+                  Information analytique historique pré-match — pas un événement live en cours.
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700/60 self-start sm:self-auto">
+              <button
+                onClick={() => setLiveScope('season')}
+                className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
+                  liveScope === 'season'
+                    ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900'
+                }`}
+              >
+                Season Scope
+              </button>
+              <button
+                onClick={() => setLiveScope('venue')}
+                className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
+                  liveScope === 'venue'
+                    ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900'
+                }`}
+              >
+                Venue Scope
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Home Team Indices */}
+            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col gap-3">
+              <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{homeTeam}</span>
+              <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                  <span className="text-[8px] text-slate-400 uppercase">Clutch (75')</span>
+                  <span className="text-base font-bold text-emerald-600 dark:text-emerald-400">
+                    {live_indices.home?.[liveScope]?.clutch?.index != null 
+                      ? `${(live_indices.home[liveScope].clutch.index * 100).toFixed(0)}%` 
+                      : 'N/A'}
+                  </span>
+                  <span className="text-[8px] text-slate-400 mt-1">
+                    {live_indices.home?.[liveScope]?.clutch?.success_matches || 0}/{live_indices.home?.[liveScope]?.clutch?.opportunities_at_75m || 0} succès
+                  </span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                  <span className="text-[8px] text-slate-400 uppercase">Collapse (75')</span>
+                  <span className="text-base font-bold text-rose-600 dark:text-rose-400">
+                    {live_indices.home?.[liveScope]?.collapse?.index != null 
+                      ? `${(live_indices.home[liveScope].collapse.index * 100).toFixed(0)}%` 
+                      : 'N/A'}
+                  </span>
+                  <span className="text-[8px] text-slate-400 mt-1">
+                    {live_indices.home?.[liveScope]?.collapse?.failed_matches || 0}/{live_indices.home?.[liveScope]?.collapse?.opportunities_leading_by_one_at_75m || 0} échecs
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Away Team Indices */}
+            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col gap-3">
+              <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">{awayTeam}</span>
+              <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                  <span className="text-[8px] text-slate-400 uppercase">Clutch (75')</span>
+                  <span className="text-base font-bold text-emerald-600 dark:text-emerald-400">
+                    {live_indices.away?.[liveScope]?.clutch?.index != null 
+                      ? `${(live_indices.away[liveScope].clutch.index * 100).toFixed(0)}%` 
+                      : 'N/A'}
+                  </span>
+                  <span className="text-[8px] text-slate-400 mt-1">
+                    {live_indices.away?.[liveScope]?.clutch?.success_matches || 0}/{live_indices.away?.[liveScope]?.clutch?.opportunities_at_75m || 0} succès
+                  </span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                  <span className="text-[8px] text-slate-400 uppercase">Collapse (75')</span>
+                  <span className="text-base font-bold text-rose-600 dark:text-rose-400">
+                    {live_indices.away?.[liveScope]?.collapse?.index != null 
+                      ? `${(live_indices.away[liveScope].collapse.index * 100).toFixed(0)}%` 
+                      : 'N/A'}
+                  </span>
+                  <span className="text-[8px] text-slate-400 mt-1">
+                    {live_indices.away?.[liveScope]?.collapse?.failed_matches || 0}/{live_indices.away?.[liveScope]?.collapse?.opportunities_leading_by_one_at_75m || 0} échecs
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. Game-State Dynamics (Scored vs Conceded when Winning / Tied / Losing) */}
+      {game_state_distribution && (
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-amber-500/10 rounded-xl border border-amber-500/20 text-amber-600 dark:text-amber-400">
+                <Scale size={18} />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">
+                  Game-State Dynamics (Dynamique par État du Score)
+                </h3>
+                <span className="text-[9px] text-slate-400 font-mono uppercase tracking-widest">
+                  Répartition des buts selon l'état du match (Menant, Score Nul, Mené)
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700/60 self-start sm:self-auto">
+              <button
+                onClick={() => setGameStateScope('season')}
+                className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
+                  gameStateScope === 'season'
+                    ? 'bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-sm'
+                    : 'text-slate-500'
+                }`}
+              >
+                Season
+              </button>
+              <button
+                onClick={() => setGameStateScope('venue')}
+                className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
+                  gameStateScope === 'venue'
+                    ? 'bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-sm'
+                    : 'text-slate-500'
+                }`}
+              >
+                Venue
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Home Game State */}
+            {game_state_distribution.home?.[gameStateScope] && (
+              <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col gap-2.5">
+                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{homeTeam}</span>
+                <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                    <span className="text-[8px] text-slate-400 uppercase">En Avance</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+                      {game_state_distribution.home[gameStateScope].scored?.winning || 0}M / {game_state_distribution.home[gameStateScope].conceded?.winning || 0}E
+                    </span>
+                  </div>
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                    <span className="text-[8px] text-slate-400 uppercase">Score Nul</span>
+                    <span className="font-bold text-slate-700 dark:text-slate-300 mt-1">
+                      {game_state_distribution.home[gameStateScope].scored?.tied || 0}M / {game_state_distribution.home[gameStateScope].conceded?.tied || 0}E
+                    </span>
+                  </div>
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                    <span className="text-[8px] text-slate-400 uppercase">En Retard</span>
+                    <span className="font-bold text-rose-600 dark:text-rose-400 mt-1">
+                      {game_state_distribution.home[gameStateScope].scored?.losing || 0}M / {game_state_distribution.home[gameStateScope].conceded?.losing || 0}E
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Away Game State */}
+            {game_state_distribution.away?.[gameStateScope] && (
+              <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col gap-2.5">
+                <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">{awayTeam}</span>
+                <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                    <span className="text-[8px] text-slate-400 uppercase">En Avance</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+                      {game_state_distribution.away[gameStateScope].scored?.winning || 0}M / {game_state_distribution.away[gameStateScope].conceded?.winning || 0}E
+                    </span>
+                  </div>
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                    <span className="text-[8px] text-slate-400 uppercase">Score Nul</span>
+                    <span className="font-bold text-slate-700 dark:text-slate-300 mt-1">
+                      {game_state_distribution.away[gameStateScope].scored?.tied || 0}M / {game_state_distribution.away[gameStateScope].conceded?.tied || 0}E
+                    </span>
+                  </div>
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
+                    <span className="text-[8px] text-slate-400 uppercase">En Retard</span>
+                    <span className="font-bold text-rose-600 dark:text-rose-400 mt-1">
+                      {game_state_distribution.away[gameStateScope].scored?.losing || 0}M / {game_state_distribution.away[gameStateScope].conceded?.losing || 0}E
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Metadata & Source */}
       {metadata && (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-4 py-3 bg-slate-50 dark:bg-slate-950/40 rounded-2xl border border-slate-100 dark:border-slate-800/50 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
           <div className="flex items-center gap-2">
             <Clock size={12} />
-            <span>Generated: {new Date(metadata.generated_at).toLocaleString()}</span>
+            <span>Généré : {new Date(metadata.generated_at).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
             <ShieldAlert size={12} />
-            <span>Source: {metadata.source}</span>
+            <span>Source : {metadata.source || 'TITANIUM v10.0 Series'}</span>
           </div>
         </div>
       )}
-
-      {/* Narrative Context integration hint */}
-      <div className="bg-amber-500/5 border border-amber-500/20 rounded-3xl p-6 flex items-start gap-4 shadow-inner">
-        <div className="p-2 bg-amber-500/10 rounded-xl">
-          <ShieldAlert size={20} className="text-amber-500" />
-        </div>
-        <div className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed italic font-medium">
-          <strong className="uppercase tracking-widest text-[10px] block mb-1">Titanium Engine Insight:</strong> 
-          These trends and streaks are dynamically processed to calibrate the "Justice Tension" and "Situational Multipliers". High streak regularity increases the reliability of generated investment signals.
-        </div>
-      </div>
     </div>
   );
 }
-

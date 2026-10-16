@@ -127,7 +127,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
             if (timeA !== timeB) return timeA.localeCompare(timeB);
             return a.Matchup.localeCompare(b.Matchup);
           }).map((match, idx) => {
-            const isSelected = selectedMatch && selectedMatch.Matchup === match.Matchup;
+            const isSelected = selectedMatch && ((selectedMatch.Match_ID && selectedMatch.Match_ID === match.Match_ID) || selectedMatch.Matchup === match.Matchup);
             const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
             const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
             const probs = match.True_Probabilities || {};
@@ -136,7 +136,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
             
             return (
               <div 
-                key={idx}
+                key={match.Match_ID || idx}
                 onClick={() => onSelectMatch(match)}
                 className={`p-2.5 rounded-lg cursor-pointer transition-all border ${
                   isSelected 
@@ -145,11 +145,16 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                 }`}
               >
                 <div className="flex justify-between items-center">
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-1.5">
-                      <h4 className="font-serif tracking-wide font-medium text-slate-900 dark:text-slate-100 text-sm">
+                  <div className="flex flex-col gap-1 min-w-0">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <h4 className="font-serif tracking-wide font-medium text-slate-900 dark:text-slate-100 text-sm truncate">
                         {match.shortAway ? `${match.shortHome} vs ${match.shortAway}` : match.Matchup}
                       </h4>
+                      {match.League && (
+                        <span className="text-[8px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                          {match.League}
+                        </span>
+                      )}
                       {match.date && match.date !== 'Date Inconnue' && (
                         <span className="text-[9px] text-slate-500 uppercase tracking-widest border border-slate-200 dark:border-slate-800 px-1 rounded bg-slate-50 dark:bg-slate-950">
                           {formatDate(match.date).substring(0, 3)}
@@ -187,7 +192,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                       {match.hours && (
                         <div className="flex items-center gap-1 ml-1 bg-slate-100 dark:bg-slate-950/50 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-800">
                           {isMatchLive(match.date, match.hours) && (
-                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title="Match en cours"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title="Fenêtre de match (coup d'envoi passé)"></div>
                           )}
                           <span className="text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400">
                             {formatTimeAMPM(match.hours)}
@@ -205,7 +210,8 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
       ) : (
         sortedDates.map((date) => {
           const isCollapsed = collapsedDates[date];
-          const isToday = date === '2026-04-26';
+          const todayStr = new Date().toISOString().slice(0, 10);
+          const isToday = date === todayStr;
 
           return (
             <div key={date} className="flex flex-col gap-3">
@@ -236,7 +242,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
               
               <div className={`flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out ${isCollapsed ? 'max-h-0 opacity-0 hidden' : 'max-h-[5000px] opacity-100 flex'}`}>
                 {groupedMatches[date].map((match, idx) => {
-                  const isSelected = selectedMatch && selectedMatch.Matchup === match.Matchup;
+                  const isSelected = selectedMatch && ((selectedMatch.Match_ID && selectedMatch.Match_ID === match.Match_ID) || selectedMatch.Matchup === match.Matchup);
                   const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
                   const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
                   const probs = match.True_Probabilities || {};
@@ -245,7 +251,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                   
                   return (
                     <div 
-                      key={idx}
+                      key={match.Match_ID || idx}
                       onClick={() => onSelectMatch(match)}
                       className={`p-2.5 rounded-lg cursor-pointer transition-all border ${
                         isSelected 
@@ -254,10 +260,17 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                       }`}
                     >
                       <div className="flex justify-between items-center">
-                        <div className="flex flex-col gap-1">
-                          <h4 className="font-serif tracking-wide font-medium text-slate-900 dark:text-slate-100 text-sm">
-                            {match.shortAway ? `${match.shortHome} vs ${match.shortAway}` : match.Matchup}
-                          </h4>
+                        <div className="flex flex-col gap-1 min-w-0">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <h4 className="font-serif tracking-wide font-medium text-slate-900 dark:text-slate-100 text-sm truncate">
+                              {match.shortAway ? `${match.shortHome} vs ${match.shortAway}` : match.Matchup}
+                            </h4>
+                            {match.League && (
+                              <span className="text-[8px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                                {match.League}
+                              </span>
+                            )}
+                          </div>
                           <div className="flex flex-wrap items-center gap-1.5 mt-1">
                             {match.isFinalPick && (
                               <Badge variant="success" className="bg-emerald-600 text-white border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.4)] animate-pulse flex items-center gap-1">
@@ -289,7 +302,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                             {match.hours && (
                               <div className="flex items-center gap-1 ml-1 bg-slate-100 dark:bg-slate-950/50 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-800">
                                 {isMatchLive(match.date, match.hours) && (
-                                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title="Match en cours"></div>
+                                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title="Fenêtre de match (coup d'envoi passé)"></div>
                                 )}
                                 <span className="text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400">
                                   {formatTimeAMPM(match.hours)}

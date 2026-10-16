@@ -1,0 +1,279 @@
+{
+  "metadata": {
+    "competition": "Major League Soccer",
+    "fixture": "Charlotte FC vs Dallas",
+    "date": "2026-10-10",
+    "generated_at": "2026-10-15T18:07:12.676100",
+    "source": "football_master.db (100% Native)",
+    "target_season_start": "2026-01-01",
+    "season_source": "season_resolver",
+    "version": "10.0",
+    "features_legend": {
+      "fatigue_profile": "Score de 0.0 (Reposé) à 1.0 (Exténué) incluant les trêves hivernales (0.4 Rouillé) et le stress géographique asymétrique (affectant surtout l'équipe Extérieure).",
+      "live_indices": "Probabilités conditionnelles pures extraites au Snapshot de la 75ème minute. Clutch = Capacité à marquer quand on est mené/à égalité. Collapse = Risque d'encaisser quand on mène d'1 but.",
+      "game_state_distribution": "Chronologie absolue des buts selon l'état du score (winning, tied, losing) à la seconde précédant le but."
+    }
+  },
+  "streaks": {
+    "h2h_streaks": [],
+    "team_streaks": {
+      "home": [
+        "No Clean Sheet: 4",
+        "Over 9.5 Corners: 9/10",
+        "Under 4.5 Corners (Team): 5/7",
+        "Over 8.5 SOT: 7/10",
+        "Over 22.5 Shots: 10/10",
+        "Over 11.5 Fouls (Team): 5/7",
+        "Under 38.5 Throws: 10/10",
+        "Under 3.5 Offsides: 7/10",
+        "Over 1.5 Offsides (Team): 7/10",
+        "Over 5.5 Keeper Saves: 9/10",
+        "Over 2.5 Keeper Saves (Team): 10/10",
+        "Opponent Under 18.5 Throws: 9/10",
+        "Opponent Under 1.5 Offsides: 8/10",
+        "Opponent Over 1.5 Yellow Cards: 7/10",
+        "Opponent Over 4.5 Corners: 9/10",
+        "Opponent Over 3.5 SOT: 9/10"
+      ],
+      "away": [
+        "No losses: 6",
+        "Over 0.5 Team Goals: 7/10",
+        "Over 3.5 SOT (Team): 9/10",
+        "Over 22.5 Shots: 7/10",
+        "Over 10.5 Shots (Team): 8/10",
+        "Over 11.5 Fouls (Team): 7/10",
+        "Under 3.5 Offsides: 8/10",
+        "Over 5.5 Keeper Saves: 8/10",
+        "Over 2.5 Keeper Saves (Team): 8/10",
+        "Over 1.5 Yellow Cards (Team): 8/10",
+        "Opponent Under 1.5 Offsides: 7/10",
+        "Opponent Over 2.5 Keeper Saves: 8/10",
+        "Opponent Over 1.5 Yellow Cards: 7/10"
+      ]
+    }
+  },
+  "fatigue_profile": {
+    "home": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 14
+    },
+    "away": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 13
+    }
+  },
+  "live_indices": {
+    "home": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 13,
+          "success_matches": 2,
+          "index": 0.15
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 9,
+          "failed_matches": 4,
+          "index": 0.44
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 6,
+          "success_matches": 1,
+          "index": 0.17
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 6,
+          "failed_matches": 2,
+          "index": 0.33
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 17,
+          "success_matches": 6,
+          "index": 0.35
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 9,
+          "failed_matches": 3,
+          "index": 0.33
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 9,
+          "success_matches": 4,
+          "index": 0.44
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 5,
+          "failed_matches": 1,
+          "index": 0.2
+        }
+      }
+    }
+  },
+  "game_state_distribution": {
+    "home": {
+      "season": {
+        "scored": {
+          "winning": 20,
+          "tied": 25,
+          "losing": 10
+        },
+        "conceded": {
+          "winning": 16,
+          "tied": 14,
+          "losing": 9
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 16,
+          "tied": 12,
+          "losing": 4
+        },
+        "conceded": {
+          "winning": 8,
+          "tied": 5,
+          "losing": 2
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "scored": {
+          "winning": 12,
+          "tied": 29,
+          "losing": 11
+        },
+        "conceded": {
+          "winning": 21,
+          "tied": 12,
+          "losing": 9
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 7,
+          "tied": 16,
+          "losing": 4
+        },
+        "conceded": {
+          "winning": 10,
+          "tied": 6,
+          "losing": 6
+        }
+      }
+    }
+  },
+  "goal_distribution": {
+    "season": {
+      "home_scored": [
+        4,
+        5,
+        2,
+        6,
+        6,
+        9
+      ],
+      "home_conceded": [
+        2,
+        1,
+        4,
+        3,
+        1,
+        4
+      ],
+      "away_scored": [
+        2,
+        4,
+        6,
+        3,
+        2,
+        10
+      ],
+      "away_conceded": [
+        4,
+        3,
+        4,
+        4,
+        5,
+        2
+      ]
+    },
+    "venue": {
+      "home_scored": [
+        4,
+        5,
+        2,
+        6,
+        6,
+        9
+      ],
+      "home_conceded": [
+        2,
+        1,
+        4,
+        3,
+        1,
+        4
+      ],
+      "away_scored": [
+        2,
+        4,
+        6,
+        3,
+        2,
+        10
+      ],
+      "away_conceded": [
+        4,
+        3,
+        4,
+        4,
+        5,
+        2
+      ]
+    },
+    "recent_form": {
+      "home_scored": [
+        2,
+        0,
+        0,
+        0,
+        3,
+        1
+      ],
+      "home_conceded": [
+        0,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "away_scored": [
+        0,
+        3,
+        2,
+        0,
+        2,
+        4
+      ],
+      "away_conceded": [
+        2,
+        1,
+        4,
+        2,
+        4,
+        0
+      ]
+    }
+  }
+}

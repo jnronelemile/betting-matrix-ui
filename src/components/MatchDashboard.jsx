@@ -23,17 +23,20 @@ import TabCalibration from './dashboard/TabCalibration';
 import TabRiskContext from './dashboard/TabRiskContext';
 import TabSeries from './dashboard/TabSeries';
 import TabDeepDive from './dashboard/TabDeepDive';
+import { getSeriesStatsUrl, validateSeriesMetadata } from '../utils/titaniumLoader';
 
-export function MatchDashboard({ match, onClose }) {
+export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const [activeTab, setActiveTab] = useState('tactical');
   const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
   const [isScrolled, setIsScrolled] = useState(false);
   const [serieStats, setSerieStats] = useState(null);
+  const [seriesError, setSeriesError] = useState(null);
   const [loadingStats, setLoadingStats] = useState(false);
   const headerRef = useRef(null);
   const tabsContainerRef = useRef(null);
   const mobileTabsContainerRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const activeSeriesFetchRef = useRef(null);
   
   // Touch refs for swipe
   const touchStartX = useRef(0);
@@ -54,87 +57,55 @@ export function MatchDashboard({ match, onClose }) {
   useEffect(() => {
     async function fetchSerieStats() {
       if (!match) return;
+      const currentMatchId = match.Match_ID || match.Matchup;
+      activeSeriesFetchRef.current = currentMatchId;
       setSerieStats(null);
+      setSeriesError(null);
       setLoadingStats(true);
+
+      const seriesUrl = getSeriesStatsUrl(match, sessionId);
+      if (!seriesUrl) {
+        setLoadingStats(false);
+        setSeriesError("URL des séries statistiques indisponible");
+        return;
+      }
+
       try {
-        const indexRes = await fetch('/data/SERIE_STATS/index.json');
-        if (!indexRes.ok) throw new Error('Failed to fetch index');
-        const files = await indexRes.json();
-        
-        const normalizeForFile = (str) => str.toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .replace(/[^a-z0-9]/g, "");
-
-        const matchupParts = match.Matchup.split(' vs ');
-        if (matchupParts.length < 2) return;
-
-        const homeNorm = normalizeForFile(matchupParts[0]);
-        const awayNorm = normalizeForFile(matchupParts[1]);
-        const leagueNorm = normalizeForFile(match.League || '');
-
-        let bestFile = null;
-        let maxScore = 0;
-        
-        files.forEach(f => {
-          const fileNameOnly = f.split('/').pop().toLowerCase();
-          const folderName = f.includes('/') ? f.split('/')[0].toLowerCase() : '';
-          
-          let score = 0;
-          
-          // League match
-          const isPL = leagueNorm.includes('premier') || leagueNorm === 'pl' || folderName.includes('premier');
-          const isSA = leagueNorm.includes('seriea') || leagueNorm.includes('italy') || folderName.includes('seriea');
-          const isLL = leagueNorm.includes('liga') || leagueNorm.includes('spain') || folderName.includes('laliga');
-          
-          if (isPL && folderName.includes('premier')) score += 15;
-          else if (isSA && folderName.includes('seriea')) score += 15;
-          else if (isLL && (folderName.includes('laliga') || folderName.includes('liga'))) score += 15;
-          else if (leagueNorm && (folderName.includes(leagueNorm) || leagueNorm.includes(folderName))) score += 10;
-          
-          // Check home team
-          const hPart = fileNameOnly.split('_')[2]?.toLowerCase() || '';
-          const aPart = fileNameOnly.split('_')[3]?.toLowerCase() || '';
-
-          if (fileNameOnly.includes(homeNorm) || (hPart && (homeNorm.includes(hPart) || hPart.includes(homeNorm)))) {
-            score += 10;
-          } else if (homeNorm.length > 3 && fileNameOnly.includes(homeNorm.substring(0, 4))) {
-            score += 5;
-          }
-          
-          // Check away team
-          if (fileNameOnly.includes(awayNorm) || (aPart && (awayNorm.includes(aPart) || aPart.includes(awayNorm)))) {
-            score += 10;
-          } else if (awayNorm.length > 3 && fileNameOnly.includes(awayNorm.substring(0, 4))) {
-            score += 5;
-          }
-          
-          if (score > maxScore) {
-            maxScore = score;
-            bestFile = f;
-          }
-        });
-
-        // Threshold: Must match at least league + some team part, OR both teams
-        if (bestFile && (maxScore >= 15)) {
-          const res = await fetch(`/data/SERIE_STATS/${bestFile}`);
-          if (res.ok) {
-            const stats = await res.json();
-            // Basic validation
-            if (stats && stats.streaks && stats.goal_distribution) {
+        const res = await fetch(seriesUrl);
+        if (res.ok) {
+          const stats = await res.json();
+          if (activeSeriesFetchRef.current === currentMatchId) {
+            const validation = validateSeriesMetadata(stats, match);
+            if (validation.valid) {
               setSerieStats(stats);
+              setSeriesError(null);
+            } else {
+              setSerieStats(null);
+              setSeriesError(validation.reason);
+              console.warn("[TITANIUM SER-01] Series payload rejected:", validation.reason);
             }
+          }
+        } else {
+          if (activeSeriesFetchRef.current === currentMatchId) {
+            setSerieStats(null);
+            setSeriesError(`Séries non disponibles pour ce match (HTTP ${res.status})`);
           }
         }
       } catch (e) {
         console.error("Error fetching serie stats:", e);
+        if (activeSeriesFetchRef.current === currentMatchId) {
+          setSerieStats(null);
+          setSeriesError(`Erreur lors du chargement des séries : ${e.message}`);
+        }
       } finally {
-        setLoadingStats(false);
+        if (activeSeriesFetchRef.current === currentMatchId) {
+          setLoadingStats(false);
+        }
       }
     }
 
     fetchSerieStats();
-  }, [match]);
+  }, [match, sessionId]);
 
   // Swipe logic for mobile
   const handleTouchStart = (e) => {
@@ -307,12 +278,22 @@ export function MatchDashboard({ match, onClose }) {
           key={activeTab}
           className={`w-full ${slideDirection === 'right' ? 'animate-slide-right' : 'animate-slide-left'}`}
         >
-          {activeTab === 'series' && <TabSeries stats={serieStats} match={match} loading={loadingStats} />}
+          {activeTab === 'series' && (
+            <div className="flex flex-col gap-4">
+              {seriesError && (
+                <div className="flex items-center gap-2 p-3 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs rounded-xl font-mono">
+                  <AlertTriangle size={14} className="shrink-0" />
+                  <span>Séries indisponibles ou rejetées : {seriesError}</span>
+                </div>
+              )}
+              <TabSeries stats={serieStats} match={match} loading={loadingStats} />
+            </div>
+          )}
           {activeTab === 'core' && <TabCoreMarket match={match} />}
           {activeTab === 'risk' && <TabRiskContext match={match} />}
           {activeTab === 'narrative' && <TabNarrative match={match} />}
           {activeTab === 'tactical' && <TabTactical match={match} />}
-          {activeTab === 'deepdive' && <TabDeepDive match={match} />}
+          {activeTab === 'deepdive' && <TabDeepDive match={match} leagueReport={leagueReport} />}
           {activeTab === 'calibration' && <TabCalibration match={match} />}
         </div>
       </div>

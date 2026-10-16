@@ -43,7 +43,13 @@ const LEAGUE_NAME_TO_CODE = {
   'Primeira Liga': 'POR1'
 };
 
-const STRATEGY_CAT_MAPPING = {
+const PRODUCT_MAPPING = {
+  'SINGLE_1': { label: 'Single', desc: '1-Leg Direct Selection', color: 'bg-emerald-600' },
+  'MICRO_2': { label: 'Micro (2)', desc: '2-Leg Acca', color: 'bg-blue-600' },
+  'CORE_3': { label: 'Core (3)', desc: '3-Leg Core Combo', color: 'bg-indigo-600' },
+  'CORE_4': { label: 'Core (4)', desc: '4-Leg Core Combo', color: 'bg-purple-600' },
+  'STANDARD_5_8': { label: 'Standard (5-8)', desc: 'Multi-Leg Combination', color: 'bg-amber-600' },
+  'EXTENDED_9_PLUS': { label: 'Extended (9+)', desc: 'Extensive Multi-Leg Ticket', color: 'bg-rose-600' },
   'A': { label: 'Alpha', desc: 'Elite', color: 'bg-emerald-500' },
   'B': { label: 'System', desc: 'Accas', color: 'bg-blue-500' },
   'C': { label: 'Props', desc: 'Situational', color: 'bg-purple-500' },
@@ -53,7 +59,7 @@ const STRATEGY_CAT_MAPPING = {
 
 const TicketLeg = ({ leg, onNavigate }) => {
   const [expanded, setExpanded] = useState(false);
-  const leagueCode = LEAGUE_NAME_TO_CODE[leg.League] || 'ALL';
+  const leagueCode = leg.League || LEAGUE_NAME_TO_CODE[leg.League] || 'ALL';
   
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col group/leg hover:border-emerald-500/30 transition-all shadow-sm overflow-hidden">
@@ -113,7 +119,7 @@ const TicketLeg = ({ leg, onNavigate }) => {
             <button 
               onClick={(e) => {
                 e.stopPropagation();
-                onNavigate(leg.Match, leagueCode);
+                onNavigate(leg.Match_ID || leg.Match, leagueCode);
               }}
               className="w-full py-1.5 bg-slate-900 dark:bg-white text-white dark:text-black rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center justify-center gap-1.5 shadow-md"
             >
@@ -136,35 +142,91 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const [sortBy, setSortBy] = useState('prob'); 
   const [auditMode, setAuditMode] = useState(false);
 
-  const [filterStratCat, setFilterStratCat] = useState('ALL');
+  const [filterProduct, setFilterProduct] = useState('ALL');
   const [stratSortBy, setStratSortBy] = useState('reliability'); 
 
-  const tickets = useMemo(() => assembled ? Object.entries(assembled) : [], [assembled]);
-  
-  const filteredStrategies = useMemo(() => {
+  const isV2Tickets = !!(assembled && Array.isArray(assembled.tickets));
+
+  const ticketsList = useMemo(() => {
     if (!assembled) return [];
-    const flattened = [];
+    if (isV2Tickets) {
+      return assembled.tickets;
+    }
+    const list = [];
     Object.entries(assembled).forEach(([key, t]) => {
       if (t.variantes && Array.isArray(t.variantes)) {
         t.variantes.forEach((variant, vIdx) => {
-          flattened.push([`${key}_v${vIdx}`, { ...t, nom: `${t.nom} #${vIdx + 1}`, legs: variant.legs, metrics: variant.metrics, isVariant: true }]);
+          list.push({
+            ticket_id: `${key}_v${vIdx}`,
+            product_code: t.categorie || 'A',
+            strategy_code: key,
+            scope_type: 'FULL_POOL',
+            scope_value: 'ALL',
+            nom: `${t.nom} #${vIdx + 1}`,
+            legs: variant.legs,
+            metrics: {
+              leg_count: variant.legs?.length || 0,
+              mean_leg_model_probability: (variant.metrics?.fiabilite_moyenne || 0) / 100,
+              reference_odds_floor_product: variant.metrics?.cote_totale || 1,
+              joint_ticket_probability: variant.metrics?.prob_implicite || null,
+              ...variant.metrics
+            }
+          });
         });
       } else {
-        flattened.push([key, t]);
+        list.push({
+          ticket_id: key,
+          product_code: t.categorie || 'A',
+          strategy_code: key,
+          scope_type: 'FULL_POOL',
+          scope_value: 'ALL',
+          nom: t.nom || key,
+          legs: t.legs || [],
+          metrics: {
+            leg_count: t.legs?.length || 0,
+            mean_leg_model_probability: (t.metrics?.fiabilite_moyenne || 0) / 100,
+            reference_odds_floor_product: t.metrics?.cote_totale || 1,
+            joint_ticket_probability: t.metrics?.prob_implicite || null,
+            ...t.metrics
+          }
+        });
       }
     });
-    return flattened.filter(([key, t]) => {
-      const matchesCat = filterStratCat === 'ALL' || t.categorie === filterStratCat;
-      const matchesSearch = t.nom?.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCat && matchesSearch;
+    return list;
+  }, [assembled, isV2Tickets]);
+
+  const uniqueProductCodes = useMemo(() => {
+    return Array.from(new Set(ticketsList.map(t => t.product_code).filter(Boolean))).sort();
+  }, [ticketsList]);
+
+  const filteredStrategies = useMemo(() => {
+    return ticketsList.filter(t => {
+      const matchesProduct = filterProduct === 'ALL' || t.product_code === filterProduct || t.categorie === filterProduct;
+      const tName = t.nom || t.ticket_id || '';
+      const matchesSearch = !searchQuery || 
+        tName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (t.scope_value && t.scope_value.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (t.legs && t.legs.some(l => (l.Match || '').toLowerCase().includes(searchQuery.toLowerCase())));
+      return matchesProduct && matchesSearch;
     }).sort((a, b) => {
-      const stratA = a[1]; const stratB = b[1];
-      if (stratSortBy === 'reliability') return (stratB.metrics?.fiabilite_moyenne || 0) - (stratA.metrics?.fiabilite_moyenne || 0);
-      if (stratSortBy === 'odds') return (stratB.metrics?.cote_totale || 0) - (stratA.metrics?.cote_totale || 0);
-      if (stratSortBy === 'gain') return (stratB.metrics?.gain_10u || 0) - (stratA.metrics?.gain_10u || 0);
+      if (stratSortBy === 'reliability' || stratSortBy === 'prob') {
+        const pA = a.metrics?.mean_leg_model_probability || (a.metrics?.fiabilite_moyenne ? a.metrics.fiabilite_moyenne / 100 : 0);
+        const pB = b.metrics?.mean_leg_model_probability || (b.metrics?.fiabilite_moyenne ? b.metrics.fiabilite_moyenne / 100 : 0);
+        return pB - pA;
+      }
+      if (stratSortBy === 'odds') {
+        const oA = a.metrics?.reference_odds_floor_product || a.metrics?.cote_totale || 0;
+        const oB = b.metrics?.reference_odds_floor_product || b.metrics?.cote_totale || 0;
+        return oB - oA;
+      }
+      if (stratSortBy === 'legs') {
+        const lA = a.metrics?.leg_count || a.legs?.length || 0;
+        const lB = b.metrics?.leg_count || b.legs?.length || 0;
+        return lB - lA;
+      }
       return 0;
     });
-  }, [assembled, filterStratCat, stratSortBy, searchQuery]);
+  }, [ticketsList, filterProduct, stratSortBy, searchQuery]);
 
   const uniqueLeagues = useMemo(() => {
     if (!finals?.Selections) return [];
@@ -331,7 +393,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <div className="col-span-full bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-emerald-500/20 transition-all" onClick={() => setActiveView('strategies')}>
                   <div className="flex items-center gap-3">
                     <ShieldCheck size={20} className="text-emerald-400" />
-                    <span className="text-sm font-bold text-white uppercase tracking-widest">{tickets.length} Active Strategies</span>
+                    <span className="text-sm font-bold text-white uppercase tracking-widest">{ticketsList.length} Active Strategies</span>
                   </div>
                   <ArrowUpRight size={18} className="text-emerald-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
@@ -382,7 +444,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                           <span className="text-[9px] font-bold text-slate-700 dark:text-slate-300 truncate">{sel.Live_Betting_Recommendation[0].Signal}</span>
                        </div>
                     )}
-                    <button onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')} className="mt-auto w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all flex items-center justify-center gap-2">
+                    <button onClick={() => onNavigateToMatch(sel.Match_ID || sel.Match, sel.League || 'ALL')} className="mt-auto w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all flex items-center justify-center gap-2">
                       Analyze <ArrowUpRight size={12} />
                     </button>
                   </div>
@@ -405,54 +467,115 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
              </div>
              <div className="grid grid-cols-2 gap-2">
                 <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-950 px-3 py-2 rounded-xl border border-slate-100 dark:border-slate-800">
-                   <Filter size={12} className="text-slate-400 shrink-0" /><select value={filterStratCat} onChange={e => setFilterStratCat(e.target.value)} className="bg-transparent text-[9px] font-black uppercase tracking-tight focus:outline-none w-full"><option value="ALL">All Types</option>{Object.entries(STRATEGY_CAT_MAPPING).map(([id, data]) => (<option key={id} value={id}>{data.label}</option>))}</select>
+                   <Filter size={12} className="text-slate-400 shrink-0" />
+                   <select 
+                     value={filterProduct} 
+                     onChange={e => setFilterProduct(e.target.value)} 
+                     className="bg-transparent text-[9px] font-black uppercase tracking-tight focus:outline-none w-full"
+                   >
+                     <option value="ALL">All Products</option>
+                     {Object.entries(PRODUCT_MAPPING).map(([id, data]) => (
+                       <option key={id} value={id}>{data.label}</option>
+                     ))}
+                   </select>
                 </div>
                 <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-950 px-3 py-2 rounded-xl border border-slate-100 dark:border-slate-800">
-                   <TrendingUp size={12} className="text-slate-400 shrink-0" /><select value={stratSortBy} onChange={e => setStratSortBy(e.target.value)} className="bg-transparent text-[9px] font-black uppercase tracking-tight focus:outline-none w-full"><option value="reliability">Reliability</option><option value="odds">Highest Odds</option><option value="gain">Pot. Gain</option></select>
+                   <TrendingUp size={12} className="text-slate-400 shrink-0" />
+                   <select 
+                     value={stratSortBy} 
+                     onChange={e => setStratSortBy(e.target.value)} 
+                     className="bg-transparent text-[9px] font-black uppercase tracking-tight focus:outline-none w-full"
+                   >
+                     <option value="reliability">Reliability</option>
+                     <option value="odds">Highest Odds</option>
+                     <option value="legs">Leg Count</option>
+                   </select>
                 </div>
              </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {filteredStrategies.map(([key, ticket]) => (
-              <div key={key} className="flex flex-col bg-white dark:bg-slate-900/60 backdrop-blur-sm rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-700/50 shadow-xl transition-all hover:shadow-emerald-500/30 group active:scale-[0.99] border-t-2 border-t-emerald-500/20 relative">
-                {auditMode && (<div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-300"><pre className="text-[8px] font-mono text-emerald-400 whitespace-pre-wrap">{JSON.stringify(ticket, null, 2)}</pre></div>)}
-                <div className="p-6 border-b border-slate-100 dark:border-slate-800/80">
-                   <div className="flex items-start justify-between mb-4 gap-4">
-                     <div className="flex flex-col gap-1.5 min-w-0">
-                       <div className="flex items-center gap-2">
-                         <span className={`px-2 py-0.5 ${STRATEGY_CAT_MAPPING[ticket.categorie]?.color || 'bg-slate-900'} text-white text-[8px] font-black rounded shadow-sm shrink-0`}>{STRATEGY_CAT_MAPPING[ticket.categorie]?.label || `CAT ${ticket.categorie}`}</span>
-                         <h3 className="text-base font-black text-slate-900 dark:text-white uppercase leading-none truncate">{ticket.nom}</h3>
+            {filteredStrategies.map((ticket, idx) => {
+              const prodInfo = PRODUCT_MAPPING[ticket.product_code] || { label: ticket.product_code || 'TICKET', color: 'bg-slate-900', desc: 'Strategy' };
+              const legCount = ticket.metrics?.leg_count ?? ticket.legs?.length ?? 0;
+              const totalOdds = ticket.metrics?.reference_odds_floor_product ?? ticket.metrics?.cote_totale ?? 0;
+              const meanProb = ticket.metrics?.mean_leg_model_probability != null 
+                ? (ticket.metrics.mean_leg_model_probability * 100).toFixed(0) 
+                : (ticket.metrics?.fiabilite_moyenne || '0');
+              const jointProb = ticket.metrics?.joint_ticket_probability != null
+                ? (ticket.metrics.joint_ticket_probability * 100).toFixed(0)
+                : null;
+
+              return (
+                <div key={ticket.ticket_id || idx} className="flex flex-col bg-white dark:bg-slate-900/60 backdrop-blur-sm rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-700/50 shadow-xl transition-all hover:shadow-emerald-500/30 group active:scale-[0.99] border-t-2 border-t-emerald-500/20 relative">
+                  {auditMode && (
+                    <div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-300">
+                      <pre className="text-[8px] font-mono text-emerald-400 whitespace-pre-wrap">{JSON.stringify(ticket, null, 2)}</pre>
+                    </div>
+                  )}
+                  <div className="p-6 border-b border-slate-100 dark:border-slate-800/80">
+                     <div className="flex items-start justify-between mb-4 gap-4">
+                       <div className="flex flex-col gap-1.5 min-w-0">
+                         <div className="flex items-center gap-2">
+                           <span className={`px-2 py-0.5 ${prodInfo.color || 'bg-slate-900'} text-white text-[8px] font-black rounded shadow-sm shrink-0`}>
+                             {prodInfo.label}
+                           </span>
+                           <h3 className="text-base font-black text-slate-900 dark:text-white uppercase leading-none truncate">
+                             {ticket.nom || ticket.ticket_id}
+                           </h3>
+                         </div>
+                         <div className="flex flex-wrap items-center gap-3 text-[8px] font-bold text-slate-400 uppercase tracking-widest">
+                            <span className="flex items-center gap-1">
+                              <Box size={10} className="text-emerald-500" />
+                              {legCount} SELECTIONS
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Activity size={10} className="text-blue-500" />
+                              {meanProb}% MEAN PROB
+                            </span>
+                            {ticket.scope_value && ticket.scope_value !== 'ALL' && (
+                              <span className="flex items-center gap-1 text-purple-400">
+                                <Globe size={10} />
+                                {ticket.scope_value}
+                              </span>
+                            )}
+                         </div>
                        </div>
-                       <div className="flex flex-wrap items-center gap-3 text-[8px] font-bold text-slate-400 uppercase tracking-widest">
-                          <span className="flex items-center gap-1"><Box size={10} className="text-emerald-500" />{ticket.metrics?.nb_legs || ticket.size || 0} SELECTIONS</span>
-                          <span className="flex items-center gap-1"><Activity size={10} className="text-blue-500" />{ticket.metrics?.fiabilite_moyenne || '0'}% RELIABILITY</span>
+                       <div className="flex flex-col items-end shrink-0">
+                          <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Est. Odds</span>
+                          <span className="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-500 tracking-tighter">
+                            @{typeof totalOdds === 'number' ? totalOdds.toFixed(2) : totalOdds}
+                          </span>
                        </div>
                      </div>
-                     <div className="flex flex-col items-end shrink-0">
-                        <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Est. Odds</span>
-                        <span className="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-500 tracking-tighter">@{ticket.metrics?.cote_totale?.toFixed(2) || '0.00'}</span>
+                     <div className="grid grid-cols-3 gap-2">
+                        <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center">
+                          <span className="text-[7px] font-black text-slate-400 uppercase mb-0.5">Pot. Gain (10U)</span>
+                          <span className="text-sm font-black text-slate-900 dark:text-white font-mono">
+                            {typeof totalOdds === 'number' ? (totalOdds * 10).toFixed(1) : '0'}U
+                          </span>
+                        </div>
+                        <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center">
+                          <span className="text-[7px] font-black text-slate-400 uppercase mb-0.5">Joint Prob</span>
+                          <span className="text-sm font-black text-slate-900 dark:text-white font-mono">
+                            {jointProb ? `${jointProb}%` : 'N/A'}
+                          </span>
+                        </div>
+                        <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center">
+                          <span className="text-[7px] font-black text-slate-400 uppercase mb-0.5">Product</span>
+                          <span className="text-[8px] font-black text-slate-900 dark:text-white truncate">
+                            {prodInfo.desc || ticket.product_code}
+                          </span>
+                        </div>
                      </div>
-                   </div>
-                   <div className="grid grid-cols-3 gap-2">
-                      <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center">
-                        <span className="text-[7px] font-black text-slate-400 uppercase mb-0.5">Gain 10U</span>
-                        <span className="text-sm font-black text-slate-900 dark:text-white font-mono">{ticket.metrics?.gain_10u || '0'}U</span>
-                      </div>
-                      <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center">
-                        <span className="text-[7px] font-black text-slate-400 uppercase mb-0.5">Imp. Prob</span>
-                        <span className="text-sm font-black text-slate-900 dark:text-white font-mono">{(ticket.metrics?.prob_implicite ? (ticket.metrics.prob_implicite * 100).toFixed(0) : '0')}%</span>
-                      </div>
-                      <div className={`p-2 rounded-xl border flex flex-col items-center ${ticket.metrics?.badge_correlation === '🟢' ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-slate-50 dark:bg-slate-800/50 border-slate-100 dark:border-slate-800'}`}>
-                        <span className="text-[7px] font-black text-slate-400 uppercase mb-0.5">Shield</span>
-                        <span className="text-[8px] font-black text-slate-900 dark:text-white truncate">{ticket.metrics?.badge_name?.replace('Anti-Variance', 'AV-SHIELD') || 'N/A'} {ticket.metrics?.badge_correlation || ''}</span>
-                      </div>
-                   </div>
+                  </div>
+                  <div className="p-3 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col gap-2">
+                    {ticket.legs?.map((leg, lidx) => (
+                      <TicketLeg key={lidx} leg={leg} onNavigate={onNavigateToMatch} />
+                    ))}
+                  </div>
                 </div>
-                <div className="p-3 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col gap-2">
-                  {ticket.legs?.map((leg, lidx) => (<TicketLeg key={lidx} leg={leg} onNavigate={onNavigateToMatch} />))}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
@@ -495,7 +618,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       <div className="flex flex-col items-end"><span className="text-[8px] font-black text-slate-400 uppercase mb-0.5">EV Score</span><span className={`text-base font-black font-mono ${sel.Score_EV > 1.2 ? 'text-emerald-500' : 'text-blue-500'}`}>{sel.Score_EV?.toFixed(3)}</span>{sel.Score_EV_Original && (<span className="text-[7px] text-slate-400 opacity-60 font-mono">Base: {sel.Score_EV_Original.toFixed(3)}</span>)}</div>
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1.5 bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-1.5 rounded-lg border border-emerald-500/20"><span className="text-[7px] font-black uppercase text-emerald-600 dark:text-emerald-400">ODDS</span><span className="text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400">@{sel.Cote_Ref}</span></div>
-                        <button onClick={() => onNavigateToMatch(sel.Match, LEAGUE_NAME_TO_CODE[sel.League] || 'ALL')} className="p-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-lg shadow-md hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-all"><ArrowUpRight size={14} /></button>
+                        <button onClick={() => onNavigateToMatch(sel.Match_ID || sel.Match, sel.League || 'ALL')} className="p-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-lg shadow-md hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-all"><ArrowUpRight size={14} /></button>
                       </div>
                     </div>
                   </div>

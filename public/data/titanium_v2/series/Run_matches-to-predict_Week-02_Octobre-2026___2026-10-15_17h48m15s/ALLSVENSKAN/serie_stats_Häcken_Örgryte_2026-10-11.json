@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "competition": "Allsvenskan",
+    "fixture": "Häcken vs Örgryte",
+    "date": "2026-10-11",
+    "generated_at": "2026-10-15T18:07:08.387025",
+    "source": "football_master.db (100% Native)",
+    "target_season_start": "2026-01-01",
+    "season_source": "season_resolver",
+    "version": "10.0",
+    "features_legend": {
+      "fatigue_profile": "Score de 0.0 (Reposé) à 1.0 (Exténué) incluant les trêves hivernales (0.4 Rouillé) et le stress géographique asymétrique (affectant surtout l'équipe Extérieure).",
+      "live_indices": "Probabilités conditionnelles pures extraites au Snapshot de la 75ème minute. Clutch = Capacité à marquer quand on est mené/à égalité. Collapse = Risque d'encaisser quand on mène d'1 but.",
+      "game_state_distribution": "Chronologie absolue des buts selon l'état du score (winning, tied, losing) à la seconde précédant le but."
+    }
+  },
+  "streaks": {
+    "h2h_streaks": [],
+    "team_streaks": {
+      "home": [
+        "No losses: 3",
+        "Over 0.5 Team Goals: 7/10",
+        "BTTS No: 7/10",
+        "Over 8.5 SOT: 5/7",
+        "Over 3.5 SOT (Team): 5/7",
+        "Over 10.5 Shots (Team): 8/10",
+        "Over 22.5 Fouls: 8/10",
+        "Under 38.5 Throws: 7/10",
+        "Under 3.5 Offsides: 8/10",
+        "Under 1.5 Offsides (Team): 8/10",
+        "Under 4.5 Yellow Cards: 9/10",
+        "Under 1.5 Yellow Cards (Team): 7/10",
+        "Opponent Over 11.5 Fouls: 8/10",
+        "Opponent Under 18.5 Throws: 6/8",
+        "Opponent Under 1.5 Offsides: 5/7",
+        "Opponent Under 1.5 Yellow Cards: 6/8"
+      ],
+      "away": [
+        "No wins: 7",
+        "Scoring: 3",
+        "No Clean Sheet: 7",
+        "Under 1.5 Team Goals: 8/10",
+        "Over 0.5 Team Goals: 7/10",
+        "BTTS Yes: 6/8",
+        "Under 3.5 SOT (Team): 7/10",
+        "Under 3.5 Offsides: 8/10",
+        "Under 1.5 Offsides (Team): 8/10",
+        "Under 4.5 Yellow Cards: 10/10",
+        "Under 1.5 Yellow Cards (Team): 8/10",
+        "Opponent Under 1.5 Offsides: 7/10",
+        "Opponent Under 2.5 Keeper Saves: 5/7",
+        "Opponent Over 1.5 Yellow Cards: 7/10"
+      ]
+    }
+  },
+  "fatigue_profile": {
+    "home": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 21
+    },
+    "away": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 22
+    }
+  },
+  "live_indices": {
+    "home": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 13,
+          "success_matches": 6,
+          "index": 0.46
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 6,
+          "failed_matches": 2,
+          "index": 0.33
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 7,
+          "success_matches": 4,
+          "index": 0.57
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 4,
+          "failed_matches": 2,
+          "index": 0.5
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 19,
+          "success_matches": 6,
+          "index": 0.32
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 1,
+          "failed_matches": 1,
+          "index": 1.0
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 9,
+          "success_matches": 1,
+          "index": 0.11
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      }
+    }
+  },
+  "game_state_distribution": {
+    "home": {
+      "season": {
+        "scored": {
+          "winning": 11,
+          "tied": 15,
+          "losing": 13
+        },
+        "conceded": {
+          "winning": 9,
+          "tied": 13,
+          "losing": 8
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 3,
+          "tied": 7,
+          "losing": 8
+        },
+        "conceded": {
+          "winning": 6,
+          "tied": 7,
+          "losing": 5
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "scored": {
+          "winning": 3,
+          "tied": 10,
+          "losing": 12
+        },
+        "conceded": {
+          "winning": 7,
+          "tied": 19,
+          "losing": 23
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 3,
+          "tied": 2,
+          "losing": 3
+        },
+        "conceded": {
+          "winning": 0,
+          "tied": 10,
+          "losing": 19
+        }
+      }
+    }
+  },
+  "goal_distribution": {
+    "season": {
+      "home_scored": [
+        1,
+        4,
+        3,
+        5,
+        1,
+        4
+      ],
+      "home_conceded": [
+        4,
+        2,
+        6,
+        1,
+        2,
+        3
+      ],
+      "away_scored": [
+        1,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      "away_conceded": [
+        3,
+        3,
+        4,
+        7,
+        5,
+        7
+      ]
+    },
+    "venue": {
+      "home_scored": [
+        1,
+        4,
+        3,
+        5,
+        1,
+        4
+      ],
+      "home_conceded": [
+        4,
+        2,
+        6,
+        1,
+        2,
+        3
+      ],
+      "away_scored": [
+        1,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      "away_conceded": [
+        3,
+        3,
+        4,
+        7,
+        5,
+        7
+      ]
+    },
+    "recent_form": {
+      "home_scored": [
+        0,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "home_conceded": [
+        1,
+        1,
+        2,
+        0,
+        1,
+        0
+      ],
+      "away_scored": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "away_conceded": [
+        1,
+        1,
+        0,
+        2,
+        3,
+        3
+      ]
+    }
+  }
+}

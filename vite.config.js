@@ -3,36 +3,79 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 
-const generateIndex = () => {
-  const dataDir = path.resolve(__dirname, 'public/data');
-  if (fs.existsSync(dataDir)) {
-    const files = fs.readdirSync(dataDir).filter(f => f.endsWith('.json') && f !== 'index.json');
-    fs.writeFileSync(path.join(dataDir, 'index.json'), JSON.stringify(files));
+function scanTitaniumV2() {
+  const baseDir = path.resolve(__dirname, 'public/data/titanium_v2');
+  const manifest = {
+    predictions: [],
+    matches: [],
+    seriesRuns: [],
+    tickets: {
+      assembled: null,
+      finals: null,
+      leagues: []
+    }
+  };
+
+  if (!fs.existsSync(baseDir)) return manifest;
+
+  const predDir = path.join(baseDir, 'predictions');
+  if (fs.existsSync(predDir)) {
+    manifest.predictions = fs.readdirSync(predDir).filter(f => f.endsWith('.json'));
   }
-  
-  const matchupsDir = path.resolve(__dirname, 'public/data/matchups');
-  if (fs.existsSync(matchupsDir)) {
-    const files = fs.readdirSync(matchupsDir).filter(f => f.endsWith('.json') && f !== 'index.json');
-    fs.writeFileSync(path.join(matchupsDir, 'index.json'), JSON.stringify(files));
+
+  const matchesDir = path.join(baseDir, 'matches');
+  if (fs.existsSync(matchesDir)) {
+    manifest.matches = fs.readdirSync(matchesDir).filter(f => f.endsWith('.json'));
   }
-};
+
+  const seriesDir = path.join(baseDir, 'series');
+  if (fs.existsSync(seriesDir)) {
+    manifest.seriesRuns = fs.readdirSync(seriesDir).filter(f => {
+      try {
+        return fs.statSync(path.join(seriesDir, f)).isDirectory();
+      } catch (e) {
+        return false;
+      }
+    });
+  }
+
+  const ticketsDir = path.join(baseDir, 'tickets');
+  if (fs.existsSync(ticketsDir)) {
+    const tFiles = fs.readdirSync(ticketsDir).filter(f => f.endsWith('.json'));
+    if (tFiles.includes('TICKETS_ASSEMBLES.json')) {
+      manifest.tickets.assembled = '/data/titanium_v2/tickets/TICKETS_ASSEMBLES.json';
+    }
+  }
+
+  const auxDir = path.join(baseDir, 'tickets', 'auxiliary');
+  if (fs.existsSync(auxDir)) {
+    if (fs.existsSync(path.join(auxDir, 'CHOIX_FINAUX.json'))) {
+      manifest.tickets.finals = '/data/titanium_v2/tickets/auxiliary/CHOIX_FINAUX.json';
+    }
+    const liguesDir = path.join(auxDir, 'LIGUES');
+    if (fs.existsSync(liguesDir)) {
+      manifest.tickets.leagues = fs.readdirSync(liguesDir).filter(f => f.endsWith('.json'));
+    }
+  }
+
+  return manifest;
+}
 
 export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'data-indexer',
-      configureServer(server) {
-        generateIndex(); // Run once on startup
-        server.watcher.add(path.resolve(__dirname, 'public/data'));
-        server.watcher.on('all', (event, filePath) => {
-          if (filePath.includes('public/data') && filePath.endsWith('.json') && !filePath.endsWith('index.json')) {
-            generateIndex();
-          }
-        });
+      name: 'titanium-manifest',
+      resolveId(id) {
+        if (id === 'virtual:titanium-manifest') {
+          return '\0virtual:titanium-manifest';
+        }
       },
-      buildStart() {
-        generateIndex();
+      load(id) {
+        if (id === '\0virtual:titanium-manifest') {
+          const manifest = scanTitaniumV2();
+          return `export default ${JSON.stringify(manifest)};`;
+        }
       }
     }
   ],

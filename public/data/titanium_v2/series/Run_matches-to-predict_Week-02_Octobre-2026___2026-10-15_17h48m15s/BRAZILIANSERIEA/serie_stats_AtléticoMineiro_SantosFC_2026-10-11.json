@@ -1,0 +1,296 @@
+{
+  "metadata": {
+    "competition": "Brazilian Serie A",
+    "fixture": "Atlético Mineiro vs Santos FC",
+    "date": "2026-10-11",
+    "generated_at": "2026-10-15T18:06:32.084092",
+    "source": "football_master.db (100% Native)",
+    "target_season_start": "2026-01-01",
+    "season_source": "season_resolver",
+    "version": "10.0",
+    "features_legend": {
+      "fatigue_profile": "Score de 0.0 (Reposé) à 1.0 (Exténué) incluant les trêves hivernales (0.4 Rouillé) et le stress géographique asymétrique (affectant surtout l'équipe Extérieure).",
+      "live_indices": "Probabilités conditionnelles pures extraites au Snapshot de la 75ème minute. Clutch = Capacité à marquer quand on est mené/à égalité. Collapse = Risque d'encaisser quand on mène d'1 but.",
+      "game_state_distribution": "Chronologie absolue des buts selon l'état du score (winning, tied, losing) à la seconde précédant le but."
+    }
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "No wins: 3",
+      "No Clean Sheet: 3"
+    ],
+    "team_streaks": {
+      "home": [
+        "No losses: 4",
+        "Scoring: 4",
+        "Over 0.5 Team Goals: 8/10",
+        "Over 9.5 Corners: 7/10",
+        "Over 10.5 Corners: 7/10",
+        "Over 8.5 SOT: 5/7",
+        "Over 3.5 SOT (Team): 7/10",
+        "Over 22.5 Shots: 9/10",
+        "Over 10.5 Shots (Team): 6/8",
+        "Over 22.5 Fouls: 7/10",
+        "Under 3.5 Offsides: 10/10",
+        "Over 5.5 Keeper Saves: 7/10",
+        "Under 4.5 Yellow Cards: 10/10",
+        "Under 1.5 Yellow Cards (Team): 10/10",
+        "Opponent Under 1.5 Offsides: 5/7",
+        "Opponent Over 2.5 Keeper Saves: 5/7",
+        "Opponent Under 1.5 Yellow Cards: 10/10",
+        "Opponent Over 4.5 Corners: 8/10"
+      ],
+      "away": [
+        "No losses: 8",
+        "Scoring: 8",
+        "No Clean Sheet: 5",
+        "Over 2.5 Goals: 7/10",
+        "Over 1.5 Team Goals: 7/10",
+        "Over 0.5 Team Goals: 9/10",
+        "BTTS Yes: 7/10",
+        "Over 8.5 SOT: 5/7",
+        "Over 3.5 SOT (Team): 8/10",
+        "Over 22.5 Shots: 9/10",
+        "Over 22.5 Fouls: 9/10",
+        "Over 11.5 Fouls (Team): 5/7",
+        "Under 18.5 Throws (Team): 5/7",
+        "Under 3.5 Offsides: 7/10",
+        "Over 1.5 Offsides (Team): 5/7",
+        "Over 2.5 Keeper Saves (Team): 4/5",
+        "Under 4.5 Yellow Cards: 10/10",
+        "Under 1.5 Yellow Cards (Team): 10/10",
+        "Opponent Over 11.5 Fouls: 7/10",
+        "Opponent Over 18.5 Throws: 7/10",
+        "Opponent Under 1.5 Offsides: 8/10",
+        "Opponent Under 2.5 Keeper Saves: 4/5",
+        "Opponent Under 1.5 Yellow Cards: 10/10",
+        "Opponent Over 4.5 Corners: 5/7",
+        "Opponent Over 3.5 SOT: 5/7"
+      ]
+    }
+  },
+  "fatigue_profile": {
+    "home": {
+      "index_score": 0.57,
+      "label": "Fatigué",
+      "days_rest": 3
+    },
+    "away": {
+      "index_score": 0.57,
+      "label": "Fatigué",
+      "days_rest": 3
+    }
+  },
+  "live_indices": {
+    "home": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 16,
+          "success_matches": 2,
+          "index": 0.12
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 9,
+          "failed_matches": 4,
+          "index": 0.44
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 3,
+          "success_matches": 0,
+          "index": 0.0
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 8,
+          "failed_matches": 4,
+          "index": 0.5
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 18,
+          "success_matches": 4,
+          "index": 0.22
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 7,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 9,
+          "success_matches": 2,
+          "index": 0.22
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 3,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      }
+    }
+  },
+  "game_state_distribution": {
+    "home": {
+      "season": {
+        "scored": {
+          "winning": 15,
+          "tied": 22,
+          "losing": 6
+        },
+        "conceded": {
+          "winning": 13,
+          "tied": 16,
+          "losing": 6
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 7,
+          "tied": 15,
+          "losing": 2
+        },
+        "conceded": {
+          "winning": 10,
+          "tied": 3,
+          "losing": 3
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "scored": {
+          "winning": 10,
+          "tied": 23,
+          "losing": 12
+        },
+        "conceded": {
+          "winning": 17,
+          "tied": 19,
+          "losing": 7
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 5,
+          "tied": 12,
+          "losing": 6
+        },
+        "conceded": {
+          "winning": 10,
+          "tied": 10,
+          "losing": 3
+        }
+      }
+    }
+  },
+  "goal_distribution": {
+    "season": {
+      "home_scored": [
+        2,
+        6,
+        2,
+        0,
+        10,
+        4
+      ],
+      "home_conceded": [
+        1,
+        1,
+        5,
+        1,
+        0,
+        8
+      ],
+      "away_scored": [
+        1,
+        4,
+        6,
+        4,
+        2,
+        6
+      ],
+      "away_conceded": [
+        1,
+        2,
+        3,
+        2,
+        6,
+        9
+      ]
+    },
+    "venue": {
+      "home_scored": [
+        2,
+        6,
+        2,
+        0,
+        10,
+        4
+      ],
+      "home_conceded": [
+        1,
+        1,
+        5,
+        1,
+        0,
+        8
+      ],
+      "away_scored": [
+        1,
+        4,
+        6,
+        4,
+        2,
+        6
+      ],
+      "away_conceded": [
+        1,
+        2,
+        3,
+        2,
+        6,
+        9
+      ]
+    },
+    "recent_form": {
+      "home_scored": [
+        0,
+        3,
+        0,
+        0,
+        6,
+        1
+      ],
+      "home_conceded": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        2
+      ],
+      "away_scored": [
+        1,
+        1,
+        3,
+        1,
+        1,
+        4
+      ],
+      "away_conceded": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        2
+      ]
+    }
+  }
+}
