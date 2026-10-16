@@ -466,6 +466,14 @@ export async function loadTitaniumV2Session(options = {}) {
     });
   }
 
+  // Build Set of Match_IDs present in assembled tickets
+  const ticketMatchIds = new Set();
+  if (ticketsAssembled?.tickets && Array.isArray(ticketsAssembled.tickets)) {
+    ticketsAssembled.tickets.forEach(ticket => {
+      (ticket.match_ids || []).forEach(id => ticketMatchIds.add(id));
+    });
+  }
+
   // 5. Correlate and enrich all matches
   const enrichedMatches = predictionsRaw.map(pred => {
     const parts = (pred.Matchup || '').split(' vs ');
@@ -519,6 +527,7 @@ export async function loadTitaniumV2Session(options = {}) {
       isFinalPick: !!finalPick,
       finalPick: finalPick || null,
       masterReason: finalPick?.Streak_Reason || null,
+      inTickets: pred.Match_ID ? ticketMatchIds.has(pred.Match_ID) : false,
       session_id: predSessionId
     };
   });

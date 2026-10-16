@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Badge } from './ui/Badge';
-import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Clock, Radio, Trophy } from 'lucide-react';
+import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Clock, Trophy } from 'lucide-react';
 
 export function MatchList({ matches, selectedMatch, onSelectMatch }) {
   const [collapsedDates, setCollapsedDates] = useState({});
   const [sortByTime, setSortByTime] = useState(true);
-  const [showLiveOnly, setShowLiveOnly] = useState(false);
 
   const formatTimeAMPM = (timeStr) => {
     if (!timeStr) return '';
@@ -29,9 +28,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
     return diffMinutes >= 0 && diffMinutes <= 120;
   };
 
-  const visibleMatches = showLiveOnly
-    ? matches.filter(match => isMatchLive(match.date, match.hours))
-    : matches;
+  const visibleMatches = matches;
 
   const groupedMatches = visibleMatches.reduce((acc, match) => {
     const d = match.date || 'Date Inconnue';
@@ -107,13 +104,6 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
               title="Sort by time"
             >
               <Clock size={14} />
-            </button>
-            <button
-              onClick={() => setShowLiveOnly(!showLiveOnly)}
-              className={`flex items-center p-1 rounded transition-colors ${showLiveOnly ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)]' : 'text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
-              title="Show live matches only"
-            >
-              <Radio size={14} className={showLiveOnly ? "animate-pulse" : ""} />
             </button>
           </div>
         </div>

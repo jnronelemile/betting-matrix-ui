@@ -1,9 +1,19 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon, Trophy, PieChart, AlertTriangle } from 'lucide-react';
+import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon, Trophy, PieChart, AlertTriangle, Ticket, Filter } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
 import TicketsView from './components/dashboard/TicketsView';
+import { AdvancedFilterDrawer } from './components/filters/AdvancedFilterDrawer';
+import { BatchDateBar } from './components/filters/BatchDateBar';
 import { loadTitaniumV2Session, getLeagueReportUrl, cleanStr } from './utils/titaniumLoader';
+import {
+  INITIAL_FILTERS_STATE,
+  filterMatches,
+  getNextFiltersState,
+  computeWhatIfCount,
+  countActiveFilters,
+  getActiveFilterChips
+} from './utils/filterPredicates';
 
 const MASTER_HUB_LEAGUE = { id: 'TICKETS', name: 'Master Selections', code: 'TICKETS', flag: '🏆' };
 const ALL_LEAGUES_DEFAULT = { id: 'ALL', name: 'Toutes les Ligues', code: 'ALL', flag: '🌍' };
@@ -26,14 +36,16 @@ export default function App() {
 
   const [sidebarOpen, setSidebarOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 1024 : false);
   const [matchListOpen, setMatchListOpen] = useState(true);
-  const [showTrueFavorites, setShowTrueFavorites] = useState(false);
-  const [showSuperSignals, setShowSuperSignals] = useState(false);
-  const [showHighConfidence, setShowHighConfidence] = useState(false);
-  const [showUltraSafe, setShowUltraSafe] = useState(false);
-  const [showRegularity, setShowRegularity] = useState(false);
-  const [showSafeButs, setShowSafeButs] = useState(false);
-  const [showTopForm, setShowTopForm] = useState(false);
-  const [showMasterPicks, setShowMasterPicks] = useState(false);
+  const [filtersState, setFiltersState] = useState(INITIAL_FILTERS_STATE);
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+
+  const handleToggleFilter = (key, subKey = null) => {
+    setFiltersState(prev => getNextFiltersState(prev, key, subKey));
+  };
+
+  const handleResetFilters = () => {
+    setFiltersState(INITIAL_FILTERS_STATE);
+  };
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
@@ -216,36 +228,33 @@ export default function App() {
     });
   }, [leagueMatches]);
 
-  const filteredMatches = useMemo(() => {
-    return leagueMatches.filter(match => {
-      const textMatch = match.Matchup.toLowerCase().includes(searchQuery.toLowerCase());
-      const dateMatch = selectedDate === 'ALL' || match.date === selectedDate;
-      const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
-      const favMatch = !showTrueFavorites || isFalseFav === false;
-
-      const hasSuperSignal = match.Super_Signals && Object.values(match.Super_Signals).some(v => v === true);
-      const signalMatch = !showSuperSignals || hasSuperSignal;
-
-      const confidence = match.Calibration_Diagnostics?.confidence_index || 0;
-      const confidenceMatch = !showHighConfidence || confidence >= 0.65;
-
-      const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
-      const ultraSafeMatch = !showUltraSafe || investSignals.IS_ULTRA_SAFE;
-
-      const trajH = match.Calibration_Diagnostics?.trajectory_home || 1;
-      const trajA = match.Calibration_Diagnostics?.trajectory_away || 1;
-      const isRegular = (1 - Math.abs(trajH - 1)) >= 0.99 && (1 - Math.abs(trajA - 1)) >= 0.99;
-      const regularMatch = !showRegularity || isRegular;
-
-      const safeButsMatch = !showSafeButs || investSignals.IS_SAFE_GOALS;
-
-      const topFormMatch = !showTopForm || investSignals.IS_TOP_FORM_HOME || investSignals.IS_TOP_FORM_AWAY;
-
-      const masterMatch = !showMasterPicks || match.isFinalPick === true;
-
-      return textMatch && dateMatch && favMatch && signalMatch && confidenceMatch && ultraSafeMatch && regularMatch && safeButsMatch && topFormMatch && masterMatch;
+  const dateCounts = useMemo(() => {
+    const counts = {};
+    (leagueMatches || []).forEach(m => {
+      const d = m.date || 'Date Inconnue';
+      counts[d] = (counts[d] || 0) + 1;
     });
-  }, [leagueMatches, searchQuery, selectedDate, showTrueFavorites, showSuperSignals, showHighConfidence, showUltraSafe, showRegularity, showSafeButs, showTopForm, showMasterPicks]);
+    return counts;
+  }, [leagueMatches]);
+
+  const baseMatches = useMemo(() => {
+    return leagueMatches.filter(match => {
+      const textMatch = !searchQuery || match.Matchup.toLowerCase().includes(searchQuery.toLowerCase());
+      const dateMatch = selectedDate === 'ALL' || match.date === selectedDate;
+      return textMatch && dateMatch;
+    });
+  }, [leagueMatches, searchQuery, selectedDate]);
+
+  const filteredMatches = useMemo(() => {
+    return filterMatches(baseMatches, filtersState);
+  }, [baseMatches, filtersState]);
+
+  const masterWhatIf = useMemo(() => computeWhatIfCount(baseMatches, filtersState, 'masterPicksOnly'), [baseMatches, filtersState]);
+  const ticketsWhatIf = useMemo(() => computeWhatIfCount(baseMatches, filtersState, 'inTicketsOnly'), [baseMatches, filtersState]);
+  const superWhatIf = useMemo(() => computeWhatIfCount(baseMatches, filtersState, 'superSignalsAny'), [baseMatches, filtersState]);
+  const killSwitchWhatIf = useMemo(() => computeWhatIfCount(baseMatches, filtersState, 'killSwitchActiveOnly'), [baseMatches, filtersState]);
+  const activeFiltersCount = useMemo(() => countActiveFilters(filtersState), [filtersState]);
+  const activeFilterChips = useMemo(() => getActiveFilterChips(filtersState), [filtersState]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300">
@@ -321,57 +330,68 @@ export default function App() {
           transition-all duration-300 ease-out transform
           ${headerVisible && lastScrollY.current > 200 ? 'translate-y-0' : '-translate-y-full'}
         `}>
-          <div className="h-16 flex items-center justify-between px-4 gap-4">
+          <div className="h-16 flex items-center justify-between px-2.5 sm:px-4 gap-2">
              <div className="flex items-center gap-2 shrink-0">
                 <button
                   className="text-slate-500 dark:text-slate-400 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
                   onClick={() => setSidebarOpen(true)}
+                  aria-label="Menu"
                 >
                   <Menu size={18} />
                 </button>
-                <div className="flex flex-col">
+                <div className="hidden sm:flex flex-col">
                   <h1 className="font-bold text-xs text-slate-900 dark:text-slate-100 tracking-tight">ColdBetdrox</h1>
                   <p className="text-[8px] text-emerald-500 font-mono tracking-widest uppercase">Live Matrix</p>
                 </div>
              </div>
 
-             <div className="flex items-center gap-2">
+             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                 <button
                   onClick={() => {
                     setSelectedLeague(MASTER_HUB_LEAGUE);
                     setSelectedMatch(null);
                     setSidebarOpen(false);
                   }}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]' : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'}`}
+                  className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]' : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'}`}
+                  aria-label="Master Hub"
                 >
                   <Trophy size={14} className={selectedLeague.id === 'TICKETS' ? 'animate-bounce' : ''} />
-                  <span className="hidden xs:inline">HUB</span>
-                  <span className="xs:hidden">HUB</span>
+                  <span>HUB</span>
                 </button>
+                <BatchDateBar
+                  availableDates={availableDates}
+                  selectedDate={selectedDate}
+                  onSelectDate={setSelectedDate}
+                  dateCounts={dateCounts}
+                  totalMatchesCount={leagueMatches.length}
+                  isMobile={true}
+                />
                 <button
-                  onClick={toggleTheme}
-                  className="text-slate-500 dark:text-slate-400 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700"
-                >
-                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                </button>
-                <button
-                  className="text-emerald-500 p-2"
+                  className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
                   onClick={() => {
                     setMobileSearchOpen(true);
                     setHeaderVisible(true);
                   }}
+                  aria-label="Recherche"
                 >
-                  <Search size={20} />
+                  <Search size={18} />
+                </button>
+                <button
+                  onClick={toggleTheme}
+                  className="text-slate-500 dark:text-slate-400 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                  aria-label="Thème"
+                >
+                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
              </div>
           </div>
         </div>
 
         {/* Static Header Section (Scrolls naturally) */}
-        <header className="relative z-20 bg-white dark:bg-slate-900 transition-colors duration-300">
+        <header className="relative z-40 bg-white dark:bg-slate-900 transition-colors duration-300">
           {/* Desktop Header & Mobile Static Top Part */}
           <div className="border-b border-slate-200 dark:border-slate-800">
-            <div className="h-16 flex items-center justify-between px-4 lg:px-6 gap-4">
+            <div className="h-16 flex items-center justify-between px-2.5 sm:px-4 lg:px-6 gap-2 sm:gap-4">
               {mobileSearchOpen ? (
                 <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200 lg:hidden">
                   <div className="relative flex-1">
@@ -417,86 +437,125 @@ export default function App() {
                   </div>
 
                   {/* Desktop Integrated Navigation (Hidden on Mobile) */}
-                  <div className="hidden lg:flex flex-1 items-center gap-4 min-w-0">
-                    {/* Integrated Date Pills */}
-                    <div className="flex-1 flex overflow-x-auto no-scrollbar gap-1.5 snap-x max-w-2xl border-x border-slate-100 dark:border-slate-800/50 px-4">
-                      <button
-                        onClick={() => setSelectedDate('ALL')}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
-                          selectedDate === 'ALL'
-                            ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
-                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
-                        }`}
-                      >
-                        ALL
-                      </button>
-                      {availableDates.map(date => {
-                        let displayDay = '???';
-                        let displayNumber = '';
-                        if (date !== 'Date Inconnue') {
-                          const d = new Date(`${date}T12:00:00`);
-                          displayDay = d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '');
-                          displayNumber = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-                        }
-                        return (
-                          <button
-                            key={date}
-                            onClick={() => setSelectedDate(date)}
-                            className={`flex flex-col items-center px-3 py-1 rounded-lg transition-all border min-w-[55px] snap-start ${
-                              selectedDate === date
-                                ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
-                                : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
-                            }`}
-                          >
-                            <span className="text-[8px] uppercase font-bold tracking-tighter opacity-70 leading-none mb-0.5">{displayDay}</span>
-                            <span className="text-[10px] font-mono font-bold leading-none">{displayNumber}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
+                  <div className="hidden lg:flex flex-1 items-center gap-3 min-w-0">
+                    {/* Batch Date Navigation */}
+                    <BatchDateBar
+                      availableDates={availableDates}
+                      selectedDate={selectedDate}
+                      onSelectDate={setSelectedDate}
+                      dateCounts={dateCounts}
+                      totalMatchesCount={leagueMatches.length}
+                    />
 
-                    {/* Integrated Signal Toggles */}
+                    {/* Subtle divider separating temporal calendar from analytical risk filters */}
+                    <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 shrink-0 mx-1 hidden xl:block" />
+
+                    {/* Desktop Quick Bar */}
                     <div className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x shrink-0">
                       {[
-                        { id: 'master', label: 'MASTER PICKS', icon: <Trophy size={12} />, active: showMasterPicks, toggle: () => setShowMasterPicks(!showMasterPicks), activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]' },
-                        { id: 'fav', label: 'TRUE FAVS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
-                        { id: 'elite', label: 'ELITE SIGNALS', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
-                        { id: 'conf', label: 'HIGH CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
-                        { id: 'safe', label: 'SAFE PICK', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
-                        { id: 'reg', label: 'REGULARITY', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
-                        { id: 'goals', label: 'SAFE GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
-                        { id: 'top', label: 'TOP FORM', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
+                        {
+                          id: 'master',
+                          label: filtersState.masterPicksOnly ? `MASTER (${filteredMatches.length})` : `MASTER (${masterWhatIf})`,
+                          icon: <Trophy size={12} />,
+                          active: filtersState.masterPicksOnly,
+                          disabled: !filtersState.masterPicksOnly && masterWhatIf === 0,
+                          toggle: () => handleToggleFilter('masterPicksOnly'),
+                          activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-sm'
+                        },
+                        {
+                          id: 'tickets',
+                          label: filtersState.inTicketsOnly ? `IN TICKETS (${filteredMatches.length})` : `IN TICKETS (${ticketsWhatIf})`,
+                          icon: <Ticket size={12} />,
+                          active: filtersState.inTicketsOnly,
+                          disabled: !filtersState.inTicketsOnly && ticketsWhatIf === 0,
+                          toggle: () => handleToggleFilter('inTicketsOnly'),
+                          activeClass: 'bg-blue-600 border-blue-500 text-white shadow-sm'
+                        },
+                        {
+                          id: 'super',
+                          label: filtersState.superSignalsAny ? `SUPER SIGNALS (${filteredMatches.length})` : `SUPER SIGNALS (${superWhatIf})`,
+                          icon: <Zap size={12} />,
+                          active: filtersState.superSignalsAny,
+                          disabled: !filtersState.superSignalsAny && superWhatIf === 0,
+                          toggle: () => handleToggleFilter('superSignalsAny'),
+                          activeClass: 'bg-amber-600 border-amber-500 text-white shadow-sm'
+                        },
+                        {
+                          id: 'kill',
+                          label: filtersState.killSwitchActiveOnly ? `KILL-SWITCH (${filteredMatches.length})` : `KILL-SWITCH (${killSwitchWhatIf})`,
+                          icon: <AlertTriangle size={12} />,
+                          active: filtersState.killSwitchActiveOnly,
+                          disabled: !filtersState.killSwitchActiveOnly && killSwitchWhatIf === 0,
+                          toggle: () => handleToggleFilter('killSwitchActiveOnly'),
+                          activeClass: 'bg-rose-600 border-rose-500 text-white shadow-sm'
+                        },
                       ].map(sig => (
                         <button
                           key={sig.id}
                           onClick={sig.toggle}
+                          disabled={sig.disabled}
                           className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 snap-start ${
-                            sig.active
-                              ? `${sig.activeClass} shadow-sm`
-                              : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                            sig.disabled
+                              ? 'opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'
+                              : sig.active
+                                ? `${sig.activeClass} shadow-sm`
+                                : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                           }`}
                         >
                           {sig.icon}
                           <span>{sig.label}</span>
                         </button>
                       ))}
+
+                      {/* Button to open Advanced Drawer */}
+                      <button
+                        onClick={() => setIsFilterDrawerOpen(true)}
+                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                          activeFiltersCount > 0
+                            ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
+                            : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                        }`}
+                        title="Ouvrir les dimensions analytiques"
+                      >
+                        <Filter size={12} />
+                        <span>FILTRES</span>
+                        {activeFiltersCount > 0 && (
+                          <span className="px-1 py-0.2 rounded-full text-[8px] font-mono bg-emerald-500 text-white font-bold">
+                            {activeFiltersCount}
+                          </span>
+                        )}
+                      </button>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1.5 lg:gap-3 shrink-0 ml-auto">
+                  <div className="flex items-center gap-1 sm:gap-1.5 lg:gap-3 shrink-0 ml-auto">
                     <button
                       onClick={() => {
                         setSelectedLeague(MASTER_HUB_LEAGUE);
                         setSelectedMatch(null);
                         if (window.innerWidth < 1024) setSidebarOpen(false);
                       }}
-                      className={`flex items-center gap-2 px-3 lg:px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest lg:tracking-[0.2em] border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-emerald-500'}`}
+                      className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 lg:px-4 py-1.5 lg:py-2 rounded-xl text-[10px] font-black uppercase tracking-widest lg:tracking-[0.2em] border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-emerald-500'}`}
+                      aria-label="Master Hub"
                     >
                       <Trophy size={14} className={selectedLeague.id === 'TICKETS' ? 'animate-bounce' : ''} />
-                      <span className="hidden xs:inline">{selectedLeague.id === 'TICKETS' ? 'HUB ACTIVE' : 'MASTER HUB'}</span>
-                      <span className="xs:hidden">HUB</span>
+                      <span className="hidden lg:inline">{selectedLeague.id === 'TICKETS' ? 'HUB ACTIVE' : 'MASTER HUB'}</span>
+                      <span className="lg:hidden">HUB</span>
                     </button>
 
+                    {/* Mobile BatchDateBar (hidden on desktop lg+) */}
+                    <div className="lg:hidden">
+                      <BatchDateBar
+                        availableDates={availableDates}
+                        selectedDate={selectedDate}
+                        onSelectDate={setSelectedDate}
+                        dateCounts={dateCounts}
+                        totalMatchesCount={leagueMatches.length}
+                        isMobile={true}
+                      />
+                    </div>
+
+                    {/* Desktop Search input (hidden on mobile) */}
                     <div className="relative group w-full max-w-[140px] hidden lg:block">
                       <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={14} />
                       <input
@@ -508,18 +567,22 @@ export default function App() {
                       />
                     </div>
 
+                    {/* Mobile Search button (hidden on desktop lg+) */}
+                    <button
+                      className="lg:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                      onClick={() => setMobileSearchOpen(true)}
+                      aria-label="Recherche"
+                    >
+                      <Search size={18} />
+                    </button>
+
+                    {/* Theme Toggle (Mobile and Desktop) */}
                     <button
                       onClick={toggleTheme}
                       className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                      aria-label="Thème"
                     >
                       {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                    </button>
-
-                    <button
-                      className="lg:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2"
-                      onClick={() => setMobileSearchOpen(true)}
-                    >
-                      <Search size={20} />
                     </button>
                   </div>
                 </>
@@ -527,6 +590,34 @@ export default function App() {
             </div>
           </div>
         </header>
+
+        {/* Active Filters Chips Bar (Desktop) */}
+        {activeFiltersCount > 0 && (
+          <div className="hidden lg:flex items-center gap-2 px-6 py-2 bg-slate-100/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 text-xs shrink-0 overflow-x-auto no-scrollbar">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 font-mono shrink-0">
+              Filtres actifs ({activeFiltersCount}) :
+            </span>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {activeFilterChips.map(chip => (
+                <button
+                  key={chip.subKey ? `${chip.key}-${chip.subKey}` : chip.key}
+                  onClick={() => handleToggleFilter(chip.key, chip.subKey)}
+                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-rose-500/10 hover:text-rose-500 hover:border-rose-500/30 transition-colors group"
+                  title="Cliquer pour retirer ce filtre"
+                >
+                  <span>{chip.label}</span>
+                  <X size={10} className="group-hover:scale-110 transition-transform" />
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={handleResetFilters}
+              className="ml-auto text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-rose-500 transition-colors shrink-0 underline underline-offset-2"
+            >
+              Tout effacer
+            </button>
+          </div>
+        )}
 
         {/* Session Warnings Banner */}
         {showWarningBanner && sessionMetadata && (sessionMetadata.warnings?.length > 0 || sessionMetadata.missingSources?.length > 0) && (
@@ -541,71 +632,108 @@ export default function App() {
           </div>
         )}
 
-        {/* Sticky Filters: This div stays at the top on Mobile when viewing match list, hidden when match dashboard is open to prevent stacked headers */}
-        <div className={`sticky top-0 z-30 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-2 gap-2 shadow-sm lg:hidden transition-colors duration-300 ${selectedMatch ? 'hidden' : 'flex flex-col'}`}>
-          {/* Mobile Date Pills */}
-          <div className="flex overflow-x-auto no-scrollbar gap-1.5 px-4 snap-x">
-            <button
-              onClick={() => setSelectedDate('ALL')}
-              className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tight whitespace-nowrap transition-all border snap-start ${
-                selectedDate === 'ALL'
-                  ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
-                  : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
-              }`}
-            >
-              ALL
-            </button>
-            {availableDates.map(date => {
-              let displayDay = '???';
-              let displayNumber = '';
-              if (date !== 'Date Inconnue') {
-                const d = new Date(`${date}T12:00:00`);
-                displayDay = d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '');
-                displayNumber = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-              }
-              return (
-                <button
-                  key={date}
-                  onClick={() => setSelectedDate(date)}
-                  className={`flex flex-col items-center px-3 py-0.5 rounded-lg transition-all border min-w-[55px] snap-start ${
-                    selectedDate === date
-                      ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
-                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
-                  }`}
-                >
-                  <span className="text-[8px] uppercase font-bold tracking-tighter opacity-70 leading-tight">{displayDay}</span>
-                  <span className="text-[10px] font-mono font-bold leading-none">{displayNumber}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Mobile Signal Toggles */}
-          <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-4 snap-x pb-0.5">
+        {/* Sticky Filters: Quick Bar stays at the top on Mobile when viewing match list, hidden when match dashboard is open */}
+        <div className={`sticky top-0 z-40 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-1.5 shadow-sm lg:hidden transition-colors duration-300 ${selectedMatch ? 'hidden' : 'block'}`}>
+          {/* Mobile Quick Bar */}
+          <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 sm:px-4 snap-x pb-0.5">
             {[
-              { id: 'master', label: 'MASTER', icon: <Trophy size={12} />, active: showMasterPicks, toggle: () => setShowMasterPicks(!showMasterPicks), activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_8px_rgba(16,185,129,0.3)]' },
-              { id: 'fav', label: 'TRUE FAVS', icon: <ShieldCheck size={12} />, active: showTrueFavorites, toggle: () => setShowTrueFavorites(!showTrueFavorites), activeClass: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' },
-              { id: 'elite', label: 'ELITE', icon: <Zap size={12} />, active: showSuperSignals, toggle: () => setShowSuperSignals(!showSuperSignals), activeClass: 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400' },
-              { id: 'conf', label: 'HIGH CONF', icon: <Target size={12} />, active: showHighConfidence, toggle: () => setShowHighConfidence(!showHighConfidence), activeClass: 'bg-blue-500/10 border-blue-500/50 text-blue-600 dark:text-blue-400' },
-              { id: 'safe', label: 'SAFE PICK', icon: <Lock size={12} />, active: showUltraSafe, toggle: () => setShowUltraSafe(!showUltraSafe), activeClass: 'bg-purple-500/10 border-purple-500/50 text-purple-600 dark:text-purple-400' },
-              { id: 'reg', label: 'REGULARITY', icon: <LineChart size={12} />, active: showRegularity, toggle: () => setShowRegularity(!showRegularity), activeClass: 'bg-cyan-500/10 border-cyan-500/50 text-cyan-600 dark:text-cyan-400' },
-              { id: 'goals', label: 'SAFE GOALS', icon: <Flame size={12} />, active: showSafeButs, toggle: () => setShowSafeButs(!showSafeButs), activeClass: 'bg-orange-500/10 border-orange-500/50 text-orange-600 dark:text-orange-400' },
-              { id: 'top', label: 'TOP FORM', icon: <TrendingUp size={12} />, active: showTopForm, toggle: () => setShowTopForm(!showTopForm), activeClass: 'bg-pink-500/10 border-pink-500/50 text-pink-600 dark:text-pink-400' },
+              {
+                id: 'master',
+                label: filtersState.masterPicksOnly ? `MASTER (${filteredMatches.length})` : `MASTER (${masterWhatIf})`,
+                icon: <Trophy size={12} />,
+                active: filtersState.masterPicksOnly,
+                disabled: !filtersState.masterPicksOnly && masterWhatIf === 0,
+                toggle: () => handleToggleFilter('masterPicksOnly'),
+                activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-sm'
+              },
+              {
+                id: 'tickets',
+                label: filtersState.inTicketsOnly ? `IN TICKETS (${filteredMatches.length})` : `IN TICKETS (${ticketsWhatIf})`,
+                icon: <Ticket size={12} />,
+                active: filtersState.inTicketsOnly,
+                disabled: !filtersState.inTicketsOnly && ticketsWhatIf === 0,
+                toggle: () => handleToggleFilter('inTicketsOnly'),
+                activeClass: 'bg-blue-600 border-blue-500 text-white shadow-sm'
+              },
+              {
+                id: 'super',
+                label: filtersState.superSignalsAny ? `SUPER SIGNALS (${filteredMatches.length})` : `SUPER SIGNALS (${superWhatIf})`,
+                icon: <Zap size={12} />,
+                active: filtersState.superSignalsAny,
+                disabled: !filtersState.superSignalsAny && superWhatIf === 0,
+                toggle: () => handleToggleFilter('superSignalsAny'),
+                activeClass: 'bg-amber-600 border-amber-500 text-white shadow-sm'
+              },
+              {
+                id: 'kill',
+                label: filtersState.killSwitchActiveOnly ? `KILL-SWITCH (${filteredMatches.length})` : `KILL-SWITCH (${killSwitchWhatIf})`,
+                icon: <AlertTriangle size={12} />,
+                active: filtersState.killSwitchActiveOnly,
+                disabled: !filtersState.killSwitchActiveOnly && killSwitchWhatIf === 0,
+                toggle: () => handleToggleFilter('killSwitchActiveOnly'),
+                activeClass: 'bg-rose-600 border-rose-500 text-white shadow-sm'
+              },
             ].map(sig => (
               <button
                 key={sig.id}
                 onClick={sig.toggle}
+                disabled={sig.disabled}
                 className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
-                  sig.active
-                    ? `${sig.activeClass} shadow-sm`
-                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  sig.disabled
+                    ? 'opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'
+                    : sig.active
+                      ? `${sig.activeClass} shadow-sm`
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
                 {sig.icon}
                 <span>{sig.label}</span>
               </button>
             ))}
+
+            {/* Mobile Button to open Advanced Drawer */}
+            <button
+              onClick={() => setIsFilterDrawerOpen(true)}
+              className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                activeFiltersCount > 0
+                  ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
+                  : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
+              }`}
+            >
+              <Filter size={12} />
+              <span>FILTRES</span>
+              {activeFiltersCount > 0 && (
+                <span className="px-1 py-0.2 rounded-full text-[8px] font-mono bg-emerald-500 text-white font-bold">
+                  {activeFiltersCount}
+                </span>
+              )}
+            </button>
           </div>
+
+          {/* Mobile Active Chips */}
+          {activeFiltersCount > 0 && (
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar px-4 pt-1 snap-x">
+              <span className="text-[9px] uppercase font-bold tracking-wider text-slate-400 font-mono shrink-0 snap-start">
+                Filtres ({activeFiltersCount}) :
+              </span>
+              {activeFilterChips.map(chip => (
+                <button
+                  key={chip.subKey ? `${chip.key}-${chip.subKey}` : chip.key}
+                  onClick={() => handleToggleFilter(chip.key, chip.subKey)}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shrink-0 snap-start"
+                >
+                  <span>{chip.label}</span>
+                  <X size={9} />
+                </button>
+              ))}
+              <button
+                onClick={handleResetFilters}
+                className="text-[9px] font-bold uppercase tracking-wider text-slate-500 hover:text-rose-500 transition-colors shrink-0 underline underline-offset-2 ml-1 snap-start"
+              >
+                Effacer
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Content Area */}
@@ -691,6 +819,18 @@ export default function App() {
           )}
         </div>
       </main>
+
+      {/* Advanced Filters Drawer (Desktop slide-over & Mobile bottom sheet) */}
+      <AdvancedFilterDrawer
+        isOpen={isFilterDrawerOpen}
+        onClose={() => setIsFilterDrawerOpen(false)}
+        filtersState={filtersState}
+        onToggleFilter={handleToggleFilter}
+        onResetFilters={handleResetFilters}
+        baseMatches={baseMatches}
+        filteredMatchesCount={filteredMatches.length}
+        activeFiltersCount={activeFiltersCount}
+      />
     </div>
   );
 }

@@ -338,7 +338,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     <div className="flex flex-col gap-6 max-w-7xl mx-auto w-full pb-32">
       
       {/* 1. INTERNAL NAVIGATION MENU */}
-      <div className="sticky top-0 z-40 -mx-4 px-4 lg:mx-0 lg:px-0 py-3 bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-md border-b lg:border-none border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4 overflow-hidden">
+      <div className="sticky top-0 z-20 -mx-4 px-4 lg:mx-0 lg:px-0 py-3 bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-md border-b lg:border-none border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4 overflow-hidden">
         <div className="flex items-center gap-1 p-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto no-scrollbar max-w-full">
           {[
             { id: 'summary', label: 'Overview', icon: <BarChart3 size={14} /> },

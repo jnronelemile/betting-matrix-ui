@@ -185,7 +185,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       style={{ touchAction: 'pan-y' }}
     >
       {/* Unified Sticky Header Section */}
-      <div className="sticky top-0 z-30 -mx-4 px-4 lg:-mx-8 lg:px-8 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all duration-300 shadow-sm">
+      <div className="sticky top-0 z-20 -mx-4 px-4 lg:-mx-8 lg:px-8 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all duration-300 shadow-sm">
         {/* Main Header (Title & Badges) */}
         <div ref={headerRef} className="pt-4 pb-3 lg:pb-6">
           <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
