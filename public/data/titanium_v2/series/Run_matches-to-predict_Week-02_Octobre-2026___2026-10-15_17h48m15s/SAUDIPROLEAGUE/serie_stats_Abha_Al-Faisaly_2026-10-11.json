@@ -1,0 +1,251 @@
+{
+  "metadata": {
+    "competition": "Saudi Pro League",
+    "fixture": "Abha vs Al-Faisaly",
+    "date": "2026-10-11",
+    "generated_at": "2026-10-15T18:07:35.387578",
+    "source": "football_master.db (100% Native)",
+    "target_season_start": "2026-07-01",
+    "season_source": "season_resolver",
+    "version": "10.0",
+    "features_legend": {
+      "fatigue_profile": "Score de 0.0 (Reposé) à 1.0 (Exténué) incluant les trêves hivernales (0.4 Rouillé) et le stress géographique asymétrique (affectant surtout l'équipe Extérieure).",
+      "live_indices": "Probabilités conditionnelles pures extraites au Snapshot de la 75ème minute. Clutch = Capacité à marquer quand on est mené/à égalité. Collapse = Risque d'encaisser quand on mène d'1 but.",
+      "game_state_distribution": "Chronologie absolue des buts selon l'état du score (winning, tied, losing) à la seconde précédant le but."
+    }
+  },
+  "streaks": {
+    "h2h_streaks": [],
+    "team_streaks": {
+      "home": [
+        "No wins: 7",
+        "Under 1.5 Team Goals: 6/7",
+        "Under 9.5 Corners: 7/7",
+        "Under 10.5 Corners: 7/7",
+        "Under 4.5 Corners (Team): 5/7",
+        "Under 8.5 SOT: 4/5",
+        "Over 22.5 Shots: 5/7",
+        "Under 10.5 Shots (Team): 5/7",
+        "Under 11.5 Fouls (Team): 5/7",
+        "Under 5.5 Keeper Saves: 4/5",
+        "Under 4.5 Yellow Cards: 7/7",
+        "Under 1.5 Yellow Cards (Team): 7/7",
+        "Opponent Over 1.5 Offsides: 5/7",
+        "Opponent Over 2.5 Keeper Saves: 5/7",
+        "Opponent Under 1.5 Yellow Cards: 7/7"
+      ],
+      "away": [
+        "No wins: 7",
+        "Under 1.5 Team Goals: 6/7",
+        "Under 9.5 Corners: 6/7",
+        "Under 10.5 Corners: 7/7",
+        "Under 4.5 Corners (Team): 7/7",
+        "Under 3.5 SOT (Team): 5/7",
+        "Under 22.5 Shots: 5/7",
+        "Under 10.5 Shots (Team): 6/7",
+        "Under 11.5 Fouls (Team): 5/7",
+        "Under 38.5 Throws: 5/7",
+        "Under 18.5 Throws (Team): 5/7",
+        "Over 1.5 Offsides (Team): 5/7",
+        "Under 4.5 Yellow Cards: 7/7",
+        "Under 1.5 Yellow Cards (Team): 7/7",
+        "Opponent Over 11.5 Fouls: 7/7",
+        "Opponent Under 2.5 Keeper Saves: 4/5",
+        "Opponent Under 1.5 Yellow Cards: 7/7",
+        "Opponent Over 3.5 SOT: 5/7",
+        "First to concede: 5/7"
+      ]
+    }
+  },
+  "fatigue_profile": {
+    "home": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 28
+    },
+    "away": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 30
+    }
+  },
+  "live_indices": {
+    "home": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 7,
+          "success_matches": 1,
+          "index": 0.14
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 3,
+          "success_matches": 0,
+          "index": 0.0
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 7,
+          "success_matches": 1,
+          "index": 0.14
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 3,
+          "success_matches": 0,
+          "index": 0.0
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      }
+    }
+  },
+  "game_state_distribution": {
+    "home": {
+      "season": {
+        "scored": {
+          "winning": 0,
+          "tied": 0,
+          "losing": 5
+        },
+        "conceded": {
+          "winning": 0,
+          "tied": 6,
+          "losing": 7
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 0,
+          "tied": 0,
+          "losing": 2
+        },
+        "conceded": {
+          "winning": 0,
+          "tied": 3,
+          "losing": 1
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "scored": {
+          "winning": 0,
+          "tied": 0,
+          "losing": 5
+        },
+        "conceded": {
+          "winning": 0,
+          "tied": 6,
+          "losing": 7
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 0,
+          "tied": 0,
+          "losing": 3
+        },
+        "conceded": {
+          "winning": 0,
+          "tied": 3,
+          "losing": 4
+        }
+      }
+    }
+  },
+  "goal_distribution": {
+    "season": {
+      "home_scored": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "home_conceded": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "away_scored": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "away_conceded": [
+        1,
+        4,
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    "venue": {
+      "home_scored": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "home_conceded": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "away_scored": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "away_conceded": [
+        1,
+        4,
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    "recent_form": null
+  }
+}

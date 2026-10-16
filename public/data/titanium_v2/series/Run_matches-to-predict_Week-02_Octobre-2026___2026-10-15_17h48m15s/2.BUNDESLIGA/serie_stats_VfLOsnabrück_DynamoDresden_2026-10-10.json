@@ -1,0 +1,252 @@
+{
+  "metadata": {
+    "competition": "2. Bundesliga",
+    "fixture": "VfL Osnabrück vs Dynamo Dresden",
+    "date": "2026-10-10",
+    "generated_at": "2026-10-15T18:07:37.781323",
+    "source": "football_master.db (100% Native)",
+    "target_season_start": "2026-07-01",
+    "season_source": "season_resolver",
+    "version": "10.0",
+    "features_legend": {
+      "fatigue_profile": "Score de 0.0 (Reposé) à 1.0 (Exténué) incluant les trêves hivernales (0.4 Rouillé) et le stress géographique asymétrique (affectant surtout l'équipe Extérieure).",
+      "live_indices": "Probabilités conditionnelles pures extraites au Snapshot de la 75ème minute. Clutch = Capacité à marquer quand on est mené/à égalité. Collapse = Risque d'encaisser quand on mène d'1 but.",
+      "game_state_distribution": "Chronologie absolue des buts selon l'état du score (winning, tied, losing) à la seconde précédant le but."
+    }
+  },
+  "streaks": {
+    "h2h_streaks": [],
+    "team_streaks": {
+      "home": [
+        "Scoring: 4",
+        "No Clean Sheet: 3",
+        "Under 1.5 Team Goals: 4/5",
+        "Over 0.5 Team Goals: 5/6",
+        "Under 4.5 Corners (Team): 4/5",
+        "Over 22.5 Shots: 6/6",
+        "Over 10.5 Shots (Team): 5/6",
+        "Over 22.5 Fouls: 5/6",
+        "Over 11.5 Fouls (Team): 4/5",
+        "Over 38.5 Throws: 4/5",
+        "Under 3.5 Offsides: 4/5",
+        "Over 5.5 Keeper Saves: 4/5",
+        "Over 2.5 Keeper Saves (Team): 4/5",
+        "Opponent Over 18.5 Throws: 4/5",
+        "Opponent Over 2.5 Keeper Saves: 5/6",
+        "Opponent Over 1.5 Yellow Cards: 4/5",
+        "Opponent Over 4.5 Corners: 5/6",
+        "Opponent Over 3.5 SOT: 5/6"
+      ],
+      "away": [
+        "No wins: 4",
+        "Scoring: 5",
+        "No Clean Sheet: 4",
+        "Over 2.5 Goals: 5/6",
+        "Over 0.5 Team Goals: 5/6",
+        "BTTS Yes: 4/5",
+        "Over 9.5 Corners: 5/6",
+        "Over 10.5 Corners: 4/5",
+        "Over 4.5 Corners (Team): 6/6",
+        "Over 8.5 SOT: 4/5",
+        "Over 22.5 Shots: 5/6",
+        "Under 1.5 Offsides (Team): 4/5",
+        "Over 5.5 Keeper Saves: 5/6",
+        "Over 2.5 Keeper Saves (Team): 5/6",
+        "Opponent Over 1.5 Yellow Cards: 4/5",
+        "Opponent Over 3.5 SOT: 5/6",
+        "First to score: 4/5"
+      ]
+    }
+  },
+  "fatigue_profile": {
+    "home": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 21
+    },
+    "away": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 21
+    }
+  },
+  "live_indices": {
+    "home": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 4,
+          "success_matches": 2,
+          "index": 0.5
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 2,
+          "failed_matches": 1,
+          "index": 0.5
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 2,
+          "success_matches": 1,
+          "index": 0.5
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 1,
+          "failed_matches": 1,
+          "index": 1.0
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 4,
+          "success_matches": 0,
+          "index": 0.0
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 2,
+          "failed_matches": 1,
+          "index": 0.5
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 2,
+          "success_matches": 0,
+          "index": 0.0
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 1,
+          "failed_matches": 1,
+          "index": 1.0
+        }
+      }
+    }
+  },
+  "game_state_distribution": {
+    "home": {
+      "season": {
+        "scored": {
+          "winning": 2,
+          "tied": 2,
+          "losing": 5
+        },
+        "conceded": {
+          "winning": 1,
+          "tied": 6,
+          "losing": 5
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 2,
+          "tied": 1,
+          "losing": 1
+        },
+        "conceded": {
+          "winning": 1,
+          "tied": 2,
+          "losing": 4
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "scored": {
+          "winning": 0,
+          "tied": 5,
+          "losing": 3
+        },
+        "conceded": {
+          "winning": 4,
+          "tied": 5,
+          "losing": 5
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 0,
+          "tied": 3,
+          "losing": 2
+        },
+        "conceded": {
+          "winning": 3,
+          "tied": 3,
+          "losing": 4
+        }
+      }
+    }
+  },
+  "goal_distribution": {
+    "season": {
+      "home_scored": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        3
+      ],
+      "home_conceded": [
+        0,
+        1,
+        1,
+        1,
+        2,
+        2
+      ],
+      "away_scored": [
+        1,
+        1,
+        0,
+        0,
+        2,
+        1
+      ],
+      "away_conceded": [
+        2,
+        0,
+        1,
+        0,
+        3,
+        4
+      ]
+    },
+    "venue": {
+      "home_scored": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        3
+      ],
+      "home_conceded": [
+        0,
+        1,
+        1,
+        1,
+        2,
+        2
+      ],
+      "away_scored": [
+        1,
+        1,
+        0,
+        0,
+        2,
+        1
+      ],
+      "away_conceded": [
+        2,
+        0,
+        1,
+        0,
+        3,
+        4
+      ]
+    },
+    "recent_form": null
+  }
+}

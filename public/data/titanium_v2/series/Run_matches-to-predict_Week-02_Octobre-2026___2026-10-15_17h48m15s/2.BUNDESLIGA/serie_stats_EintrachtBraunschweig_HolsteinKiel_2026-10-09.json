@@ -1,0 +1,253 @@
+{
+  "metadata": {
+    "competition": "2. Bundesliga",
+    "fixture": "Eintracht Braunschweig vs Holstein Kiel",
+    "date": "2026-10-09",
+    "generated_at": "2026-10-15T18:07:36.191056",
+    "source": "football_master.db (100% Native)",
+    "target_season_start": "2026-07-01",
+    "season_source": "season_resolver",
+    "version": "10.0",
+    "features_legend": {
+      "fatigue_profile": "Score de 0.0 (Reposé) à 1.0 (Exténué) incluant les trêves hivernales (0.4 Rouillé) et le stress géographique asymétrique (affectant surtout l'équipe Extérieure).",
+      "live_indices": "Probabilités conditionnelles pures extraites au Snapshot de la 75ème minute. Clutch = Capacité à marquer quand on est mené/à égalité. Collapse = Risque d'encaisser quand on mène d'1 but.",
+      "game_state_distribution": "Chronologie absolue des buts selon l'état du score (winning, tied, losing) à la seconde précédant le but."
+    }
+  },
+  "streaks": {
+    "h2h_streaks": [],
+    "team_streaks": {
+      "home": [
+        "No wins: 5",
+        "No Clean Sheet: 6",
+        "Over 9.5 Corners: 5/6",
+        "Over 4.5 Corners (Team): 5/6",
+        "Over 8.5 SOT: 5/6",
+        "Over 3.5 SOT (Team): 5/6",
+        "Over 22.5 Shots: 6/6",
+        "Over 10.5 Shots (Team): 6/6",
+        "Under 11.5 Fouls (Team): 5/6",
+        "Over 38.5 Throws: 4/5",
+        "Under 1.5 Offsides (Team): 5/6",
+        "Over 5.5 Keeper Saves: 6/6",
+        "Over 2.5 Keeper Saves (Team): 5/6",
+        "Over 1.5 Yellow Cards (Team): 5/6",
+        "Opponent Over 18.5 Throws: 5/6",
+        "Opponent Over 2.5 Keeper Saves: 6/6",
+        "Opponent Over 4.5 Corners: 6/6",
+        "Opponent Over 3.5 SOT: 5/6",
+        "First to concede: 4/5"
+      ],
+      "away": [
+        "No wins: 6",
+        "No Clean Sheet: 6",
+        "Over 9.5 Corners: 5/6",
+        "Over 4.5 Corners (Team): 4/5",
+        "Over 22.5 Shots: 6/6",
+        "Over 10.5 Shots (Team): 6/6",
+        "Over 22.5 Fouls: 6/6",
+        "Over 18.5 Throws (Team): 5/6",
+        "Under 3.5 Offsides: 4/5",
+        "Under 1.5 Offsides (Team): 6/6",
+        "Over 2.5 Keeper Saves (Team): 4/5",
+        "Over 4.5 Yellow Cards: 5/6",
+        "Over 1.5 Yellow Cards (Team): 5/6",
+        "Opponent Over 11.5 Fouls: 5/6",
+        "Opponent Over 18.5 Throws: 5/6",
+        "Opponent Over 1.5 Offsides: 5/6",
+        "Opponent Over 1.5 Yellow Cards: 5/6"
+      ]
+    }
+  },
+  "fatigue_profile": {
+    "home": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 20
+    },
+    "away": {
+      "index_score": 0.0,
+      "label": "Reposé",
+      "days_rest": 20
+    }
+  },
+  "live_indices": {
+    "home": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 5,
+          "success_matches": 2,
+          "index": 0.4
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 3,
+          "success_matches": 1,
+          "index": 0.33
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 5,
+          "success_matches": 1,
+          "index": 0.2
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 2,
+          "success_matches": 0,
+          "index": 0.0
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      }
+    }
+  },
+  "game_state_distribution": {
+    "home": {
+      "season": {
+        "scored": {
+          "winning": 6,
+          "tied": 3,
+          "losing": 3
+        },
+        "conceded": {
+          "winning": 4,
+          "tied": 5,
+          "losing": 4
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 1,
+          "tied": 2,
+          "losing": 2
+        },
+        "conceded": {
+          "winning": 3,
+          "tied": 3,
+          "losing": 2
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "scored": {
+          "winning": 1,
+          "tied": 3,
+          "losing": 3
+        },
+        "conceded": {
+          "winning": 4,
+          "tied": 4,
+          "losing": 2
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 1,
+          "tied": 1,
+          "losing": 0
+        },
+        "conceded": {
+          "winning": 2,
+          "tied": 2,
+          "losing": 1
+        }
+      }
+    }
+  },
+  "goal_distribution": {
+    "season": {
+      "home_scored": [
+        2,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "home_conceded": [
+        1,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "away_scored": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "away_conceded": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        4
+      ]
+    },
+    "venue": {
+      "home_scored": [
+        2,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "home_conceded": [
+        1,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "away_scored": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "away_conceded": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        4
+      ]
+    },
+    "recent_form": null
+  }
+}
