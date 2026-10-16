@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "competition": "LaLiga",
+    "fixture": "Celta Vigo vs Sevilla FC",
+    "date": "2026-05-23",
+    "generated_at": "2026-05-23T19:00:52.166592",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "BTTS Yes: 6/8",
+      "Over 4.5 cards: 8/10",
+      "Under 10.5 corners: 4/5"
+    ],
+    "team_streaks": {
+      "home": [
+        "Scoring: 5",
+        "Under 1.5 Team Goals: 7/10",
+        "Over 0.5 Team Goals: 7/10",
+        "BTTS Yes: 5/7",
+        "Under 9.5 Corners: 8/10",
+        "Under 10.5 Corners: 9/10",
+        "Under 4.5 Corners (Team): 8/10",
+        "Under 3.5 SOT (Team): 5/7",
+        "Under 10.5 Shots (Team): 8/10",
+        "Over 22.5 Fouls: 7/10",
+        "First to score: 4/5"
+      ],
+      "away": [
+        "No Clean Sheet: 3",
+        "Under 10.5 Corners: 8/10",
+        "Under 4.5 Corners (Team): 7/10",
+        "Over 3.5 SOT (Team): 4/5",
+        "Over 22.5 Shots: 5/7",
+        "Over 10.5 Shots (Team): 5/7",
+        "Over 22.5 Fouls: 6/8",
+        "Over 11.5 Fouls (Team): 8/10"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      3,
+      6,
+      8,
+      5,
+      2,
+      10
+    ],
+    "away_scored": [
+      1,
+      2,
+      4,
+      3,
+      7,
+      5
+    ],
+    "home_conceded": [
+      5,
+      0,
+      7,
+      5,
+      5,
+      6
+    ],
+    "home_scored": [
+      3,
+      5,
+      4,
+      7,
+      1,
+      8
+    ]
+  }
+}

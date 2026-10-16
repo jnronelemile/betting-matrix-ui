@@ -1,0 +1,1874 @@
+{
+    "_METADATA_": {
+        "weekend_folder": "2_Week-04-Mai",
+        "league_folder": "BACKTEST-SERIEA",
+        "Engine_Version": "8.5",
+        "timestamp_analysis": "2026-05-21_T13:39:17.084259"
+    },
+    "matches": [
+        {
+            "Matchup": "AC Fiorentina vs Atalanta BC",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 0.7442,
+                "lambda_away": 0.9627,
+                "composite_home": -0.2698,
+                "composite_away": 0.2002,
+                "trg_multiplier_home": 0.9534,
+                "trg_multiplier_away": 1.0466,
+                "home_fortress_multiplier": 0.9851,
+                "defensive_shield": 1.0,
+                "press_mult_home": 1.0,
+                "press_mult_away": 1.0,
+                "conv_mult_home": 1.0,
+                "conv_mult_away": 1.0,
+                "sp_mult_home": 1.0,
+                "sp_mult_away": 1.0,
+                "trajectory_home": 0.9849,
+                "trajectory_away": 1.007,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.28,
+                "confidence_index": 0.0,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 15,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 15,
+                            "position_diff": -7,
+                            "points_diff": 12.17,
+                            "goals_for_diff": -12.24,
+                            "goals_against_diff": 0.53
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 9,
+                        "objective": "MID_TABLE",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 7,
+                            "position_diff": -2,
+                            "points_diff": 3.83,
+                            "goals_for_diff": -6.49,
+                            "goals_against_diff": -7.14
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.0,
+                    "motivation_away": 0.993,
+                    "net_justice_tension": 8.34,
+                    "home_justice_z_score": 1.263,
+                    "away_justice_z_score": 0.375
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 0,
+                    "fotmob_rating_home": 6.74,
+                    "fotmob_rating_away": 6.93,
+                    "team_rating_gap": -0.19,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": true,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": true
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.0,
+                "PROB_X": 0.0,
+                "PROB_2": 0.0,
+                "PROB_O25": 0.0,
+                "PROB_U25": 0.0,
+                "PROB_O15": 0.0,
+                "PROB_U35": 0.0,
+                "PROB_BTTS": 0.0
+            },
+            "True_Odds": {
+                "ODDS_1": 100.0,
+                "ODDS_X": 100.0,
+                "ODDS_2": 100.0,
+                "ODDS_O25": 100.0,
+                "ODDS_U25": 100.0,
+                "ODDS_O15": 100.0,
+                "ODDS_U35": 100.0,
+                "ODDS_BTTS": 100.0
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "0-0",
+                    "prob": 0.2178,
+                    "odds": 4.59
+                },
+                "Score_2": {
+                    "score": "1-1",
+                    "prob": 0.1664,
+                    "odds": 6.01
+                },
+                "Score_3": {
+                    "score": "0-1",
+                    "prob": 0.1383,
+                    "odds": 7.23
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.1474,
+                    "odds": 6.79
+                },
+                "H_-2.5": {
+                    "prob": 0.0413,
+                    "odds": 24.2
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "Atalanta BC",
+                    "Outsider": "AC Fiorentina",
+                    "Probability_Gap": 0.0
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.0,
+                    "ODDS_FAV_O15": 100.0,
+                    "PROB_FAV_O25": 0.0,
+                    "ODDS_FAV_O25": 100.0,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.0,
+                    "ODDS_OUT_O05": 100.0,
+                    "PROB_OUT_O15": 0.0,
+                    "ODDS_OUT_O15": 100.0,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.3346,
+                "LAMBDA_SOT_MATCH": 6.5505,
+                "PROB_OVER_MEDIAN_CORNERS": 0.4933,
+                "LAMBDA_CORNERS_MATCH": 8.62,
+                "PROB_OVER_MEDIAN_SHOTS": 0.2063,
+                "LAMBDA_SHOTS_MATCH": 19.9068,
+                "LAMBDA_FOULS_MATCH": 28.11,
+                "PROB_OVER_MEDIAN_FOULS": 0.6801,
+                "PROP_HOME_MORE_CORNERS": 0.0953,
+                "PROP_HOME_MORE_SHOTS": 0.5,
+                "PROP_HOME_MORE_SOT": 0.5,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "Bologna FC vs Inter Milan",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 0.8862,
+                "lambda_away": 1.2648,
+                "composite_home": -0.2293,
+                "composite_away": 0.2849,
+                "trg_multiplier_home": 0.9222,
+                "trg_multiplier_away": 1.076,
+                "home_fortress_multiplier": 0.9383,
+                "defensive_shield": 0.9752,
+                "press_mult_home": 1.042,
+                "press_mult_away": 0.958,
+                "conv_mult_home": 0.9883,
+                "conv_mult_away": 1.0117,
+                "sp_mult_home": 0.95,
+                "sp_mult_away": 1.05,
+                "trajectory_home": 1.0186,
+                "trajectory_away": 0.9974,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.157,
+                "confidence_index": 0.3516,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 14,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 8,
+                            "position_diff": 1,
+                            "points_diff": -4.57,
+                            "goals_for_diff": 2.98,
+                            "goals_against_diff": -0.89
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 1,
+                        "objective": "TITLE_DEFENSE",
+                        "momentum": "FIRE",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 1,
+                            "position_diff": 0,
+                            "points_diff": -10.7,
+                            "goals_for_diff": 15.57,
+                            "goals_against_diff": -1.4
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.007,
+                    "motivation_away": 1.047,
+                    "net_justice_tension": 6.13,
+                    "home_justice_z_score": -0.519,
+                    "away_justice_z_score": -1.171
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 3.06,
+                    "fotmob_rating_home": 6.8,
+                    "fotmob_rating_away": 7.12,
+                    "team_rating_gap": -0.32,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.2628,
+                "PROB_X": 0.3318,
+                "PROB_2": 0.4053,
+                "PROB_O25": 0.3641,
+                "PROB_U25": 0.6359,
+                "PROB_O15": 0.6538,
+                "PROB_U35": 0.8289,
+                "PROB_BTTS": 0.4424
+            },
+            "True_Odds": {
+                "ODDS_1": 3.81,
+                "ODDS_X": 3.01,
+                "ODDS_2": 2.47,
+                "ODDS_O25": 2.75,
+                "ODDS_U25": 1.57,
+                "ODDS_O15": 1.53,
+                "ODDS_U35": 1.21,
+                "ODDS_BTTS": 2.26
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1509,
+                    "odds": 6.63
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.1368,
+                    "odds": 7.31
+                },
+                "Score_3": {
+                    "score": "0-1",
+                    "prob": 0.1267,
+                    "odds": 7.89
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.2048,
+                    "odds": 4.88
+                },
+                "H_-2.5": {
+                    "prob": 0.0717,
+                    "odds": 13.94
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "Inter Milan",
+                    "Outsider": "Bologna FC",
+                    "Probability_Gap": 0.1425
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.3895,
+                    "ODDS_FAV_O15": 2.57,
+                    "PROB_FAV_O25": 0.1457,
+                    "ODDS_FAV_O25": 6.87,
+                    "Alpha_Signals_Active": [
+                        "STYLE_DIRECTNESS_LOW"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.5878,
+                    "ODDS_OUT_O05": 1.7,
+                    "PROB_OUT_O15": 0.2225,
+                    "ODDS_OUT_O15": 4.49,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.5629,
+                "LAMBDA_SOT_MATCH": 8.1148,
+                "PROB_OVER_MEDIAN_CORNERS": 0.5204,
+                "LAMBDA_CORNERS_MATCH": 8.82,
+                "PROB_OVER_MEDIAN_SHOTS": 0.5865,
+                "LAMBDA_SHOTS_MATCH": 24.746,
+                "LAMBDA_FOULS_MATCH": 24.29,
+                "PROB_OVER_MEDIAN_FOULS": 0.3904,
+                "PROP_HOME_MORE_CORNERS": 0.3688,
+                "PROP_HOME_MORE_SHOTS": 0.4638,
+                "PROP_HOME_MORE_SOT": 0.4513,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": true,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "SS Lazio vs Pisa SC",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.2961,
+                "lambda_away": 0.8365,
+                "composite_home": 0.0442,
+                "composite_away": -0.088,
+                "trg_multiplier_home": 1.0608,
+                "trg_multiplier_away": 0.935,
+                "home_fortress_multiplier": 1.0109,
+                "defensive_shield": 1.0,
+                "press_mult_home": 1.009,
+                "press_mult_away": 0.991,
+                "conv_mult_home": 1.0081,
+                "conv_mult_away": 0.9919,
+                "sp_mult_home": 0.9919,
+                "sp_mult_away": 1.0081,
+                "trajectory_home": 0.9677,
+                "trajectory_away": 0.9967,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1928,
+                "confidence_index": 0.4636,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 9,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 9,
+                            "position_diff": 2,
+                            "points_diff": -4.79,
+                            "goals_for_diff": -3.16,
+                            "goals_against_diff": -7.16
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 20,
+                        "objective": "DESPERATION",
+                        "momentum": "ICE",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 20,
+                            "position_diff": -3,
+                            "points_diff": 21.61,
+                            "goals_for_diff": -13.24,
+                            "goals_against_diff": 10.77
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.007,
+                    "motivation_away": 0.95,
+                    "net_justice_tension": -26.4,
+                    "home_justice_z_score": -0.542,
+                    "away_justice_z_score": 2.267
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.17,
+                    "fotmob_rating_home": 6.78,
+                    "fotmob_rating_away": 6.51,
+                    "team_rating_gap": 0.27,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.4301,
+                "PROB_X": 0.3392,
+                "PROB_2": 0.2307,
+                "PROB_O25": 0.3592,
+                "PROB_U25": 0.6408,
+                "PROB_O15": 0.6535,
+                "PROB_U35": 0.8324,
+                "PROB_BTTS": 0.4365
+            },
+            "True_Odds": {
+                "ODDS_1": 2.33,
+                "ODDS_X": 2.95,
+                "ODDS_2": 4.33,
+                "ODDS_O25": 2.78,
+                "ODDS_U25": 1.56,
+                "ODDS_O15": 1.53,
+                "ODDS_U35": 1.2,
+                "ODDS_BTTS": 2.29
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1533,
+                    "odds": 6.52
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.1433,
+                    "odds": 6.98
+                },
+                "Score_3": {
+                    "score": "1-0",
+                    "prob": 0.1289,
+                    "odds": 7.76
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "HOME",
+                "H_-1.5": {
+                    "prob": 0.2195,
+                    "odds": 4.56
+                },
+                "H_-2.5": {
+                    "prob": 0.0787,
+                    "odds": 12.71
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "SS Lazio",
+                    "Outsider": "Pisa SC",
+                    "Probability_Gap": 0.1994
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.4276,
+                    "ODDS_FAV_O15": 2.34,
+                    "PROB_FAV_O25": 0.1633,
+                    "ODDS_FAV_O25": 6.12,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_RELIEF_CRITICAL",
+                        "STYLE_DIRECTNESS_LOW"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.5668,
+                    "ODDS_OUT_O05": 1.76,
+                    "PROB_OUT_O15": 0.2044,
+                    "ODDS_OUT_O15": 4.89,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4973,
+                "LAMBDA_SOT_MATCH": 7.6509,
+                "PROB_OVER_MEDIAN_CORNERS": 0.5041,
+                "LAMBDA_CORNERS_MATCH": 8.6993,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4588,
+                "LAMBDA_SHOTS_MATCH": 23.1688,
+                "LAMBDA_FOULS_MATCH": 25.4,
+                "PROB_OVER_MEDIAN_FOULS": 0.4787,
+                "PROP_HOME_MORE_CORNERS": 0.5225,
+                "PROP_HOME_MORE_SHOTS": 0.5144,
+                "PROP_HOME_MORE_SOT": 0.5317,
+                "PROP_HOME_MORE_FOULS": 0.42
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "Parma Calcio 1913 vs US Sassuolo",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 0.8686,
+                "lambda_away": 1.0806,
+                "composite_home": -0.1551,
+                "composite_away": 0.1665,
+                "trg_multiplier_home": 0.9527,
+                "trg_multiplier_away": 1.0064,
+                "home_fortress_multiplier": 0.9573,
+                "defensive_shield": 1.0,
+                "press_mult_home": 0.997,
+                "press_mult_away": 1.003,
+                "conv_mult_home": 0.9862,
+                "conv_mult_away": 1.0138,
+                "sp_mult_home": 0.9838,
+                "sp_mult_away": 1.0162,
+                "trajectory_home": 0.9742,
+                "trajectory_away": 1.0065,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.2008,
+                "confidence_index": 0.0,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 16,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 13,
+                            "position_diff": 6,
+                            "points_diff": -6.53,
+                            "goals_for_diff": -3.93,
+                            "goals_against_diff": -9.92
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 13,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 11,
+                            "position_diff": 3,
+                            "points_diff": -6.1,
+                            "goals_for_diff": 4.01,
+                            "goals_against_diff": -6.01
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.0,
+                    "motivation_away": 1.007,
+                    "net_justice_tension": -0.43,
+                    "home_justice_z_score": -0.728,
+                    "away_justice_z_score": -0.682
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 1.97,
+                    "fotmob_rating_home": 6.67,
+                    "fotmob_rating_away": 6.77,
+                    "team_rating_gap": -0.1,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": true,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": true
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.0,
+                "PROB_X": 0.0,
+                "PROB_2": 0.0,
+                "PROB_O25": 0.0,
+                "PROB_U25": 0.0,
+                "PROB_O15": 0.0,
+                "PROB_U35": 0.0,
+                "PROB_BTTS": 0.0
+            },
+            "True_Odds": {
+                "ODDS_1": 100.0,
+                "ODDS_X": 100.0,
+                "ODDS_2": 100.0,
+                "ODDS_O25": 100.0,
+                "ODDS_U25": 100.0,
+                "ODDS_O15": 100.0,
+                "ODDS_U35": 100.0,
+                "ODDS_BTTS": 100.0
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "0-0",
+                    "prob": 0.1692,
+                    "odds": 5.91
+                },
+                "Score_2": {
+                    "score": "1-1",
+                    "prob": 0.1605,
+                    "odds": 6.23
+                },
+                "Score_3": {
+                    "score": "0-1",
+                    "prob": 0.127,
+                    "odds": 7.87
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.1623,
+                    "odds": 6.16
+                },
+                "H_-2.5": {
+                    "prob": 0.0499,
+                    "odds": 20.05
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "US Sassuolo",
+                    "Outsider": "Parma Calcio 1913",
+                    "Probability_Gap": 0.0
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.0,
+                    "ODDS_FAV_O15": 100.0,
+                    "PROB_FAV_O25": 0.0,
+                    "ODDS_FAV_O25": 100.0,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.0,
+                    "ODDS_OUT_O05": 100.0,
+                    "PROB_OUT_O15": 0.0,
+                    "ODDS_OUT_O15": 100.0,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4842,
+                "LAMBDA_SOT_MATCH": 7.5608,
+                "PROB_OVER_MEDIAN_CORNERS": 0.4958,
+                "LAMBDA_CORNERS_MATCH": 8.6379,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4218,
+                "LAMBDA_SHOTS_MATCH": 22.7214,
+                "LAMBDA_FOULS_MATCH": 25.65,
+                "PROB_OVER_MEDIAN_FOULS": 0.4984,
+                "PROP_HOME_MORE_CORNERS": 0.502,
+                "PROP_HOME_MORE_SHOTS": 0.4968,
+                "PROP_HOME_MORE_SOT": 0.4675,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "SSC Napoli vs Udinese Calcio",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.2202,
+                "lambda_away": 0.9163,
+                "composite_home": 0.0516,
+                "composite_away": -0.0015,
+                "trg_multiplier_home": 0.9293,
+                "trg_multiplier_away": 0.9557,
+                "home_fortress_multiplier": 1.0224,
+                "defensive_shield": 1.0,
+                "press_mult_home": 0.979,
+                "press_mult_away": 1.021,
+                "conv_mult_home": 1.0036,
+                "conv_mult_away": 0.9964,
+                "sp_mult_home": 1.0203,
+                "sp_mult_away": 0.9798,
+                "trajectory_home": 1.0202,
+                "trajectory_away": 0.9963,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1807,
+                "confidence_index": 0.2766,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 3,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "LUCKY",
+                        "performance_analysis": {
+                            "actual_league_position": 2,
+                            "position_diff": 5,
+                            "points_diff": -14.36,
+                            "goals_for_diff": 7.41,
+                            "goals_against_diff": -2.06
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 8,
+                        "objective": "MID_TABLE",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 10,
+                            "position_diff": 3,
+                            "points_diff": -4.88,
+                            "goals_for_diff": 3.21,
+                            "goals_against_diff": -4.25
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.047,
+                    "motivation_away": 1.007,
+                    "net_justice_tension": -9.48,
+                    "home_justice_z_score": -1.561,
+                    "away_justice_z_score": -0.552
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.47,
+                    "fotmob_rating_home": 6.96,
+                    "fotmob_rating_away": 6.8,
+                    "team_rating_gap": 0.16,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3821,
+                "PROB_X": 0.3415,
+                "PROB_2": 0.2764,
+                "PROB_O25": 0.3602,
+                "PROB_U25": 0.6398,
+                "PROB_O15": 0.6535,
+                "PROB_U35": 0.8317,
+                "PROB_BTTS": 0.4468
+            },
+            "True_Odds": {
+                "ODDS_1": 2.62,
+                "ODDS_X": 2.93,
+                "ODDS_2": 3.62,
+                "ODDS_O25": 2.78,
+                "ODDS_U25": 1.56,
+                "ODDS_O15": 1.53,
+                "ODDS_U35": 1.2,
+                "ODDS_BTTS": 2.24
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1559,
+                    "odds": 6.42
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.1419,
+                    "odds": 7.05
+                },
+                "Score_3": {
+                    "score": "1-0",
+                    "prob": 0.1202,
+                    "odds": 8.32
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "HOME",
+                "H_-1.5": {
+                    "prob": 0.1901,
+                    "odds": 5.26
+                },
+                "H_-2.5": {
+                    "prob": 0.0645,
+                    "odds": 15.51
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "SSC Napoli",
+                    "Outsider": "Udinese Calcio",
+                    "Probability_Gap": 0.1057
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.3964,
+                    "ODDS_FAV_O15": 2.52,
+                    "PROB_FAV_O25": 0.1437,
+                    "ODDS_FAV_O25": 6.96,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_RELIEF_CRITICAL",
+                        "STYLE_DIRECTNESS_LOW"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.6,
+                    "ODDS_OUT_O05": 1.67,
+                    "PROB_OUT_O15": 0.2335,
+                    "ODDS_OUT_O15": 4.28,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.5116,
+                "LAMBDA_SOT_MATCH": 7.7498,
+                "PROB_OVER_MEDIAN_CORNERS": 0.5033,
+                "LAMBDA_CORNERS_MATCH": 8.6931,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4922,
+                "LAMBDA_SHOTS_MATCH": 23.5732,
+                "LAMBDA_FOULS_MATCH": 25.02,
+                "PROB_OVER_MEDIAN_FOULS": 0.4489,
+                "PROP_HOME_MORE_CORNERS": 0.5715,
+                "PROP_HOME_MORE_SHOTS": 0.5132,
+                "PROP_HOME_MORE_SOT": 0.5189,
+                "PROP_HOME_MORE_FOULS": 0.44
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "AC Milan vs Cagliari Calcio",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.3102,
+                "lambda_away": 0.8649,
+                "composite_home": 0.1333,
+                "composite_away": -0.0905,
+                "trg_multiplier_home": 1.0695,
+                "trg_multiplier_away": 0.9305,
+                "home_fortress_multiplier": 0.9703,
+                "defensive_shield": 1.0,
+                "press_mult_home": 0.955,
+                "press_mult_away": 1.045,
+                "conv_mult_home": 1.003,
+                "conv_mult_away": 0.997,
+                "sp_mult_home": 1.0405,
+                "sp_mult_away": 0.9595,
+                "trajectory_home": 1.0058,
+                "trajectory_away": 1.0131,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1775,
+                "confidence_index": 0.4036,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 7,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 3,
+                            "position_diff": 1,
+                            "points_diff": -7.34,
+                            "goals_for_diff": -6.69,
+                            "goals_against_diff": -8.61
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 18,
+                        "objective": "SURVIVAL",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 16,
+                            "position_diff": 0,
+                            "points_diff": 0.01,
+                            "goals_for_diff": 2.33,
+                            "goals_against_diff": 0.48
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.047,
+                    "motivation_away": 1.032,
+                    "net_justice_tension": -7.35,
+                    "home_justice_z_score": -0.814,
+                    "away_justice_z_score": -0.031
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.55,
+                    "fotmob_rating_home": 7.0,
+                    "fotmob_rating_away": 6.71,
+                    "team_rating_gap": 0.29,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.4232,
+                "PROB_X": 0.3244,
+                "PROB_2": 0.2524,
+                "PROB_O25": 0.3706,
+                "PROB_U25": 0.6294,
+                "PROB_O15": 0.6622,
+                "PROB_U35": 0.8242,
+                "PROB_BTTS": 0.4456
+            },
+            "True_Odds": {
+                "ODDS_1": 2.36,
+                "ODDS_X": 3.08,
+                "ODDS_2": 3.96,
+                "ODDS_O25": 2.7,
+                "ODDS_U25": 1.59,
+                "ODDS_O15": 1.51,
+                "ODDS_U35": 1.21,
+                "ODDS_BTTS": 2.24
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1516,
+                    "odds": 6.6
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.1365,
+                    "odds": 7.33
+                },
+                "Score_3": {
+                    "score": "1-0",
+                    "prob": 0.126,
+                    "odds": 7.94
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "HOME",
+                "H_-1.5": {
+                    "prob": 0.219,
+                    "odds": 4.57
+                },
+                "H_-2.5": {
+                    "prob": 0.0791,
+                    "odds": 12.65
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "AC Milan",
+                    "Outsider": "Cagliari Calcio",
+                    "Probability_Gap": 0.1708
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.3768,
+                    "ODDS_FAV_O15": 2.65,
+                    "PROB_FAV_O25": 0.1452,
+                    "ODDS_FAV_O25": 6.89,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.5789,
+                    "ODDS_OUT_O05": 1.73,
+                    "PROB_OUT_O15": 0.2147,
+                    "ODDS_OUT_O15": 4.66,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.5211,
+                "LAMBDA_SOT_MATCH": 7.8164,
+                "PROB_OVER_MEDIAN_CORNERS": 0.5138,
+                "LAMBDA_CORNERS_MATCH": 8.771,
+                "PROB_OVER_MEDIAN_SHOTS": 0.5188,
+                "LAMBDA_SHOTS_MATCH": 23.897,
+                "LAMBDA_FOULS_MATCH": 24.92,
+                "PROB_OVER_MEDIAN_FOULS": 0.4409,
+                "PROP_HOME_MORE_CORNERS": 0.5635,
+                "PROP_HOME_MORE_SHOTS": 0.5273,
+                "PROP_HOME_MORE_SOT": 0.5285,
+                "PROP_HOME_MORE_FOULS": 0.44
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "Torino FC vs Juventus",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 1.2005,
+                "lambda_away": 1.2375,
+                "composite_home": -0.0724,
+                "composite_away": 0.2883,
+                "trg_multiplier_home": 0.9198,
+                "trg_multiplier_away": 1.0802,
+                "home_fortress_multiplier": 1.0778,
+                "defensive_shield": 0.9613,
+                "press_mult_home": 1.045,
+                "press_mult_away": 0.955,
+                "conv_mult_home": 1.0003,
+                "conv_mult_away": 0.9997,
+                "sp_mult_home": 0.95,
+                "sp_mult_away": 1.05,
+                "trajectory_home": 1.0034,
+                "trajectory_away": 1.0104,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1582,
+                "confidence_index": 0.1238,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 10,
+                        "objective": "MID_TABLE",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 12,
+                            "position_diff": 0,
+                            "points_diff": 1.75,
+                            "goals_for_diff": -2.95,
+                            "goals_against_diff": 8.95
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 6,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 6,
+                            "position_diff": -4,
+                            "points_diff": 5.03,
+                            "goals_for_diff": -7.97,
+                            "goals_against_diff": -0.17
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.993,
+                    "motivation_away": 1.047,
+                    "net_justice_tension": -3.28,
+                    "home_justice_z_score": 0.154,
+                    "away_justice_z_score": 0.503
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 3.03,
+                    "fotmob_rating_home": 6.68,
+                    "fotmob_rating_away": 7.02,
+                    "team_rating_gap": -0.34,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.009,
+                    "false_favorite_score": 0.009,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.3234,
+                "PROB_X": 0.3075,
+                "PROB_2": 0.3691,
+                "PROB_O25": 0.4402,
+                "PROB_U25": 0.5598,
+                "PROB_O15": 0.7203,
+                "PROB_U35": 0.7708,
+                "PROB_BTTS": 0.5167
+            },
+            "True_Odds": {
+                "ODDS_1": 3.09,
+                "ODDS_X": 3.25,
+                "ODDS_2": 2.71,
+                "ODDS_O25": 2.27,
+                "ODDS_U25": 1.79,
+                "ODDS_O15": 1.39,
+                "ODDS_U35": 1.3,
+                "ODDS_BTTS": 1.94
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1503,
+                    "odds": 6.65
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.1079,
+                    "odds": 9.27
+                },
+                "Score_3": {
+                    "score": "0-1",
+                    "prob": 0.0875,
+                    "odds": 11.42
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.161,
+                    "odds": 6.21
+                },
+                "H_-2.5": {
+                    "prob": 0.0542,
+                    "odds": 18.44
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "Juventus",
+                    "Outsider": "Torino FC",
+                    "Probability_Gap": 0.0457
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.4035,
+                    "ODDS_FAV_O15": 2.48,
+                    "PROB_FAV_O25": 0.148,
+                    "ODDS_FAV_O25": 6.75,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_RELIEF_CRITICAL"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.699,
+                    "ODDS_OUT_O05": 1.43,
+                    "PROB_OUT_O15": 0.3376,
+                    "ODDS_OUT_O15": 2.96,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.5592,
+                "LAMBDA_SOT_MATCH": 8.0878,
+                "PROB_OVER_MEDIAN_CORNERS": 0.5268,
+                "LAMBDA_CORNERS_MATCH": 8.8676,
+                "PROB_OVER_MEDIAN_SHOTS": 0.5933,
+                "LAMBDA_SHOTS_MATCH": 24.833,
+                "LAMBDA_FOULS_MATCH": 24.32,
+                "PROB_OVER_MEDIAN_FOULS": 0.3934,
+                "PROP_HOME_MORE_CORNERS": 0.3558,
+                "PROP_HOME_MORE_SHOTS": 0.4552,
+                "PROP_HOME_MORE_SOT": 0.4555,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": true,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": true,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "Hellas Verona vs AS Roma",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 0.7568,
+                "lambda_away": 1.2105,
+                "composite_home": -0.1595,
+                "composite_away": 0.2095,
+                "trg_multiplier_home": 0.9177,
+                "trg_multiplier_away": 1.0293,
+                "home_fortress_multiplier": 0.9374,
+                "defensive_shield": 0.9723,
+                "press_mult_home": 1.042,
+                "press_mult_away": 0.958,
+                "conv_mult_home": 0.9826,
+                "conv_mult_away": 1.0174,
+                "sp_mult_home": 0.95,
+                "sp_mult_away": 1.05,
+                "trajectory_home": 0.991,
+                "trajectory_away": 1.0018,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1859,
+                "confidence_index": 0.4864,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 20,
+                        "objective": "DESPERATION",
+                        "momentum": "ICE",
+                        "justice_status": "UNDERVALUED",
+                        "performance_analysis": {
+                            "actual_league_position": 19,
+                            "position_diff": -4,
+                            "points_diff": 20.94,
+                            "goals_for_diff": -9.78,
+                            "goals_against_diff": 11.55
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 7,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "FIRE",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 4,
+                            "position_diff": 2,
+                            "points_diff": -8.97,
+                            "goals_for_diff": 5.29,
+                            "goals_against_diff": -7.51
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 0.95,
+                    "motivation_away": 1.047,
+                    "net_justice_tension": 29.91,
+                    "home_justice_z_score": 2.196,
+                    "away_justice_z_score": -0.987
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.34,
+                    "fotmob_rating_home": 6.62,
+                    "fotmob_rating_away": 6.97,
+                    "team_rating_gap": -0.35,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.0,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.2206,
+                "PROB_X": 0.3498,
+                "PROB_2": 0.4295,
+                "PROB_O25": 0.3145,
+                "PROB_U25": 0.6855,
+                "PROB_O15": 0.6089,
+                "PROB_U35": 0.863,
+                "PROB_BTTS": 0.3964
+            },
+            "True_Odds": {
+                "ODDS_1": 4.53,
+                "ODDS_X": 2.86,
+                "ODDS_2": 2.33,
+                "ODDS_O25": 3.18,
+                "ODDS_U25": 1.46,
+                "ODDS_O15": 1.64,
+                "ODDS_U35": 1.16,
+                "ODDS_BTTS": 2.52
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "0-0",
+                    "prob": 0.1637,
+                    "odds": 6.11
+                },
+                "Score_2": {
+                    "score": "1-1",
+                    "prob": 0.1519,
+                    "odds": 6.58
+                },
+                "Score_3": {
+                    "score": "0-1",
+                    "prob": 0.1455,
+                    "odds": 6.87
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.2086,
+                    "odds": 4.79
+                },
+                "H_-2.5": {
+                    "prob": 0.0711,
+                    "odds": 14.07
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "AS Roma",
+                    "Outsider": "Hellas Verona",
+                    "Probability_Gap": 0.2089
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.3923,
+                    "ODDS_FAV_O15": 2.55,
+                    "PROB_FAV_O25": 0.1412,
+                    "ODDS_FAV_O25": 7.08,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_RELIEF_CRITICAL"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.5308,
+                    "ODDS_OUT_O05": 1.88,
+                    "PROB_OUT_O15": 0.1758,
+                    "ODDS_OUT_O15": 5.69,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.5043,
+                "LAMBDA_SOT_MATCH": 7.699,
+                "PROB_OVER_MEDIAN_CORNERS": 0.5008,
+                "LAMBDA_CORNERS_MATCH": 8.6745,
+                "PROB_OVER_MEDIAN_SHOTS": 0.473,
+                "LAMBDA_SHOTS_MATCH": 23.3401,
+                "LAMBDA_FOULS_MATCH": 25.19,
+                "PROB_OVER_MEDIAN_FOULS": 0.4618,
+                "PROP_HOME_MORE_CORNERS": 0.4124,
+                "PROP_HOME_MORE_SHOTS": 0.4901,
+                "PROP_HOME_MORE_SOT": 0.4781,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "US Cremonese vs Como 1907",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 0.8806,
+                "lambda_away": 1.2584,
+                "composite_home": -0.269,
+                "composite_away": 0.2491,
+                "trg_multiplier_home": 0.9056,
+                "trg_multiplier_away": 1.0944,
+                "home_fortress_multiplier": 0.9766,
+                "defensive_shield": 0.9523,
+                "press_mult_home": 1.036,
+                "press_mult_away": 0.964,
+                "conv_mult_home": 0.9931,
+                "conv_mult_away": 1.0069,
+                "sp_mult_home": 0.9838,
+                "sp_mult_away": 1.0162,
+                "trajectory_home": 1.0167,
+                "trajectory_away": 1.0305,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1779,
+                "confidence_index": 0.3091,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 18,
+                        "objective": "SURVIVAL",
+                        "momentum": "NEUTRAL",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 18,
+                            "position_diff": 0,
+                            "points_diff": 4.22,
+                            "goals_for_diff": -3.67,
+                            "goals_against_diff": -2.31
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 5,
+                        "objective": "EUROPE_QUALIFICATION",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 5,
+                            "position_diff": -2,
+                            "points_diff": -1.19,
+                            "goals_for_diff": 1.58,
+                            "goals_against_diff": -4.8
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.082,
+                    "motivation_away": 1.047,
+                    "net_justice_tension": 5.41,
+                    "home_justice_z_score": 0.417,
+                    "away_justice_z_score": -0.159
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.54,
+                    "fotmob_rating_home": 6.58,
+                    "fotmob_rating_away": 6.99,
+                    "team_rating_gap": -0.41,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.51,
+                    "false_favorite_score": 0.51,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.2756,
+                "PROB_X": 0.3255,
+                "PROB_2": 0.3989,
+                "PROB_O25": 0.3609,
+                "PROB_U25": 0.6391,
+                "PROB_O15": 0.6535,
+                "PROB_U35": 0.8312,
+                "PROB_BTTS": 0.4424
+            },
+            "True_Odds": {
+                "ODDS_1": 3.63,
+                "ODDS_X": 3.07,
+                "ODDS_2": 2.51,
+                "ODDS_O25": 2.77,
+                "ODDS_U25": 1.56,
+                "ODDS_O15": 1.53,
+                "ODDS_U35": 1.2,
+                "ODDS_BTTS": 2.26
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "1-1",
+                    "prob": 0.1537,
+                    "odds": 6.5
+                },
+                "Score_2": {
+                    "score": "0-0",
+                    "prob": 0.141,
+                    "odds": 7.09
+                },
+                "Score_3": {
+                    "score": "0-1",
+                    "prob": 0.125,
+                    "odds": 8.0
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.204,
+                    "odds": 4.9
+                },
+                "H_-2.5": {
+                    "prob": 0.0712,
+                    "odds": 14.05
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "Como 1907",
+                    "Outsider": "US Cremonese",
+                    "Probability_Gap": 0.1233
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.4121,
+                    "ODDS_FAV_O15": 2.43,
+                    "PROB_FAV_O25": 0.1534,
+                    "ODDS_FAV_O25": 6.52,
+                    "Alpha_Signals_Active": [
+                        "PRESSURE_RELIEF_CRITICAL"
+                    ]
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.5855,
+                    "ODDS_OUT_O05": 1.71,
+                    "PROB_OUT_O15": 0.2204,
+                    "ODDS_OUT_O15": 4.54,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.5259,
+                "LAMBDA_SOT_MATCH": 7.8499,
+                "PROB_OVER_MEDIAN_CORNERS": 0.5332,
+                "LAMBDA_CORNERS_MATCH": 8.9158,
+                "PROB_OVER_MEDIAN_SHOTS": 0.5494,
+                "LAMBDA_SHOTS_MATCH": 24.2761,
+                "LAMBDA_FOULS_MATCH": 24.93,
+                "PROB_OVER_MEDIAN_FOULS": 0.4419,
+                "PROP_HOME_MORE_CORNERS": 0.3772,
+                "PROP_HOME_MORE_SHOTS": 0.4466,
+                "PROP_HOME_MORE_SOT": 0.4592,
+                "PROP_HOME_MORE_FOULS": 0.48
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": true,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        },
+        {
+            "Matchup": "US Lecce vs Genoa CFC",
+            "League": "Serie A",
+            "Data_Integrity": [
+                "COMPLETE"
+            ],
+            "Calibration_Diagnostics": {
+                "lambda_home": 0.9766,
+                "lambda_away": 1.0222,
+                "composite_home": -0.1416,
+                "composite_away": 0.0222,
+                "trg_multiplier_home": 0.9776,
+                "trg_multiplier_away": 1.0224,
+                "home_fortress_multiplier": 0.9837,
+                "defensive_shield": 0.985,
+                "press_mult_home": 1.018,
+                "press_mult_away": 0.982,
+                "conv_mult_home": 0.9934,
+                "conv_mult_away": 1.0066,
+                "sp_mult_home": 0.9879,
+                "sp_mult_away": 1.0122,
+                "trajectory_home": 0.9804,
+                "trajectory_away": 0.9928,
+                "efficiency_bias_correction": 0.92,
+                "rho_dynamic": -0.1988,
+                "confidence_index": 0.1493,
+                "CONTRADICTION_CORNERS_FOULS": false
+            },
+            "Risk_Management_Context": {
+                "League_Anchors": {
+                    "median_shots": 23.4,
+                    "median_sot": 7.7,
+                    "median_corners": 8.62,
+                    "median_fouls": 25.0
+                },
+                "Situational_Narrative": {
+                    "Home_Team": {
+                        "rank_home": 17,
+                        "objective": "SURVIVAL",
+                        "momentum": "HOT",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 17,
+                            "position_diff": 3,
+                            "points_diff": -0.96,
+                            "goals_for_diff": -3.17,
+                            "goals_against_diff": -7.51
+                        }
+                    },
+                    "Away_Team": {
+                        "rank_away": 14,
+                        "objective": "MID_TABLE",
+                        "momentum": "COLD",
+                        "justice_status": "FAIR",
+                        "performance_analysis": {
+                            "actual_league_position": 14,
+                            "position_diff": -4,
+                            "points_diff": 6.94,
+                            "goals_for_diff": -3.73,
+                            "goals_against_diff": 2.81
+                        }
+                    }
+                },
+                "Team_Psychology": {
+                    "motivation_home": 1.095,
+                    "motivation_away": 0.993,
+                    "net_justice_tension": -7.9,
+                    "home_justice_z_score": -0.135,
+                    "away_justice_z_score": 0.706
+                },
+                "Tactical_Red_Flags": {
+                    "match_openness_index": 2.02,
+                    "fotmob_rating_home": 6.64,
+                    "fotmob_rating_away": 6.73,
+                    "team_rating_gap": -0.09,
+                    "home_wastefulness_score": 0.0,
+                    "away_wastefulness_score": 0.0,
+                    "false_favorite_score": 0.2,
+                    "IS_FALSE_FAVORITE": false,
+                    "MISSING_FOTMOB_DATA": false
+                },
+                "Investment_Signals": {
+                    "IS_KILL_SWITCH_ACTIVE": false,
+                    "IS_TOP_FORM_HOME": false,
+                    "IS_TOP_FORM_AWAY": false,
+                    "IS_ULTRA_SAFE": false,
+                    "IS_SAFE_GOALS": false,
+                    "IS_STERILE_UNDER_QUALIFIED": false,
+                    "IS_PREDICTABLE_SCORE_REGIME": false
+                }
+            },
+            "True_Probabilities": {
+                "PROB_1": 0.2992,
+                "PROB_X": 0.3491,
+                "PROB_2": 0.3517,
+                "PROB_O25": 0.323,
+                "PROB_U25": 0.677,
+                "PROB_O15": 0.6205,
+                "PROB_U35": 0.8574,
+                "PROB_BTTS": 0.426
+            },
+            "True_Odds": {
+                "ODDS_1": 3.34,
+                "ODDS_X": 2.86,
+                "ODDS_2": 2.84,
+                "ODDS_O25": 3.1,
+                "ODDS_U25": 1.48,
+                "ODDS_O15": 1.61,
+                "ODDS_U35": 1.17,
+                "ODDS_BTTS": 2.35
+            },
+            "Top_3_Exact_Scores": {
+                "Score_1": {
+                    "score": "0-0",
+                    "prob": 0.1624,
+                    "odds": 6.16
+                },
+                "Score_2": {
+                    "score": "1-1",
+                    "prob": 0.1622,
+                    "odds": 6.17
+                },
+                "Score_3": {
+                    "score": "0-1",
+                    "prob": 0.1116,
+                    "odds": 8.96
+                }
+            },
+            "Alternative_Domination_Score": null,
+            "Standard_Handicaps": {
+                "favorite": "AWAY",
+                "H_-1.5": {
+                    "prob": 0.1375,
+                    "odds": 7.27
+                },
+                "H_-2.5": {
+                    "prob": 0.04,
+                    "odds": 24.97
+                }
+            },
+            "Team_Goals_Markets": {
+                "Target_Entity": {
+                    "Favorite": "Genoa CFC",
+                    "Outsider": "US Lecce",
+                    "Probability_Gap": 0.0525
+                },
+                "Favorite_Goals": {
+                    "PROB_FAV_O15": 0.2724,
+                    "ODDS_FAV_O15": 3.67,
+                    "PROB_FAV_O25": 0.0844,
+                    "ODDS_FAV_O25": 11.85,
+                    "Alpha_Signals_Active": []
+                },
+                "Outsider_Goals": {
+                    "PROB_OUT_O05": 0.6234,
+                    "ODDS_OUT_O05": 1.6,
+                    "PROB_OUT_O15": 0.2556,
+                    "ODDS_OUT_O15": 3.91,
+                    "Alpha_Signals_Active": []
+                }
+            },
+            "Prop_Bets": {
+                "PROB_OVER_MEDIAN_SOT": 0.4907,
+                "LAMBDA_SOT_MATCH": 7.6054,
+                "PROB_OVER_MEDIAN_CORNERS": 0.5097,
+                "LAMBDA_CORNERS_MATCH": 8.7407,
+                "PROB_OVER_MEDIAN_SHOTS": 0.4507,
+                "LAMBDA_SHOTS_MATCH": 23.0705,
+                "LAMBDA_FOULS_MATCH": 25.59,
+                "PROB_OVER_MEDIAN_FOULS": 0.4935,
+                "PROP_HOME_MORE_CORNERS": 0.5288,
+                "PROP_HOME_MORE_SHOTS": 0.4781,
+                "PROP_HOME_MORE_SOT": 0.4606,
+                "PROP_HOME_MORE_FOULS": 0.44
+            },
+            "Super_Signals": {
+                "O_CORNERS_ELITE": false,
+                "O_SHOTS_ELITE": false,
+                "O_FOULS_ELITE": false,
+                "O15_ELITE": false,
+                "H_MINUS_25_ANNIHILATION": false,
+                "FAV_O25_STORM": false,
+                "U25_STERILE_DOMINATION": false
+            }
+        }
+    ]
+}

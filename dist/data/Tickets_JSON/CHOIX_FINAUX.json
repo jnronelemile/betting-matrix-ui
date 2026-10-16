@@ -1,0 +1,2964 @@
+{
+  "Methode": "POOL UNIVERSEL V9.1 — Validé par Séries Statistiques",
+  "Total_Bets_Evalues": 116,
+  "Total_Selectionnes": 25,
+  "Cote_Totale_Estimee": 2925.33,
+  "Gain_Potentiel_10U": 29253.26,
+  "Selections": [
+    {
+      "Match": "RCD Espanyol vs Real Sociedad",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Real Sociedad",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.7362,
+      "Cote_Ref": 1.43,
+      "Score_EV": 1.3208,
+      "Super_Signal": false,
+      "Profile": [
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+      "Score_EV_Original": 1.1485
+    },
+    {
+      "Match": "Valencia CF vs FC Barcelona",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Valencia CF",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.7185,
+      "Cote_Ref": 1.46,
+      "Score_EV": 1.289,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+          "Force": 0.68
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+      "Score_EV_Original": 1.1209
+    },
+    {
+      "Match": "Girona FC vs Elche CF",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Elche CF",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.7159,
+      "Cote_Ref": 1.47,
+      "Score_EV": 1.2843,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+      "Score_EV_Original": 1.1168
+    },
+    {
+      "Match": "Villarreal CF vs Atletico Madrid",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Atletico Madrid",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.6901,
+      "Cote_Ref": 1.52,
+      "Score_EV": 1.2381,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+      "Score_EV_Original": 1.0766
+    },
+    {
+      "Match": "AC Fiorentina vs Atalanta BC",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.9058,
+      "Cote_Ref": 1.1,
+      "Score_EV": 1.2196,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-22",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.2196
+    },
+    {
+      "Match": "Deportivo Alaves vs Rayo Vallecano",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Rayo Vallecano",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.6752,
+      "Cote_Ref": 1.56,
+      "Score_EV": 1.2113,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+      "Score_EV_Original": 1.0533
+    },
+    {
+      "Match": "Parma Calcio 1913 vs US Sassuolo",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.8662,
+      "Cote_Ref": 1.15,
+      "Score_EV": 1.1663,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "Top3 cumul 46% | 0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-24",
+      "Heure": "09:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.1663
+    },
+    {
+      "Match": "Real Madrid vs Athletic Club",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Real Madrid",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5919,
+      "Cote_Ref": 1.77,
+      "Score_EV": 1.1436,
+      "Super_Signal": false,
+      "Alpha": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.1436
+    },
+    {
+      "Match": "Villarreal CF vs Atletico Madrid",
+      "League": "LaLiga",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.6264,
+      "Cote_Ref": 1.68,
+      "Score_EV": 1.1275,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.1275
+    },
+    {
+      "Match": "Torino FC vs Juventus",
+      "League": "Serie A",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.6442,
+      "Cote_Ref": 1.63,
+      "Score_EV": 1.1112,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+      "Score_EV_Original": 0.9663
+    },
+    {
+      "Match": "Brighton & Hove Albion vs Manchester United",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8674,
+      "Cote_Ref": 1.15,
+      "Score_EV": 1.0972,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+          "Force": 0.54
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 8/10",
+      "Score_EV_Original": 0.9541
+    },
+    {
+      "Match": "Hellas Verona vs AS Roma",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.863,
+      "Cote_Ref": 1.16,
+      "Score_EV": 1.0917,
+      "Super_Signal": false,
+      "Profile": [
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 8/10",
+      "Score_EV_Original": 0.9493
+    },
+    {
+      "Match": "Bologna FC vs Inter Milan",
+      "League": "Serie A",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.6312,
+      "Cote_Ref": 1.66,
+      "Score_EV": 1.0888,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-23",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+      "Score_EV_Original": 0.9468
+    },
+    {
+      "Match": "Girona FC vs Elche CF",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7452,
+      "Cote_Ref": 1.34,
+      "Score_EV": 1.0841,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9427
+    },
+    {
+      "Match": "Liverpool vs Brentford",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8371,
+      "Cote_Ref": 1.19,
+      "Score_EV": 1.0589,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+          "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+          "Force": 0.7
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 4/5",
+      "Score_EV_Original": 0.9208
+    },
+    {
+      "Match": "SS Lazio vs Pisa SC",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8324,
+      "Cote_Ref": 1.2,
+      "Score_EV": 1.0529,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9156
+    },
+    {
+      "Match": "SSC Napoli vs Udinese Calcio",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8317,
+      "Cote_Ref": 1.2,
+      "Score_EV": 1.0521,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9149
+    },
+    {
+      "Match": "US Cremonese vs Como 1907",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8312,
+      "Cote_Ref": 1.2,
+      "Score_EV": 1.0514,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+      "Score_EV_Original": 0.9143
+    },
+    {
+      "Match": "Bologna FC vs Inter Milan",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8289,
+      "Cote_Ref": 1.21,
+      "Score_EV": 1.0486,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.9118
+    },
+    {
+      "Match": "Deportivo Alaves vs Rayo Vallecano",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7143,
+      "Cote_Ref": 1.4,
+      "Score_EV": 1.0391,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9036
+    },
+    {
+      "Match": "Manchester City vs Aston Villa",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8155,
+      "Cote_Ref": 1.23,
+      "Score_EV": 1.0317,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.8971
+    },
+    {
+      "Match": "AC Fiorentina vs Atalanta BC",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.7554,
+      "Cote_Ref": 1.32,
+      "Score_EV": 1.0171,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-22",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.0171
+    },
+    {
+      "Match": "Crystal Palace vs Arsenal",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.804,
+      "Cote_Ref": 1.24,
+      "Score_EV": 1.0171,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+          "Force": 0.72
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 9/10",
+      "Score_EV_Original": 0.8844
+    },
+    {
+      "Match": "Hellas Verona vs AS Roma",
+      "League": "Serie A",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.5876,
+      "Cote_Ref": 1.79,
+      "Score_EV": 1.0136,
+      "Super_Signal": false,
+      "Profile": [
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+      "Score_EV_Original": 0.8814
+    },
+    {
+      "Match": "Manchester City vs Aston Villa",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Manchester City",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5973,
+      "Cote_Ref": 1.76,
+      "Score_EV": 1.0035,
+      "Super_Signal": false,
+      "Alpha": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.0035
+    }
+  ],
+  "Pool_Complet": [
+    {
+      "Match": "RCD Espanyol vs Real Sociedad",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Real Sociedad",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.7362,
+      "Cote_Ref": 1.43,
+      "Score_EV": 1.3208,
+      "Super_Signal": false,
+      "Profile": [
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+      "Score_EV_Original": 1.1485
+    },
+    {
+      "Match": "Valencia CF vs FC Barcelona",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Valencia CF",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.7185,
+      "Cote_Ref": 1.46,
+      "Score_EV": 1.289,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+          "Force": 0.68
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 7/10",
+      "Score_EV_Original": 1.1209
+    },
+    {
+      "Match": "Girona FC vs Elche CF",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Elche CF",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.7159,
+      "Cote_Ref": 1.47,
+      "Score_EV": 1.2843,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+      "Score_EV_Original": 1.1168
+    },
+    {
+      "Match": "Villarreal CF vs Atletico Madrid",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Atletico Madrid",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.6901,
+      "Cote_Ref": 1.52,
+      "Score_EV": 1.2381,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+      "Score_EV_Original": 1.0766
+    },
+    {
+      "Match": "AC Fiorentina vs Atalanta BC",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.9058,
+      "Cote_Ref": 1.1,
+      "Score_EV": 1.2196,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-22",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.2196
+    },
+    {
+      "Match": "Deportivo Alaves vs Rayo Vallecano",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Rayo Vallecano",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.6752,
+      "Cote_Ref": 1.56,
+      "Score_EV": 1.2113,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 9/10",
+      "Score_EV_Original": 1.0533
+    },
+    {
+      "Match": "Parma Calcio 1913 vs US Sassuolo",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.8662,
+      "Cote_Ref": 1.15,
+      "Score_EV": 1.1663,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "Top3 cumul 46% | 0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-24",
+      "Heure": "09:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.1663
+    },
+    {
+      "Match": "Real Madrid vs Athletic Club",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Real Madrid",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5919,
+      "Cote_Ref": 1.77,
+      "Score_EV": 1.1436,
+      "Super_Signal": false,
+      "Alpha": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.1436
+    },
+    {
+      "Match": "Villarreal CF vs Atletico Madrid",
+      "League": "LaLiga",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.6264,
+      "Cote_Ref": 1.68,
+      "Score_EV": 1.1275,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.1275
+    },
+    {
+      "Match": "Torino FC vs Juventus",
+      "League": "Serie A",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.6442,
+      "Cote_Ref": 1.63,
+      "Score_EV": 1.1112,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 7/10",
+      "Score_EV_Original": 0.9663
+    },
+    {
+      "Match": "Brighton & Hove Albion vs Manchester United",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8674,
+      "Cote_Ref": 1.15,
+      "Score_EV": 1.0972,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+          "Force": 0.54
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 8/10",
+      "Score_EV_Original": 0.9541
+    },
+    {
+      "Match": "Hellas Verona vs AS Roma",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.863,
+      "Cote_Ref": 1.16,
+      "Score_EV": 1.0917,
+      "Super_Signal": false,
+      "Profile": [
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 8/10",
+      "Score_EV_Original": 0.9493
+    },
+    {
+      "Match": "Bologna FC vs Inter Milan",
+      "League": "Serie A",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.6312,
+      "Cote_Ref": 1.66,
+      "Score_EV": 1.0888,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-23",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Volume statistique élevé : Over 10.5 Corners: 5/7",
+      "Score_EV_Original": 0.9468
+    },
+    {
+      "Match": "Girona FC vs Elche CF",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7452,
+      "Cote_Ref": 1.34,
+      "Score_EV": 1.0841,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9427
+    },
+    {
+      "Match": "Liverpool vs Brentford",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8371,
+      "Cote_Ref": 1.19,
+      "Score_EV": 1.0589,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+          "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+          "Force": 0.7
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 4/5",
+      "Score_EV_Original": 0.9208
+    },
+    {
+      "Match": "SS Lazio vs Pisa SC",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8324,
+      "Cote_Ref": 1.2,
+      "Score_EV": 1.0529,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9156
+    },
+    {
+      "Match": "SSC Napoli vs Udinese Calcio",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8317,
+      "Cote_Ref": 1.2,
+      "Score_EV": 1.0521,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9149
+    },
+    {
+      "Match": "US Cremonese vs Como 1907",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8312,
+      "Cote_Ref": 1.2,
+      "Score_EV": 1.0514,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+      "Score_EV_Original": 0.9143
+    },
+    {
+      "Match": "Bologna FC vs Inter Milan",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8289,
+      "Cote_Ref": 1.21,
+      "Score_EV": 1.0486,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.9118
+    },
+    {
+      "Match": "Deportivo Alaves vs Rayo Vallecano",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7143,
+      "Cote_Ref": 1.4,
+      "Score_EV": 1.0391,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9036
+    },
+    {
+      "Match": "Manchester City vs Aston Villa",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8155,
+      "Cote_Ref": 1.23,
+      "Score_EV": 1.0317,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.8971
+    },
+    {
+      "Match": "AC Fiorentina vs Atalanta BC",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.7554,
+      "Cote_Ref": 1.32,
+      "Score_EV": 1.0171,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "Top3 cumul 52% | 0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-22",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.0171
+    },
+    {
+      "Match": "Crystal Palace vs Arsenal",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.804,
+      "Cote_Ref": 1.24,
+      "Score_EV": 1.0171,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+          "Force": 0.72
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 9/10",
+      "Score_EV_Original": 0.8844
+    },
+    {
+      "Match": "Hellas Verona vs AS Roma",
+      "League": "Serie A",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.5876,
+      "Cote_Ref": 1.79,
+      "Score_EV": 1.0136,
+      "Super_Signal": false,
+      "Profile": [
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Volume statistique élevé : Over 4.5 Corners (Team): 4/5",
+      "Score_EV_Original": 0.8814
+    },
+    {
+      "Match": "Manchester City vs Aston Villa",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Manchester City",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5973,
+      "Cote_Ref": 1.76,
+      "Score_EV": 1.0035,
+      "Super_Signal": false,
+      "Alpha": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 1.0035
+    },
+    {
+      "Match": "West Ham United vs Leeds United",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7852,
+      "Cote_Ref": 1.27,
+      "Score_EV": 0.9933,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.8637
+    },
+    {
+      "Match": "Nottingham Forest vs AFC Bournemouth",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.781,
+      "Cote_Ref": 1.28,
+      "Score_EV": 0.988,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 27%. Appuyé par un Momentum global HOT.",
+          "Force": 0.54
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.8591
+    },
+    {
+      "Match": "Real Betis vs Levante UD",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.78,
+      "Cote_Ref": 1.28,
+      "Score_EV": 0.9867,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 6/8",
+      "Score_EV_Original": 0.858
+    },
+    {
+      "Match": "Getafe CF vs CA Osasuna",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.7934,
+      "Cote_Ref": 1.26,
+      "Score_EV": 0.9792,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.9792
+    },
+    {
+      "Match": "Valencia CF vs FC Barcelona",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.77,
+      "Cote_Ref": 1.3,
+      "Score_EV": 0.974,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "BUTS_GARANTIS"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+          "Force": 0.68
+        }
+      ],
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.974
+    },
+    {
+      "Match": "Burnley vs Wolverhampton Wanderers",
+      "League": "Premier League",
+      "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.7072,
+      "Cote_Ref": 1.41,
+      "Score_EV": 0.9581,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "0-0 dans Top3",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.9581
+    },
+    {
+      "Match": "Villarreal CF vs Atletico Madrid",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7515,
+      "Cote_Ref": 1.33,
+      "Score_EV": 0.9506,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.8266
+    },
+    {
+      "Match": "RCD Espanyol vs Real Sociedad",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7506,
+      "Cote_Ref": 1.33,
+      "Score_EV": 0.9495,
+      "Super_Signal": false,
+      "Profile": [
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.9495
+    },
+    {
+      "Match": "Real Betis vs Levante UD",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Levante UD",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.6321,
+      "Cote_Ref": 1.66,
+      "Score_EV": 0.945,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série de buts de l'outsider : Over 0.5 Team Goals: 8/10",
+      "Score_EV_Original": 0.8217
+    },
+    {
+      "Match": "US Lecce vs Genoa CFC",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8574,
+      "Cote_Ref": 1.17,
+      "Score_EV": 0.9431,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.9431
+    },
+    {
+      "Match": "Crystal Palace vs Arsenal",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Arsenal",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5981,
+      "Cote_Ref": 1.76,
+      "Score_EV": 0.942,
+      "Super_Signal": false,
+      "Alpha": true,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+          "Force": 0.72
+        }
+      ],
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Faible volume de buts du favori : Under 1.5 Team Goals: 9/10",
+      "Score_EV_Original": 1.256
+    },
+    {
+      "Match": "US Cremonese vs Como 1907",
+      "League": "Serie A",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.6228,
+      "Cote_Ref": 1.69,
+      "Score_EV": 0.9342,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.9342
+    },
+    {
+      "Match": "Parma Calcio 1913 vs US Sassuolo",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.6904,
+      "Cote_Ref": 1.45,
+      "Score_EV": 0.9296,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "Top3 cumul 46% | 0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-24",
+      "Heure": "09:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.9296
+    },
+    {
+      "Match": "Liverpool vs Brentford",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Liverpool",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5728,
+      "Cote_Ref": 1.83,
+      "Score_EV": 0.9222,
+      "Super_Signal": false,
+      "Alpha": false,
+      "Profile": [],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+          "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+          "Force": 0.7
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série offensive favorable : Over 1.5 Team Goals: 5/7",
+      "Score_EV_Original": 0.8019
+    },
+    {
+      "Match": "RCD Mallorca vs Real Oviedo",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.7145,
+      "Cote_Ref": 1.4,
+      "Score_EV": 0.9219,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "Aucune confirmation",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.9219
+    },
+    {
+      "Match": "Torino FC vs Juventus",
+      "League": "Serie A",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7203,
+      "Cote_Ref": 1.39,
+      "Score_EV": 0.9111,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.7923
+    },
+    {
+      "Match": "AC Milan vs Cagliari Calcio",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8242,
+      "Cote_Ref": 1.21,
+      "Score_EV": 0.9066,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.9066
+    },
+    {
+      "Match": "Celta Vigo vs Sevilla FC",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.813,
+      "Cote_Ref": 1.23,
+      "Score_EV": 0.8943,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.8943
+    },
+    {
+      "Match": "Real Betis vs Levante UD",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Real Betis",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5222,
+      "Cote_Ref": 2.01,
+      "Score_EV": 0.8773,
+      "Super_Signal": false,
+      "Alpha": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.8773
+    },
+    {
+      "Match": "Tottenham Hotspur vs Everton",
+      "League": "Premier League",
+      "Marche": "Under 3.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.7446,
+      "Cote_Ref": 1.34,
+      "Score_EV": 0.8772,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "0-0 dans Top3",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.8772
+    },
+    {
+      "Match": "Hellas Verona vs AS Roma",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6855,
+      "Cote_Ref": 1.46,
+      "Score_EV": 0.8672,
+      "Super_Signal": false,
+      "Profile": [
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 8/10",
+      "Score_EV_Original": 0.7541
+    },
+    {
+      "Match": "Sunderland AFC vs Chelsea",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7881,
+      "Cote_Ref": 1.27,
+      "Score_EV": 0.8669,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.8669
+    },
+    {
+      "Match": "Valencia CF vs FC Barcelona",
+      "League": "LaLiga",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.6362,
+      "Cote_Ref": 1.65,
+      "Score_EV": 0.8589,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+          "Force": 0.68
+        }
+      ],
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 8/10",
+      "Score_EV_Original": 1.1452
+    },
+    {
+      "Match": "Brighton & Hove Albion vs Manchester United",
+      "League": "Premier League",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6731,
+      "Cote_Ref": 1.49,
+      "Score_EV": 0.8515,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+          "Force": 0.54
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "BTTS fréquent : BTTS Yes: 8/10",
+      "Score_EV_Original": 0.7404
+    },
+    {
+      "Match": "Fulham vs Newcastle United",
+      "League": "Premier League",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6593,
+      "Cote_Ref": 1.52,
+      "Score_EV": 0.834,
+      "Super_Signal": false,
+      "Profile": [
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+          "Force": 0.6
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "BTTS fréquent : BTTS Yes: 8/10",
+      "Score_EV_Original": 0.7252
+    },
+    {
+      "Match": "Brighton & Hove Albion vs Manchester United",
+      "League": "Premier League",
+      "Marche": "Over 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6578,
+      "Cote_Ref": 1.52,
+      "Score_EV": 0.8321,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+          "Force": 0.54
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 8/10",
+      "Score_EV_Original": 0.7236
+    },
+    {
+      "Match": "Torino FC vs Juventus",
+      "League": "Serie A",
+      "Marche": "Over 23.5 SHOTS",
+      "Type": "PROP_BET",
+      "Tier": 3,
+      "Prob": 0.5933,
+      "Cote_Ref": 1.77,
+      "Score_EV": 0.8188,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Tendance de match favorable : Over 22.5 Shots: 6/8",
+      "Score_EV_Original": 0.712
+    },
+    {
+      "Match": "Real Madrid vs Athletic Club",
+      "League": "LaLiga",
+      "Marche": "Over 24.5 SHOTS",
+      "Type": "PROP_BET",
+      "Tier": 3,
+      "Prob": 0.5876,
+      "Cote_Ref": 1.79,
+      "Score_EV": 0.8109,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Tendance de match favorable : Over 22.5 Shots: 8/10",
+      "Score_EV_Original": 0.7051
+    },
+    {
+      "Match": "SS Lazio vs Pisa SC",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6408,
+      "Cote_Ref": 1.56,
+      "Score_EV": 0.8106,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.7049
+    },
+    {
+      "Match": "SSC Napoli vs Udinese Calcio",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6398,
+      "Cote_Ref": 1.56,
+      "Score_EV": 0.8094,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.7038
+    },
+    {
+      "Match": "US Cremonese vs Como 1907",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6391,
+      "Cote_Ref": 1.56,
+      "Score_EV": 0.8084,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+      "Score_EV_Original": 0.703
+    },
+    {
+      "Match": "Bologna FC vs Inter Milan",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6359,
+      "Cote_Ref": 1.57,
+      "Score_EV": 0.8044,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.6995
+    },
+    {
+      "Match": "Celta Vigo vs Sevilla FC",
+      "League": "LaLiga",
+      "Marche": "Over 0.5 Sevilla FC",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.6174,
+      "Cote_Ref": 1.7,
+      "Score_EV": 0.8026,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.8026
+    },
+    {
+      "Match": "Brighton & Hove Albion vs Manchester United",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Brighton & Hove Albion",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5694,
+      "Cote_Ref": 1.84,
+      "Score_EV": 0.7972,
+      "Super_Signal": false,
+      "Alpha": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%.",
+          "Force": 0.54
+        }
+      ],
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.7972
+    },
+    {
+      "Match": "Valencia CF vs FC Barcelona",
+      "League": "LaLiga",
+      "Marche": "Over 24.5 SHOTS",
+      "Type": "PROP_BET",
+      "Tier": 3,
+      "Prob": 0.6307,
+      "Cote_Ref": 1.66,
+      "Score_EV": 0.7947,
+      "Super_Signal": true,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+          "Force": 0.68
+        }
+      ],
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Tendance de match défavorable : Under 22.5 Shots: 4/5",
+      "Score_EV_Original": 1.0596
+    },
+    {
+      "Match": "Valencia CF vs FC Barcelona",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7131,
+      "Cote_Ref": 1.4,
+      "Score_EV": 0.7844,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "BUTS_GARANTIS"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+          "Force": 0.68
+        }
+      ],
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.7844
+    },
+    {
+      "Match": "Liverpool vs Brentford",
+      "League": "Premier League",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6166,
+      "Cote_Ref": 1.62,
+      "Score_EV": 0.78,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+          "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+          "Force": 0.7
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "BTTS fréquent : BTTS Yes: 5/7",
+      "Score_EV_Original": 0.6783
+    },
+    {
+      "Match": "Liverpool vs Brentford",
+      "League": "Premier League",
+      "Marche": "Over 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6063,
+      "Cote_Ref": 1.65,
+      "Score_EV": 0.7669,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+          "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+          "Force": 0.7
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 4/5",
+      "Score_EV_Original": 0.6669
+    },
+    {
+      "Match": "Real Madrid vs Athletic Club",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.801,
+      "Cote_Ref": 1.25,
+      "Score_EV": 0.76,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME",
+        "BUTS_GARANTIS"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+      "Score_EV_Original": 1.0133
+    },
+    {
+      "Match": "Celta Vigo vs Sevilla FC",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6786,
+      "Cote_Ref": 1.47,
+      "Score_EV": 0.7465,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.7465
+    },
+    {
+      "Match": "US Lecce vs Genoa CFC",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.677,
+      "Cote_Ref": 1.48,
+      "Score_EV": 0.7447,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.7447
+    },
+    {
+      "Match": "Crystal Palace vs Arsenal",
+      "League": "Premier League",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5843,
+      "Cote_Ref": 1.71,
+      "Score_EV": 0.7391,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+          "Force": 0.72
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "BTTS fréquent : BTTS Yes: 7/10",
+      "Score_EV_Original": 0.6427
+    },
+    {
+      "Match": "AC Milan vs Cagliari Calcio",
+      "League": "Serie A",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6622,
+      "Cote_Ref": 1.51,
+      "Score_EV": 0.7284,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.7284
+    },
+    {
+      "Match": "Nottingham Forest vs AFC Bournemouth",
+      "League": "Premier League",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5753,
+      "Cote_Ref": 1.74,
+      "Score_EV": 0.7277,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 27%. Appuyé par un Momentum global HOT.",
+          "Force": 0.54
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "BTTS fréquent : BTTS Yes: 5/7",
+      "Score_EV_Original": 0.6328
+    },
+    {
+      "Match": "Getafe CF vs CA Osasuna",
+      "League": "LaLiga",
+      "Marche": "Under 2.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.5883,
+      "Cote_Ref": 1.7,
+      "Score_EV": 0.7261,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.7261
+    },
+    {
+      "Match": "Manchester City vs Aston Villa",
+      "League": "Premier League",
+      "Marche": "Over 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5738,
+      "Cote_Ref": 1.74,
+      "Score_EV": 0.7259,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.6312
+    },
+    {
+      "Match": "Manchester City vs Aston Villa",
+      "League": "Premier League",
+      "Marche": "Victoire Home (1)",
+      "Type": "CLASSIQUE_1X2",
+      "Tier": 5,
+      "Prob": 0.6207,
+      "Cote_Ref": 1.61,
+      "Score_EV": 0.7138,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Série d'invincibilité : No losses: 10",
+      "Score_EV_Original": 0.6207
+    },
+    {
+      "Match": "Fulham vs Newcastle United",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.8547,
+      "Cote_Ref": 1.17,
+      "Score_EV": 0.7052,
+      "Super_Signal": false,
+      "Profile": [
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+          "Force": 0.6
+        }
+      ],
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.9402
+    },
+    {
+      "Match": "Crystal Palace vs Arsenal",
+      "League": "Premier League",
+      "Marche": "Over 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5544,
+      "Cote_Ref": 1.8,
+      "Score_EV": 0.7013,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "DYNAMIQUE_ECRASANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 38% de ses buts (après la 75') croisant la défense Away qui y encaisse 33%.",
+          "Force": 0.72
+        }
+      ],
+      "Streak_Status": "STREAK_CONFIRMED",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 9/10",
+      "Score_EV_Original": 0.6098
+    },
+    {
+      "Match": "AC Milan vs Cagliari Calcio",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6294,
+      "Cote_Ref": 1.59,
+      "Score_EV": 0.6923,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6923
+    },
+    {
+      "Match": "Tottenham Hotspur vs Everton",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.7249,
+      "Cote_Ref": 1.38,
+      "Score_EV": 0.6778,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "0-0 dans Top3",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6778
+    },
+    {
+      "Match": "Celta Vigo vs Sevilla FC",
+      "League": "LaLiga",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6141,
+      "Cote_Ref": 1.63,
+      "Score_EV": 0.6755,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6755
+    },
+    {
+      "Match": "Celta Vigo vs Sevilla FC",
+      "League": "LaLiga",
+      "Marche": "Away + de CORNERS",
+      "Type": "H2H_PROP",
+      "Tier": 1,
+      "Prob": 0.582,
+      "Cote_Ref": 1.8,
+      "Score_EV": 0.6547,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Faible volume statistique : Under 10.5 Corners: 8/10",
+      "Score_EV_Original": 0.873
+    },
+    {
+      "Match": "RCD Espanyol vs Real Sociedad",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7417,
+      "Cote_Ref": 1.35,
+      "Score_EV": 0.6527,
+      "Super_Signal": false,
+      "Profile": [
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6527
+    },
+    {
+      "Match": "Sunderland AFC vs Chelsea",
+      "League": "Premier League",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5865,
+      "Cote_Ref": 1.71,
+      "Score_EV": 0.6452,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6452
+    },
+    {
+      "Match": "West Ham United vs Leeds United",
+      "League": "Premier League",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5831,
+      "Cote_Ref": 1.71,
+      "Score_EV": 0.6414,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6414
+    },
+    {
+      "Match": "Torino FC vs Juventus",
+      "League": "Serie A",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7708,
+      "Cote_Ref": 1.3,
+      "Score_EV": 0.6359,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.8479
+    },
+    {
+      "Match": "Getafe CF vs CA Osasuna",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.6758,
+      "Cote_Ref": 1.48,
+      "Score_EV": 0.6319,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Score_Exact_Confirmation": "0-0 dans Top3 | tous ≤2 buts",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6319
+    },
+    {
+      "Match": "Valencia CF vs FC Barcelona",
+      "League": "LaLiga",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5656,
+      "Cote_Ref": 1.77,
+      "Score_EV": 0.6222,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "BUTS_GARANTIS"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 41% de ses buts (après la 75') croisant la défense Away qui y encaisse 26%. Appuyé par un Momentum global HOT.",
+          "Force": 0.68
+        }
+      ],
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6222
+    },
+    {
+      "Match": "Manchester City vs Aston Villa",
+      "League": "Premier League",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.556,
+      "Cote_Ref": 1.8,
+      "Score_EV": 0.6116,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.6116
+    },
+    {
+      "Match": "Villarreal CF vs Atletico Madrid",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7388,
+      "Cote_Ref": 1.35,
+      "Score_EV": 0.6095,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.8127
+    },
+    {
+      "Match": "Nottingham Forest vs AFC Bournemouth",
+      "League": "Premier League",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.704,
+      "Cote_Ref": 1.42,
+      "Score_EV": 0.5808,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 26% de ses buts (après la 75') croisant la défense Away qui y encaisse 27%. Appuyé par un Momentum global HOT.",
+          "Force": 0.54
+        }
+      ],
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.7744
+    },
+    {
+      "Match": "Real Betis vs Levante UD",
+      "League": "LaLiga",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.703,
+      "Cote_Ref": 1.42,
+      "Score_EV": 0.58,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 6/8",
+      "Score_EV_Original": 0.7733
+    },
+    {
+      "Match": "West Ham United vs Leeds United",
+      "League": "Premier League",
+      "Marche": "Under 3.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7001,
+      "Cote_Ref": 1.43,
+      "Score_EV": 0.5776,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.7701
+    },
+    {
+      "Match": "Burnley vs Wolverhampton Wanderers",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.7569,
+      "Cote_Ref": 1.32,
+      "Score_EV": 0.5662,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "0-0 dans Top3",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.5662
+    },
+    {
+      "Match": "Fulham vs Newcastle United",
+      "League": "Premier League",
+      "Marche": "Over 1.5 Fulham",
+      "Type": "TEAM_GOALS",
+      "Tier": 2,
+      "Prob": 0.5359,
+      "Cote_Ref": 1.96,
+      "Score_EV": 0.5627,
+      "Super_Signal": false,
+      "Alpha": false,
+      "Profile": [
+        "FAUX_FAVORI"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+          "Force": 0.6
+        }
+      ],
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Faible volume de buts du favori : Under 1.5 Team Goals: 8/10",
+      "Score_EV_Original": 0.7503
+    },
+    {
+      "Match": "RCD Mallorca vs Real Oviedo",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals [KILL_SWITCH_RECOVERY]",
+      "Type": "CLASSIQUE_BUTS_RECOVERED",
+      "Tier": 5,
+      "Prob": 0.751,
+      "Cote_Ref": 1.33,
+      "Score_EV": 0.5617,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "Aucune confirmation",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.5617
+    },
+    {
+      "Match": "Bologna FC vs Inter Milan",
+      "League": "Serie A",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6538,
+      "Cote_Ref": 1.53,
+      "Score_EV": 0.5394,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 5/7",
+      "Score_EV_Original": 0.7192
+    },
+    {
+      "Match": "SS Lazio vs Pisa SC",
+      "League": "Serie A",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6535,
+      "Cote_Ref": 1.53,
+      "Score_EV": 0.5391,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.7188
+    },
+    {
+      "Match": "SSC Napoli vs Udinese Calcio",
+      "League": "Serie A",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6535,
+      "Cote_Ref": 1.53,
+      "Score_EV": 0.5391,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.7188
+    },
+    {
+      "Match": "US Cremonese vs Como 1907",
+      "League": "Serie A",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6535,
+      "Cote_Ref": 1.53,
+      "Score_EV": 0.5391,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+      "Score_EV_Original": 0.7188
+    },
+    {
+      "Match": "Bologna FC vs Inter Milan",
+      "League": "Serie A",
+      "Marche": "Over 23.5 SHOTS",
+      "Type": "PROP_BET",
+      "Tier": 3,
+      "Prob": 0.5865,
+      "Cote_Ref": 1.79,
+      "Score_EV": 0.5278,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-23",
+      "Heure": "12:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Tendance de match défavorable : Under 22.5 Shots: 5/7",
+      "Score_EV_Original": 0.7038
+    },
+    {
+      "Match": "Real Madrid vs Athletic Club",
+      "League": "LaLiga",
+      "Marche": "Over 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5544,
+      "Cote_Ref": 1.8,
+      "Score_EV": 0.526,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME",
+        "BUTS_GARANTIS"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 6/8",
+      "Score_EV_Original": 0.7013
+    },
+    {
+      "Match": "Fulham vs Newcastle United",
+      "League": "Premier League",
+      "Marche": "Over 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.6324,
+      "Cote_Ref": 1.58,
+      "Score_EV": 0.5217,
+      "Super_Signal": false,
+      "Profile": [
+        "FAUX_FAVORI"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Home",
+          "Argument": "L'attaque Home marque 25% de ses buts (après la 75') croisant la défense Away qui y encaisse 34%.",
+          "Force": 0.6
+        }
+      ],
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.6956
+    },
+    {
+      "Match": "Deportivo Alaves vs Rayo Vallecano",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7729,
+      "Cote_Ref": 1.29,
+      "Score_EV": 0.5101,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.6802
+    },
+    {
+      "Match": "Girona FC vs Elche CF",
+      "League": "LaLiga",
+      "Marche": "Over 1.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.7479,
+      "Cote_Ref": 1.34,
+      "Score_EV": 0.4937,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs fermés : Under 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.6582
+    },
+    {
+      "Match": "Deportivo Alaves vs Rayo Vallecano",
+      "League": "LaLiga",
+      "Marche": "Both Teams to Score (BTTS Yes)",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5571,
+      "Cote_Ref": 1.8,
+      "Score_EV": 0.4902,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_AWAY",
+        "FAUX_FAVORI",
+        "MATCH_DE_PEUR"
+      ],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.4902
+    },
+    {
+      "Match": "Torino FC vs Juventus",
+      "League": "Serie A",
+      "Marche": "Under 2.5 Goals",
+      "Type": "CLASSIQUE_BUTS",
+      "Tier": 5,
+      "Prob": 0.5598,
+      "Cote_Ref": 1.79,
+      "Score_EV": 0.4618,
+      "Super_Signal": false,
+      "Profile": [],
+      "Score_Exact_Confirmation": "",
+      "Date": "2026-05-24",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_WARNING",
+      "Streak_Reason": "Matchs ouverts : Over 2.5 Goals: 7/10",
+      "Score_EV_Original": 0.6158
+    },
+    {
+      "Match": "Real Madrid vs Athletic Club",
+      "League": "LaLiga",
+      "Marche": "Away + de FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.58,
+      "Cote_Ref": 1.81,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Real Madrid vs Athletic Club",
+      "League": "LaLiga",
+      "Marche": "Victoire Home (1)",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.5857,
+      "Cote_Ref": 1.71,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME",
+        "BUTS_GARANTIS"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Real Betis vs Levante UD",
+      "League": "LaLiga",
+      "Marche": "Victoire Home (1)",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.5092,
+      "Cote_Ref": 1.96,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "FORCE_DOMINANTE_HOME"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Getafe CF vs CA Osasuna",
+      "League": "LaLiga",
+      "Marche": "Away + de FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.58,
+      "Cote_Ref": 1.81,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Getafe CF vs CA Osasuna",
+      "League": "LaLiga",
+      "Marche": "Over 24.5 FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.5636,
+      "Cote_Ref": 1.86,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "RCD Mallorca vs Real Oviedo",
+      "League": "LaLiga",
+      "Marche": "Over 24.5 FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.5598,
+      "Cote_Ref": 1.88,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME",
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-23",
+      "Heure": "15:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Liverpool vs Brentford",
+      "League": "Premier League",
+      "Marche": "Victoire Home (1)",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.501,
+      "Cote_Ref": 2.0,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Live_Betting_Recommendation": [
+        {
+          "Signal": "🔴 ALERTE FIN DE MATCH (76'-90') -> Avantage Away",
+          "Argument": "L'attaque Away marque 38% de ses buts (après la 75') croisant la défense Home qui y encaisse 31%.",
+          "Force": 0.7
+        }
+      ],
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Sunderland AFC vs Chelsea",
+      "League": "Premier League",
+      "Marche": "Away + de FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.58,
+      "Cote_Ref": 1.81,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Tottenham Hotspur vs Everton",
+      "League": "Premier League",
+      "Marche": "Over 20.5 FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.5585,
+      "Cote_Ref": 1.88,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Burnley vs Wolverhampton Wanderers",
+      "League": "Premier League",
+      "Marche": "Away + de FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.58,
+      "Cote_Ref": 1.81,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME",
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "Burnley vs Wolverhampton Wanderers",
+      "League": "Premier League",
+      "Marche": "Over 20.5 FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.6062,
+      "Cote_Ref": 1.73,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME",
+        "MATCH_DE_PEUR"
+      ],
+      "Date": "2026-05-24",
+      "Heure": "11:00",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "AC Fiorentina vs Atalanta BC",
+      "League": "Serie A",
+      "Marche": "Over 25.5 FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.6801,
+      "Cote_Ref": 1.54,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [
+        "MATCH_FERME"
+      ],
+      "Date": "2026-05-22",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    },
+    {
+      "Match": "SS Lazio vs Pisa SC",
+      "League": "Serie A",
+      "Marche": "Away + de FOULS",
+      "Type": "WATCHLIST_LIVE",
+      "Tier": 7,
+      "Prob": 0.58,
+      "Cote_Ref": 1.81,
+      "Score_EV": 0.0,
+      "Super_Signal": false,
+      "Profile": [],
+      "Date": "2026-05-23",
+      "Heure": "14:45",
+      "Streak_Status": "STREAK_NEUTRAL",
+      "Streak_Reason": "Aucune série statistique déterminante",
+      "Score_EV_Original": 0.0
+    }
+  ]
+}

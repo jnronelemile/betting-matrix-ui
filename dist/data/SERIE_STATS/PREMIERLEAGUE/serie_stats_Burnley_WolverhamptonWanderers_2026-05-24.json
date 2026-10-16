@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "competition": "PREMIERLEAGUE",
+    "fixture": "Burnley vs Wolverhampton Wanderers",
+    "date": "2026-05-24",
+    "generated_at": "2026-05-23T19:00:52.064114",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Burnley) No Clean Sheet: 4",
+      "Under 2.5 goals: 5/6",
+      "Under 4.5 cards: 8/10"
+    ],
+    "team_streaks": {
+      "home": [
+        "No wins: 11",
+        "No Clean Sheet: 7",
+        "Under 1.5 Team Goals: 8/10",
+        "Under 10.5 Corners: 5/7",
+        "Under 4.5 Corners (Team): 7/10",
+        "Under 3.5 SOT (Team): 7/10",
+        "Under 10.5 Shots (Team): 7/10",
+        "Over 11.5 Fouls (Team): 4/5"
+      ],
+      "away": [
+        "No wins: 8",
+        "No Clean Sheet: 9",
+        "Under 1.5 Team Goals: 7/10",
+        "Under 9.5 Corners: 5/7",
+        "Under 10.5 Corners: 7/10",
+        "Under 8.5 SOT: 5/7",
+        "Under 3.5 SOT (Team): 8/10",
+        "Over 22.5 Shots: 8/10",
+        "Over 10.5 Shots (Team): 5/7",
+        "First to concede: 7/8",
+        "First half loser: 5/7"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      5,
+      7,
+      5,
+      1,
+      8,
+      7
+    ],
+    "away_scored": [
+      0,
+      0,
+      2,
+      2,
+      1,
+      2
+    ],
+    "home_conceded": [
+      8,
+      2,
+      8,
+      4,
+      0,
+      6
+    ],
+    "home_scored": [
+      2,
+      4,
+      2,
+      4,
+      2,
+      3
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "competition": "LaLiga",
+    "fixture": "Real Madrid vs Athletic Club",
+    "date": "2026-05-23",
+    "generated_at": "2026-05-23T19:00:52.089003",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Athletic Club) No Clean Sheet: 7",
+      "Under 2.5 goals: 7/9",
+      "(Real Madrid) First to score: 4/5",
+      "Under 4.5 cards: 5/6",
+      "Over 10.5 corners: 7/8"
+    ],
+    "team_streaks": {
+      "home": [
+        "Under 2.5 Goals: 6/8",
+        "Over 0.5 Team Goals: 9/10",
+        "BTTS No: 4/5",
+        "Under 8.5 SOT: 4/5",
+        "Over 22.5 Shots: 8/10",
+        "Over 10.5 Shots (Team): 9/10",
+        "First to score: 7/8",
+        "First half winner: 5/7"
+      ],
+      "away": [
+        "No wins: 3",
+        "No Clean Sheet: 5",
+        "Under 1.5 Team Goals: 7/10",
+        "Over 0.5 Team Goals: 5/7",
+        "Over 4.5 Corners (Team): 8/10",
+        "Over 3.5 SOT (Team): 8/10",
+        "Over 10.5 Shots (Team): 7/10",
+        "Over 11.5 Fouls (Team): 7/10",
+        "First to concede: 4/5"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      5,
+      1,
+      6,
+      7,
+      4,
+      10
+    ],
+    "away_scored": [
+      2,
+      1,
+      4,
+      4,
+      3,
+      5
+    ],
+    "home_conceded": [
+      0,
+      2,
+      3,
+      2,
+      4,
+      3
+    ],
+    "home_scored": [
+      2,
+      6,
+      10,
+      11,
+      4,
+      8
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "competition": "SERIEA",
+    "fixture": "SS Lazio vs Pisa SC",
+    "date": "2026-05-23",
+    "generated_at": "2026-05-23T19:00:52.408751",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(Lazio) No losses: 6",
+      "(Lazio) No goals conceded: 4",
+      "Under 2.5 goals: 5/5",
+      "Under 4.5 cards: 6/7"
+    ],
+    "team_streaks": {
+      "home": [
+        "No Clean Sheet: 5",
+        "Under 2.5 Goals: 7/10",
+        "Under 10.5 Shots (Team): 7/10",
+        "Over 22.5 Fouls: 4/5",
+        "First to concede: 5/5",
+        "First half loser: 5/5"
+      ],
+      "away": [
+        "Losses: 8",
+        "No wins: 8",
+        "No Clean Sheet: 13",
+        "Over 2.5 Goals: 8/10",
+        "Under 1.5 Team Goals: 9/10",
+        "Under 0.5 Team Goals: 7/10",
+        "BTTS No: 7/10",
+        "Under 9.5 Corners: 8/10",
+        "Under 10.5 Corners: 9/10",
+        "Under 4.5 Corners (Team): 8/10",
+        "Under 8.5 SOT: 6/8",
+        "Under 10.5 Shots (Team): 7/10",
+        "Over 11.5 Fouls (Team): 8/10",
+        "First to concede: 7/8"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      6,
+      3,
+      11,
+      7,
+      6,
+      10
+    ],
+    "away_scored": [
+      4,
+      3,
+      2,
+      2,
+      1,
+      4
+    ],
+    "home_conceded": [
+      4,
+      3,
+      6,
+      3,
+      3,
+      5
+    ],
+    "home_scored": [
+      4,
+      3,
+      3,
+      3,
+      2,
+      10
+    ]
+  }
+}

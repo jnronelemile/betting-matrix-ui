@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "competition": "PREMIERLEAGUE",
+    "fixture": "West Ham United vs Leeds United",
+    "date": "2026-05-24",
+    "generated_at": "2026-05-23T19:00:52.017347",
+    "source": "football_master.db + Sofascore"
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "(West Ham United) No Clean Sheet: 5",
+      "(Leeds United) No Clean Sheet: 11",
+      "Over 2.5 goals: 5/5",
+      "BTTS Yes: 5/5",
+      "(Leeds United) First to score: 5/5",
+      "Under 10.5 corners: 5/6"
+    ],
+    "team_streaks": {
+      "home": [
+        "Losses: 3",
+        "No wins: 3",
+        "No Clean Sheet: 4",
+        "Over 2.5 Goals: 5/7",
+        "Under 1.5 Team Goals: 4/5",
+        "Under 10.5 Corners: 7/10",
+        "Over 3.5 SOT (Team): 5/7",
+        "Over 22.5 Shots: 8/10"
+      ],
+      "away": [
+        "No losses: 3",
+        "Scoring: 3",
+        "Over 0.5 Team Goals: 7/10",
+        "Over 9.5 Corners: 7/10",
+        "Over 10.5 Corners: 5/7",
+        "Over 22.5 Shots: 7/10",
+        "Under 11.5 Fouls (Team): 7/10"
+      ]
+    }
+  },
+  "goal_distribution": {
+    "away_conceded": [
+      4,
+      4,
+      3,
+      6,
+      6,
+      9
+    ],
+    "away_scored": [
+      2,
+      2,
+      6,
+      2,
+      5,
+      3
+    ],
+    "home_conceded": [
+      3,
+      1,
+      6,
+      7,
+      4,
+      9
+    ],
+    "home_scored": [
+      5,
+      2,
+      7,
+      3,
+      2,
+      5
+    ]
+  }
+}
