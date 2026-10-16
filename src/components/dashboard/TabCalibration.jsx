@@ -10,13 +10,13 @@ export default function TabCalibration({ match }) {
   if (!match.Calibration_Diagnostics) {
     return <div className="text-slate-500 text-sm italic">Aucune donnée de calibration disponible pour ce match.</div>;
   }
-  
+
   // Format paired multipliers for clarity
   const renderPairedMulti = (label, homeVal, awayVal) => {
     if (homeVal === undefined || awayVal === undefined) return null;
     const colorHome = Math.abs(homeVal - 1.0) < 0.01 ? 'text-slate-500' : (homeVal > 1 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400');
     const colorAway = Math.abs(awayVal - 1.0) < 0.01 ? 'text-slate-500' : (awayVal > 1 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400');
-    
+
     return (
       <div className="flex items-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden shadow-inner mb-2">
         <div className="w-1/3 bg-slate-100 dark:bg-slate-950 p-2.5 flex items-center justify-center border-r border-slate-200 dark:border-slate-800">
@@ -47,7 +47,7 @@ export default function TabCalibration({ match }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      
+
       {/* Column 1: Global View & Intensities */}
       <div className="flex flex-col gap-6">
         <Card title="Engine Diagnostics" titleIcon={<Calculator size={16} />}>
@@ -60,11 +60,14 @@ export default function TabCalibration({ match }) {
                 </span>
               </div>
               <div className="mt-4 w-full bg-slate-200 dark:bg-slate-800/50 rounded-full h-2">
-                <div 
-                  className={`h-2 rounded-full transition-all duration-1000 ${diag.confidence_index >= 0.5 ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]'}`} 
+                <div
+                  className={`h-2 rounded-full transition-all duration-1000 ${diag.confidence_index >= 0.5 ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]'}`}
                   style={{ width: `${Math.min(100, diag.confidence_index * 100)}%` }}
                 ></div>
               </div>
+              <span className="text-[8px] text-slate-400 italic mt-2 block">
+                * Indice de confiance interne algorithmique propre au moteur TITANIUM. Ne constitue ni un taux de réussite prédictif ni une probabilité de gain.
+              </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -147,7 +150,7 @@ export default function TabCalibration({ match }) {
                 Aucun ajustement ou donnée par défaut lors de l'inférence.
               </div>
             )}
-            
+
             <p className="text-[8px] text-slate-400 italic">
               Ces drapeaux signalent les imputations ou valeurs par défaut appliquées lors de l'inférence. Ne constitue pas une validation statistique globale du match.
             </p>

@@ -11,10 +11,10 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
     if (!timeStr) return '';
     const [hours, minutes] = timeStr.split(':');
     let h = parseInt(hours, 10);
-    
+
     const ampm = h >= 12 ? 'PM' : 'AM';
     h = h % 12;
-    h = h ? h : 12; 
+    h = h ? h : 12;
     return `${h}:${minutes} ${ampm}`;
   };
 
@@ -22,14 +22,14 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
     if (!dateStr || !hoursStr || dateStr === 'Date Inconnue') return false;
     const [year, month, day] = dateStr.split('-').map(Number);
     const [h, m] = hoursStr.split(':').map(Number);
-    
+
     const matchTimeLocal = new Date(year, month - 1, day, h, m);
     const now = new Date();
     const diffMinutes = (now - matchTimeLocal) / (1000 * 60);
     return diffMinutes >= 0 && diffMinutes <= 120;
   };
 
-  const visibleMatches = showLiveOnly 
+  const visibleMatches = showLiveOnly
     ? matches.filter(match => isMatchLive(match.date, match.hours))
     : matches;
 
@@ -63,14 +63,14 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
   const formatDate = (dateStr) => {
     if (dateStr === 'Unknown Date') return dateStr;
     const date = new Date(`${dateStr}T12:00:00`);
-    
+
     const options = { weekday: 'long', day: 'numeric', month: 'long' };
     let formatted = date.toLocaleDateString('en-GB', options);
     return formatted.charAt(0).toUpperCase() + formatted.slice(1);
   };
 
   return (
-    <div className="flex flex-col gap-4 pb-20 lg:pb-4 transition-colors duration-300">
+    <div className="flex flex-col gap-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] lg:pb-4 transition-colors duration-300">
       {matches.length === 0 && (
         <div className="text-center py-10 text-slate-500 dark:text-slate-400 text-sm">
           No matches found for this filter.
@@ -83,16 +83,16 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
           <div className="flex items-center gap-3">
             {sortedDates.length > 1 && (
               <>
-                <button 
-                  onClick={expandAll} 
+                <button
+                  onClick={expandAll}
                   className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                   title="Expand All"
                 >
                   <Maximize2 size={12} /> <span className="hidden xl:inline">Expand All</span>
                 </button>
                 <div className="w-px h-3 bg-slate-200 dark:bg-slate-800"></div>
-                <button 
-                  onClick={collapseAll} 
+                <button
+                  onClick={collapseAll}
                   className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                   title="Collapse All"
                 >
@@ -101,15 +101,15 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                 <div className="w-px h-3 bg-slate-200 dark:bg-slate-800"></div>
               </>
             )}
-            <button 
-              onClick={() => setSortByTime(!sortByTime)} 
+            <button
+              onClick={() => setSortByTime(!sortByTime)}
               className={`flex items-center p-1 rounded transition-colors ${sortByTime ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400' : 'text-slate-500 hover:text-blue-600 dark:hover:text-blue-400'}`}
               title="Sort by time"
             >
               <Clock size={14} />
             </button>
-            <button 
-              onClick={() => setShowLiveOnly(!showLiveOnly)} 
+            <button
+              onClick={() => setShowLiveOnly(!showLiveOnly)}
               className={`flex items-center p-1 rounded transition-colors ${showLiveOnly ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)]' : 'text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
               title="Show live matches only"
             >
@@ -133,14 +133,14 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
             const probs = match.True_Probabilities || {};
             const isKillSwitch = match.Risk_Management_Context?.Investment_Signals?.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
             const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
-            
+
             return (
-              <div 
+              <div
                 key={match.Match_ID || idx}
                 onClick={() => onSelectMatch(match)}
                 className={`p-2.5 rounded-lg cursor-pointer transition-all border ${
-                  isSelected 
-                    ? 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600 shadow-md ring-1 ring-slate-200 dark:ring-slate-500' 
+                  isSelected
+                    ? 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600 shadow-md ring-1 ring-slate-200 dark:ring-slate-500'
                     : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                 }`}
               >
@@ -215,11 +215,11 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
 
           return (
             <div key={date} className="flex flex-col gap-3">
-              <button 
+              <button
                 onClick={() => toggleDate(date)}
                 className={`sticky top-0 z-10 w-full flex items-center justify-between backdrop-blur-md border py-2 px-3 rounded-lg shadow-sm transition-all group focus:outline-none focus:ring-1 focus:ring-slate-400 dark:focus:ring-slate-700 ${
-                  isToday 
-                    ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border-emerald-500/20 hover:bg-emerald-100/80 dark:hover:bg-emerald-950/50' 
+                  isToday
+                    ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border-emerald-500/20 hover:bg-emerald-100/80 dark:hover:bg-emerald-950/50'
                     : 'bg-indigo-50/80 dark:bg-indigo-950/30 border-indigo-500/20 hover:bg-indigo-100/80 dark:hover:bg-indigo-950/50'
                 }`}
               >
@@ -231,7 +231,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                     {formatDate(date)}
                   </span>
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <div className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${isToday ? 'bg-emerald-100 dark:bg-emerald-950 border-emerald-500/30 text-emerald-600 dark:text-emerald-500' : 'bg-indigo-100 dark:bg-indigo-950 border-indigo-500/30 text-indigo-600 dark:text-indigo-400'}`}>
                     {groupedMatches[date].length} MATCH{groupedMatches[date].length > 1 ? 'S' : ''}
@@ -239,7 +239,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                   <ChevronDown size={14} className={`${isToday ? 'text-emerald-500' : 'text-indigo-500'} transition-transform duration-300 ${isCollapsed ? '-rotate-90' : 'rotate-0'}`} />
                 </div>
               </button>
-              
+
               <div className={`flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out ${isCollapsed ? 'max-h-0 opacity-0 hidden' : 'max-h-[5000px] opacity-100 flex'}`}>
                 {groupedMatches[date].map((match, idx) => {
                   const isSelected = selectedMatch && ((selectedMatch.Match_ID && selectedMatch.Match_ID === match.Match_ID) || selectedMatch.Matchup === match.Matchup);
@@ -248,14 +248,14 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
                   const probs = match.True_Probabilities || {};
                   const isKillSwitch = match.Risk_Management_Context?.Investment_Signals?.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
                   const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
-                  
+
                   return (
-                    <div 
+                    <div
                       key={match.Match_ID || idx}
                       onClick={() => onSelectMatch(match)}
                       className={`p-2.5 rounded-lg cursor-pointer transition-all border ${
-                        isSelected 
-                          ? 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600 shadow-md ring-1 ring-slate-200 dark:ring-slate-500' 
+                        isSelected
+                          ? 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600 shadow-md ring-1 ring-slate-200 dark:ring-slate-500'
                           : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                       }`}
                     >

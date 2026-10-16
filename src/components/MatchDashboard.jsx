@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Badge } from './ui/Badge';
-import { 
-  BarChart3, 
-  Brain, 
-  Crosshair, 
-  Calculator, 
-  Activity, 
-  AlertTriangle, 
-  ShieldCheck, 
-  Zap, 
-  Target, 
-  ChevronLeft, 
-  TrendingUp, 
-  Trophy, 
-  Fingerprint 
+import {
+  BarChart3,
+  Brain,
+  Crosshair,
+  Calculator,
+  Activity,
+  AlertTriangle,
+  ShieldCheck,
+  Zap,
+  Target,
+  ChevronLeft,
+  TrendingUp,
+  Trophy,
+  Fingerprint
 } from 'lucide-react';
 
 import TabCoreMarket from './dashboard/TabCoreMarket';
@@ -37,7 +37,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const mobileTabsContainerRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
   const activeSeriesFetchRef = useRef(null);
-  
+
   // Touch refs for swipe
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
@@ -45,13 +45,13 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const touchEndY = useRef(0);
 
   const TABS = [
-    { id: 'tactical', label: 'Tactical & Props', icon: <Crosshair size={14} /> },
-    { id: 'deepdive', label: 'Analytical Deep-Dive', icon: <Fingerprint size={14} /> },
-    { id: 'core', label: 'Core Market', icon: <BarChart3 size={14} /> },
-    { id: 'series', label: 'Series Stats', icon: <TrendingUp size={14} /> },
-    { id: 'risk', label: 'Risk Context', icon: <Activity size={14} /> },
-    { id: 'narrative', label: 'Narrative & Psych', icon: <Brain size={14} /> },
-    { id: 'calibration', label: 'Maths & Calibration', icon: <Calculator size={14} /> },
+    { id: 'tactical', label: 'Props & Statistical Markets', mobileLabel: 'PROPS', icon: <Crosshair size={14} /> },
+    { id: 'core', label: 'Core Market', mobileLabel: 'CORE', icon: <BarChart3 size={14} /> },
+    { id: 'deepdive', label: 'Signals & Bet Review', mobileLabel: 'BET REVIEW', icon: <Fingerprint size={14} /> },
+    { id: 'risk', label: 'Risk & Restrictions', mobileLabel: 'RISK', icon: <Activity size={14} /> },
+    { id: 'series', label: 'Series & Form', mobileLabel: 'SERIES', icon: <TrendingUp size={14} /> },
+    { id: 'narrative', label: 'Narrative & Justice', mobileLabel: 'NARRATIVE', icon: <Brain size={14} /> },
+    { id: 'calibration', label: 'Model Diagnostics', mobileLabel: 'DIAGNOSTICS', icon: <Calculator size={14} /> },
   ];
 
   useEffect(() => {
@@ -177,7 +177,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const isKillSwitch = investSignals.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
 
   return (
-    <div 
+    <div
       className="flex flex-col gap-4 relative transition-colors duration-300"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -191,7 +191,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
           <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
             <div className="flex items-center gap-2">
               {onClose && (
-                <button 
+                <button
                   onClick={onClose}
                   className="lg:hidden p-1.5 -ml-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
                   title="Back"
@@ -203,7 +203,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                 {match.Matchup}
               </h2>
             </div>
-            
+
             <div className="flex flex-wrap gap-2 items-center">
               {match.isFinalPick && (
                 <Badge variant="success" className="text-[9px] flex items-center gap-1.5 px-3 py-1 uppercase tracking-widest bg-emerald-600 text-white border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-pulse">
@@ -230,7 +230,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
               )}
             </div>
           </div>
-          
+
           <div className={`flex flex-wrap gap-2 mt-2 transition-all duration-300 ${isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'h-auto opacity-100'}`}>
             {match.Data_Integrity?.map((flag, idx) => {
               if (flag === 'COMPLETE') return null;
@@ -258,14 +258,15 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                     setActiveTab(tab.id);
                   }}
                   className={`
-                    flex items-center gap-2 px-5 py-2.5 rounded-full font-black uppercase tracking-wider whitespace-nowrap transition-all text-[10px]
-                    ${activeTab === tab.id 
-                      ? 'bg-slate-900 dark:bg-white text-white dark:text-black shadow-xl scale-[1.05]' 
+                    flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-black uppercase tracking-wider whitespace-nowrap transition-all text-[10px]
+                    ${activeTab === tab.id
+                      ? 'bg-slate-900 dark:bg-white text-white dark:text-black shadow-xl scale-[1.03] sm:scale-[1.05]'
                       : 'bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'}
                   `}
                 >
                   {tab.icon}
-                  {tab.label}
+                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="sm:hidden">{tab.mobileLabel}</span>
                 </button>
               ))}
           </div>
@@ -273,11 +274,15 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       </div>
 
       {/* Tab Content with Animation */}
-      <div className="min-h-[600px] mt-4 overflow-hidden relative">
-        <div 
+      <div className="mt-4 overflow-hidden relative">
+        <div
           key={activeTab}
           className={`w-full ${slideDirection === 'right' ? 'animate-slide-right' : 'animate-slide-left'}`}
         >
+          {activeTab === 'tactical' && <TabTactical match={match} onNavigateTab={setActiveTab} />}
+          {activeTab === 'core' && <TabCoreMarket match={match} onNavigateTab={setActiveTab} />}
+          {activeTab === 'deepdive' && <TabDeepDive match={match} leagueReport={leagueReport} onNavigateTab={setActiveTab} />}
+          {activeTab === 'risk' && <TabRiskContext match={match} onNavigateTab={setActiveTab} />}
           {activeTab === 'series' && (
             <div className="flex flex-col gap-4">
               {seriesError && (
@@ -286,15 +291,11 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                   <span>Séries indisponibles ou rejetées : {seriesError}</span>
                 </div>
               )}
-              <TabSeries stats={serieStats} match={match} loading={loadingStats} />
+              <TabSeries stats={serieStats} match={match} loading={loadingStats} onNavigateTab={setActiveTab} />
             </div>
           )}
-          {activeTab === 'core' && <TabCoreMarket match={match} />}
-          {activeTab === 'risk' && <TabRiskContext match={match} />}
-          {activeTab === 'narrative' && <TabNarrative match={match} />}
-          {activeTab === 'tactical' && <TabTactical match={match} />}
-          {activeTab === 'deepdive' && <TabDeepDive match={match} leagueReport={leagueReport} />}
-          {activeTab === 'calibration' && <TabCalibration match={match} />}
+          {activeTab === 'narrative' && <TabNarrative match={match} onNavigateTab={setActiveTab} />}
+          {activeTab === 'calibration' && <TabCalibration match={match} onNavigateTab={setActiveTab} />}
         </div>
       </div>
     </div>
