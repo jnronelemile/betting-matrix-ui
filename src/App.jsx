@@ -451,66 +451,68 @@ export default function App() {
                     <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 shrink-0 mx-1 hidden xl:block" />
 
                     {/* Desktop Quick Bar */}
-                    <div className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x shrink-0">
-                      {[
-                        {
-                          id: 'master',
-                          label: filtersState.masterPicksOnly ? `MASTER (${filteredMatches.length})` : `MASTER (${masterWhatIf})`,
-                          icon: <Trophy size={12} />,
-                          active: filtersState.masterPicksOnly,
-                          disabled: !filtersState.masterPicksOnly && masterWhatIf === 0,
-                          toggle: () => handleToggleFilter('masterPicksOnly'),
-                          activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-sm'
-                        },
-                        {
-                          id: 'tickets',
-                          label: filtersState.inTicketsOnly ? `IN TICKETS (${filteredMatches.length})` : `IN TICKETS (${ticketsWhatIf})`,
-                          icon: <Ticket size={12} />,
-                          active: filtersState.inTicketsOnly,
-                          disabled: !filtersState.inTicketsOnly && ticketsWhatIf === 0,
-                          toggle: () => handleToggleFilter('inTicketsOnly'),
-                          activeClass: 'bg-blue-600 border-blue-500 text-white shadow-sm'
-                        },
-                        {
-                          id: 'super',
-                          label: filtersState.superSignalsAny ? `SUPER SIGNALS (${filteredMatches.length})` : `SUPER SIGNALS (${superWhatIf})`,
-                          icon: <Zap size={12} />,
-                          active: filtersState.superSignalsAny,
-                          disabled: !filtersState.superSignalsAny && superWhatIf === 0,
-                          toggle: () => handleToggleFilter('superSignalsAny'),
-                          activeClass: 'bg-amber-600 border-amber-500 text-white shadow-sm'
-                        },
-                        {
-                          id: 'kill',
-                          label: filtersState.killSwitchActiveOnly ? `KILL-SWITCH (${filteredMatches.length})` : `KILL-SWITCH (${killSwitchWhatIf})`,
-                          icon: <AlertTriangle size={12} />,
-                          active: filtersState.killSwitchActiveOnly,
-                          disabled: !filtersState.killSwitchActiveOnly && killSwitchWhatIf === 0,
-                          toggle: () => handleToggleFilter('killSwitchActiveOnly'),
-                          activeClass: 'bg-rose-600 border-rose-500 text-white shadow-sm'
-                        },
-                      ].map(sig => (
-                        <button
-                          key={sig.id}
-                          onClick={sig.toggle}
-                          disabled={sig.disabled}
-                          className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 snap-start ${
-                            sig.disabled
-                              ? 'opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'
-                              : sig.active
-                                ? `${sig.activeClass} shadow-sm`
-                                : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                          }`}
-                        >
-                          {sig.icon}
-                          <span>{sig.label}</span>
-                        </button>
-                      ))}
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x shrink-0">
+                        {[
+                          {
+                            id: 'master',
+                            label: filtersState.masterPicksOnly ? `MASTER (${filteredMatches.length})` : `MASTER (${masterWhatIf})`,
+                            icon: <Trophy size={12} />,
+                            active: filtersState.masterPicksOnly,
+                            disabled: !filtersState.masterPicksOnly && masterWhatIf === 0,
+                            toggle: () => handleToggleFilter('masterPicksOnly'),
+                            activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-sm'
+                          },
+                          {
+                            id: 'tickets',
+                            label: filtersState.inTicketsOnly ? `IN TICKETS (${filteredMatches.length})` : `IN TICKETS (${ticketsWhatIf})`,
+                            icon: <Ticket size={12} />,
+                            active: filtersState.inTicketsOnly,
+                            disabled: !filtersState.inTicketsOnly && ticketsWhatIf === 0,
+                            toggle: () => handleToggleFilter('inTicketsOnly'),
+                            activeClass: 'bg-blue-600 border-blue-500 text-white shadow-sm'
+                          },
+                          {
+                            id: 'super',
+                            label: filtersState.superSignalsAny ? `SUPER SIGNALS (${filteredMatches.length})` : `SUPER SIGNALS (${superWhatIf})`,
+                            icon: <Zap size={12} />,
+                            active: filtersState.superSignalsAny,
+                            disabled: !filtersState.superSignalsAny && superWhatIf === 0,
+                            toggle: () => handleToggleFilter('superSignalsAny'),
+                            activeClass: 'bg-amber-600 border-amber-500 text-white shadow-sm'
+                          },
+                          {
+                            id: 'kill',
+                            label: filtersState.killSwitchActiveOnly ? `KILL-SWITCH (${filteredMatches.length})` : `KILL-SWITCH (${killSwitchWhatIf})`,
+                            icon: <AlertTriangle size={12} />,
+                            active: filtersState.killSwitchActiveOnly,
+                            disabled: !filtersState.killSwitchActiveOnly && killSwitchWhatIf === 0,
+                            toggle: () => handleToggleFilter('killSwitchActiveOnly'),
+                            activeClass: 'bg-rose-600 border-rose-500 text-white shadow-sm'
+                          },
+                        ].map(sig => (
+                          <button
+                            key={sig.id}
+                            onClick={sig.toggle}
+                            disabled={sig.disabled}
+                            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                              sig.disabled
+                                ? 'opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'
+                                : sig.active
+                                  ? `${sig.activeClass} shadow-sm`
+                                  : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                            }`}
+                          >
+                            {sig.icon}
+                            <span>{sig.label}</span>
+                          </button>
+                        ))}
+                      </div>
 
-                      {/* Button to open Advanced Drawer */}
+                      {/* Fixed Button to open Advanced Drawer */}
                       <button
                         onClick={() => setIsFilterDrawerOpen(true)}
-                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 ${
                           activeFiltersCount > 0
                             ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
                             : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -634,67 +636,73 @@ export default function App() {
 
         {/* Sticky Filters: Quick Bar stays at the top on Mobile when viewing match list, hidden when match dashboard is open */}
         <div className={`sticky top-0 z-40 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-1.5 shadow-sm lg:hidden transition-colors duration-300 ${selectedMatch ? 'hidden' : 'block'}`}>
-          {/* Mobile Quick Bar */}
-          <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 sm:px-4 snap-x pb-0.5">
-            {[
-              {
-                id: 'master',
-                label: filtersState.masterPicksOnly ? `MASTER (${filteredMatches.length})` : `MASTER (${masterWhatIf})`,
-                icon: <Trophy size={12} />,
-                active: filtersState.masterPicksOnly,
-                disabled: !filtersState.masterPicksOnly && masterWhatIf === 0,
-                toggle: () => handleToggleFilter('masterPicksOnly'),
-                activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-sm'
-              },
-              {
-                id: 'tickets',
-                label: filtersState.inTicketsOnly ? `IN TICKETS (${filteredMatches.length})` : `IN TICKETS (${ticketsWhatIf})`,
-                icon: <Ticket size={12} />,
-                active: filtersState.inTicketsOnly,
-                disabled: !filtersState.inTicketsOnly && ticketsWhatIf === 0,
-                toggle: () => handleToggleFilter('inTicketsOnly'),
-                activeClass: 'bg-blue-600 border-blue-500 text-white shadow-sm'
-              },
-              {
-                id: 'super',
-                label: filtersState.superSignalsAny ? `SUPER SIGNALS (${filteredMatches.length})` : `SUPER SIGNALS (${superWhatIf})`,
-                icon: <Zap size={12} />,
-                active: filtersState.superSignalsAny,
-                disabled: !filtersState.superSignalsAny && superWhatIf === 0,
-                toggle: () => handleToggleFilter('superSignalsAny'),
-                activeClass: 'bg-amber-600 border-amber-500 text-white shadow-sm'
-              },
-              {
-                id: 'kill',
-                label: filtersState.killSwitchActiveOnly ? `KILL-SWITCH (${filteredMatches.length})` : `KILL-SWITCH (${killSwitchWhatIf})`,
-                icon: <AlertTriangle size={12} />,
-                active: filtersState.killSwitchActiveOnly,
-                disabled: !filtersState.killSwitchActiveOnly && killSwitchWhatIf === 0,
-                toggle: () => handleToggleFilter('killSwitchActiveOnly'),
-                activeClass: 'bg-rose-600 border-rose-500 text-white shadow-sm'
-              },
-            ].map(sig => (
-              <button
-                key={sig.id}
-                onClick={sig.toggle}
-                disabled={sig.disabled}
-                className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
-                  sig.disabled
-                    ? 'opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'
-                    : sig.active
-                      ? `${sig.activeClass} shadow-sm`
-                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                }`}
-              >
-                {sig.icon}
-                <span>{sig.label}</span>
-              </button>
-            ))}
+          {/* Mobile Quick Bar with Fixed FILTRES Button */}
+          <div className="flex items-center gap-1.5 px-2.5 sm:px-4">
+            {/* Scrollable Quick Filter Pills */}
+            <div className="flex-1 min-w-0 flex gap-1.5 overflow-x-auto no-scrollbar snap-x pb-0.5">
+              {[
+                {
+                  id: 'master',
+                  label: filtersState.masterPicksOnly ? `MASTER (${filteredMatches.length})` : `MASTER (${masterWhatIf})`,
+                  icon: <Trophy size={12} />,
+                  active: filtersState.masterPicksOnly,
+                  disabled: !filtersState.masterPicksOnly && masterWhatIf === 0,
+                  toggle: () => handleToggleFilter('masterPicksOnly'),
+                  activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-sm'
+                },
+                {
+                  id: 'tickets',
+                  label: filtersState.inTicketsOnly ? `IN TICKETS (${filteredMatches.length})` : `IN TICKETS (${ticketsWhatIf})`,
+                  icon: <Ticket size={12} />,
+                  active: filtersState.inTicketsOnly,
+                  disabled: !filtersState.inTicketsOnly && ticketsWhatIf === 0,
+                  toggle: () => handleToggleFilter('inTicketsOnly'),
+                  activeClass: 'bg-blue-600 border-blue-500 text-white shadow-sm'
+                },
+                {
+                  id: 'super',
+                  label: filtersState.superSignalsAny ? `SUPER SIGNALS (${filteredMatches.length})` : `SUPER SIGNALS (${superWhatIf})`,
+                  icon: <Zap size={12} />,
+                  active: filtersState.superSignalsAny,
+                  disabled: !filtersState.superSignalsAny && superWhatIf === 0,
+                  toggle: () => handleToggleFilter('superSignalsAny'),
+                  activeClass: 'bg-amber-600 border-amber-500 text-white shadow-sm'
+                },
+                {
+                  id: 'kill',
+                  label: filtersState.killSwitchActiveOnly ? `KILL-SWITCH (${filteredMatches.length})` : `KILL-SWITCH (${killSwitchWhatIf})`,
+                  icon: <AlertTriangle size={12} />,
+                  active: filtersState.killSwitchActiveOnly,
+                  disabled: !filtersState.killSwitchActiveOnly && killSwitchWhatIf === 0,
+                  toggle: () => handleToggleFilter('killSwitchActiveOnly'),
+                  activeClass: 'bg-rose-600 border-rose-500 text-white shadow-sm'
+                },
+              ].map(sig => (
+                <button
+                  key={sig.id}
+                  onClick={sig.toggle}
+                  disabled={sig.disabled}
+                  className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                    sig.disabled
+                      ? 'opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'
+                      : sig.active
+                        ? `${sig.activeClass} shadow-sm`
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  {sig.icon}
+                  <span>{sig.label}</span>
+                </button>
+              ))}
+            </div>
 
-            {/* Mobile Button to open Advanced Drawer */}
+            {/* Subtle Divider */}
+            <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 shrink-0" />
+
+            {/* Mobile Fixed Button to open Advanced Drawer */}
             <button
               onClick={() => setIsFilterDrawerOpen(true)}
-              className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shrink-0 snap-start ${
+              className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shadow-sm ${
                 activeFiltersCount > 0
                   ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
                   : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
