@@ -239,9 +239,17 @@ export default function App() {
 
   const baseMatches = useMemo(() => {
     return leagueMatches.filter(match => {
-      const textMatch = !searchQuery || match.Matchup.toLowerCase().includes(searchQuery.toLowerCase());
       const dateMatch = selectedDate === 'ALL' || match.date === selectedDate;
-      return textMatch && dateMatch;
+      if (!dateMatch) return false;
+      if (!searchQuery) return true;
+      const q = searchQuery.toLowerCase().trim();
+      return (
+        (match.Matchup && match.Matchup.toLowerCase().includes(q)) ||
+        (match.displayHome && match.displayHome.toLowerCase().includes(q)) ||
+        (match.displayAway && match.displayAway.toLowerCase().includes(q)) ||
+        (match.shortHome && match.shortHome.toLowerCase().includes(q)) ||
+        (match.shortAway && match.shortAway.toLowerCase().includes(q))
+      );
     });
   }, [leagueMatches, searchQuery, selectedDate]);
 

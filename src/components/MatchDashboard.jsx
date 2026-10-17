@@ -176,6 +176,23 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
   const isKillSwitch = investSignals.IS_KILL_SWITCH_ACTIVE || ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
 
+  // Extraction déterministe des noms des clubs avec fallback sécurisé
+  const parts = (match.Matchup || '').split(' vs ');
+  const homeName = match.displayHome || match.shortHome || parts[0] || 'Domicile';
+  const awayName = match.displayAway || match.shortAway || parts[1] || 'Extérieur';
+
+  // Formatage de la journée de compétition (Journée N ou libellé de phase brut)
+  const formatRound = (round) => {
+    if (round === null || round === undefined || round === '') return null;
+    const str = String(round).trim();
+    if (!str) return null;
+    if (/^\d+$/.test(str)) {
+      return `Journée ${str}`;
+    }
+    return str;
+  };
+  const roundLabel = formatRound(match.round);
+
   return (
     <div
       className="flex flex-col gap-4 relative transition-colors duration-300"
@@ -187,26 +204,43 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       {/* Unified Sticky Header Section */}
       <div className="sticky top-0 z-20 -mx-4 px-4 lg:-mx-8 lg:px-8 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all duration-300 shadow-sm">
         {/* Main Header (Title & Badges) */}
-        <div ref={headerRef} className="pt-4 pb-3 lg:pb-6">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4">
-            <div className="flex items-center gap-2">
+        <div ref={headerRef} className="pt-3 pb-2.5 lg:pt-4 lg:pb-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-6">
+            {/* Horizontal Matchup Header [ HOME ] VS [ AWAY ] (Mobile-first & Desktop) */}
+            <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1 lg:max-w-2xl">
               {onClose && (
                 <button
+                  type="button"
                   onClick={onClose}
-                  className="lg:hidden p-1.5 -ml-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
-                  title="Back"
+                  className="lg:hidden p-1 -ml-1 shrink-0 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                  title="Retour à la liste"
+                  aria-label="Retour à la liste"
                 >
-                  <ChevronLeft size={24} />
+                  <ChevronLeft size={22} />
                 </button>
               )}
-              <h2 className="text-xl sm:text-2xl lg:text-4xl font-serif tracking-tight font-bold text-slate-900 dark:text-white uppercase">
-                {match.Matchup}
-              </h2>
+
+              <div className="flex items-center justify-center gap-2 sm:gap-3.5 min-w-0 flex-1">
+                <div className="flex-1 text-right min-w-0">
+                  <span className="font-sans font-bold text-base sm:text-xl lg:text-2xl text-slate-900 dark:text-white leading-tight break-words">
+                    {homeName}
+                  </span>
+                </div>
+                <div className="shrink-0 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 select-none">
+                  VS
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <span className="font-sans font-bold text-base sm:text-xl lg:text-2xl text-slate-900 dark:text-white leading-tight break-words">
+                    {awayName}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-2 items-center">
+            {/* Analytic Signal Badges */}
+            <div className="flex flex-wrap gap-2 items-center shrink-0">
               {match.isFinalPick && (
-                <Badge variant="success" className="text-[9px] flex items-center gap-1.5 px-3 py-1 uppercase tracking-widest bg-emerald-600 text-white border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-pulse">
+                <Badge variant="success" className="text-[9px] flex items-center gap-1.5 px-3 py-1 uppercase tracking-widest bg-emerald-600 text-white border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-pulse font-mono">
                   <Trophy size={12} /> MASTER PICK
                 </Badge>
               )}
@@ -218,29 +252,35 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
               )}
 
               {investSignals.IS_ULTRA_SAFE && (
-                <Badge variant="success" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest border-emerald-500/50">
+                <Badge variant="success" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest border-emerald-500/50 font-mono">
                   <ShieldCheck size={10} /> ULTRA SAFE
                 </Badge>
               )}
 
               {isKillSwitch && (
-                <Badge variant="danger" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50">
+                <Badge variant="danger" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-widest bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50 font-mono">
                   <AlertTriangle size={10} /> KILL-SWITCH ACTIVE
                 </Badge>
               )}
             </div>
           </div>
 
-          <div className={`flex flex-wrap gap-2 mt-2 transition-all duration-300 ${isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'h-auto opacity-100'}`}>
+          {/* Contextual Sub-row: League, Round & Data Integrity (date & hours retirés conformément aux directives) */}
+          <div className={`flex flex-wrap items-center gap-2 mt-2 pt-0.5 transition-all duration-300 ${isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'h-auto opacity-100'}`}>
+            {match.League && (
+              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                {match.League}
+              </span>
+            )}
+            {roundLabel && (
+              <span className="text-[9px] font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-200/80 dark:border-indigo-800/60 shadow-2xs">
+                {roundLabel}
+              </span>
+            )}
             {match.Data_Integrity?.map((flag, idx) => {
               if (flag === 'COMPLETE') return null;
               return <Badge key={idx} variant="info" className="text-[8px] opacity-70 px-1.5">{flag}</Badge>;
             })}
-            {match.hours && (
-              <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400">
-                ⚡ {match.hours}
-              </span>
-            )}
           </div>
         </div>
 

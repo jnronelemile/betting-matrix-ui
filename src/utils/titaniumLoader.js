@@ -6,6 +6,8 @@
  * Strictly respects TITANIUM outputs without recalculating probabilities or risk decisions.
  */
 
+import { getTeamDisplayName } from './teamDisplayNames.js';
+
 // Fallback league flags mapping
 export const LEAGUE_FLAGS = {
   'PL': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
@@ -522,7 +524,10 @@ export async function loadTitaniumV2Session(options = {}) {
       hours: matchedFixture?.hours || null,
       shortHome: matchedFixture?.home || homeRaw,
       shortAway: matchedFixture?.away || awayRaw,
+      displayHome: getTeamDisplayName(matchedFixture?.home || homeRaw, pred.League),
+      displayAway: getTeamDisplayName(matchedFixture?.away || awayRaw, pred.League),
       round: matchedFixture?.round || null,
+      kickoff_utc: matchedFixture?.kickoff_utc || pred.kickoff_utc || null,
       fotmob_match_id: matchedFixture?.fotmob_match_id || null,
       isFinalPick: !!finalPick,
       finalPick: finalPick || null,
