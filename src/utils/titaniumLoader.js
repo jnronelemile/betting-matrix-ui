@@ -16,8 +16,10 @@ export const LEAGUE_FLAGS = {
   'LALIGA': '🇪🇸',
   'LALIGA2': '🇪🇸',
   'SERIEA': '🇮🇹',
+  'SERIEB': '🇮🇹',
   'BUNDESLIGA': '🇩🇪',
   '2.BUNDESLIGA': '🇩🇪',
+  '2BUNDESLIGA': '🇩🇪',
   'LIGUE1': '🇫🇷',
   'LIGUE2': '🇫🇷',
   'EREDIVISIE': '🇳🇱',
@@ -126,7 +128,29 @@ export const VERIFIED_ALIASES = {
   'jeju sk': 'jeju united',
   'nancy lorraine': 'nancy',
   'akhmat grozny': 'akhmat',
-  'baltika kaliningrad': 'baltika'
+  'baltika kaliningrad': 'baltika',
+  // Ligue 1 verified aliases
+  'lille osc': 'lille',
+  'stade brestois 29': 'brest',
+  'estac troyes': 'troyes',
+  'angers sco': 'angers',
+  'olympique de marseille': 'marseille',
+  'olympique marseille': 'marseille',
+  'aj auxerre': 'auxerre',
+  'stade rennais': 'rennes',
+  'olympique lyonnais': 'lyon',
+  'ogc nice': 'nice',
+  // Serie A verified aliases
+  'frosinone calcio': 'frosinone',
+  'ssc napoli': 'napoli',
+  'inter milan': 'inter',
+  'genoa cfc': 'genoa',
+  'udinese calcio': 'udinese',
+  'como 1907': 'como',
+  'atalanta bc': 'atalanta',
+  'ss lazio': 'lazio',
+  'cagliari calcio': 'cagliari',
+  'parma calcio 1913': 'parma'
 };
 
 export function getCanonicalTokens(name) {
@@ -191,7 +215,7 @@ export function canonicalSessionId(id) {
   s = s.replace(/^RUN_/, '');
   s = s.replace(/\.json$/i, '');
   s = s.replace(/_VALUE_BETTING_MATRIX.*$/, '');
-  const match = s.match(/^(Run_[^_]+___[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}h[0-9]{2}m[0-9]{2}s)/);
+  const match = s.match(/^(Run_.+?___[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}h[0-9]{2}m[0-9]{2}s)/);
   if (match) {
     return match[1];
   }
@@ -260,16 +284,105 @@ export function validateSeriesMetadata(stats, match) {
   return { valid: true };
 }
 
-export function getSeriesStatsUrl(match, sessionId) {
+export function resolveSeriesTopology(manifest, predSessionId) {
+  const rawSeriesRuns = Array.isArray(manifest?.seriesRuns) ? manifest.seriesRuns : [];
+  const explicitFlatLeagues = Array.isArray(manifest?.seriesFlatLeagues) ? manifest.seriesFlatLeagues : [];
+
+  const runDirs = rawSeriesRuns.filter(d => /^Run_/i.test(d));
+  const flatLeagueDirs = Array.from(new Set([
+    ...explicitFlatLeagues,
+    ...rawSeriesRuns.filter(d => !/^Run_/i.test(d))
+  ]));
+
+  const canonicalActive = canonicalSessionId(predSessionId);
+  const matchingRunDirs = canonicalActive
+    ? runDirs.filter(d => canonicalSessionId(d) === canonicalActive)
+    : [];
+
+  if (runDirs.length > 0 && flatLeagueDirs.length > 0) {
+    return {
+      mode: 'invalid',
+      runFolder: null,
+      flatLeagues: [],
+      reason: `Topologie des séries ambiguë : dossier(s) de session (${runDirs.join(', ')}) et dossiers de ligues à plat simultanément présents dans series/.`
+    };
+  }
+
+  if (runDirs.length > 0) {
+    if (matchingRunDirs.length === 1) {
+      return {
+        mode: 'session',
+        runFolder: matchingRunDirs[0],
+        flatLeagues: [],
+        reason: null
+      };
+    }
+    if (matchingRunDirs.length > 1) {
+      return {
+        mode: 'invalid',
+        runFolder: null,
+        flatLeagues: [],
+        reason: `Topologie des séries ambiguë : plusieurs dossiers correspondent à la session active "${canonicalActive}" (${matchingRunDirs.join(', ')}).`
+      };
+    }
+    return {
+      mode: 'invalid',
+      runFolder: null,
+      flatLeagues: [],
+      reason: `Dossier de séries incompatible avec la session active "${canonicalActive}" (dossiers présents : ${runDirs.join(', ')}).`
+    };
+  }
+
+  if (flatLeagueDirs.length > 0) {
+    return {
+      mode: 'flat',
+      runFolder: null,
+      flatLeagues: flatLeagueDirs,
+      reason: null
+    };
+  }
+
+  return {
+    mode: 'invalid',
+    runFolder: null,
+    flatLeagues: [],
+    reason: 'Aucun répertoire de séries détecté dans le manifeste TITANIUM V2.'
+  };
+}
+
+export function getSeriesStatsUrl(match, sessionId, topology = null) {
   if (!match || !match.Matchup) return null;
-  const sId = sessionId || match.session_id || (match.run_id ? match.run_id.replace(/^RUN_/, '').split('_2026-')[0] : '');
   const leagueFolder = (match.League || '').toUpperCase().replace(/\s+/g, '');
+  if (!leagueFolder) return null;
   const parts = match.Matchup.split(' vs ');
   if (parts.length < 2) return null;
   const homeClean = parts[0].replace(/\s+/g, '').replace(/\//g, '_');
   const awayClean = parts[1].replace(/\s+/g, '').replace(/\//g, '_');
   const date = match.Match_Date || match.date || '';
-  return `/data/titanium_v2/series/${sId}/${leagueFolder}/serie_stats_${homeClean}_${awayClean}_${date}.json`;
+  const fileName = `serie_stats_${homeClean}_${awayClean}_${date}.json`;
+
+  const resolvedTopology = topology || match.series_topology || null;
+  if (resolvedTopology) {
+    if (resolvedTopology.mode === 'invalid') {
+      return null;
+    }
+    if (resolvedTopology.mode === 'flat') {
+      return `/data/titanium_v2/series/${leagueFolder}/${fileName}`;
+    }
+    if (resolvedTopology.mode === 'session' && resolvedTopology.runFolder) {
+      return `/data/titanium_v2/series/${resolvedTopology.runFolder}/${leagueFolder}/${fileName}`;
+    }
+    return null;
+  }
+
+  if (sessionId === 'FLAT' || sessionId === '') {
+    return `/data/titanium_v2/series/${leagueFolder}/${fileName}`;
+  }
+
+  const rawSession = sessionId || match.session_id || match.run_id || '';
+  const sId = canonicalSessionId(rawSession);
+  if (!sId || !/^Run_/i.test(sId)) return null;
+  return `/data/titanium_v2/series/${sId}/${leagueFolder}/${fileName}`;
 }
 
 export function getLeagueReportUrl(leagueName) {
@@ -299,6 +412,7 @@ export async function loadTitaniumV2Session(options = {}) {
         predictions: ['Run_matches-to-predict_Week-02_Octobre-2026___2026-10-15_17h48m15s_VALUE_BETTING_MATRIX_2026-10-15_18h08m06s.json'],
         matches: ['matches_to_predict_Week-02-Octobre-2026.json'],
         seriesRuns: ['Run_matches-to-predict_Week-02_Octobre-2026___2026-10-15_17h48m15s'],
+        seriesFlatLeagues: [],
         tickets: {
           assembled: '/data/titanium_v2/tickets/TICKETS_ASSEMBLES.json',
           finals: '/data/titanium_v2/tickets/auxiliary/CHOIX_FINAUX.json'
@@ -334,11 +448,14 @@ export async function loadTitaniumV2Session(options = {}) {
     throw new Error(`TITANIUM V2 predictions load error: ${err.message}`);
   }
 
-  // Extract session run_id / session_id from predictions
+  // Extract session run_id / session_id strictly from active predictions matrix
   const firstPred = predictionsRaw[0] || {};
   const predRunId = firstPred.run_id || '';
-  const predSessionId = manifest.seriesRuns?.[0] || 
-    (predRunId ? predRunId.replace(/^RUN_/, '').split('_2026-')[0] : '');
+  const predSessionId = canonicalSessionId(predRunId) || canonicalSessionId(predFileName);
+  const seriesTopology = resolveSeriesTopology(manifest, predSessionId);
+  if (seriesTopology.mode === 'invalid' && seriesTopology.reason) {
+    warnings.push(`Séries statistiques : ${seriesTopology.reason}`);
+  }
 
   // 3. Load Matches Fixtures (matches_to_predict)
   let fixturesByLeague = {};
@@ -533,7 +650,8 @@ export async function loadTitaniumV2Session(options = {}) {
       finalPick: finalPick || null,
       masterReason: finalPick?.Streak_Reason || null,
       inTickets: pred.Match_ID ? ticketMatchIds.has(pred.Match_ID) : false,
-      session_id: predSessionId
+      session_id: predSessionId,
+      series_topology: seriesTopology
     };
   });
 
@@ -562,6 +680,7 @@ export async function loadTitaniumV2Session(options = {}) {
       sessionId: predSessionId,
       runId: predRunId,
       sourceMatrix: predFileName,
+      seriesTopology,
       predictionsCount: enrichedMatches.length,
       leaguesCount: uniqueLeagueNames.length,
       warnings,

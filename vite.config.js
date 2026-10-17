@@ -9,6 +9,7 @@ function scanTitaniumV2() {
     predictions: [],
     matches: [],
     seriesRuns: [],
+    seriesFlatLeagues: [],
     tickets: {
       assembled: null,
       finals: null,
@@ -30,13 +31,15 @@ function scanTitaniumV2() {
 
   const seriesDir = path.join(baseDir, 'series');
   if (fs.existsSync(seriesDir)) {
-    manifest.seriesRuns = fs.readdirSync(seriesDir).filter(f => {
+    const seriesDirs = fs.readdirSync(seriesDir).filter(f => {
       try {
         return fs.statSync(path.join(seriesDir, f)).isDirectory();
       } catch (e) {
         return false;
       }
     });
+    manifest.seriesRuns = seriesDirs.filter(d => /^Run_/i.test(d));
+    manifest.seriesFlatLeagues = seriesDirs.filter(d => !/^Run_/i.test(d));
   }
 
   const ticketsDir = path.join(baseDir, 'tickets');

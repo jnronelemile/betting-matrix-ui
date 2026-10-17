@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
-import { ShieldCheck, ShieldAlert, AlertTriangle, AlertCircle, Ban, Lock, Activity } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, AlertTriangle, AlertCircle, Ban, Lock, Activity, Info, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function TabRiskContext({ match }) {
+  const [showCoverageNotes, setShowCoverageNotes] = useState(false);
+
   const risk = match.Risk_Management_Context || {};
   const operational = risk.Operational_Restrictions || {};
   const investment = risk.Investment_Signals || {};
@@ -11,6 +13,36 @@ export default function TabRiskContext({ match }) {
   const probs = match.True_Probabilities || {};
   const isKillSwitchActive = investment.IS_KILL_SWITCH_ACTIVE ||
     ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
+
+  const coverageNotice = match.Market_Coverage_Notice && typeof match.Market_Coverage_Notice === 'object'
+    ? match.Market_Coverage_Notice
+    : null;
+  const coverageEntries = coverageNotice?.markets && typeof coverageNotice.markets === 'object'
+    ? Object.entries(coverageNotice.markets).filter(([, v]) => v && typeof v === 'object')
+    : [];
+
+  const getOperationalStatusStyle = (status) => {
+    if (status === 'ACTIONABLE_PRODUCTION') {
+      return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30';
+    }
+    if (status === 'INFORMATIONAL_ONLY') {
+      return 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30';
+    }
+    return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30';
+  };
+
+  const getBookmakerCoverageStyle = (coverage) => {
+    if (coverage === 'PRESUMED_AVAILABLE') {
+      return 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/30';
+    }
+    if (coverage === 'LIMITED_OR_UNKNOWN') {
+      return 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30';
+    }
+    if (coverage === 'SPECIALIST_ONLY') {
+      return 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30';
+    }
+    return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30';
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
@@ -105,6 +137,95 @@ export default function TabRiskContext({ match }) {
                   <span className="text-xs font-bold uppercase tracking-wider">Aucun marché spécifique bloqué</span>
                   <span className="text-[9px] text-slate-400">Aucun marché individuel spécifiquement bloqué par la liste de restriction.</span>
                 </div>
+              </div>
+            )}
+          </div>
+        </Card>
+
+        {/* Distinct Statistical Market Coverage Notice Reminder (Non-Veto) */}
+        <Card title="Market Coverage Notice (Marchés Statistiques)" titleIcon={<Info size={16} />}>
+          <div className="flex flex-col gap-3 mt-1">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">
+                Disponibilité Bookmaker &amp; Statut Opérationnel
+              </span>
+              {coverageNotice?.notice_version && (
+                <Badge variant="info" className="text-[8px] font-mono">
+                  v{coverageNotice.notice_version}
+                </Badge>
+              )}
+            </div>
+
+            <p className="text-[9px] text-slate-500 dark:text-slate-400 italic leading-relaxed">
+              Information de couverture relative aux marchés statistiques (distincte des vetos de risque <code className="font-mono">blocked_markets</code> ci-dessus).
+            </p>
+
+            {coverageEntries.length > 0 ? (
+              <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {coverageEntries.map(([mKey, mVal]) => (
+                    <div
+                      key={mKey}
+                      className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col gap-1.5 min-w-0"
+                    >
+                      <div className="flex items-center justify-between gap-2 pb-1 border-b border-slate-200/70 dark:border-slate-800/70">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 font-mono">
+                          {mKey}
+                        </span>
+                        <span className="text-[8px] font-mono text-slate-400">
+                          {mVal.calculated === true ? 'CALCULATED' : mVal.calculated === false ? 'NOT_CALCULATED' : 'UNSPECIFIED'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-1.5 min-w-0">
+                        <span className="text-[8px] uppercase font-bold text-slate-400 shrink-0">Status</span>
+                        <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border truncate ${getOperationalStatusStyle(mVal.operational_status)}`}>
+                          {mVal.operational_status || 'UNSPECIFIED'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-1.5 min-w-0">
+                        <span className="text-[8px] uppercase font-bold text-slate-400 shrink-0">Coverage</span>
+                        <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border truncate ${getBookmakerCoverageStyle(mVal.bookmaker_coverage)}`}>
+                          {mVal.bookmaker_coverage || 'UNSPECIFIED'}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setShowCoverageNotes(prev => !prev)}
+                    aria-expanded={showCoverageNotes}
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[9px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+                  >
+                    <span>{showCoverageNotes ? 'Masquer Disclaimer & Notes' : 'Voir Disclaimer & Notes de couverture'}</span>
+                    {showCoverageNotes ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                  </button>
+
+                  {showCoverageNotes && (
+                    <div className="mt-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 text-[9px]">
+                      {coverageNotice.disclaimer && (
+                        <p className="font-mono text-slate-600 dark:text-slate-300 leading-relaxed">
+                          <strong className="uppercase font-sans font-black text-slate-800 dark:text-slate-200 mr-1">Disclaimer :</strong>
+                          {coverageNotice.disclaimer}
+                        </p>
+                      )}
+                      {coverageEntries.filter(([, mVal]) => mVal.notes).map(([mKey, mVal]) => (
+                        <div key={`note-${mKey}`} className="pt-1.5 border-t border-slate-200/70 dark:border-slate-800/70">
+                          <span className="font-mono font-bold uppercase text-slate-700 dark:text-slate-300 mr-1.5">{mKey}:</span>
+                          <span className="text-slate-600 dark:text-slate-400 break-words">{mVal.notes}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="p-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-[10px] text-slate-400 italic">
+                Aucune notice de couverture statistique (Market_Coverage_Notice) fournie pour ce match.
               </div>
             )}
           </div>

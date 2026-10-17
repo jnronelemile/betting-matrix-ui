@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
 import { Badge } from '../ui/Badge';
@@ -12,10 +12,16 @@ import {
   ArrowRight,
   BarChart3,
   Ban,
-  Activity
+  Activity,
+  Info,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 export default function TabTactical({ match, onNavigateTab }) {
+  const [showCoverageDetails, setShowCoverageDetails] = useState(false);
+  const [expandedCardNotes, setExpandedCardNotes] = useState({});
+
   const risk = match.Risk_Management_Context || {};
   const tactical = risk.Tactical_Red_Flags || {};
   const anchors = risk.League_Anchors || {};
@@ -25,6 +31,13 @@ export default function TabTactical({ match, onNavigateTab }) {
   const investSignals = risk.Investment_Signals || {};
   const operational = risk.Operational_Restrictions || {};
   const blockedMarkets = operational.blocked_markets || [];
+
+  const coverageNotice = match.Market_Coverage_Notice && typeof match.Market_Coverage_Notice === 'object'
+    ? match.Market_Coverage_Notice
+    : null;
+  const coverageMarkets = coverageNotice?.markets && typeof coverageNotice.markets === 'object'
+    ? coverageNotice.markets
+    : null;
 
   const isKillSwitchActive = investSignals.IS_KILL_SWITCH_ACTIVE ||
     ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
@@ -66,6 +79,55 @@ export default function TabTactical({ match, onNavigateTab }) {
       lambdaKey: 'LAMBDA_THROWS_MATCH'
     },
   ];
+
+  const getOperationalStatusStyle = (status) => {
+    if (status === 'ACTIONABLE_PRODUCTION') {
+      return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30';
+    }
+    if (status === 'INFORMATIONAL_ONLY') {
+      return 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30';
+    }
+    return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30';
+  };
+
+  const getBookmakerCoverageStyle = (coverage) => {
+    if (coverage === 'PRESUMED_AVAILABLE') {
+      return 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/30';
+    }
+    if (coverage === 'LIMITED_OR_UNKNOWN') {
+      return 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30';
+    }
+    if (coverage === 'SPECIALIST_ONLY') {
+      return 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30';
+    }
+    return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30';
+  };
+
+  const coverageSummary = React.useMemo(() => {
+    if (!coverageMarkets) return null;
+    const entries = Object.entries(coverageMarkets).filter(([, v]) => v && typeof v === 'object');
+    if (entries.length === 0) return null;
+
+    const statusCounts = {};
+    const coverageCounts = {};
+    const notesList = [];
+
+    entries.forEach(([mKey, mVal]) => {
+      const st = mVal.operational_status || 'UNSPECIFIED';
+      const cov = mVal.bookmaker_coverage || 'UNSPECIFIED';
+      statusCounts[st] = (statusCounts[st] || 0) + 1;
+      coverageCounts[cov] = (coverageCounts[cov] || 0) + 1;
+      if (mVal.notes) {
+        notesList.push({ marketKey: mKey, note: mVal.notes, status: st, coverage: cov });
+      }
+    });
+
+    return { statusCounts, coverageCounts, notesList, total: entries.length };
+  }, [coverageMarkets]);
+
+  const toggleCardNote = (key) => {
+    setExpandedCardNotes(prev => ({ ...prev, [key]: !prev[key] }));
+  };
 
   const hasFotmobRatings = tactical.fotmob_rating_home !== undefined &&
                            tactical.fotmob_rating_away !== undefined &&
@@ -113,10 +175,10 @@ export default function TabTactical({ match, onNavigateTab }) {
       )}
 
       {/* Top Grid: Statistical Market Overview (Full Width / Prominent) */}
-      <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+      <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
+            <div className="p-2 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl shrink-0">
               <Crosshair size={18} />
             </div>
             <div>
@@ -133,61 +195,214 @@ export default function TabTactical({ match, onNavigateTab }) {
           </span>
         </div>
 
+        {/* Compact Market Coverage Notice Summary Banner */}
+        {coverageNotice && (
+          <div className="mb-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/80 p-3 transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div className="flex flex-col gap-1.5 min-w-0">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <Info size={14} className="text-blue-600 dark:text-blue-400 shrink-0" />
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                    Market Coverage Notice
+                  </span>
+                  {coverageNotice.notice_version && (
+                    <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                      v{coverageNotice.notice_version}
+                    </span>
+                  )}
+                </div>
+
+                {coverageSummary && (
+                  <div className="flex flex-wrap items-center gap-1.5 text-[9px] font-mono">
+                    <span className="text-slate-400 uppercase font-sans font-bold text-[8px]">Status:</span>
+                    {Object.entries(coverageSummary.statusCounts).map(([st, count]) => (
+                      <span
+                        key={`st-${st}`}
+                        className={`px-1.5 py-0.5 rounded border font-bold break-all ${getOperationalStatusStyle(st)}`}
+                      >
+                        {st}: {count}
+                      </span>
+                    ))}
+                    <span className="text-slate-400 uppercase font-sans font-bold text-[8px] ml-0.5">Coverage:</span>
+                    {Object.entries(coverageSummary.coverageCounts).map(([cov, count]) => (
+                      <span
+                        key={`cov-${cov}`}
+                        className={`px-1.5 py-0.5 rounded border font-bold break-all ${getBookmakerCoverageStyle(cov)}`}
+                      >
+                        {cov}: {count}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowCoverageDetails(prev => !prev)}
+                aria-expanded={showCoverageDetails}
+                className="self-start sm:self-center shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                <span>{showCoverageDetails ? 'Masquer détails' : 'Détails & Disclaimer'}</span>
+                {showCoverageDetails ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+              </button>
+            </div>
+
+            {showCoverageDetails && (
+              <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2.5 text-[10px]">
+                {coverageNotice.disclaimer && (
+                  <p className="text-slate-600 dark:text-slate-300 font-mono text-[9px] leading-relaxed bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
+                    <strong className="uppercase font-sans font-black text-slate-800 dark:text-slate-200 mr-1">Disclaimer TITANIUM :</strong>
+                    {coverageNotice.disclaimer}
+                  </p>
+                )}
+
+                <p className="text-[9px] text-slate-500 dark:text-slate-400 italic leading-relaxed">
+                  Note sémantique : <code className="font-mono font-bold">ACTIONABLE_PRODUCTION</code> qualifie le statut opérationnel du modèle sur le marché statistique et ne constitue pas, à lui seul, une autorisation de pari. <code className="font-mono font-bold">PRESUMED_AVAILABLE</code> indique une disponibilité bookmaker présumée, sans vérification d&apos;offre ou de cote en temps réel.
+                </p>
+
+                {coverageSummary?.notesList?.length > 0 && (
+                  <div className="space-y-1.5">
+                    <span className="text-[8px] font-black uppercase tracking-wider text-slate-400 block">
+                      Notes spécifiques par marché statistique :
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {coverageSummary.notesList.map(({ marketKey, note, status, coverage }) => (
+                        <div
+                          key={marketKey}
+                          className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col gap-1"
+                        >
+                          <div className="flex flex-wrap items-center justify-between gap-1">
+                            <span className="font-mono font-bold uppercase text-[9px] text-slate-800 dark:text-slate-200">
+                              {marketKey}
+                            </span>
+                            <span className="text-[8px] font-mono text-slate-400">
+                              {status} / {coverage}
+                            </span>
+                          </div>
+                          <p className="text-[9px] text-slate-600 dark:text-slate-400 leading-snug break-words">
+                            {note}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {statisticalMarkets.map(({ key, label, refKey, refType, propKey, lambdaKey }) => {
             const refVal = anchors[refKey];
             const prob = props[propKey];
             const lambdaVal = props[lambdaKey];
+            const mNotice = coverageMarkets?.[key] && typeof coverageMarkets[key] === 'object'
+              ? coverageMarkets[key]
+              : null;
             const isGenerated = lambdaVal !== undefined && lambdaVal !== null;
+            const isNoteExpanded = !!expandedCardNotes[key];
 
             return (
               <div
                 key={key}
-                className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm"
+                className="bg-slate-50 dark:bg-slate-950 p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm min-w-0"
               >
-                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800/60">
-                  <span className="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
-                    {label}
-                  </span>
-                  <Badge variant="default" className="text-[8px] px-1.5 py-0 font-mono">
-                    {refType}
-                  </Badge>
+                <div>
+                  <div className="flex items-center justify-between gap-1.5 pb-2 border-b border-slate-200 dark:border-slate-800/60">
+                    <span className="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 truncate">
+                      {label}
+                    </span>
+                    <Badge variant="default" className="text-[8px] px-1.5 py-0 font-mono shrink-0">
+                      {refType}
+                    </Badge>
+                  </div>
+
+                  {isGenerated ? (
+                    <div className="my-3 space-y-2">
+                      <div className="flex items-baseline justify-between gap-2">
+                        <span className="text-[9px] text-slate-500 uppercase tracking-widest">Total Attendu (λ)</span>
+                        <span className="font-mono text-2xl font-bold text-slate-900 dark:text-slate-100">
+                          {lambdaVal.toFixed(2)}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between text-xs font-mono gap-2">
+                        <span className="text-[9px] text-slate-500 uppercase">{refType}:</span>
+                        <span className="text-slate-600 dark:text-slate-400 font-bold">
+                          {refVal !== undefined ? refVal.toFixed(2) : '-'}
+                        </span>
+                      </div>
+
+                      <div className="pt-2 border-t border-slate-200 dark:border-slate-800/40 flex items-center justify-between gap-2">
+                        <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold">Prob &gt; Réf ligue</span>
+                        <span className={`font-mono text-sm font-bold ${getPropTextColor(prob || 0)}`}>
+                          {prob !== undefined ? `${(prob * 100).toFixed(1)}%` : '-'}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="my-6 py-4 px-2 text-center bg-slate-100/50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-800 rounded-lg">
+                      <p className="text-[10px] text-slate-400 italic">
+                        Projection non générée dans cette session
+                      </p>
+                    </div>
+                  )}
                 </div>
 
-                {isGenerated ? (
-                  <div className="my-3 space-y-2">
-                    <div className="flex items-baseline justify-between">
-                      <span className="text-[9px] text-slate-500 uppercase tracking-widest">Total Attendu (λ)</span>
-                      <span className="font-mono text-2xl font-bold text-slate-900 dark:text-slate-100">
-                        {lambdaVal.toFixed(2)}
-                      </span>
-                    </div>
+                <div className="space-y-2 pt-2 border-t border-slate-200/70 dark:border-slate-800/70">
+                  {mNotice && (
+                    <div className="space-y-1.5">
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-center justify-between gap-1.5 min-w-0">
+                          <span className="text-[8px] font-bold uppercase tracking-wider text-slate-400 shrink-0">
+                            Status
+                          </span>
+                          <span
+                            className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border truncate max-w-full ${getOperationalStatusStyle(mNotice.operational_status)}`}
+                            title={mNotice.operational_status || 'UNSPECIFIED'}
+                          >
+                            {mNotice.operational_status || 'UNSPECIFIED'}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between gap-1.5 min-w-0">
+                          <span className="text-[8px] font-bold uppercase tracking-wider text-slate-400 shrink-0">
+                            Coverage
+                          </span>
+                          <span
+                            className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border truncate max-w-full ${getBookmakerCoverageStyle(mNotice.bookmaker_coverage)}`}
+                            title={mNotice.bookmaker_coverage || 'UNSPECIFIED'}
+                          >
+                            {mNotice.bookmaker_coverage || 'UNSPECIFIED'}
+                          </span>
+                        </div>
+                      </div>
 
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-[9px] text-slate-500 uppercase">{refType}:</span>
-                      <span className="text-slate-600 dark:text-slate-400 font-bold">
-                        {refVal !== undefined ? refVal.toFixed(2) : '-'}
-                      </span>
+                      {mNotice.notes && (
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() => toggleCardNote(key)}
+                            aria-expanded={isNoteExpanded}
+                            className="w-full flex items-center justify-between text-[8px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 hover:underline py-0.5"
+                          >
+                            <span>Note de couverture</span>
+                            {isNoteExpanded ? <ChevronUp size={10} /> : <ChevronDown size={10} />}
+                          </button>
+                          {isNoteExpanded && (
+                            <p className="mt-1 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[9px] text-slate-600 dark:text-slate-400 leading-snug break-words">
+                              {mNotice.notes}
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </div>
+                  )}
 
-                    <div className="pt-2 border-t border-slate-200 dark:border-slate-800/40 flex items-center justify-between">
-                      <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold">Prob &gt; Réf ligue</span>
-                      <span className={`font-mono text-sm font-bold ${getPropTextColor(prob || 0)}`}>
-                        {prob !== undefined ? `${(prob * 100).toFixed(1)}%` : '-'}
-                      </span>
-                    </div>
+                  <div className="text-[8px] text-slate-400 italic">
+                    {key === 'throws' ? 'Moyenne arithmétique de ligue' : 'Médiane empirique de ligue'}
                   </div>
-                ) : (
-                  <div className="my-6 py-4 px-2 text-center bg-slate-100/50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-800 rounded-lg">
-                    <p className="text-[10px] text-slate-400 italic">
-                      Projection non générée dans cette session
-                    </p>
-                  </div>
-                )}
-
-                <div className="text-[8px] text-slate-400 italic pt-1 border-t border-slate-100 dark:border-slate-900">
-                  {key === 'throws' ? 'Moyenne arithmétique de ligue' : 'Médiane empirique de ligue'}
                 </div>
               </div>
             );

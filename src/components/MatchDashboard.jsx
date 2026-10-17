@@ -63,6 +63,12 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       setSeriesError(null);
       setLoadingStats(true);
 
+      if (match.series_topology?.mode === 'invalid') {
+        setLoadingStats(false);
+        setSeriesError(match.series_topology.reason || "Topologie des séries incompatible ou ambiguë");
+        return;
+      }
+
       const seriesUrl = getSeriesStatsUrl(match, sessionId);
       if (!seriesUrl) {
         setLoadingStats(false);
@@ -73,7 +79,26 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       try {
         const res = await fetch(seriesUrl);
         if (res.ok) {
-          const stats = await res.json();
+          const contentType = res.headers?.get ? (res.headers.get('content-type') || '') : '';
+          if (contentType && contentType.includes('text/html')) {
+            if (activeSeriesFetchRef.current === currentMatchId) {
+              setSerieStats(null);
+              setSeriesError(`Fichier de séries introuvable (réponse HTML inattendue sur ${seriesUrl})`);
+            }
+            return;
+          }
+
+          let stats;
+          try {
+            stats = await res.json();
+          } catch (parseErr) {
+            if (activeSeriesFetchRef.current === currentMatchId) {
+              setSerieStats(null);
+              setSeriesError(`Réponse non-JSON ou HTML inattendue sur ${seriesUrl} (${parseErr.message})`);
+            }
+            return;
+          }
+
           if (activeSeriesFetchRef.current === currentMatchId) {
             const validation = validateSeriesMetadata(stats, match);
             if (validation.valid) {
@@ -81,7 +106,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
               setSeriesError(null);
             } else {
               setSerieStats(null);
-              setSeriesError(validation.reason);
+              setSeriesError(`Métadonnées rejetées : ${validation.reason}`);
               console.warn("[TITANIUM SER-01] Series payload rejected:", validation.reason);
             }
           }
@@ -95,7 +120,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
         console.error("Error fetching serie stats:", e);
         if (activeSeriesFetchRef.current === currentMatchId) {
           setSerieStats(null);
-          setSeriesError(`Erreur lors du chargement des séries : ${e.message}`);
+          setSeriesError(`Erreur réseau lors du chargement des séries : ${e.message}`);
         }
       } finally {
         if (activeSeriesFetchRef.current === currentMatchId) {
