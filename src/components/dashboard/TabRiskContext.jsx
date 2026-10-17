@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
-import { ShieldCheck, ShieldAlert, AlertTriangle, AlertCircle, Ban, Lock, Activity, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import {
+  ShieldCheck,
+  ShieldAlert,
+  AlertTriangle,
+  AlertCircle,
+  Ban,
+  Lock,
+  Activity,
+  Info,
+  ChevronDown,
+  ChevronUp,
+  ArrowRight
+} from 'lucide-react';
+import { getOperationalStatusMeta, getBookmakerCoverageMeta } from './TabTactical';
 
-export default function TabRiskContext({ match }) {
+export default function TabRiskContext({ match, onNavigateTab }) {
   const [showCoverageNotes, setShowCoverageNotes] = useState(false);
 
   const risk = match.Risk_Management_Context || {};
@@ -21,28 +34,16 @@ export default function TabRiskContext({ match }) {
     ? Object.entries(coverageNotice.markets).filter(([, v]) => v && typeof v === 'object')
     : [];
 
-  const getOperationalStatusStyle = (status) => {
-    if (status === 'ACTIONABLE_PRODUCTION') {
-      return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30';
-    }
-    if (status === 'INFORMATIONAL_ONLY') {
-      return 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30';
-    }
-    return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30';
-  };
-
-  const getBookmakerCoverageStyle = (coverage) => {
-    if (coverage === 'PRESUMED_AVAILABLE') {
-      return 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/30';
-    }
-    if (coverage === 'LIMITED_OR_UNKNOWN') {
-      return 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30';
-    }
-    if (coverage === 'SPECIALIST_ONLY') {
-      return 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30';
-    }
-    return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30';
-  };
+  const coverageSummary = React.useMemo(() => {
+    let actionableCount = 0;
+    let informationalCount = 0;
+    coverageEntries.forEach(([, mVal]) => {
+      const op = getOperationalStatusMeta(mVal?.operational_status);
+      if (op.isActionable === true) actionableCount++;
+      else if (op.isActionable === false) informationalCount++;
+    });
+    return { actionableCount, informationalCount };
+  }, [coverageEntries]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
@@ -66,21 +67,21 @@ export default function TabRiskContext({ match }) {
                   <span className={`text-xs font-bold uppercase tracking-wider ${isKillSwitchActive ? 'text-rose-700 dark:text-rose-400' : 'text-slate-800 dark:text-slate-200'}`}>
                     {isKillSwitchActive ? 'Kill-Switch Sécurité Déclenché' : 'Kill-Switch Désactivé'}
                   </span>
-                  <span className="text-[9px] text-slate-500">
+                  <span className="text-xs text-slate-500">
                     {isKillSwitchActive
                       ? 'Marchés principaux neutralisés côté modèle (probabilités ramenées à 0).'
                       : 'Conditions de calcul et d’exposition nominales.'}
                   </span>
                 </div>
               </div>
-              <Badge variant={isKillSwitchActive ? 'danger' : 'success'} className="text-[9px]">
+              <Badge variant={isKillSwitchActive ? 'danger' : 'success'} className="text-xs">
                 {isKillSwitchActive ? 'VETO ACTIF' : 'NOMINAL'}
               </Badge>
             </div>
 
             {/* Profile Applied */}
             <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
-              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">Profil de Risque Appliqué</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Profil de Risque Appliqué</span>
               <span className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200">
                 {operational.profile_applied ? 'GOUVERNANCE_ACTIVE' : 'STANDARD'}
               </span>
@@ -88,10 +89,10 @@ export default function TabRiskContext({ match }) {
 
             {/* Source Data Integrity */}
             <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
-              <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
                 <AlertCircle size={14} /> Intégrité des Données Source
               </span>
-              <Badge variant={match.Data_Integrity?.[0] === 'COMPLETE' ? 'success' : 'warning'} className="text-[10px]">
+              <Badge variant={match.Data_Integrity?.[0] === 'COMPLETE' ? 'success' : 'warning'} className="text-xs">
                 {match.Data_Integrity?.[0] || 'INCONNU'}
               </Badge>
             </div>
@@ -103,10 +104,10 @@ export default function TabRiskContext({ match }) {
         <Card title="Marchés Bloqués (Veto Risque)" titleIcon={<Ban size={16} />}>
           <div className="flex flex-col gap-4 mt-1">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
                 Restrictions Spécifiques par Marché
               </span>
-              <Badge variant={blockedMarkets.length > 0 ? 'danger' : 'default'} className="text-[9px]">
+              <Badge variant={blockedMarkets.length > 0 ? 'danger' : 'default'} className="text-xs">
                 {blockedMarkets.length} {blockedMarkets.length > 1 ? 'marchés' : 'marché'}
               </Badge>
             </div>
@@ -121,12 +122,12 @@ export default function TabRiskContext({ match }) {
                     >
                       <Ban size={12} className="text-rose-500" />
                       <span className="text-xs font-mono font-bold tracking-tight">{marketKey}</span>
-                      <span className="text-[8px] font-black uppercase tracking-wider text-rose-500/80">INTERDIT</span>
+                      <span className="text-xs font-black uppercase tracking-wider text-rose-500/80">INTERDIT</span>
                     </div>
                   ))}
                 </div>
-                <p className="text-[9px] text-slate-500 italic mt-1 bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
-                  <strong className="text-rose-600 dark:text-rose-400 not-italic uppercase font-black mr-1">Règle de risque :</strong>
+                <p className="text-xs text-slate-500 italic mt-1 bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 leading-relaxed">
+                  <strong className="text-rose-600 dark:text-rose-400 not-italic uppercase font-bold mr-1">Règle de risque :</strong>
                   Ces marchés sont formellement exclus de toute sélection ou prise de position par la couche de risque du moteur TITANIUM.
                 </p>
               </div>
@@ -135,7 +136,7 @@ export default function TabRiskContext({ match }) {
                 <ShieldCheck size={20} className="shrink-0 text-slate-400" />
                 <div className="flex flex-col">
                   <span className="text-xs font-bold uppercase tracking-wider">Aucun marché spécifique bloqué</span>
-                  <span className="text-[9px] text-slate-400">Aucun marché individuel spécifiquement bloqué par la liste de restriction.</span>
+                  <span className="text-xs text-slate-400">Aucun marché individuel spécifiquement bloqué par la liste de restriction.</span>
                 </div>
               </div>
             )}
@@ -144,88 +145,150 @@ export default function TabRiskContext({ match }) {
 
         {/* Distinct Statistical Market Coverage Notice Reminder (Non-Veto) */}
         <Card title="Market Coverage Notice (Marchés Statistiques)" titleIcon={<Info size={16} />}>
-          <div className="flex flex-col gap-3 mt-1">
+          <div className="flex flex-col gap-3.5 mt-1">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">
-                Disponibilité Bookmaker &amp; Statut Opérationnel
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
+                Disponibilité Marché &amp; Couverture
               </span>
               {coverageNotice?.notice_version && (
-                <Badge variant="info" className="text-[8px] font-mono">
+                <Badge variant="info" className="text-xs font-mono">
                   v{coverageNotice.notice_version}
                 </Badge>
               )}
             </div>
 
-            <p className="text-[9px] text-slate-500 dark:text-slate-400 italic leading-relaxed">
-              Information de couverture relative aux marchés statistiques (distincte des vetos de risque <code className="font-mono">blocked_markets</code> ci-dessus).
-            </p>
+            {/* Context distinction banner */}
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 leading-relaxed space-y-1">
+              <p>
+                <strong className="text-slate-800 dark:text-slate-200 font-semibold">Information de couverture :</strong>{' '}
+                Qualifie l&apos;accessibilité bookmaker des marchés annexes (Corners, Tirs, Touches).
+              </p>
+              <p className="text-slate-500 dark:text-slate-400 italic">
+                Ne constitue pas un veto de risque opérationnel du Risk Manager (distinct des <code className="font-mono text-slate-700 dark:text-slate-300">blocked_markets</code> ci-dessus).
+              </p>
+            </div>
 
             {coverageEntries.length > 0 ? (
               <div className="space-y-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {coverageEntries.map(([mKey, mVal]) => (
-                    <div
-                      key={mKey}
-                      className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col gap-1.5 min-w-0"
-                    >
-                      <div className="flex items-center justify-between gap-2 pb-1 border-b border-slate-200/70 dark:border-slate-800/70">
-                        <span className="text-[10px] font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 font-mono">
-                          {mKey}
-                        </span>
-                        <span className="text-[8px] font-mono text-slate-400">
-                          {mVal.calculated === true ? 'CALCULATED' : mVal.calculated === false ? 'NOT_CALCULATED' : 'UNSPECIFIED'}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-1.5 min-w-0">
-                        <span className="text-[8px] uppercase font-bold text-slate-400 shrink-0">Status</span>
-                        <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border truncate ${getOperationalStatusStyle(mVal.operational_status)}`}>
-                          {mVal.operational_status || 'UNSPECIFIED'}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-1.5 min-w-0">
-                        <span className="text-[8px] uppercase font-bold text-slate-400 shrink-0">Coverage</span>
-                        <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border truncate ${getBookmakerCoverageStyle(mVal.bookmaker_coverage)}`}>
-                          {mVal.bookmaker_coverage || 'UNSPECIFIED'}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                {/* Summary counters */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 text-xs font-semibold">
+                    {coverageEntries.length} marchés surveillés
+                  </span>
+                  {coverageSummary.actionableCount > 0 && (
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 text-xs font-semibold">
+                      {coverageSummary.actionableCount} validé{coverageSummary.actionableCount > 1 ? 's' : ''} en production
+                    </span>
+                  )}
+                  {coverageSummary.informationalCount > 0 && (
+                    <span className="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-xs font-semibold">
+                      {coverageSummary.informationalCount} informatif{coverageSummary.informationalCount > 1 ? 's' : ''}
+                    </span>
+                  )}
                 </div>
 
+                {/* Synthetic markets status list */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {coverageEntries.map(([mKey, mVal]) => {
+                    const op = getOperationalStatusMeta(mVal?.operational_status);
+                    const cov = getBookmakerCoverageMeta(mVal?.bookmaker_coverage);
+                    return (
+                      <div
+                        key={mKey}
+                        className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col gap-2 min-w-0"
+                      >
+                        <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-slate-200/70 dark:border-slate-800/70">
+                          <span className="text-xs font-bold tracking-tight text-slate-800 dark:text-slate-200 font-mono">
+                            {mKey}
+                          </span>
+                          <span className="text-xs font-mono text-slate-400" title={`Calculé: ${mVal?.calculated}`}>
+                            {mVal?.calculated === true ? 'Calculé' : mVal?.calculated === false ? 'Non calculé' : '—'}
+                          </span>
+                        </div>
+
+                        <div className="flex flex-col gap-1.5 text-xs">
+                          <div className="flex items-center justify-between gap-2 min-w-0">
+                            <span className="text-slate-500 dark:text-slate-400 shrink-0">Statut</span>
+                            <span
+                              className={`px-2 py-0.5 rounded-md border text-xs font-medium truncate ${op.badgeClass}`}
+                              title={`${op.raw}: ${op.description}`}
+                            >
+                              {op.label}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between gap-2 min-w-0">
+                            <span className="text-slate-500 dark:text-slate-400 shrink-0">Couverture</span>
+                            <span
+                              className={`px-2 py-0.5 rounded-md border text-xs font-medium truncate ${cov.badgeClass}`}
+                              title={`${cov.raw}: ${cov.description}`}
+                            >
+                              {cov.label}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Collapsible Disclaimer & Notes */}
                 <div>
                   <button
                     type="button"
                     onClick={() => setShowCoverageNotes(prev => !prev)}
                     aria-expanded={showCoverageNotes}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[9px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
                   >
-                    <span>{showCoverageNotes ? 'Masquer Disclaimer & Notes' : 'Voir Disclaimer & Notes de couverture'}</span>
-                    {showCoverageNotes ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                    <span>{showCoverageNotes ? 'Masquer la notice et le disclaimer' : 'Voir la notice complète & disclaimer'}</span>
+                    {showCoverageNotes ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                   </button>
 
                   {showCoverageNotes && (
-                    <div className="mt-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 text-[9px]">
-                      {coverageNotice.disclaimer && (
-                        <p className="font-mono text-slate-600 dark:text-slate-300 leading-relaxed">
-                          <strong className="uppercase font-sans font-black text-slate-800 dark:text-slate-200 mr-1">Disclaimer :</strong>
+                    <div className="mt-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+                      {coverageNotice?.disclaimer && (
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                          <strong className="font-semibold text-slate-800 dark:text-slate-200 mr-1">Disclaimer TITANIUM :</strong>
                           {coverageNotice.disclaimer}
                         </p>
                       )}
-                      {coverageEntries.filter(([, mVal]) => mVal.notes).map(([mKey, mVal]) => (
-                        <div key={`note-${mKey}`} className="pt-1.5 border-t border-slate-200/70 dark:border-slate-800/70">
-                          <span className="font-mono font-bold uppercase text-slate-700 dark:text-slate-300 mr-1.5">{mKey}:</span>
+                      {coverageEntries.filter(([, mVal]) => mVal?.notes).map(([mKey, mVal]) => (
+                        <div key={`note-${mKey}`} className="pt-2 border-t border-slate-200/70 dark:border-slate-800/70 text-xs">
+                          <span className="font-mono font-bold text-slate-700 dark:text-slate-300 mr-1.5">{mKey} :</span>
                           <span className="text-slate-600 dark:text-slate-400 break-words">{mVal.notes}</span>
                         </div>
                       ))}
                     </div>
                   )}
                 </div>
+
+                {/* Direct Link to Tactical tab */}
+                {onNavigateTab && (
+                  <button
+                    type="button"
+                    onClick={() => onNavigateTab('tactical')}
+                    className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 text-xs font-semibold shadow-sm transition-all mt-1"
+                  >
+                    <span>Consulter les projections volumétriques dans Tactique</span>
+                    <ArrowRight size={14} />
+                  </button>
+                )}
               </div>
             ) : (
-              <div className="p-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-[10px] text-slate-400 italic">
-                Aucune notice de couverture statistique (Market_Coverage_Notice) fournie pour ce match.
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl flex flex-col gap-2.5">
+                <span className="text-xs text-slate-500 dark:text-slate-400 italic">
+                  Aucune notice de couverture statistique spécifique fournie pour ce match. Les projections volumétriques restent consultables dans l&apos;onglet Tactique.
+                </span>
+                {onNavigateTab && (
+                  <button
+                    type="button"
+                    onClick={() => onNavigateTab('tactical')}
+                    className="self-start flex items-center gap-1.5 text-xs font-semibold text-primary-600 dark:text-primary-400 hover:underline"
+                  >
+                    <span>Ouvrir l&apos;onglet Tactique</span>
+                    <ArrowRight size={12} />
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -237,7 +300,7 @@ export default function TabRiskContext({ match }) {
       <div className="flex flex-col gap-6">
         <Card title="Investment Signals (Régime de Risque)" titleIcon={<Activity size={16} />}>
           <div className="flex flex-col gap-4 mt-1">
-            <p className="text-[10px] text-slate-400 italic">
+            <p className="text-xs text-slate-500 dark:text-slate-400 italic">
               Signaux qualifiant le régime de risque et la régularité du match. Ne constituent pas en eux-mêmes des ordres de prise de position sans ticket aval validé.
             </p>
 
@@ -251,7 +314,7 @@ export default function TabRiskContext({ match }) {
                       : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800/80 opacity-60'
                   }`}
                 >
-                  <span className={`text-[9px] uppercase font-bold tracking-tight ${value ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500'}`}>
+                  <span className={`text-xs uppercase font-bold tracking-tight ${value ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}>
                     {key.replace('IS_', '').replace(/_/g, ' ')}
                   </span>
                   {value ? (

@@ -18,6 +18,76 @@ import {
   ChevronUp
 } from 'lucide-react';
 
+/**
+ * Présentation typographique et sémantique du statut opérationnel TITANIUM.
+ * Valeurs sources exactes préservées pour les détails techniques.
+ */
+export const getOperationalStatusMeta = (status) => {
+  switch (status) {
+    case 'ACTIONABLE_PRODUCTION':
+      return {
+        label: 'Production',
+        raw: 'ACTIONABLE_PRODUCTION',
+        description: 'Calcul algorithmique validé en production',
+        badgeClass: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/25',
+        isActionable: true,
+      };
+    case 'INFORMATIONAL_ONLY':
+      return {
+        label: 'Informatif',
+        raw: 'INFORMATIONAL_ONLY',
+        description: 'Calcul indicatif réservé à l’analyse (non qualifié pour l’aval)',
+        badgeClass: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/25',
+        isActionable: false,
+      };
+    default:
+      return {
+        label: status || 'Non spécifié',
+        raw: status || 'UNSPECIFIED',
+        description: 'Statut opérationnel non spécifié',
+        badgeClass: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700',
+        isActionable: null,
+      };
+  }
+};
+
+/**
+ * Présentation typographique et sémantique de la couverture bookmaker présumée TITANIUM.
+ * Valeurs sources exactes préservées pour les détails techniques.
+ */
+export const getBookmakerCoverageMeta = (coverage) => {
+  switch (coverage) {
+    case 'PRESUMED_AVAILABLE':
+      return {
+        label: 'Présumée disponible',
+        raw: 'PRESUMED_AVAILABLE',
+        description: 'Offre bookmaker standard présumée (sans vérification temps réel)',
+        badgeClass: 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/25',
+      };
+    case 'LIMITED_OR_UNKNOWN':
+      return {
+        label: 'Limitée / Inconnue',
+        raw: 'LIMITED_OR_UNKNOWN',
+        description: 'Disponibilité restreinte ou variable selon les opérateurs',
+        badgeClass: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/25',
+      };
+    case 'SPECIALIST_ONLY':
+      return {
+        label: 'Spécialistes uniquement',
+        raw: 'SPECIALIST_ONLY',
+        description: 'Disponible uniquement chez certains bookmakers spécialisés',
+        badgeClass: 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/25',
+      };
+    default:
+      return {
+        label: coverage || 'Non renseignée',
+        raw: coverage || 'UNSPECIFIED',
+        description: 'Couverture bookmaker non renseignée',
+        badgeClass: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700',
+      };
+  }
+};
+
 export default function TabTactical({ match, onNavigateTab }) {
   const [showCoverageDetails, setShowCoverageDetails] = useState(false);
   const [expandedCardNotes, setExpandedCardNotes] = useState({});
@@ -80,49 +150,31 @@ export default function TabTactical({ match, onNavigateTab }) {
     },
   ];
 
-  const getOperationalStatusStyle = (status) => {
-    if (status === 'ACTIONABLE_PRODUCTION') {
-      return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30';
-    }
-    if (status === 'INFORMATIONAL_ONLY') {
-      return 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30';
-    }
-    return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30';
-  };
-
-  const getBookmakerCoverageStyle = (coverage) => {
-    if (coverage === 'PRESUMED_AVAILABLE') {
-      return 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/30';
-    }
-    if (coverage === 'LIMITED_OR_UNKNOWN') {
-      return 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30';
-    }
-    if (coverage === 'SPECIALIST_ONLY') {
-      return 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30';
-    }
-    return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30';
-  };
-
   const coverageSummary = React.useMemo(() => {
     if (!coverageMarkets) return null;
     const entries = Object.entries(coverageMarkets).filter(([, v]) => v && typeof v === 'object');
     if (entries.length === 0) return null;
 
-    const statusCounts = {};
-    const coverageCounts = {};
+    let actionableCount = 0;
+    let informationalCount = 0;
     const notesList = [];
 
     entries.forEach(([mKey, mVal]) => {
-      const st = mVal.operational_status || 'UNSPECIFIED';
-      const cov = mVal.bookmaker_coverage || 'UNSPECIFIED';
-      statusCounts[st] = (statusCounts[st] || 0) + 1;
-      coverageCounts[cov] = (coverageCounts[cov] || 0) + 1;
+      const op = getOperationalStatusMeta(mVal.operational_status);
+      const cov = getBookmakerCoverageMeta(mVal.bookmaker_coverage);
+      if (op.isActionable === true) actionableCount++;
+      else if (op.isActionable === false) informationalCount++;
       if (mVal.notes) {
-        notesList.push({ marketKey: mKey, note: mVal.notes, status: st, coverage: cov });
+        notesList.push({ marketKey: mKey, note: mVal.notes, opMeta: op, covMeta: cov });
       }
     });
 
-    return { statusCounts, coverageCounts, notesList, total: entries.length };
+    return {
+      total: entries.length,
+      actionableCount,
+      informationalCount,
+      notesList,
+    };
   }, [coverageMarkets]);
 
   const toggleCardNote = (key) => {
@@ -154,10 +206,10 @@ export default function TabTactical({ match, onNavigateTab }) {
           <div className="flex items-center gap-2.5">
             <AlertTriangle className="text-rose-600 dark:text-rose-400 shrink-0" size={18} />
             <div className="flex flex-col">
-              <span className="text-[10px] font-black uppercase tracking-wider text-rose-700 dark:text-rose-300">
+              <span className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300">
                 Vigilance opérationnelle active
               </span>
-              <span className="text-[9px] text-slate-600 dark:text-slate-400">
+              <span className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 {isKillSwitchActive && 'Kill-Switch actif (probabilités 1X2 & Buts neutralisées). '}
                 {blockedMarkets.length > 0 && `Marchés bloqués : ${blockedMarkets.join(', ')}.`}
               </span>
@@ -166,9 +218,10 @@ export default function TabTactical({ match, onNavigateTab }) {
           {onNavigateTab && (
             <button
               onClick={() => onNavigateTab('risk')}
-              className="text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-700 dark:text-rose-300 hover:bg-rose-500/30 transition-colors flex items-center gap-1 shrink-0"
+              className="text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg bg-rose-500/20 text-rose-700 dark:text-rose-300 hover:bg-rose-500/30 transition-colors flex items-center gap-1.5 shrink-0"
             >
-              Détails du risque <ArrowRight size={10} />
+              <span>Détails du risque</span>
+              <ArrowRight size={12} />
             </button>
           )}
         </div>
@@ -182,56 +235,55 @@ export default function TabTactical({ match, onNavigateTab }) {
               <Crosshair size={18} />
             </div>
             <div>
-              <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                 Statistical Market Overview
               </h3>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400">
+              <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 mt-0.5">
                 Projections statistiques directes (Corners, Tirs, Cadrés, Touches) et références de ligue.
               </p>
             </div>
           </div>
-          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+          <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
             Priorité décisionnelle
           </span>
         </div>
 
         {/* Compact Market Coverage Notice Summary Banner */}
         {coverageNotice && (
-          <div className="mb-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/80 p-3 transition-colors">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <div className="mb-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/70 p-3.5 sm:p-4 transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex flex-col gap-1.5 min-w-0">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <Info size={14} className="text-blue-600 dark:text-blue-400 shrink-0" />
-                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
-                    Market Coverage Notice
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="p-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+                    <Info size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                    Couverture des marchés statistiques
                   </span>
                   {coverageNotice.notice_version && (
-                    <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                    <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
                       v{coverageNotice.notice_version}
                     </span>
                   )}
                 </div>
 
                 {coverageSummary && (
-                  <div className="flex flex-wrap items-center gap-1.5 text-[9px] font-mono">
-                    <span className="text-slate-400 uppercase font-sans font-bold text-[8px]">Status:</span>
-                    {Object.entries(coverageSummary.statusCounts).map(([st, count]) => (
-                      <span
-                        key={`st-${st}`}
-                        className={`px-1.5 py-0.5 rounded border font-bold break-all ${getOperationalStatusStyle(st)}`}
-                      >
-                        {st}: {count}
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    {coverageSummary.actionableCount > 0 && (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/25 font-medium">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        {coverageSummary.actionableCount} en Production
                       </span>
-                    ))}
-                    <span className="text-slate-400 uppercase font-sans font-bold text-[8px] ml-0.5">Coverage:</span>
-                    {Object.entries(coverageSummary.coverageCounts).map(([cov, count]) => (
-                      <span
-                        key={`cov-${cov}`}
-                        className={`px-1.5 py-0.5 rounded border font-bold break-all ${getBookmakerCoverageStyle(cov)}`}
-                      >
-                        {cov}: {count}
+                    )}
+                    {coverageSummary.informationalCount > 0 && (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/25 font-medium">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                        {coverageSummary.informationalCount} Informatif{coverageSummary.informationalCount > 1 ? 's' : ''}
                       </span>
-                    ))}
+                    )}
+                    <span className="text-slate-500 dark:text-slate-400 text-xs hidden md:inline">
+                      • Disponibilité bookmaker estimée pour aide à la décision
+                    </span>
                   </div>
                 )}
               </div>
@@ -240,48 +292,61 @@ export default function TabTactical({ match, onNavigateTab }) {
                 type="button"
                 onClick={() => setShowCoverageDetails(prev => !prev)}
                 aria-expanded={showCoverageDetails}
-                className="self-start sm:self-center shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="self-start sm:self-center shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-2xs"
               >
-                <span>{showCoverageDetails ? 'Masquer détails' : 'Détails & Disclaimer'}</span>
-                {showCoverageDetails ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                <span>{showCoverageDetails ? 'Masquer les détails' : 'Détails & Avertissement'}</span>
+                {showCoverageDetails ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               </button>
             </div>
 
             {showCoverageDetails && (
-              <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2.5 text-[10px]">
+              <div className="mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-800 space-y-3 text-xs sm:text-[13px]">
                 {coverageNotice.disclaimer && (
-                  <p className="text-slate-600 dark:text-slate-300 font-mono text-[9px] leading-relaxed bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
-                    <strong className="uppercase font-sans font-black text-slate-800 dark:text-slate-200 mr-1">Disclaimer TITANIUM :</strong>
-                    {coverageNotice.disclaimer}
-                  </p>
+                  <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                    <span className="font-semibold text-slate-900 dark:text-slate-100 block">
+                      Avertissement officiel TITANIUM :
+                    </span>
+                    <p className="font-sans text-slate-600 dark:text-slate-300">
+                      {coverageNotice.disclaimer}
+                    </p>
+                  </div>
                 )}
 
-                <p className="text-[9px] text-slate-500 dark:text-slate-400 italic leading-relaxed">
-                  Note sémantique : <code className="font-mono font-bold">ACTIONABLE_PRODUCTION</code> qualifie le statut opérationnel du modèle sur le marché statistique et ne constitue pas, à lui seul, une autorisation de pari. <code className="font-mono font-bold">PRESUMED_AVAILABLE</code> indique une disponibilité bookmaker présumée, sans vérification d&apos;offre ou de cote en temps réel.
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed italic bg-slate-100/70 dark:bg-slate-900/40 p-2.5 rounded-lg border border-slate-200/60 dark:border-slate-800/60">
+                  <strong className="not-italic font-semibold text-slate-700 dark:text-slate-300 mr-1">Rappel de portée :</strong>
+                  Le statut <code className="font-mono text-emerald-700 dark:text-emerald-400 font-medium">ACTIONABLE_PRODUCTION</code> atteste la maturité algorithmique du modèle statistique, mais ne constitue pas une autorisation de pari. La mention <code className="font-mono text-blue-700 dark:text-blue-400 font-medium">PRESUMED_AVAILABLE</code> indique une offre bookmaker courante présumée sans vérification de cote en temps réel.
                 </p>
 
                 {coverageSummary?.notesList?.length > 0 && (
-                  <div className="space-y-1.5">
-                    <span className="text-[8px] font-black uppercase tracking-wider text-slate-400 block">
-                      Notes spécifiques par marché statistique :
+                  <div className="space-y-2 pt-1">
+                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
+                      Notes de qualification par marché :
                     </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {coverageSummary.notesList.map(({ marketKey, note, status, coverage }) => (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {coverageSummary.notesList.map(({ marketKey, note, opMeta, covMeta }) => (
                         <div
                           key={marketKey}
-                          className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col gap-1"
+                          className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col gap-1.5"
                         >
-                          <div className="flex flex-wrap items-center justify-between gap-1">
-                            <span className="font-mono font-bold uppercase text-[9px] text-slate-800 dark:text-slate-200">
+                          <div className="flex flex-wrap items-center justify-between gap-1.5">
+                            <span className="font-semibold text-xs text-slate-900 dark:text-slate-100 capitalize">
                               {marketKey}
                             </span>
-                            <span className="text-[8px] font-mono text-slate-400">
-                              {status} / {coverage}
-                            </span>
+                            <div className="flex items-center gap-1">
+                              <span className={`text-[11px] font-medium px-1.5 py-0.5 rounded border ${opMeta.badgeClass}`}>
+                                {opMeta.label}
+                              </span>
+                              <span className={`text-[11px] font-medium px-1.5 py-0.5 rounded border ${covMeta.badgeClass}`}>
+                                {covMeta.label}
+                              </span>
+                            </div>
                           </div>
-                          <p className="text-[9px] text-slate-600 dark:text-slate-400 leading-snug break-words">
+                          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                             {note}
                           </p>
+                          <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500">
+                            ID: {opMeta.raw} • {covMeta.raw}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -295,12 +360,20 @@ export default function TabTactical({ match, onNavigateTab }) {
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {statisticalMarkets.map(({ key, label, refKey, refType, propKey, lambdaKey }) => {
-            const refVal = anchors[refKey];
-            const prob = props[propKey];
-            const lambdaVal = props[lambdaKey];
-            const mNotice = coverageMarkets?.[key] && typeof coverageMarkets[key] === 'object'
-              ? coverageMarkets[key]
-              : null;
+            const refVal = anchors[refKey] !== undefined ? anchors[refKey] : diag[refKey];
+            const prob = props[propKey] !== undefined ? props[propKey] : probs[propKey];
+            const lambdaVal = props[lambdaKey] !== undefined ? props[lambdaKey] : probs[lambdaKey];
+            const mNotice = (() => {
+              if (!coverageMarkets || typeof coverageMarkets !== 'object') return null;
+              if (coverageMarkets[key] && typeof coverageMarkets[key] === 'object') return coverageMarkets[key];
+              if (coverageMarkets[label] && typeof coverageMarkets[label] === 'object') return coverageMarkets[label];
+              const lowerKey = key.toLowerCase();
+              const foundKey = Object.keys(coverageMarkets).find(k => {
+                const lk = k.toLowerCase();
+                return lk === lowerKey || (lowerKey === 'sot' && (lk === 'shots_on_target' || lk === 'shots on target'));
+              });
+              return foundKey && typeof coverageMarkets[foundKey] === 'object' ? coverageMarkets[foundKey] : null;
+            })();
             const isGenerated = lambdaVal !== undefined && lambdaVal !== null;
             const isNoteExpanded = !!expandedCardNotes[key];
 
@@ -311,10 +384,10 @@ export default function TabTactical({ match, onNavigateTab }) {
               >
                 <div>
                   <div className="flex items-center justify-between gap-1.5 pb-2 border-b border-slate-200 dark:border-slate-800/60">
-                    <span className="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 truncate">
+                    <span className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate">
                       {label}
                     </span>
-                    <Badge variant="default" className="text-[8px] px-1.5 py-0 font-mono shrink-0">
+                    <Badge variant="default" className="text-xs px-2 py-0.5 font-mono shrink-0">
                       {refType}
                     </Badge>
                   </div>
@@ -322,21 +395,21 @@ export default function TabTactical({ match, onNavigateTab }) {
                   {isGenerated ? (
                     <div className="my-3 space-y-2">
                       <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-[9px] text-slate-500 uppercase tracking-widest">Total Attendu (λ)</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Total Attendu (λ)</span>
                         <span className="font-mono text-2xl font-bold text-slate-900 dark:text-slate-100">
                           {lambdaVal.toFixed(2)}
                         </span>
                       </div>
 
                       <div className="flex items-center justify-between text-xs font-mono gap-2">
-                        <span className="text-[9px] text-slate-500 uppercase">{refType}:</span>
+                        <span className="text-slate-500 dark:text-slate-400 font-sans font-medium">{refType}:</span>
                         <span className="text-slate-600 dark:text-slate-400 font-bold">
                           {refVal !== undefined ? refVal.toFixed(2) : '-'}
                         </span>
                       </div>
 
                       <div className="pt-2 border-t border-slate-200 dark:border-slate-800/40 flex items-center justify-between gap-2">
-                        <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold">Prob &gt; Réf ligue</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Prob &gt; Réf ligue</span>
                         <span className={`font-mono text-sm font-bold ${getPropTextColor(prob || 0)}`}>
                           {prob !== undefined ? `${(prob * 100).toFixed(1)}%` : '-'}
                         </span>
@@ -344,63 +417,68 @@ export default function TabTactical({ match, onNavigateTab }) {
                     </div>
                   ) : (
                     <div className="my-6 py-4 px-2 text-center bg-slate-100/50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-800 rounded-lg">
-                      <p className="text-[10px] text-slate-400 italic">
+                      <p className="text-xs text-slate-400 italic">
                         Projection non générée dans cette session
                       </p>
                     </div>
                   )}
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-slate-200/70 dark:border-slate-800/70">
-                  {mNotice && (
-                    <div className="space-y-1.5">
-                      <div className="flex flex-col gap-1">
-                        <div className="flex items-center justify-between gap-1.5 min-w-0">
-                          <span className="text-[8px] font-bold uppercase tracking-wider text-slate-400 shrink-0">
-                            Status
-                          </span>
-                          <span
-                            className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border truncate max-w-full ${getOperationalStatusStyle(mNotice.operational_status)}`}
-                            title={mNotice.operational_status || 'UNSPECIFIED'}
-                          >
-                            {mNotice.operational_status || 'UNSPECIFIED'}
-                          </span>
+                <div className="space-y-2 pt-2.5 border-t border-slate-200/80 dark:border-slate-800/80">
+                  {mNotice && (() => {
+                    const opMeta = getOperationalStatusMeta(mNotice.operational_status);
+                    const covMeta = getBookmakerCoverageMeta(mNotice.bookmaker_coverage);
+
+                    return (
+                      <div className="space-y-2">
+                        <div className="flex flex-col gap-1.5 text-xs">
+                          <div className="flex items-center justify-between gap-1.5 min-w-0">
+                            <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0">
+                              Statut
+                            </span>
+                            <span
+                              className={`text-xs font-medium px-2 py-0.5 rounded-md border text-right ${opMeta.badgeClass}`}
+                              title={`Statut technique : ${opMeta.raw} (${opMeta.description})`}
+                            >
+                              {opMeta.label}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between gap-1.5 min-w-0">
+                            <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0">
+                              Couverture
+                            </span>
+                            <span
+                              className={`text-xs font-medium px-2 py-0.5 rounded-md border text-right ${covMeta.badgeClass}`}
+                              title={`Couverture technique : ${covMeta.raw} (${covMeta.description})`}
+                            >
+                              {covMeta.label}
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex items-center justify-between gap-1.5 min-w-0">
-                          <span className="text-[8px] font-bold uppercase tracking-wider text-slate-400 shrink-0">
-                            Coverage
-                          </span>
-                          <span
-                            className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border truncate max-w-full ${getBookmakerCoverageStyle(mNotice.bookmaker_coverage)}`}
-                            title={mNotice.bookmaker_coverage || 'UNSPECIFIED'}
-                          >
-                            {mNotice.bookmaker_coverage || 'UNSPECIFIED'}
-                          </span>
-                        </div>
+
+                        {mNotice.notes && (
+                          <div className="pt-0.5">
+                            <button
+                              type="button"
+                              onClick={() => toggleCardNote(key)}
+                              aria-expanded={isNoteExpanded}
+                              className="w-full flex items-center justify-between text-xs font-medium text-amber-700 dark:text-amber-400 hover:underline py-0.5"
+                            >
+                              <span>Note de marché</span>
+                              {isNoteExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                            </button>
+                            {isNoteExpanded && (
+                              <p className="mt-1.5 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                                {mNotice.notes}
+                              </p>
+                            )}
+                          </div>
+                        )}
                       </div>
+                    );
+                  })()}
 
-                      {mNotice.notes && (
-                        <div>
-                          <button
-                            type="button"
-                            onClick={() => toggleCardNote(key)}
-                            aria-expanded={isNoteExpanded}
-                            className="w-full flex items-center justify-between text-[8px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 hover:underline py-0.5"
-                          >
-                            <span>Note de couverture</span>
-                            {isNoteExpanded ? <ChevronUp size={10} /> : <ChevronDown size={10} />}
-                          </button>
-                          {isNoteExpanded && (
-                            <p className="mt-1 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[9px] text-slate-600 dark:text-slate-400 leading-snug break-words">
-                              {mNotice.notes}
-                            </p>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="text-[8px] text-slate-400 italic">
+                  <div className="text-xs text-slate-400 italic">
                     {key === 'throws' ? 'Moyenne arithmétique de ligue' : 'Médiane empirique de ligue'}
                   </div>
                 </div>
@@ -423,26 +501,26 @@ export default function TabTactical({ match, onNavigateTab }) {
 
               {/* 1X2 Mini Bar */}
               <div className="bg-slate-50 dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
-                <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-500">
                   <span>1X2 Probabilités</span>
-                  {isKillSwitchActive && <span className="text-rose-500 font-mono text-[8px]">KILL-SWITCH</span>}
+                  {isKillSwitchActive && <span className="text-rose-500 font-mono text-xs">KILL-SWITCH</span>}
                 </div>
                 {isKillSwitchActive ? (
-                  <div className="p-2 text-center text-rose-500 text-[10px] font-mono bg-rose-500/5 rounded border border-rose-500/20">
+                  <div className="p-2 text-center text-rose-500 text-xs font-mono bg-rose-500/5 rounded border border-rose-500/20">
                     Probabilités neutralisées par le Kill-Switch
                   </div>
                 ) : (
                   <div className="grid grid-cols-3 gap-2 text-center font-mono">
                     <div className="bg-blue-500/10 p-2 rounded-lg border border-blue-500/20">
-                      <div className="text-[8px] text-blue-600 dark:text-blue-400 font-bold uppercase">Home</div>
+                      <div className="text-xs text-blue-600 dark:text-blue-400 font-bold uppercase">Home</div>
                       <div className="text-sm font-bold text-blue-700 dark:text-blue-300">{((probs.PROB_1 || 0) * 100).toFixed(0)}%</div>
                     </div>
                     <div className="bg-slate-100 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
-                      <div className="text-[8px] text-slate-500 font-bold uppercase">Draw</div>
+                      <div className="text-xs text-slate-500 font-bold uppercase">Draw</div>
                       <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{((probs.PROB_X || 0) * 100).toFixed(0)}%</div>
                     </div>
                     <div className="bg-rose-500/10 p-2 rounded-lg border border-rose-500/20">
-                      <div className="text-[8px] text-rose-600 dark:text-rose-400 font-bold uppercase">Away</div>
+                      <div className="text-xs text-rose-600 dark:text-rose-400 font-bold uppercase">Away</div>
                       <div className="text-sm font-bold text-rose-700 dark:text-rose-300">{((probs.PROB_2 || 0) * 100).toFixed(0)}%</div>
                     </div>
                   </div>
@@ -451,24 +529,24 @@ export default function TabTactical({ match, onNavigateTab }) {
 
               {/* Goals Snapshot */}
               <div className="bg-slate-50 dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-2.5">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
                   Buts & Intensité Modélisée
                 </span>
                 <div className="grid grid-cols-2 gap-2 text-xs font-mono">
                   <div className="flex justify-between items-center p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                    <span className="text-[9px] text-slate-500">Over 2.5:</span>
+                    <span className="text-xs text-slate-500">Over 2.5:</span>
                     <span className="font-bold text-slate-800 dark:text-slate-200">{((probs.PROB_O25 || 0) * 100).toFixed(1)}%</span>
                   </div>
                   <div className="flex justify-between items-center p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                    <span className="text-[9px] text-slate-500">BTTS:</span>
+                    <span className="text-xs text-slate-500">BTTS:</span>
                     <span className="font-bold text-slate-800 dark:text-slate-200">{((probs.PROB_BTTS || 0) * 100).toFixed(1)}%</span>
                   </div>
                   <div className="flex justify-between items-center p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                    <span className="text-[9px] text-slate-500">λ Home:</span>
+                    <span className="text-xs text-slate-500">λ Home:</span>
                     <span className="font-bold text-blue-600 dark:text-blue-400">{diag.lambda_home?.toFixed(2) || '-'}</span>
                   </div>
                   <div className="flex justify-between items-center p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                    <span className="text-[9px] text-slate-500">λ Away:</span>
+                    <span className="text-xs text-slate-500">λ Away:</span>
                     <span className="font-bold text-rose-600 dark:text-rose-400">{diag.lambda_away?.toFixed(2) || '-'}</span>
                   </div>
                 </div>
@@ -477,9 +555,10 @@ export default function TabTactical({ match, onNavigateTab }) {
               {onNavigateTab && (
                 <button
                   onClick={() => onNavigateTab('core')}
-                  className="w-full py-2.5 px-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black font-black uppercase tracking-wider text-[10px] flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                  className="w-full py-2.5 px-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
                 >
-                  Explorer le Core Market complet <ArrowRight size={12} />
+                  <span>Explorer le Core Market complet</span>
+                  <ArrowRight size={14} />
                 </button>
               )}
             </div>
@@ -567,8 +646,8 @@ export default function TabTactical({ match, onNavigateTab }) {
                   <div className="flex items-center gap-2">
                     <ShieldAlert className="text-rose-600 dark:text-rose-400 shrink-0" size={16} />
                     <div className="flex flex-col">
-                      <span className="text-[9px] font-black text-rose-600 dark:text-rose-400 uppercase tracking-widest leading-none">FALSE FAVORITE ALERT</span>
-                      <span className="text-[8px] text-rose-500/80">Favori algorithmique vulnérable</span>
+                      <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider leading-none">FALSE FAVORITE ALERT</span>
+                      <span className="text-xs text-rose-500/80">Favori algorithmique vulnérable</span>
                     </div>
                   </div>
                   <span className="text-xs font-mono font-bold text-rose-600 dark:text-rose-400">
@@ -580,8 +659,8 @@ export default function TabTactical({ match, onNavigateTab }) {
               {/* Match Openness Index */}
               <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3.5 rounded-xl flex items-center justify-between shadow-inner">
                 <div className="flex flex-col">
-                  <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Match Openness Index</span>
-                  <span className="text-[8px] text-slate-400">Degré d'ouverture offensive du match</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Match Openness Index</span>
+                  <span className="text-xs text-slate-400">Degré d'ouverture offensive du match</span>
                 </div>
                 <span className="font-mono text-xl font-bold text-slate-800 dark:text-slate-200">
                   {tactical.match_openness_index?.toFixed(2) || 'N/A'}
@@ -599,7 +678,7 @@ export default function TabTactical({ match, onNavigateTab }) {
           <div className="overflow-x-auto">
             <table className="w-full text-xs font-mono text-left">
               <thead>
-                <tr className="border-b border-slate-200 dark:border-slate-800 text-[9px] text-slate-400 uppercase tracking-widest">
+                <tr className="border-b border-slate-200 dark:border-slate-800 text-xs text-slate-400 uppercase tracking-wider">
                   <th className="py-2 px-3">Métrique</th>
                   <th className="py-2 px-3">Nature du repère</th>
                   <th className="py-2 px-3 text-right">Valeur Ligue</th>
@@ -609,9 +688,9 @@ export default function TabTactical({ match, onNavigateTab }) {
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                 {statisticalMarkets.map(({ key, label, refKey, refType, propKey, lambdaKey }) => {
-                  const refVal = anchors[refKey];
-                  const prob = props[propKey];
-                  const lambdaVal = props[lambdaKey];
+                  const refVal = anchors[refKey] !== undefined ? anchors[refKey] : diag[refKey];
+                  const prob = props[propKey] !== undefined ? props[propKey] : probs[propKey];
+                  const lambdaVal = props[lambdaKey] !== undefined ? props[lambdaKey] : probs[lambdaKey];
                   const isGen = lambdaVal !== undefined && lambdaVal !== null;
 
                   return (
@@ -619,14 +698,14 @@ export default function TabTactical({ match, onNavigateTab }) {
                       <td className="py-2.5 px-3 font-sans font-bold text-slate-700 dark:text-slate-300 uppercase text-xs">
                         {label}
                       </td>
-                      <td className="py-2.5 px-3 font-sans text-slate-500 text-[10px]">
+                      <td className="py-2.5 px-3 font-sans text-slate-500 text-xs">
                         {refType}
                       </td>
                       <td className="py-2.5 px-3 text-right text-slate-500">
                         {refVal !== undefined ? refVal.toFixed(2) : '-'}
                       </td>
                       <td className="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-slate-100">
-                        {isGen ? lambdaVal.toFixed(2) : <span className="text-slate-400 italic text-[10px]">Non générée</span>}
+                        {isGen ? lambdaVal.toFixed(2) : <span className="text-slate-400 italic text-xs">Non générée</span>}
                       </td>
                       <td className={`py-2.5 px-3 text-right font-bold ${prob !== undefined ? getPropTextColor(prob) : 'text-slate-400'}`}>
                         {prob !== undefined ? `${(prob * 100).toFixed(1)}%` : '-'}
@@ -637,7 +716,7 @@ export default function TabTactical({ match, onNavigateTab }) {
               </tbody>
             </table>
           </div>
-          <p className="text-[9px] text-slate-400 italic pt-2 border-t border-slate-100 dark:border-slate-800">
+          <p className="text-xs text-slate-400 italic pt-2 border-t border-slate-100 dark:border-slate-800">
             * Indicateurs statistiques de référence algorithmique (moyennes et médianes de ligue). Ne constituent pas des lignes ou cotes bookmaker.
           </p>
         </div>

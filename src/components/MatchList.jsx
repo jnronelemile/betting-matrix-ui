@@ -13,8 +13,16 @@ const formatTimeAMPM = (timeStr) => {
 };
 
 /**
- * Détection déterministe de la fenêtre de match estimée (0 à 120 minutes après coup d'envoi).
+ * Convention d'affichage : fenêtre conventionnelle de match LIVE estimé (0 à 115 minutes après coup d'envoi).
+ * Note : Le frontend ne disposant pas du statut officiel du match en direct,
+ * cette fenêtre est un indicateur visuel conventionnel ("LIVE estimé") et non une attestation d'état réel.
+ */
+export const ESTIMATED_LIVE_WINDOW_MINUTES = 115;
+
+/**
+ * Détection déterministe de la fenêtre de match LIVE estimé [0 à 115 minutes après coup d'envoi].
  * Privilégie kickoff_utc avec comparaison en millisecondes UTC pour immunité aux fuseaux horaires.
+ * Fallback déterministe sur date et hours locales en l'absence de kickoff_utc (ambiguïté de fuseau possible).
  */
 export const isMatchLive = (match, nowMs = Date.now()) => {
   if (!match) return false;
@@ -24,18 +32,22 @@ export const isMatchLive = (match, nowMs = Date.now()) => {
     const kickoffMs = new Date(match.kickoff_utc).getTime();
     if (!isNaN(kickoffMs)) {
       const diffMinutes = (nowMs - kickoffMs) / 60000;
-      return diffMinutes >= 0 && diffMinutes <= 120;
+      return diffMinutes >= 0 && diffMinutes <= ESTIMATED_LIVE_WINDOW_MINUTES;
     }
   }
 
   // 2. Fallback déterministe sur date et hours locales
-  if (match.date && match.hours && match.date !== 'Date Inconnue' && match.date !== 'Unknown Date') {
-    const [year, month, day] = match.date.split('-').map(Number);
-    const [h, m] = match.hours.split(':').map(Number);
+  // Note de fuseau : date + hours sont interprétées dans le fuseau du navigateur en fallback (ambiguïté potentielle)
+  const dateVal = match.date || match.Date;
+  const hoursVal = match.hours || match.Hours;
+  if (dateVal && hoursVal && dateVal !== 'Date Inconnue' && dateVal !== 'Unknown Date') {
+    const datePart = String(dateVal).split('T')[0];
+    const [year, month, day] = datePart.split('-').map(Number);
+    const [h, m] = String(hoursVal).split(':').map(Number);
     if (!isNaN(year) && !isNaN(month) && !isNaN(day) && !isNaN(h) && !isNaN(m)) {
       const matchTimeLocal = new Date(year, month - 1, day, h, m).getTime();
       const diffMinutes = (nowMs - matchTimeLocal) / 60000;
-      return diffMinutes >= 0 && diffMinutes <= 120;
+      return diffMinutes >= 0 && diffMinutes <= ESTIMATED_LIVE_WINDOW_MINUTES;
     }
   }
 
@@ -106,7 +118,7 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
           {match.hours && (
             <div className="flex items-center gap-1 font-mono font-bold text-[10px] text-blue-600 dark:text-blue-400 bg-blue-50/80 dark:bg-blue-950/40 px-1.5 py-0.5 rounded border border-blue-200/50 dark:border-blue-800/50">
               {isMatchLive(match, currentTime) && (
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title="Fenêtre de match (LIVE estimé)" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title={`Fenêtre de match conventionnelle (LIVE estimé [0–${ESTIMATED_LIVE_WINDOW_MINUTES} min])`} />
               )}
               <span>{formatTimeAMPM(match.hours)}</span>
             </div>
@@ -184,7 +196,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
     return () => clearInterval(timer);
   }, []);
 
-  // Décompte des matchs dans la fenêtre estimée LIVE [0 à 120 min après coup d'envoi]
+  // Décompte des matchs dans la fenêtre conventionnelle LIVE estimé [0 à 115 min après coup d'envoi]
   const liveMatchesCount = useMemo(() => {
     return matches.filter(m => isMatchLive(m, currentTime)).length;
   }, [matches, currentTime]);
@@ -262,7 +274,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
               ? 'bg-rose-500/15 border-rose-500/40 text-rose-600 dark:text-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.25)] ring-1 ring-rose-500/20'
               : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 shadow-2xs'
           }`}
-          title="Afficher uniquement les matchs estimés en cours (fenêtre 0 à 120 min après coup d'envoi UTC)"
+          title={`Afficher uniquement les matchs estimés en cours (fenêtre conventionnelle 0 à ${ESTIMATED_LIVE_WINDOW_MINUTES} min après coup d'envoi UTC)`}
         >
           <Radio size={13} className={showLiveOnly ? 'animate-pulse text-rose-500' : 'text-slate-400'} />
           <span>LIVE estimé</span>
@@ -318,7 +330,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
             Aucun match en cours (LIVE estimé)
           </span>
           <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xs">
-            Aucune rencontre dans la fenêtre estimée [0–120 min après coup d'envoi].
+            Aucune rencontre dans la fenêtre conventionnelle [0–{ESTIMATED_LIVE_WINDOW_MINUTES} min après coup d'envoi].
           </span>
           <button
             type="button"
