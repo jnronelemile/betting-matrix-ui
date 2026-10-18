@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { getTeamInfo } from '../../utils';
 import { getTeamDisplayName } from '../../utils/teamDisplayNames';
 import {
@@ -27,6 +27,7 @@ import {
 } from '../../utils/ticketFilters';
 import { TicketFilterDrawer } from '../filters/TicketFilterDrawer';
 import { getLeagueFlag } from '../../utils/titaniumLoader';
+import { isMatchLive } from '../MatchList';
 import { Badge } from '../ui/Badge';
 import {
   Trophy,
@@ -55,7 +56,8 @@ import {
   Sparkles,
   X,
   Target,
-  AlertCircle
+  AlertCircle,
+  Radio
 } from 'lucide-react';
 
 const INITIAL_VISIBLE_TICKETS = 30;
@@ -86,7 +88,30 @@ function resolveLegMatchDisplay(matchStr, leagueContext) {
   };
 }
 
-const TicketLeg = ({ leg, legIndex, onNavigate }) => {
+/**
+ * Détection déterministe de la fenêtre de match LIVE estimé pour une jambe.
+ * Réutilise fidèlement isMatchLive de MatchList.jsx [0 à 115 minutes, priorité kickoff_utc].
+ */
+export const isLegLive = (leg, currentNowMs) => {
+  if (!leg) return false;
+  const matchObj = leg.Heure && !leg.hours && !leg.Hours
+    ? { ...leg, hours: leg.Heure }
+    : leg;
+  return isMatchLive(matchObj, currentNowMs);
+};
+
+/**
+ * Détection LIVE estimé pour un ticket entier :
+ * - Single : son unique match satisfait isMatchLive.
+ * - Combiné : au moins une jambe satisfait isMatchLive.
+ * Évalue chaque ticket de façon unique (sans double comptage).
+ */
+export const isTicketLive = (ticket, currentNowMs) => {
+  if (!ticket || !Array.isArray(ticket.legs) || ticket.legs.length === 0) return false;
+  return ticket.legs.some(leg => isLegLive(leg, currentNowMs));
+};
+
+const TicketLeg = ({ leg, legIndex, onNavigate, nowMs }) => {
   const [expanded, setExpanded] = useState(false);
   const leagueCode = leg.League || 'ALL';
   const { displayHome, displayAway } = resolveLegMatchDisplay(leg.Match, leg.League);
@@ -95,6 +120,7 @@ const TicketLeg = ({ leg, legIndex, onNavigate }) => {
   const evMeta = formatScoreEvMetric(leg.Score_EV, 3);
   const kickoffMeta = formatKickoffExplicit(leg);
   const marketMeta = getMarketFamilyMeta(leg.family_name || leg.Type || leg.Marche);
+  const isLegCurrentlyLive = isLegLive(leg, nowMs);
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-300/80 dark:border-slate-800 flex flex-col hover:border-slate-400 dark:hover:border-slate-700 transition-all shadow-xs overflow-hidden">
@@ -120,6 +146,15 @@ const TicketLeg = ({ leg, legIndex, onNavigate }) => {
                 <span className="font-semibold text-slate-700 dark:text-slate-300">{getLeagueFlag(leg.League)} {leg.League || 'Ligue N/D'}</span>
                 <span aria-hidden="true">•</span>
                 <span className="font-mono text-slate-600 dark:text-slate-400" title={kickoffMeta.title || undefined}>{kickoffMeta.display}</span>
+                {isLegCurrentlyLive && (
+                  <span
+                    className="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono shrink-0"
+                    title="Match dans la fenêtre conventionnelle [0 à 115 min après coup d'envoi]"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    LIVE estimé
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -245,7 +280,7 @@ const TicketLeg = ({ leg, legIndex, onNavigate }) => {
   );
 };
 
-const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
+const TicketCard = ({ ticket, auditMode, onNavigateToMatch, nowMs }) => {
   const [showAllLegs, setShowAllLegs] = useState(false);
   const [showTechDetails, setShowTechDetails] = useState(false);
 
@@ -278,7 +313,7 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
   const scopeValue = ticket.scope_value || 'ALL';
 
   return (
-    <div className={`flex flex-col bg-white dark:bg-slate-900/90 rounded-2xl overflow-hidden border ${familyMeta.cardBorderClass} ${familyMeta.cardGlowClass} transition-all relative`}>
+    <div className={`flex flex-col bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border ${familyMeta.cardBorderClass} ${familyMeta.cardGlowClass} shadow-sm hover:shadow-md transition-all relative`}>
       {auditMode && (
         <div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur-md p-4 overflow-y-auto">
           <pre className="text-[11px] font-mono text-emerald-400 whitespace-pre-wrap break-all">
@@ -291,7 +326,7 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
       <div className="p-3.5 sm:p-4.5 border-b border-slate-100 dark:border-slate-800/80 flex flex-col gap-3">
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-col gap-1.5 min-w-0 flex-1">
-            {/* Human ID + Family Badge + Leg Count */}
+            {/* Human ID + Family Badge + Leg Count + Optional LIVE badge */}
             <div className="flex flex-wrap items-center gap-2">
               <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg font-mono text-xs sm:text-sm font-black tracking-tight border shadow-xs shrink-0 ${familyMeta.humanIdBadgeClass}`}>
                 <Hash size={13} />
@@ -304,6 +339,15 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
                 <Box size={12} className="text-emerald-500" />
                 {legCount} {legCount > 1 ? 'jambes' : 'jambe'}
               </span>
+              {isTicketLive(ticket, nowMs) && (
+                <span
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 font-mono shadow-2xs"
+                  title="Au moins une jambe de ce ticket est estimée en direct (fenêtre conventionnelle 0 à 115 min)"
+                >
+                  <Radio size={12} className="text-emerald-500 animate-pulse" />
+                  <span>LIVE estimé</span>
+                </span>
+              )}
             </div>
 
             {/* Scope & Canonical ID preview */}
@@ -377,7 +421,7 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
       </div>
 
       {/* 3. Ticket Legs List */}
-      <div className="p-3 sm:p-4 bg-slate-100/70 dark:bg-slate-950/80 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-col gap-2.5 flex-1">
+      <div className="p-3 sm:p-4 bg-slate-100/70 dark:bg-slate-950/80 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col gap-2.5 flex-1">
         <div className="flex items-center justify-between px-1">
           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             Composition du ticket ({legs.length} {legs.length > 1 ? 'jambes' : 'jambe'})
@@ -395,6 +439,7 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
             leg={leg}
             legIndex={lidx}
             onNavigate={onNavigateToMatch}
+            nowMs={nowMs}
           />
         ))}
 
@@ -462,14 +507,164 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
   );
 };
 
+const CompactStickyToolbar = ({
+  tabBarHeight,
+  isStickyVisible,
+  countDisplay,
+  quickPills,
+  searchQuery,
+  onSearchChange,
+  isSearchOpen,
+  setIsSearchOpen,
+  searchInputRef,
+  activeCriteriaCount,
+  onOpenDrawer
+}) => {
+  return (
+    <div
+      style={{ top: `${tabBarHeight}px` }}
+      className={`
+        sticky z-[15] hidden lg:block w-full pointer-events-none transition-all duration-200 ease-in-out
+        ${isStickyVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}
+      `}
+      aria-hidden={!isStickyVisible}
+    >
+      <div className="absolute top-2 left-0 right-0 pointer-events-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 shadow-lg rounded-2xl p-2.5 flex items-center justify-between gap-3">
+        {/* Quick Pills Strip */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 min-w-0 flex-1">
+          {quickPills.map(pill => (
+            <button
+              key={pill.id}
+              type="button"
+              onClick={pill.onClick}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all shrink-0 select-none ${
+                pill.active
+                  ? pill.isLive
+                    ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs'
+                    : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
+                  : pill.isLive
+                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 hover:border-emerald-500/50'
+                    : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+              }`}
+            >
+              {pill.isLive && <Radio size={11} className={pill.active ? 'text-white animate-pulse' : 'text-emerald-500'} />}
+              <span>{pill.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Right Controls: Real Count Badge, Search Button/Input, Filters Drawer Button */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Compact Count Badge */}
+          <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[11px] font-semibold text-slate-700 dark:text-slate-300 shrink-0">
+            <span>Affichés :</span>
+            <strong className="font-mono text-emerald-600 dark:text-emerald-400">{countDisplay.visible}</strong>
+            <span className="text-slate-400 font-mono">/</span>
+            <strong className="font-mono">{countDisplay.filtered}</strong>
+            {countDisplay.total && countDisplay.filtered !== countDisplay.total && (
+              <span className="text-slate-400 font-mono text-[10px]">({countDisplay.total})</span>
+            )}
+          </div>
+
+          {/* Expandable Compact Search */}
+          <div className="relative flex items-center shrink-0">
+            {isSearchOpen ? (
+              <div className="relative flex items-center">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" size={13} />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Rechercher..."
+                  value={searchQuery}
+                  onChange={e => onSearchChange(e.target.value)}
+                  className="w-36 xl:w-48 py-1 pl-7 pr-6 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-2xs"
+                />
+                {searchQuery ? (
+                  <button
+                    type="button"
+                    onClick={() => onSearchChange('')}
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5"
+                    title="Effacer la recherche"
+                  >
+                    <X size={12} />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setIsSearchOpen(false)}
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5"
+                    title="Fermer la recherche"
+                  >
+                    <X size={12} />
+                  </button>
+                )}
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                  searchQuery?.trim()
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+                title={searchQuery?.trim() ? `Recherche active : "${searchQuery}"` : "Rechercher..."}
+              >
+                <Search size={13} />
+                {searchQuery?.trim() && (
+                  <span className="max-w-[80px] truncate font-mono text-[11px]">
+                    {searchQuery}
+                  </span>
+                )}
+              </button>
+            )}
+          </div>
+
+          {/* "Filtres" Drawer Button with Active Badge */}
+          <button
+            type="button"
+            onClick={onOpenDrawer}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 ${
+              activeCriteriaCount > 0
+                ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+            title="Ouvrir le panneau de filtres avancés"
+          >
+            <Sliders size={13} />
+            <span>Filtres</span>
+            {activeCriteriaCount > 0 && (
+              <span className="w-4 h-4 rounded-full bg-white text-emerald-700 font-mono text-[10px] font-black flex items-center justify-center">
+                {activeCriteriaCount}
+              </span>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function TicketsView({ assembled, finals, loading, onNavigateToMatch, initialView = 'summary' }) {
   const [activeView, setActiveView] = useState(initialView);
   const [auditMode, setAuditMode] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Isolated filter states for Tickets Assemblés and Choix Finaux
-  const [ticketFilters, setTicketFilters] = useState(INITIAL_TICKET_FILTERS);
+  const [ticketFilters, setTicketFilters] = useState(() => ({
+    ...INITIAL_TICKET_FILTERS,
+    liveEstimatedOnly: false
+  }));
   const [picksFilters, setPicksFilters] = useState(INITIAL_PICKS_FILTERS);
+
+  // Live estimation ticker state (convention isMatchLive 0-115 min, auto-refresh 60s)
+  const [nowMs, setNowMs] = useState(() => Date.now());
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNowMs(Date.now());
+    }, 60000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Progressive load state for tickets
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_TICKETS);
@@ -480,6 +675,40 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   useEffect(() => {
     setVisibleCount(INITIAL_VISIBLE_TICKETS);
   }, [ticketFilters]);
+
+  // Persistent Compact Filter Bar State & Measurement (WEB-001-C)
+  const tabBarRef = useRef(null);
+  const [tabBarHeight, setTabBarHeight] = useState(52);
+  const strategiesSentinelRef = useRef(null);
+  const picksSentinelRef = useRef(null);
+  const compactSearchInputRef = useRef(null);
+  const [isStickyBarVisible, setIsStickyBarVisible] = useState(false);
+  const [isCompactSearchOpen, setIsCompactSearchOpen] = useState(false);
+
+  // Auto-focus compact search input when toggled open
+  useEffect(() => {
+    if (isCompactSearchOpen && compactSearchInputRef.current) {
+      compactSearchInputRef.current.focus();
+    }
+  }, [isCompactSearchOpen]);
+
+  // Dynamically track navigation tab bar height across window resizes
+  useEffect(() => {
+    if (!tabBarRef.current) return;
+    const updateHeight = () => {
+      if (tabBarRef.current) {
+        setTabBarHeight(tabBarRef.current.offsetHeight);
+      }
+    };
+    updateHeight();
+    const ro = new ResizeObserver(updateHeight);
+    ro.observe(tabBarRef.current);
+    window.addEventListener('resize', updateHeight);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
 
   const isV2Tickets = !!(assembled && Array.isArray(assembled.tickets));
 
@@ -645,8 +874,10 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
   // 3. Global Filtering & Sorting on the FULL source (never mutating human_id)
   const filteredStrategies = useMemo(() => {
-    return filterTickets(ticketsList, ticketFilters);
-  }, [ticketsList, ticketFilters]);
+    const base = filterTickets(ticketsList, ticketFilters);
+    if (!ticketFilters.liveEstimatedOnly) return base;
+    return base.filter(t => isTicketLive(t, nowMs));
+  }, [ticketsList, ticketFilters, nowMs]);
 
   // 4. Progressive Slicing for Mobile/Desktop DOM performance
   const visibleStrategies = useMemo(() => {
@@ -654,6 +885,13 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   }, [filteredStrategies, visibleCount]);
 
   const remainingTicketsCount = Math.max(0, filteredStrategies.length - visibleStrategies.length);
+
+  // Dynamic what-if count for LIVE estimé filter under currently active criteria
+  const liveTicketsCount = useMemo(() => {
+    const filtersWithoutLive = { ...ticketFilters, liveEstimatedOnly: false };
+    const candidates = filterTickets(ticketsList, filtersWithoutLive);
+    return candidates.filter(t => isTicketLive(t, nowMs)).length;
+  }, [ticketsList, ticketFilters, nowMs]);
 
   // 5. Choix Finaux filtering & sorting
   const totalSelections = finals?.Selections?.length || 0;
@@ -702,6 +940,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     if (ticketFilters.selectedDate !== 'ALL') count++;
     if (ticketFilters.minProbThreshold > 0) count++;
     if (ticketFilters.legMatchMode && ticketFilters.legMatchMode !== 'ANY') count++;
+    if (ticketFilters.liveEstimatedOnly) count++;
     if (ticketFilters.searchQuery?.trim()) count++;
     return count;
   }, [ticketFilters]);
@@ -722,8 +961,69 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     return count;
   }, [picksFilters]);
 
-  const onResetTicketFilters = () => setTicketFilters(INITIAL_TICKET_FILTERS);
+  const onResetTicketFilters = () => setTicketFilters({ ...INITIAL_TICKET_FILTERS, liveEstimatedOnly: false });
   const onResetPicksFilters = () => setPicksFilters(INITIAL_PICKS_FILTERS);
+
+  // Sentinel observation and scroll synchronization for persistent compact bar (WEB-001-C)
+  useEffect(() => {
+    setIsStickyBarVisible(false);
+    setIsCompactSearchOpen(false);
+
+    if (activeView === 'summary') return;
+
+    const getSentinel = () => (activeView === 'strategies' ? strategiesSentinelRef.current : picksSentinelRef.current);
+    const sentinel = getSentinel();
+    if (!sentinel) return;
+
+    const getScrollParent = (node) => {
+      if (!node) return null;
+      let parent = node.parentElement;
+      while (parent) {
+        const style = window.getComputedStyle(parent);
+        if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+          return parent;
+        }
+        parent = parent.parentElement;
+      }
+      return window;
+    };
+
+    const scrollParent = getScrollParent(sentinel);
+
+    const checkVisibility = () => {
+      const s = getSentinel();
+      if (!s) return;
+      const sentinelRect = s.getBoundingClientRect();
+      const tabBottom = tabBarRef.current ? tabBarRef.current.getBoundingClientRect().bottom : 52;
+      setIsStickyBarVisible(sentinelRect.bottom <= tabBottom + 10);
+    };
+
+    const root = scrollParent === window ? null : scrollParent;
+    const observer = new IntersectionObserver(
+      () => {
+        checkVisibility();
+      },
+      {
+        root,
+        threshold: [0, 1]
+      }
+    );
+
+    observer.observe(sentinel);
+
+    const target = scrollParent || window;
+    const onScroll = () => checkVisibility();
+    target.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    checkVisibility();
+
+    return () => {
+      observer.disconnect();
+      target.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [activeView, tabBarHeight, ticketActiveCriteriaCount, picksActiveCriteriaCount]);
 
   // Descriptive mean of model probabilities across valid CHOIX_FINAUX selections
   const avgProbDisplay = useMemo(() => {
@@ -790,7 +1090,10 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   return (
     <div className="flex flex-col gap-6 max-w-7xl mx-auto w-full pb-28">
       {/* 1. INTERNAL NAVIGATION MENU */}
-      <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-4 sm:px-4 lg:mx-0 lg:px-0 py-2.5 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-b lg:border-none border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 overflow-hidden">
+      <div
+        ref={tabBarRef}
+        className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-4 sm:px-4 lg:mx-0 lg:px-0 py-2.5 bg-slate-100/95 dark:bg-slate-950/95 backdrop-blur-md border-b lg:border-none border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 overflow-hidden"
+      >
         <div className="flex items-center gap-1 p-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto no-scrollbar max-w-full">
           {[
             { id: 'summary', label: 'Synthèse', shortLabel: 'Synthèse', icon: <BarChart3 size={14} /> },
@@ -914,14 +1217,20 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
           {/* Section 1: Top 5 Singles à haute probabilité modèle */}
           <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-              <div>
-                <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                  <Target size={18} className="text-emerald-500" />
-                  <span>Singles à probabilité modèle élevée</span>
-                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">({highlights.topSingles.length} affichés)</span>
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
+              <div className="flex flex-col gap-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <div className="flex items-center gap-2">
+                    <Target size={18} className="text-emerald-500 shrink-0" />
+                    <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                      Singles à probabilité modèle élevée
+                    </h3>
+                  </div>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0">
+                    {highlights.topSingles.length} affichés
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   Classés par probabilité modèle décroissante de l&apos;unique jambe • Réf. catalogue : {singlesCount} sélections simples.
                 </p>
               </div>
@@ -931,10 +1240,10 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   setActiveView('strategies');
                   setTicketFilters(prev => ({ ...prev, structure: 'SINGLES' }));
                 }}
-                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+                className="w-full sm:w-auto inline-flex items-center justify-center min-h-[38px] px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 hover:border-emerald-500/30 transition-all gap-1.5 shrink-0 shadow-2xs"
               >
                 <span>Explorer les {singlesCount} singles</span>
-                <ArrowUpRight size={14} />
+                <ArrowUpRight size={14} className="shrink-0" />
               </button>
             </div>
 
@@ -1031,14 +1340,20 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
           {/* Section 2: Top 5 Combinés à jambes fortes */}
           <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-              <div>
-                <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                  <Layers size={18} className="text-sky-500" />
-                  <span>Combinés à jambes fortes</span>
-                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">({highlights.topCombos.length} affichés)</span>
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
+              <div className="flex flex-col gap-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <div className="flex items-center gap-2">
+                    <Layers size={18} className="text-sky-500 shrink-0" />
+                    <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                      Combinés à jambes fortes
+                    </h3>
+                  </div>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0">
+                    {highlights.topCombos.length} affichés
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   Classés par <strong>probabilité minimale d&apos;une jambe</strong> (jambe la plus délicate) décroissante • {combosCount} combinés totaux.
                 </p>
               </div>
@@ -1048,10 +1363,10 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   setActiveView('strategies');
                   setTicketFilters(prev => ({ ...prev, structure: 'COMBOS' }));
                 }}
-                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+                className="w-full sm:w-auto inline-flex items-center justify-center min-h-[38px] px-3.5 py-2 rounded-xl text-xs font-bold bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-400 border border-sky-500/20 hover:border-sky-500/30 transition-all gap-1.5 shrink-0 shadow-2xs"
               >
                 <span>Explorer les {combosCount} combinés</span>
-                <ArrowUpRight size={14} />
+                <ArrowUpRight size={14} className="shrink-0" />
               </button>
             </div>
 
@@ -1164,24 +1479,30 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
           {/* Section 3: Top 5 Choix Finaux les plus probables */}
           <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-              <div>
-                <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                  <Zap size={18} className="text-amber-500 fill-amber-500" />
-                  <span>Choix Finaux les plus probables (CHOIX_FINAUX)</span>
-                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">({highlights.topPicks.length} affichés)</span>
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
+              <div className="flex flex-col gap-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <div className="flex items-center gap-2">
+                    <Zap size={18} className="text-amber-500 fill-amber-500 shrink-0" />
+                    <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                      Choix Finaux les plus probables (CHOIX_FINAUX)
+                    </h3>
+                  </div>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0">
+                    {highlights.topPicks.length} affichés
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   Sélections retenues ordonnées par probabilité modèle • Tiers réels restitués ({totalSelections} choix au total).
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveView('picks')}
-                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+                className="w-full sm:w-auto inline-flex items-center justify-center min-h-[38px] px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/20 hover:border-amber-500/30 transition-all gap-1.5 shrink-0 shadow-2xs"
               >
                 <span>Voir les {totalSelections} choix</span>
-                <ArrowUpRight size={14} />
+                <ArrowUpRight size={14} className="shrink-0" />
               </button>
             </div>
 
@@ -1351,7 +1672,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             {/* Row 2: Quick Filter Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
               {[
-                { id: 'ALL', label: `Tous (${ticketsList.length})`, active: ticketFilters.structure === 'ALL' && ticketFilters.productCode === 'ALL' && ticketFilters.leagueGroup === 'ALL' && ticketFilters.selectedMarketFamilies.length === 0 },
+                { id: 'ALL', label: `Tous (${ticketsList.length})`, active: ticketFilters.structure === 'ALL' && ticketFilters.productCode === 'ALL' && ticketFilters.leagueGroup === 'ALL' && ticketFilters.selectedMarketFamilies.length === 0 && !ticketFilters.liveEstimatedOnly },
+                { id: 'LIVE_ESTIMATED', label: `LIVE estimé (${liveTicketsCount})`, isLive: true, active: Boolean(ticketFilters.liveEstimatedOnly) },
                 { id: 'SINGLES', label: `Singles (${singlesCount})`, active: ticketFilters.structure === 'SINGLES' && ticketFilters.productCode === 'ALL' },
                 { id: 'COMBOS', label: `Combinés (${combosCount})`, active: ticketFilters.structure === 'COMBOS' && ticketFilters.productCode === 'ALL' },
                 { id: 'MICRO_2', label: `Micro (${productWhatIfCounts?.['MICRO_2'] ?? 36})`, active: ticketFilters.productCode === 'MICRO_2' },
@@ -1368,6 +1690,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   onClick={() => {
                     if (pill.id === 'ALL') {
                       onResetTicketFilters();
+                    } else if (pill.id === 'LIVE_ESTIMATED') {
+                      setTicketFilters(prev => ({
+                        ...prev,
+                        liveEstimatedOnly: !prev.liveEstimatedOnly
+                      }));
                     } else if (pill.id === 'SINGLES') {
                       setTicketFilters(prev => ({
                         ...prev,
@@ -1398,13 +1725,18 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       });
                     }
                   }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none ${
                     pill.active
-                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
-                      : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                      ? pill.isLive
+                        ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs'
+                        : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
+                      : pill.isLive
+                        ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 hover:border-emerald-500/50'
+                        : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
                   }`}
                 >
-                  {pill.label}
+                  {pill.isLive && <Radio size={12} className={pill.active ? 'text-white animate-pulse' : 'text-emerald-500'} />}
+                  <span>{pill.label}</span>
                 </button>
               ))}
             </div>
@@ -1415,6 +1747,20 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-tight mr-1">
                   Actifs :
                 </span>
+                {ticketFilters.liveEstimatedOnly && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                    <Radio size={12} className="animate-pulse text-emerald-500" />
+                    <span>LIVE estimé</span>
+                    <button
+                      type="button"
+                      onClick={() => setTicketFilters(prev => ({ ...prev, liveEstimatedOnly: false }))}
+                      className="hover:text-rose-500 ml-0.5"
+                      aria-label="Désactiver le filtre LIVE estimé"
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                )}
                 {ticketFilters.structure !== 'ALL' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
                     Structure: {ticketFilters.structure}
@@ -1509,36 +1855,174 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 id="ticket-sort-select"
                 value={ticketFilters.sortBy}
                 onChange={e => setTicketFilters(prev => ({ ...prev, sortBy: e.target.value }))}
-                className="bg-transparent text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none w-full"
+                className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 [color-scheme:light] dark:[color-scheme:dark] border border-slate-200 dark:border-slate-700/80 rounded-lg px-2.5 py-1 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer w-full"
               >
-                <option value="mean_prob">Prob. Moy. Jambes (Décroissant)</option>
-                <option value="min_prob">Prob. Min. Jambe (Décroissant)</option>
-                <option value="odds">Cote Réf. Plancher (Décroissant)</option>
-                <option value="legs">Nombre de Jambes (Décroissant)</option>
-                <option value="canonical">Ordre Canonique Moteur (ID)</option>
+                <option value="mean_prob" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-1">Prob. Moy. Jambes (Décroissant)</option>
+                <option value="min_prob" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-1">Prob. Min. Jambe (Décroissant)</option>
+                <option value="odds" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-1">Cote Réf. Plancher (Décroissant)</option>
+                <option value="legs" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-1">Nombre de Jambes (Décroissant)</option>
+                <option value="canonical" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-1">Ordre Canonique Moteur (ID)</option>
               </select>
             </div>
           </div>
 
+          {/* Sentinel for persistent compact bar */}
+          <div ref={strategiesSentinelRef} className="h-px w-full pointer-events-none -mt-3 mb-0 opacity-0" aria-hidden="true" />
+
+          {/* Persistent Compact Sticky Filter Bar (PC / lg:) */}
+          <CompactStickyToolbar
+            tabBarHeight={tabBarHeight}
+            isStickyVisible={isStickyBarVisible}
+            countDisplay={{
+              visible: visibleStrategies.length,
+              filtered: filteredStrategies.length,
+              total: ticketsList.length
+            }}
+            quickPills={[
+              {
+                id: 'ALL',
+                label: `Tous (${ticketsList.length})`,
+                active: ticketFilters.structure === 'ALL' && ticketFilters.productCode === 'ALL' && ticketFilters.leagueGroup === 'ALL' && ticketFilters.selectedMarketFamilies.length === 0 && !ticketFilters.liveEstimatedOnly,
+                onClick: onResetTicketFilters
+              },
+              {
+                id: 'LIVE_ESTIMATED',
+                label: `LIVE estimé (${liveTicketsCount})`,
+                isLive: true,
+                active: Boolean(ticketFilters.liveEstimatedOnly),
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  liveEstimatedOnly: !prev.liveEstimatedOnly
+                }))
+              },
+              {
+                id: 'SINGLES',
+                label: `Singles (${singlesCount})`,
+                active: ticketFilters.structure === 'SINGLES' && ticketFilters.productCode === 'ALL',
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  structure: prev.structure === 'SINGLES' ? 'ALL' : 'SINGLES',
+                  productCode: 'ALL'
+                }))
+              },
+              {
+                id: 'COMBOS',
+                label: `Combinés (${combosCount})`,
+                active: ticketFilters.structure === 'COMBOS' && ticketFilters.productCode === 'ALL',
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  structure: prev.structure === 'COMBOS' ? 'ALL' : 'COMBOS',
+                  productCode: 'ALL'
+                }))
+              },
+              {
+                id: 'MICRO_2',
+                label: `Micro (${productWhatIfCounts?.['MICRO_2'] ?? 36})`,
+                active: ticketFilters.productCode === 'MICRO_2',
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  productCode: prev.productCode === 'MICRO_2' ? 'ALL' : 'MICRO_2',
+                  structure: prev.structure === 'SINGLES' ? 'ALL' : prev.structure
+                }))
+              },
+              {
+                id: 'CORE_3',
+                label: `Core 3 (${productWhatIfCounts?.['CORE_3'] ?? 30})`,
+                active: ticketFilters.productCode === 'CORE_3',
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  productCode: prev.productCode === 'CORE_3' ? 'ALL' : 'CORE_3',
+                  structure: prev.structure === 'SINGLES' ? 'ALL' : prev.structure
+                }))
+              },
+              {
+                id: 'CORE_4',
+                label: `Core 4 (${productWhatIfCounts?.['CORE_4'] ?? 23})`,
+                active: ticketFilters.productCode === 'CORE_4',
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  productCode: prev.productCode === 'CORE_4' ? 'ALL' : 'CORE_4',
+                  structure: prev.structure === 'SINGLES' ? 'ALL' : prev.structure
+                }))
+              },
+              {
+                id: 'STANDARD_5_8',
+                label: `Standard (${productWhatIfCounts?.['STANDARD_5_8'] ?? 18})`,
+                active: ticketFilters.productCode === 'STANDARD_5_8',
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  productCode: prev.productCode === 'STANDARD_5_8' ? 'ALL' : 'STANDARD_5_8',
+                  structure: prev.structure === 'SINGLES' ? 'ALL' : prev.structure
+                }))
+              },
+              {
+                id: 'EXTENDED_9_PLUS',
+                label: `Extended (${productWhatIfCounts?.['EXTENDED_9_PLUS'] ?? 2})`,
+                active: ticketFilters.productCode === 'EXTENDED_9_PLUS',
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  productCode: prev.productCode === 'EXTENDED_9_PLUS' ? 'ALL' : 'EXTENDED_9_PLUS',
+                  structure: prev.structure === 'SINGLES' ? 'ALL' : prev.structure
+                }))
+              },
+              {
+                id: 'TOP7',
+                label: 'Top 7 Europe',
+                active: ticketFilters.leagueGroup === 'TOP_7_EUROPE',
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  leagueGroup: prev.leagueGroup === 'TOP_7_EUROPE' ? 'ALL' : 'TOP_7_EUROPE'
+                }))
+              },
+              {
+                id: 'TG',
+                label: 'Team Goals',
+                active: ticketFilters.selectedMarketFamilies.includes('Team Goals'),
+                onClick: () => setTicketFilters(prev => {
+                  const hasTG = prev.selectedMarketFamilies.includes('Team Goals');
+                  return {
+                    ...prev,
+                    selectedMarketFamilies: hasTG
+                      ? prev.selectedMarketFamilies.filter(f => f !== 'Team Goals')
+                      : [...prev.selectedMarketFamilies, 'Team Goals']
+                  };
+                })
+              }
+            ]}
+            searchQuery={ticketFilters.searchQuery}
+            onSearchChange={q => setTicketFilters(prev => ({ ...prev, searchQuery: q }))}
+            isSearchOpen={isCompactSearchOpen}
+            setIsSearchOpen={setIsCompactSearchOpen}
+            searchInputRef={compactSearchInputRef}
+            activeCriteriaCount={ticketActiveCriteriaCount}
+            onOpenDrawer={() => setIsDrawerOpen(true)}
+          />
+
           {/* Tickets Grid */}
           {visibleStrategies.length > 0 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
               {visibleStrategies.map((ticket) => (
                 <TicketCard
                   key={ticket.human_id || ticket.ticket_id}
                   ticket={ticket}
                   auditMode={auditMode}
                   onNavigateToMatch={onNavigateToMatch}
+                  nowMs={nowMs}
                 />
               ))}
             </div>
           ) : (
             <div className="p-10 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-500 flex flex-col items-center justify-center gap-2">
-              <p>Aucun ticket ne correspond aux critères de recherche ou de filtre sélectionnés.</p>
+              <p className="font-semibold text-slate-700 dark:text-slate-300">Aucun ticket ne correspond aux critères de recherche ou de filtre sélectionnés.</p>
+              {ticketFilters.liveEstimatedOnly && (
+                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md">
+                  Aucun ticket n&apos;a de match dans la fenêtre conventionnelle LIVE estimé [0 à 115 minutes après coup d&apos;envoi] pour cette sélection.
+                </p>
+              )}
               <button
                 type="button"
                 onClick={onResetTicketFilters}
-                className="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs"
+                className="mt-1 px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-500 transition-colors shadow-sm"
               >
                 Réinitialiser les filtres
               </button>
@@ -1758,17 +2242,70 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 id="pick-sort-select"
                 value={picksFilters.sortBy}
                 onChange={e => setPicksFilters(prev => ({ ...prev, sortBy: e.target.value }))}
-                className="bg-transparent text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none w-full"
+                className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 [color-scheme:light] dark:[color-scheme:dark] border border-slate-200 dark:border-slate-700/80 rounded-lg px-2.5 py-1 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer w-full"
               >
-                <option value="prob">Probabilité Modèle (Décroissant)</option>
-                <option value="odds">Cote de Référence (Décroissant)</option>
-                <option value="ev">Score_EV (Décroissant)</option>
+                <option value="prob" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-1">Probabilité Modèle (Décroissant)</option>
+                <option value="odds" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-1">Cote de Référence (Décroissante)</option>
+                <option value="ev" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-1">Score_EV (Décroissant)</option>
               </select>
             </div>
           </div>
 
+          {/* Sentinel for persistent compact bar */}
+          <div ref={picksSentinelRef} className="h-px w-full pointer-events-none -mt-3 mb-0 opacity-0" aria-hidden="true" />
+
+          {/* Persistent Compact Sticky Filter Bar (PC / lg:) */}
+          <CompactStickyToolbar
+            tabBarHeight={tabBarHeight}
+            isStickyVisible={isStickyBarVisible}
+            countDisplay={{
+              visible: filteredPicks.length,
+              filtered: filteredPicks.length,
+              total: totalSelections
+            }}
+            quickPills={[
+              {
+                id: 'ALL',
+                label: `Tous (${totalSelections})`,
+                active: picksFilters.tier === 'ALL' && !picksFilters.liveOnly && picksFilters.streakStatus === 'ALL',
+                onClick: onResetPicksFilters
+              },
+              ...picksTierPills.map(p => ({
+                id: p.id,
+                label: p.label,
+                active: p.active,
+                onClick: () => setPicksFilters(prev => ({
+                  ...prev,
+                  tier: prev.tier === p.tierKey ? 'ALL' : p.tierKey
+                }))
+              })),
+              {
+                id: 'LIVE',
+                label: 'Live Eligible',
+                active: picksFilters.liveOnly,
+                onClick: () => setPicksFilters(prev => ({ ...prev, liveOnly: !prev.liveOnly }))
+              },
+              {
+                id: 'STREAK',
+                label: 'Séries confirmées',
+                active: picksFilters.streakStatus === 'STREAK_CONFIRMED',
+                onClick: () => setPicksFilters(prev => ({
+                  ...prev,
+                  streakStatus: prev.streakStatus === 'STREAK_CONFIRMED' ? 'ALL' : 'STREAK_CONFIRMED'
+                }))
+              }
+            ]}
+            searchQuery={picksFilters.searchQuery}
+            onSearchChange={q => setPicksFilters(prev => ({ ...prev, searchQuery: q }))}
+            isSearchOpen={isCompactSearchOpen}
+            setIsSearchOpen={setIsCompactSearchOpen}
+            searchInputRef={compactSearchInputRef}
+            activeCriteriaCount={picksActiveCriteriaCount}
+            onOpenDrawer={() => setIsDrawerOpen(true)}
+          />
+
           {/* Picks List */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3.5 sm:gap-4">
             {filteredPicks.length > 0 ? (
               filteredPicks.map((sel, idx) => {
                 const isExpanded = expandedTicket === idx;
@@ -1782,7 +2319,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 const kickoffMeta = formatKickoffExplicit(sel);
 
                 return (
-                  <div key={sel.Bet_ID || idx} className="flex flex-col bg-white dark:bg-slate-900/80 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden transition-all hover:border-emerald-500/40">
+                  <div key={sel.Bet_ID || idx} className="flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 shadow-sm hover:shadow-md relative overflow-hidden transition-all hover:border-emerald-500/40">
                     {auditMode && (
                       <div className="absolute inset-0 z-50 bg-slate-900/95 p-4 overflow-y-auto">
                         <pre className="text-[11px] font-mono text-emerald-400 whitespace-pre-wrap break-all">

@@ -819,7 +819,7 @@ export default function App() {
         <div className="flex-1 flex flex-col lg:flex-row overflow-visible lg:overflow-hidden">
           {/* Match List Area or Tickets View */}
           {selectedLeague.id === 'TICKETS' ? (
-             <div className="flex-1 overflow-y-visible lg:overflow-y-auto p-3 sm:p-4 lg:p-10 custom-scrollbar bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+             <div className="flex-1 overflow-y-visible lg:overflow-y-auto p-3 sm:p-4 lg:pt-3 lg:pb-10 lg:px-8 custom-scrollbar bg-slate-100/90 dark:bg-slate-950 transition-colors duration-300">
                <TicketsView
                  assembled={ticketsData.assembled}
                  finals={ticketsData.finals}
