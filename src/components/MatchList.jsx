@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Badge } from './ui/Badge';
 import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Trophy, Radio } from 'lucide-react';
 import { TIME_SLOTS, getLegTimeSlot } from '../utils/ticketFilters';
+import { TeamLogo, LeagueLogo, getLeagueDisplayName } from '../utils/teamLogos';
 
 const formatTimeAMPM = (timeStr) => {
   if (!timeStr) return '';
@@ -106,6 +107,8 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
   const investSignals = match.Risk_Management_Context?.Investment_Signals || {};
 
   const parts = (match.Matchup || '').split(' vs ');
+  const rawHome = parts[0] || '';
+  const rawAway = parts[1] || '';
   const homeDisplay = match.displayHome || match.shortHome || parts[0] || 'Domicile';
   const awayDisplay = match.displayAway || match.shortAway || parts[1] || 'Extérieur';
   const displayTime = getMatchDisplayTime(match);
@@ -127,8 +130,9 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
       <div className="flex items-center justify-between gap-2 mb-2">
         <div className="flex items-center gap-1.5 min-w-0">
           {match.League && (
-            <span className="text-[8px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200/70 dark:border-slate-700/70 truncate">
-              {match.League}
+            <span className="inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200/70 dark:border-slate-700/70 truncate">
+              <LeagueLogo league={match.League} size="xs" />
+              <span>{getLeagueDisplayName(match.League)}</span>
             </span>
           )}
           {isMultiDate && match.date && match.date !== 'Date Inconnue' && (
@@ -159,15 +163,15 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
       </div>
 
       {/* Étage 2 : Bloc Équipes sur 2 Lignes (Core Team Stack) */}
-      <div className="flex flex-col gap-1 min-w-0">
+      <div className="flex flex-col gap-1.5 min-w-0">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500 shrink-0" title="Domicile" />
+          <TeamLogo teamName={rawHome} league={match.League} size="sm" alt={homeDisplay} />
           <span className="font-sans font-semibold text-[13px] text-slate-900 dark:text-slate-100 leading-tight truncate">
             {homeDisplay}
           </span>
         </div>
         <div className="flex items-center gap-2 min-w-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-transparent border border-slate-400 dark:border-slate-500 shrink-0" title="Extérieur" />
+          <TeamLogo teamName={rawAway} league={match.League} size="sm" alt={awayDisplay} />
           <span className="font-sans font-medium text-[13px] text-slate-700 dark:text-slate-300 leading-tight truncate">
             {awayDisplay}
           </span>

@@ -7,6 +7,7 @@ import { AdvancedFilterDrawer } from './components/filters/AdvancedFilterDrawer'
 import { BatchDateBar } from './components/filters/BatchDateBar';
 import { loadTitaniumV2Session, getLeagueReportUrl, cleanStr } from './utils/titaniumLoader';
 import { LEAGUE_GROUPS, getLeagueGroupId } from './utils/ticketFilters';
+import { LeagueLogo, getLeagueDisplayName } from './utils/teamLogos';
 import {
   INITIAL_FILTERS_STATE,
   filterMatches,
@@ -354,17 +355,26 @@ export default function App() {
         bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 flex flex-col
         transition-all duration-300 ease-in-out shadow-2xl lg:shadow-none
         ${sidebarOpen
-          ? 'translate-x-0 w-52 border-r opacity-100'
-          : '-translate-x-full lg:translate-x-0 w-52 lg:w-0 border-r lg:border-r-0 opacity-100 lg:opacity-0 lg:overflow-hidden'}
+          ? 'translate-x-0 w-72 sm:w-80 lg:w-64 xl:w-72 border-r opacity-100'
+          : '-translate-x-full lg:translate-x-0 w-72 lg:w-0 border-r lg:border-r-0 opacity-100 lg:opacity-0 lg:overflow-hidden'}
       `}>
-        <div className="p-5 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-          <div className="bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20 shadow-inner">
-            <Terminal className="text-emerald-600 dark:text-emerald-400" size={20} />
+        <div className="p-4 sm:p-5 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20 shadow-inner shrink-0">
+              <Terminal className="text-emerald-600 dark:text-emerald-400" size={20} />
+            </div>
+            <div className="min-w-0">
+              <h1 className="font-bold text-sm text-slate-900 dark:text-slate-100 tracking-wide truncate">ColdBetdrox Lab</h1>
+              <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase truncate">TITANIUM Terminal</p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-bold text-sm text-slate-900 dark:text-slate-100 tracking-wide">ColdBetdrox Lab</h1>
-            <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase">TITANIUM Intelligence Terminal</p>
-          </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors ml-2 shrink-0"
+            aria-label="Fermer le menu"
+          >
+            <X size={18} />
+          </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-3 sm:p-4 custom-scrollbar">
@@ -428,6 +438,7 @@ export default function App() {
                       <div className="flex flex-col gap-1 p-1.5 pt-1">
                         {group.leagues.map(league => {
                           const mCount = leagueMatchCounts[league.code] || 0;
+                          const displayName = getLeagueDisplayName(league.name || league.code);
                           return (
                             <button
                               key={league.id}
@@ -439,18 +450,21 @@ export default function App() {
                                   setSidebarOpen(false);
                                 }
                               }}
+                              title={displayName}
                               className={`
-                                flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all text-left
+                                flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all text-left
                                 ${selectedLeague.id === league.id
                                   ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold border border-emerald-500/30 shadow-2xs'
                                   : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-200 font-medium'}
                               `}
                             >
-                              <div className="flex items-center gap-2 min-w-0">
-                                <span className="text-sm shrink-0">{league.flag}</span>
-                                <span className="truncate">{league.name}</span>
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <div className="w-5 h-5 flex items-center justify-center shrink-0">
+                                  <LeagueLogo league={league.code || league.name} size="sm" />
+                                </div>
+                                <span className="truncate">{displayName}</span>
                               </div>
-                              <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 shrink-0 ml-1">
+                              <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-200/60 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 shrink-0 ml-2">
                                 {mCount}
                               </span>
                             </button>
@@ -966,14 +980,21 @@ export default function App() {
               `}>
                 <div className="w-full lg:w-80 flex flex-col h-full min-h-[500px] lg:min-h-0">
                   <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/30 flex justify-between items-center shrink-0">
-                  <div>
-                    <h2 className="font-bold text-slate-900 dark:text-slate-200 text-xs tracking-tight">{selectedLeague.name}</h2>
-                    <p className="text-[9px] text-slate-500 font-mono tracking-tighter">
-                      {filteredMatches.length} MATCHES FOUND
-                    </p>
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      {selectedLeague.id !== 'ALL' && selectedLeague.id !== 'TICKETS' && (
+                        <LeagueLogo league={selectedLeague.code || selectedLeague.name} size="sm" className="shrink-0" />
+                      )}
+                      <div>
+                        <h2 className="font-bold text-slate-900 dark:text-slate-200 text-xs tracking-tight truncate">
+                          {getLeagueDisplayName(selectedLeague.name || selectedLeague.code)}
+                        </h2>
+                        <p className="text-[9px] text-slate-500 font-mono tracking-tighter">
+                          {filteredMatches.length} MATCHES FOUND
+                        </p>
+                      </div>
                     </div>
                     {sessionData && <div className="text-[9px] uppercase font-mono tracking-tighter text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">Synchronized</div>}
-                </div>
+                  </div>
 
                 <div className="flex-1 overflow-y-auto p-4 custom-scrollbar relative">
                   {loading ? (

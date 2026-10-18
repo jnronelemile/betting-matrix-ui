@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { getTeamInfo } from '../../utils';
 import { getTeamDisplayName } from '../../utils/teamDisplayNames';
+import { TeamLogo, LeagueLogo, getLeagueDisplayName } from '../../utils/teamLogos';
 import {
   assignHumanTicketIds,
   getTicketFamilyMeta,
@@ -116,7 +117,7 @@ export const isTicketLive = (ticket, currentNowMs) => {
 const TicketLeg = ({ leg, legIndex, onNavigate, nowMs }) => {
   const [expanded, setExpanded] = useState(false);
   const leagueCode = leg.League || 'ALL';
-  const { displayHome, displayAway } = resolveLegMatchDisplay(leg.Match, leg.League);
+  const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(leg.Match, leg.League);
   const probMeta = formatProbabilityMetric(leg.Prob, 1);
   const oddsMeta = formatOddsMetric(leg.Cote_Ref, 2);
   const evMeta = formatScoreEvMetric(leg.Score_EV, 3);
@@ -135,8 +136,14 @@ const TicketLeg = ({ leg, legIndex, onNavigate, nowMs }) => {
             </span>
             <div className="flex flex-col min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-1.5 min-w-0">
-                <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 leading-snug break-words">
-                  {displayHome} <span className="text-slate-400 font-normal">vs</span> {displayAway}
+                <TeamLogo teamName={homeRaw} league={leg.League} size="xs" alt={displayHome} />
+                <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                  {displayHome}
+                </span>
+                <span className="text-slate-400 font-normal text-xs">vs</span>
+                <TeamLogo teamName={awayRaw} league={leg.League} size="xs" alt={displayAway} />
+                <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                  {displayAway}
                 </span>
                 {leg.Alpha && (
                   <span className="text-[10px] px-1.5 py-0.2 bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-bold rounded shrink-0">
@@ -145,7 +152,10 @@ const TicketLeg = ({ leg, legIndex, onNavigate, nowMs }) => {
                 )}
               </div>
               <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
-                <span className="font-semibold text-slate-700 dark:text-slate-300">{getLeagueFlag(leg.League)} {leg.League || 'Ligue N/D'}</span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300 inline-flex items-center gap-1">
+                  <LeagueLogo league={leg.League} size="xs" />
+                  <span>{getLeagueDisplayName(leg.League) || 'Ligue N/D'}</span>
+                </span>
                 <span aria-hidden="true">•</span>
                 <span className="font-mono text-slate-600 dark:text-slate-400" title={kickoffMeta.title || undefined}>{kickoffMeta.display}</span>
                 {isLegCurrentlyLive && (
@@ -1270,8 +1280,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 {highlights.topSingles.map((ticket) => {
                   const leg = ticket.legs?.[0] || {};
                   const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(leg.Match, leg.League);
-                  const homeInfo = getTeamInfo(homeRaw);
-                  const awayInfo = getTeamInfo(awayRaw);
+                  const homeInfo = getTeamInfo(homeRaw, [], leg.League);
+                  const awayInfo = getTeamInfo(awayRaw, [], leg.League);
                   const probMeta = formatProbabilityMetric(leg.Prob, 1);
                   const oddsMeta = formatOddsMetric(leg.Cote_Ref, 2);
                   const kickoffMeta = formatKickoffExplicit(leg);
@@ -1301,20 +1311,23 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                         <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-end">
                           <span className="text-xs font-bold text-slate-900 dark:text-white truncate text-right">{displayHome}</span>
                           <div className="w-6 h-6 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 border border-slate-200 dark:border-slate-700">
-                            <img src={homeInfo.logoPath} alt={displayHome} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                            <TeamLogo teamName={homeRaw} league={leg.League} size="sm" alt={displayHome} className="w-full h-full object-contain" />
                           </div>
                         </div>
                         <span className="text-[11px] font-mono text-slate-400 shrink-0">vs</span>
                         <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-start">
                           <div className="w-6 h-6 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 border border-slate-200 dark:border-slate-700">
-                            <img src={awayInfo.logoPath} alt={displayAway} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                            <TeamLogo teamName={awayRaw} league={leg.League} size="sm" alt={displayAway} className="w-full h-full object-contain" />
                           </div>
                           <span className="text-xs font-bold text-slate-900 dark:text-white truncate text-left">{displayAway}</span>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                        <span className="font-semibold">{getLeagueFlag(leg.League)} {leg.League}</span>
+                        <span className="font-semibold inline-flex items-center gap-1">
+                          <LeagueLogo league={leg.League} size="xs" />
+                          <span>{getLeagueDisplayName(leg.League)}</span>
+                        </span>
                         <span className="font-mono text-[11px]">{kickoffMeta.display}</span>
                       </div>
 
@@ -1528,8 +1541,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {highlights.topPicks.map((sel, idx) => {
                   const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(sel.Match, sel.League);
-                  const homeInfo = getTeamInfo(homeRaw);
-                  const awayInfo = getTeamInfo(awayRaw);
+                  const homeInfo = getTeamInfo(homeRaw, [], sel.League);
+                  const awayInfo = getTeamInfo(awayRaw, [], sel.League);
                   const probMeta = formatProbabilityMetric(sel.Prob, 1);
                   const oddsMeta = formatOddsMetric(sel.Cote_Ref, 2);
                   const evMeta = formatScoreEvMetric(sel.Score_EV, 3);
@@ -1565,20 +1578,23 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                         <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-end">
                           <span className="text-xs font-bold text-slate-900 dark:text-white truncate text-right">{displayHome}</span>
                           <div className="w-6 h-6 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 border border-slate-200 dark:border-slate-700">
-                            <img src={homeInfo.logoPath} alt={displayHome} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                            <TeamLogo teamName={homeRaw} league={sel.League} size="sm" alt={displayHome} className="w-full h-full object-contain" />
                           </div>
                         </div>
                         <span className="text-[11px] font-mono text-slate-400 shrink-0">vs</span>
                         <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-start">
                           <div className="w-6 h-6 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 border border-slate-200 dark:border-slate-700">
-                            <img src={awayInfo.logoPath} alt={displayAway} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                            <TeamLogo teamName={awayRaw} league={sel.League} size="sm" alt={displayAway} className="w-full h-full object-contain" />
                           </div>
                           <span className="text-xs font-bold text-slate-900 dark:text-white truncate text-left">{displayAway}</span>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                        <span className="font-semibold">{getLeagueFlag(sel.League)} {sel.League}</span>
+                        <span className="font-semibold inline-flex items-center gap-1">
+                          <LeagueLogo league={sel.League} size="xs" />
+                          <span>{getLeagueDisplayName(sel.League)}</span>
+                        </span>
                         <span className="font-mono text-[11px]">{kickoffMeta.display}</span>
                       </div>
 
@@ -2373,8 +2389,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               filteredPicks.map((sel, idx) => {
                 const isExpanded = expandedTicket === idx;
                 const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(sel.Match, sel.League);
-                const homeInfo = getTeamInfo(homeRaw);
-                const awayInfo = getTeamInfo(awayRaw);
+                const homeInfo = getTeamInfo(homeRaw, [], sel.League);
+                const awayInfo = getTeamInfo(awayRaw, [], sel.League);
                 const probMeta = formatProbabilityMetric(sel.Prob, 1);
                 const oddsMeta = formatOddsMetric(sel.Cote_Ref, 2);
                 const evMeta = formatScoreEvMetric(sel.Score_EV, 3);
@@ -2423,7 +2439,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                         <div className="flex flex-wrap items-center gap-2.5">
                           <div className="flex items-center gap-2 min-w-0">
                             <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-slate-700 shrink-0">
-                              <img src={homeInfo.logoPath} alt={displayHome} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                              <TeamLogo teamName={homeRaw} league={sel.League} size="md" alt={displayHome} className="w-full h-full object-contain" />
                             </div>
                             <span className="text-sm font-bold text-slate-900 dark:text-white break-words">{displayHome}</span>
                           </div>
@@ -2432,7 +2448,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                           </span>
                           <div className="flex items-center gap-2 min-w-0">
                             <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-slate-700 shrink-0">
-                              <img src={awayInfo.logoPath} alt={displayAway} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                              <TeamLogo teamName={awayRaw} league={sel.League} size="md" alt={displayAway} className="w-full h-full object-contain" />
                             </div>
                             <span className="text-sm font-bold text-slate-900 dark:text-white break-words">{displayAway}</span>
                           </div>
@@ -2445,8 +2461,9 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                           <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 break-words">
                             {sel.Marche}
                           </span>
-                          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 font-mono" title={kickoffMeta.title || undefined}>
-                            {getLeagueFlag(sel.League)} {sel.League} • {kickoffMeta.display}
+                          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 font-mono inline-flex items-center gap-1" title={kickoffMeta.title || undefined}>
+                            <LeagueLogo league={sel.League} size="xs" />
+                            <span>{getLeagueDisplayName(sel.League)} • {kickoffMeta.display}</span>
                           </span>
                         </div>
 

@@ -23,6 +23,7 @@ import TabCalibration from './dashboard/TabCalibration';
 import TabRiskContext from './dashboard/TabRiskContext';
 import TabSeries from './dashboard/TabSeries';
 import TabDeepDive from './dashboard/TabDeepDive';
+import { TeamLogo, LeagueLogo, getLeagueDisplayName } from '../utils/teamLogos';
 import { getSeriesStatsUrl, validateSeriesMetadata } from '../utils/titaniumLoader';
 
 export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
@@ -203,6 +204,8 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
 
   // Extraction déterministe des noms des clubs avec fallback sécurisé
   const parts = (match.Matchup || '').split(' vs ');
+  const rawHome = parts[0] || '';
+  const rawAway = parts[1] || '';
   const homeName = match.displayHome || match.shortHome || parts[0] || 'Domicile';
   const awayName = match.displayAway || match.shortAway || parts[1] || 'Extérieur';
 
@@ -246,16 +249,18 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
               )}
 
               <div className="flex items-center justify-center gap-2 sm:gap-3.5 min-w-0 flex-1">
-                <div className="flex-1 text-right min-w-0">
-                  <span className="font-sans font-bold text-base sm:text-xl lg:text-2xl text-slate-900 dark:text-white leading-tight break-words">
+                <div className="flex-1 flex items-center justify-end gap-2 sm:gap-3 min-w-0">
+                  <span className="font-sans font-bold text-base sm:text-xl lg:text-2xl text-slate-900 dark:text-white leading-tight break-words text-right">
                     {homeName}
                   </span>
+                  <TeamLogo teamName={rawHome} league={match.League} size="lg" alt={homeName} className="hidden xs:block" />
                 </div>
                 <div className="shrink-0 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 select-none">
                   VS
                 </div>
-                <div className="flex-1 text-left min-w-0">
-                  <span className="font-sans font-bold text-base sm:text-xl lg:text-2xl text-slate-900 dark:text-white leading-tight break-words">
+                <div className="flex-1 flex items-center justify-start gap-2 sm:gap-3 min-w-0">
+                  <TeamLogo teamName={rawAway} league={match.League} size="lg" alt={awayName} className="hidden xs:block" />
+                  <span className="font-sans font-bold text-base sm:text-xl lg:text-2xl text-slate-900 dark:text-white leading-tight break-words text-left">
                     {awayName}
                   </span>
                 </div>
@@ -293,8 +298,9 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
           {/* Contextual Sub-row: League, Round & Data Integrity (date & hours retirés conformément aux directives) */}
           <div className={`flex flex-wrap items-center gap-2 mt-2 pt-0.5 transition-all duration-300 ${isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'h-auto opacity-100'}`}>
             {match.League && (
-              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
-                {match.League}
+              <span className="inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                <LeagueLogo league={match.League} size="xs" />
+                <span>{getLeagueDisplayName(match.League)}</span>
               </span>
             )}
             {roundLabel && (
