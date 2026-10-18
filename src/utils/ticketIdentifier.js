@@ -486,14 +486,18 @@ export function formatScoreEvMetric(value, decimals = 3) {
 
 /**
  * Formate un objet Date en jour et mois en français avec initiale majuscule (ex. "Dim. 18 oct.").
+ * Supporte un fuseau horaire explicite optionnel (timeZone).
  *
  * @param {Date} dateObj
+ * @param {string} [timeZone]
  * @returns {string}
  */
-export function formatFrenchDayMonth(dateObj) {
+export function formatFrenchDayMonth(dateObj, timeZone) {
   if (!dateObj || Number.isNaN(dateObj.getTime())) return '';
   try {
-    const parts = new Intl.DateTimeFormat('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }).formatToParts(dateObj);
+    const opts = { weekday: 'short', day: 'numeric', month: 'short' };
+    if (timeZone) opts.timeZone = timeZone;
+    const parts = new Intl.DateTimeFormat('fr-FR', opts).formatToParts(dateObj);
     let weekday = '', day = '', month = '';
     for (const p of parts) {
       if (p.type === 'weekday') weekday = p.value;
@@ -508,36 +512,47 @@ export function formatFrenchDayMonth(dateObj) {
 }
 
 /**
- * Formate l'heure locale en français (format 24h, ex. "15:00").
+ * Formate l'heure au format 12h AM/PM (ex. "9:00 AM", "3:00 PM", "9:30 PM", "12:00 AM", "12:00 PM").
  *
  * @param {Date} dateObj
+ * @param {string} [timeZone]
  * @returns {string}
  */
-export function formatFrenchTime(dateObj) {
+export function formatAmPmTime(dateObj, timeZone) {
   if (!dateObj || Number.isNaN(dateObj.getTime())) return '';
   try {
-    const parts = new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(dateObj);
-    let h = '', m = '';
-    for (const p of parts) {
-      if (p.type === 'hour') h = p.value;
-      if (p.type === 'minute') m = p.value;
-    }
-    return `${h}:${m}`;
+    const opts = { hour: 'numeric', minute: '2-digit', hour12: true };
+    if (timeZone) opts.timeZone = timeZone;
+    return new Intl.DateTimeFormat('en-US', opts).format(dateObj);
   } catch (_) {
-    return dateObj.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', hour12: false });
+    return dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
   }
+}
+
+/**
+ * Alias de compatibilité pour le formatage d'heure.
+ *
+ * @param {Date} dateObj
+ * @param {string} [timeZone]
+ * @returns {string}
+ */
+export function formatFrenchTime(dateObj, timeZone) {
+  return formatAmPmTime(dateObj, timeZone);
 }
 
 /**
  * Formate de façon lisible, déterministe et respectueuse des fuseaux la date et l'heure d'un match :
  * 1. Priorise `kickoff_utc` lorsqu'il est valide et le convertit dans le fuseau horaire local
- *    du navigateur en français (ex. "Dim. 18 oct. · 15:00 (heure locale)").
- * 2. Préserve l'horodatage UTC original dans `utcDisplay` et `title` pour consultation technique.
- * 3. En cas de date seule (`Date` ou `Match_Date`), évite tout décalage accidentel de journée
+ *    du navigateur au format 12h AM/PM en conservant la date en français (ex. "Dim. 18 oct. · 3:00 PM").
+ * 2. Supprime "(heure locale)" du texte visible.
+ * 3. Préserve l'horodatage UTC original dans `utcDisplay` et `title` pour consultation technique.
+ * 4. Si seul un champ `Heure` sans fuseau est disponible, ne prétend pas avoir effectué une conversion locale.
+ * 5. En cas de date seule (`Date` ou `Match_Date`), évite tout décalage accidentel de journée
  *    via un parsing calendrier sécurisé (midi local) et affiche uniquement la date en français
  *    sans jamais fabriquer d'heure artificielle.
  *
  * @param {Object} item Jambe de ticket, sélection finale ou objet avec kickoff_utc / Date / Heure
+ * @param {string} [explicitTimeZone] Fuseau cible explicite (optionnel, pour tests ou configuration utilisateur)
  * @returns {{
  *   display: string,
  *   formattedLocal: string,
@@ -549,7 +564,7 @@ export function formatFrenchTime(dateObj) {
  *   title: string
  * }}
  */
-export function formatKickoffExplicit(item) {
+export function formatKickoffExplicit(item, explicitTimeZone = null) {
   if (!item || typeof item !== 'object') {
     return {
       display: 'Date non disponible',
@@ -562,6 +577,14 @@ export function formatKickoffExplicit(item) {
       title: 'Date non disponible'
     };
   }
+
+  const browserTimezone = explicitTimeZone || (() => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    } catch (_) {
+      return 'UTC';
+    }
+  })();
 
   const rawKickoffUtc = typeof item.kickoff_utc === 'string' && item.kickoff_utc.trim()
     ? item.kickoff_utc.trim()
@@ -578,8 +601,8 @@ export function formatKickoffExplicit(item) {
   if (rawKickoffUtc && /T\d{2}:\d{2}/.test(rawKickoffUtc)) {
     const parsed = new Date(rawKickoffUtc);
     if (!Number.isNaN(parsed.getTime())) {
-      const frenchDate = formatFrenchDayMonth(parsed);
-      const frenchTime = formatFrenchTime(parsed);
+      const frenchDate = formatFrenchDayMonth(parsed, browserTimezone);
+      const timeStr = formatAmPmTime(parsed, browserTimezone);
 
       const uYear = parsed.getUTCFullYear();
       const uMonth = String(parsed.getUTCMonth() + 1).padStart(2, '0');
@@ -589,14 +612,14 @@ export function formatKickoffExplicit(item) {
       const utcDisplay = `${uYear}-${uMonth}-${uDay} • ${uHours}:${uMinutes} UTC`;
 
       return {
-        display: `${frenchDate} · ${frenchTime} (heure locale)`,
-        formattedLocal: `${frenchDate} · ${frenchTime}`,
+        display: `${frenchDate} · ${timeStr}`,
+        formattedLocal: `${frenchDate} · ${timeStr}`,
         hasTime: true,
-        timezone: 'LOCAL',
+        timezone: browserTimezone,
         rawKickoffUtc,
         rawDate: `${uYear}-${uMonth}-${uDay}`,
         utcDisplay,
-        title: `Heure locale du navigateur • Horodatage original : ${utcDisplay}`
+        title: `Heure locale (${browserTimezone}) • Horodatage original : ${utcDisplay}`
       };
     }
   }
@@ -616,14 +639,14 @@ export function formatKickoffExplicit(item) {
 
     if (rawHour) {
       return {
-        display: `${frenchDate} · ${rawHour} (heure locale)`,
+        display: `${frenchDate} · ${rawHour}`,
         formattedLocal: `${frenchDate} · ${rawHour}`,
         hasTime: true,
-        timezone: 'LOCAL',
+        timezone: null,
         rawKickoffUtc: null,
         rawDate,
         utcDisplay: `${rawDate} • ${rawHour}`,
-        title: `Heure déclarée • Date : ${rawDate}`
+        title: `Heure déclarée : ${rawHour} (fuseau non précisé) • Date : ${rawDate}`
       };
     }
 

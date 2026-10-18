@@ -11,6 +11,22 @@ import {
   formatKickoffExplicit,
   formatIsoTimestampUtc
 } from '../../utils/ticketIdentifier';
+import {
+  INITIAL_TICKET_FILTERS,
+  INITIAL_PICKS_FILTERS,
+  PRODUCT_FAMILIES,
+  filterTickets,
+  filterFinalPicks,
+  getSynthesisHighlights,
+  computeTicketWhatIfCounts,
+  LEAGUE_GROUPS,
+  getLeagueGroupId,
+  formatDateDisplay,
+  getMarketFamilyMeta,
+  getScopeTypeLabel
+} from '../../utils/ticketFilters';
+import { TicketFilterDrawer } from '../filters/TicketFilterDrawer';
+import { getLeagueFlag } from '../../utils/titaniumLoader';
 import { Badge } from '../ui/Badge';
 import {
   Trophy,
@@ -33,7 +49,13 @@ import {
   Code,
   Box,
   Fingerprint,
-  Hash
+  Hash,
+  RotateCcw,
+  Sliders,
+  Sparkles,
+  X,
+  Target,
+  AlertCircle
 } from 'lucide-react';
 
 const INITIAL_VISIBLE_TICKETS = 30;
@@ -72,15 +94,16 @@ const TicketLeg = ({ leg, legIndex, onNavigate }) => {
   const oddsMeta = formatOddsMetric(leg.Cote_Ref, 2);
   const evMeta = formatScoreEvMetric(leg.Score_EV, 3);
   const kickoffMeta = formatKickoffExplicit(leg);
+  const marketMeta = getMarketFamilyMeta(leg.family_name || leg.Type || leg.Marche);
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col hover:border-emerald-500/40 transition-all shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-300/80 dark:border-slate-800 flex flex-col hover:border-slate-400 dark:hover:border-slate-700 transition-all shadow-xs overflow-hidden">
       <div className="p-3 sm:p-3.5 flex flex-col gap-2.5">
-        {/* Row 1: Leg index, Matchup & Direct Navigation CTA */}
+        {/* Row 1: Leg index badge, Matchup & Direct Navigation CTA */}
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-start gap-2 min-w-0 flex-1">
-            <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0 mt-0.5">
-              #{legIndex + 1}
+            <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-[10px] font-mono font-black tracking-wider uppercase bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0 mt-0.5 shadow-2xs">
+              JAMBE {legIndex + 1}
             </span>
             <div className="flex flex-col min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-1.5 min-w-0">
@@ -88,15 +111,15 @@ const TicketLeg = ({ leg, legIndex, onNavigate }) => {
                   {displayHome} <span className="text-slate-400 font-normal">vs</span> {displayAway}
                 </span>
                 {leg.Alpha && (
-                  <span className="text-[11px] px-1.5 py-0.5 bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-bold rounded shrink-0">
+                  <span className="text-[10px] px-1.5 py-0.2 bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-bold rounded shrink-0">
                     ALPHA
                   </span>
                 )}
               </div>
               <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
-                <span className="font-semibold text-slate-600 dark:text-slate-300">{leg.League || 'Ligue N/D'}</span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300">{getLeagueFlag(leg.League)} {leg.League || 'Ligue N/D'}</span>
                 <span aria-hidden="true">•</span>
-                <span className="font-mono" title={kickoffMeta.title || undefined}>{kickoffMeta.display}</span>
+                <span className="font-mono text-slate-600 dark:text-slate-400" title={kickoffMeta.title || undefined}>{kickoffMeta.display}</span>
               </div>
             </div>
           </div>
@@ -107,7 +130,7 @@ const TicketLeg = ({ leg, legIndex, onNavigate }) => {
               e.stopPropagation();
               onNavigate(leg.Match_ID || leg.Match, leagueCode);
             }}
-            className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors shadow-sm"
+            className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors shadow-sm ml-auto"
             title={`Ouvrir l'analyse du match ${displayHome} vs ${displayAway}`}
           >
             <span>Voir Match</span>
@@ -115,34 +138,35 @@ const TicketLeg = ({ leg, legIndex, onNavigate }) => {
           </button>
         </div>
 
-        {/* Row 2: Market, Model Probability & Reference Odds */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
-          <div className="flex items-center gap-1.5 min-w-0">
-            <span className="text-[11px] uppercase font-semibold text-slate-400 dark:text-slate-500 shrink-0">
-              Marché :
+        {/* Row 2: Distinct Market Zone, Model Probability, Reference Odds & Details toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+          {/* Distinct Market Box with lightly tinted background and highlighted label */}
+          <div className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border min-w-0 ${marketMeta.containerClass}`}>
+            <span className={`text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded shadow-2xs shrink-0 ${marketMeta.badgeClass}`}>
+              {marketMeta.label}
             </span>
-            <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 break-words">
+            <span className={`text-xs font-black truncate ${marketMeta.labelClass}`}>
               {leg.Marche || 'Non spécifié'}
             </span>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0 ml-auto">
-            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20">
-              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Prob.</span>
-              <span className="text-xs font-bold font-mono text-blue-600 dark:text-blue-400">
+          <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
+            <div className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200/90 dark:border-slate-700">
+              <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Prob.</span>
+              <span className="text-xs font-bold font-mono text-slate-900 dark:text-slate-100">
                 {probMeta.display}
               </span>
             </div>
-            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20">
-              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Cote Réf.</span>
-              <span className="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400">
+            <div className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200/90 dark:border-slate-700">
+              <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Cote Réf.</span>
+              <span className="text-xs font-bold font-mono text-slate-900 dark:text-slate-100">
                 {oddsMeta.display}
               </span>
             </div>
             <button
               type="button"
               onClick={() => setExpanded(!expanded)}
-              className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               aria-expanded={expanded}
               title={expanded ? 'Masquer les détails de la jambe' : 'Afficher les détails de la jambe'}
             >
@@ -286,7 +310,7 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
             <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
               <span className="inline-flex items-center gap-1 font-medium text-slate-600 dark:text-slate-300">
                 <Globe size={12} className="text-purple-500 shrink-0" />
-                <span>Portée : {scopeType} ({scopeValue})</span>
+                <span>Périmètre : {getScopeTypeLabel(scopeType)} <span className="font-mono text-slate-400 dark:text-slate-500 text-[10px]">({scopeType})</span></span>
               </span>
               {ticket.ticket_id && (
                 <span className="font-mono text-slate-400 dark:text-slate-500 break-all" title={`ID canonique : ${ticket.ticket_id}`}>
@@ -353,7 +377,7 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
       </div>
 
       {/* 3. Ticket Legs List */}
-      <div className="p-3 sm:p-4 bg-slate-50/60 dark:bg-slate-950/50 flex flex-col gap-2.5 flex-1">
+      <div className="p-3 sm:p-4 bg-slate-100/70 dark:bg-slate-950/80 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-col gap-2.5 flex-1">
         <div className="flex items-center justify-between px-1">
           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             Composition du ticket ({legs.length} {legs.length > 1 ? 'jambes' : 'jambe'})
@@ -440,24 +464,22 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch }) => {
 
 export default function TicketsView({ assembled, finals, loading, onNavigateToMatch, initialView = 'summary' }) {
   const [activeView, setActiveView] = useState(initialView);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterTier, setFilterTier] = useState('ALL');
-  const [filterLeague, setFilterLeague] = useState('ALL');
-  const [filterMarket, setFilterMarket] = useState('ALL');
-  const [filterFamily, setFilterFamily] = useState('ALL');
-  const [sortBy, setSortBy] = useState('prob');
   const [auditMode, setAuditMode] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const [filterProduct, setFilterProduct] = useState('ALL');
-  const [stratSortBy, setStratSortBy] = useState('mean_prob');
+  // Isolated filter states for Tickets Assemblés and Choix Finaux
+  const [ticketFilters, setTicketFilters] = useState(INITIAL_TICKET_FILTERS);
+  const [picksFilters, setPicksFilters] = useState(INITIAL_PICKS_FILTERS);
+
+  // Progressive load state for tickets
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_TICKETS);
   const [expandedTicket, setExpandedTicket] = useState(null);
   const toggleExpanded = (idx) => setExpandedTicket(prev => prev === idx ? null : idx);
 
-  // Reset progressive visible slice when ticket filters, search or sort change
+  // Reset progressive visible slice when ticket filters change
   useEffect(() => {
     setVisibleCount(INITIAL_VISIBLE_TICKETS);
-  }, [filterProduct, stratSortBy, searchQuery]);
+  }, [ticketFilters]);
 
   const isV2Tickets = !!(assembled && Array.isArray(assembled.tickets));
 
@@ -537,7 +559,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     return Math.max(0, ticketsList.length - singlesCount);
   }, [ticketsList, singlesCount]);
 
-  // Dynamic list of product families present in the dataset (preserving known + unknown families)
+  // Dynamic list of product families present in the dataset
   const availableProducts = useMemo(() => {
     const codes = Array.from(new Set(ticketsList.map(t => t.product_code).filter(Boolean)));
     return codes.map(code => ({
@@ -547,64 +569,84 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     }));
   }, [ticketsList, ticketAttributionBundle]);
 
+  // Dynamic what-if counts per product family synchronized with active filters
+  const productWhatIfCounts = useMemo(() => {
+    return computeTicketWhatIfCounts(ticketsList, ticketFilters, 'productCode', [
+      'ALL',
+      'MICRO_2',
+      'CORE_3',
+      'CORE_4',
+      'STANDARD_5_8',
+      'EXTENDED_9_PLUS'
+    ]);
+  }, [ticketsList, ticketFilters]);
+
+  // Available unique leagues across the dataset
+  const availableLeagues = useMemo(() => {
+    const leagues = new Set();
+    ticketsList.forEach(t => {
+      (t.legs || []).forEach(l => {
+        if (l.League) leagues.add(l.League);
+      });
+    });
+    (finals?.Selections || []).forEach(s => {
+      if (s.League) leagues.add(s.League);
+    });
+    return Array.from(leagues).sort();
+  }, [ticketsList, finals]);
+
+  // Available unique market families in ticket legs
+  const availableMarketFamilies = useMemo(() => {
+    const fams = new Set();
+    ticketsList.forEach(t => {
+      (t.legs || []).forEach(l => {
+        const f = l.family_name || l.Type;
+        if (f) fams.add(f);
+      });
+    });
+    return Array.from(fams).sort();
+  }, [ticketsList]);
+
+  // Available unique dates
+  const availableDates = useMemo(() => {
+    const dates = new Set();
+    ticketsList.forEach(t => {
+      (t.legs || []).forEach(l => {
+        const d = l.Date || (l.kickoff_utc ? l.kickoff_utc.slice(0, 10) : null);
+        if (d) dates.add(d);
+      });
+    });
+    (finals?.Selections || []).forEach(s => {
+      const d = s.Date || s.Match_Date || (s.kickoff_utc ? s.kickoff_utc.slice(0, 10) : null);
+      if (d) dates.add(d);
+    });
+    return Array.from(dates).sort();
+  }, [ticketsList, finals]);
+
+  // Available unique types in Choix Finaux
+  const availablePicksTypes = useMemo(() => {
+    if (!finals?.Selections) return [];
+    return Array.from(new Set(finals.Selections.map(s => s.family_name || s.Type).filter(Boolean))).sort();
+  }, [finals]);
+
+  // Available unique profiles in Choix Finaux
+  const availablePicksProfiles = useMemo(() => {
+    if (!finals?.Selections) return [];
+    const profs = new Set();
+    finals.Selections.forEach(s => {
+      if (Array.isArray(s.Profile)) {
+        s.Profile.forEach(p => profs.add(p));
+      } else if (s.Profile) {
+        profs.add(s.Profile);
+      }
+    });
+    return Array.from(profs).sort();
+  }, [finals]);
+
   // 3. Global Filtering & Sorting on the FULL source (never mutating human_id)
   const filteredStrategies = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-
-    return ticketsList.filter(t => {
-      const matchesProduct = filterProduct === 'ALL' || t.product_code === filterProduct || t.categorie === filterProduct;
-      if (!matchesProduct) return false;
-      if (!q) return true;
-
-      const humanIdMatch = (t.human_id || '').toLowerCase().includes(q);
-      const canonicalIdMatch = (t.ticket_id || '').toLowerCase().includes(q);
-      const nameMatch = (t.nom || '').toLowerCase().includes(q);
-      const productMatch = (t.product_code || '').toLowerCase().includes(q) || (t.family_meta?.label || '').toLowerCase().includes(q);
-      const scopeMatch = (t.scope_value || '').toLowerCase().includes(q) || (t.scope_type || '').toLowerCase().includes(q);
-      const legMatch = Array.isArray(t.legs) && t.legs.some(l => {
-        const { displayHome, displayAway } = resolveLegMatchDisplay(l.Match, l.League);
-        return (
-          (l.Match || '').toLowerCase().includes(q) ||
-          displayHome.toLowerCase().includes(q) ||
-          displayAway.toLowerCase().includes(q) ||
-          (l.Match_ID || '').toLowerCase().includes(q) ||
-          (l.League || '').toLowerCase().includes(q) ||
-          (l.Marche || '').toLowerCase().includes(q)
-        );
-      });
-
-      return humanIdMatch || canonicalIdMatch || nameMatch || productMatch || scopeMatch || legMatch;
-    }).sort((a, b) => {
-      if (stratSortBy === 'canonical') {
-        return a.canonical_index - b.canonical_index;
-      }
-      if (stratSortBy === 'mean_prob' || stratSortBy === 'prob') {
-        const pA = isValidNumericMetric(a.metrics?.mean_leg_model_probability) ? a.metrics.mean_leg_model_probability : -Infinity;
-        const pB = isValidNumericMetric(b.metrics?.mean_leg_model_probability) ? b.metrics.mean_leg_model_probability : -Infinity;
-        if (pB !== pA) return pB - pA;
-        return a.canonical_index - b.canonical_index;
-      }
-      if (stratSortBy === 'min_prob') {
-        const pA = isValidNumericMetric(a.metrics?.min_leg_model_probability) ? a.metrics.min_leg_model_probability : -Infinity;
-        const pB = isValidNumericMetric(b.metrics?.min_leg_model_probability) ? b.metrics.min_leg_model_probability : -Infinity;
-        if (pB !== pA) return pB - pA;
-        return a.canonical_index - b.canonical_index;
-      }
-      if (stratSortBy === 'odds') {
-        const oA = isValidNumericMetric(a.metrics?.reference_odds_floor_product) ? a.metrics.reference_odds_floor_product : -Infinity;
-        const oB = isValidNumericMetric(b.metrics?.reference_odds_floor_product) ? b.metrics.reference_odds_floor_product : -Infinity;
-        if (oB !== oA) return oB - oA;
-        return a.canonical_index - b.canonical_index;
-      }
-      if (stratSortBy === 'legs') {
-        const lA = isValidNumericMetric(a.metrics?.leg_count) ? a.metrics.leg_count : (a.legs?.length || 0);
-        const lB = isValidNumericMetric(b.metrics?.leg_count) ? b.metrics.leg_count : (b.legs?.length || 0);
-        if (lB !== lA) return lB - lA;
-        return a.canonical_index - b.canonical_index;
-      }
-      return a.canonical_index - b.canonical_index;
-    });
-  }, [ticketsList, filterProduct, stratSortBy, searchQuery]);
+    return filterTickets(ticketsList, ticketFilters);
+  }, [ticketsList, ticketFilters]);
 
   // 4. Progressive Slicing for Mobile/Desktop DOM performance
   const visibleStrategies = useMemo(() => {
@@ -613,21 +655,77 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
   const remainingTicketsCount = Math.max(0, filteredStrategies.length - visibleStrategies.length);
 
-  // Selections (CHOIX_FINAUX) aggregations & filters
-  const uniqueLeagues = useMemo(() => {
-    if (!finals?.Selections) return [];
-    return Array.from(new Set(finals.Selections.map(s => s.League).filter(Boolean))).sort();
-  }, [finals]);
-
-  const uniqueFamilies = useMemo(() => {
-    if (!finals?.Selections) return [];
-    const names = finals.Selections.map(s => s.family_name || s.Type).filter(Boolean);
-    return Array.from(new Set(names)).sort();
-  }, [finals]);
-
+  // 5. Choix Finaux filtering & sorting
   const totalSelections = finals?.Selections?.length || 0;
 
-  // Descriptive mean of model probabilities across valid CHOIX_FINAUX selections (never turning absent values into 0)
+  const filteredPicks = useMemo(() => {
+    return filterFinalPicks(finals?.Selections || [], picksFilters);
+  }, [finals, picksFilters]);
+
+  // Dynamic Tier counts and pills for Choix Finaux (D-1)
+  const picksTierCounts = useMemo(() => {
+    const counts = {};
+    (finals?.Selections || []).forEach(p => {
+      const t = p.Tier != null ? String(p.Tier) : null;
+      if (t) counts[t] = (counts[t] || 0) + 1;
+    });
+    return counts;
+  }, [finals]);
+
+  const picksTierPills = useMemo(() => {
+    const tiers = Object.keys(picksTierCounts)
+      .map(t => parseInt(t, 10))
+      .filter(t => !isNaN(t) && (picksTierCounts[String(t)] || 0) > 0)
+      .sort((a, b) => a - b);
+    return tiers.map(t => ({
+      id: `T${t}`,
+      tierKey: String(t),
+      label: `Tier ${t} (${picksTierCounts[String(t)] || 0})`,
+      active: picksFilters.tier === String(t)
+    }));
+  }, [picksTierCounts, picksFilters.tier]);
+
+  // 6. Synthesis Highlights (Top 5 Singles, Top 5 Combos by min prob, Top 5 Choix Finaux)
+  const highlights = useMemo(() => {
+    return getSynthesisHighlights(ticketsList, finals?.Selections || [], 5);
+  }, [ticketsList, finals]);
+
+  // Active filter counters
+  const ticketActiveCriteriaCount = useMemo(() => {
+    let count = 0;
+    if (ticketFilters.structure !== 'ALL') count++;
+    if (ticketFilters.productCode && ticketFilters.productCode !== 'ALL') count++;
+    if (ticketFilters.scopeType !== 'ALL') count++;
+    if (ticketFilters.leagueGroup !== 'ALL') count++;
+    if (ticketFilters.selectedLeagues?.length > 0) count++;
+    if (ticketFilters.selectedMarketFamilies?.length > 0) count++;
+    if (ticketFilters.selectedDate !== 'ALL') count++;
+    if (ticketFilters.minProbThreshold > 0) count++;
+    if (ticketFilters.legMatchMode && ticketFilters.legMatchMode !== 'ANY') count++;
+    if (ticketFilters.searchQuery?.trim()) count++;
+    return count;
+  }, [ticketFilters]);
+
+  const picksActiveCriteriaCount = useMemo(() => {
+    let count = 0;
+    if (picksFilters.tier !== 'ALL') count++;
+    if (picksFilters.leagueGroup !== 'ALL') count++;
+    if (picksFilters.selectedLeagues?.length > 0) count++;
+    if (picksFilters.selectedType !== 'ALL') count++;
+    if (picksFilters.selectedProfile !== 'ALL') count++;
+    if (picksFilters.streakStatus !== 'ALL') count++;
+    if (picksFilters.alphaOnly) count++;
+    if (picksFilters.superSignalOnly) count++;
+    if (picksFilters.liveOnly) count++;
+    if (picksFilters.selectedDate !== 'ALL') count++;
+    if (picksFilters.searchQuery?.trim()) count++;
+    return count;
+  }, [picksFilters]);
+
+  const onResetTicketFilters = () => setTicketFilters(INITIAL_TICKET_FILTERS);
+  const onResetPicksFilters = () => setPicksFilters(INITIAL_PICKS_FILTERS);
+
+  // Descriptive mean of model probabilities across valid CHOIX_FINAUX selections
   const avgProbDisplay = useMemo(() => {
     if (!finals?.Selections || finals.Selections.length === 0) return 'N/D';
     const valid = finals.Selections.filter(s => isValidNumericMetric(s?.Prob));
@@ -653,58 +751,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     return Object.entries(stats).sort((a, b) => b[1] - a[1]);
   }, [finals]);
 
-  const filteredPicks = useMemo(() => {
-    if (!finals?.Selections) return [];
-    const q = searchQuery.trim().toLowerCase();
-
-    return finals.Selections.filter(p => {
-      if (!p) return false;
-      const familyRef = p.family_name || p.Type || '';
-      const { displayHome, displayAway } = resolveLegMatchDisplay(p.Match, p.League);
-      const matchSearch = !q ||
-        (p.Match || '').toLowerCase().includes(q) ||
-        displayHome.toLowerCase().includes(q) ||
-        displayAway.toLowerCase().includes(q) ||
-        (p.Match_ID || '').toLowerCase().includes(q) ||
-        (p.League || '').toLowerCase().includes(q) ||
-        (p.Marche || '').toLowerCase().includes(q) ||
-        (p.Streak_Reason || '').toLowerCase().includes(q) ||
-        familyRef.toLowerCase().includes(q) ||
-        (p.Profile && p.Profile.some(prof => prof.toLowerCase().includes(q)));
-
-      const matchesTier = filterTier === 'ALL' || p.Tier === parseInt(filterTier, 10);
-      const matchesLeague = filterLeague === 'ALL' || p.League === filterLeague;
-      const matchesFamily = filterFamily === 'ALL' || familyRef === filterFamily;
-      let matchesMarket = true;
-      if (filterMarket !== 'ALL') {
-        const m = p.Marche || '';
-        if (filterMarket === 'Over Goals') matchesMarket = m.includes('Over');
-        else if (filterMarket === 'Under Goals') matchesMarket = m.includes('Under');
-        else if (filterMarket === 'BTTS') matchesMarket = m.includes('BTTS');
-        else matchesMarket = !m.includes('Over') && !m.includes('Under') && !m.includes('BTTS');
-      }
-      return matchSearch && matchesTier && matchesLeague && matchesFamily && matchesMarket;
-    }).sort((a, b) => {
-      if (sortBy === 'prob') {
-        const pA = isValidNumericMetric(a.Prob) ? a.Prob : -Infinity;
-        const pB = isValidNumericMetric(b.Prob) ? b.Prob : -Infinity;
-        return pB - pA;
-      }
-      if (sortBy === 'odds') {
-        const oA = isValidNumericMetric(a.Cote_Ref) ? a.Cote_Ref : -Infinity;
-        const oB = isValidNumericMetric(b.Cote_Ref) ? b.Cote_Ref : -Infinity;
-        return oB - oA;
-      }
-      if (sortBy === 'ev') {
-        const eA = isValidNumericMetric(a.Score_EV) ? a.Score_EV : -Infinity;
-        const eB = isValidNumericMetric(b.Score_EV) ? b.Score_EV : -Infinity;
-        return eB - eA;
-      }
-      return 0;
-    });
-  }, [finals, searchQuery, filterTier, filterLeague, filterMarket, filterFamily, sortBy]);
-
-  // Descriptive mean of Score_EV across filtered selections (never turning empty/absent into 0)
+  // Descriptive mean of Score_EV across filtered selections
   const filteredAvgScoreEvDisplay = useMemo(() => {
     const valid = filteredPicks.filter(s => isValidNumericMetric(s?.Score_EV));
     if (valid.length === 0) return 'N/D';
@@ -786,6 +833,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
       {/* VIEW 1: SUMMARY / SYNTHÈSE */}
       {activeView === 'summary' && (
         <div className="flex flex-col gap-8 animate-in fade-in duration-300">
+          {/* Hero KPI Card */}
           <div className="relative rounded-3xl p-5 sm:p-6 lg:p-10 overflow-hidden bg-slate-900 dark:bg-black border border-white/10 shadow-2xl">
             <div className="absolute top-0 right-0 p-8 opacity-5 text-white pointer-events-none">
               <Trophy size={150} />
@@ -823,7 +871,10 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
                 <div
                   className="col-span-full bg-emerald-500/15 border border-emerald-500/30 p-4 rounded-2xl flex items-center justify-between gap-3 group cursor-pointer hover:bg-emerald-500/25 transition-all"
-                  onClick={() => setActiveView('strategies')}
+                  onClick={() => {
+                    setActiveView('strategies');
+                    setTicketFilters(INITIAL_TICKET_FILTERS);
+                  }}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
                     <div className="flex items-center gap-2">
@@ -861,42 +912,65 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             </div>
           </div>
 
-          {/* Alpha / Elite Tier 1 Picks */}
+          {/* Section 1: Top 5 Singles à haute probabilité modèle */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between px-1">
-              <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                <Zap size={18} className="text-amber-500 fill-amber-500" /> Sélections Tier 1 (CHOIX_FINAUX)
-              </h3>
+            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+              <div>
+                <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                  <Target size={18} className="text-emerald-500" />
+                  <span>Singles à probabilité modèle élevée</span>
+                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">({highlights.topSingles.length} affichés)</span>
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Classés par probabilité modèle décroissante de l&apos;unique jambe • Réf. catalogue : {singlesCount} sélections simples.
+                </p>
+              </div>
               <button
                 type="button"
-                onClick={() => setActiveView('picks')}
-                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                onClick={() => {
+                  setActiveView('strategies');
+                  setTicketFilters(prev => ({ ...prev, structure: 'SINGLES' }));
+                }}
+                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
               >
-                Voir les {totalSelections} choix →
+                <span>Explorer les {singlesCount} singles</span>
+                <ArrowUpRight size={14} />
               </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {finals?.Selections && finals.Selections.some(s => s.Tier === 1) ? (
-                finals.Selections.filter(s => s.Tier === 1).slice(0, 3).map((sel, idx) => {
-                  const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(sel.Match, sel.League);
+
+            {highlights.topSingles.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {highlights.topSingles.map((ticket) => {
+                  const leg = ticket.legs?.[0] || {};
+                  const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(leg.Match, leg.League);
                   const homeInfo = getTeamInfo(homeRaw);
                   const awayInfo = getTeamInfo(awayRaw);
-                  const probMeta = formatProbabilityMetric(sel.Prob, 1);
-                  const oddsMeta = formatOddsMetric(sel.Cote_Ref, 2);
-                  const kickoffMeta = formatKickoffExplicit(sel);
+                  const probMeta = formatProbabilityMetric(leg.Prob, 1);
+                  const oddsMeta = formatOddsMetric(leg.Cote_Ref, 2);
+                  const kickoffMeta = formatKickoffExplicit(leg);
+                  const familyMeta = ticket.family_meta || getTicketFamilyMeta(ticket.product_code);
 
                   return (
-                    <div key={sel.Bet_ID || idx} className="bg-white dark:bg-slate-900/80 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-md flex flex-col gap-3">
+                    <div
+                      key={ticket.human_id || ticket.ticket_id}
+                      className="bg-white dark:bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3 transition-all hover:border-emerald-500/40"
+                    >
                       <div className="flex justify-between items-center">
-                        <Badge variant="success" className="bg-emerald-600 text-white text-xs px-2.5 py-0.5 font-bold">
-                          TIER 1
-                        </Badge>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg font-mono text-xs font-black border ${familyMeta.humanIdBadgeClass}`}>
+                            <Hash size={12} />
+                            {ticket.human_id}
+                          </span>
+                          <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                            Single
+                          </span>
+                        </div>
                         <div className="text-base font-black text-emerald-600 dark:text-emerald-400 font-mono">
                           Prob. {probMeta.display}
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                      <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
                         <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-end">
                           <span className="text-xs font-bold text-slate-900 dark:text-white truncate text-right">{displayHome}</span>
                           <div className="w-6 h-6 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 border border-slate-200 dark:border-slate-700">
@@ -912,36 +986,301 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                         </div>
                       </div>
 
-                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                        {sel.League} • <span className="font-mono">{kickoffMeta.display}</span>
-                      </p>
-
-                      <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200/70 dark:border-slate-800">
-                        <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 truncate pr-2">
-                          {sel.Marche}
-                        </span>
-                        <span className="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 shrink-0">
-                          {oddsMeta.display}
-                        </span>
+                      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                        <span className="font-semibold">{getLeagueFlag(leg.League)} {leg.League}</span>
+                        <span className="font-mono text-[11px]">{kickoffMeta.display}</span>
                       </div>
+
+                      {(() => {
+                        const marketMeta = getMarketFamilyMeta(leg.family_name || leg.Type || leg.Marche);
+                        return (
+                          <div className={`flex items-center justify-between p-2 rounded-xl border ${marketMeta.containerClass}`}>
+                            <div className="flex items-center gap-1.5 min-w-0 pr-2">
+                              <span className={`text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded shadow-2xs shrink-0 ${marketMeta.badgeClass}`}>
+                                {marketMeta.label}
+                              </span>
+                              <span className={`text-xs font-black truncate ${marketMeta.labelClass}`}>
+                                {leg.Marche || 'Marché'}
+                              </span>
+                            </div>
+                            <span className="text-xs font-bold font-mono text-slate-900 dark:text-slate-100 bg-white/80 dark:bg-slate-900/80 px-2 py-0.5 rounded border border-slate-200/80 dark:border-slate-700 shrink-0">
+                              {oddsMeta.display}
+                            </span>
+                          </div>
+                        );
+                      })()}
 
                       <button
                         type="button"
-                        onClick={() => onNavigateToMatch(sel.Match_ID || sel.Match, sel.League || 'ALL')}
-                        className="mt-auto w-full py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center justify-center gap-1.5"
+                        onClick={() => onNavigateToMatch(leg.Match_ID || leg.Match, leg.League || 'ALL')}
+                        className="mt-auto w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
                       >
                         <span>Voir Match</span>
                         <ArrowUpRight size={14} />
                       </button>
                     </div>
                   );
-                })
-              ) : (
-                <div className="col-span-full py-8 px-4 text-center text-slate-500 dark:text-slate-400 text-xs bg-white dark:bg-slate-900/60 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
-                  Aucune sélection Tier 1 dans cette session ({totalSelections} sélections totales disponibles dans l&apos;onglet Choix Finaux).
-                </div>
-              )}
+                })}
+              </div>
+            ) : (
+              <div className="py-6 px-4 text-center text-slate-500 dark:text-slate-400 text-xs bg-white dark:bg-slate-900/60 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+                Aucune sélection simple dans cette session.
+              </div>
+            )}
+          </div>
+
+          {/* Section 2: Top 5 Combinés à jambes fortes */}
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+              <div>
+                <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                  <Layers size={18} className="text-sky-500" />
+                  <span>Combinés à jambes fortes</span>
+                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">({highlights.topCombos.length} affichés)</span>
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Classés par <strong>probabilité minimale d&apos;une jambe</strong> (jambe la plus délicate) décroissante • {combosCount} combinés totaux.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveView('strategies');
+                  setTicketFilters(prev => ({ ...prev, structure: 'COMBOS' }));
+                }}
+                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+              >
+                <span>Explorer les {combosCount} combinés</span>
+                <ArrowUpRight size={14} />
+              </button>
             </div>
+
+            {/* Informative notice on joint probability vs min leg probability */}
+            <div className="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-3 sm:p-3.5 flex items-start gap-2.5">
+              <AlertCircle size={16} className="text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />
+              <p className="text-xs text-sky-800 dark:text-sky-300 leading-relaxed font-medium">
+                <strong>Précision quantitative :</strong> Ce classement ordonne les combinés selon la solidité de leur maillon le plus faible (<span className="font-mono">Prob. Min. Jambe</span>). La probabilité jointe d&apos;un combiné n&apos;est pas déduite arbitrairement côté client et reste <span className="font-mono">Non disponible</span> conformément à la sortie du moteur.
+              </p>
+            </div>
+
+            {highlights.topCombos.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {highlights.topCombos.map((ticket) => {
+                  const familyMeta = ticket.family_meta || getTicketFamilyMeta(ticket.product_code);
+                  const legs = ticket.legs || [];
+                  const minProbMeta = formatProbabilityMetric(ticket.metrics?.min_leg_model_probability, 1);
+                  const meanProbMeta = formatProbabilityMetric(ticket.metrics?.mean_leg_model_probability, 1);
+                  const oddsMeta = formatOddsMetric(ticket.metrics?.reference_odds_floor_product, 2);
+
+                  return (
+                    <div
+                      key={ticket.human_id || ticket.ticket_id}
+                      className="bg-white dark:bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3 transition-all hover:border-sky-500/40"
+                    >
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-1.5">
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg font-mono text-xs font-black border ${familyMeta.humanIdBadgeClass}`}>
+                            <Hash size={12} />
+                            {ticket.human_id}
+                          </span>
+                          <span className={`px-2 py-0.5 rounded text-[11px] font-bold border ${familyMeta.badgeClass}`}>
+                            {familyMeta.label}
+                          </span>
+                          <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                            {legs.length} jambes
+                          </span>
+                        </div>
+                        <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                          {oddsMeta.display}
+                        </span>
+                      </div>
+
+                      {/* Primary Metric: Min leg probability highlighted */}
+                      <div className="bg-sky-500/10 border border-sky-500/25 p-2.5 rounded-xl flex items-center justify-between">
+                        <div className="flex flex-col">
+                          <span className="text-[11px] font-bold text-sky-700 dark:text-sky-300 uppercase">
+                            Prob. Min. Jambe
+                          </span>
+                          <span className="text-lg font-black font-mono text-sky-900 dark:text-sky-100">
+                            {minProbMeta.display}
+                          </span>
+                        </div>
+                        <div className="flex flex-col items-end">
+                          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                            Prob. Moy. Jambes
+                          </span>
+                          <span className="text-sm font-bold font-mono text-slate-800 dark:text-slate-200">
+                            {meanProbMeta.display}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Preview of legs */}
+                      <div className="flex flex-col gap-1.5 bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                          Jambes du combiné ({legs.length})
+                        </span>
+                        {legs.slice(0, 3).map((l, lidx) => {
+                          const legProb = formatProbabilityMetric(l.Prob, 1);
+                          return (
+                            <div key={lidx} className="flex items-center justify-between text-xs py-0.5 border-b border-slate-200/50 dark:border-slate-800/60 last:border-0">
+                              <span className="truncate pr-2 font-medium text-slate-800 dark:text-slate-200">
+                                {getLeagueFlag(l.League)} {l.Match}
+                              </span>
+                              <span className="font-mono text-[11px] font-bold text-emerald-600 dark:text-emerald-400 shrink-0">
+                                {legProb.display}
+                              </span>
+                            </div>
+                          );
+                        })}
+                        {legs.length > 3 && (
+                          <span className="text-[10px] text-slate-400 font-mono text-center pt-0.5">
+                            +{legs.length - 3} autre{legs.length - 3 > 1 ? 's' : ''} jambe{legs.length - 3 > 1 ? 's' : ''}
+                          </span>
+                        )}
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveView('strategies');
+                          setTicketFilters(prev => ({ ...prev, structure: 'COMBOS', searchQuery: ticket.human_id }));
+                        }}
+                        className="mt-auto w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-sky-600 dark:hover:bg-sky-400 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+                      >
+                        <span>Voir ce ticket</span>
+                        <ArrowUpRight size={14} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="py-6 px-4 text-center text-slate-500 dark:text-slate-400 text-xs bg-white dark:bg-slate-900/60 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+                Aucun combiné assemblé dans cette session ({singlesCount} sélections simples disponibles).
+              </div>
+            )}
+          </div>
+
+          {/* Section 3: Top 5 Choix Finaux les plus probables */}
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+              <div>
+                <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                  <Zap size={18} className="text-amber-500 fill-amber-500" />
+                  <span>Choix Finaux les plus probables (CHOIX_FINAUX)</span>
+                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">({highlights.topPicks.length} affichés)</span>
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Sélections retenues ordonnées par probabilité modèle • Tiers réels restitués ({totalSelections} choix au total).
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveView('picks')}
+                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+              >
+                <span>Voir les {totalSelections} choix</span>
+                <ArrowUpRight size={14} />
+              </button>
+            </div>
+
+            {highlights.topPicks.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {highlights.topPicks.map((sel, idx) => {
+                  const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(sel.Match, sel.League);
+                  const homeInfo = getTeamInfo(homeRaw);
+                  const awayInfo = getTeamInfo(awayRaw);
+                  const probMeta = formatProbabilityMetric(sel.Prob, 1);
+                  const oddsMeta = formatOddsMetric(sel.Cote_Ref, 2);
+                  const evMeta = formatScoreEvMetric(sel.Score_EV, 3);
+                  const kickoffMeta = formatKickoffExplicit(sel);
+
+                  return (
+                    <div
+                      key={sel.Bet_ID || idx}
+                      className="bg-white dark:bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3 transition-all hover:border-emerald-500/40"
+                    >
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-1.5">
+                          <Badge className={`${getTierColor(sel.Tier)} text-[11px] px-2.5 py-0.5 font-bold rounded-md`}>
+                            Tier {sel.Tier}
+                          </Badge>
+                          {sel.Streak_Status === 'STREAK_CONFIRMED' && (
+                            <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                              Série OK
+                            </span>
+                          )}
+                          {sel.Alpha && (
+                            <span className="text-[11px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white">
+                              ALPHA
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-base font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                          Prob. {probMeta.display}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+                        <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-end">
+                          <span className="text-xs font-bold text-slate-900 dark:text-white truncate text-right">{displayHome}</span>
+                          <div className="w-6 h-6 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 border border-slate-200 dark:border-slate-700">
+                            <img src={homeInfo.logoPath} alt={displayHome} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                          </div>
+                        </div>
+                        <span className="text-[11px] font-mono text-slate-400 shrink-0">vs</span>
+                        <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-start">
+                          <div className="w-6 h-6 shrink-0 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-0.5 border border-slate-200 dark:border-slate-700">
+                            <img src={awayInfo.logoPath} alt={displayAway} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                          </div>
+                          <span className="text-xs font-bold text-slate-900 dark:text-white truncate text-left">{displayAway}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                        <span className="font-semibold">{getLeagueFlag(sel.League)} {sel.League}</span>
+                        <span className="font-mono text-[11px]">{kickoffMeta.display}</span>
+                      </div>
+
+                      <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                        <div className="flex flex-col min-w-0 pr-2">
+                          <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 truncate">
+                            {sel.Marche}
+                          </span>
+                          <span className="text-[10px] font-mono text-slate-400 uppercase">
+                            {sel.family_name || sel.Type}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <span className="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                            {oddsMeta.display}
+                          </span>
+                          {evMeta.available && (
+                            <span className="text-[11px] font-bold font-mono text-purple-600 dark:text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20" title={`Score_EV : ${evMeta.display}`}>
+                              EV: {evMeta.display}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => onNavigateToMatch(sel.Match_ID || sel.Match, sel.League || 'ALL')}
+                        className="mt-auto w-full py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+                      >
+                        <span>Voir Match</span>
+                        <ArrowUpRight size={14} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="py-6 px-4 text-center text-slate-500 dark:text-slate-400 text-xs bg-white dark:bg-slate-900/60 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+                Aucune sélection finale dans cette session.
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -955,7 +1294,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 Catalogue des Tickets Assemblés
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-xs font-medium mt-0.5">
-                Sorties brutes de <span className="font-mono">TICKETS_ASSEMBLES.json</span> • Numérotation humaine déterministe par session.
+                Sorties brutes de <span className="font-mono">TICKETS_ASSEMBLES.json</span> • Numérotation humaine déterministe.
               </p>
             </div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 shrink-0">
@@ -966,58 +1305,218 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             </div>
           </div>
 
-          {/* Search, Product Filter & Sort Controls */}
+          {/* Search, Filter Toolbar & Active Chips */}
           <div className="flex flex-col gap-3 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-              <input
-                type="text"
-                placeholder="Rechercher par ID humain (ex: SINGLE-001, MICRO-001), ID canonique, équipe, ligue, marché..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-3 text-xs sm:text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
-              />
+            {/* Row 1: Search + Advanced Filters Drawer Button */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <input
+                  type="text"
+                  placeholder="Rechercher par ID humain (SINGLE-001, MICRO-001...), match, équipe, ligue..."
+                  value={ticketFilters.searchQuery}
+                  onChange={e => setTicketFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-8 text-xs sm:text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+                />
+                {ticketFilters.searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setTicketFilters(prev => ({ ...prev, searchQuery: '' }))}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsDrawerOpen(true)}
+                className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-bold border transition-all shrink-0 ${
+                  ticketActiveCriteriaCount > 0
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+              >
+                <Sliders size={14} />
+                <span>Filtres</span>
+                {ticketActiveCriteriaCount > 0 && (
+                  <span className="w-5 h-5 rounded-full bg-white text-emerald-700 font-mono text-[11px] font-black flex items-center justify-center">
+                    {ticketActiveCriteriaCount}
+                  </span>
+                )}
+              </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
-                <Filter size={14} className="text-slate-400 shrink-0" />
-                <label htmlFor="ticket-product-filter" className="text-xs font-semibold text-slate-500 shrink-0">
-                  Famille :
-                </label>
-                <select
-                  id="ticket-product-filter"
-                  value={filterProduct}
-                  onChange={e => setFilterProduct(e.target.value)}
-                  className="bg-transparent text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none w-full"
+            {/* Row 2: Quick Filter Pills */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+              {[
+                { id: 'ALL', label: `Tous (${ticketsList.length})`, active: ticketFilters.structure === 'ALL' && ticketFilters.productCode === 'ALL' && ticketFilters.leagueGroup === 'ALL' && ticketFilters.selectedMarketFamilies.length === 0 },
+                { id: 'SINGLES', label: `Singles (${singlesCount})`, active: ticketFilters.structure === 'SINGLES' && ticketFilters.productCode === 'ALL' },
+                { id: 'COMBOS', label: `Combinés (${combosCount})`, active: ticketFilters.structure === 'COMBOS' && ticketFilters.productCode === 'ALL' },
+                { id: 'MICRO_2', label: `Micro (${productWhatIfCounts?.['MICRO_2'] ?? 36})`, active: ticketFilters.productCode === 'MICRO_2' },
+                { id: 'CORE_3', label: `Core 3 (${productWhatIfCounts?.['CORE_3'] ?? 30})`, active: ticketFilters.productCode === 'CORE_3' },
+                { id: 'CORE_4', label: `Core 4 (${productWhatIfCounts?.['CORE_4'] ?? 23})`, active: ticketFilters.productCode === 'CORE_4' },
+                { id: 'STANDARD_5_8', label: `Standard (${productWhatIfCounts?.['STANDARD_5_8'] ?? 18})`, active: ticketFilters.productCode === 'STANDARD_5_8' },
+                { id: 'EXTENDED_9_PLUS', label: `Extended (${productWhatIfCounts?.['EXTENDED_9_PLUS'] ?? 2})`, active: ticketFilters.productCode === 'EXTENDED_9_PLUS' },
+                { id: 'TOP7', label: 'Top 7 Europe', active: ticketFilters.leagueGroup === 'TOP_7_EUROPE' },
+                { id: 'TG', label: 'Team Goals', active: ticketFilters.selectedMarketFamilies.includes('Team Goals') }
+              ].map(pill => (
+                <button
+                  key={pill.id}
+                  type="button"
+                  onClick={() => {
+                    if (pill.id === 'ALL') {
+                      onResetTicketFilters();
+                    } else if (pill.id === 'SINGLES') {
+                      setTicketFilters(prev => ({
+                        ...prev,
+                        structure: prev.structure === 'SINGLES' ? 'ALL' : 'SINGLES',
+                        productCode: 'ALL'
+                      }));
+                    } else if (pill.id === 'COMBOS') {
+                      setTicketFilters(prev => ({
+                        ...prev,
+                        structure: prev.structure === 'COMBOS' ? 'ALL' : 'COMBOS',
+                        productCode: 'ALL'
+                      }));
+                    } else if (['MICRO_2', 'CORE_3', 'CORE_4', 'STANDARD_5_8', 'EXTENDED_9_PLUS'].includes(pill.id)) {
+                      setTicketFilters(prev => ({
+                        ...prev,
+                        productCode: prev.productCode === pill.id ? 'ALL' : pill.id,
+                        structure: prev.structure === 'SINGLES' ? 'ALL' : prev.structure
+                      }));
+                    } else if (pill.id === 'TOP7') {
+                      setTicketFilters(prev => ({ ...prev, leagueGroup: prev.leagueGroup === 'TOP_7_EUROPE' ? 'ALL' : 'TOP_7_EUROPE' }));
+                    } else if (pill.id === 'TG') {
+                      setTicketFilters(prev => {
+                        const hasTG = prev.selectedMarketFamilies.includes('Team Goals');
+                        return {
+                          ...prev,
+                          selectedMarketFamilies: hasTG ? prev.selectedMarketFamilies.filter(f => f !== 'Team Goals') : [...prev.selectedMarketFamilies, 'Team Goals']
+                        };
+                      });
+                    }
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none ${
+                    pill.active
+                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
+                      : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                  }`}
                 >
-                  <option value="ALL">Toutes les familles ({ticketsList.length})</option>
-                  {availableProducts.map(({ code, meta, count }) => (
-                    <option key={code} value={code}>
-                      {meta.label} — {meta.prefix} ({count})
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  {pill.label}
+                </button>
+              ))}
+            </div>
 
-              <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
-                <TrendingUp size={14} className="text-slate-400 shrink-0" />
-                <label htmlFor="ticket-sort-select" className="text-xs font-semibold text-slate-500 shrink-0">
-                  Tri :
-                </label>
-                <select
-                  id="ticket-sort-select"
-                  value={stratSortBy}
-                  onChange={e => setStratSortBy(e.target.value)}
-                  className="bg-transparent text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none w-full"
+            {/* Row 3: Active Filter Chips */}
+            {ticketActiveCriteriaCount > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-tight mr-1">
+                  Actifs :
+                </span>
+                {ticketFilters.structure !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                    Structure: {ticketFilters.structure}
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, structure: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.productCode !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
+                    Famille: {PRODUCT_FAMILIES.find(f => f.code === ticketFilters.productCode)?.label || ticketFilters.productCode}
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, productCode: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.scopeType !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20" title={`Valeur canonique : ${ticketFilters.scopeType}`}>
+                    Périmètre: {getScopeTypeLabel(ticketFilters.scopeType)}
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, scopeType: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.leagueGroup !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
+                    Groupe: {LEAGUE_GROUPS[ticketFilters.leagueGroup]?.label || ticketFilters.leagueGroup}
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, leagueGroup: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.selectedLeagues?.map(l => (
+                  <span key={l} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                    {l}
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, selectedLeagues: prev.selectedLeagues.filter(x => x !== l) }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                ))}
+                {ticketFilters.selectedMarketFamilies?.map(f => (
+                  <span key={f} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">
+                    {f}
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, selectedMarketFamilies: prev.selectedMarketFamilies.filter(x => x !== f) }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                ))}
+                {ticketFilters.selectedDate !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
+                    Date: {formatDateDisplay(ticketFilters.selectedDate)}
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, selectedDate: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.minProbThreshold > 0 && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                    Prob. Min ≥ {(ticketFilters.minProbThreshold * 100).toFixed(0)}%
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, minProbThreshold: 0 }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.legMatchMode === 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20" title="Mode de correspondance stricte : toutes les jambes doivent satisfaire le critère">
+                    Mode ALL (Toutes jambes)
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, legMatchMode: 'ANY' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.legMatchMode === 'AT_LEAST_2' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+                    Correspondance : ≥ 2 jambes
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, legMatchMode: 'ANY' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.legMatchMode === 'AT_LEAST_3' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+                    Correspondance : ≥ 3 jambes
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, legMatchMode: 'ANY' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {ticketFilters.legMatchMode === 'CUSTOM' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
+                    Correspondance : ≥ {ticketFilters.minLegsMatching || 1} jambes
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, legMatchMode: 'ANY' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+
+                <button
+                  type="button"
+                  onClick={onResetTicketFilters}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:underline ml-auto"
                 >
-                  <option value="mean_prob">Prob. Moy. Jambes (Décroissant)</option>
-                  <option value="min_prob">Prob. Min. Jambe (Décroissant)</option>
-                  <option value="odds">Cote Réf. Plancher (Décroissant)</option>
-                  <option value="legs">Nombre de Jambes (Décroissant)</option>
-                  <option value="canonical">Ordre Canonique Moteur (ID)</option>
-                </select>
+                  <RotateCcw size={12} />
+                  <span>Tout réinitialiser</span>
+                </button>
               </div>
+            )}
+
+            {/* Row 4: Sort Selector */}
+            <div className="flex items-center gap-2 pt-1 border-t border-slate-100 dark:border-slate-800/80">
+              <TrendingUp size={14} className="text-slate-400 shrink-0" />
+              <label htmlFor="ticket-sort-select" className="text-xs font-semibold text-slate-500 shrink-0">
+                Tri :
+              </label>
+              <select
+                id="ticket-sort-select"
+                value={ticketFilters.sortBy}
+                onChange={e => setTicketFilters(prev => ({ ...prev, sortBy: e.target.value }))}
+                className="bg-transparent text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none w-full"
+              >
+                <option value="mean_prob">Prob. Moy. Jambes (Décroissant)</option>
+                <option value="min_prob">Prob. Min. Jambe (Décroissant)</option>
+                <option value="odds">Cote Réf. Plancher (Décroissant)</option>
+                <option value="legs">Nombre de Jambes (Décroissant)</option>
+                <option value="canonical">Ordre Canonique Moteur (ID)</option>
+              </select>
             </div>
           </div>
 
@@ -1034,8 +1533,15 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               ))}
             </div>
           ) : (
-            <div className="p-10 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-500">
-              Aucun ticket ne correspond aux critères de recherche ou de filtre sélectionnés.
+            <div className="p-10 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-500 flex flex-col items-center justify-center gap-2">
+              <p>Aucun ticket ne correspond aux critères de recherche ou de filtre sélectionnés.</p>
+              <button
+                type="button"
+                onClick={onResetTicketFilters}
+                className="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs"
+              >
+                Réinitialiser les filtres
+              </button>
             </div>
           )}
 
@@ -1094,243 +1600,369 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             </div>
           </div>
 
+          {/* Search, Filter Toolbar & Active Chips */}
           <div className="flex flex-col gap-3 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-              <input
-                type="text"
-                placeholder="Rechercher une équipe, ligue, marché, profil..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-3 text-xs sm:text-sm font-medium text-slate-900 dark:text-slate-100"
-              />
+            {/* Row 1: Search + Advanced Filters Drawer Button */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <input
+                  type="text"
+                  placeholder="Rechercher une équipe, ligue, marché, profil contextuel..."
+                  value={picksFilters.searchQuery}
+                  onChange={e => setPicksFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-8 text-xs sm:text-sm font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+                />
+                {picksFilters.searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setPicksFilters(prev => ({ ...prev, searchQuery: '' }))}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsDrawerOpen(true)}
+                className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-bold border transition-all shrink-0 ${
+                  picksActiveCriteriaCount > 0
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+              >
+                <Sliders size={14} />
+                <span>Filtres</span>
+                {picksActiveCriteriaCount > 0 && (
+                  <span className="w-5 h-5 rounded-full bg-white text-emerald-700 font-mono text-[11px] font-black flex items-center justify-center">
+                    {picksActiveCriteriaCount}
+                  </span>
+                )}
+              </button>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <div className="bg-slate-50 dark:bg-slate-950 px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
-                <select value={filterTier} onChange={e => setFilterTier(e.target.value)} className="bg-transparent text-xs font-bold w-full focus:outline-none">
-                  <option value="ALL">Tous les Tiers</option>
-                  <option value="1">Tier 1</option>
-                  <option value="2">Tier 2</option>
-                  <option value="5">Tier 5</option>
-                </select>
+
+            {/* Row 2: Quick Filter Pills */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+              {[
+                { id: 'ALL', label: `Tous (${totalSelections})`, active: picksFilters.tier === 'ALL' && !picksFilters.liveOnly && picksFilters.streakStatus === 'ALL' },
+                ...picksTierPills,
+                { id: 'LIVE', label: 'Live Eligible', active: picksFilters.liveOnly },
+                { id: 'STREAK', label: 'Séries confirmées', active: picksFilters.streakStatus === 'STREAK_CONFIRMED' }
+              ].map(pill => (
+                <button
+                  key={pill.id}
+                  type="button"
+                  onClick={() => {
+                    if (pill.id === 'ALL') {
+                      onResetPicksFilters();
+                    } else if (pill.tierKey) {
+                      setPicksFilters(prev => ({ ...prev, tier: prev.tier === pill.tierKey ? 'ALL' : pill.tierKey }));
+                    } else if (pill.id === 'LIVE') {
+                      setPicksFilters(prev => ({ ...prev, liveOnly: !prev.liveOnly }));
+                    } else if (pill.id === 'STREAK') {
+                      setPicksFilters(prev => ({ ...prev, streakStatus: prev.streakStatus === 'STREAK_CONFIRMED' ? 'ALL' : 'STREAK_CONFIRMED' }));
+                    }
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none ${
+                    pill.active
+                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
+                      : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                  }`}
+                >
+                  {pill.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Row 3: Active Filter Chips */}
+            {picksActiveCriteriaCount > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-tight mr-1">
+                  Actifs :
+                </span>
+                {picksFilters.tier !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                    Tier {picksFilters.tier}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, tier: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {picksFilters.leagueGroup !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
+                    Groupe: {LEAGUE_GROUPS[picksFilters.leagueGroup]?.label || picksFilters.leagueGroup}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, leagueGroup: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {picksFilters.selectedLeagues?.map(l => (
+                  <span key={l} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                    {l}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, selectedLeagues: prev.selectedLeagues.filter(x => x !== l) }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                ))}
+                {picksFilters.selectedType !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">
+                    Type: {picksFilters.selectedType}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, selectedType: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {picksFilters.selectedProfile !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+                    Profil: {picksFilters.selectedProfile}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, selectedProfile: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {picksFilters.streakStatus !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                    {picksFilters.streakStatus}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, streakStatus: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {picksFilters.liveOnly && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                    Live Eligible
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, liveOnly: false }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {picksFilters.alphaOnly && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+                    Alpha
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, alphaOnly: false }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {picksFilters.selectedDate !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
+                    Date: {formatDateDisplay(picksFilters.selectedDate)}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, selectedDate: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+
+                <button
+                  type="button"
+                  onClick={onResetPicksFilters}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:underline ml-auto"
+                >
+                  <RotateCcw size={12} />
+                  <span>Tout réinitialiser</span>
+                </button>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-950 px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
-                <select value={filterLeague} onChange={e => setFilterLeague(e.target.value)} className="bg-transparent text-xs font-bold w-full focus:outline-none">
-                  <option value="ALL">Toutes les Ligues</option>
-                  {uniqueLeagues.map(l => <option key={l} value={l}>{l}</option>)}
-                </select>
-              </div>
-              <div className="bg-slate-50 dark:bg-slate-950 px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
-                <select value={filterFamily} onChange={e => setFilterFamily(e.target.value)} className="bg-transparent text-xs font-bold w-full focus:outline-none">
-                  <option value="ALL">Toutes les Familles</option>
-                  {uniqueFamilies.map(f => <option key={f} value={f}>{f}</option>)}
-                </select>
-              </div>
-              <div className="bg-slate-50 dark:bg-slate-950 px-2.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
-                <select value={sortBy} onChange={e => setSortBy(e.target.value)} className="bg-transparent text-xs font-bold w-full focus:outline-none">
-                  <option value="prob">Tri : Prob. Modèle</option>
-                  <option value="odds">Tri : Cote Réf.</option>
-                  <option value="ev">Tri : Score_EV</option>
-                </select>
-              </div>
+            )}
+
+            {/* Row 4: Sort Selector */}
+            <div className="flex items-center gap-2 pt-1 border-t border-slate-100 dark:border-slate-800/80">
+              <TrendingUp size={14} className="text-slate-400 shrink-0" />
+              <label htmlFor="pick-sort-select" className="text-xs font-semibold text-slate-500 shrink-0">
+                Tri :
+              </label>
+              <select
+                id="pick-sort-select"
+                value={picksFilters.sortBy}
+                onChange={e => setPicksFilters(prev => ({ ...prev, sortBy: e.target.value }))}
+                className="bg-transparent text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none w-full"
+              >
+                <option value="prob">Probabilité Modèle (Décroissant)</option>
+                <option value="odds">Cote de Référence (Décroissant)</option>
+                <option value="ev">Score_EV (Décroissant)</option>
+              </select>
             </div>
           </div>
 
+          {/* Picks List */}
           <div className="flex flex-col gap-3">
-            {filteredPicks.map((sel, idx) => {
-              const isExpanded = expandedTicket === idx;
-              const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(sel.Match, sel.League);
-              const homeInfo = getTeamInfo(homeRaw);
-              const awayInfo = getTeamInfo(awayRaw);
-              const probMeta = formatProbabilityMetric(sel.Prob, 1);
-              const oddsMeta = formatOddsMetric(sel.Cote_Ref, 2);
-              const evMeta = formatScoreEvMetric(sel.Score_EV, 3);
-              const baseEvMeta = formatScoreEvMetric(sel.Score_EV_Original, 3);
-              const kickoffMeta = formatKickoffExplicit(sel);
+            {filteredPicks.length > 0 ? (
+              filteredPicks.map((sel, idx) => {
+                const isExpanded = expandedTicket === idx;
+                const { homeRaw, awayRaw, displayHome, displayAway } = resolveLegMatchDisplay(sel.Match, sel.League);
+                const homeInfo = getTeamInfo(homeRaw);
+                const awayInfo = getTeamInfo(awayRaw);
+                const probMeta = formatProbabilityMetric(sel.Prob, 1);
+                const oddsMeta = formatOddsMetric(sel.Cote_Ref, 2);
+                const evMeta = formatScoreEvMetric(sel.Score_EV, 3);
+                const baseEvMeta = formatScoreEvMetric(sel.Score_EV_Original, 3);
+                const kickoffMeta = formatKickoffExplicit(sel);
 
-              return (
-                <div key={sel.Bet_ID || idx} className="flex flex-col bg-white dark:bg-slate-900/80 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden transition-all hover:border-emerald-500/40">
-                  {auditMode && (
-                    <div className="absolute inset-0 z-50 bg-slate-900/95 p-4 overflow-y-auto">
-                      <pre className="text-[11px] font-mono text-emerald-400 whitespace-pre-wrap break-all">
-                        {JSON.stringify(sel, null, 2)}
-                      </pre>
-                    </div>
-                  )}
-
-                  {/* Always Visible Primary Info */}
-                  <div
-                    className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
-                    onClick={() => toggleExpanded(idx)}
-                  >
-                    <div className="flex flex-col gap-2 flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <Badge className={`${getTierColor(sel.Tier)} text-[11px] px-2 py-0.5 rounded-md font-bold`}>
-                          Tier {sel.Tier}
-                        </Badge>
-                        {sel.Streak_Status && (
-                          <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${
-                            sel.Streak_Status === 'STREAK_CONFIRMED'
-                              ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700'
-                          }`}>
-                            {sel.Streak_Status}
-                          </span>
-                        )}
-                        <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 uppercase">
-                          {sel.family_name || sel.Type}
-                        </span>
-                        {sel.Alpha && (
-                          <span className="text-[11px] px-2 py-0.5 bg-amber-500 text-white font-bold rounded-md">
-                            ALPHA
-                          </span>
-                        )}
+                return (
+                  <div key={sel.Bet_ID || idx} className="flex flex-col bg-white dark:bg-slate-900/80 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden transition-all hover:border-emerald-500/40">
+                    {auditMode && (
+                      <div className="absolute inset-0 z-50 bg-slate-900/95 p-4 overflow-y-auto">
+                        <pre className="text-[11px] font-mono text-emerald-400 whitespace-pre-wrap break-all">
+                          {JSON.stringify(sel, null, 2)}
+                        </pre>
                       </div>
+                    )}
 
-                      <div className="flex flex-wrap items-center gap-2.5">
-                        <div className="flex items-center gap-2 min-w-0">
-                          <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-slate-700 shrink-0">
-                            <img src={homeInfo.logoPath} alt={displayHome} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
-                          </div>
-                          <span className="text-sm font-bold text-slate-900 dark:text-white break-words">{displayHome}</span>
-                        </div>
-                        <span className="text-[11px] font-mono text-slate-400 font-bold bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
-                          vs
-                        </span>
-                        <div className="flex items-center gap-2 min-w-0">
-                          <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-slate-700 shrink-0">
-                            <img src={awayInfo.logoPath} alt={displayAway} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
-                          </div>
-                          <span className="text-sm font-bold text-slate-900 dark:text-white break-words">{displayAway}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Core Market Info */}
-                    <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 dark:border-slate-800">
-                      <div className="flex flex-col min-w-0 pr-3 border-r border-slate-200 dark:border-slate-800">
-                        <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 break-words">
-                          {sel.Marche}
-                        </span>
-                        <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 font-mono" title={kickoffMeta.title || undefined}>
-                          {sel.League} • {kickoffMeta.display}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5 shrink-0">
-                        <div className="flex flex-col items-end">
-                          <span className="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400">
-                            Prob. {probMeta.display}
-                          </span>
-                          <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">
-                            {oddsMeta.display}
-                          </span>
-                        </div>
-                        <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">
-                          <ChevronDown size={16} className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Collapsible Secondary Info */}
-                  {isExpanded && (
-                    <div className="p-4 pt-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 flex flex-col gap-3">
-                      {sel.Profile?.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5">
-                          {sel.Profile.map(p => (
-                            <span key={p} className={`text-[11px] font-mono px-2 py-0.5 rounded border ${getProfileColor(p)}`}>
-                              {p.replace(/_/g, ' ')}
+                    {/* Primary Info */}
+                    <div
+                      className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
+                      onClick={() => toggleExpanded(idx)}
+                    >
+                      <div className="flex flex-col gap-2 flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <Badge className={`${getTierColor(sel.Tier)} text-[11px] px-2 py-0.5 rounded-md font-bold`}>
+                            Tier {sel.Tier}
+                          </Badge>
+                          {sel.Streak_Status && (
+                            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${
+                              sel.Streak_Status === 'STREAK_CONFIRMED'
+                                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700'
+                            }`}>
+                              {sel.Streak_Status}
                             </span>
-                          ))}
-                        </div>
-                      )}
-
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        <div className="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center">
-                          <span className="text-[11px] text-slate-500 font-mono uppercase mb-0.5">Score_EV</span>
-                          <span className="text-xs sm:text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400">
-                            {evMeta.display}
+                          )}
+                          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 uppercase">
+                            {sel.family_name || sel.Type}
                           </span>
-                          {baseEvMeta.available && (
-                            <span className="text-[11px] text-slate-400 font-mono">
-                              Initial : {baseEvMeta.display}
+                          {sel.Alpha && (
+                            <span className="text-[11px] px-2 py-0.5 bg-amber-500 text-white font-bold rounded-md">
+                              ALPHA
                             </span>
                           )}
                         </div>
-                        <div className="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center">
-                          <span className="text-[11px] text-slate-500 font-mono uppercase mb-0.5">Famille</span>
-                          <span className="text-xs font-bold text-slate-900 dark:text-white uppercase text-center">
-                            {sel.family_name || sel.Type}
-                          </span>
-                        </div>
-                        {sel.Super_Signal && (
-                          <div className="bg-amber-50 dark:bg-amber-900/20 p-2.5 rounded-xl border border-amber-200 dark:border-amber-800/50 flex flex-col items-center justify-center col-span-2">
-                            <span className="text-[11px] text-amber-600 dark:text-amber-400 font-mono uppercase flex items-center gap-1 mb-0.5">
-                              <Zap size={12} /> SUPER SIGNAL
-                            </span>
-                            <span className="text-xs font-bold text-amber-700 dark:text-amber-300">ACTIVE</span>
+
+                        <div className="flex flex-wrap items-center gap-2.5">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-slate-700 shrink-0">
+                              <img src={homeInfo.logoPath} alt={displayHome} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                            </div>
+                            <span className="text-sm font-bold text-slate-900 dark:text-white break-words">{displayHome}</span>
                           </div>
-                        )}
+                          <span className="text-[11px] font-mono text-slate-400 font-bold bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
+                            vs
+                          </span>
+                          <div className="flex items-center gap-2 min-w-0">
+                            <div className="w-7 h-7 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-slate-700 shrink-0">
+                              <img src={awayInfo.logoPath} alt={displayAway} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = '/logos/default.png'; }} />
+                            </div>
+                            <span className="text-sm font-bold text-slate-900 dark:text-white break-words">{displayAway}</span>
+                          </div>
+                        </div>
                       </div>
 
-                      {sel.Streak_Reason && (
-                        <div className="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
-                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1 flex items-center gap-1">
-                            <TrendingUp size={13} /> Justification de série
-                          </h4>
-                          <p className="text-xs text-slate-700 dark:text-slate-300 font-mono">{sel.Streak_Reason}</p>
-                        </div>
-                      )}
-
-                      {sel.Score_Exact_Confirmation && (
-                        <div className="bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-500/20 p-2.5 rounded-xl flex items-center gap-2">
-                          <Fingerprint size={14} className="text-emerald-500 shrink-0" />
-                          <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">
-                            Score_Exact_Confirmation : {sel.Score_Exact_Confirmation}
+                      {/* Core Market Info */}
+                      <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 dark:border-slate-800">
+                        <div className="flex flex-col min-w-0 pr-3 border-r border-slate-200 dark:border-slate-800">
+                          <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 break-words">
+                            {sel.Marche}
+                          </span>
+                          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 font-mono" title={kickoffMeta.title || undefined}>
+                            {getLeagueFlag(sel.League)} {sel.League} • {kickoffMeta.display}
                           </span>
                         </div>
-                      )}
 
-                      {sel.Live_Betting_Recommendation?.[0] && (
-                        <div className="bg-rose-50 dark:bg-rose-900/10 border border-rose-200 dark:border-rose-900/30 p-3 rounded-xl flex items-start gap-2">
-                          <Clock size={14} className="text-rose-500 shrink-0 mt-0.5" />
-                          <div className="flex flex-col">
-                            <span className="text-[11px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-1">
-                              Live Recommendation {isValidNumericMetric(sel.Live_Betting_Recommendation[0].Force) ? `(${(sel.Live_Betting_Recommendation[0].Force * 100).toFixed(0)}% FORCE)` : ''}
+                        <div className="flex items-center gap-2.5 shrink-0">
+                          <div className="flex flex-col items-end">
+                            <span className="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400">
+                              Prob. {probMeta.display}
                             </span>
-                            <span className="text-xs font-medium text-slate-700 dark:text-slate-300 leading-relaxed">
-                              {sel.Live_Betting_Recommendation[0].Signal} — {sel.Live_Betting_Recommendation[0].Argument}
+                            <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">
+                              {oddsMeta.display}
                             </span>
                           </div>
+                          <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">
+                            <ChevronDown size={16} className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                          </div>
                         </div>
-                      )}
-
-                      <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-                        <span className="text-[11px] font-mono text-slate-400">
-                          {sel.Match_ID ? `Match_ID : ${sel.Match_ID}` : ''} {sel.Bet_ID ? `• Bet_ID : ${sel.Bet_ID}` : ''}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onNavigateToMatch(sel.Match_ID || sel.Match, sel.League || 'ALL');
-                          }}
-                          className="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center gap-1.5 shadow-sm ml-auto"
-                        >
-                          <span>Voir Match</span>
-                          <ArrowUpRight size={14} />
-                        </button>
                       </div>
                     </div>
-                  )}
-                </div>
-              );
-            })}
+
+                    {/* Collapsible Secondary Info */}
+                    {isExpanded && (
+                      <div className="p-4 pt-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 flex flex-col gap-3">
+                        {sel.Profile?.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5">
+                            {sel.Profile.map(p => (
+                              <span key={p} className={`text-[11px] font-mono px-2 py-0.5 rounded border ${getProfileColor(p)}`}>
+                                {p.replace(/_/g, ' ')}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                          <div className="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center">
+                            <span className="text-[11px] text-slate-500 font-mono uppercase mb-0.5">Score_EV</span>
+                            <span className="text-xs sm:text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400">
+                              {evMeta.display}
+                            </span>
+                            {baseEvMeta.available && (
+                              <span className="text-[11px] text-slate-400 font-mono">
+                                Initial : {baseEvMeta.display}
+                              </span>
+                            )}
+                          </div>
+                          <div className="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center">
+                            <span className="text-[11px] text-slate-500 font-mono uppercase mb-0.5">Famille</span>
+                            <span className="text-xs font-bold text-slate-900 dark:text-white uppercase text-center">
+                              {sel.family_name || sel.Type}
+                            </span>
+                          </div>
+                          {sel.Super_Signal && (
+                            <div className="bg-amber-50 dark:bg-amber-900/20 p-2.5 rounded-xl border border-amber-200 dark:border-amber-800/50 flex flex-col items-center justify-center col-span-2">
+                              <span className="text-[11px] text-amber-600 dark:text-amber-400 font-mono uppercase flex items-center gap-1 mb-0.5">
+                                <Zap size={12} /> SUPER SIGNAL
+                              </span>
+                              <span className="text-xs font-bold text-amber-700 dark:text-amber-300">ACTIVE</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {sel.Streak_Reason && (
+                          <div className="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1 flex items-center gap-1">
+                              <TrendingUp size={13} /> Justification de série
+                            </h4>
+                            <p className="text-xs text-slate-700 dark:text-slate-300 font-mono">{sel.Streak_Reason}</p>
+                          </div>
+                        )}
+
+                        {sel.Score_Exact_Confirmation && (
+                          <div className="bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-500/20 p-2.5 rounded-xl flex items-center gap-2">
+                            <Fingerprint size={14} className="text-emerald-500 shrink-0" />
+                            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                              Score_Exact_Confirmation : {sel.Score_Exact_Confirmation}
+                            </span>
+                          </div>
+                        )}
+
+                        <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                          <span className="text-[11px] font-mono text-slate-400">
+                            {sel.Match_ID ? `Match_ID : ${sel.Match_ID}` : ''} {sel.Bet_ID ? `• Bet_ID : ${sel.Bet_ID}` : ''}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onNavigateToMatch(sel.Match_ID || sel.Match, sel.League || 'ALL');
+                            }}
+                            className="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-emerald-600 dark:hover:bg-emerald-400 transition-colors flex items-center gap-1.5 shadow-sm ml-auto"
+                          >
+                            <span>Voir Match</span>
+                            <ArrowUpRight size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            ) : (
+              <div className="p-10 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-500 flex flex-col items-center justify-center gap-2">
+                <p>Aucune sélection ne correspond aux critères de recherche ou de filtre sélectionnés.</p>
+                <button
+                  type="button"
+                  onClick={onResetPicksFilters}
+                  className="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs"
+                >
+                  Réinitialiser les filtres
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
 
+      {/* FOOTER NOTICE */}
       <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4 shadow-inner mt-2">
         <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center shrink-0">
           <Flame size={24} className="text-emerald-500" />
@@ -1344,6 +1976,30 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
           </p>
         </div>
       </div>
+
+      {/* ADVANCED FILTER DRAWER (SLIDE-OVER) */}
+      <TicketFilterDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        tab={activeView === 'picks' ? 'picks' : 'strategies'}
+        tickets={ticketsList}
+        picks={finals?.Selections || []}
+        ticketFilters={ticketFilters}
+        setTicketFilters={setTicketFilters}
+        picksFilters={picksFilters}
+        setPicksFilters={setPicksFilters}
+        onResetTicketFilters={onResetTicketFilters}
+        onResetPicksFilters={onResetPicksFilters}
+        totalTicketsCount={ticketsList.length}
+        filteredTicketsCount={filteredStrategies.length}
+        totalPicksCount={totalSelections}
+        filteredPicksCount={filteredPicks.length}
+        availableLeagues={availableLeagues}
+        availableMarketFamilies={availableMarketFamilies}
+        availablePicksProfiles={availablePicksProfiles}
+        availablePicksTypes={availablePicksTypes}
+        availableDates={availableDates}
+      />
     </div>
   );
 }
