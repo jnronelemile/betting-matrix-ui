@@ -478,7 +478,7 @@ export default function App() {
 
         {/* Mobile Smart Floating Header (Fixed Overlay - Appears on Scroll Up) */}
         <div className={`
-          lg:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-lg
+          lg:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/90 shadow-lg dark:shadow-[0_8px_24px_rgba(0,0,0,0.7)]
           transition-all duration-300 ease-out transform
           ${headerVisible && lastScrollY.current > 200 ? 'translate-y-0' : '-translate-y-full'}
         `}>
@@ -836,7 +836,7 @@ export default function App() {
         )}
 
         {/* Sticky Filters: Quick Bar stays at the top on Mobile when viewing match list, hidden when match dashboard or MASTER HUB is open */}
-        <div className={`sticky top-0 z-40 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-1.5 shadow-sm lg:hidden transition-colors duration-300 ${selectedMatch || selectedLeague.id === 'TICKETS' ? 'hidden' : 'block'}`}>
+        <div className={`sticky top-0 z-40 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/90 py-1.5 shadow-sm dark:shadow-[0_6px_20px_rgba(0,0,0,0.65)] lg:hidden transition-colors duration-300 ${selectedMatch || selectedLeague.id === 'TICKETS' ? 'hidden' : 'block'}`}>
           {/* Mobile Quick Bar with Fixed FILTRES Button */}
           <div className="flex items-center gap-1.5 px-2.5 sm:px-4">
             {/* Scrollable Quick Filter Pills */}

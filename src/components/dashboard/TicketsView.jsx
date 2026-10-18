@@ -517,7 +517,7 @@ const CompactStickyToolbar = ({
       `}
       aria-hidden={!isStickyVisible}
     >
-      <div className="absolute top-2 left-0 right-0 pointer-events-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 shadow-lg rounded-2xl p-2.5 flex items-center justify-between gap-3">
+      <div className="absolute top-2 left-0 right-0 pointer-events-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800/90 shadow-lg dark:shadow-[0_12px_28px_rgba(0,0,0,0.75),0_4px_10px_rgba(0,0,0,0.5)] rounded-2xl p-2.5 flex items-center justify-between gap-3">
         {/* Quick Pills Strip */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 min-w-0 flex-1">
           {quickPills.map(pill => (
@@ -1110,7 +1110,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
       {/* 1. INTERNAL NAVIGATION MENU */}
       <div
         ref={tabBarRef}
-        className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-4 sm:px-4 lg:mx-0 lg:px-0 py-2.5 bg-slate-100/95 dark:bg-slate-950/95 backdrop-blur-md border-b lg:border-none border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 overflow-hidden"
+        className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-4 sm:px-4 lg:mx-0 lg:px-0 py-2.5 bg-slate-100/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/90 lg:border-none lg:dark:border-b lg:dark:border-slate-800/90 dark:shadow-[0_4px_20px_rgba(0,0,0,0.65)] flex items-center justify-between gap-2"
       >
         <div className="flex items-center gap-1 p-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto no-scrollbar max-w-full">
           {[
