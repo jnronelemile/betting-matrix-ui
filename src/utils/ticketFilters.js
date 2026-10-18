@@ -122,6 +122,85 @@ export const LEAGUE_GROUPS = {
 };
 
 /**
+ * Registre canonique des 4 créneaux horaires intra-journaliers (WEB-001-D).
+ *
+ * - Matin : 05:00–11:59 (5h - 12h)
+ * - Après-midi : 12:00–17:59 (12h - 18h)
+ * - Soir : 18:00–23:59 (18h - 24h)
+ * - Nuit : 00:00–04:59 (0h - 5h)
+ */
+export const TIME_SLOTS = {
+  MATIN: { id: 'MATIN', label: 'Matin', period: '05:00–11:59', hoursRange: '05:00–11:59', rangeLabel: '5h – 12h', minHour: 5, maxHour: 12, description: 'Matchs débutant entre 05:00 et 11:59' },
+  APRES_MIDI: { id: 'APRES_MIDI', label: 'Après-midi', period: '12:00–17:59', hoursRange: '12:00–17:59', rangeLabel: '12h – 18h', minHour: 12, maxHour: 18, description: 'Matchs débutant entre 12:00 et 17:59' },
+  SOIR: { id: 'SOIR', label: 'Soir', period: '18:00–23:59', hoursRange: '18:00–23:59', rangeLabel: '18h – 24h', minHour: 18, maxHour: 24, description: 'Matchs débutant entre 18:00 et 23:59' },
+  NUIT: { id: 'NUIT', label: 'Nuit', period: '00:00–04:59', hoursRange: '00:00–04:59', rangeLabel: '0h – 5h', minHour: 0, maxHour: 5, description: 'Matchs débutant entre 00:00 et 04:59' }
+};
+
+/**
+ * Extrait l'heure d'un match (0-23) de façon déterministe et cohérente avec l'affichage :
+ * 1. Priorité absolue à kickoff_utc, converti dans le fuseau horaire d'affichage (ou navigateur).
+ * 2. Repli sécurisé sur Heure / hours / Hours locale (sans conversion arbitraire de fuseau).
+ *
+ * @param {Object} item Jambe de ticket, sélection finale ou match
+ * @param {string} [timeZone] Fuseau explicite optionnel (ex. 'Europe/Paris', 'UTC')
+ * @returns {number|null} Heure entière 0-23 ou null
+ */
+export function getKickoffHour(item, timeZone = null) {
+  if (!item || typeof item !== 'object') return null;
+
+  // 1. Priorité absolue à kickoff_utc valide
+  if (typeof item.kickoff_utc === 'string' && item.kickoff_utc.trim()) {
+    const d = new Date(item.kickoff_utc.trim());
+    if (!isNaN(d.getTime())) {
+      if (timeZone) {
+        try {
+          const formatter = new Intl.DateTimeFormat('en-US', { hour: 'numeric', hourCycle: 'h23', timeZone });
+          const parts = formatter.format(d);
+          const h = parseInt(parts, 10);
+          if (!isNaN(h)) return h;
+        } catch (_) {
+          return d.getHours();
+        }
+      }
+      return d.getHours();
+    }
+  }
+
+  // 2. Repli déterministe sur Heure / hours / Hours locale
+  const rawHour = (typeof item.Heure === 'string' && item.Heure.trim() && item.Heure.trim().toUpperCase() !== 'TBD' && item.Heure.trim())
+    || (typeof item.hours === 'string' && item.hours.trim() && item.hours.trim())
+    || (typeof item.Hours === 'string' && item.Hours.trim() && item.Hours.trim())
+    || null;
+
+  if (rawHour && rawHour.includes(':')) {
+    const [hStr] = rawHour.split(':');
+    const h = parseInt(hStr, 10);
+    if (!isNaN(h) && h >= 0 && h <= 23) {
+      return h;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Détermine le créneau horaire (MATIN, APRES_MIDI, SOIR, NUIT) d'une jambe ou d'un match.
+ *
+ * @param {Object} item
+ * @param {string} [timeZone]
+ * @returns {'MATIN'|'APRES_MIDI'|'SOIR'|'NUIT'|null}
+ */
+export function getLegTimeSlot(item, timeZone = null) {
+  const hour = getKickoffHour(item, timeZone);
+  if (hour === null) return null;
+  if (hour >= 5 && hour < 12) return 'MATIN';
+  if (hour >= 12 && hour < 18) return 'APRES_MIDI';
+  if (hour >= 18 && hour < 24) return 'SOIR';
+  if (hour >= 0 && hour < 5) return 'NUIT';
+  return null;
+}
+
+/**
  * Normalise un nom ou code de ligue pour comparaison robuste.
  *
  * @param {string} leagueStr
@@ -220,7 +299,10 @@ export function legMatchesUnifiedCriteria(leg, {
   leagueGroup = 'ALL',
   selectedLeagues = [],
   selectedMarketFamilies = [],
-  selectedDate = 'ALL'
+  selectedDate = 'ALL',
+  selectedTimeSlot = 'ALL',
+  timeSlot = 'ALL',
+  displayTimeZone = null
 } = {}) {
   if (!leg || typeof leg !== 'object') return false;
 
@@ -247,6 +329,16 @@ export function legMatchesUnifiedCriteria(leg, {
     if (d !== selectedDate) return false;
   }
 
+  // 5. Créneau horaire (Matin, Après-midi, Soir, Nuit)
+  const slotTarget = (selectedTimeSlot && selectedTimeSlot !== 'ALL')
+    ? selectedTimeSlot
+    : ((timeSlot && timeSlot !== 'ALL') ? timeSlot : 'ALL');
+
+  if (slotTarget !== 'ALL') {
+    const slot = getLegTimeSlot(leg, displayTimeZone);
+    if (slot !== slotTarget) return false;
+  }
+
   return true;
 }
 
@@ -260,13 +352,16 @@ export function hasActiveLegCriteria({
   leagueGroup = 'ALL',
   selectedLeagues = [],
   selectedMarketFamilies = [],
-  selectedDate = 'ALL'
+  selectedDate = 'ALL',
+  selectedTimeSlot = 'ALL',
+  timeSlot = 'ALL'
 } = {}) {
   const hasGroup = Boolean(leagueGroup && leagueGroup !== 'ALL');
   const hasLeagues = Boolean(Array.isArray(selectedLeagues) && selectedLeagues.length > 0 && !selectedLeagues.includes('ALL'));
   const hasFamilies = Boolean(Array.isArray(selectedMarketFamilies) && selectedMarketFamilies.length > 0 && !selectedMarketFamilies.includes('ALL'));
   const hasDate = Boolean(selectedDate && selectedDate !== 'ALL');
-  return hasGroup || hasLeagues || hasFamilies || hasDate;
+  const hasSlot = Boolean((selectedTimeSlot && selectedTimeSlot !== 'ALL') || (timeSlot && timeSlot !== 'ALL'));
+  return hasGroup || hasLeagues || hasFamilies || hasDate || hasSlot;
 }
 
 /**
@@ -356,6 +451,7 @@ export const INITIAL_TICKET_FILTERS = {
   selectedLeagues: [], // Tableau de noms de ligues ou [] pour toutes
   selectedMarketFamilies: [], // Tableau de familles ou [] pour toutes
   selectedDate: 'ALL',
+  timeSlot: 'ALL', // 'ALL' | 'MATIN' | 'APRES_MIDI' | 'SOIR' | 'NUIT'
   legMatchMode: 'ANY', // 'ANY' | 'AT_LEAST_2' | 'AT_LEAST_3' | 'CUSTOM' | 'ALL'
   minLegsMatching: 1, // Seuil configurable N (entier 1..12)
   minProbThreshold: 0, // Seuil min de min_leg_model_probability (0 = désactivé)
@@ -415,6 +511,9 @@ export function ticketPassesFilters(ticket, filters = INITIAL_TICKET_FILTERS) {
     selectedLeagues: filters.selectedLeagues,
     selectedMarketFamilies: filters.selectedMarketFamilies,
     selectedDate: filters.selectedDate,
+    selectedTimeSlot: filters.timeSlot || filters.selectedTimeSlot,
+    timeSlot: filters.timeSlot,
+    displayTimeZone: filters.displayTimeZone,
     legMatchMode: filters.legMatchMode,
     minLegsMatching: filters.minLegsMatching
   });
@@ -518,6 +617,7 @@ export const INITIAL_PICKS_FILTERS = {
   superSignalOnly: false,
   liveOnly: false,
   selectedDate: 'ALL',
+  timeSlot: 'ALL', // 'ALL' | 'MATIN' | 'APRES_MIDI' | 'SOIR' | 'NUIT'
   sortBy: 'prob' // 'prob' | 'odds' | 'ev'
 };
 
@@ -580,7 +680,14 @@ export function pickPassesFilters(pick, filters = INITIAL_PICKS_FILTERS) {
     if (d !== filters.selectedDate) return false;
   }
 
-  // 11. Recherche textuelle
+  // 11. Créneau horaire (Matin, Après-midi, Soir, Nuit)
+  const targetSlot = filters.timeSlot || filters.selectedTimeSlot;
+  if (targetSlot && targetSlot !== 'ALL') {
+    const slot = getLegTimeSlot(pick, filters.displayTimeZone);
+    if (slot !== targetSlot) return false;
+  }
+
+  // 12. Recherche textuelle
   const q = (filters.searchQuery || '').trim().toLowerCase();
   if (q) {
     const matchRaw = (pick.Match || '').toLowerCase();

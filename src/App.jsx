@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon, Trophy, PieChart, AlertTriangle, Ticket, Filter } from 'lucide-react';
+import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon, Trophy, PieChart, AlertTriangle, Ticket, Filter, ChevronDown, ChevronRight } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
 import TicketsView from './components/dashboard/TicketsView';
 import { AdvancedFilterDrawer } from './components/filters/AdvancedFilterDrawer';
 import { BatchDateBar } from './components/filters/BatchDateBar';
 import { loadTitaniumV2Session, getLeagueReportUrl, cleanStr } from './utils/titaniumLoader';
+import { LEAGUE_GROUPS, getLeagueGroupId } from './utils/ticketFilters';
 import {
   INITIAL_FILTERS_STATE,
   filterMatches,
@@ -48,6 +49,7 @@ export default function App() {
   };
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
+  const [collapsedGroups, setCollapsedGroups] = useState(() => ({}));
   const lastScrollY = useRef(0);
   const isTransitioning = useRef(false);
   const activeMatchRequestRef = useRef(null);
@@ -233,6 +235,64 @@ export default function App() {
     );
   }, [sessionData, selectedLeague]);
 
+  const leagueMatchCounts = useMemo(() => {
+    const counts = {};
+    if (!sessionData?.matches) return counts;
+    for (const m of sessionData.matches) {
+      if (m.League) {
+        counts[m.League] = (counts[m.League] || 0) + 1;
+      }
+    }
+    return counts;
+  }, [sessionData]);
+
+  const groupedLeagues = useMemo(() => {
+    const specificLeagues = availableLeagues.filter(l => l.id !== 'ALL');
+    const orderedGroupKeys = [
+      'TOP_7_EUROPE',
+      'SECOND_TIERS_EUROPE',
+      'OTHER_EUROPE',
+      'AMERICAS',
+      'ASIA'
+    ];
+
+    const groupsMap = {};
+    for (const key of orderedGroupKeys) {
+      const def = LEAGUE_GROUPS[key] || { label: key, description: key };
+      groupsMap[key] = {
+        id: key,
+        label: def.label,
+        description: def.description,
+        leagues: []
+      };
+    }
+    const otherGroup = {
+      id: 'AUTRES_LIGUES',
+      label: 'Autres Ligues',
+      description: 'Ligues complémentaires',
+      leagues: []
+    };
+
+    for (const l of specificLeagues) {
+      const gid = getLeagueGroupId(l.code || l.name);
+      if (groupsMap[gid]) {
+        groupsMap[gid].leagues.push(l);
+      } else {
+        otherGroup.leagues.push(l);
+      }
+    }
+
+    const result = orderedGroupKeys
+      .map(k => groupsMap[k])
+      .filter(g => g.leagues.length > 0);
+
+    if (otherGroup.leagues.length > 0) {
+      result.push(otherGroup);
+    }
+
+    return result;
+  }, [availableLeagues]);
+
   const availableDates = useMemo(() => {
     if (!leagueMatches || leagueMatches.length === 0) return [];
     return Array.from(new Set(leagueMatches.map(m => m.date || 'Date Inconnue'))).sort((a, b) => {
@@ -307,14 +367,15 @@ export default function App() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
-          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 px-2">Matrices Actives</div>
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 custom-scrollbar">
+          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5 px-2">Matrices Actives</div>
           <nav className="flex flex-col gap-1.5">
-            {availableLeagues.map(league => (
+            {/* 1. All Leagues Root Entry */}
+            {availableLeagues.find(l => l.id === 'ALL') && (
               <button
-                key={league.id}
+                key="ALL"
                 onClick={() => {
-                  setSelectedLeague(league);
+                  setSelectedLeague(ALL_LEAGUES_DEFAULT);
                   setSelectedDate('ALL');
                   setMatchListOpen(true);
                   if (window.innerWidth < 1024) {
@@ -322,16 +383,85 @@ export default function App() {
                   }
                 }}
                 className={`
-                  flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-left
-                  ${selectedLeague.id === league.id
-                    ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-medium shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50'
-                    : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200'}
+                  flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all text-left mb-2
+                  ${selectedLeague.id === 'ALL'
+                    ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-bold shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200 font-medium'}
                 `}
               >
-                <span className="text-lg">{league.flag}</span>
-                {league.name}
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="text-base shrink-0">🌍</span>
+                  <span className="truncate">Toutes les Ligues</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-slate-700/70 text-slate-700 dark:text-slate-300 shrink-0">
+                  {sessionData?.matches?.length || 0}
+                </span>
               </button>
-            ))}
+            )}
+
+            {/* 2. Categorized League Groups */}
+            <div className="flex flex-col gap-2">
+              {groupedLeagues.map(group => {
+                const isSelectedInGroup = group.leagues.some(l => l.id === selectedLeague.id);
+                const isCollapsed = Boolean(collapsedGroups[group.id]) && !isSelectedInGroup;
+                const groupMatchCount = group.leagues.reduce((acc, l) => acc + (leagueMatchCounts[l.code] || 0), 0);
+
+                return (
+                  <div key={group.id} className="flex flex-col rounded-xl overflow-hidden border border-slate-200/70 dark:border-slate-800/70 bg-slate-50/50 dark:bg-slate-900/40">
+                    <button
+                      type="button"
+                      onClick={() => setCollapsedGroups(prev => ({ ...prev, [group.id]: !isCollapsed }))}
+                      className="flex items-center justify-between px-3 py-2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors bg-slate-100/50 dark:bg-slate-800/30"
+                      title={group.description}
+                      aria-expanded={!isCollapsed}
+                    >
+                      <span className="uppercase tracking-wider text-[10px] font-bold truncate pr-1">{group.label}</span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className="text-[10px] font-mono px-1 rounded bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
+                          {groupMatchCount}
+                        </span>
+                        {isCollapsed ? <ChevronRight size={13} /> : <ChevronDown size={13} />}
+                      </div>
+                    </button>
+
+                    {!isCollapsed && (
+                      <div className="flex flex-col gap-1 p-1.5 pt-1">
+                        {group.leagues.map(league => {
+                          const mCount = leagueMatchCounts[league.code] || 0;
+                          return (
+                            <button
+                              key={league.id}
+                              onClick={() => {
+                                setSelectedLeague(league);
+                                setSelectedDate('ALL');
+                                setMatchListOpen(true);
+                                if (window.innerWidth < 1024) {
+                                  setSidebarOpen(false);
+                                }
+                              }}
+                              className={`
+                                flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all text-left
+                                ${selectedLeague.id === league.id
+                                  ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold border border-emerald-500/30 shadow-2xs'
+                                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-200 font-medium'}
+                              `}
+                            >
+                              <div className="flex items-center gap-2 min-w-0">
+                                <span className="text-sm shrink-0">{league.flag}</span>
+                                <span className="truncate">{league.name}</span>
+                              </div>
+                              <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 shrink-0 ml-1">
+                                {mCount}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </nav>
         </div>
 

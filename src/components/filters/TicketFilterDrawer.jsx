@@ -7,6 +7,7 @@ import {
   Layers,
   Globe,
   Calendar,
+  Clock,
   Percent,
   Sliders,
   Zap,
@@ -19,6 +20,7 @@ import {
 import {
   LEAGUE_GROUPS,
   PRODUCT_FAMILIES,
+  TIME_SLOTS,
   hasActiveLegCriteria,
   formatDateDisplay,
   computeTicketWhatIfCounts,
@@ -49,7 +51,8 @@ export function TicketFilterDrawer({
   availableMarketFamilies = [],
   availablePicksProfiles = [],
   availablePicksTypes = [],
-  availableDates = []
+  availableDates = [],
+  isTicketLive
 }) {
   if (!isOpen) return null;
 
@@ -82,6 +85,12 @@ export function TicketFilterDrawer({
     });
   };
 
+  // Détermination des tickets candidats en respectant le filtre LIVE estimé si actif
+  const candidateTickets = React.useMemo(() => {
+    if (!ticketFilters?.liveEstimatedOnly || typeof isTicketLive !== 'function') return tickets;
+    return tickets.filter(t => isTicketLive(t));
+  }, [tickets, ticketFilters?.liveEstimatedOnly, isTicketLive]);
+
   // 1. Découverte dynamique de tous les Tiers existants dans les choix finaux (D-1)
   const availableTiers = React.useMemo(() => {
     const set = new Set([1, 2, 3]); // Socle standard TITANIUM
@@ -92,12 +101,12 @@ export function TicketFilterDrawer({
     return Array.from(set).sort((a, b) => a - b);
   }, [picks]);
 
-  // 2. Compteurs prospectifs what-if pour les tickets (D-3)
+  // 2. Compteurs prospectifs what-if pour les tickets (D-3 & WEB-001-D)
   const ticketWhatIfCounts = React.useMemo(() => {
-    if (!isTickets || !Array.isArray(tickets) || tickets.length === 0) return null;
+    if (!isTickets || !Array.isArray(candidateTickets) || candidateTickets.length === 0) return null;
     return {
-      structure: computeTicketWhatIfCounts(tickets, ticketFilters, 'structure', ['ALL', 'SINGLES', 'COMBOS']),
-      productCode: computeTicketWhatIfCounts(tickets, ticketFilters, 'productCode', [
+      structure: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'structure', ['ALL', 'SINGLES', 'COMBOS']),
+      productCode: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'productCode', [
         'ALL',
         'MICRO_2',
         'CORE_3',
@@ -105,27 +114,28 @@ export function TicketFilterDrawer({
         'STANDARD_5_8',
         'EXTENDED_9_PLUS'
       ]),
-      legMatchMode: computeTicketWhatIfCounts(tickets, ticketFilters, 'legMatchMode', [
+      legMatchMode: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'legMatchMode', [
         'ANY',
         'AT_LEAST_2',
         'AT_LEAST_3',
         'CUSTOM',
         'ALL'
       ]),
-      leagueGroup: computeTicketWhatIfCounts(tickets, ticketFilters, 'leagueGroup', [
+      leagueGroup: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'leagueGroup', [
         'ALL',
         ...Object.keys(LEAGUE_GROUPS),
         'AUTRES_LIGUES'
       ]),
-      selectedLeagues: computeTicketWhatIfCounts(tickets, ticketFilters, 'selectedLeagues', availableLeagues),
-      selectedMarketFamilies: computeTicketWhatIfCounts(tickets, ticketFilters, 'selectedMarketFamilies', availableMarketFamilies),
-      selectedDate: computeTicketWhatIfCounts(tickets, ticketFilters, 'selectedDate', ['ALL', ...availableDates]),
-      minProbThreshold: computeTicketWhatIfCounts(tickets, ticketFilters, 'minProbThreshold', [0, 0.70, 0.75, 0.80, 0.85]),
-      scopeType: computeTicketWhatIfCounts(tickets, ticketFilters, 'scopeType', ['ALL', 'FULL_POOL', 'LEAGUE_SCOPED', 'COMPOUND_SCOPE'])
+      selectedLeagues: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'selectedLeagues', availableLeagues),
+      selectedMarketFamilies: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'selectedMarketFamilies', availableMarketFamilies),
+      selectedDate: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'selectedDate', ['ALL', ...availableDates]),
+      timeSlot: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']),
+      minProbThreshold: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'minProbThreshold', [0, 0.70, 0.75, 0.80, 0.85]),
+      scopeType: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'scopeType', ['ALL', 'FULL_POOL', 'LEAGUE_SCOPED', 'COMPOUND_SCOPE'])
     };
-  }, [isTickets, tickets, ticketFilters, availableLeagues, availableMarketFamilies, availableDates]);
+  }, [isTickets, candidateTickets, ticketFilters, availableLeagues, availableMarketFamilies, availableDates]);
 
-  // 3. Compteurs prospectifs what-if pour les Choix Finaux (D-3)
+  // 3. Compteurs prospectifs what-if pour les Choix Finaux (D-3 & WEB-001-D)
   const picksWhatIfCounts = React.useMemo(() => {
     if (isTickets || !Array.isArray(picks) || picks.length === 0) return null;
     return {
@@ -139,6 +149,7 @@ export function TicketFilterDrawer({
       selectedType: computePickWhatIfCounts(picks, picksFilters, 'selectedType', ['ALL', ...availablePicksTypes]),
       selectedProfile: computePickWhatIfCounts(picks, picksFilters, 'selectedProfile', ['ALL', ...availablePicksProfiles]),
       selectedDate: computePickWhatIfCounts(picks, picksFilters, 'selectedDate', ['ALL', ...availableDates]),
+      timeSlot: computePickWhatIfCounts(picks, picksFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']),
       alphaOnly: picks.filter(p => pickPassesFilters(p, { ...picksFilters, alphaOnly: true })).length,
       superSignalOnly: picks.filter(p => pickPassesFilters(p, { ...picksFilters, superSignalOnly: true })).length,
       liveOnly: picks.filter(p => pickPassesFilters(p, { ...picksFilters, liveOnly: true })).length,
@@ -595,6 +606,46 @@ export function TicketFilterDrawer({
                 </div>
               </div>
 
+              {/* Créneaux horaires */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                  <Clock size={13} className="text-indigo-500" /> Créneaux Horaires
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setTicketFilters(prev => ({ ...prev, timeSlot: 'ALL' }))}
+                    className={`py-1.5 px-2.5 rounded-lg text-left text-xs font-semibold border transition-all flex items-center justify-between ${
+                      (ticketFilters.timeSlot || 'ALL') === 'ALL'
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
+                    }`}
+                  >
+                    <span>Tous</span>
+                    <span className="text-[10px] font-mono opacity-80">({ticketWhatIfCounts?.timeSlot?.['ALL'] ?? candidateTickets.length})</span>
+                  </button>
+                  {Object.values(TIME_SLOTS).map(slot => (
+                    <button
+                      key={slot.id}
+                      type="button"
+                      onClick={() => setTicketFilters(prev => ({ ...prev, timeSlot: slot.id }))}
+                      title={`${slot.label} (${slot.hoursRange}) : ${slot.description}`}
+                      className={`py-1.5 px-2.5 rounded-lg text-left text-xs font-semibold border transition-all flex items-center justify-between ${
+                        ticketFilters.timeSlot === slot.id
+                          ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
+                      }`}
+                    >
+                      <div className="flex flex-col min-w-0 pr-1">
+                        <span className="truncate">{slot.label}</span>
+                        <span className="text-[9px] font-mono opacity-70 truncate">{slot.hoursRange}</span>
+                      </div>
+                      <span className="text-[10px] font-mono opacity-80 shrink-0">({ticketWhatIfCounts?.timeSlot?.[slot.id] ?? 0})</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* 7. Seuil de probabilité minimale */}
               <div className="space-y-2">
                 <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
@@ -977,6 +1028,46 @@ export function TicketFilterDrawer({
                     >
                       <span>{formatDateDisplay(dateStr)}</span>
                       <span className="text-[10px] font-mono opacity-80">({picksWhatIfCounts?.selectedDate?.[dateStr] ?? 0})</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Créneaux horaires */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                  <Clock size={13} className="text-indigo-500" /> Créneaux Horaires
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setPicksFilters(prev => ({ ...prev, timeSlot: 'ALL' }))}
+                    className={`py-1.5 px-2.5 rounded-lg text-left text-xs font-semibold border transition-all flex items-center justify-between ${
+                      (picksFilters.timeSlot || 'ALL') === 'ALL'
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
+                    }`}
+                  >
+                    <span>Tous</span>
+                    <span className="text-[10px] font-mono opacity-80">({picksWhatIfCounts?.timeSlot?.['ALL'] ?? totalPicksCount})</span>
+                  </button>
+                  {Object.values(TIME_SLOTS).map(slot => (
+                    <button
+                      key={slot.id}
+                      type="button"
+                      onClick={() => setPicksFilters(prev => ({ ...prev, timeSlot: slot.id }))}
+                      title={`${slot.label} (${slot.hoursRange}) : ${slot.description}`}
+                      className={`py-1.5 px-2.5 rounded-lg text-left text-xs font-semibold border transition-all flex items-center justify-between ${
+                        picksFilters.timeSlot === slot.id
+                          ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
+                      }`}
+                    >
+                      <div className="flex flex-col min-w-0 pr-1">
+                        <span className="truncate">{slot.label}</span>
+                        <span className="text-[9px] font-mono opacity-70 truncate">{slot.hoursRange}</span>
+                      </div>
+                      <span className="text-[10px] font-mono opacity-80 shrink-0">({picksWhatIfCounts?.timeSlot?.[slot.id] ?? 0})</span>
                     </button>
                   ))}
                 </div>

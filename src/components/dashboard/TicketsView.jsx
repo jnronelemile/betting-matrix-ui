@@ -15,10 +15,12 @@ import {
   INITIAL_TICKET_FILTERS,
   INITIAL_PICKS_FILTERS,
   PRODUCT_FAMILIES,
+  TIME_SLOTS,
   filterTickets,
   filterFinalPicks,
   getSynthesisHighlights,
   computeTicketWhatIfCounts,
+  computePickWhatIfCounts,
   LEAGUE_GROUPS,
   getLeagueGroupId,
   formatDateDisplay,
@@ -322,88 +324,74 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch, nowMs }) => {
         </div>
       )}
 
-      {/* 1. Primary Card Header */}
-      <div className="p-3.5 sm:p-4.5 border-b border-slate-100 dark:border-slate-800/80 flex flex-col gap-3">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex flex-col gap-1.5 min-w-0 flex-1">
-            {/* Human ID + Family Badge + Leg Count + Optional LIVE badge */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg font-mono text-xs sm:text-sm font-black tracking-tight border shadow-xs shrink-0 ${familyMeta.humanIdBadgeClass}`}>
-                <Hash size={13} />
-                {ticket.human_id}
+      {/* 1. Primary Card Header (Contraste renforcé et agencement compact en 2 lignes — WEB-001-D C) */}
+      <div className="bg-slate-50/90 dark:bg-slate-900/90 border-b border-slate-200/90 dark:border-slate-800/90 p-3 sm:p-3.5 flex flex-col gap-2.5">
+        {/* Ligne 1 : Identité, badges contextuels, périmètre et cote plancher compacte */}
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 min-w-0 flex-1">
+            <span className={`inline-flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg font-mono text-xs sm:text-sm font-black tracking-tight border shadow-xs shrink-0 ${familyMeta.humanIdBadgeClass}`}>
+              <Hash size={12} className="sm:w-[13px] sm:h-[13px]" />
+              {ticket.human_id}
+            </span>
+            <span className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[11px] sm:text-xs font-bold border shadow-xs shrink-0 ${familyMeta.badgeClass}`}>
+              {familyMeta.label}
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0">
+              <Box size={11} className="text-emerald-500" />
+              {legCount} {legCount > 1 ? 'jambes' : 'jambe'}
+            </span>
+            {isTicketLive(ticket, nowMs) && (
+              <span
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 font-mono shadow-2xs shrink-0"
+                title="Au moins une jambe de ce ticket est estimée en direct (fenêtre conventionnelle 0 à 115 min)"
+              >
+                <Radio size={11} className="text-emerald-500 animate-pulse" />
+                <span>LIVE estimé</span>
               </span>
-              <span className={`px-2.5 py-1 rounded-lg text-xs font-bold border shadow-xs shrink-0 ${familyMeta.badgeClass}`}>
-                {familyMeta.label}
-              </span>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                <Box size={12} className="text-emerald-500" />
-                {legCount} {legCount > 1 ? 'jambes' : 'jambe'}
-              </span>
-              {isTicketLive(ticket, nowMs) && (
-                <span
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 font-mono shadow-2xs"
-                  title="Au moins une jambe de ce ticket est estimée en direct (fenêtre conventionnelle 0 à 115 min)"
-                >
-                  <Radio size={12} className="text-emerald-500 animate-pulse" />
-                  <span>LIVE estimé</span>
-                </span>
-              )}
-            </div>
-
-            {/* Scope & Canonical ID preview */}
-            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-              <span className="inline-flex items-center gap-1 font-medium text-slate-600 dark:text-slate-300">
-                <Globe size={12} className="text-purple-500 shrink-0" />
-                <span>Périmètre : {getScopeTypeLabel(scopeType)} <span className="font-mono text-slate-400 dark:text-slate-500 text-[10px]">({scopeType})</span></span>
-              </span>
-              {ticket.ticket_id && (
-                <span className="font-mono text-slate-400 dark:text-slate-500 break-all" title={`ID canonique : ${ticket.ticket_id}`}>
-                  ID : {ticket.ticket_id}
-                </span>
-              )}
-            </div>
+            )}
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 dark:text-slate-300 shrink-0">
+              <Globe size={11} className="text-purple-500 shrink-0" />
+              <span>{getScopeTypeLabel(scopeType)}</span>
+            </span>
           </div>
 
-          {/* Reference Floor Odds Product */}
-          <div className="flex flex-col items-end shrink-0 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-xl">
-            <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight">
-              Cote Réf. Plancher
+          {/* Reference Floor Odds Product Compact */}
+          <div className="flex items-center gap-1.5 shrink-0 bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 px-2 sm:px-2.5 py-1 rounded-xl" title="Cote Référence Plancher">
+            <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight hidden sm:inline">
+              Cote Réf.
             </span>
-            <span className="text-lg sm:text-xl font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tight">
+            <span className="text-sm sm:text-base font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tight">
               {oddsMeta.display}
             </span>
           </div>
         </div>
 
-        {/* 2. Compact Probabilities Section (2 compact blocks + discreet joint probability row) */}
-        <div className="flex flex-col gap-1.5">
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-slate-50 dark:bg-slate-800/60 px-2.5 py-1.5 rounded-lg border border-slate-200/70 dark:border-slate-800 flex flex-col justify-between">
-              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate">
-                Prob. Moy. Jambes
-              </span>
-              <span className="text-sm sm:text-base font-black font-mono text-slate-900 dark:text-white mt-0.5">
-                {meanProbMeta.display}
-              </span>
-            </div>
-
-            <div className="bg-slate-50 dark:bg-slate-800/60 px-2.5 py-1.5 rounded-lg border border-slate-200/70 dark:border-slate-800 flex flex-col justify-between">
-              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate">
-                Prob. Min. Jambe
-              </span>
-              <span className="text-sm sm:text-base font-black font-mono text-slate-900 dark:text-white mt-0.5">
-                {minProbMeta.display}
-              </span>
-            </div>
+        {/* Ligne 2 : Bandeau compact de 3 métriques (grid-cols-2 sm:grid-cols-3) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs">
+          <div className="bg-white/80 dark:bg-slate-800/60 px-2.5 py-1.5 rounded-lg border border-slate-200/70 dark:border-slate-800 flex items-center justify-between min-w-0">
+            <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate mr-1">
+              Prob. Moy. Jambes
+            </span>
+            <span className="text-xs sm:text-sm font-black font-mono text-slate-900 dark:text-white shrink-0">
+              {meanProbMeta.display}
+            </span>
           </div>
 
-          {/* Discreet Joint Probability Row */}
-          <div className="flex items-center justify-between px-2.5 py-1 rounded-lg bg-slate-100/60 dark:bg-slate-800/40 border border-slate-200/50 dark:border-slate-800/60 text-[11px]">
-            <span className="font-medium text-slate-500 dark:text-slate-400">
+          <div className="bg-white/80 dark:bg-slate-800/60 px-2.5 py-1.5 rounded-lg border border-slate-200/70 dark:border-slate-800 flex items-center justify-between min-w-0">
+            <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate mr-1">
+              Prob. Min. Jambe
+            </span>
+            <span className="text-xs sm:text-sm font-black font-mono text-slate-900 dark:text-white shrink-0">
+              {minProbMeta.display}
+            </span>
+          </div>
+
+          <div className="col-span-2 sm:col-span-1 bg-white/80 dark:bg-slate-800/60 px-2.5 py-1.5 rounded-lg border border-slate-200/70 dark:border-slate-800 flex items-center justify-between min-w-0">
+            <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate mr-1">
               Prob. Jointe Ticket
             </span>
             <span
-              className={`font-mono ${
+              className={`text-xs sm:text-sm font-mono shrink-0 ${
                 jointProbMeta.available
                   ? 'text-emerald-600 dark:text-emerald-400 font-bold'
                   : 'text-slate-500 dark:text-slate-400'
@@ -923,6 +911,34 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     }));
   }, [picksTierCounts, picksFilters.tier]);
 
+  // Dynamic what-if counts for time slots (WEB-001-D B)
+  const ticketTimeSlotCounts = useMemo(() => {
+    const pool = ticketFilters.liveEstimatedOnly ? ticketsList.filter(t => isTicketLive(t, nowMs)) : ticketsList;
+    return computeTicketWhatIfCounts(pool, ticketFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']);
+  }, [ticketsList, ticketFilters, nowMs]);
+
+  const picksTimeSlotCounts = useMemo(() => {
+    return computePickWhatIfCounts(finals?.Selections || [], picksFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']);
+  }, [finals, picksFilters]);
+
+  const ticketTimeSlotPills = useMemo(() => {
+    return Object.values(TIME_SLOTS).map(slot => ({
+      id: `SLOT_${slot.id}`,
+      slotKey: slot.id,
+      label: `${slot.label} (${ticketTimeSlotCounts?.[slot.id] ?? 0})`,
+      active: ticketFilters.timeSlot === slot.id
+    }));
+  }, [ticketTimeSlotCounts, ticketFilters.timeSlot]);
+
+  const picksTimeSlotPills = useMemo(() => {
+    return Object.values(TIME_SLOTS).map(slot => ({
+      id: `SLOT_${slot.id}`,
+      slotKey: slot.id,
+      label: `${slot.label} (${picksTimeSlotCounts?.[slot.id] ?? 0})`,
+      active: picksFilters.timeSlot === slot.id
+    }));
+  }, [picksTimeSlotCounts, picksFilters.timeSlot]);
+
   // 6. Synthesis Highlights (Top 5 Singles, Top 5 Combos by min prob, Top 5 Choix Finaux)
   const highlights = useMemo(() => {
     return getSynthesisHighlights(ticketsList, finals?.Selections || [], 5);
@@ -938,6 +954,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     if (ticketFilters.selectedLeagues?.length > 0) count++;
     if (ticketFilters.selectedMarketFamilies?.length > 0) count++;
     if (ticketFilters.selectedDate !== 'ALL') count++;
+    if (ticketFilters.timeSlot && ticketFilters.timeSlot !== 'ALL') count++;
     if (ticketFilters.minProbThreshold > 0) count++;
     if (ticketFilters.legMatchMode && ticketFilters.legMatchMode !== 'ANY') count++;
     if (ticketFilters.liveEstimatedOnly) count++;
@@ -957,6 +974,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     if (picksFilters.superSignalOnly) count++;
     if (picksFilters.liveOnly) count++;
     if (picksFilters.selectedDate !== 'ALL') count++;
+    if (picksFilters.timeSlot && picksFilters.timeSlot !== 'ALL') count++;
     if (picksFilters.searchQuery?.trim()) count++;
     return count;
   }, [picksFilters]);
@@ -1682,7 +1700,14 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 { id: 'STANDARD_5_8', label: `Standard (${productWhatIfCounts?.['STANDARD_5_8'] ?? 18})`, active: ticketFilters.productCode === 'STANDARD_5_8' },
                 { id: 'EXTENDED_9_PLUS', label: `Extended (${productWhatIfCounts?.['EXTENDED_9_PLUS'] ?? 2})`, active: ticketFilters.productCode === 'EXTENDED_9_PLUS' },
                 { id: 'TOP7', label: 'Top 7 Europe', active: ticketFilters.leagueGroup === 'TOP_7_EUROPE' },
-                { id: 'TG', label: 'Team Goals', active: ticketFilters.selectedMarketFamilies.includes('Team Goals') }
+                { id: 'TG', label: 'Team Goals', active: ticketFilters.selectedMarketFamilies.includes('Team Goals') },
+                ...ticketTimeSlotPills.map(p => ({
+                  id: p.id,
+                  label: p.label,
+                  active: p.active,
+                  isTimeSlot: true,
+                  timeSlotKey: p.slotKey
+                }))
               ].map(pill => (
                 <button
                   key={pill.id}
@@ -1723,6 +1748,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                           selectedMarketFamilies: hasTG ? prev.selectedMarketFamilies.filter(f => f !== 'Team Goals') : [...prev.selectedMarketFamilies, 'Team Goals']
                         };
                       });
+                    } else if (pill.isTimeSlot) {
+                      setTicketFilters(prev => ({
+                        ...prev,
+                        timeSlot: prev.timeSlot === pill.timeSlotKey ? 'ALL' : pill.timeSlotKey
+                      }));
                     }
                   }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none ${
@@ -1759,6 +1789,12 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                     >
                       <X size={12} />
                     </button>
+                  </span>
+                )}
+                {ticketFilters.timeSlot && ticketFilters.timeSlot !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20">
+                    Horaire : {TIME_SLOTS[ticketFilters.timeSlot]?.label || ticketFilters.timeSlot}
+                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, timeSlot: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
                   </span>
                 )}
                 {ticketFilters.structure !== 'ALL' && (
@@ -1987,7 +2023,16 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       : [...prev.selectedMarketFamilies, 'Team Goals']
                   };
                 })
-              }
+              },
+              ...ticketTimeSlotPills.map(p => ({
+                id: p.id,
+                label: p.label,
+                active: p.active,
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  timeSlot: prev.timeSlot === p.slotKey ? 'ALL' : p.slotKey
+                }))
+              }))
             ]}
             searchQuery={ticketFilters.searchQuery}
             onSearchChange={q => setTicketFilters(prev => ({ ...prev, searchQuery: q }))}
@@ -2130,10 +2175,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             {/* Row 2: Quick Filter Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
               {[
-                { id: 'ALL', label: `Tous (${totalSelections})`, active: picksFilters.tier === 'ALL' && !picksFilters.liveOnly && picksFilters.streakStatus === 'ALL' },
+                { id: 'ALL', label: `Tous (${totalSelections})`, active: picksFilters.tier === 'ALL' && !picksFilters.liveOnly && picksFilters.streakStatus === 'ALL' && picksFilters.timeSlot === 'ALL' },
                 ...picksTierPills,
                 { id: 'LIVE', label: 'Live Eligible', active: picksFilters.liveOnly },
-                { id: 'STREAK', label: 'Séries confirmées', active: picksFilters.streakStatus === 'STREAK_CONFIRMED' }
+                { id: 'STREAK', label: 'Séries confirmées', active: picksFilters.streakStatus === 'STREAK_CONFIRMED' },
+                ...picksTimeSlotPills
               ].map(pill => (
                 <button
                   key={pill.id}
@@ -2147,6 +2193,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       setPicksFilters(prev => ({ ...prev, liveOnly: !prev.liveOnly }));
                     } else if (pill.id === 'STREAK') {
                       setPicksFilters(prev => ({ ...prev, streakStatus: prev.streakStatus === 'STREAK_CONFIRMED' ? 'ALL' : 'STREAK_CONFIRMED' }));
+                    } else if (pill.slotKey) {
+                      setPicksFilters(prev => ({ ...prev, timeSlot: prev.timeSlot === pill.slotKey ? 'ALL' : pill.slotKey }));
                     }
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none ${
@@ -2166,6 +2214,12 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-tight mr-1">
                   Actifs :
                 </span>
+                {picksFilters.timeSlot && picksFilters.timeSlot !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20">
+                    Horaire : {TIME_SLOTS[picksFilters.timeSlot]?.label || picksFilters.timeSlot}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, timeSlot: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
                 {picksFilters.tier !== 'ALL' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
                     Tier {picksFilters.tier}
@@ -2293,7 +2347,16 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   ...prev,
                   streakStatus: prev.streakStatus === 'STREAK_CONFIRMED' ? 'ALL' : 'STREAK_CONFIRMED'
                 }))
-              }
+              },
+              ...picksTimeSlotPills.map(p => ({
+                id: p.id,
+                label: p.label,
+                active: p.active,
+                onClick: () => setPicksFilters(prev => ({
+                  ...prev,
+                  timeSlot: prev.timeSlot === p.slotKey ? 'ALL' : p.slotKey
+                }))
+              }))
             ]}
             searchQuery={picksFilters.searchQuery}
             onSearchChange={q => setPicksFilters(prev => ({ ...prev, searchQuery: q }))}
@@ -2536,6 +2599,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
         availablePicksProfiles={availablePicksProfiles}
         availablePicksTypes={availablePicksTypes}
         availableDates={availableDates}
+        isTicketLive={isTicketLive}
       />
     </div>
   );
