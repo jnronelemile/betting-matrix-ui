@@ -40,6 +40,8 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const dashboardRef = useRef(null);
   const headerRef = useRef(null);
   const tabsContainerRef = useRef(null);
+  const tabIndicatorRef = useRef(null);
+  const tabsGeometryRef = useRef({});
   const activeSeriesFetchRef = useRef(null);
   const transitionTimerRef = useRef(null);
 
@@ -220,9 +222,62 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
     };
   }, []);
 
-  // Sécurisation au redimensionnement : purger tout état de transition ou swipe résiduel sur Desktop
+  // Mesure optimisée de la géométrie des onglets (évite les reflows pendant le swipe)
+  const updateTabsGeometry = useCallback(() => {
+    if (!tabsContainerRef.current) return;
+    const buttons = tabsContainerRef.current.querySelectorAll('[data-tab-id]');
+    const geoMap = {};
+    buttons.forEach(btn => {
+      const id = btn.getAttribute('data-tab-id');
+      if (id) {
+        geoMap[id] = {
+          left: btn.offsetLeft,
+          width: btn.offsetWidth,
+        };
+      }
+    });
+    tabsGeometryRef.current = geoMap;
+  }, []);
+
+  // Positionnement direct de l'indicateur d'onglet sans re-rendu React
+  const setIndicatorPosition = useCallback((left, width, transition = null) => {
+    if (!tabIndicatorRef.current) return;
+    if (transition !== null) {
+      tabIndicatorRef.current.style.transition = transition;
+    }
+    tabIndicatorRef.current.style.left = `${left}px`;
+    tabIndicatorRef.current.style.width = `${width}px`;
+  }, []);
+
+  // Positionnement de l'indicateur au changement d'onglet actif
+  useEffect(() => {
+    const rafId = requestAnimationFrame(() => {
+      updateTabsGeometry();
+      const geo = tabsGeometryRef.current[activeTab];
+      if (geo) {
+        const prefersReducedMotion = typeof window !== 'undefined' &&
+          window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const transition = prefersReducedMotion
+          ? 'none'
+          : 'left 200ms cubic-bezier(0.2, 0.9, 0.3, 1), width 200ms cubic-bezier(0.2, 0.9, 0.3, 1)';
+
+        setIndicatorPosition(geo.left, geo.width, transition);
+      }
+    });
+    return () => cancelAnimationFrame(rafId);
+  }, [activeTab, updateTabsGeometry, setIndicatorPosition]);
+
+  // Sécurisation au redimensionnement : purger tout état de transition ou swipe résiduel et recalculer les onglets
   useEffect(() => {
     const handleResize = () => {
+      updateTabsGeometry();
+      const geo = tabsGeometryRef.current[activeTab];
+      if (geo) {
+        setIndicatorPosition(geo.left, geo.width, 'none');
+      }
+
       if (typeof window !== 'undefined' && window.innerWidth >= 768) {
         if (isTransitioning) {
           if (transitionTimerRef.current) {
@@ -253,7 +308,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isTransitioning, swipeNeighbor]);
+  }, [activeTab, isTransitioning, swipeNeighbor, updateTabsGeometry, setIndicatorPosition]);
 
   // Déterminants de navigation séquentielle (Flèches PC / Raccourcis)
   const currentTabIndex = TABS.findIndex(t => t.id === activeTab);
@@ -367,7 +422,9 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       containerWidth: containerW,
       isAnimatingRelease: false,
     };
-  }, [isInteractiveTarget]);
+
+    updateTabsGeometry();
+  }, [isInteractiveTarget, updateTabsGeometry]);
 
   // Déplacement tactile au doigt en temps réel
   const handleTouchMove = useCallback((e) => {
@@ -445,8 +502,25 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
         neighborPanelRef.current.style.transition = 'none';
         neighborPanelRef.current.style.transform = `translate3d(${neighborOffset}px, 0, 0)`;
       }
+
+      // Synchronisation progressive de l'indicateur d'onglet tactile
+      const currentGeo = tabsGeometryRef.current[activeTab];
+      if (currentGeo) {
+        if (neighborId && tabsGeometryRef.current[neighborId]) {
+          const neighborGeo = tabsGeometryRef.current[neighborId];
+          const progress = Math.min(1, Math.abs(effectiveDx) / containerW);
+          const interpolatedLeft = currentGeo.left + (neighborGeo.left - currentGeo.left) * progress;
+          const interpolatedWidth = currentGeo.width + (neighborGeo.width - currentGeo.width) * progress;
+          setIndicatorPosition(interpolatedLeft, interpolatedWidth, 'none');
+        } else {
+          // Résistance élastique aux extrémités
+          const progress = Math.min(1, Math.abs(effectiveDx) / containerW);
+          const stretchFactor = dx < 0 ? progress * 10 : -progress * 10;
+          setIndicatorPosition(currentGeo.left + (stretchFactor < 0 ? stretchFactor : 0), currentGeo.width + Math.abs(stretchFactor), 'none');
+        }
+      }
     }
-  }, [activeTab, swipeNeighbor]);
+  }, [activeTab, swipeNeighbor, setIndicatorPosition]);
 
   // Relâchement du doigt : validation ou annulation amortie
   const handleTouchEnd = useCallback(() => {
@@ -488,6 +562,12 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
         neighborPanelRef.current.style.transform = 'translate3d(0px, 0, 0)';
       }
 
+      // Animer l'indicateur d'onglet vers le voisin
+      const neighborGeo = tabsGeometryRef.current[neighborTabId];
+      if (neighborGeo) {
+        setIndicatorPosition(neighborGeo.left, neighborGeo.width, `left ${duration}ms ${ease}, width ${duration}ms ${ease}`);
+      }
+
       finishTimeoutRef.current = setTimeout(() => {
         // Remise à zéro instantanée du scroll vertical vers le haut pour le nouveau contenu
         if (dashboardRef.current) {
@@ -525,6 +605,12 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
         neighborPanelRef.current.style.transform = `translate3d(${targetNeighbor}px, 0, 0)`;
       }
 
+      // Animer l'indicateur d'onglet de retour vers l'onglet actif
+      const currentGeo = tabsGeometryRef.current[activeTab];
+      if (currentGeo) {
+        setIndicatorPosition(currentGeo.left, currentGeo.width, `left ${duration}ms ${ease}, width ${duration}ms ${ease}`);
+      }
+
       finishTimeoutRef.current = setTimeout(() => {
         if (currentPanelRef.current) {
           currentPanelRef.current.style.transition = '';
@@ -540,7 +626,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
         finishTimeoutRef.current = null;
       }, duration);
     }
-  }, [activeTab]);
+  }, [activeTab, setIndicatorPosition]);
 
   // Interruption système (touchcancel)
   const handleTouchCancel = useCallback(() => {
@@ -552,6 +638,10 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
     }
     if (neighborPanelRef.current) {
       neighborPanelRef.current.style.transition = 'transform 150ms ease-out';
+    }
+    const currentGeo = tabsGeometryRef.current[activeTab];
+    if (currentGeo) {
+      setIndicatorPosition(currentGeo.left, currentGeo.width, 'left 150ms ease-out, width 150ms ease-out');
     }
     setTimeout(() => {
       if (currentPanelRef.current) {
@@ -566,7 +656,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       touchStateRef.current.isDragging = false;
       touchStateRef.current.isAnimatingRelease = false;
     }, 150);
-  }, []);
+  }, [activeTab, setIndicatorPosition]);
 
   // Attachement des écouteurs tactiles natifs avec { passive: false } sur le conteneur de contenu
   useEffect(() => {
@@ -800,8 +890,8 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
             </div>
           </div>
 
-          {/* MOBILE (< lg): Disposition Responsive & Compacte */}
-          <div className="flex flex-col gap-1.5 lg:hidden min-w-0">
+          {/* MOBILE (< 768px) : Disposition Centrée avec Heure/Date au milieu */}
+          <div className="flex flex-col gap-1.5 md:hidden min-w-0">
             {/* Étage 1 Mobile : Retour + Ligue/Journée + Badges */}
             <div className="flex items-center justify-between gap-1.5 min-w-0">
               <div className="flex items-center gap-1.5 min-w-0">
@@ -873,7 +963,146 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
               </div>
             </div>
 
-            {/* Étage 2 Mobile : Confrontation Centrale Symétrique (Logos 32-36px + Noms Lisibles) */}
+            {/* Étage 2 Mobile : Confrontation Centrale Symétrique (Logos 32-36px + Horodatage Centré) */}
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-1.5 sm:gap-2 max-w-sm mx-auto w-full py-0.5">
+              {/* Club Domicile */}
+              <div className="flex flex-col items-center text-center min-w-0">
+                <TeamLogo
+                  teamName={rawHome}
+                  league={match.League}
+                  size="w-8 h-8 sm:w-9 sm:h-9"
+                  alt={homeName}
+                  className="drop-shadow-xs shrink-0"
+                />
+                <span
+                  title={homeName}
+                  className="mt-1 font-sans font-bold text-xs text-slate-900 dark:text-white leading-tight line-clamp-2 break-words max-w-[110px] xs:max-w-[130px] tracking-tight"
+                >
+                  {homeName}
+                </span>
+              </div>
+
+              {/* Bloc Horaire Centré ou Fallback VS */}
+              <div className="flex flex-col items-center justify-center text-center shrink-0 px-0.5 min-w-[65px]">
+                {schedule.hasSchedule ? (
+                  <div className="flex flex-col items-center justify-center gap-0.5">
+                    {schedule.time && (
+                      <span className="font-mono font-bold text-xs sm:text-sm text-blue-600 dark:text-blue-400 leading-none">
+                        {schedule.time}
+                      </span>
+                    )}
+                    {(schedule.shortDate || schedule.dateLong) && (
+                      <span className="font-mono text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-none">
+                        {schedule.shortDate || schedule.dateLong}
+                      </span>
+                    )}
+                    {schedule.isLive && (
+                      <span className="inline-flex items-center gap-1 mt-0.5 px-1.5 py-0.2 rounded-full text-[8px] font-bold uppercase bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 animate-pulse">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        LIVE
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <div className="px-1.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
+                    VS
+                  </div>
+                )}
+              </div>
+
+              {/* Club Extérieur */}
+              <div className="flex flex-col items-center text-center min-w-0">
+                <TeamLogo
+                  teamName={rawAway}
+                  league={match.League}
+                  size="w-8 h-8 sm:w-9 sm:h-9"
+                  alt={awayName}
+                  className="drop-shadow-xs shrink-0"
+                />
+                <span
+                  title={awayName}
+                  className="mt-1 font-sans font-bold text-xs text-slate-900 dark:text-white leading-tight line-clamp-2 break-words max-w-[110px] xs:max-w-[130px] tracking-tight"
+                >
+                  {awayName}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* TABLETTE (768px à 1023px) : Reproduction à l'identique du header d'origine */}
+          <div className="hidden md:flex lg:hidden flex-col gap-1.5 min-w-0">
+            {/* Étage 1 Tablettes : Retour + Ligue/Journée + Badges */}
+            <div className="flex items-center justify-between gap-1.5 min-w-0">
+              <div className="flex items-center gap-1.5 min-w-0">
+                {onClose && (
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="p-0.5 -ml-1 shrink-0 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                    title="Retour à la liste"
+                    aria-label="Retour à la liste"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                )}
+
+                <div className="inline-flex items-center gap-1 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 min-w-0">
+                  {match.League && (
+                    <>
+                      <LeagueLogo league={match.League} size="xs" className="shrink-0 opacity-80" />
+                      <span className="font-semibold text-slate-700 dark:text-slate-300 tracking-tight truncate max-w-[100px] xs:max-w-[130px]">
+                        {getLeagueDisplayName(match.League)}
+                      </span>
+                    </>
+                  )}
+                  {countryLabel && (
+                    <>
+                      <span className="text-slate-300 dark:text-slate-700 shrink-0">•</span>
+                      <span className="text-slate-500 dark:text-slate-400 font-medium truncate max-w-[80px] xs:max-w-[100px]">
+                        {countryLabel}
+                      </span>
+                    </>
+                  )}
+                  {roundLabel && (
+                    <>
+                      <span className="text-slate-300 dark:text-slate-700 shrink-0">•</span>
+                      <span className="font-mono text-[9px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50/80 dark:bg-indigo-950/50 px-1 py-0.2 rounded border border-indigo-200/50 dark:border-indigo-800/40 shrink-0">
+                        {roundLabel}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Badges Tablettes */}
+              <div className="flex items-center gap-1 shrink-0">
+                {match.isFinalPick && (
+                  <Badge variant="success" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider bg-emerald-600 text-white border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)] animate-pulse font-mono">
+                    <Trophy size={9} /> <span className="hidden xs:inline">MASTER</span> PICK
+                  </Badge>
+                )}
+
+                {match.Calibration_Diagnostics?.confidence_index !== undefined && (
+                  <Badge variant={match.Calibration_Diagnostics.confidence_index >= 0.5 ? 'success' : 'warning'} className="text-[8px] font-mono tracking-wider px-1.5 py-0.5">
+                    CONF: {(match.Calibration_Diagnostics.confidence_index * 100).toFixed(0)}%
+                  </Badge>
+                )}
+
+                {investSignals.IS_ULTRA_SAFE && (
+                  <Badge variant="success" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider border-emerald-500/50 font-mono">
+                    <ShieldCheck size={9} /> SAFE
+                  </Badge>
+                )}
+
+                {isKillSwitch && (
+                  <Badge variant="danger" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50 font-mono">
+                    <AlertTriangle size={9} /> KILL
+                  </Badge>
+                )}
+              </div>
+            </div>
+
+            {/* Étage 2 Tablettes : Confrontation Centrale Symétrique (Logos 32-36px + Noms Lisibles) */}
             <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 max-w-sm mx-auto w-full py-0.5">
               {/* Club Domicile */}
               <div className="flex flex-col items-center text-center min-w-0">
@@ -915,7 +1144,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
               </div>
             </div>
 
-            {/* Étage 3 Mobile : Date et Heure (Partie inférieure gauche du header) */}
+            {/* Étage 3 Tablettes : Date et Heure (Partie inférieure du header d'origine) */}
             <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400 px-0.5">
               <div className="inline-flex items-center gap-1.5">
                 <Calendar size={11} className="text-slate-400 dark:text-slate-500 shrink-0" />
@@ -961,8 +1190,18 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
             {/* Liste d'onglets défilante */}
             <div
               ref={tabsContainerRef}
-              className="flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth px-0.5 flex-1 min-w-0"
+              role="tablist"
+              aria-label="Onglets d'analyse de match"
+              className="relative flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth px-0.5 flex-1 min-w-0"
             >
+              {/* Underline visuel d'onglet actif dynamique sur mobile uniquement (style SofaScore) */}
+              <div
+                ref={tabIndicatorRef}
+                className="md:hidden absolute bottom-0 h-0.5 bg-slate-900 dark:bg-white pointer-events-none z-10 rounded-full"
+                aria-hidden="true"
+                style={{ left: 0, width: 0 }}
+              />
+
               {TABS.map(tab => {
                 const isActive = activeTab === tab.id;
                 return (
@@ -970,14 +1209,16 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                     key={tab.id}
                     data-tab-id={tab.id}
                     onClick={() => navigateToTab(tab.id)}
+                    aria-selected={isActive}
+                    role="tab"
                     className={`
-                      group relative flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg font-mono text-[10px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap transition-all duration-150 select-none shrink-0
+                      group relative z-10 flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-lg font-mono text-[10px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap transition-colors duration-150 select-none shrink-0
                       ${isActive
-                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-black shadow-xs'
+                        ? 'text-slate-900 dark:text-white font-black md:bg-slate-900 md:text-white md:dark:bg-white md:dark:text-slate-950 shadow-2xs md:shadow-xs'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 font-semibold'}
                     `}
                   >
-                    <span className={`transition-colors ${isActive ? 'text-emerald-400 dark:text-emerald-600' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
+                    <span className={`transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400 md:text-emerald-400 md:dark:text-emerald-600' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
                       {tab.icon}
                     </span>
                     <span className="hidden sm:inline">{tab.label}</span>
