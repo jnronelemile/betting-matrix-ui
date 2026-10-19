@@ -890,8 +890,8 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
             </div>
           </div>
 
-          {/* MOBILE (< lg): Disposition Responsive & Compacte */}
-          <div className="flex flex-col gap-1.5 lg:hidden min-w-0">
+          {/* MOBILE (< 768px) : Disposition Centrée avec Heure/Date au milieu */}
+          <div className="flex flex-col gap-1.5 md:hidden min-w-0">
             {/* Étage 1 Mobile : Retour + Ligue/Journée + Badges */}
             <div className="flex items-center justify-between gap-1.5 min-w-0">
               <div className="flex items-center gap-1.5 min-w-0">
@@ -1026,6 +1026,118 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                   {awayName}
                 </span>
               </div>
+            </div>
+          </div>
+
+          {/* TABLETTE (768px à 1023px) : Disposition Antérieure (VS au centre & Date/Heure en bas) */}
+          <div className="hidden md:flex lg:hidden flex-col gap-1.5 min-w-0">
+            {/* Ligne 1 : Retour + Ligue + Badges */}
+            <div className="flex items-center justify-between gap-1.5 min-w-0">
+              <div className="flex items-center gap-1.5 min-w-0">
+                {onClose && (
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="p-0.5 -ml-1 shrink-0 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                    title="Retour à la liste"
+                    aria-label="Retour à la liste"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                )}
+
+                <div className="inline-flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400 min-w-0">
+                  {match.League && (
+                    <>
+                      <LeagueLogo league={match.League} size="xs" className="shrink-0 opacity-80" />
+                      <span className="font-semibold text-slate-700 dark:text-slate-300 tracking-tight truncate max-w-[150px]">
+                        {getLeagueDisplayName(match.League)}
+                      </span>
+                    </>
+                  )}
+                  {countryLabel && (
+                    <>
+                      <span className="text-slate-300 dark:text-slate-700 shrink-0">•</span>
+                      <span className="text-slate-500 dark:text-slate-400 font-medium truncate max-w-[120px]">
+                        {countryLabel}
+                      </span>
+                    </>
+                  )}
+                  {roundLabel && (
+                    <>
+                      <span className="text-slate-300 dark:text-slate-700 shrink-0">•</span>
+                      <span className="font-mono text-[9px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50/80 dark:bg-indigo-950/50 px-1 py-0.2 rounded border border-indigo-200/50 dark:border-indigo-800/40 shrink-0">
+                        {roundLabel}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1 shrink-0">
+                {match.isFinalPick && (
+                  <Badge variant="success" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider bg-emerald-600 text-white border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)] animate-pulse font-mono">
+                    <Trophy size={9} /> MASTER PICK
+                  </Badge>
+                )}
+
+                {match.Calibration_Diagnostics?.confidence_index !== undefined && (
+                  <Badge variant={match.Calibration_Diagnostics.confidence_index >= 0.5 ? 'success' : 'warning'} className="text-[8px] font-mono tracking-wider px-1.5 py-0.5">
+                    CONF: {(match.Calibration_Diagnostics.confidence_index * 100).toFixed(0)}%
+                  </Badge>
+                )}
+
+                {investSignals.IS_ULTRA_SAFE && (
+                  <Badge variant="success" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider border-emerald-500/50 font-mono">
+                    <ShieldCheck size={9} /> SAFE
+                  </Badge>
+                )}
+
+                {isKillSwitch && (
+                  <Badge variant="danger" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50 font-mono">
+                    <AlertTriangle size={9} /> KILL
+                  </Badge>
+                )}
+              </div>
+            </div>
+
+            {/* Ligne 2 : Confrontation avec VS central */}
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 max-w-md mx-auto w-full py-0.5">
+              <div className="flex items-center justify-end gap-2 min-w-0 text-right">
+                <span title={homeName} className="font-sans font-bold text-sm text-slate-900 dark:text-white leading-tight truncate tracking-tight">
+                  {homeName}
+                </span>
+                <TeamLogo teamName={rawHome} league={match.League} size="w-9 h-9" alt={homeName} className="drop-shadow-xs shrink-0" />
+              </div>
+
+              <div className="px-1.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
+                VS
+              </div>
+
+              <div className="flex items-center justify-start gap-2 min-w-0 text-left">
+                <TeamLogo teamName={rawAway} league={match.League} size="w-9 h-9" alt={awayName} className="drop-shadow-xs shrink-0" />
+                <span title={awayName} className="font-sans font-bold text-sm text-slate-900 dark:text-white leading-tight truncate tracking-tight">
+                  {awayName}
+                </span>
+              </div>
+            </div>
+
+            {/* Ligne 3 : Date et Heure */}
+            <div className="flex items-center justify-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400">
+              <Calendar size={12} className="text-slate-400 dark:text-slate-500 shrink-0" />
+              <span className="text-slate-700 dark:text-slate-300 font-medium">{schedule.dateLong}</span>
+              {schedule.time && (
+                <>
+                  <span className="text-slate-300 dark:text-slate-600">•</span>
+                  <span className="font-bold text-blue-600 dark:text-blue-400">{schedule.time}</span>
+                </>
+              )}
+              {schedule.isLive && (
+                <span className="inline-flex items-center gap-1 ml-1 px-1.5 py-0.2 rounded-full text-[8px] font-bold uppercase bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 animate-pulse">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  LIVE
+                </span>
+              )}
             </div>
           </div>
         </div>
