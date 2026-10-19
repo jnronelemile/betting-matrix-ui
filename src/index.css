@@ -64,25 +64,25 @@
 }
 
 .animate-tab-slide-out-left {
-  animation: tabSlideOutToLeft 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: tabSlideOutToLeft 240ms cubic-bezier(0.25, 1, 0.5, 1) both;
   will-change: transform;
   backface-visibility: hidden;
 }
 
 .animate-tab-slide-in-right {
-  animation: tabSlideInFromRight 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: tabSlideInFromRight 240ms cubic-bezier(0.25, 1, 0.5, 1) both;
   will-change: transform;
   backface-visibility: hidden;
 }
 
 .animate-tab-slide-out-right {
-  animation: tabSlideOutToRight 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: tabSlideOutToRight 240ms cubic-bezier(0.25, 1, 0.5, 1) both;
   will-change: transform;
   backface-visibility: hidden;
 }
 
 .animate-tab-slide-in-left {
-  animation: tabSlideInFromLeft 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: tabSlideInFromLeft 240ms cubic-bezier(0.25, 1, 0.5, 1) both;
   will-change: transform;
   backface-visibility: hidden;
 }

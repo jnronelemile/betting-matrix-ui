@@ -576,13 +576,8 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
             scrollParent.scrollTo({ top: 0, behavior: 'instant' });
           }
         }
-        if (currentPanelRef.current) {
-          currentPanelRef.current.style.transition = '';
-          currentPanelRef.current.style.transform = '';
-        }
         if (neighborPanelRef.current) {
           neighborPanelRef.current.style.transition = '';
-          neighborPanelRef.current.style.transform = '';
         }
         setActiveTab(neighborTabId);
         setSwipeNeighbor(null);
@@ -1297,7 +1292,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                 : 'animate-tab-slide-in-left'
               : ''
           }`}
-          style={{ transform: 'translate3d(0px, 0, 0)' }}
+          style={!swipeNeighbor && isTransitioning ? undefined : { transform: 'translate3d(0px, 0, 0)' }}
         >
           {renderTabContent(activeTab)}
         </div>
