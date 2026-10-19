@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Badge } from './ui/Badge';
 import {
   BarChart3,
@@ -11,6 +11,7 @@ import {
   Zap,
   Target,
   ChevronLeft,
+  ChevronRight,
   TrendingUp,
   Trophy,
   Fingerprint,
@@ -30,19 +31,23 @@ import { getMatchScheduleDetails } from '../utils/matchSchedule';
 
 export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const [activeTab, setActiveTab] = useState('tactical');
-  const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
+  const [outgoingTab, setOutgoingTab] = useState(null);
+  const [slideDirection, setSlideDirection] = useState('forward'); // 'forward' (leftward slide) or 'backward' (rightward slide)
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [serieStats, setSerieStats] = useState(null);
   const [seriesError, setSeriesError] = useState(null);
   const [loadingStats, setLoadingStats] = useState(false);
+  const dashboardRef = useRef(null);
   const headerRef = useRef(null);
   const tabsContainerRef = useRef(null);
   const activeSeriesFetchRef = useRef(null);
+  const transitionTimerRef = useRef(null);
 
   // Touch refs for swipe
-  const touchStartX = useRef(0);
-  const touchStartY = useRef(0);
-  const touchEndX = useRef(0);
-  const touchEndY = useRef(0);
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
+  const touchEndX = useRef(null);
+  const touchEndY = useRef(null);
 
   const TABS = [
     { id: 'tactical', label: 'Props & Statistical Markets', mobileLabel: 'PROPS', icon: <Crosshair size={14} /> },
@@ -132,35 +137,199 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
     fetchSerieStats();
   }, [match, sessionId]);
 
-  // Swipe logic for mobile
+  // Navigation centralisée vers un onglet cible avec animation directionnelle fluide
+  const navigateToTab = useCallback((targetTabId) => {
+    if (!targetTabId || targetTabId === activeTab) return;
+    const currentIdx = TABS.findIndex(t => t.id === activeTab);
+    const targetIdx = TABS.findIndex(t => t.id === targetTabId);
+    if (targetIdx === -1) return;
+
+    const direction = targetIdx > currentIdx ? 'forward' : 'backward';
+
+    // Détection de l'environnement Desktop (Instant Switch) ou prefers-reduced-motion
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const isDesktop = typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(min-width: 768px)').matches;
+
+    // Réinitialisation de tout timer de transition en cours (changement rapide)
+    if (transitionTimerRef.current) {
+      clearTimeout(transitionTimerRef.current);
+      transitionTimerRef.current = null;
+    }
+
+    // Réinitialisation instantanée du défilement vertical vers le haut (conteneur scrollable parent & fenêtre)
+    if (dashboardRef.current) {
+      const scrollParent = dashboardRef.current.closest('.overflow-y-auto');
+      if (scrollParent && scrollParent.scrollTop > 0) {
+        scrollParent.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    }
+    if (typeof window !== 'undefined' && window.scrollY > 0) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Sur PC / Desktop (>= 768px) ou si animations réduites : bascule instantanée sans transition bi-panneaux
+    if (isDesktop || prefersReducedMotion) {
+      setOutgoingTab(null);
+      setIsTransitioning(false);
+      setActiveTab(targetTabId);
+      setSlideDirection(direction);
+      return;
+    }
+
+    // Sur Mobile (< 768px) : transition directionnelle bi-panneaux fluide
+    setOutgoingTab(activeTab);
+    setActiveTab(targetTabId);
+    setSlideDirection(direction);
+    setIsTransitioning(true);
+
+    transitionTimerRef.current = setTimeout(() => {
+      setOutgoingTab(null);
+      setIsTransitioning(false);
+      transitionTimerRef.current = null;
+    }, 250);
+  }, [activeTab]);
+
+  // Nettoyage des timers lors du démontage
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Sécurisation au redimensionnement : purger tout état de transition bi-panneau résiduel sur Desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== 'undefined' && window.innerWidth >= 768 && isTransitioning) {
+        if (transitionTimerRef.current) {
+          clearTimeout(transitionTimerRef.current);
+          transitionTimerRef.current = null;
+        }
+        setOutgoingTab(null);
+        setIsTransitioning(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isTransitioning]);
+
+  // Déterminants de navigation séquentielle (Flèches PC / Raccourcis)
+  const currentTabIndex = TABS.findIndex(t => t.id === activeTab);
+  const isFirstTab = currentTabIndex <= 0;
+  const isLastTab = currentTabIndex >= TABS.length - 1;
+
+  const goToPrevTab = useCallback((e) => {
+    if (e) {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      if (typeof e.stopPropagation === 'function') e.stopPropagation();
+    }
+    const curIdx = TABS.findIndex(t => t.id === activeTab);
+    if (curIdx > 0) {
+      navigateToTab(TABS[curIdx - 1].id);
+    }
+  }, [activeTab, navigateToTab]);
+
+  const goToNextTab = useCallback((e) => {
+    if (e) {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      if (typeof e.stopPropagation === 'function') e.stopPropagation();
+    }
+    const curIdx = TABS.findIndex(t => t.id === activeTab);
+    if (curIdx >= 0 && curIdx < TABS.length - 1) {
+      navigateToTab(TABS[curIdx + 1].id);
+    }
+  }, [activeTab, navigateToTab]);
+
+  // Raccourcis clavier PC (Flèches gauche / droite pour naviguer entre onglets)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const activeEl = document.activeElement;
+      if (
+        activeEl &&
+        (activeEl.tagName === 'INPUT' ||
+          activeEl.tagName === 'TEXTAREA' ||
+          activeEl.tagName === 'SELECT' ||
+          activeEl.isContentEditable)
+      ) {
+        return;
+      }
+
+      if (e.key === 'ArrowLeft') {
+        const curIdx = TABS.findIndex(t => t.id === activeTab);
+        if (curIdx > 0) {
+          e.preventDefault();
+          navigateToTab(TABS[curIdx - 1].id);
+        }
+      } else if (e.key === 'ArrowRight') {
+        const curIdx = TABS.findIndex(t => t.id === activeTab);
+        if (curIdx >= 0 && curIdx < TABS.length - 1) {
+          e.preventDefault();
+          navigateToTab(TABS[curIdx + 1].id);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeTab, navigateToTab]);
+
+  // Logique gestuelle de swipe mobile avec filtrage directionnel et zones interactives
   const handleTouchStart = (e) => {
+    if (!e.targetTouches || e.targetTouches.length === 0) return;
+    // Ignorer le swipe s'il provient de la barre d'onglets défilante elle-même
+    if (tabsContainerRef.current && tabsContainerRef.current.contains(e.target)) {
+      touchStartX.current = null;
+      touchStartY.current = null;
+      return;
+    }
+    // Ignorer le swipe sur les curseurs, inputs ou zones annotées data-no-swipe
+    if (e.target.closest && e.target.closest('input[type="range"], [data-no-swipe="true"]')) {
+      touchStartX.current = null;
+      touchStartY.current = null;
+      return;
+    }
     touchStartX.current = e.targetTouches[0].clientX;
     touchStartY.current = e.targetTouches[0].clientY;
+    touchEndX.current = e.targetTouches[0].clientX;
+    touchEndY.current = e.targetTouches[0].clientY;
   };
 
   const handleTouchMove = (e) => {
+    if (touchStartX.current === null) return;
+    if (!e.targetTouches || e.targetTouches.length === 0) return;
     touchEndX.current = e.targetTouches[0].clientX;
     touchEndY.current = e.targetTouches[0].clientY;
   };
 
   const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
     const deltaX = touchStartX.current - touchEndX.current;
     const deltaY = touchStartY.current - touchEndY.current;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
     const minDistance = 50;
 
-    // Only swipe if horizontal movement is greater than vertical movement
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minDistance) {
-      const currentIndex = TABS.findIndex(tab => tab.id === activeTab);
-      if (deltaX > 0 && currentIndex < TABS.length - 1) {
-        // Swipe Left -> Next
-        setSlideDirection('right');
-        setActiveTab(TABS[currentIndex + 1].id);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (deltaX < 0 && currentIndex > 0) {
-        // Swipe Right -> Previous
-        setSlideDirection('left');
-        setActiveTab(TABS[currentIndex - 1].id);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Réinitialisation immédiate des coordonnées
+    touchStartX.current = null;
+    touchStartY.current = null;
+    touchEndX.current = null;
+    touchEndY.current = null;
+
+    // Détection stricte d'un mouvement horizontal dominant (au moins 1.5x le déplacement vertical)
+    if (absX > minDistance && absX > absY * 1.5) {
+      const currentIdx = TABS.findIndex(tab => tab.id === activeTab);
+      if (deltaX > 0 && currentIdx < TABS.length - 1) {
+        // Swipe vers la gauche -> Onglet suivant
+        navigateToTab(TABS[currentIdx + 1].id);
+      } else if (deltaX < 0 && currentIdx > 0) {
+        // Swipe vers la droite -> Onglet précédent
+        navigateToTab(TABS[currentIdx - 1].id);
       }
     }
   };
@@ -204,8 +373,41 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const schedule = getMatchScheduleDetails(match);
   const countryLabel = getLeagueCountryLabel(match.League || match.league);
 
+  // Restitution pure et découplée des panneaux analytiques pour la transition fluide
+  const renderTabContent = (tabId) => {
+    switch (tabId) {
+      case 'tactical':
+        return <TabTactical match={match} onNavigateTab={navigateToTab} />;
+      case 'core':
+        return <TabCoreMarket match={match} onNavigateTab={navigateToTab} />;
+      case 'deepdive':
+        return <TabDeepDive match={match} leagueReport={leagueReport} onNavigateTab={navigateToTab} />;
+      case 'risk':
+        return <TabRiskContext match={match} onNavigateTab={navigateToTab} />;
+      case 'series':
+        return (
+          <div className="flex flex-col gap-4">
+            {seriesError && (
+              <div className="flex items-center gap-2 p-3 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs rounded-xl font-mono">
+                <AlertTriangle size={14} className="shrink-0" />
+                <span>Séries indisponibles ou rejetées : {seriesError}</span>
+              </div>
+            )}
+            <TabSeries stats={serieStats} match={match} loading={loadingStats} onNavigateTab={navigateToTab} />
+          </div>
+        );
+      case 'narrative':
+        return <TabNarrative match={match} onNavigateTab={navigateToTab} />;
+      case 'calibration':
+        return <TabCalibration match={match} onNavigateTab={navigateToTab} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div
+      ref={dashboardRef}
       className="flex flex-col gap-4 relative transition-colors duration-300"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -482,66 +684,102 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
           </div>
         </div>
 
-        {/* Modernized Integrated Tab Navigation Bar */}
+        {/* Modernized Integrated Tab Navigation Bar with PC Chevrons */}
         <div className="border-t border-slate-200/70 dark:border-slate-800/70 py-1">
-          <div
-            ref={tabsContainerRef}
-            className="flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth px-0.5"
-          >
-            {TABS.map(tab => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  data-tab-id={tab.id}
-                  onClick={() => {
-                    const newIdx = TABS.findIndex(t => t.id === tab.id);
-                    const currentIdx = TABS.findIndex(t => t.id === activeTab);
-                    setSlideDirection(newIdx > currentIdx ? 'right' : 'left');
-                    setActiveTab(tab.id);
-                  }}
-                  className={`
-                    group relative flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg font-mono text-[10px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap transition-all duration-150 select-none
-                    ${isActive
-                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-black shadow-xs'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 font-semibold'}
-                  `}
-                >
-                  <span className={`transition-colors ${isActive ? 'text-emerald-400 dark:text-emerald-600' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
-                    {tab.icon}
-                  </span>
-                  <span className="hidden sm:inline">{tab.label}</span>
-                  <span className="sm:hidden">{tab.mobileLabel}</span>
-                </button>
-              );
-            })}
+          <div className="flex items-center gap-1 min-w-0">
+            {/* Flèche précédente (PC / desktop) */}
+            <button
+              type="button"
+              data-testid="chevron-prev-tab"
+              onClick={goToPrevTab}
+              disabled={isFirstTab}
+              aria-label="Onglet précédent"
+              title={!isFirstTab ? `Onglet précédent (${TABS[currentTabIndex - 1]?.label})` : 'Premier onglet atteint'}
+              className={`
+                hidden md:flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 dark:text-slate-400 shrink-0 transition-all duration-150 select-none
+                ${isFirstTab
+                  ? 'opacity-25 cursor-not-allowed text-slate-300 dark:text-slate-700'
+                  : 'hover:bg-slate-200/70 dark:hover:bg-slate-800/70 hover:text-slate-900 dark:hover:text-slate-100 active:scale-95 cursor-pointer'}
+              `}
+            >
+              <ChevronLeft size={16} />
+            </button>
+
+            {/* Liste d'onglets défilante */}
+            <div
+              ref={tabsContainerRef}
+              className="flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth px-0.5 flex-1 min-w-0"
+            >
+              {TABS.map(tab => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    data-tab-id={tab.id}
+                    onClick={() => navigateToTab(tab.id)}
+                    className={`
+                      group relative flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg font-mono text-[10px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap transition-all duration-150 select-none shrink-0
+                      ${isActive
+                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-black shadow-xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 font-semibold'}
+                    `}
+                  >
+                    <span className={`transition-colors ${isActive ? 'text-emerald-400 dark:text-emerald-600' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
+                      {tab.icon}
+                    </span>
+                    <span className="hidden sm:inline">{tab.label}</span>
+                    <span className="sm:hidden">{tab.mobileLabel}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Flèche suivante (PC / desktop) */}
+            <button
+              type="button"
+              data-testid="chevron-next-tab"
+              onClick={goToNextTab}
+              disabled={isLastTab}
+              aria-label="Onglet suivant"
+              title={!isLastTab ? `Onglet suivant (${TABS[currentTabIndex + 1]?.label})` : 'Dernier onglet atteint'}
+              className={`
+                hidden md:flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 dark:text-slate-400 shrink-0 transition-all duration-150 select-none
+                ${isLastTab
+                  ? 'opacity-25 cursor-not-allowed text-slate-300 dark:text-slate-700'
+                  : 'hover:bg-slate-200/70 dark:hover:bg-slate-800/70 hover:text-slate-900 dark:hover:text-slate-100 active:scale-95 cursor-pointer'}
+              `}
+            >
+              <ChevronRight size={16} />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Tab Content with Animation */}
-      <div className="mt-4 overflow-hidden relative">
+      {/* Tab Content with Directional Horizontal Sliding Panels */}
+      <div data-testid="tab-content-container" className="mt-4 relative overflow-hidden w-full">
+        {isTransitioning && outgoingTab && (
+          <div
+            key={`outgoing-${outgoingTab}`}
+            aria-hidden="true"
+            className={`w-full absolute top-0 left-0 pointer-events-none select-none z-0 bg-slate-50 dark:bg-slate-950 ${
+              slideDirection === 'forward' ? 'animate-tab-slide-out-left' : 'animate-tab-slide-out-right'
+            }`}
+          >
+            {renderTabContent(outgoingTab)}
+          </div>
+        )}
+
         <div
-          key={activeTab}
-          className={`w-full ${slideDirection === 'right' ? 'animate-slide-right' : 'animate-slide-left'}`}
+          key={`incoming-${activeTab}`}
+          className={`w-full relative z-10 bg-slate-50 dark:bg-slate-950 ${
+            isTransitioning
+              ? slideDirection === 'forward'
+                ? 'animate-tab-slide-in-right'
+                : 'animate-tab-slide-in-left'
+              : ''
+          }`}
         >
-          {activeTab === 'tactical' && <TabTactical match={match} onNavigateTab={setActiveTab} />}
-          {activeTab === 'core' && <TabCoreMarket match={match} onNavigateTab={setActiveTab} />}
-          {activeTab === 'deepdive' && <TabDeepDive match={match} leagueReport={leagueReport} onNavigateTab={setActiveTab} />}
-          {activeTab === 'risk' && <TabRiskContext match={match} onNavigateTab={setActiveTab} />}
-          {activeTab === 'series' && (
-            <div className="flex flex-col gap-4">
-              {seriesError && (
-                <div className="flex items-center gap-2 p-3 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs rounded-xl font-mono">
-                  <AlertTriangle size={14} className="shrink-0" />
-                  <span>Séries indisponibles ou rejetées : {seriesError}</span>
-                </div>
-              )}
-              <TabSeries stats={serieStats} match={match} loading={loadingStats} onNavigateTab={setActiveTab} />
-            </div>
-          )}
-          {activeTab === 'narrative' && <TabNarrative match={match} onNavigateTab={setActiveTab} />}
-          {activeTab === 'calibration' && <TabCalibration match={match} onNavigateTab={setActiveTab} />}
+          {renderTabContent(activeTab)}
         </div>
       </div>
     </div>

@@ -23,23 +23,100 @@
   @apply bg-slate-400 dark:bg-slate-700;
 }
 
-/* Animations d'onglets ultra-fluides */
-@keyframes slideInFromRight {
-  from { transform: translateX(20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+/* ==========================================================================
+   Transitions horizontales directionnelles des onglets MatchDashboard
+   ========================================================================== */
+
+@keyframes tabSlideOutToLeft {
+  from {
+    transform: translate3d(0%, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
 }
 
-@keyframes slideInFromLeft {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+@keyframes tabSlideInFromRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0%, 0, 0);
+  }
 }
 
+@keyframes tabSlideOutToRight {
+  from {
+    transform: translate3d(0%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes tabSlideInFromLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.animate-tab-slide-out-left {
+  animation: tabSlideOutToLeft 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.animate-tab-slide-in-right {
+  animation: tabSlideInFromRight 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.animate-tab-slide-out-right {
+  animation: tabSlideOutToRight 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.animate-tab-slide-in-left {
+  animation: tabSlideInFromLeft 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Fallback / legacy aliases */
 .animate-slide-right {
-  animation: slideInFromRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: tabSlideInFromRight 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 .animate-slide-left {
-  animation: slideInFromLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: tabSlideInFromLeft 240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-tab-slide-out-left,
+  .animate-tab-slide-in-right,
+  .animate-tab-slide-out-right,
+  .animate-tab-slide-in-left,
+  .animate-slide-right,
+  .animate-slide-left {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Désactivation stricte des animations de glissement de panneaux sur Desktop (Instant Switch) */
+@media (min-width: 768px) {
+  .animate-tab-slide-out-left,
+  .animate-tab-slide-in-right,
+  .animate-tab-slide-out-right,
+  .animate-tab-slide-in-left {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
