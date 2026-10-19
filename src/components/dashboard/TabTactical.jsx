@@ -91,6 +91,11 @@ export const getBookmakerCoverageMeta = (coverage) => {
 export default function TabTactical({ match, onNavigateTab }) {
   const [showCoverageDetails, setShowCoverageDetails] = useState(false);
   const [expandedCardNotes, setExpandedCardNotes] = useState({});
+  const [activeMetaTip, setActiveMetaTip] = useState(null);
+
+  const toggleMetaTip = (tipId) => {
+    setActiveMetaTip(prev => prev === tipId ? null : tipId);
+  };
 
   const risk = match.Risk_Management_Context || {};
   const tactical = risk.Tactical_Red_Flags || {};
@@ -250,40 +255,35 @@ export default function TabTactical({ match, onNavigateTab }) {
 
         {/* Compact Market Coverage Notice Summary Banner */}
         {coverageNotice && (
-          <div className="mb-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/70 p-3.5 sm:p-4 transition-colors">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex flex-col gap-1.5 min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="p-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
-                    <Info size={16} />
-                  </div>
-                  <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                    Couverture des marchés statistiques
-                  </span>
-                  {coverageNotice.notice_version && (
-                    <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                      v{coverageNotice.notice_version}
-                    </span>
-                  )}
+          <div className="mb-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/70 p-3 transition-colors max-w-full overflow-hidden">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div className="flex flex-wrap items-center gap-2 min-w-0">
+                <div className="p-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+                  <Info size={15} />
                 </div>
+                <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 shrink-0">
+                  Couverture des marchés
+                </span>
+                {coverageNotice.notice_version && (
+                  <span className="text-[10px] font-mono font-medium px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
+                    v{coverageNotice.notice_version}
+                  </span>
+                )}
 
                 {coverageSummary && (
-                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                  <div className="flex flex-wrap items-center gap-1.5 text-xs">
                     {coverageSummary.actionableCount > 0 && (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/25 font-medium">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/25 text-[11px] font-medium">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        {coverageSummary.actionableCount} en Production
+                        {coverageSummary.actionableCount} Production
                       </span>
                     )}
                     {coverageSummary.informationalCount > 0 && (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/25 font-medium">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/25 text-[11px] font-medium">
                         <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                         {coverageSummary.informationalCount} Informatif{coverageSummary.informationalCount > 1 ? 's' : ''}
                       </span>
                     )}
-                    <span className="text-slate-500 dark:text-slate-400 text-xs hidden md:inline">
-                      • Disponibilité bookmaker estimée pour aide à la décision
-                    </span>
                   </div>
                 )}
               </div>
@@ -292,27 +292,27 @@ export default function TabTactical({ match, onNavigateTab }) {
                 type="button"
                 onClick={() => setShowCoverageDetails(prev => !prev)}
                 aria-expanded={showCoverageDetails}
-                className="self-start sm:self-center shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-2xs"
+                className="self-start sm:self-center shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-2xs"
               >
-                <span>{showCoverageDetails ? 'Masquer les détails' : 'Détails & Avertissement'}</span>
-                {showCoverageDetails ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                <span>{showCoverageDetails ? 'Masquer' : 'Détails & Avertissement'}</span>
+                {showCoverageDetails ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
               </button>
             </div>
 
             {showCoverageDetails && (
-              <div className="mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-800 space-y-3 text-xs sm:text-[13px]">
+              <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2.5 text-xs">
                 {coverageNotice.disclaimer && (
-                  <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
-                    <span className="font-semibold text-slate-900 dark:text-slate-100 block">
+                  <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                    <span className="font-semibold text-slate-900 dark:text-slate-100 block text-xs">
                       Avertissement officiel TITANIUM :
                     </span>
-                    <p className="font-sans text-slate-600 dark:text-slate-300">
+                    <p className="font-sans text-[11px] sm:text-xs text-slate-600 dark:text-slate-300">
                       {coverageNotice.disclaimer}
                     </p>
                   </div>
                 )}
 
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed italic bg-slate-100/70 dark:bg-slate-900/40 p-2.5 rounded-lg border border-slate-200/60 dark:border-slate-800/60">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed italic bg-slate-100/70 dark:bg-slate-900/40 p-2 rounded-lg border border-slate-200/60 dark:border-slate-800/60">
                   <strong className="not-italic font-semibold text-slate-700 dark:text-slate-300 mr-1">Rappel de portée :</strong>
                   Le statut <code className="font-mono text-emerald-700 dark:text-emerald-400 font-medium">ACTIONABLE_PRODUCTION</code> atteste la maturité algorithmique du modèle statistique, mais ne constitue pas une autorisation de pari. La mention <code className="font-mono text-blue-700 dark:text-blue-400 font-medium">PRESUMED_AVAILABLE</code> indique une offre bookmaker courante présumée sans vérification de cote en temps réel.
                 </p>
@@ -322,29 +322,29 @@ export default function TabTactical({ match, onNavigateTab }) {
                     <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
                       Notes de qualification par marché :
                     </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {coverageSummary.notesList.map(({ marketKey, note, opMeta, covMeta }) => (
                         <div
                           key={marketKey}
-                          className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col gap-1.5"
+                          className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col gap-1"
                         >
-                          <div className="flex flex-wrap items-center justify-between gap-1.5">
+                          <div className="flex flex-wrap items-center justify-between gap-1">
                             <span className="font-semibold text-xs text-slate-900 dark:text-slate-100 capitalize">
                               {marketKey}
                             </span>
                             <div className="flex items-center gap-1">
-                              <span className={`text-[11px] font-medium px-1.5 py-0.5 rounded border ${opMeta.badgeClass}`}>
+                              <span className={`text-[10px] font-medium px-1.5 py-0.2 rounded border ${opMeta.badgeClass}`}>
                                 {opMeta.label}
                               </span>
-                              <span className={`text-[11px] font-medium px-1.5 py-0.5 rounded border ${covMeta.badgeClass}`}>
+                              <span className={`text-[10px] font-medium px-1.5 py-0.2 rounded border ${covMeta.badgeClass}`}>
                                 {covMeta.label}
                               </span>
                             </div>
                           </div>
-                          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                          <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
                             {note}
                           </p>
-                          <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500">
+                          <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
                             ID: {opMeta.raw} • {covMeta.raw}
                           </span>
                         </div>
@@ -424,51 +424,71 @@ export default function TabTactical({ match, onNavigateTab }) {
                   )}
                 </div>
 
-                <div className="space-y-2 pt-2.5 border-t border-slate-200/80 dark:border-slate-800/80">
+                <div className="space-y-1.5 pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
                   {mNotice && (() => {
                     const opMeta = getOperationalStatusMeta(mNotice.operational_status);
                     const covMeta = getBookmakerCoverageMeta(mNotice.bookmaker_coverage);
+                    const opTipId = `${key}-op`;
+                    const covTipId = `${key}-cov`;
 
                     return (
-                      <div className="space-y-2">
-                        <div className="flex flex-col gap-1.5 text-xs">
-                          <div className="flex items-center justify-between gap-1.5 min-w-0">
-                            <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0">
-                              Statut
-                            </span>
-                            <span
-                              className={`text-xs font-medium px-2 py-0.5 rounded-md border text-right ${opMeta.badgeClass}`}
-                              title={`Statut technique : ${opMeta.raw} (${opMeta.description})`}
-                            >
-                              {opMeta.label}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between gap-1.5 min-w-0">
-                            <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0">
-                              Couverture
-                            </span>
-                            <span
-                              className={`text-xs font-medium px-2 py-0.5 rounded-md border text-right ${covMeta.badgeClass}`}
-                              title={`Couverture technique : ${covMeta.raw} (${covMeta.description})`}
-                            >
-                              {covMeta.label}
-                            </span>
-                          </div>
+                      <div className="space-y-1.5">
+                        <div className="flex flex-wrap items-center justify-between gap-1 text-[11px]">
+                          <button
+                            type="button"
+                            onClick={() => toggleMetaTip(opTipId)}
+                            className={`font-medium px-1.5 py-0.5 rounded border text-left cursor-pointer transition-opacity hover:opacity-80 active:scale-95 ${opMeta.badgeClass}`}
+                            aria-label={`Statut : ${opMeta.label}. Cliquer pour détails.`}
+                            title={`Statut : ${opMeta.raw}`}
+                          >
+                            {opMeta.label}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => toggleMetaTip(covTipId)}
+                            className={`font-medium px-1.5 py-0.5 rounded border text-right cursor-pointer transition-opacity hover:opacity-80 active:scale-95 ${covMeta.badgeClass}`}
+                            aria-label={`Couverture : ${covMeta.label}. Cliquer pour détails.`}
+                            title={`Couverture : ${covMeta.raw}`}
+                          >
+                            {covMeta.label}
+                          </button>
                         </div>
 
+                        {/* Touch-accessible explanations for status or coverage */}
+                        {activeMetaTip === opTipId && (
+                          <div className="p-2 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] leading-snug animate-in fade-in duration-200">
+                            <div className="font-semibold text-slate-800 dark:text-slate-200 mb-0.5 flex justify-between">
+                              <span>Statut : {opMeta.label}</span>
+                              <span className="font-mono text-[10px] opacity-75">{opMeta.raw}</span>
+                            </div>
+                            <p className="text-slate-600 dark:text-slate-400">{opMeta.description}</p>
+                          </div>
+                        )}
+
+                        {activeMetaTip === covTipId && (
+                          <div className="p-2 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] leading-snug animate-in fade-in duration-200">
+                            <div className="font-semibold text-slate-800 dark:text-slate-200 mb-0.5 flex justify-between">
+                              <span>Couverture : {covMeta.label}</span>
+                              <span className="font-mono text-[10px] opacity-75">{covMeta.raw}</span>
+                            </div>
+                            <p className="text-slate-600 dark:text-slate-400">{covMeta.description}</p>
+                          </div>
+                        )}
+
                         {mNotice.notes && (
-                          <div className="pt-0.5">
+                          <div>
                             <button
                               type="button"
                               onClick={() => toggleCardNote(key)}
                               aria-expanded={isNoteExpanded}
-                              className="w-full flex items-center justify-between text-xs font-medium text-amber-700 dark:text-amber-400 hover:underline py-0.5"
+                              className="w-full flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 hover:underline py-0.5"
                             >
                               <span>Note de marché</span>
                               {isNoteExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
                             </button>
                             {isNoteExpanded && (
-                              <p className="mt-1.5 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                              <p className="mt-1 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">
                                 {mNotice.notes}
                               </p>
                             )}
@@ -478,8 +498,8 @@ export default function TabTactical({ match, onNavigateTab }) {
                     );
                   })()}
 
-                  <div className="text-xs text-slate-400 italic">
-                    {key === 'throws' ? 'Moyenne arithmétique de ligue' : 'Médiane empirique de ligue'}
+                  <div className="text-[10px] text-slate-400 italic">
+                    {key === 'throws' ? 'Moyenne arithmétique ligue' : 'Médiane empirique ligue'}
                   </div>
                 </div>
               </div>
@@ -488,8 +508,42 @@ export default function TabTactical({ match, onNavigateTab }) {
         </div>
       </div>
 
-      {/* Middle Grid: Core Market Snapshot & Proposition Bets */}
+      {/* Middle Grid: Proposition Bets & Core Market Snapshot */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        {/* Proposition Market */}
+        <div className="lg:col-span-1">
+          <Card title="Proposition Market (Home > Away)" titleIcon={<Target size={16} />}>
+            <div className="flex flex-col gap-3 mt-1">
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 italic">
+                Probabilités estimées de domination volumétrique de l'équipe à domicile.
+              </p>
+
+              {propBetsKeys.length > 0 ? propBetsKeys.map(key => {
+                const val = props[key];
+                const label = key.replace('PROP_HOME_MORE_', '').replace(/_/g, ' ');
+
+                return (
+                  <div key={key} className="bg-slate-50 dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">
+                        {label}
+                      </span>
+                      <span className={`font-mono text-sm font-bold ${getPropTextColor(val)}`}>
+                        {(val * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                    <ProgressBar value={val} max={1} colorClass={getPropColor(val)} displayValue=" " />
+                  </div>
+                );
+              }) : (
+                <div className="p-6 text-center text-slate-400 text-xs italic bg-slate-50 dark:bg-slate-950 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
+                  Projection non générée dans cette session
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
 
         {/* Context Snapshot (Core Market) */}
         <div className="lg:col-span-1">
@@ -560,40 +614,6 @@ export default function TabTactical({ match, onNavigateTab }) {
                   <span>Explorer le Core Market complet</span>
                   <ArrowRight size={14} />
                 </button>
-              )}
-            </div>
-          </Card>
-        </div>
-
-        {/* Proposition Market */}
-        <div className="lg:col-span-1">
-          <Card title="Proposition Market (Home > Away)" titleIcon={<Target size={16} />}>
-            <div className="flex flex-col gap-3 mt-1">
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 italic">
-                Probabilités estimées de domination volumétrique de l'équipe à domicile.
-              </p>
-
-              {propBetsKeys.length > 0 ? propBetsKeys.map(key => {
-                const val = props[key];
-                const label = key.replace('PROP_HOME_MORE_', '').replace(/_/g, ' ');
-
-                return (
-                  <div key={key} className="bg-slate-50 dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">
-                        {label}
-                      </span>
-                      <span className={`font-mono text-sm font-bold ${getPropTextColor(val)}`}>
-                        {(val * 100).toFixed(1)}%
-                      </span>
-                    </div>
-                    <ProgressBar value={val} max={1} colorClass={getPropColor(val)} displayValue=" " />
-                  </div>
-                );
-              }) : (
-                <div className="p-6 text-center text-slate-400 text-xs italic bg-slate-50 dark:bg-slate-950 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
-                  Projection non générée dans cette session
-                </div>
               )}
             </div>
           </Card>
