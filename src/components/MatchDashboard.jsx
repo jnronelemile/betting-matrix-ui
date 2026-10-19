@@ -1029,9 +1029,9 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
             </div>
           </div>
 
-          {/* TABLETTE (768px à 1023px) : Disposition Antérieure (VS au centre & Date/Heure en bas) */}
+          {/* TABLETTE (768px à 1023px) : Reproduction à l'identique du header d'origine */}
           <div className="hidden md:flex lg:hidden flex-col gap-1.5 min-w-0">
-            {/* Ligne 1 : Retour + Ligue + Badges */}
+            {/* Étage 1 Tablettes : Retour + Ligue/Journée + Badges */}
             <div className="flex items-center justify-between gap-1.5 min-w-0">
               <div className="flex items-center gap-1.5 min-w-0">
                 {onClose && (
@@ -1046,11 +1046,11 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                   </button>
                 )}
 
-                <div className="inline-flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400 min-w-0">
+                <div className="inline-flex items-center gap-1 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 min-w-0">
                   {match.League && (
                     <>
                       <LeagueLogo league={match.League} size="xs" className="shrink-0 opacity-80" />
-                      <span className="font-semibold text-slate-700 dark:text-slate-300 tracking-tight truncate max-w-[150px]">
+                      <span className="font-semibold text-slate-700 dark:text-slate-300 tracking-tight truncate max-w-[100px] xs:max-w-[130px]">
                         {getLeagueDisplayName(match.League)}
                       </span>
                     </>
@@ -1058,7 +1058,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                   {countryLabel && (
                     <>
                       <span className="text-slate-300 dark:text-slate-700 shrink-0">•</span>
-                      <span className="text-slate-500 dark:text-slate-400 font-medium truncate max-w-[120px]">
+                      <span className="text-slate-500 dark:text-slate-400 font-medium truncate max-w-[80px] xs:max-w-[100px]">
                         {countryLabel}
                       </span>
                     </>
@@ -1074,10 +1074,11 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                 </div>
               </div>
 
+              {/* Badges Tablettes */}
               <div className="flex items-center gap-1 shrink-0">
                 {match.isFinalPick && (
                   <Badge variant="success" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider bg-emerald-600 text-white border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)] animate-pulse font-mono">
-                    <Trophy size={9} /> MASTER PICK
+                    <Trophy size={9} /> <span className="hidden xs:inline">MASTER</span> PICK
                   </Badge>
                 )}
 
@@ -1101,43 +1102,66 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
               </div>
             </div>
 
-            {/* Ligne 2 : Confrontation avec VS central */}
-            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 max-w-md mx-auto w-full py-0.5">
-              <div className="flex items-center justify-end gap-2 min-w-0 text-right">
-                <span title={homeName} className="font-sans font-bold text-sm text-slate-900 dark:text-white leading-tight truncate tracking-tight">
+            {/* Étage 2 Tablettes : Confrontation Centrale Symétrique (Logos 32-36px + Noms Lisibles) */}
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 max-w-sm mx-auto w-full py-0.5">
+              {/* Club Domicile */}
+              <div className="flex flex-col items-center text-center min-w-0">
+                <TeamLogo
+                  teamName={rawHome}
+                  league={match.League}
+                  size="w-8 h-8 sm:w-9 sm:h-9"
+                  alt={homeName}
+                  className="drop-shadow-xs shrink-0"
+                />
+                <span
+                  title={homeName}
+                  className="mt-1 font-sans font-bold text-xs text-slate-900 dark:text-white leading-tight line-clamp-2 break-words max-w-[120px] xs:max-w-[140px] tracking-tight"
+                >
                   {homeName}
                 </span>
-                <TeamLogo teamName={rawHome} league={match.League} size="w-9 h-9" alt={homeName} className="drop-shadow-xs shrink-0" />
               </div>
 
-              <div className="px-1.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
+              {/* VS Central */}
+              <div className="px-1.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0 self-center">
                 VS
               </div>
 
-              <div className="flex items-center justify-start gap-2 min-w-0 text-left">
-                <TeamLogo teamName={rawAway} league={match.League} size="w-9 h-9" alt={awayName} className="drop-shadow-xs shrink-0" />
-                <span title={awayName} className="font-sans font-bold text-sm text-slate-900 dark:text-white leading-tight truncate tracking-tight">
+              {/* Club Extérieur */}
+              <div className="flex flex-col items-center text-center min-w-0">
+                <TeamLogo
+                  teamName={rawAway}
+                  league={match.League}
+                  size="w-8 h-8 sm:w-9 sm:h-9"
+                  alt={awayName}
+                  className="drop-shadow-xs shrink-0"
+                />
+                <span
+                  title={awayName}
+                  className="mt-1 font-sans font-bold text-xs text-slate-900 dark:text-white leading-tight line-clamp-2 break-words max-w-[120px] xs:max-w-[140px] tracking-tight"
+                >
                   {awayName}
                 </span>
               </div>
             </div>
 
-            {/* Ligne 3 : Date et Heure */}
-            <div className="flex items-center justify-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400">
-              <Calendar size={12} className="text-slate-400 dark:text-slate-500 shrink-0" />
-              <span className="text-slate-700 dark:text-slate-300 font-medium">{schedule.dateLong}</span>
-              {schedule.time && (
-                <>
-                  <span className="text-slate-300 dark:text-slate-600">•</span>
-                  <span className="font-bold text-blue-600 dark:text-blue-400">{schedule.time}</span>
-                </>
-              )}
-              {schedule.isLive && (
-                <span className="inline-flex items-center gap-1 ml-1 px-1.5 py-0.2 rounded-full text-[8px] font-bold uppercase bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 animate-pulse">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  LIVE
-                </span>
-              )}
+            {/* Étage 3 Tablettes : Date et Heure (Partie inférieure du header d'origine) */}
+            <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400 px-0.5">
+              <div className="inline-flex items-center gap-1.5">
+                <Calendar size={11} className="text-slate-400 dark:text-slate-500 shrink-0" />
+                <span className="text-slate-700 dark:text-slate-300 font-medium">{schedule.shortDate || schedule.dateLong}</span>
+                {schedule.time && (
+                  <>
+                    <span className="text-slate-300 dark:text-slate-600">•</span>
+                    <span className="font-bold text-blue-600 dark:text-blue-400">{schedule.time}</span>
+                  </>
+                )}
+                {schedule.isLive && (
+                  <span className="inline-flex items-center gap-1 ml-1 px-1.5 py-0.2 rounded-full text-[8px] font-bold uppercase bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 animate-pulse">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    LIVE
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
