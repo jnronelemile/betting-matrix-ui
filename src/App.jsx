@@ -7,7 +7,7 @@ import { AdvancedFilterDrawer } from './components/filters/AdvancedFilterDrawer'
 import { BatchDateBar } from './components/filters/BatchDateBar';
 import { loadTitaniumV2Session, getLeagueReportUrl, cleanStr } from './utils/titaniumLoader';
 import { LEAGUE_GROUPS, getLeagueGroupId } from './utils/ticketFilters';
-import { LeagueLogo, getLeagueDisplayName } from './utils/teamLogos';
+import { LeagueLogo, getLeagueDisplayName, getLeagueCountryLabel } from './utils/teamLogos';
 import {
   INITIAL_FILTERS_STATE,
   filterMatches,
@@ -51,9 +51,14 @@ export default function App() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [collapsedGroups, setCollapsedGroups] = useState(() => ({}));
+  const [isMatchListScrolled, setIsMatchListScrolled] = useState(false);
   const lastScrollY = useRef(0);
   const isTransitioning = useRef(false);
   const activeMatchRequestRef = useRef(null);
+
+  useEffect(() => {
+    setIsMatchListScrolled(false);
+  }, [selectedLeague, selectedDate]);
 
   useEffect(() => {
     const handleScroll = (e) => {
@@ -439,6 +444,7 @@ export default function App() {
                         {group.leagues.map(league => {
                           const mCount = leagueMatchCounts[league.code] || 0;
                           const displayName = getLeagueDisplayName(league.name || league.code);
+                          const countryLabel = getLeagueCountryLabel(league.code || league.name);
                           return (
                             <button
                               key={league.id}
@@ -450,7 +456,7 @@ export default function App() {
                                   setSidebarOpen(false);
                                 }
                               }}
-                              title={displayName}
+                              title={countryLabel ? `${displayName} (${countryLabel})` : displayName}
                               className={`
                                 flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all text-left
                                 ${selectedLeague.id === league.id
@@ -462,7 +468,14 @@ export default function App() {
                                 <div className="w-5 h-5 flex items-center justify-center shrink-0">
                                   <LeagueLogo league={league.code || league.name} size="sm" />
                                 </div>
-                                <span className="truncate">{displayName}</span>
+                                <div className="flex flex-col min-w-0 leading-tight">
+                                  <span className="truncate">{displayName}</span>
+                                  {countryLabel && (
+                                    <span className="text-[10px] text-slate-400 dark:text-slate-500 font-normal truncate">
+                                      {countryLabel}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                               <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-200/60 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 shrink-0 ml-2">
                                 {mCount}
@@ -488,7 +501,7 @@ export default function App() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-y-auto lg:overflow-hidden transition-colors duration-300">
+      <main className="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-hidden transition-colors duration-300">
 
         {/* Mobile Smart Floating Header (Fixed Overlay - Appears on Scroll Up) */}
         <div className={`
@@ -960,10 +973,10 @@ export default function App() {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 flex flex-col lg:flex-row overflow-visible lg:overflow-hidden">
+        <div className="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
           {/* Match List Area or Tickets View */}
           {selectedLeague.id === 'TICKETS' ? (
-             <div className="flex-1 overflow-y-visible lg:overflow-y-auto p-3 sm:p-4 lg:pt-3 lg:pb-10 lg:px-8 custom-scrollbar bg-slate-100/90 dark:bg-slate-950 transition-colors duration-300">
+             <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:pt-3 lg:pb-10 lg:px-8 custom-scrollbar bg-slate-100/90 dark:bg-slate-950 transition-colors duration-300">
                <TicketsView
                  assembled={ticketsData.assembled}
                  finals={ticketsData.finals}
@@ -974,12 +987,20 @@ export default function App() {
           ) : (
             <>
               <div className={`
-                border-r border-slate-200 dark:border-slate-800 flex-col bg-white/50 dark:bg-slate-950/50 transition-all duration-300 ease-in-out overflow-hidden shrink-0
+                border-r border-slate-200 dark:border-slate-800 flex-col bg-white/50 dark:bg-slate-950/50 transition-all duration-300 ease-in-out overflow-hidden shrink-0 h-full
                 ${selectedMatch ? 'hidden lg:flex' : 'flex'}
                 ${matchListOpen ? 'w-full lg:w-80 opacity-100' : 'w-full lg:w-0 lg:border-r-0 lg:opacity-0'}
               `}>
-                <div className="w-full lg:w-80 flex flex-col h-full min-h-[500px] lg:min-h-0">
-                  <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/30 flex justify-between items-center shrink-0">
+                <div className="w-full lg:w-80 flex flex-col h-full min-h-0">
+                  {/* Bandeau informatif : Championnat + Compteur de matchs (masqué pendant le défilement sur mobile) */}
+                  <div className={`
+                    px-4 border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/30 flex justify-between items-center shrink-0 overflow-hidden
+                    transition-all duration-200 ease-in-out
+                    ${isMatchListScrolled
+                      ? 'max-h-0 py-0 opacity-0 border-b-0 lg:max-h-20 lg:py-2.5 lg:opacity-100 lg:border-b'
+                      : 'max-h-20 py-2.5 opacity-100 border-b'
+                    }
+                  `}>
                     <div className="flex items-center gap-2.5 min-w-0">
                       {selectedLeague.id !== 'ALL' && selectedLeague.id !== 'TICKETS' && (
                         <LeagueLogo league={selectedLeague.code || selectedLeague.name} size="sm" className="shrink-0" />
@@ -996,14 +1017,14 @@ export default function App() {
                     {sessionData && <div className="text-[9px] uppercase font-mono tracking-tighter text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">Synchronized</div>}
                   </div>
 
-                <div className="flex-1 overflow-y-auto p-4 custom-scrollbar relative">
+                <div className="flex-1 flex flex-col min-h-0 relative">
                   {loading ? (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-slate-500 bg-white/50 dark:bg-slate-950/50 backdrop-blur-sm z-10">
                       <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
                       <span className="text-[10px] uppercase tracking-widest font-mono">Loading Matrix...</span>
                     </div>
                   ) : error ? (
-                    <div className="p-4 border border-rose-500/30 bg-rose-500/10 rounded-xl text-rose-600 dark:text-rose-400 text-sm flex flex-col gap-2 shadow-inner">
+                    <div className="p-4 border border-rose-500/30 bg-rose-500/10 rounded-xl text-rose-600 dark:text-rose-400 text-sm flex flex-col gap-2 shadow-inner m-4">
                       <span className="font-bold uppercase tracking-wider text-xs">System Error</span>
                       <span className="text-xs leading-relaxed opacity-90">{error}</span>
                     </div>
@@ -1012,6 +1033,8 @@ export default function App() {
                       matches={filteredMatches}
                       selectedMatch={selectedMatch}
                       onSelectMatch={handleSelectMatch}
+                      isScrolled={isMatchListScrolled}
+                      onScrollChange={setIsMatchListScrolled}
                     />
                   )}
                 </div>
@@ -1020,7 +1043,7 @@ export default function App() {
 
               {/* Match Dashboard Area */}
               <div className={`
-                flex-1 overflow-y-visible lg:overflow-y-auto bg-slate-50 dark:bg-slate-950 custom-scrollbar transition-colors duration-300
+                flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 custom-scrollbar transition-colors duration-300
                 ${!selectedMatch ? 'hidden lg:flex' : 'flex'}
               `}>
                 {selectedMatch ? (

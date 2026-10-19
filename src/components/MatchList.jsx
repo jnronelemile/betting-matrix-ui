@@ -1,82 +1,20 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Badge } from './ui/Badge';
 import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Trophy, Radio } from 'lucide-react';
 import { TIME_SLOTS, getLegTimeSlot } from '../utils/ticketFilters';
-import { TeamLogo, LeagueLogo, getLeagueDisplayName } from '../utils/teamLogos';
+import { TeamLogo, LeagueLogo, getLeagueDisplayName, getLeagueCountryLabel } from '../utils/teamLogos';
 
-const formatTimeAMPM = (timeStr) => {
-  if (!timeStr) return '';
-  const [hours, minutes] = timeStr.split(':');
-  let h = parseInt(hours, 10);
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  h = h % 12;
-  h = h ? h : 12;
-  return `${h}:${minutes} ${ampm}`;
-};
+import {
+  formatTimeAMPM,
+  getMatchDisplayTime,
+  getMatchDisplayDate,
+  isMatchLive,
+  getMatchScheduleDetails,
+  ESTIMATED_LIVE_WINDOW_MINUTES
+} from '../utils/matchSchedule';
 
-/**
- * Résout de façon déterministe l'heure affichée pour une carte de match :
- * 1. Priorité absolue à kickoff_utc converti dans le fuseau d'affichage local (format 12h AM/PM).
- * 2. Repli sécurisé sur match.hours ou match.Heure.
- */
-export const getMatchDisplayTime = (match) => {
-  if (!match) return '';
-  if (match.kickoff_utc) {
-    const d = new Date(match.kickoff_utc);
-    if (!isNaN(d.getTime())) {
-      try {
-        return new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).format(d);
-      } catch (_) {
-        return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-      }
-    }
-  }
-  if (match.hours) return formatTimeAMPM(match.hours);
-  if (match.Heure) return formatTimeAMPM(match.Heure);
-  return '';
-};
-
-/**
- * Convention d'affichage : fenêtre conventionnelle de match LIVE estimé (0 à 115 minutes après coup d'envoi).
- * Note : Le frontend ne disposant pas du statut officiel du match en direct,
- * cette fenêtre est un indicateur visuel conventionnel ("LIVE estimé") et non une attestation d'état réel.
- */
-export const ESTIMATED_LIVE_WINDOW_MINUTES = 115;
-
-/**
- * Détection déterministe de la fenêtre de match LIVE estimé [0 à 115 minutes après coup d'envoi].
- * Privilégie kickoff_utc avec comparaison en millisecondes UTC pour immunité aux fuseaux horaires.
- * Fallback déterministe sur date et hours locales en l'absence de kickoff_utc (ambiguïté de fuseau possible).
- */
-export const isMatchLive = (match, nowMs = Date.now()) => {
-  if (!match) return false;
-
-  // 1. Priorité absolue au timestamp canonique kickoff_utc (comparaison UTC pure)
-  if (match.kickoff_utc) {
-    const kickoffMs = new Date(match.kickoff_utc).getTime();
-    if (!isNaN(kickoffMs)) {
-      const diffMinutes = (nowMs - kickoffMs) / 60000;
-      return diffMinutes >= 0 && diffMinutes <= ESTIMATED_LIVE_WINDOW_MINUTES;
-    }
-  }
-
-  // 2. Fallback déterministe sur date et hours locales
-  // Note de fuseau : date + hours sont interprétées dans le fuseau du navigateur en fallback (ambiguïté potentielle)
-  const dateVal = match.date || match.Date;
-  const hoursVal = match.hours || match.Hours;
-  if (dateVal && hoursVal && dateVal !== 'Date Inconnue' && dateVal !== 'Unknown Date') {
-    const datePart = String(dateVal).split('T')[0];
-    const [year, month, day] = datePart.split('-').map(Number);
-    const [h, m] = String(hoursVal).split(':').map(Number);
-    if (!isNaN(year) && !isNaN(month) && !isNaN(day) && !isNaN(h) && !isNaN(m)) {
-      const matchTimeLocal = new Date(year, month - 1, day, h, m).getTime();
-      const diffMinutes = (nowMs - matchTimeLocal) / 60000;
-      return diffMinutes >= 0 && diffMinutes <= ESTIMATED_LIVE_WINDOW_MINUTES;
-    }
-  }
-
-  return false;
-};
+// Re-export canoniques pour préserver les contrats d'import (ex: TicketsView.jsx)
+export { formatTimeAMPM, getMatchDisplayTime, isMatchLive, ESTIMATED_LIVE_WINDOW_MINUTES };
 
 const formatDate = (dateStr) => {
   if (!dateStr || dateStr === 'Date Inconnue' || dateStr === 'Unknown Date') return dateStr || 'Date Inconnue';
@@ -93,9 +31,9 @@ const formatDateShort = (dateStr) => {
 };
 
 /**
- * Carte de match unitaire en 3 étages compacts (WEB-P3-C) :
- * 1. Métadonnées contextuelles (Ligue, date si multi-dates, heure de coup d'envoi & statut live)
- * 2. Équipes sur 2 lignes nettes (Domicile au-dessus, Extérieur en dessous)
+ * Carte de match unitaire en 3 étages compacts modernisés (WEB-001) :
+ * 1. Métadonnées contextuelles (Ligue et nom lisible, date si multi-dates, heure de coup d'envoi & statut live)
+ * 2. Équipes sur 2 lignes nettes avec écussons (Domicile au-dessus, Extérieur en dessous)
  * 3. Signaux analytiques critiques (sans badge "Standard" non-informatif)
  */
 function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, currentTime }) {
@@ -111,7 +49,8 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
   const rawAway = parts[1] || '';
   const homeDisplay = match.displayHome || match.shortHome || parts[0] || 'Domicile';
   const awayDisplay = match.displayAway || match.shortAway || parts[1] || 'Extérieur';
-  const displayTime = getMatchDisplayTime(match);
+  const schedule = getMatchScheduleDetails(match, currentTime);
+  const country = getLeagueCountryLabel(match.League || match.league);
 
   // Signaux décisionnels critiques (Standard est exclu conformément aux arbitrages validés)
   const hasSignals = match.isFinalPick || isKillSwitch || investSignals.IS_ULTRA_SAFE ||
@@ -126,34 +65,31 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
           : 'bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50/70 dark:hover:bg-slate-800/40 shadow-xs'
       }`}
     >
-      {/* Étage 1 : Métadonnées & Horodatage (Top Row) */}
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <div className="flex items-center gap-1.5 min-w-0">
+      {/* Étage 1 : Métadonnées de compétition (Gauche) & Horodatage (Droite) */}
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <div className="flex items-start gap-1.5 min-w-0 flex-1 pr-2">
           {match.League && (
-            <span className="inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200/70 dark:border-slate-700/70 truncate">
-              <LeagueLogo league={match.League} size="xs" />
-              <span>{getLeagueDisplayName(match.League)}</span>
-            </span>
-          )}
-          {isMultiDate && match.date && match.date !== 'Date Inconnue' && (
-            <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-tight">
-              {formatDateShort(match.date)}
-            </span>
+            <>
+              <LeagueLogo league={match.League} size="xs" className="opacity-90 shrink-0 mt-0.5" />
+              <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-tight leading-snug line-clamp-2">
+                {getLeagueDisplayName(match.League)}
+              </span>
+            </>
           )}
         </div>
 
-        <div className="flex items-center gap-1.5 shrink-0">
-          {displayTime && (
-            <div className="flex items-center gap-1 font-mono font-bold text-[10px] text-blue-600 dark:text-blue-400 bg-blue-50/80 dark:bg-blue-950/40 px-1.5 py-0.5 rounded border border-blue-200/50 dark:border-blue-800/50">
-              {isMatchLive(match, currentTime) && (
+        <div className="flex items-center gap-1.5 shrink-0 pt-0.5">
+          {schedule.time && (
+            <div className="inline-flex items-center gap-1 font-mono font-semibold text-[10px] text-slate-700 dark:text-slate-300 bg-slate-100/90 dark:bg-slate-800/80 px-2 py-0.5 rounded border border-slate-200/80 dark:border-slate-700/80">
+              {schedule.isLive && (
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title={`Fenêtre de match conventionnelle (LIVE estimé [0–${ESTIMATED_LIVE_WINDOW_MINUTES} min])`} />
               )}
-              <span>{displayTime}</span>
+              <span>{schedule.time}</span>
             </div>
           )}
           <ChevronRight
-            size={16}
-            className={`transition-transform duration-200 ${
+            size={15}
+            className={`transition-transform duration-200 shrink-0 ${
               isSelected
                 ? 'text-emerald-500 translate-x-0.5'
                 : 'text-slate-300 dark:text-slate-600 group-hover:text-slate-500 dark:group-hover:text-slate-400'
@@ -162,8 +98,8 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
         </div>
       </div>
 
-      {/* Étage 2 : Bloc Équipes sur 2 Lignes (Core Team Stack) */}
-      <div className="flex flex-col gap-1.5 min-w-0">
+      {/* Étage 2 : Bloc Équipes sur 2 Lignes décalé vers la droite (Core Team Stack indenté de 10px) */}
+      <div className="flex flex-col gap-1.5 min-w-0 pl-2.5">
         <div className="flex items-center gap-2 min-w-0">
           <TeamLogo teamName={rawHome} league={match.League} size="sm" alt={homeDisplay} />
           <span className="font-sans font-semibold text-[13px] text-slate-900 dark:text-slate-100 leading-tight truncate">
@@ -177,6 +113,18 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
           </span>
         </div>
       </div>
+
+      {/* Date individuelle courte déterministe avec pays (zone secondaire inférieure discrète sous les équipes) */}
+      {(country || schedule.shortDate) && (
+        <div className="flex items-center gap-1.5 pl-2.5 mt-1 text-[10px] font-mono text-slate-400 dark:text-slate-500">
+          <Calendar size={10} className="opacity-70 shrink-0" />
+          <span className="truncate">
+            {country && <span className="font-sans font-medium text-slate-500 dark:text-slate-400">{country}</span>}
+            {country && schedule.shortDate && <span className="mx-1 text-slate-300 dark:text-slate-600">·</span>}
+            {schedule.shortDate && <span>{schedule.shortDate}</span>}
+          </span>
+        </div>
+      )}
 
       {/* Étage 3 : Signaux d'analyse décisionnels (uniquement si actifs) */}
       {hasSignals && (
@@ -211,11 +159,29 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
   );
 }
 
-export function MatchList({ matches, selectedMatch, onSelectMatch }) {
+export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = false, onScrollChange }) {
   const [collapsedDates, setCollapsedDates] = useState({});
   const [showLiveOnly, setShowLiveOnly] = useState(false);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('ALL');
   const [currentTime, setCurrentTime] = useState(() => Date.now());
+
+  const scrollContainerRef = useRef(null);
+
+  // Détection du défilement pour masquer le bandeau informatif supérieur sur mobile
+  const handleContainerScroll = (e) => {
+    const scrollTop = e.target.scrollTop;
+    const nextScrolled = scrollTop > 15;
+    if (nextScrolled !== isScrolled && onScrollChange) {
+      onScrollChange(nextScrolled);
+    }
+  };
+
+  // Réinitialisation de la position de défilement lors d'un changement de jeu de matchs
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [matches]);
 
   // Actualisation temporelle périodique toutes les 60s avec nettoyage strict du timer
   useEffect(() => {
@@ -315,101 +281,111 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
   const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
   return (
-    <div className="flex flex-col gap-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] lg:pb-4 transition-colors duration-300">
-      {/* Barre d'actions supérieure : Filtre LIVE estimé & Contrôles Déplier/Replier */}
-      <div className="flex items-center justify-between mb-0.5 px-1 gap-2">
-        {/* Bouton de filtrage LIVE estimé (prioritaire, compact et immédiatement accessible) */}
-        <button
-          type="button"
-          onClick={() => setShowLiveOnly(prev => !prev)}
-          aria-pressed={showLiveOnly}
-          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-bold uppercase font-mono transition-all border ${
-            showLiveOnly
-              ? 'bg-rose-500/15 border-rose-500/40 text-rose-600 dark:text-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.25)] ring-1 ring-rose-500/20'
-              : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 shadow-2xs'
-          }`}
-          title={`Afficher uniquement les matchs estimés en cours (fenêtre conventionnelle 0 à ${ESTIMATED_LIVE_WINDOW_MINUTES} min après coup d'envoi UTC)`}
-        >
-          <Radio size={13} className={showLiveOnly ? 'animate-pulse text-rose-500' : 'text-slate-400'} />
-          <span>LIVE estimé</span>
-          {liveMatchesCount > 0 && (
-            <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
+    <div className="flex-1 flex flex-col min-h-0 h-full overflow-hidden">
+      {/* Barre de commandes permanente du panneau MatchList */}
+      <div className="shrink-0 bg-slate-50 dark:bg-slate-900 px-3.5 pt-2 pb-2.5 border-b border-slate-200 dark:border-slate-800 flex flex-col gap-2 z-20 shadow-xs">
+        {/* Ligne 1 : Filtre LIVE estimé & Contrôles Déplier/Replier */}
+        <div className="flex items-center justify-between gap-2">
+          {/* Bouton de filtrage LIVE estimé (prioritaire, compact et immédiatement accessible) */}
+          <button
+            type="button"
+            onClick={() => setShowLiveOnly(prev => !prev)}
+            aria-pressed={showLiveOnly}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-bold uppercase font-mono transition-all border ${
               showLiveOnly
-                ? 'bg-rose-500 text-white'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-            }`}>
-              {liveMatchesCount}
-            </span>
-          )}
-        </button>
-
-        {/* Contrôles d'accordéons Déplier / Replier (affichés dès qu'au moins 2 journées existent) */}
-        {sortedDates.length > 1 && (
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={expandAll}
-              className="flex items-center gap-1 text-[10px] uppercase font-bold text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              title="Tout déplier"
-            >
-              <Maximize2 size={11} /> <span>Déplier</span>
-            </button>
-            <div className="w-px h-3 bg-slate-200 dark:bg-slate-800" />
-            <button
-              type="button"
-              onClick={collapseAll}
-              className="flex items-center gap-1 text-[10px] uppercase font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-              title="Tout replier"
-            >
-              <Minimize2 size={11} /> <span>Replier</span>
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Rangée de filtres par créneaux horaires (Matin, Après-midi, Soir, Nuit) sous le bouton LIVE estimé */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 px-1 scrollbar-none text-[11px]">
-        <button
-          type="button"
-          onClick={() => setSelectedTimeSlot('ALL')}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
-            selectedTimeSlot === 'ALL'
-              ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-              : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-          }`}
-        >
-          <span>Tous</span>
-          <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
-            selectedTimeSlot === 'ALL' ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
-          }`}>
-            {timeSlotCounts.ALL}
-          </span>
-        </button>
-        {Object.values(TIME_SLOTS).map(slot => {
-          const count = timeSlotCounts[slot.id] || 0;
-          const isSelected = selectedTimeSlot === slot.id;
-          return (
-            <button
-              key={slot.id}
-              type="button"
-              onClick={() => setSelectedTimeSlot(slot.id)}
-              title={`${slot.label} (${slot.hoursRange}) : ${slot.description}`}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
-                isSelected
-                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-              }`}
-            >
-              <span>{slot.label}</span>
+                ? 'bg-rose-500/15 border-rose-500/40 text-rose-600 dark:text-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.25)] ring-1 ring-rose-500/20'
+                : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 shadow-2xs'
+            }`}
+            title={`Afficher uniquement les matchs estimés en cours (fenêtre conventionnelle 0 à ${ESTIMATED_LIVE_WINDOW_MINUTES} min après coup d'envoi UTC)`}
+          >
+            <Radio size={13} className={showLiveOnly ? 'animate-pulse text-rose-500' : 'text-slate-400'} />
+            <span>LIVE estimé</span>
+            {liveMatchesCount > 0 && (
               <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
-                isSelected ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                showLiveOnly
+                  ? 'bg-rose-500 text-white'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
               }`}>
-                {count}
+                {liveMatchesCount}
               </span>
-            </button>
-          );
-        })}
+            )}
+          </button>
+
+          {/* Contrôles d'accordéons Déplier / Replier (affichés dès qu'au moins 2 journées existent) */}
+          {sortedDates.length > 1 && (
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={expandAll}
+                className="flex items-center gap-1 text-[10px] uppercase font-bold text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                title="Tout déplier"
+              >
+                <Maximize2 size={11} /> <span>Déplier</span>
+              </button>
+              <div className="w-px h-3 bg-slate-200 dark:bg-slate-800" />
+              <button
+                type="button"
+                onClick={collapseAll}
+                className="flex items-center gap-1 text-[10px] uppercase font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                title="Tout replier"
+              >
+                <Minimize2 size={11} /> <span>Replier</span>
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Ligne 2 : Rangée de filtres par créneaux horaires (Matin, Après-midi, Soir, Nuit) */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none text-[11px]">
+          <button
+            type="button"
+            onClick={() => setSelectedTimeSlot('ALL')}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
+              selectedTimeSlot === 'ALL'
+                ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+            }`}
+          >
+            <span>Tous</span>
+            <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
+              selectedTimeSlot === 'ALL' ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+            }`}>
+              {timeSlotCounts.ALL}
+            </span>
+          </button>
+          {Object.values(TIME_SLOTS).map(slot => {
+            const count = timeSlotCounts[slot.id] || 0;
+            const isSelected = selectedTimeSlot === slot.id;
+            return (
+              <button
+                key={slot.id}
+                type="button"
+                onClick={() => setSelectedTimeSlot(slot.id)}
+                title={`${slot.label} (${slot.hoursRange}) : ${slot.description}`}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
+                  isSelected
+                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                <span>{slot.label}</span>
+                <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
+                  isSelected ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                }`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
+
+      {/* Zone de défilement indépendante pour les journées et matchs */}
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleContainerScroll}
+        className="flex-1 overflow-y-auto px-3.5 pt-0 pb-3 custom-scrollbar flex flex-col gap-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] lg:pb-4"
+      >
 
       {/* État vide classique (aucun match pour les filtres actifs) */}
       {matches.length === 0 && (
@@ -460,13 +436,13 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
       )}
 
       {/* Rendu des groupes de dates avec tri chronologique interne par heure */}
-      {sortedDates.map((date) => {
+      {sortedDates.map((date, dateIdx) => {
         const isCollapsed = collapsedDates[date];
         const isToday = date === todayStr;
         const dayMatches = sortedGroupedMatches[date] || [];
 
         return (
-          <div key={date} className="flex flex-col gap-2">
+          <div key={date} className={`flex flex-col gap-2 ${dateIdx === 0 ? 'mt-2.5' : ''}`}>
             {/* En-tête de date cliquable différencié des cartes (Correction B : accent indigo/bleu sobre) */}
             <button
               type="button"
@@ -532,6 +508,8 @@ export function MatchList({ matches, selectedMatch, onSelectMatch }) {
           </div>
         );
       })}
+      {/* End of scrollable match list */}
+      </div>
     </div>
   );
 }

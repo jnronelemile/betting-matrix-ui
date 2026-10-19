@@ -192,6 +192,75 @@ export function getLeagueDisplayName(leagueKey) {
 }
 
 /**
+ * Table de traduction française soignée des codes pays ISO/compétitions.
+ */
+export const COUNTRY_LABELS_FR = {
+  AUT: 'Autriche',
+  BEL: 'Belgique',
+  BRA: 'Brésil',
+  DEN: 'Danemark',
+  ENG: 'Angleterre',
+  ESP: 'Espagne',
+  FRA: 'France',
+  GER: 'Allemagne',
+  GRE: 'Grèce',
+  ITA: 'Italie',
+  JPN: 'Japon',
+  KOR: 'Corée du Sud',
+  KSA: 'Arabie Saoudite',
+  MEX: 'Mexique',
+  NED: 'Pays-Bas',
+  NOR: 'Norvège',
+  POL: 'Pologne',
+  POR: 'Portugal',
+  RUS: 'Russie',
+  SCO: 'Écosse',
+  SUI: 'Suisse',
+  SWE: 'Suède',
+  TUR: 'Turquie',
+  USA: 'États-Unis / Canada'
+};
+
+/**
+ * Retourne le pays d'un championnat en français (WEB-001).
+ * Gère les alias et traite explicitement les championnats transnationaux (ex: MLS).
+ *
+ * @param {string|null} leagueKey - Clé ou code technique du championnat
+ * @returns {string} Nom du pays en français ou chaîne vide
+ */
+export function getLeagueCountryLabel(leagueKey) {
+  if (!leagueKey) return '';
+  const clean = cleanStr(leagueKey);
+  if (!clean || clean === 'all' || clean === 'tickets') return '';
+
+  if (clean === 'mls' || clean === 'majorleaguesoccer') {
+    return 'États-Unis / Canada';
+  }
+
+  // 1. Recherche directe dans logosRegistry.leagues
+  let leagueData = logosRegistry.leagues?.[leagueKey] ||
+                   logosRegistry.leagues?.[clean] ||
+                   logosRegistry.leagues?.[leagueKey.toUpperCase()];
+
+  // 2. Si non trouvé directement, tenter la résolution via getLeagueDisplayName
+  if (!leagueData?.country) {
+    const displayName = getLeagueDisplayName(leagueKey);
+    if (displayName && displayName !== leagueKey) {
+      const cleanDisplay = cleanStr(displayName);
+      leagueData = logosRegistry.leagues?.[displayName] ||
+                   logosRegistry.leagues?.[cleanDisplay];
+    }
+  }
+
+  const countryCode = leagueData?.country?.toUpperCase();
+  if (countryCode && COUNTRY_LABELS_FR[countryCode]) {
+    return COUNTRY_LABELS_FR[countryCode];
+  }
+
+  return '';
+}
+
+/**
  * Résout déterministement l'URL du logo d'une compétition.
  *
  * @param {string} leagueKey - Nom ou code de la ligue (ex: "PremierLeague", "PL", "47")
@@ -233,7 +302,8 @@ const SIZE_CLASSES = {
   sm: 'w-4 h-4',
   md: 'w-5 h-5 sm:w-6 sm:h-6',
   lg: 'w-7 h-7 sm:w-8 sm:h-8',
-  xl: 'w-10 h-10 sm:w-12 sm:h-12'
+  xl: 'w-10 h-10 sm:w-12 sm:h-12',
+  '2xl': 'w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16'
 };
 
 /**
