@@ -43,11 +43,25 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const activeSeriesFetchRef = useRef(null);
   const transitionTimerRef = useRef(null);
 
-  // Touch refs for swipe
-  const touchStartX = useRef(null);
-  const touchStartY = useRef(null);
-  const touchEndX = useRef(null);
-  const touchEndY = useRef(null);
+  // Refs et état pour le suivi tactile interactif au pixel près (mobile)
+  const [swipeNeighbor, setSwipeNeighbor] = useState(null); // { id: string, direction: 'next' | 'prev' } | null
+  const contentContainerRef = useRef(null);
+  const currentPanelRef = useRef(null);
+  const neighborPanelRef = useRef(null);
+  const finishTimeoutRef = useRef(null);
+
+  const touchStateRef = useRef({
+    startX: 0,
+    startY: 0,
+    currentDx: 0,
+    startTime: 0,
+    isDragging: false,
+    isVerticalScroll: false,
+    direction: null,
+    neighborTabId: null,
+    containerWidth: 0,
+    isAnimatingRelease: false,
+  });
 
   const TABS = [
     { id: 'tactical', label: 'Props & Statistical Markets', mobileLabel: 'PROPS', icon: <Crosshair size={14} /> },
@@ -200,24 +214,46 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       if (transitionTimerRef.current) {
         clearTimeout(transitionTimerRef.current);
       }
+      if (finishTimeoutRef.current) {
+        clearTimeout(finishTimeoutRef.current);
+      }
     };
   }, []);
 
-  // Sécurisation au redimensionnement : purger tout état de transition bi-panneau résiduel sur Desktop
+  // Sécurisation au redimensionnement : purger tout état de transition ou swipe résiduel sur Desktop
   useEffect(() => {
     const handleResize = () => {
-      if (typeof window !== 'undefined' && window.innerWidth >= 768 && isTransitioning) {
-        if (transitionTimerRef.current) {
-          clearTimeout(transitionTimerRef.current);
-          transitionTimerRef.current = null;
+      if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+        if (isTransitioning) {
+          if (transitionTimerRef.current) {
+            clearTimeout(transitionTimerRef.current);
+            transitionTimerRef.current = null;
+          }
+          setOutgoingTab(null);
+          setIsTransitioning(false);
         }
-        setOutgoingTab(null);
-        setIsTransitioning(false);
+        if (touchStateRef.current.isDragging || swipeNeighbor) {
+          if (finishTimeoutRef.current) {
+            clearTimeout(finishTimeoutRef.current);
+            finishTimeoutRef.current = null;
+          }
+          if (currentPanelRef.current) {
+            currentPanelRef.current.style.transition = '';
+            currentPanelRef.current.style.transform = '';
+          }
+          if (neighborPanelRef.current) {
+            neighborPanelRef.current.style.transition = '';
+            neighborPanelRef.current.style.transform = '';
+          }
+          setSwipeNeighbor(null);
+          touchStateRef.current.isDragging = false;
+          touchStateRef.current.isAnimatingRelease = false;
+        }
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isTransitioning]);
+  }, [isTransitioning, swipeNeighbor]);
 
   // Déterminants de navigation séquentielle (Flèches PC / Raccourcis)
   const currentTabIndex = TABS.findIndex(t => t.id === activeTab);
@@ -279,60 +315,281 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeTab, navigateToTab]);
 
-  // Logique gestuelle de swipe mobile avec filtrage directionnel et zones interactives
-  const handleTouchStart = (e) => {
+  // Helper pour vérifier si un élément est une zone d'interaction où le swipe horizontal est exclu
+  const isInteractiveTarget = useCallback((target) => {
+    if (!target) return false;
+    // Ignorer si le toucher débute sur la barre d'onglets défilante
+    if (tabsContainerRef.current && tabsContainerRef.current.contains(target)) {
+      return true;
+    }
+    // Ignorer sur les inputs, textareas, selects, curseurs et éléments explicitement exclus
+    if (target.closest && target.closest('input, textarea, select, [data-no-swipe="true"]')) {
+      return true;
+    }
+    // Ignorer si le toucher est dans un conteneur interne à défilement horizontal (ex: tables, badges scrollables)
+    let el = target;
+    while (el && el !== contentContainerRef.current && el !== document.body) {
+      if (el.scrollWidth > el.clientWidth && el !== dashboardRef.current) {
+        const overflowX = window.getComputedStyle(el).overflowX;
+        if (overflowX === 'auto' || overflowX === 'scroll') {
+          return true;
+        }
+      }
+      el = el.parentElement;
+    }
+    return false;
+  }, []);
+
+  // Début du geste tactile (Mobile < 768px uniquement)
+  const handleTouchStart = useCallback((e) => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) return;
     if (!e.targetTouches || e.targetTouches.length === 0) return;
-    // Ignorer le swipe s'il provient de la barre d'onglets défilante elle-même
-    if (tabsContainerRef.current && tabsContainerRef.current.contains(e.target)) {
-      touchStartX.current = null;
-      touchStartY.current = null;
+    if (touchStateRef.current.isAnimatingRelease) return;
+    if (isInteractiveTarget(e.target)) return;
+
+    // Prise en compte de prefers-reduced-motion
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
-    // Ignorer le swipe sur les curseurs, inputs ou zones annotées data-no-swipe
-    if (e.target.closest && e.target.closest('input[type="range"], [data-no-swipe="true"]')) {
-      touchStartX.current = null;
-      touchStartY.current = null;
-      return;
-    }
-    touchStartX.current = e.targetTouches[0].clientX;
-    touchStartY.current = e.targetTouches[0].clientY;
-    touchEndX.current = e.targetTouches[0].clientX;
-    touchEndY.current = e.targetTouches[0].clientY;
-  };
 
-  const handleTouchMove = (e) => {
-    if (touchStartX.current === null) return;
+    const touch = e.targetTouches[0];
+    const containerW = contentContainerRef.current ? contentContainerRef.current.offsetWidth : (window.innerWidth || 390);
+
+    touchStateRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      currentDx: 0,
+      startTime: Date.now(),
+      isDragging: false,
+      isVerticalScroll: false,
+      direction: null,
+      neighborTabId: null,
+      containerWidth: containerW,
+      isAnimatingRelease: false,
+    };
+  }, [isInteractiveTarget]);
+
+  // Déplacement tactile au doigt en temps réel
+  const handleTouchMove = useCallback((e) => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) return;
     if (!e.targetTouches || e.targetTouches.length === 0) return;
-    touchEndX.current = e.targetTouches[0].clientX;
-    touchEndY.current = e.targetTouches[0].clientY;
-  };
+    if (touchStateRef.current.isAnimatingRelease) return;
+    if (touchStateRef.current.isVerticalScroll) return;
 
-  const handleTouchEnd = () => {
-    if (touchStartX.current === null || touchEndX.current === null) return;
-    const deltaX = touchStartX.current - touchEndX.current;
-    const deltaY = touchStartY.current - touchEndY.current;
-    const absX = Math.abs(deltaX);
-    const absY = Math.abs(deltaY);
-    const minDistance = 50;
+    const touch = e.targetTouches[0];
+    const dx = touch.clientX - touchStateRef.current.startX;
+    const dy = touch.clientY - touchStateRef.current.startY;
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
 
-    // Réinitialisation immédiate des coordonnées
-    touchStartX.current = null;
-    touchStartY.current = null;
-    touchEndX.current = null;
-    touchEndY.current = null;
-
-    // Détection stricte d'un mouvement horizontal dominant (au moins 1.5x le déplacement vertical)
-    if (absX > minDistance && absX > absY * 1.5) {
-      const currentIdx = TABS.findIndex(tab => tab.id === activeTab);
-      if (deltaX > 0 && currentIdx < TABS.length - 1) {
-        // Swipe vers la gauche -> Onglet suivant
-        navigateToTab(TABS[currentIdx + 1].id);
-      } else if (deltaX < 0 && currentIdx > 0) {
-        // Swipe vers la droite -> Onglet précédent
-        navigateToTab(TABS[currentIdx - 1].id);
+    // Phase 1 : Détermination stricte de l'intention (Scroll vertical vs Swipe horizontal)
+    if (!touchStateRef.current.isDragging) {
+      if (absY > absX && absY > 7) {
+        // Défilement vertical naturel : laisser le navigateur gérer nativement sans interférence
+        touchStateRef.current.isVerticalScroll = true;
+        return;
+      }
+      if (absX > 8 && absX > absY * 1.1) {
+        // Défilement horizontal dominant : verrouiller le swipe interactif
+        touchStateRef.current.isDragging = true;
+      } else {
+        return;
       }
     }
-  };
+
+    // Phase 2 : En cours de glissement horizontal piloté par le doigt
+    if (touchStateRef.current.isDragging) {
+      if (e.cancelable) e.preventDefault();
+
+      const curIdx = TABS.findIndex(t => t.id === activeTab);
+      const direction = dx < 0 ? 'next' : 'prev';
+      let neighborId = null;
+
+      if (direction === 'next') {
+        if (curIdx < TABS.length - 1) {
+          neighborId = TABS[curIdx + 1].id;
+        }
+      } else {
+        if (curIdx > 0) {
+          neighborId = TABS[curIdx - 1].id;
+        }
+      }
+
+      // Aux extrémités (PROPS à gauche, DIAGNOSTICS à droite) : résistance élastique sans panneau vide
+      let effectiveDx = dx;
+      if (!neighborId) {
+        effectiveDx = dx * 0.15;
+      }
+
+      // Montage / bascule dynamique du panneau voisin
+      if (neighborId) {
+        if (!swipeNeighbor || swipeNeighbor.id !== neighborId || swipeNeighbor.direction !== direction) {
+          setSwipeNeighbor({ id: neighborId, direction });
+        }
+      } else if (swipeNeighbor) {
+        setSwipeNeighbor(null);
+      }
+
+      touchStateRef.current.currentDx = effectiveDx;
+      touchStateRef.current.direction = direction;
+      touchStateRef.current.neighborTabId = neighborId;
+
+      // Translation GPU directe en temps réel synchronisée avec le doigt (zéro rerender)
+      const containerW = touchStateRef.current.containerWidth || 390;
+      if (currentPanelRef.current) {
+        currentPanelRef.current.style.transition = 'none';
+        currentPanelRef.current.style.transform = `translate3d(${effectiveDx}px, 0, 0)`;
+      }
+      if (neighborPanelRef.current && neighborId) {
+        const neighborOffset = direction === 'next' ? containerW + effectiveDx : -containerW + effectiveDx;
+        neighborPanelRef.current.style.transition = 'none';
+        neighborPanelRef.current.style.transform = `translate3d(${neighborOffset}px, 0, 0)`;
+      }
+    }
+  }, [activeTab, swipeNeighbor]);
+
+  // Relâchement du doigt : validation ou annulation amortie
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStateRef.current.isDragging) {
+      touchStateRef.current.isDragging = false;
+      touchStateRef.current.isVerticalScroll = false;
+      return;
+    }
+
+    const { currentDx, containerWidth, startTime, direction, neighborTabId } = touchStateRef.current;
+    const containerW = containerWidth || 390;
+    const dt = Date.now() - startTime;
+    const velocity = dt > 0 ? currentDx / dt : 0;
+
+    // Décision de validation (Commit) vs annulation (Cancel)
+    let shouldCommit = false;
+    if (neighborTabId) {
+      if (direction === 'next') {
+        shouldCommit = (currentDx < -containerW * 0.22) || (velocity < -0.32 && currentDx < -25);
+      } else if (direction === 'prev') {
+        shouldCommit = (currentDx > containerW * 0.22) || (velocity > 0.32 && currentDx > 25);
+      }
+    }
+
+    touchStateRef.current.isAnimatingRelease = true;
+
+    if (shouldCommit && neighborTabId) {
+      // Finition fluide vers l'onglet voisin depuis la position actuelle
+      const duration = 220;
+      const ease = 'cubic-bezier(0.2, 0.9, 0.3, 1)';
+      const targetCurrent = direction === 'next' ? -containerW : containerW;
+
+      if (currentPanelRef.current) {
+        currentPanelRef.current.style.transition = `transform ${duration}ms ${ease}`;
+        currentPanelRef.current.style.transform = `translate3d(${targetCurrent}px, 0, 0)`;
+      }
+      if (neighborPanelRef.current) {
+        neighborPanelRef.current.style.transition = `transform ${duration}ms ${ease}`;
+        neighborPanelRef.current.style.transform = 'translate3d(0px, 0, 0)';
+      }
+
+      finishTimeoutRef.current = setTimeout(() => {
+        // Remise à zéro instantanée du scroll vertical vers le haut pour le nouveau contenu
+        if (dashboardRef.current) {
+          const scrollParent = dashboardRef.current.closest('.overflow-y-auto');
+          if (scrollParent && scrollParent.scrollTop > 0) {
+            scrollParent.scrollTo({ top: 0, behavior: 'instant' });
+          }
+        }
+        if (currentPanelRef.current) {
+          currentPanelRef.current.style.transition = '';
+          currentPanelRef.current.style.transform = '';
+        }
+        if (neighborPanelRef.current) {
+          neighborPanelRef.current.style.transition = '';
+          neighborPanelRef.current.style.transform = '';
+        }
+        setActiveTab(neighborTabId);
+        setSwipeNeighbor(null);
+        touchStateRef.current.isDragging = false;
+        touchStateRef.current.isAnimatingRelease = false;
+        finishTimeoutRef.current = null;
+      }, duration);
+    } else {
+      // Annulation : retour amorti à la position d'origine (position de lecture conservée)
+      const duration = 200;
+      const ease = 'cubic-bezier(0.2, 0.9, 0.3, 1)';
+
+      if (currentPanelRef.current) {
+        currentPanelRef.current.style.transition = `transform ${duration}ms ${ease}`;
+        currentPanelRef.current.style.transform = 'translate3d(0px, 0, 0)';
+      }
+      if (neighborPanelRef.current && neighborTabId) {
+        const targetNeighbor = direction === 'next' ? containerW : -containerW;
+        neighborPanelRef.current.style.transition = `transform ${duration}ms ${ease}`;
+        neighborPanelRef.current.style.transform = `translate3d(${targetNeighbor}px, 0, 0)`;
+      }
+
+      finishTimeoutRef.current = setTimeout(() => {
+        if (currentPanelRef.current) {
+          currentPanelRef.current.style.transition = '';
+          currentPanelRef.current.style.transform = '';
+        }
+        if (neighborPanelRef.current) {
+          neighborPanelRef.current.style.transition = '';
+          neighborPanelRef.current.style.transform = '';
+        }
+        setSwipeNeighbor(null);
+        touchStateRef.current.isDragging = false;
+        touchStateRef.current.isAnimatingRelease = false;
+        finishTimeoutRef.current = null;
+      }, duration);
+    }
+  }, [activeTab]);
+
+  // Interruption système (touchcancel)
+  const handleTouchCancel = useCallback(() => {
+    if (!touchStateRef.current.isDragging) return;
+    if (finishTimeoutRef.current) clearTimeout(finishTimeoutRef.current);
+    if (currentPanelRef.current) {
+      currentPanelRef.current.style.transition = 'transform 150ms ease-out';
+      currentPanelRef.current.style.transform = 'translate3d(0px, 0, 0)';
+    }
+    if (neighborPanelRef.current) {
+      neighborPanelRef.current.style.transition = 'transform 150ms ease-out';
+    }
+    setTimeout(() => {
+      if (currentPanelRef.current) {
+        currentPanelRef.current.style.transition = '';
+        currentPanelRef.current.style.transform = '';
+      }
+      if (neighborPanelRef.current) {
+        neighborPanelRef.current.style.transition = '';
+        neighborPanelRef.current.style.transform = '';
+      }
+      setSwipeNeighbor(null);
+      touchStateRef.current.isDragging = false;
+      touchStateRef.current.isAnimatingRelease = false;
+    }, 150);
+  }, []);
+
+  // Attachement des écouteurs tactiles natifs avec { passive: false } sur le conteneur de contenu
+  useEffect(() => {
+    const container = contentContainerRef.current;
+    if (!container) return;
+
+    const onStart = (e) => handleTouchStart(e);
+    const onMove = (e) => handleTouchMove(e);
+    const onEnd = () => handleTouchEnd();
+    const onCancel = () => handleTouchCancel();
+
+    container.addEventListener('touchstart', onStart, { passive: true });
+    container.addEventListener('touchmove', onMove, { passive: false });
+    container.addEventListener('touchend', onEnd, { passive: true });
+    container.addEventListener('touchcancel', onCancel, { passive: true });
+
+    return () => {
+      container.removeEventListener('touchstart', onStart);
+      container.removeEventListener('touchmove', onMove);
+      container.removeEventListener('touchend', onEnd);
+      container.removeEventListener('touchcancel', onCancel);
+    };
+  }, [handleTouchStart, handleTouchMove, handleTouchEnd, handleTouchCancel]);
 
   // Centrage automatique et fluide de l'onglet actif dans le bandeau de navigation
   useEffect(() => {
@@ -409,10 +666,6 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
     <div
       ref={dashboardRef}
       className="flex flex-col gap-4 relative transition-colors duration-300"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      style={{ touchAction: 'pan-y' }}
     >
       {/* Unified Sticky Header Section - Stable Constant-Height Professional Sports Terminal Layout */}
       <div className="sticky top-0 z-20 -mx-4 px-4 lg:-mx-8 lg:px-8 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs select-none">
@@ -755,9 +1008,32 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
         </div>
       </div>
 
-      {/* Tab Content with Directional Horizontal Sliding Panels */}
-      <div data-testid="tab-content-container" className="mt-4 relative overflow-hidden w-full">
-        {isTransitioning && outgoingTab && (
+      {/* Tab Content with Directional Horizontal Sliding Panels & Interactive Mobile Touch Drag */}
+      <div
+        ref={contentContainerRef}
+        data-testid="tab-content-container"
+        className="mt-4 relative overflow-hidden w-full select-none"
+        style={{ touchAction: 'pan-y' }}
+      >
+        {/* Panneau voisin interactif (Mobile swipe suivi au doigt en temps réel) */}
+        {swipeNeighbor && (
+          <div
+            ref={neighborPanelRef}
+            aria-hidden="true"
+            className="w-full absolute top-0 left-0 z-0 bg-slate-50 dark:bg-slate-950 will-change-transform"
+            style={{
+              transform:
+                swipeNeighbor.direction === 'next'
+                  ? 'translate3d(100%, 0, 0)'
+                  : 'translate3d(-100%, 0, 0)',
+            }}
+          >
+            {renderTabContent(swipeNeighbor.id)}
+          </div>
+        )}
+
+        {/* Panneau sortant lors d'un clic direct programmatique sur mobile */}
+        {!swipeNeighbor && isTransitioning && outgoingTab && (
           <div
             key={`outgoing-${outgoingTab}`}
             aria-hidden="true"
@@ -769,15 +1045,18 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
           </div>
         )}
 
+        {/* Panneau actif courant */}
         <div
+          ref={currentPanelRef}
           key={`incoming-${activeTab}`}
-          className={`w-full relative z-10 bg-slate-50 dark:bg-slate-950 ${
-            isTransitioning
+          className={`w-full relative z-10 bg-slate-50 dark:bg-slate-950 will-change-transform ${
+            !swipeNeighbor && isTransitioning
               ? slideDirection === 'forward'
                 ? 'animate-tab-slide-in-right'
                 : 'animate-tab-slide-in-left'
               : ''
           }`}
+          style={{ transform: 'translate3d(0px, 0, 0)' }}
         >
           {renderTabContent(activeTab)}
         </div>
