@@ -91,11 +91,6 @@ export const getBookmakerCoverageMeta = (coverage) => {
 export default function TabTactical({ match, onNavigateTab }) {
   const [showCoverageDetails, setShowCoverageDetails] = useState(false);
   const [expandedCardNotes, setExpandedCardNotes] = useState({});
-  const [activeMetaTip, setActiveMetaTip] = useState(null);
-
-  const toggleMetaTip = (tipId) => {
-    setActiveMetaTip(prev => prev === tipId ? null : tipId);
-  };
 
   const risk = match.Risk_Management_Context || {};
   const tactical = risk.Tactical_Red_Flags || {};
@@ -203,7 +198,7 @@ export default function TabTactical({ match, onNavigateTab }) {
   };
 
   return (
-    <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
+    <div className="flex flex-col gap-6">
 
       {/* Operational Vigilance Banner if Kill-Switch active or Blocked Markets */}
       {(isKillSwitchActive || blockedMarkets.length > 0) && (
@@ -255,57 +250,59 @@ export default function TabTactical({ match, onNavigateTab }) {
 
         {/* Compact Market Coverage Notice Summary Banner */}
         {coverageNotice && (
-          <div className="mb-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/70 p-3 transition-colors max-w-full overflow-hidden">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-              <div className="flex flex-wrap items-center gap-2 min-w-0">
+          <div className="mb-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/70 p-2 sm:px-3 sm:py-2 transition-colors max-w-full overflow-hidden">
+            {/* Collapsed state: single interactive summary row */}
+            <button
+              type="button"
+              onClick={() => setShowCoverageDetails(prev => !prev)}
+              aria-expanded={showCoverageDetails}
+              className="w-full flex items-center justify-between gap-1.5 text-left select-none cursor-pointer group"
+            >
+              <div className="flex items-center gap-1.5 min-w-0 flex-1">
                 <div className="p-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
-                  <Info size={15} />
+                  <Info size={13} />
                 </div>
-                <span className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 shrink-0">
-                  Couverture des marchés
+                <span className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate">
+                  Couverture
                 </span>
-                {coverageNotice.notice_version && (
-                  <span className="text-[10px] font-mono font-medium px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
-                    v{coverageNotice.notice_version}
-                  </span>
-                )}
-
                 {coverageSummary && (
-                  <div className="flex flex-wrap items-center gap-1.5 text-xs">
+                  <div className="flex items-center gap-1 shrink-0 text-[10px]">
                     {coverageSummary.actionableCount > 0 && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/25 text-[11px] font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        {coverageSummary.actionableCount} Production
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/25 font-medium leading-none">
+                        <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                        {coverageSummary.actionableCount} Prod
                       </span>
                     )}
                     {coverageSummary.informationalCount > 0 && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/25 text-[11px] font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                        {coverageSummary.informationalCount} Informatif{coverageSummary.informationalCount > 1 ? 's' : ''}
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/25 font-medium leading-none">
+                        <span className="w-1 h-1 rounded-full bg-amber-500" />
+                        {coverageSummary.informationalCount} Info
                       </span>
                     )}
                   </div>
                 )}
               </div>
 
-              <button
-                type="button"
-                onClick={() => setShowCoverageDetails(prev => !prev)}
-                aria-expanded={showCoverageDetails}
-                className="self-start sm:self-center shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-2xs"
-              >
-                <span>{showCoverageDetails ? 'Masquer' : 'Détails & Avertissement'}</span>
+              <div className="flex items-center gap-1 text-[11px] font-medium text-slate-500 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200 shrink-0 transition-colors">
+                <span className="hidden xs:inline sm:inline">{showCoverageDetails ? 'Masquer' : 'Détails & Avis'}</span>
                 {showCoverageDetails ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-              </button>
-            </div>
+              </div>
+            </button>
 
             {showCoverageDetails && (
-              <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2.5 text-xs">
+              <div className="mt-2.5 pt-2.5 border-t border-slate-200 dark:border-slate-800 space-y-2.5 text-xs">
                 {coverageNotice.disclaimer && (
                   <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
-                    <span className="font-semibold text-slate-900 dark:text-slate-100 block text-xs">
-                      Avertissement officiel TITANIUM :
-                    </span>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-semibold text-slate-900 dark:text-slate-100 text-xs">
+                        Avertissement officiel TITANIUM :
+                      </span>
+                      {coverageNotice.notice_version && (
+                        <span className="text-[10px] font-mono font-medium px-1.5 py-0.2 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 shrink-0">
+                          v{coverageNotice.notice_version}
+                        </span>
+                      )}
+                    </div>
                     <p className="font-sans text-[11px] sm:text-xs text-slate-600 dark:text-slate-300">
                       {coverageNotice.disclaimer}
                     </p>
@@ -344,7 +341,7 @@ export default function TabTactical({ match, onNavigateTab }) {
                           <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
                             {note}
                           </p>
-                          <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
+                          <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 break-words">
                             ID: {opMeta.raw} • {covMeta.raw}
                           </span>
                         </div>
@@ -357,8 +354,8 @@ export default function TabTactical({ match, onNavigateTab }) {
           </div>
         )}
 
-        {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* 4 Cards Grid - Compact Mobile Architecture */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {statisticalMarkets.map(({ key, label, refKey, refType, propKey, lambdaKey }) => {
             const refVal = anchors[refKey] !== undefined ? anchors[refKey] : diag[refKey];
             const prob = props[propKey] !== undefined ? props[propKey] : probs[propKey];
@@ -380,117 +377,112 @@ export default function TabTactical({ match, onNavigateTab }) {
             return (
               <div
                 key={key}
-                className="bg-slate-50 dark:bg-slate-950 p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm min-w-0"
+                className="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-xs min-w-0 gap-2.5"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-1.5 pb-2 border-b border-slate-200 dark:border-slate-800/60">
-                    <span className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate">
+                  {/* En-tête compact */}
+                  <div className="flex items-center justify-between gap-1.5 pb-1.5 border-b border-slate-200 dark:border-slate-800/60">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 truncate">
                       {label}
                     </span>
-                    <Badge variant="default" className="text-xs px-2 py-0.5 font-mono shrink-0">
+                    <Badge variant="default" className="text-[9px] px-1.5 py-0 font-mono shrink-0">
                       {refType}
                     </Badge>
                   </div>
 
+                  {/* Bloc métrique dense 3 colonnes */}
                   {isGenerated ? (
-                    <div className="my-3 space-y-2">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Total Attendu (λ)</span>
-                        <span className="font-mono text-2xl font-bold text-slate-900 dark:text-slate-100">
+                    <div className="mt-2 grid grid-cols-3 gap-1 py-1.5 px-2 rounded-lg bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 text-center items-center">
+                      <div className="flex flex-col items-center justify-center min-w-0">
+                        <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold truncate w-full" title="Total Attendu (λ)">
+                          λ Attendu
+                        </span>
+                        <span className="font-mono text-base sm:text-lg font-black text-slate-900 dark:text-slate-100 leading-tight">
                           {lambdaVal.toFixed(2)}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between text-xs font-mono gap-2">
-                        <span className="text-slate-500 dark:text-slate-400 font-sans font-medium">{refType}:</span>
-                        <span className="text-slate-600 dark:text-slate-400 font-bold">
+                      <div className="flex flex-col items-center justify-center min-w-0 border-x border-slate-200 dark:border-slate-800">
+                        <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold truncate w-full" title={`Référence : ${refType}`}>
+                          Réf Ligue
+                        </span>
+                        <span className="font-mono text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 leading-tight">
                           {refVal !== undefined ? refVal.toFixed(2) : '-'}
                         </span>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-200 dark:border-slate-800/40 flex items-center justify-between gap-2">
-                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Prob &gt; Réf ligue</span>
-                        <span className={`font-mono text-sm font-bold ${getPropTextColor(prob || 0)}`}>
+                      <div className="flex flex-col items-center justify-center min-w-0">
+                        <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold truncate w-full" title="Probabilité supérieure à la référence de ligue">
+                          Prob &gt; Réf
+                        </span>
+                        <span className={`font-mono text-xs sm:text-sm font-black leading-tight ${getPropTextColor(prob || 0)}`}>
                           {prob !== undefined ? `${(prob * 100).toFixed(1)}%` : '-'}
                         </span>
                       </div>
                     </div>
                   ) : (
-                    <div className="my-6 py-4 px-2 text-center bg-slate-100/50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-800 rounded-lg">
-                      <p className="text-xs text-slate-400 italic">
+                    <div className="my-3 py-3 px-2 text-center bg-slate-100/50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-800 rounded-lg">
+                      <p className="text-[10px] text-slate-400 italic">
                         Projection non générée dans cette session
                       </p>
                     </div>
                   )}
                 </div>
 
-                <div className="space-y-1.5 pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
+                {/* Qualification secondaire repliée par défaut */}
+                <div className="pt-1.5 border-t border-slate-200/80 dark:border-slate-800/80 space-y-1.5">
                   {mNotice && (() => {
                     const opMeta = getOperationalStatusMeta(mNotice.operational_status);
                     const covMeta = getBookmakerCoverageMeta(mNotice.bookmaker_coverage);
-                    const opTipId = `${key}-op`;
-                    const covTipId = `${key}-cov`;
 
                     return (
                       <div className="space-y-1.5">
-                        <div className="flex flex-wrap items-center justify-between gap-1 text-[11px]">
-                          <button
-                            type="button"
-                            onClick={() => toggleMetaTip(opTipId)}
-                            className={`font-medium px-1.5 py-0.5 rounded border text-left cursor-pointer transition-opacity hover:opacity-80 active:scale-95 ${opMeta.badgeClass}`}
-                            aria-label={`Statut : ${opMeta.label}. Cliquer pour détails.`}
-                            title={`Statut : ${opMeta.raw}`}
-                          >
-                            {opMeta.label}
-                          </button>
-
-                          <button
-                            type="button"
-                            onClick={() => toggleMetaTip(covTipId)}
-                            className={`font-medium px-1.5 py-0.5 rounded border text-right cursor-pointer transition-opacity hover:opacity-80 active:scale-95 ${covMeta.badgeClass}`}
-                            aria-label={`Couverture : ${covMeta.label}. Cliquer pour détails.`}
-                            title={`Couverture : ${covMeta.raw}`}
-                          >
-                            {covMeta.label}
-                          </button>
-                        </div>
-
-                        {/* Touch-accessible explanations for status or coverage */}
-                        {activeMetaTip === opTipId && (
-                          <div className="p-2 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] leading-snug animate-in fade-in duration-200">
-                            <div className="font-semibold text-slate-800 dark:text-slate-200 mb-0.5 flex justify-between">
-                              <span>Statut : {opMeta.label}</span>
-                              <span className="font-mono text-[10px] opacity-75">{opMeta.raw}</span>
-                            </div>
-                            <p className="text-slate-600 dark:text-slate-400">{opMeta.description}</p>
+                        <button
+                          type="button"
+                          onClick={() => toggleCardNote(key)}
+                          aria-expanded={isNoteExpanded}
+                          className="w-full min-h-[32px] py-1 px-1 -mx-1 rounded-md flex items-center justify-between gap-1 text-[10px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/40 dark:hover:bg-slate-800/40 transition-colors group cursor-pointer"
+                        >
+                          <div className="flex items-center gap-1 min-w-0 flex-wrap">
+                            <span className={`px-1.5 py-0.2 rounded border font-medium text-[9px] tracking-tight ${opMeta.badgeClass}`}>
+                              {opMeta.label}
+                            </span>
+                            <span className={`px-1.5 py-0.2 rounded border font-medium text-[9px] tracking-tight ${covMeta.badgeClass}`}>
+                              {covMeta.label}
+                            </span>
                           </div>
-                        )}
-
-                        {activeMetaTip === covTipId && (
-                          <div className="p-2 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] leading-snug animate-in fade-in duration-200">
-                            <div className="font-semibold text-slate-800 dark:text-slate-200 mb-0.5 flex justify-between">
-                              <span>Couverture : {covMeta.label}</span>
-                              <span className="font-mono text-[10px] opacity-75">{covMeta.raw}</span>
-                            </div>
-                            <p className="text-slate-600 dark:text-slate-400">{covMeta.description}</p>
+                          <div className="flex items-center gap-0.5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 shrink-0 font-medium text-[10px]">
+                            <span>{isNoteExpanded ? 'Masquer' : 'Détails'}</span>
+                            {isNoteExpanded ? <ChevronUp size={11} /> : <ChevronDown size={11} />}
                           </div>
-                        )}
+                        </button>
 
-                        {mNotice.notes && (
-                          <div>
-                            <button
-                              type="button"
-                              onClick={() => toggleCardNote(key)}
-                              aria-expanded={isNoteExpanded}
-                              className="w-full flex items-center justify-between text-[11px] font-medium text-amber-700 dark:text-amber-400 hover:underline py-0.5"
-                            >
-                              <span>Note de marché</span>
-                              {isNoteExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
-                            </button>
-                            {isNoteExpanded && (
-                              <p className="mt-1 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                                {mNotice.notes}
-                              </p>
+                        {/* Tiroir déplié : statut technique, couverture bookmaker et avertissements */}
+                        {isNoteExpanded && (
+                          <div className="p-2 rounded-lg bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 space-y-1.5 text-[10px]">
+                            <div className="space-y-0.5">
+                              <div className="flex flex-wrap justify-between items-baseline gap-1 font-mono text-[9px]">
+                                <span className="text-slate-500 uppercase">Statut technique :</span>
+                                <span className="font-bold text-slate-700 dark:text-slate-300 break-words">{opMeta.raw}</span>
+                              </div>
+                              <p className="text-slate-600 dark:text-slate-400 leading-tight">{opMeta.description}</p>
+                            </div>
+
+                            <div className="pt-1 border-t border-slate-200/50 dark:border-slate-800/50 space-y-0.5">
+                              <div className="flex flex-wrap justify-between items-baseline gap-1 font-mono text-[9px]">
+                                <span className="text-slate-500 uppercase">Couverture bookmaker :</span>
+                                <span className="font-bold text-slate-700 dark:text-slate-300 break-words">{covMeta.raw}</span>
+                              </div>
+                              <p className="text-slate-600 dark:text-slate-400 leading-tight">{covMeta.description}</p>
+                            </div>
+
+                            {mNotice.notes && (
+                              <div className="pt-1 border-t border-slate-200/50 dark:border-slate-800/50">
+                                <span className="text-[9px] font-semibold text-amber-600 dark:text-amber-400 block mb-0.5">
+                                  Note de couverture :
+                                </span>
+                                <p className="text-slate-700 dark:text-slate-300 leading-tight">{mNotice.notes}</p>
+                              </div>
                             )}
                           </div>
                         )}
@@ -498,7 +490,7 @@ export default function TabTactical({ match, onNavigateTab }) {
                     );
                   })()}
 
-                  <div className="text-[10px] text-slate-400 italic">
+                  <div className="text-[9px] text-slate-400 dark:text-slate-500 italic text-right">
                     {key === 'throws' ? 'Moyenne arithmétique ligue' : 'Médiane empirique ligue'}
                   </div>
                 </div>
