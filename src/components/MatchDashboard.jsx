@@ -1054,12 +1054,14 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
             {/* Liste d'onglets défilante */}
             <div
               ref={tabsContainerRef}
+              role="tablist"
+              aria-label="Onglets d'analyse de match"
               className="relative flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth px-0.5 flex-1 min-w-0"
             >
-              {/* Capsule / Indicateur visuel d'onglet actif dynamique */}
+              {/* Underline visuel d'onglet actif dynamique sur mobile uniquement (style SofaScore) */}
               <div
                 ref={tabIndicatorRef}
-                className="absolute top-0 bottom-0 rounded-lg bg-slate-900 dark:bg-white pointer-events-none z-0 shadow-xs"
+                className="md:hidden absolute bottom-0 h-0.5 bg-slate-900 dark:bg-white pointer-events-none z-10 rounded-full"
                 aria-hidden="true"
                 style={{ left: 0, width: 0 }}
               />
@@ -1074,13 +1076,13 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                     aria-selected={isActive}
                     role="tab"
                     className={`
-                      group relative z-10 flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg font-mono text-[10px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap transition-colors duration-150 select-none shrink-0
+                      group relative z-10 flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-lg font-mono text-[10px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap transition-colors duration-150 select-none shrink-0
                       ${isActive
-                        ? 'text-white dark:text-slate-950 font-black'
+                        ? 'text-slate-900 dark:text-white font-black md:bg-slate-900 md:text-white md:dark:bg-white md:dark:text-slate-950 shadow-2xs md:shadow-xs'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 font-semibold'}
                     `}
                   >
-                    <span className={`transition-colors ${isActive ? 'text-emerald-400 dark:text-emerald-600' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
+                    <span className={`transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400 md:text-emerald-400 md:dark:text-emerald-600' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
                       {tab.icon}
                     </span>
                     <span className="hidden sm:inline">{tab.label}</span>
