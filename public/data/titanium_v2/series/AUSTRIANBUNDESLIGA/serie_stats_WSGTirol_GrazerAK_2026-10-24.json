@@ -1,0 +1,263 @@
+{
+  "metadata": {
+    "competition": "Austrian Bundesliga",
+    "fixture": "WSG Tirol vs Grazer AK",
+    "date": "2026-10-24",
+    "generated_at": "2026-10-23T12:29:36.442588",
+    "source": "football_master.db (100% Native)",
+    "target_season_start": "2026-07-01",
+    "season_source": "season_resolver",
+    "version": "10.0",
+    "features_legend": {
+      "fatigue_profile": "Score de 0.0 (Reposé) à 1.0 (Exténué) incluant les trêves hivernales (0.4 Rouillé) et le stress géographique asymétrique (affectant surtout l'équipe Extérieure).",
+      "live_indices": "Probabilités conditionnelles pures extraites au Snapshot de la 75ème minute. Clutch = Capacité à marquer quand on est mené/à égalité. Collapse = Risque d'encaisser quand on mène d'1 but.",
+      "game_state_distribution": "Chronologie absolue des buts selon l'état du score (winning, tied, losing) à la seconde précédant le but."
+    }
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "Under 1.5 Team Goals: 7/8",
+      "Under 10.5 Corners: 7/8",
+      "Under 3.5 SOT (Team): 7/8",
+      "Under 22.5 Shots: 6/8",
+      "Over 38.5 Throws: 8/8",
+      "Over 18.5 Throws (Team): 8/8",
+      "Under 3.5 Offsides: 7/8",
+      "Under 1.5 Offsides (Team): 7/8",
+      "Under 5.5 Keeper Saves: 7/8",
+      "Over 1.5 Yellow Cards (Team): 7/8",
+      "Opponent Under 11.5 Fouls: 5/7",
+      "Opponent Under 1.5 Offsides: 5/7",
+      "Opponent Under 1.5 Yellow Cards: 4/5",
+      "Opponent Under 4.5 Corners: 6/8",
+      "Opponent Over 3.5 SOT: 5/7"
+    ],
+    "team_streaks": {
+      "home": [
+        "Over 0.5 Team Goals: 7/9",
+        "BTTS No: 5/7",
+        "Over 9.5 Corners: 5/7",
+        "Over 3.5 SOT (Team): 5/7",
+        "Over 10.5 Shots (Team): 6/8",
+        "Over 38.5 Throws: 7/9",
+        "Over 18.5 Throws (Team): 4/5",
+        "Over 5.5 Keeper Saves: 5/7",
+        "Opponent Over 18.5 Throws: 5/7",
+        "Opponent Over 1.5 Yellow Cards: 5/7",
+        "Opponent Over 4.5 Corners: 7/9",
+        "Opponent Over 3.5 SOT: 7/9"
+      ],
+      "away": [
+        "No wins: 3",
+        "Under 1.5 Team Goals: 5/7",
+        "Under 10.5 Corners: 5/7",
+        "Under 4.5 Corners (Team): 7/9",
+        "Over 22.5 Shots: 9/9",
+        "Over 10.5 Shots (Team): 6/8",
+        "Over 22.5 Fouls: 7/9",
+        "Over 11.5 Fouls (Team): 8/9",
+        "Over 38.5 Throws: 7/9",
+        "Over 18.5 Throws (Team): 5/7",
+        "Under 1.5 Offsides (Team): 6/8",
+        "Over 5.5 Keeper Saves: 7/9",
+        "Over 1.5 Yellow Cards (Team): 5/7",
+        "Opponent Under 11.5 Fouls: 6/8",
+        "Opponent Over 18.5 Throws: 8/9",
+        "Opponent Over 1.5 Yellow Cards: 6/8",
+        "Opponent Over 4.5 Corners: 7/9",
+        "Opponent Over 3.5 SOT: 5/7"
+      ]
+    }
+  },
+  "fatigue_profile": {
+    "home": {
+      "index_score": 0.14,
+      "label": "Reposé",
+      "days_rest": 6
+    },
+    "away": {
+      "index_score": 0.14,
+      "label": "Reposé",
+      "days_rest": 6
+    }
+  },
+  "live_indices": {
+    "home": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 6,
+          "success_matches": 1,
+          "index": 0.17
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 1,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 4,
+          "success_matches": 1,
+          "index": 0.25
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 0,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 6,
+          "success_matches": 0,
+          "index": 0.0
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 3,
+          "failed_matches": 1,
+          "index": 0.33
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 4,
+          "success_matches": 0,
+          "index": 0.0
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 1,
+          "failed_matches": 0,
+          "index": 0.0
+        }
+      }
+    }
+  },
+  "game_state_distribution": {
+    "home": {
+      "season": {
+        "scored": {
+          "winning": 4,
+          "tied": 5,
+          "losing": 3
+        },
+        "conceded": {
+          "winning": 2,
+          "tied": 6,
+          "losing": 6
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 0,
+          "tied": 1,
+          "losing": 3
+        },
+        "conceded": {
+          "winning": 1,
+          "tied": 4,
+          "losing": 3
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "scored": {
+          "winning": 0,
+          "tied": 7,
+          "losing": 0
+        },
+        "conceded": {
+          "winning": 5,
+          "tied": 4,
+          "losing": 13
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 0,
+          "tied": 3,
+          "losing": 0
+        },
+        "conceded": {
+          "winning": 2,
+          "tied": 4,
+          "losing": 13
+        }
+      }
+    }
+  },
+  "goal_distribution": {
+    "season": {
+      "home_scored": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "home_conceded": [
+        3,
+        2,
+        2,
+        0,
+        1,
+        0
+      ],
+      "away_scored": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "away_conceded": [
+        3,
+        3,
+        6,
+        3,
+        2,
+        2
+      ]
+    },
+    "venue": {
+      "home_scored": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "home_conceded": [
+        3,
+        2,
+        2,
+        0,
+        1,
+        0
+      ],
+      "away_scored": [
+        2,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "away_conceded": [
+        3,
+        3,
+        6,
+        3,
+        2,
+        2
+      ]
+    },
+    "recent_form": null
+  }
+}
