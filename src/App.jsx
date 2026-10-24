@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon, Trophy, PieChart, AlertTriangle, Ticket, Filter, ChevronDown, ChevronRight } from 'lucide-react';
+import { Search, Terminal, Activity, Layers, Menu, X, Command, PanelLeftClose, PanelLeftOpen, ShieldCheck, Zap, Target, Lock, LineChart, Flame, TrendingUp, Sun, Moon, Trophy, PieChart, AlertTriangle, Ticket, Filter, ChevronDown, ChevronRight, Star } from 'lucide-react';
 import { MatchList } from './components/MatchList';
 import { MatchDashboard } from './components/MatchDashboard';
 import TicketsView from './components/dashboard/TicketsView';
+import { FavoritesView } from './components/favorites/FavoritesView';
 import { AdvancedFilterDrawer } from './components/filters/AdvancedFilterDrawer';
 import { BatchDateBar } from './components/filters/BatchDateBar';
 import { loadTitaniumV2Session, getLeagueReportUrl, cleanStr } from './utils/titaniumLoader';
@@ -16,6 +17,8 @@ import {
   countActiveFilters,
   getActiveFilterChips
 } from './utils/filterPredicates';
+import { useFavorites } from './context/FavoritesContext.jsx';
+import { findExactMatch } from './utils/favoritesStorage.js';
 
 const MASTER_HUB_LEAGUE = { id: 'TICKETS', name: 'Master Selections', code: 'TICKETS', flag: '🏆' };
 const ALL_LEAGUES_DEFAULT = { id: 'ALL', name: 'Toutes les Ligues', code: 'ALL', flag: '🌍' };
@@ -35,6 +38,15 @@ export default function App() {
   const [loadingReport, setLoadingReport] = useState(false);
   const [ticketsData, setTicketsData] = useState({ assembled: null, finals: null, loading: false });
   const [showWarningBanner, setShowWarningBanner] = useState(true);
+  const {
+    persistenceWarning,
+    downloadFavoritesBackup,
+    dismissPersistenceWarning,
+    totalFavoritesCount,
+    totalMatchesCount,
+    totalTicketsCount
+  } = useFavorites();
+  const [currentMainView, setCurrentMainView] = useState('matrix'); // 'matrix' | 'hub' | 'favorites'
 
   const [sidebarOpen, setSidebarOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 1024 : false);
   const [matchListOpen, setMatchListOpen] = useState(true);
@@ -48,6 +60,78 @@ export default function App() {
   const handleResetFilters = () => {
     setFiltersState(INITIAL_FILTERS_STATE);
   };
+
+  // État et références pour la recherche repliable (Zone C)
+  const [searchPopoverOpen, setSearchPopoverOpen] = useState(false);
+  const searchContainerRef = useRef(null);
+  const searchInputRef = useRef(null);
+  const searchTriggerBtnRef = useRef(null);
+
+  // État et références pour le menu déroulant Signaux (Zone D)
+  const [isSignalsDropdownOpen, setIsSignalsDropdownOpen] = useState(false);
+  const signalsDropdownRef = useRef(null);
+  const signalsTriggerBtnRef = useRef(null);
+
+  // Largeur de fenêtre dynamique pour adaptation fine de la disposition
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1440);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Focus automatique du champ de recherche à l'ouverture
+  useEffect(() => {
+    if (searchPopoverOpen) {
+      searchInputRef.current?.focus();
+    }
+  }, [searchPopoverOpen]);
+
+  // Fermeture de la recherche au clic extérieur et touche Escape
+  useEffect(() => {
+    if (!searchPopoverOpen) return;
+    const handleClickOutside = (e) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
+        setSearchPopoverOpen(false);
+      }
+    };
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setSearchPopoverOpen(false);
+        searchTriggerBtnRef.current?.focus();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [searchPopoverOpen]);
+
+  // Fermeture du menu Signaux au clic extérieur et touche Escape
+  useEffect(() => {
+    if (!isSignalsDropdownOpen) return;
+    const handleClickOutside = (e) => {
+      if (signalsDropdownRef.current && !signalsDropdownRef.current.contains(e.target)) {
+        setIsSignalsDropdownOpen(false);
+      }
+    };
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsSignalsDropdownOpen(false);
+        signalsTriggerBtnRef.current?.focus();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isSignalsDropdownOpen]);
+
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [collapsedGroups, setCollapsedGroups] = useState(() => ({}));
@@ -205,26 +289,42 @@ export default function App() {
 
   const handleNavigateToMatch = (matchIdentifier, leagueIdentifier) => {
     if (!sessionData?.matches) return;
-    const cleanId = cleanStr(matchIdentifier);
-    const targetMatch = sessionData.matches.find(m =>
-      (m.Match_ID && m.Match_ID === matchIdentifier) ||
-      cleanStr(m.Matchup).includes(cleanId) ||
-      cleanId.includes(cleanStr(m.Matchup))
-    );
+
+    // Correspondance exacte et déterministe (WEB-FAVORITES-001 - Phase 5)
+    let targetMatch = null;
+    if (typeof matchIdentifier === 'object' && matchIdentifier !== null) {
+      targetMatch = findExactMatch(
+        sessionData.matches,
+        matchIdentifier,
+        matchIdentifier.League || matchIdentifier.league || leagueIdentifier,
+        matchIdentifier.date
+      );
+    } else {
+      targetMatch = findExactMatch(
+        sessionData.matches,
+        matchIdentifier,
+        leagueIdentifier
+      );
+    }
 
     if (targetMatch) {
-      if (selectedLeague.id === 'TICKETS') {
+      if (currentMainView === 'favorites') {
+        // Préserver le contexte favoris sans basculer vers matrix
+      } else if (currentMainView === 'hub' || selectedLeague.id === 'TICKETS') {
         const targetLeague = availableLeagues.find(l =>
           l.code === targetMatch.League ||
           l.id === targetMatch.League.toUpperCase().replace(/\s+/g, '')
         ) || availableLeagues[0];
         setSelectedLeague(targetLeague);
-      } else if (selectedLeague.id !== 'ALL' && selectedLeague.code !== targetMatch.League) {
-        const targetLeague = availableLeagues.find(l =>
-          l.code === targetMatch.League ||
-          l.id === targetMatch.League.toUpperCase().replace(/\s+/g, '')
-        ) || availableLeagues[0];
-        setSelectedLeague(targetLeague);
+        setCurrentMainView('matrix');
+      } else if (currentMainView === 'matrix') {
+        if (selectedLeague.id !== 'ALL' && selectedLeague.code !== targetMatch.League) {
+          const targetLeague = availableLeagues.find(l =>
+            l.code === targetMatch.League ||
+            l.id === targetMatch.League.toUpperCase().replace(/\s+/g, '')
+          ) || availableLeagues[0];
+          setSelectedLeague(targetLeague);
+        }
       }
       handleSelectMatch(targetMatch);
       setMatchListOpen(true);
@@ -344,6 +444,75 @@ export default function App() {
   const activeFiltersCount = useMemo(() => countActiveFilters(filtersState), [filtersState]);
   const activeFilterChips = useMemo(() => getActiveFilterChips(filtersState), [filtersState]);
 
+  // Mode compact pour les filtres rapides (« Signaux ») si l'espace est contraint ou si un panneau est ouvert
+  const shouldUseCompactSignals = useMemo(() => {
+    if (sidebarOpen || matchListOpen) return true;
+    if (windowWidth < 1380) return true;
+    return false;
+  }, [sidebarOpen, matchListOpen, windowWidth]);
+
+  // Définition unique et partagée des 4 filtres rapides analytiques (Classes 100% statiques)
+  const quickSignalFilters = useMemo(() => [
+    {
+      id: 'master',
+      key: 'masterPicksOnly',
+      label: 'MASTER',
+      longLabel: 'MASTER CHOIX FINAUX',
+      count: filtersState.masterPicksOnly ? filteredMatches.length : masterWhatIf,
+      icon: <Trophy size={12} />,
+      dropdownIcon: <Trophy size={14} className="text-emerald-500" />,
+      active: filtersState.masterPicksOnly,
+      disabled: !filtersState.masterPicksOnly && masterWhatIf === 0,
+      toggle: () => handleToggleFilter('masterPicksOnly'),
+      activeDirectClass: 'bg-emerald-600 border-emerald-500 text-white shadow-xs',
+      activeDropdownClass: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-500/30'
+    },
+    {
+      id: 'tickets',
+      key: 'inTicketsOnly',
+      label: 'IN TICKETS',
+      longLabel: 'IN TICKETS ASSEMBLÉS',
+      count: filtersState.inTicketsOnly ? filteredMatches.length : ticketsWhatIf,
+      icon: <Ticket size={12} />,
+      dropdownIcon: <Ticket size={14} className="text-blue-500" />,
+      active: filtersState.inTicketsOnly,
+      disabled: !filtersState.inTicketsOnly && ticketsWhatIf === 0,
+      toggle: () => handleToggleFilter('inTicketsOnly'),
+      activeDirectClass: 'bg-blue-600 border-blue-500 text-white shadow-xs',
+      activeDropdownClass: 'bg-blue-500/15 text-blue-700 dark:text-blue-300 font-bold border border-blue-500/30'
+    },
+    {
+      id: 'super',
+      key: 'superSignalsAny',
+      label: 'SUPER SIGNALS',
+      longLabel: 'SUPER SIGNALS (V2)',
+      count: filtersState.superSignalsAny ? filteredMatches.length : superWhatIf,
+      icon: <Zap size={12} />,
+      dropdownIcon: <Zap size={14} className="text-amber-500" />,
+      active: filtersState.superSignalsAny,
+      disabled: !filtersState.superSignalsAny && superWhatIf === 0,
+      toggle: () => handleToggleFilter('superSignalsAny'),
+      activeDirectClass: 'bg-amber-600 border-amber-500 text-white shadow-xs',
+      activeDropdownClass: 'bg-amber-500/15 text-amber-700 dark:text-amber-300 font-bold border border-amber-500/30'
+    },
+    {
+      id: 'kill',
+      key: 'killSwitchActiveOnly',
+      label: 'KILL-SWITCH',
+      longLabel: 'KILL-SWITCH ACTIF',
+      count: filtersState.killSwitchActiveOnly ? filteredMatches.length : killSwitchWhatIf,
+      icon: <AlertTriangle size={12} />,
+      dropdownIcon: <AlertTriangle size={14} className="text-rose-500" />,
+      active: filtersState.killSwitchActiveOnly,
+      disabled: !filtersState.killSwitchActiveOnly && killSwitchWhatIf === 0,
+      toggle: () => handleToggleFilter('killSwitchActiveOnly'),
+      activeDirectClass: 'bg-rose-600 border-rose-500 text-white shadow-xs',
+      activeDropdownClass: 'bg-rose-500/15 text-rose-700 dark:text-rose-300 font-bold border border-rose-500/30'
+    }
+  ], [filtersState, filteredMatches.length, masterWhatIf, ticketsWhatIf, superWhatIf, killSwitchWhatIf]);
+
+  const activeSignalsCount = useMemo(() => quickSignalFilters.filter(f => f.active).length, [quickSignalFilters]);
+
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300">
       {/* Mobile Sidebar Overlay */}
@@ -383,13 +552,16 @@ export default function App() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-3 sm:p-4 custom-scrollbar">
-          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5 px-2">Matrices Actives</div>
-          <nav className="flex flex-col gap-1.5">
-            {/* 1. All Leagues Root Entry */}
+          {/* Navigation Espaces de travail */}
+          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 px-2">Navigation</div>
+          <nav className="flex flex-col gap-1.5 mb-4">
+            {/* 1. Toutes les Ligues (Repositionné en tête de navigation) */}
             {availableLeagues.find(l => l.id === 'ALL') && (
               <button
+                type="button"
                 key="ALL"
                 onClick={() => {
+                  setCurrentMainView('matrix');
                   setSelectedLeague(ALL_LEAGUES_DEFAULT);
                   setSelectedDate('ALL');
                   setMatchListOpen(true);
@@ -398,8 +570,8 @@ export default function App() {
                   }
                 }}
                 className={`
-                  flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all text-left mb-2
-                  ${selectedLeague.id === 'ALL'
+                  flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all text-left min-h-[44px]
+                  ${currentMainView === 'matrix' && selectedLeague.id === 'ALL'
                     ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-bold shadow-sm ring-1 ring-slate-200 dark:ring-slate-700/50'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200 font-medium'}
                 `}
@@ -414,10 +586,69 @@ export default function App() {
               </button>
             )}
 
-            {/* 2. Categorized League Groups */}
+            {/* 2. Bouton encadré : Mes favoris (Zone A) */}
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentMainView('favorites');
+                setSelectedMatch(null);
+                if (window.innerWidth < 1024) {
+                  setSidebarOpen(false);
+                }
+              }}
+              className={`w-full min-h-[44px] flex items-center px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left border ${
+                currentMainView === 'favorites'
+                  ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/40 shadow-xs font-bold'
+                  : 'bg-white/80 dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 border-slate-200/90 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+              aria-label="Accéder à Mes favoris"
+              title={`Mes favoris (${totalFavoritesCount} enregistrés)`}
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <Star size={15} className={currentMainView === 'favorites' ? 'text-amber-500 fill-amber-500 shrink-0' : 'text-amber-500 shrink-0'} />
+                <span className="truncate">Mes favoris</span>
+                <span className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded-full border shrink-0 ${
+                  currentMainView === 'favorites'
+                    ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700'
+                }`}>
+                  {totalFavoritesCount}
+                </span>
+              </div>
+            </button>
+
+            {/* 3. Bouton encadré : Master Hub (Zone A) */}
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentMainView('hub');
+                setSelectedLeague(MASTER_HUB_LEAGUE);
+                setSelectedMatch(null);
+                if (window.innerWidth < 1024) {
+                  setSidebarOpen(false);
+                }
+              }}
+              className={`w-full min-h-[44px] flex items-center px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left border ${
+                currentMainView === 'hub' || selectedLeague.id === 'TICKETS'
+                  ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/40 shadow-xs font-bold'
+                  : 'bg-white/80 dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 border-slate-200/90 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+              aria-label="Accéder au Master Hub"
+              title="Master Hub (Tickets & Sélections TITANIUM)"
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <Trophy size={15} className="text-emerald-500 shrink-0" />
+                <span className="truncate">Master Hub</span>
+              </div>
+            </button>
+          </nav>
+
+          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5 px-2">Matrices Actives</div>
+          <nav className="flex flex-col gap-1.5">
+            {/* Categorized League Groups */}
             <div className="flex flex-col gap-2">
               {groupedLeagues.map(group => {
-                const isSelectedInGroup = group.leagues.some(l => l.id === selectedLeague.id);
+                const isSelectedInGroup = currentMainView === 'matrix' && group.leagues.some(l => l.id === selectedLeague.id);
                 const isCollapsed = Boolean(collapsedGroups[group.id]) && !isSelectedInGroup;
                 const groupMatchCount = group.leagues.reduce((acc, l) => acc + (leagueMatchCounts[l.code] || 0), 0);
 
@@ -449,6 +680,7 @@ export default function App() {
                             <button
                               key={league.id}
                               onClick={() => {
+                                setCurrentMainView('matrix');
                                 setSelectedLeague(league);
                                 setSelectedDate('ALL');
                                 setMatchListOpen(true);
@@ -459,7 +691,7 @@ export default function App() {
                               title={countryLabel ? `${displayName} (${countryLabel})` : displayName}
                               className={`
                                 flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all text-left
-                                ${selectedLeague.id === league.id
+                                ${currentMainView === 'matrix' && selectedLeague.id === league.id
                                   ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold border border-emerald-500/30 shadow-2xs'
                                   : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-200 font-medium'}
                               `}
@@ -525,30 +757,62 @@ export default function App() {
              </div>
 
              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                {selectedLeague.id === 'TICKETS' && (
+                {(currentMainView !== 'matrix' || selectedLeague.id === 'TICKETS') && (
                   <button
+                    type="button"
                     onClick={() => {
-                      setSelectedLeague(availableLeagues[0] || ALL_LEAGUES_DEFAULT);
+                      setCurrentMainView('matrix');
+                      if (selectedLeague.id === 'TICKETS') {
+                        setSelectedLeague(availableLeagues[0] || ALL_LEAGUES_DEFAULT);
+                      }
                       setSidebarOpen(false);
                     }}
-                    className="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-500/40 transition-colors"
+                    className="min-h-[44px] px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-500/40 transition-colors"
                   >
                     ← Matchs
                   </button>
                 )}
                 <button
+                  type="button"
                   onClick={() => {
+                    setCurrentMainView('favorites');
+                    setSelectedMatch(null);
+                    setSidebarOpen(false);
+                  }}
+                  className={`min-h-[44px] flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${
+                    currentMainView === 'favorites'
+                      ? 'bg-amber-500 border-amber-400 text-white shadow-[0_0_12px_rgba(245,158,11,0.4)]'
+                      : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'
+                  }`}
+                  aria-label="Mes favoris"
+                >
+                  <Star size={13} className={currentMainView === 'favorites' ? 'fill-white text-white' : 'text-amber-500'} />
+                  <span>FAV</span>
+                  <span className={`text-[9px] font-mono font-bold px-1 rounded-full ${
+                    currentMainView === 'favorites' ? 'bg-white/20 text-white' : 'bg-amber-500/20 text-amber-700 dark:text-amber-300'
+                  }`}>
+                    {totalFavoritesCount}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCurrentMainView('hub');
                     setSelectedLeague(MASTER_HUB_LEAGUE);
                     setSelectedMatch(null);
                     setSidebarOpen(false);
                   }}
-                  className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]' : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'}`}
+                  className={`min-h-[44px] flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${
+                    currentMainView === 'hub' || selectedLeague.id === 'TICKETS'
+                      ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]'
+                      : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'
+                  }`}
                   aria-label="Master Hub"
                 >
-                  <Trophy size={14} className={selectedLeague.id === 'TICKETS' ? 'animate-bounce' : ''} />
+                  <Trophy size={14} className={selectedLeague.id === 'TICKETS' || currentMainView === 'hub' ? 'animate-bounce' : ''} />
                   <span>HUB</span>
                 </button>
-                {selectedLeague.id !== 'TICKETS' && (
+                {currentMainView === 'matrix' && selectedLeague.id !== 'TICKETS' && (
                   <>
                     <BatchDateBar
                       availableDates={availableDates}
@@ -559,6 +823,7 @@ export default function App() {
                       isMobile={true}
                     />
                     <button
+                      type="button"
                       className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
                       onClick={() => {
                         setMobileSearchOpen(true);
@@ -613,15 +878,17 @@ export default function App() {
                 <>
                   <div className="flex items-center gap-2 lg:gap-4 shrink-0">
                     <button
-                      className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                      className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm min-w-[44px] min-h-[44px] flex items-center justify-center"
                       onClick={() => setSidebarOpen(!sidebarOpen)}
+                      aria-label="Basculer le menu"
                     >
                       <Menu size={18} />
                     </button>
                     {selectedLeague.id !== 'TICKETS' && (
                       <button
-                        className="hidden lg:flex text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
+                        className="hidden lg:flex text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm min-w-[44px] min-h-[44px] items-center justify-center"
                         onClick={() => setMatchListOpen(!matchListOpen)}
+                        aria-label="Basculer la liste des matchs"
                       >
                         {matchListOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
                       </button>
@@ -633,14 +900,33 @@ export default function App() {
                   </div>
 
                   {/* Desktop Integrated Navigation (Hidden on Mobile) */}
-                  {selectedLeague.id === 'TICKETS' ? (
+                  {currentMainView === 'favorites' ? (
+                    <div className="hidden lg:flex flex-1 items-center gap-3 min-w-0">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs font-bold text-amber-700 dark:text-amber-400">
+                        <Star size={14} className="text-amber-500 fill-amber-500" />
+                        <span>ESPACE PERSONNEL • MES FAVORIS ({totalFavoritesCount})</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCurrentMainView('matrix');
+                          if (selectedLeague.id === 'TICKETS') setSelectedLeague(availableLeagues[0] || ALL_LEAGUES_DEFAULT);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-colors"
+                      >
+                        <span>← Retour à la Matrice ({sessionData?.matches?.length || 0} matchs)</span>
+                      </button>
+                    </div>
+                  ) : selectedLeague.id === 'TICKETS' || currentMainView === 'hub' ? (
                     <div className="hidden lg:flex flex-1 items-center gap-3 min-w-0">
                       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-bold text-emerald-700 dark:text-emerald-400">
                         <Trophy size={14} className="text-emerald-500" />
                         <span>MASTER HUB • TICKETS & SÉLECTIONS TITANIUM</span>
                       </div>
                       <button
+                        type="button"
                         onClick={() => {
+                          setCurrentMainView('matrix');
                           setSelectedLeague(availableLeagues[0] || ALL_LEAGUES_DEFAULT);
                         }}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-colors"
@@ -649,8 +935,8 @@ export default function App() {
                       </button>
                     </div>
                   ) : (
-                    <div className="hidden lg:flex flex-1 items-center gap-3 min-w-0">
-                      {/* Batch Date Navigation */}
+                    <div className="hidden lg:flex flex-1 items-center gap-2 sm:gap-3 min-w-0">
+                      {/* BatchDateBar (Position Historique Préservée) */}
                       <BatchDateBar
                         availableDates={availableDates}
                         selectedDate={selectedDate}
@@ -659,160 +945,265 @@ export default function App() {
                         totalMatchesCount={leagueMatches.length}
                       />
 
-                      {/* Subtle divider separating temporal calendar from analytical risk filters */}
-                      <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 shrink-0 mx-1 hidden xl:block" />
+                      <div className="h-5 w-px bg-slate-200 dark:bg-slate-800 shrink-0" />
 
-                      {/* Desktop Quick Bar */}
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <div className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x shrink-0">
-                          {[
-                            {
-                              id: 'master',
-                              label: filtersState.masterPicksOnly ? `MASTER (${filteredMatches.length})` : `MASTER (${masterWhatIf})`,
-                              icon: <Trophy size={12} />,
-                              active: filtersState.masterPicksOnly,
-                              disabled: !filtersState.masterPicksOnly && masterWhatIf === 0,
-                              toggle: () => handleToggleFilter('masterPicksOnly'),
-                              activeClass: 'bg-emerald-600 border-emerald-500 text-white shadow-sm'
-                            },
-                            {
-                              id: 'tickets',
-                              label: filtersState.inTicketsOnly ? `IN TICKETS (${filteredMatches.length})` : `IN TICKETS (${ticketsWhatIf})`,
-                              icon: <Ticket size={12} />,
-                              active: filtersState.inTicketsOnly,
-                              disabled: !filtersState.inTicketsOnly && ticketsWhatIf === 0,
-                              toggle: () => handleToggleFilter('inTicketsOnly'),
-                              activeClass: 'bg-blue-600 border-blue-500 text-white shadow-sm'
-                            },
-                            {
-                              id: 'super',
-                              label: filtersState.superSignalsAny ? `SUPER SIGNALS (${filteredMatches.length})` : `SUPER SIGNALS (${superWhatIf})`,
-                              icon: <Zap size={12} />,
-                              active: filtersState.superSignalsAny,
-                              disabled: !filtersState.superSignalsAny && superWhatIf === 0,
-                              toggle: () => handleToggleFilter('superSignalsAny'),
-                              activeClass: 'bg-amber-600 border-amber-500 text-white shadow-sm'
-                            },
-                            {
-                              id: 'kill',
-                              label: filtersState.killSwitchActiveOnly ? `KILL-SWITCH (${filteredMatches.length})` : `KILL-SWITCH (${killSwitchWhatIf})`,
-                              icon: <AlertTriangle size={12} />,
-                              active: filtersState.killSwitchActiveOnly,
-                              disabled: !filtersState.killSwitchActiveOnly && killSwitchWhatIf === 0,
-                              toggle: () => handleToggleFilter('killSwitchActiveOnly'),
-                              activeClass: 'bg-rose-600 border-rose-500 text-white shadow-sm'
-                            },
-                          ].map(sig => (
+                      {/* Filtres Rapides : Mode direct (4 boutons) ou Mode compact (« Signaux ») */}
+                      {shouldUseCompactSignals ? (
+                        <div className="relative" ref={signalsDropdownRef}>
+                          <button
+                            ref={signalsTriggerBtnRef}
+                            type="button"
+                            onClick={() => setIsSignalsDropdownOpen(prev => !prev)}
+                            className={`min-h-[44px] flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                              activeSignalsCount > 0
+                                ? 'bg-purple-600 border-purple-500 text-white shadow-xs'
+                                : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
+                            }`}
+                            aria-expanded={isSignalsDropdownOpen}
+                            aria-haspopup="true"
+                            title="Filtres rapides sur les signaux analytiques TITANIUM"
+                          >
+                            <Zap size={14} className={activeSignalsCount > 0 ? 'text-white' : 'text-purple-500'} />
+                            <span>Signaux</span>
+                            {activeSignalsCount > 0 && (
+                              <span className="px-1.5 py-0.2 rounded-full text-[9px] font-mono bg-white/25 text-white font-black">
+                                {activeSignalsCount}
+                              </span>
+                            )}
+                            <ChevronDown size={12} className={`transition-transform duration-150 ${isSignalsDropdownOpen ? 'rotate-180' : ''}`} />
+                          </button>
+
+                          {/* Popover Liste des 4 Signaux */}
+                          {isSignalsDropdownOpen && (
+                            <div role="menu" className="absolute left-0 top-full mt-2 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-2 z-50 space-y-1 animate-in fade-in zoom-in-95 duration-150">
+                              <div className="px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                <span>Signaux Moteur</span>
+                                <span>{activeSignalsCount} actif{activeSignalsCount > 1 ? 's' : ''}</span>
+                              </div>
+                              {quickSignalFilters.map(sig => (
+                                <button
+                                  key={sig.id}
+                                  type="button"
+                                  role="menuitem"
+                                  onClick={sig.toggle}
+                                  disabled={sig.disabled}
+                                  className={`w-full min-h-[40px] flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left ${
+                                    sig.disabled
+                                      ? 'opacity-40 cursor-not-allowed text-slate-400'
+                                      : sig.active
+                                        ? sig.activeDropdownClass
+                                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    {sig.dropdownIcon}
+                                    <span className="text-[11px] font-bold">{sig.longLabel}</span>
+                                  </div>
+                                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                                    {sig.count}
+                                  </span>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          {quickSignalFilters.map(sig => (
                             <button
                               key={sig.id}
+                              type="button"
                               onClick={sig.toggle}
                               disabled={sig.disabled}
-                              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 snap-start ${
+                              className={`min-h-[44px] flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border shrink-0 transition-all ${
                                 sig.disabled
                                   ? 'opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400'
                                   : sig.active
-                                    ? `${sig.activeClass} shadow-sm`
-                                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                    ? sig.activeDirectClass
+                                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
                               }`}
                             >
                               {sig.icon}
                               <span>{sig.label}</span>
+                              <span className="text-[10px] font-mono opacity-80">({sig.count})</span>
                             </button>
                           ))}
                         </div>
-
-                        {/* Fixed Button to open Advanced Drawer */}
-                        <button
-                          onClick={() => setIsFilterDrawerOpen(true)}
-                          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[9px] transition-all font-bold border shrink-0 ${
-                            activeFiltersCount > 0
-                              ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
-                              : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
-                          }`}
-                          title="Ouvrir les dimensions analytiques"
-                        >
-                          <Filter size={12} />
-                          <span>FILTRES</span>
-                          {activeFiltersCount > 0 && (
-                            <span className="px-1 py-0.2 rounded-full text-[8px] font-mono bg-emerald-500 text-white font-bold">
-                              {activeFiltersCount}
-                            </span>
-                          )}
-                        </button>
-                      </div>
+                      )}
                     </div>
                   )}
 
-                  <div className="flex items-center gap-1 sm:gap-1.5 lg:gap-3 shrink-0 ml-auto">
-                    {selectedLeague.id === 'TICKETS' && (
+                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 ml-auto">
+                    {(currentMainView !== 'matrix' || selectedLeague.id === 'TICKETS') && (
                       <button
+                        type="button"
                         onClick={() => {
-                          setSelectedLeague(availableLeagues[0] || ALL_LEAGUES_DEFAULT);
+                          setCurrentMainView('matrix');
+                          if (selectedLeague.id === 'TICKETS') {
+                            setSelectedLeague(availableLeagues[0] || ALL_LEAGUES_DEFAULT);
+                          }
                         }}
-                        className="lg:hidden px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-500/40 transition-colors"
+                        className="min-h-[44px] lg:hidden px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-500/40 transition-colors"
                       >
                         ← Matchs
                       </button>
                     )}
 
+                    {/* 1. Bouton FILTRES (Adjacent à FAV et HUB) */}
+                    {currentMainView === 'matrix' && selectedLeague.id !== 'TICKETS' && (
+                      <button
+                        type="button"
+                        onClick={() => setIsFilterDrawerOpen(true)}
+                        className={`min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                          activeFiltersCount > 0
+                            ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 shadow-xs'
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
+                        }`}
+                        title="Ouvrir les dimensions analytiques (Filtres avancés)"
+                        aria-label="Filtres avancés"
+                      >
+                        <Filter size={14} className={activeFiltersCount > 0 ? 'text-slate-700 dark:text-slate-200' : 'text-slate-500 dark:text-slate-400'} />
+                        <span className="hidden sm:inline">FILTRES</span>
+                        {activeFiltersCount > 0 && (
+                          <span className="px-1.5 py-0.2 rounded-full text-[9px] font-mono bg-emerald-500 text-white font-black">
+                            {activeFiltersCount}
+                          </span>
+                        )}
+                      </button>
+                    )}
+
+                    {/* 2. Bouton MES FAVORIS */}
                     <button
+                      type="button"
                       onClick={() => {
+                        setCurrentMainView('favorites');
+                        setSelectedMatch(null);
+                        if (window.innerWidth < 1024) setSidebarOpen(false);
+                      }}
+                      className={`min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all ${
+                        currentMainView === 'favorites'
+                          ? 'bg-amber-500 border-amber-400 text-white shadow-xs'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 hover:border-amber-400/50'
+                      }`}
+                      title={`Mes favoris (${totalFavoritesCount} enregistrés)`}
+                      aria-label={`Mes favoris (${totalFavoritesCount})`}
+                    >
+                      <Star size={14} className={currentMainView === 'favorites' ? 'fill-white text-white' : 'text-amber-500 fill-amber-500'} />
+                      <span className="hidden sm:inline">FAV</span>
+                      <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full ${
+                        currentMainView === 'favorites'
+                          ? 'bg-white/25 text-white'
+                          : 'bg-amber-500/15 text-amber-700 dark:text-amber-400'
+                      }`}>
+                        {totalFavoritesCount}
+                      </span>
+                    </button>
+
+                    {/* 3. Bouton MASTER HUB */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCurrentMainView('hub');
                         setSelectedLeague(MASTER_HUB_LEAGUE);
                         setSelectedMatch(null);
                         if (window.innerWidth < 1024) setSidebarOpen(false);
                       }}
-                      className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 lg:px-4 py-1.5 lg:py-2 rounded-xl text-[10px] font-black uppercase tracking-widest lg:tracking-[0.2em] border transition-all ${selectedLeague.id === 'TICKETS' ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-emerald-500'}`}
+                      className={`min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all ${
+                        currentMainView === 'hub' || selectedLeague.id === 'TICKETS'
+                          ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/50'
+                      }`}
+                      title="Master Hub (Tickets & Sélections TITANIUM)"
                       aria-label="Master Hub"
                     >
-                      <Trophy size={14} className={selectedLeague.id === 'TICKETS' ? 'animate-bounce' : ''} />
-                      <span className="hidden lg:inline">{selectedLeague.id === 'TICKETS' ? 'HUB ACTIVE' : 'MASTER HUB'}</span>
-                      <span className="lg:hidden">HUB</span>
+                      <Trophy size={14} className={selectedLeague.id === 'TICKETS' || currentMainView === 'hub' ? 'text-white' : 'text-emerald-500'} />
+                      <span className="hidden sm:inline">HUB</span>
                     </button>
 
-                    {selectedLeague.id !== 'TICKETS' && (
-                      <>
-                        {/* Mobile BatchDateBar (hidden on desktop lg+) */}
-                        <div className="lg:hidden">
-                          <BatchDateBar
-                            availableDates={availableDates}
-                            selectedDate={selectedDate}
-                            onSelectDate={setSelectedDate}
-                            dateCounts={dateCounts}
-                            totalMatchesCount={leagueMatches.length}
-                            isMobile={true}
-                          />
-                        </div>
-
-                        {/* Desktop Search input (hidden on mobile) */}
-                        <div className="relative group w-full max-w-[140px] hidden lg:block">
-                          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={14} />
-                          <input
-                            type="text"
-                            placeholder="Filter..."
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 pl-8 pr-3 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
-                          />
-                        </div>
-
-                        {/* Mobile Search button (hidden on desktop lg+) */}
-                        <button
-                          className="lg:hidden text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
-                          onClick={() => setMobileSearchOpen(true)}
-                          aria-label="Recherche"
-                        >
-                          <Search size={18} />
-                        </button>
-                      </>
+                    {/* 4. Mobile BatchDateBar (affiché sur mobile quand non-tickets) */}
+                    {currentMainView === 'matrix' && selectedLeague.id !== 'TICKETS' && (
+                      <div className="lg:hidden">
+                        <BatchDateBar
+                          availableDates={availableDates}
+                          selectedDate={selectedDate}
+                          onSelectDate={setSelectedDate}
+                          dateCounts={dateCounts}
+                          totalMatchesCount={leagueMatches.length}
+                          isMobile={true}
+                        />
+                      </div>
                     )}
 
-                    {/* Theme Toggle (Mobile and Desktop) */}
+                    {/* 5. Recherche Repliable (Icône Loupe avec Popover Ancré) */}
+                    {currentMainView === 'matrix' && selectedLeague.id !== 'TICKETS' && (
+                      <div className="relative" ref={searchContainerRef}>
+                        <button
+                          ref={searchTriggerBtnRef}
+                          type="button"
+                          onClick={() => setSearchPopoverOpen(prev => !prev)}
+                          className={`w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border transition-all relative ${
+                            searchQuery.trim() !== '' || searchPopoverOpen
+                              ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/40 shadow-xs'
+                              : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-slate-200'
+                          }`}
+                          aria-label="Rechercher une équipe"
+                          aria-expanded={searchPopoverOpen}
+                          title={searchQuery.trim() ? `Recherche active : "${searchQuery}"` : "Rechercher une équipe"}
+                        >
+                          <Search size={16} />
+                          {searchQuery.trim() !== '' && (
+                            <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900 animate-pulse" />
+                          )}
+                        </button>
+
+                        {/* Popover ancré */}
+                        {searchPopoverOpen && (
+                          <div className="fixed left-3 right-3 top-[68px] max-w-[340px] mx-auto sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2 sm:w-72 md:w-80 sm:max-w-[calc(100vw-24px)] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
+                            <div className="relative flex items-center">
+                              <Search size={15} className="absolute left-3 text-slate-400 dark:text-slate-500" />
+                              <input
+                                ref={searchInputRef}
+                                type="text"
+                                placeholder="Chercher une équipe..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-8 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
+                              />
+                              {searchQuery && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setSearchQuery('');
+                                    searchInputRef.current?.focus();
+                                  }}
+                                  className="absolute right-2 p-1 text-slate-400 hover:text-rose-500 transition-colors"
+                                  aria-label="Effacer la recherche"
+                                >
+                                  <X size={14} />
+                                </button>
+                              )}
+                            </div>
+                            <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 dark:border-slate-800/80 text-[10px] text-slate-400 font-mono">
+                              <span>Touche Esc pour fermer</span>
+                              {searchQuery && (
+                                <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                                  {filteredMatches.length} match{filteredMatches.length > 1 ? 's' : ''}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* 6. Thème Toggle */}
                     <button
+                      type="button"
                       onClick={toggleTheme}
-                      className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
-                      aria-label="Thème"
+                      className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs"
+                      aria-label="Changer de thème"
                     >
-                      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                      {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
                     </button>
                   </div>
                 </>
@@ -822,7 +1213,7 @@ export default function App() {
         </header>
 
         {/* Active Filters Chips Bar (Desktop) */}
-        {selectedLeague.id !== 'TICKETS' && activeFiltersCount > 0 && (
+        {selectedLeague.id !== 'TICKETS' && currentMainView === 'matrix' && activeFiltersCount > 0 && (
           <div className="hidden lg:flex items-center gap-2 px-6 py-2 bg-slate-100/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 text-xs shrink-0 overflow-x-auto no-scrollbar">
             <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 font-mono shrink-0">
               Filtres actifs ({activeFiltersCount}) :
@@ -862,8 +1253,35 @@ export default function App() {
           </div>
         )}
 
-        {/* Sticky Filters: Quick Bar stays at the top on Mobile when viewing match list, hidden when match dashboard or MASTER HUB is open */}
-        <div className={`sticky top-0 z-40 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/90 py-1.5 shadow-sm dark:shadow-[0_6px_20px_rgba(0,0,0,0.65)] lg:hidden transition-colors duration-300 ${selectedMatch || selectedLeague.id === 'TICKETS' ? 'hidden' : 'block'}`}>
+        {/* Storage Persistence Warning Banner */}
+        {persistenceWarning && (
+          <div className="bg-rose-500/10 border-b border-rose-500/20 px-4 py-2 flex items-center justify-between text-xs text-rose-700 dark:text-rose-400 shrink-0 z-30">
+            <div className="flex items-center gap-2 min-w-0 flex-1">
+              <AlertTriangle size={14} className="shrink-0 text-rose-500" />
+              <span className="truncate">
+                Attention : Le stockage local est saturé ou inaccessible. Vos favoris risquent d'être perdus au rechargement.
+              </span>
+              <button
+                type="button"
+                onClick={() => downloadFavoritesBackup()}
+                className="ml-2 px-2 py-0.5 rounded bg-rose-600 text-white font-bold text-[10px] hover:bg-rose-700 transition-colors shrink-0"
+              >
+                Sauvegarder JSON
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={dismissPersistenceWarning}
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 ml-2"
+              aria-label="Fermer l'avertissement"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+
+        {/* Sticky Filters: Quick Bar stays at the top on Mobile when viewing match list, hidden when match dashboard, MASTER HUB or MES FAVORIS is open */}
+        <div className={`sticky top-0 z-40 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/90 py-1.5 shadow-sm dark:shadow-[0_6px_20px_rgba(0,0,0,0.65)] lg:hidden transition-colors duration-300 ${selectedMatch || selectedLeague.id === 'TICKETS' || currentMainView !== 'matrix' ? 'hidden' : 'block'}`}>
           {/* Mobile Quick Bar with Fixed FILTRES Button */}
           <div className="flex items-center gap-1.5 px-2.5 sm:px-4">
             {/* Scrollable Quick Filter Pills */}
@@ -932,11 +1350,11 @@ export default function App() {
               onClick={() => setIsFilterDrawerOpen(true)}
               className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded-md text-[9px] transition-all font-bold border shadow-sm ${
                 activeFiltersCount > 0
-                  ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
+                  ? 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 border-slate-300 dark:border-slate-600 shadow-sm'
                   : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
               }`}
             >
-              <Filter size={12} />
+              <Filter size={12} className={activeFiltersCount > 0 ? 'text-slate-800 dark:text-slate-200' : ''} />
               <span>FILTRES</span>
               {activeFiltersCount > 0 && (
                 <span className="px-1 py-0.2 rounded-full text-[8px] font-mono bg-emerald-500 text-white font-bold">
@@ -974,8 +1392,36 @@ export default function App() {
 
         {/* Content Area */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
-          {/* Match List Area or Tickets View */}
-          {selectedLeague.id === 'TICKETS' ? (
+          {currentMainView === 'favorites' ? (
+            <>
+              {selectedMatch && (
+                <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 custom-scrollbar transition-colors duration-300 p-4 lg:p-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] lg:pb-8 w-full">
+                  <MatchDashboard
+                    match={selectedMatch}
+                    leagueReport={selectedMatchReport}
+                    sessionId={sessionMetadata?.sessionId}
+                    onClose={handleCloseMatch}
+                  />
+                </div>
+              )}
+              <div className={selectedMatch ? 'hidden' : 'flex-1 flex flex-col min-h-0 h-full'}>
+                <FavoritesView
+                  currentMatches={sessionData?.matches || []}
+                  currentTickets={ticketsData}
+                  sessionMetadata={sessionMetadata}
+                  onNavigateToMatch={(match) => handleNavigateToMatch(match)}
+                  onNavigateToMatrix={() => {
+                    setCurrentMainView('matrix');
+                    if (selectedLeague.id === 'TICKETS') setSelectedLeague(availableLeagues[0] || ALL_LEAGUES_DEFAULT);
+                  }}
+                  onNavigateToHub={() => {
+                    setCurrentMainView('hub');
+                    setSelectedLeague(MASTER_HUB_LEAGUE);
+                  }}
+                />
+              </div>
+            </>
+          ) : currentMainView === 'hub' || selectedLeague.id === 'TICKETS' ? (
              <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:pt-3 lg:pb-10 lg:px-8 custom-scrollbar bg-slate-100/90 dark:bg-slate-950 transition-colors duration-300">
                <TicketsView
                  assembled={ticketsData.assembled}

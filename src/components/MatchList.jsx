@@ -1,8 +1,10 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Badge } from './ui/Badge';
-import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Trophy, Radio } from 'lucide-react';
+import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Trophy, Radio, Star, FolderPlus } from 'lucide-react';
 import { TIME_SLOTS, getLegTimeSlot } from '../utils/ticketFilters';
 import { TeamLogo, LeagueLogo, getLeagueDisplayName, getLeagueCountryLabel } from '../utils/teamLogos';
+import { useFavorites } from '../context/FavoritesContext.jsx';
+import { GroupManagerModal } from './favorites/GroupManagerModal.jsx';
 
 import {
   formatTimeAMPM,
@@ -36,7 +38,22 @@ const formatDateShort = (dateStr) => {
  * 2. Équipes sur 2 lignes nettes avec écussons (Domicile au-dessus, Extérieur en dessous)
  * 3. Signaux analytiques critiques (sans badge "Standard" non-informatif)
  */
-function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, currentTime }) {
+function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, currentTime, onOpenClassify }) {
+  const { isMatchFavorite, toggleMatchFavorite, getMatchFavorite, getGroup } = useFavorites();
+  const isFav = isMatchFavorite(match);
+  const favoriteData = isFav ? getMatchFavorite(match) : null;
+  const currentGroupIds = favoriteData?.groupIds || [];
+
+  const groupBadgeLabel = useMemo(() => {
+    if (!isFav) return null;
+    if (currentGroupIds.length === 0) return 'Classer (À classer)';
+    if (currentGroupIds.length === 1) {
+      const g = getGroup(currentGroupIds[0]);
+      return g?.name ? g.name : '1 groupe';
+    }
+    return `${currentGroupIds.length} groupes`;
+  }, [isFav, currentGroupIds, getGroup]);
+
   const isFalseFav = match.Risk_Management_Context?.Tactical_Red_Flags?.IS_FALSE_FAVORITE;
   const tension = match.Risk_Management_Context?.Team_Psychology?.net_justice_tension || 0;
   const probs = match.True_Probabilities || {};
@@ -65,28 +82,58 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
           : 'bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50/70 dark:hover:bg-slate-800/40 shadow-xs'
       }`}
     >
-      {/* Étage 1 : Métadonnées de compétition (Gauche) & Horodatage (Droite) */}
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <div className="flex items-start gap-1.5 min-w-0 flex-1 pr-2">
+      {/* Étage 1 : Métadonnées de compétition (Gauche) & Horodatage / Actions (Droite) */}
+      <div className="flex items-center justify-between gap-1.5 sm:gap-2 mb-2">
+        <div className="flex items-center gap-1.5 min-w-0 flex-1 mr-1">
           {match.League && (
             <>
-              <LeagueLogo league={match.League} size="xs" className="opacity-90 shrink-0 mt-0.5" />
-              <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-tight leading-snug line-clamp-2">
+              <LeagueLogo league={match.League} size="xs" className="opacity-90 shrink-0" />
+              <span
+                className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-tight truncate whitespace-nowrap"
+                title={getLeagueDisplayName(match.League)}
+              >
                 {getLeagueDisplayName(match.League)}
               </span>
             </>
           )}
         </div>
 
-        <div className="flex items-center gap-1.5 shrink-0 pt-0.5">
+        <div className="flex items-center gap-1.5 shrink-0">
           {schedule.time && (
-            <div className="inline-flex items-center gap-1 font-mono font-semibold text-[10px] text-slate-700 dark:text-slate-300 bg-slate-100/90 dark:bg-slate-800/80 px-2 py-0.5 rounded border border-slate-200/80 dark:border-slate-700/80">
+            <div className="inline-flex items-center gap-1 font-mono font-semibold text-[10px] text-slate-700 dark:text-slate-300 bg-slate-100/90 dark:bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-200/80 dark:border-slate-700/80 shrink-0">
               {schedule.isLive && (
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]" title={`Fenêtre de match conventionnelle (LIVE estimé [0–${ESTIMATED_LIVE_WINDOW_MINUTES} min])`} />
+                <span
+                  className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)] shrink-0"
+                  title={`Fenêtre de match conventionnelle (LIVE estimé [0–${ESTIMATED_LIVE_WINDOW_MINUTES} min])`}
+                />
               )}
               <span>{schedule.time}</span>
             </div>
           )}
+
+          {/* Bouton Étoile Compact (Conteneur visuel 28px, Cible tactile >= 44x44px via pseudo-élément sans collision) */}
+          <button
+            type="button"
+            data-no-swipe="true"
+            aria-label={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+            aria-pressed={isFav}
+            title={isFav ? "Retirer des favoris" : "Ajouter aux favoris (À classer)"}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleMatchFavorite(match, [], { sessionId: match.session_id });
+            }}
+            className={`relative w-7 h-7 min-w-[28px] min-h-[28px] flex items-center justify-center rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-amber-400 shrink-0 before:absolute before:inset-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-11 before:h-11 before:content-[''] ${
+              isFav
+                ? 'text-amber-400 hover:text-amber-500 bg-amber-400/10'
+                : 'text-slate-300 dark:text-slate-600 hover:text-slate-500 dark:hover:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+          >
+            <Star
+              size={15}
+              className={isFav ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]' : ''}
+            />
+          </button>
+
           <ChevronRight
             size={15}
             className={`transition-transform duration-200 shrink-0 ${
@@ -126,32 +173,50 @@ function MatchCard({ match, isSelected, onSelectMatch, isMultiDate = false, curr
         </div>
       )}
 
-      {/* Étage 3 : Signaux d'analyse décisionnels (uniquement si actifs) */}
-      {hasSignals && (
-        <div className="flex flex-wrap items-center gap-1.5 mt-2 pt-2 border-t border-slate-100 dark:border-slate-800/60">
-          {match.isFinalPick && (
-            <Badge variant="success" className="bg-emerald-600 text-white border-emerald-500 shadow-xs flex items-center gap-1 font-mono text-[9px] px-1.5 py-0.5">
-              <Trophy size={10} /> MASTER PICK
-            </Badge>
-          )}
-          {isKillSwitch && (
-            <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/40 font-mono text-[9px] px-1.5 py-0.5">
-              <AlertTriangle size={10} /> KILL-SWITCH
-            </Badge>
-          )}
-          {investSignals.IS_ULTRA_SAFE && (
-            <Badge variant="success" className="text-[9px] px-1.5 py-0.5 font-mono">ULTRA SAFE</Badge>
-          )}
-          {investSignals.IS_SAFE_GOALS && (
-            <Badge variant="info" className="text-[9px] px-1.5 py-0.5 font-mono">SAFE GOALS</Badge>
-          )}
-          {isFalseFav && !isKillSwitch && (
-            <Badge variant="danger" className="flex items-center gap-1 text-[9px] px-1.5 py-0.5 font-mono">
-              <AlertTriangle size={10} /> False Fav
-            </Badge>
-          )}
-          {tension > 5 && (
-            <Badge variant="warning" className="text-[9px] px-1.5 py-0.5 font-mono">High Tension</Badge>
+      {/* Étage 3 : Signaux d'analyse décisionnels et / ou Action Classer */}
+      {(hasSignals || isFav) && (
+        <div className="flex items-center justify-between gap-1.5 mt-2 pt-2 border-t border-slate-100 dark:border-slate-800/60">
+          <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+            {match.isFinalPick && (
+              <Badge variant="success" className="bg-emerald-600 text-white border-emerald-500 shadow-xs flex items-center gap-1 font-mono text-[9px] px-1.5 py-0.5">
+                <Trophy size={10} /> MASTER PICK
+              </Badge>
+            )}
+            {isKillSwitch && (
+              <Badge variant="danger" className="flex items-center gap-1 bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/40 font-mono text-[9px] px-1.5 py-0.5">
+                <AlertTriangle size={10} /> KILL-SWITCH
+              </Badge>
+            )}
+            {investSignals.IS_ULTRA_SAFE && (
+              <Badge variant="success" className="text-[9px] px-1.5 py-0.5 font-mono">ULTRA SAFE</Badge>
+            )}
+            {investSignals.IS_SAFE_GOALS && (
+              <Badge variant="info" className="text-[9px] px-1.5 py-0.5 font-mono">SAFE GOALS</Badge>
+            )}
+            {isFalseFav && !isKillSwitch && (
+              <Badge variant="danger" className="flex items-center gap-1 text-[9px] px-1.5 py-0.5 font-mono">
+                <AlertTriangle size={10} /> False Fav
+              </Badge>
+            )}
+            {tension > 5 && (
+              <Badge variant="warning" className="text-[9px] px-1.5 py-0.5 font-mono">High Tension</Badge>
+            )}
+          </div>
+
+          {isFav && (
+            <button
+              type="button"
+              data-no-swipe="true"
+              aria-label={`Gérer les groupes du match ${homeDisplay} vs ${awayDisplay}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onOpenClassify) onOpenClassify(match);
+              }}
+              className="inline-flex items-center gap-1 px-2.5 py-1 min-h-[32px] sm:min-h-[28px] text-[10px] font-semibold rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400 transition-all shrink-0 ml-auto"
+            >
+              <FolderPlus size={12} className="shrink-0" />
+              <span className="truncate max-w-[130px]">{groupBadgeLabel}</span>
+            </button>
           )}
         </div>
       )}
@@ -164,6 +229,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
   const [showLiveOnly, setShowLiveOnly] = useState(false);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('ALL');
   const [currentTime, setCurrentTime] = useState(() => Date.now());
+  const [classifyMatch, setClassifyMatch] = useState(null);
 
   const scrollContainerRef = useRef(null);
 
@@ -501,6 +567,7 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
                     onSelectMatch={onSelectMatch}
                     isMultiDate={sortedDates.length > 1}
                     currentTime={currentTime}
+                    onOpenClassify={(m) => setClassifyMatch(m)}
                   />
                 );
               })}
@@ -510,6 +577,14 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
       })}
       {/* End of scrollable match list */}
       </div>
+
+      {classifyMatch && (
+        <GroupManagerModal
+          isOpen={Boolean(classifyMatch)}
+          onClose={() => setClassifyMatch(null)}
+          match={classifyMatch}
+        />
+      )}
     </div>
   );
 }
