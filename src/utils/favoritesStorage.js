@@ -725,80 +725,213 @@ export function validateImportPayload(jsonStr) {
 
   // Assainissement des groupes importés
   const sanitizedGroups = {};
-  Object.entries(rawGroups).forEach(([gid, g]) => {
+  for (const [gid, g] of Object.entries(rawGroups)) {
     if (g && typeof g === 'object') {
-      const cleanId = sanitizeString(g.id || gid, 60);
-      const cleanName = sanitizeString(g.name || 'Groupe importé', 80);
-      if (cleanId && cleanName) {
-        sanitizedGroups[cleanId] = {
-          id: cleanId,
-          name: cleanName,
-          createdAt: g.createdAt || new Date().toISOString(),
-          updatedAt: g.updatedAt || new Date().toISOString()
+      const rawGid = typeof gid === 'string' ? gid.trim() : '';
+      const rawId = typeof g.id === 'string' ? g.id.trim() : '';
+      if (rawGid && rawId && rawGid !== rawId) {
+        return {
+          valid: false,
+          errors: [`Incohérence d'identifiant détectée : la clé de groupe "${rawGid}" ne correspond pas à g.id "${rawId}".`],
+          store: null
         };
       }
+      const effectiveGid = rawId || rawGid;
+      const cleanId = sanitizeString(effectiveGid, 60);
+      const cleanName = sanitizeString(g.name || 'Groupe importé', 80);
+      if (!cleanId || !cleanName) {
+        return {
+          valid: false,
+          errors: [`Identifiant ou nom de groupe manquant pour "${gid}".`],
+          store: null
+        };
+      }
+      if (cleanId !== effectiveGid.trim()) {
+        return {
+          valid: false,
+          errors: [`Identifiant de groupe invalide : la clé "${effectiveGid}" contient des caractères non autorisés ou dépasse la taille maximale (60 caractères).`],
+          store: null
+        };
+      }
+      if (sanitizedGroups[cleanId]) {
+        return {
+          valid: false,
+          errors: [`Collision d'identifiant détectée lors de l'import : le groupe "${cleanId}" est défini plusieurs fois.`],
+          store: null
+        };
+      }
+      sanitizedGroups[cleanId] = {
+        id: cleanId,
+        name: cleanName,
+        createdAt: g.createdAt || new Date().toISOString(),
+        updatedAt: g.updatedAt || new Date().toISOString()
+      };
     }
-  });
+  }
 
   const validGroupIds = new Set(Object.keys(sanitizedGroups));
 
-  // Assainissement des matchs importés
+  // Assainissement des matchs importés (Validation atomique et préservation stricte de la clé canonique)
   const sanitizedMatches = {};
-  Object.entries(rawMatches).forEach(([mid, m]) => {
-    if (m && typeof m === 'object') {
-      const cleanKey = getCanonicalMatchKey(m) || sanitizeString(m.id || mid, 120);
-      if (cleanKey) {
-        const cleanGroupIds = Array.isArray(m.groupIds)
-          ? m.groupIds.map(id => sanitizeString(id, 60)).filter(id => validGroupIds.has(id))
-          : [];
-
-        sanitizedMatches[cleanKey] = {
-          id: cleanKey,
-          matchId: m.matchId ? sanitizeString(m.matchId, 100) : null,
-          canonicalKey: cleanKey,
-          matchup: sanitizeString(m.matchup || 'Match inconnu', 120),
-          league: sanitizeString(m.league || 'Ligue inconnue', 80),
-          date: sanitizeString(m.date || 'Date inconnue', 25),
-          hours: m.hours ? sanitizeString(m.hours, 10) : null,
-          kickoff_utc: m.kickoff_utc ? sanitizeString(m.kickoff_utc, 35) : null,
-          homeRaw: sanitizeString(m.homeRaw || '', 100),
-          awayRaw: sanitizeString(m.awayRaw || '', 100),
-          displayHome: sanitizeString(m.displayHome || m.homeRaw || 'Home', 100),
-          displayAway: sanitizeString(m.displayAway || m.awayRaw || 'Away', 100),
-          round: m.round ? sanitizeString(String(m.round), 30) : null,
-          groupIds: cleanGroupIds,
-          savedAt: m.savedAt || new Date().toISOString(),
-          updatedAt: m.updatedAt || new Date().toISOString(),
-          originSession: {
-            sessionId: sanitizeString(m.originSession?.sessionId || 'IMPORTED_SESSION', 120),
-            runId: sanitizeString(m.originSession?.runId || '', 120),
-            sourceMatrix: sanitizeString(m.originSession?.sourceMatrix || '', 160)
-          },
-          snapshot: {
-            prob1: sanitizeNumericMetric(m.snapshot?.prob1),
-            probX: sanitizeNumericMetric(m.snapshot?.probX),
-            prob2: sanitizeNumericMetric(m.snapshot?.prob2),
-            probO25: sanitizeNumericMetric(m.snapshot?.probO25),
-            isFinalPick: Boolean(m.snapshot?.isFinalPick),
-            isKillSwitch: Boolean(m.snapshot?.isKillSwitch),
-            superSignals: Array.isArray(m.snapshot?.superSignals) ? m.snapshot.superSignals.map(s => sanitizeString(s, 50)) : [],
-            scoreEV: sanitizeNumericMetric(m.snapshot?.scoreEV),
-            tier: sanitizeNumericMetric(m.snapshot?.tier),
-            masterReason: m.snapshot?.masterReason ? sanitizeString(m.snapshot.masterReason, 200) : null,
-            confidenceIndex: sanitizeNumericMetric(m.snapshot?.confidenceIndex)
-          }
-        };
-      }
+  for (const [mid, m] of Object.entries(rawMatches)) {
+    if (!m || typeof m !== 'object' || Array.isArray(m)) {
+      return {
+        valid: false,
+        errors: [`Entrée de match invalide pour la clé "${mid}" : un objet JSON est requis.`],
+        store: null
+      };
     }
-  });
+
+    const rawMid = typeof mid === 'string' ? mid.trim() : '';
+    const rawId = typeof m.id === 'string' ? m.id.trim() : '';
+    const rawCanonicalKey = typeof m.canonicalKey === 'string' ? m.canonicalKey.trim() : '';
+
+    // Détection d'incohérence entre la clé de stockage, m.id et m.canonicalKey
+    if (rawMid && rawId && rawMid !== rawId) {
+      return {
+        valid: false,
+        errors: [`Incohérence d'identifiant détectée : la clé de stockage "${rawMid}" ne correspond pas à m.id "${rawId}".`],
+        store: null
+      };
+    }
+    if (rawMid && rawCanonicalKey && rawMid !== rawCanonicalKey) {
+      return {
+        valid: false,
+        errors: [`Incohérence d'identifiant détectée : la clé de stockage "${rawMid}" ne correspond pas à m.canonicalKey "${rawCanonicalKey}".`],
+        store: null
+      };
+    }
+    if (rawId && rawCanonicalKey && rawId !== rawCanonicalKey) {
+      return {
+        valid: false,
+        errors: [`Incohérence d'identifiant détectée : m.id "${rawId}" ne correspond pas à m.canonicalKey "${rawCanonicalKey}".`],
+        store: null
+      };
+    }
+
+    // Détermination de la clé canonique :
+    // Priorité absolue à la clé persistée d'origine (rawMid, rawId, ou rawCanonicalKey).
+    // Ne recourt à m.matchId ou getCanonicalMatchKey qu'en repli pour un format dépourvu de clé persistée.
+    const effectiveKey = rawMid ||
+                         rawId ||
+                         rawCanonicalKey ||
+                         (typeof m.matchId === 'string' && m.matchId.trim() ? m.matchId.trim() : null) ||
+                         getCanonicalMatchKey(m);
+
+    const cleanKey = effectiveKey ? sanitizeString(effectiveKey, 120) : null;
+    if (!cleanKey) {
+      return {
+        valid: false,
+        errors: [`Impossible de déterminer un identifiant canonique valide pour le match "${mid}".`],
+        store: null
+      };
+    }
+
+    // Aucun changement silencieux d'identité lors de l'assainissement
+    if (cleanKey !== effectiveKey.trim()) {
+      return {
+        valid: false,
+        errors: [`Identifiant de match invalide : la clé "${effectiveKey}" contient des caractères non autorisés ou dépasse la taille maximale (120 caractères).`],
+        store: null
+      };
+    }
+
+    // Détection de collision d'identifiants assainis (rejet atomique)
+    if (sanitizedMatches[cleanKey]) {
+      return {
+        valid: false,
+        errors: [`Collision d'identifiant détectée lors de l'import : le match "${cleanKey}" est défini plusieurs fois.`],
+        store: null
+      };
+    }
+
+    const cleanGroupIds = Array.isArray(m.groupIds)
+      ? m.groupIds.map(id => sanitizeString(id, 60)).filter(id => validGroupIds.has(id))
+      : [];
+
+    // Référence source : conserve m.matchId s'il existe, sinon m.Match_ID,
+    // ou cleanKey uniquement si ce n'est pas une clé composite de repli
+    const sourceMatchId = (typeof m.matchId === 'string' && m.matchId.trim())
+      ? sanitizeString(m.matchId.trim(), 100)
+      : (typeof m.Match_ID === 'string' && m.Match_ID.trim())
+        ? sanitizeString(m.Match_ID.trim(), 100)
+        : (!cleanKey.includes('__') ? cleanKey : null);
+
+    sanitizedMatches[cleanKey] = {
+      id: cleanKey,
+      matchId: sourceMatchId,
+      canonicalKey: cleanKey,
+      matchup: sanitizeString(m.matchup || (m.homeRaw && m.awayRaw ? `${m.homeRaw} vs ${m.awayRaw}` : 'Match inconnu'), 120),
+      league: sanitizeString(m.league || m.League || 'Ligue inconnue', 80),
+      date: sanitizeString(m.date || m.Match_Date || 'Date inconnue', 25),
+      hours: m.hours ? sanitizeString(m.hours, 10) : null,
+      kickoff_utc: m.kickoff_utc ? sanitizeString(m.kickoff_utc, 35) : null,
+      homeRaw: sanitizeString(m.homeRaw || '', 100),
+      awayRaw: sanitizeString(m.awayRaw || '', 100),
+      displayHome: sanitizeString(m.displayHome || m.homeRaw || 'Home', 100),
+      displayAway: sanitizeString(m.displayAway || m.awayRaw || 'Away', 100),
+      round: m.round != null ? sanitizeString(String(m.round), 30) : null,
+      groupIds: cleanGroupIds,
+      savedAt: m.savedAt || new Date().toISOString(),
+      updatedAt: m.updatedAt || new Date().toISOString(),
+      originSession: {
+        sessionId: sanitizeString(m.originSession?.sessionId || 'IMPORTED_SESSION', 120),
+        runId: sanitizeString(m.originSession?.runId || '', 120),
+        sourceMatrix: sanitizeString(m.originSession?.sourceMatrix || '', 160)
+      },
+      snapshot: {
+        prob1: sanitizeNumericMetric(m.snapshot?.prob1),
+        probX: sanitizeNumericMetric(m.snapshot?.probX),
+        prob2: sanitizeNumericMetric(m.snapshot?.prob2),
+        probO25: sanitizeNumericMetric(m.snapshot?.probO25),
+        isFinalPick: Boolean(m.snapshot?.isFinalPick),
+        isKillSwitch: Boolean(m.snapshot?.isKillSwitch),
+        superSignals: Array.isArray(m.snapshot?.superSignals) ? m.snapshot.superSignals.map(s => sanitizeString(s, 50)) : [],
+        scoreEV: sanitizeNumericMetric(m.snapshot?.scoreEV),
+        tier: sanitizeNumericMetric(m.snapshot?.tier),
+        masterReason: m.snapshot?.masterReason ? sanitizeString(m.snapshot.masterReason, 200) : null,
+        confidenceIndex: sanitizeNumericMetric(m.snapshot?.confidenceIndex)
+      }
+    };
+  }
 
   // Assainissement des tickets importés
   const sanitizedTickets = {};
-  Object.entries(rawTickets).forEach(([tid, t]) => {
+  for (const [tid, t] of Object.entries(rawTickets)) {
     if (t && typeof t === 'object') {
-      const cleanTicketId = sanitizeString(t.ticketId || tid, 100);
-      if (cleanTicketId) {
-        const rawLegs = Array.isArray(t.snapshot?.legs) ? t.snapshot.legs : [];
+      const rawTid = typeof tid === 'string' ? tid.trim() : '';
+      const rawTicketId = typeof t.ticketId === 'string' ? t.ticketId.trim() : '';
+      if (rawTid && rawTicketId && rawTid !== rawTicketId) {
+        return {
+          valid: false,
+          errors: [`Incohérence d'identifiant détectée : la clé de ticket "${rawTid}" ne correspond pas à t.ticketId "${rawTicketId}".`],
+          store: null
+        };
+      }
+      const effectiveTid = rawTicketId || rawTid;
+      const cleanTicketId = sanitizeString(effectiveTid, 100);
+      if (!cleanTicketId) {
+        return {
+          valid: false,
+          errors: [`Identifiant de ticket manquant pour "${tid}".`],
+          store: null
+        };
+      }
+      if (cleanTicketId !== effectiveTid.trim()) {
+        return {
+          valid: false,
+          errors: [`Identifiant de ticket invalide : la clé "${effectiveTid}" contient des caractères non autorisés ou dépasse la taille maximale (100 caractères).`],
+          store: null
+        };
+      }
+      if (sanitizedTickets[cleanTicketId]) {
+        return {
+          valid: false,
+          errors: [`Collision d'identifiant détectée lors de l'import : le ticket "${cleanTicketId}" est défini plusieurs fois.`],
+          store: null
+        };
+      }
+      const rawLegs = Array.isArray(t.snapshot?.legs) ? t.snapshot.legs : [];
         const cleanLegs = rawLegs.map(l => ({
           Bet_ID: l.Bet_ID ? sanitizeString(l.Bet_ID, 80) : null,
           Match_ID: l.Match_ID ? sanitizeString(l.Match_ID, 100) : null,
@@ -853,7 +986,6 @@ export function validateImportPayload(jsonStr) {
         };
       }
     }
-  });
 
   return {
     valid: true,

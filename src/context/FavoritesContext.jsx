@@ -598,7 +598,19 @@ export function FavoritesProvider({ children, storage = null }) {
       nextStore = mergeFavoritesStores(store, validation.store);
     }
 
-    persistState(nextStore);
+    const persistResult = persistState(nextStore);
+    if (persistResult && !persistResult.success) {
+      return {
+        success: false,
+        mode,
+        errors: [
+          persistResult.quotaExceeded
+            ? 'Échec de persistance : espace de stockage local saturé (QuotaExceededError). Les données restent disponibles en mémoire pour la session actuelle mais ne sont pas enregistrées durablement.'
+            : 'Échec de persistance : impossible d\'enregistrer les favoris sur le stockage local. Les données restent disponibles en mémoire pour la session actuelle mais ne sont pas enregistrées durablement.'
+        ],
+        summary: null
+      };
+    }
 
     return {
       success: true,
