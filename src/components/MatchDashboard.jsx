@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Badge } from './ui/Badge';
 import {
   BarChart3,
@@ -15,7 +15,9 @@ import {
   TrendingUp,
   Trophy,
   Fingerprint,
-  Calendar
+  Calendar,
+  Star,
+  FolderPlus
 } from 'lucide-react';
 
 import TabCoreMarket from './dashboard/TabCoreMarket';
@@ -28,8 +30,26 @@ import TabDeepDive from './dashboard/TabDeepDive';
 import { TeamLogo, LeagueLogo, getLeagueDisplayName, getLeagueCountryLabel } from '../utils/teamLogos';
 import { getSeriesStatsUrl, validateSeriesMetadata } from '../utils/titaniumLoader';
 import { getMatchScheduleDetails } from '../utils/matchSchedule';
+import { useFavorites } from '../context/FavoritesContext.jsx';
+import { GroupManagerModal } from './favorites/GroupManagerModal.jsx';
 
 export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
+  const { isMatchFavorite, toggleMatchFavorite, getMatchFavorite, getGroup } = useFavorites();
+  const isFav = isMatchFavorite(match);
+  const [groupModalOpen, setGroupModalOpen] = useState(false);
+
+  const favoriteData = isFav ? getMatchFavorite(match) : null;
+  const groupIds = favoriteData?.groupIds || [];
+  const groupCount = groupIds.length;
+  const dashboardGroupLabel = useMemo(() => {
+    if (groupCount === 0) return 'Classer (À classer)';
+    if (groupCount === 1) {
+      const g = getGroup(groupIds[0]);
+      return g?.name ? `Groupe: ${g.name}` : '1 groupe';
+    }
+    return `${groupCount} groupes`;
+  }, [groupCount, groupIds, getGroup]);
+
   const [activeTab, setActiveTab] = useState('tactical');
   const [outgoingTab, setOutgoingTab] = useState(null);
   const [slideDirection, setSlideDirection] = useState('forward'); // 'forward' (leftward slide) or 'backward' (rightward slide)
@@ -854,6 +874,37 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
 
             {/* Zone Droite Desktop : Badges Analytiques */}
             <div className="flex items-center justify-end gap-1.5 flex-wrap shrink-0">
+              <button
+                type="button"
+                data-no-swipe="true"
+                aria-label={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+                aria-pressed={isFav}
+                title={isFav ? "Retirer des favoris" : "Ajouter aux favoris (À classer)"}
+                onClick={() => toggleMatchFavorite(match, [], { sessionId: sessionId || match.session_id })}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all border shrink-0 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-400 ${
+                  isFav
+                    ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/40 shadow-xs ring-1 ring-amber-500/20'
+                    : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                <Star size={14} className={isFav ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]' : ''} />
+                <span>{isFav ? 'FAVORI' : 'FAVORI'}</span>
+              </button>
+
+              {isFav && (
+                <button
+                  type="button"
+                  data-no-swipe="true"
+                  aria-label="Gérer les groupes de cette rencontre"
+                  title="Organiser dans les groupes personnalisés"
+                  onClick={() => setGroupModalOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all border shrink-0 min-h-[44px] bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                >
+                  <FolderPlus size={14} className="text-amber-500" />
+                  <span>{dashboardGroupLabel}</span>
+                </button>
+              )}
+
               {match.isFinalPick && (
                 <Badge variant="success" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-wider bg-emerald-600 text-white border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)] animate-pulse font-mono">
                   <Trophy size={10} /> MASTER PICK
@@ -932,6 +983,40 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
 
               {/* Badges Mobile */}
               <div className="flex items-center gap-1 shrink-0">
+                <button
+                  type="button"
+                  data-no-swipe="true"
+                  aria-label={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+                  aria-pressed={isFav}
+                  title={isFav ? "Retirer des favoris" : "Ajouter aux favoris (À classer)"}
+                  onClick={() => toggleMatchFavorite(match, [], { sessionId: sessionId || match.session_id })}
+                  className={`w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition-all border shrink-0 focus:outline-none focus:ring-2 focus:ring-amber-400 ${
+                    isFav
+                      ? 'bg-amber-500/15 text-amber-500 border-amber-500/40 shadow-xs'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700 hover:text-slate-600 dark:hover:text-slate-300'
+                  }`}
+                >
+                  <Star size={15} className={isFav ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]' : ''} />
+                </button>
+
+                {isFav && (
+                  <button
+                    type="button"
+                    data-no-swipe="true"
+                    aria-label="Gérer les groupes du match"
+                    title="Organiser dans les groupes personnalisés"
+                    onClick={() => setGroupModalOpen(true)}
+                    className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition-all border shrink-0 bg-slate-100 dark:bg-slate-800 text-amber-500 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-400 relative"
+                  >
+                    <FolderPlus size={15} />
+                    {groupCount > 0 && (
+                      <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-amber-500 text-slate-950 text-[9px] font-bold rounded-full flex items-center justify-center">
+                        {groupCount}
+                      </span>
+                    )}
+                  </button>
+                )}
+
                 {match.isFinalPick && (
                   <Badge variant="success" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider bg-emerald-600 text-white border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)] animate-pulse font-mono">
                     <Trophy size={9} /> <span className="hidden xs:inline">MASTER</span> PICK
@@ -1297,6 +1382,15 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
           {renderTabContent(activeTab)}
         </div>
       </div>
+
+      {/* Boîte de dialogue de gestion des groupes pour cette rencontre */}
+      {groupModalOpen && (
+        <GroupManagerModal
+          isOpen={groupModalOpen}
+          onClose={() => setGroupModalOpen(false)}
+          match={match}
+        />
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { useFavorites } from '../../context/FavoritesContext';
 import { getTeamInfo } from '../../utils';
 import { getTeamDisplayName } from '../../utils/teamDisplayNames';
 import { TeamLogo, LeagueLogo, getLeagueDisplayName } from '../../utils/teamLogos';
@@ -60,7 +61,8 @@ import {
   X,
   Target,
   AlertCircle,
-  Radio
+  Radio,
+  Bookmark
 } from 'lucide-react';
 
 const INITIAL_VISIBLE_TICKETS = 30;
@@ -292,7 +294,71 @@ const TicketLeg = ({ leg, legIndex, onNavigate, nowMs }) => {
   );
 };
 
-const TicketCard = ({ ticket, auditMode, onNavigateToMatch, nowMs }) => {
+/**
+ * Bouton d'enregistrement d'un ticket favori (WEB-FAVORITES-001 - Phase 4)
+ * Surface tactile réelle >= 44x44 px, accessibilité clavier, stopPropagation
+ */
+function TicketBookmarkButton({
+  ticket,
+  isFavorite = false,
+  onToggleFavorite,
+  className = ''
+}) {
+  const ticketId = ticket?.ticket_id;
+  const isInvalid = !ticketId || typeof ticketId !== 'string' || !ticketId.trim();
+
+  if (isInvalid) {
+    return (
+      <button
+        type="button"
+        disabled
+        aria-disabled="true"
+        aria-label="Enregistrement indisponible : identifiant technique ticket_id manquant"
+        title="Enregistrement indisponible : identifiant technique ticket_id manquant"
+        className={`w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl opacity-40 cursor-not-allowed text-slate-400 dark:text-slate-600 shrink-0 ${className}`}
+      >
+        <Bookmark size={18} />
+      </button>
+    );
+  }
+
+  const label = isFavorite
+    ? `Retirer le ticket ${ticket.human_id || ticketId} des favoris`
+    : `Enregistrer le ticket ${ticket.human_id || ticketId} dans les favoris`;
+
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        if (onToggleFavorite) onToggleFavorite(ticket);
+      }}
+      data-no-swipe="true"
+      aria-pressed={isFavorite}
+      aria-label={label}
+      title={label}
+      className={`w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl transition-all shrink-0 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 ${
+        isFavorite
+          ? 'bg-amber-500/15 border border-amber-500/40 text-amber-500 shadow-xs hover:bg-amber-500/25'
+          : 'bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600'
+      } ${className}`}
+    >
+      <Bookmark
+        size={18}
+        className={isFavorite ? 'fill-amber-400 text-amber-500' : 'transition-colors'}
+      />
+    </button>
+  );
+}
+
+const TicketCard = ({
+  ticket,
+  auditMode,
+  onNavigateToMatch,
+  nowMs,
+  isFavorite = false,
+  onToggleFavorite
+}) => {
   const [showAllLegs, setShowAllLegs] = useState(false);
   const [showTechDetails, setShowTechDetails] = useState(false);
 
@@ -365,14 +431,23 @@ const TicketCard = ({ ticket, auditMode, onNavigateToMatch, nowMs }) => {
             </span>
           </div>
 
-          {/* Reference Floor Odds Product Compact */}
-          <div className="flex items-center gap-1.5 shrink-0 bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 px-2 sm:px-2.5 py-1 rounded-xl" title="Cote Référence Plancher">
-            <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight hidden sm:inline">
-              Cote Réf.
-            </span>
-            <span className="text-sm sm:text-base font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tight">
-              {oddsMeta.display}
-            </span>
+          {/* Reference Floor Odds Product Compact & Bookmark */}
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 shrink-0 bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 px-2 sm:px-2.5 py-1 rounded-xl" title="Cote Référence Plancher">
+              <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight hidden sm:inline">
+                Cote Réf.
+              </span>
+              <span className="text-sm sm:text-base font-black font-mono text-emerald-600 dark:text-emerald-400 tracking-tight">
+                {oddsMeta.display}
+              </span>
+            </div>
+            {onToggleFavorite && (
+              <TicketBookmarkButton
+                ticket={ticket}
+                isFavorite={isFavorite}
+                onToggleFavorite={onToggleFavorite}
+              />
+            )}
           </div>
         </div>
 
@@ -537,15 +612,20 @@ const CompactStickyToolbar = ({
               onClick={pill.onClick}
               className={`flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all shrink-0 select-none ${
                 pill.active
-                  ? pill.isLive
-                    ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs'
-                    : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
-                  : pill.isLive
-                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 hover:border-emerald-500/50'
-                    : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                  ? pill.isFavorite
+                    ? 'bg-amber-500 border-amber-500 text-slate-950 font-black shadow-xs'
+                    : pill.isLive
+                      ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs'
+                      : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
+                  : pill.isFavorite
+                    ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30 hover:border-amber-500/50'
+                    : pill.isLive
+                      ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 hover:border-emerald-500/50'
+                      : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
               }`}
             >
               {pill.isLive && <Radio size={11} className={pill.active ? 'text-white animate-pulse' : 'text-emerald-500'} />}
+              {pill.isFavorite && <Bookmark size={11} className={pill.active ? 'fill-slate-950 text-slate-950' : 'fill-amber-400 text-amber-500'} />}
               <span>{pill.label}</span>
             </button>
           ))}
@@ -647,6 +727,19 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const [activeView, setActiveView] = useState(initialView);
   const [auditMode, setAuditMode] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const { isTicketFavorite, toggleTicketFavorite, store } = useFavorites();
+
+  const originSession = useMemo(() => ({
+    sessionId: assembled?.metadata?.run_id || 'UNKNOWN_SESSION',
+    runId: assembled?.metadata?.run_id || '',
+    sourceMatrix: assembled?.metadata?.source_matrix || ''
+  }), [assembled]);
+
+  const handleToggleTicketFavorite = useCallback((ticket) => {
+    if (!ticket || !ticket.ticket_id) return;
+    toggleTicketFavorite(ticket, originSession);
+  }, [toggleTicketFavorite, originSession]);
 
   // Isolated filter states for Tickets Assemblés and Choix Finaux
   const [ticketFilters, setTicketFilters] = useState(() => ({
@@ -778,6 +871,18 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
   const ticketsList = ticketAttributionBundle.tickets;
 
+  // Set of favorite ticket IDs and count of favorite tickets in this session (WEB-FAVORITES-001 - Phase 4)
+  const favoriteTicketIds = useMemo(() => new Set(Object.keys(store?.tickets || {})), [store?.tickets]);
+
+  const favoriteTicketsCount = useMemo(() => {
+    return ticketsList.filter(t => Boolean(store?.tickets?.[t.ticket_id])).length;
+  }, [ticketsList, store?.tickets]);
+
+  const effectiveTicketFilters = useMemo(() => ({
+    ...ticketFilters,
+    favoriteTicketIds
+  }), [ticketFilters, favoriteTicketIds]);
+
   const singlesCount = useMemo(() => {
     return ticketsList.filter(t => t.product_code === 'SINGLE_1' || t.is_single_ticket).length;
   }, [ticketsList]);
@@ -798,7 +903,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
   // Dynamic what-if counts per product family synchronized with active filters
   const productWhatIfCounts = useMemo(() => {
-    return computeTicketWhatIfCounts(ticketsList, ticketFilters, 'productCode', [
+    return computeTicketWhatIfCounts(ticketsList, effectiveTicketFilters, 'productCode', [
       'ALL',
       'MICRO_2',
       'CORE_3',
@@ -806,7 +911,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
       'STANDARD_5_8',
       'EXTENDED_9_PLUS'
     ]);
-  }, [ticketsList, ticketFilters]);
+  }, [ticketsList, effectiveTicketFilters]);
 
   // Available unique leagues across the dataset
   const availableLeagues = useMemo(() => {
@@ -872,10 +977,10 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
   // 3. Global Filtering & Sorting on the FULL source (never mutating human_id)
   const filteredStrategies = useMemo(() => {
-    const base = filterTickets(ticketsList, ticketFilters);
+    const base = filterTickets(ticketsList, effectiveTicketFilters);
     if (!ticketFilters.liveEstimatedOnly) return base;
     return base.filter(t => isTicketLive(t, nowMs));
-  }, [ticketsList, ticketFilters, nowMs]);
+  }, [ticketsList, effectiveTicketFilters, ticketFilters.liveEstimatedOnly, nowMs]);
 
   // 4. Progressive Slicing for Mobile/Desktop DOM performance
   const visibleStrategies = useMemo(() => {
@@ -886,10 +991,10 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
 
   // Dynamic what-if count for LIVE estimé filter under currently active criteria
   const liveTicketsCount = useMemo(() => {
-    const filtersWithoutLive = { ...ticketFilters, liveEstimatedOnly: false };
+    const filtersWithoutLive = { ...effectiveTicketFilters, liveEstimatedOnly: false };
     const candidates = filterTickets(ticketsList, filtersWithoutLive);
     return candidates.filter(t => isTicketLive(t, nowMs)).length;
-  }, [ticketsList, ticketFilters, nowMs]);
+  }, [ticketsList, effectiveTicketFilters, nowMs]);
 
   // 5. Choix Finaux filtering & sorting
   const totalSelections = finals?.Selections?.length || 0;
@@ -924,8 +1029,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   // Dynamic what-if counts for time slots (WEB-001-D B)
   const ticketTimeSlotCounts = useMemo(() => {
     const pool = ticketFilters.liveEstimatedOnly ? ticketsList.filter(t => isTicketLive(t, nowMs)) : ticketsList;
-    return computeTicketWhatIfCounts(pool, ticketFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']);
-  }, [ticketsList, ticketFilters, nowMs]);
+    return computeTicketWhatIfCounts(pool, effectiveTicketFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']);
+  }, [ticketsList, effectiveTicketFilters, ticketFilters.liveEstimatedOnly, nowMs]);
 
   const picksTimeSlotCounts = useMemo(() => {
     return computePickWhatIfCounts(finals?.Selections || [], picksFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']);
@@ -957,6 +1062,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   // Active filter counters
   const ticketActiveCriteriaCount = useMemo(() => {
     let count = 0;
+    if (ticketFilters.favoritesOnly) count++;
     if (ticketFilters.structure !== 'ALL') count++;
     if (ticketFilters.productCode && ticketFilters.productCode !== 'ALL') count++;
     if (ticketFilters.scopeType !== 'ALL') count++;
@@ -989,7 +1095,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     return count;
   }, [picksFilters]);
 
-  const onResetTicketFilters = () => setTicketFilters({ ...INITIAL_TICKET_FILTERS, liveEstimatedOnly: false });
+  const onResetTicketFilters = () => setTicketFilters({ ...INITIAL_TICKET_FILTERS, liveEstimatedOnly: false, favoritesOnly: false });
   const onResetPicksFilters = () => setPicksFilters(INITIAL_PICKS_FILTERS);
 
   // Sentinel observation and scroll synchronization for persistent compact bar (WEB-001-C)
@@ -1302,8 +1408,15 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                             Single
                           </span>
                         </div>
-                        <div className="text-base font-black text-emerald-600 dark:text-emerald-400 font-mono">
-                          Prob. {probMeta.display}
+                        <div className="flex items-center gap-2">
+                          <div className="text-base font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                            Prob. {probMeta.display}
+                          </div>
+                          <TicketBookmarkButton
+                            ticket={ticket}
+                            isFavorite={isTicketFavorite(ticket.ticket_id)}
+                            onToggleFavorite={handleToggleTicketFavorite}
+                          />
                         </div>
                       </div>
 
@@ -1436,9 +1549,16 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                             {legs.length} jambes
                           </span>
                         </div>
-                        <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                          {oddsMeta.display}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                            {oddsMeta.display}
+                          </span>
+                          <TicketBookmarkButton
+                            ticket={ticket}
+                            isFavorite={isTicketFavorite(ticket.ticket_id)}
+                            onToggleFavorite={handleToggleTicketFavorite}
+                          />
+                        </div>
                       </div>
 
                       {/* Primary Metric: Min leg probability highlighted */}
@@ -1706,10 +1826,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             {/* Row 2: Quick Filter Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
               {[
-                { id: 'ALL', label: `Tous (${ticketsList.length})`, active: ticketFilters.structure === 'ALL' && ticketFilters.productCode === 'ALL' && ticketFilters.leagueGroup === 'ALL' && ticketFilters.selectedMarketFamilies.length === 0 && !ticketFilters.liveEstimatedOnly },
+                { id: 'ALL', label: `Tous (${ticketsList.length})`, active: ticketFilters.structure === 'ALL' && ticketFilters.productCode === 'ALL' && ticketFilters.leagueGroup === 'ALL' && ticketFilters.selectedMarketFamilies.length === 0 && !ticketFilters.liveEstimatedOnly && !ticketFilters.favoritesOnly },
+                { id: 'FAVORITES', label: `★ Favoris (${favoriteTicketsCount})`, isFavorite: true, active: Boolean(ticketFilters.favoritesOnly) },
                 { id: 'LIVE_ESTIMATED', label: `LIVE estimé (${liveTicketsCount})`, isLive: true, active: Boolean(ticketFilters.liveEstimatedOnly) },
-                { id: 'SINGLES', label: `Singles (${singlesCount})`, active: ticketFilters.structure === 'SINGLES' && ticketFilters.productCode === 'ALL' },
-                { id: 'COMBOS', label: `Combinés (${combosCount})`, active: ticketFilters.structure === 'COMBOS' && ticketFilters.productCode === 'ALL' },
+                { id: 'SINGLES', label: `Singles (${singlesCount})`, active: ticketFilters.structure === 'SINGLES' && ticketFilters.productCode === 'ALL' && !ticketFilters.favoritesOnly },
+                { id: 'COMBOS', label: `Combinés (${combosCount})`, active: ticketFilters.structure === 'COMBOS' && ticketFilters.productCode === 'ALL' && !ticketFilters.favoritesOnly },
                 { id: 'MICRO_2', label: `Micro (${productWhatIfCounts?.['MICRO_2'] ?? 36})`, active: ticketFilters.productCode === 'MICRO_2' },
                 { id: 'CORE_3', label: `Core 3 (${productWhatIfCounts?.['CORE_3'] ?? 30})`, active: ticketFilters.productCode === 'CORE_3' },
                 { id: 'CORE_4', label: `Core 4 (${productWhatIfCounts?.['CORE_4'] ?? 23})`, active: ticketFilters.productCode === 'CORE_4' },
@@ -1731,6 +1852,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   onClick={() => {
                     if (pill.id === 'ALL') {
                       onResetTicketFilters();
+                    } else if (pill.id === 'FAVORITES') {
+                      setTicketFilters(prev => ({
+                        ...prev,
+                        favoritesOnly: !prev.favoritesOnly
+                      }));
                     } else if (pill.id === 'LIVE_ESTIMATED') {
                       setTicketFilters(prev => ({
                         ...prev,
@@ -1773,15 +1899,20 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none ${
                     pill.active
-                      ? pill.isLive
-                        ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs'
-                        : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
-                      : pill.isLive
-                        ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 hover:border-emerald-500/50'
-                        : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                      ? pill.isFavorite
+                        ? 'bg-amber-500 border-amber-500 text-slate-950 font-black shadow-xs'
+                        : pill.isLive
+                          ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs'
+                          : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
+                      : pill.isFavorite
+                        ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30 hover:border-amber-500/50'
+                        : pill.isLive
+                          ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 hover:border-emerald-500/50'
+                          : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
                   }`}
                 >
                   {pill.isLive && <Radio size={12} className={pill.active ? 'text-white animate-pulse' : 'text-emerald-500'} />}
+                  {pill.isFavorite && <Bookmark size={12} className={pill.active ? 'fill-slate-950 text-slate-950' : 'fill-amber-400 text-amber-500'} />}
                   <span>{pill.label}</span>
                 </button>
               ))}
@@ -1793,6 +1924,20 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-tight mr-1">
                   Actifs :
                 </span>
+                {ticketFilters.favoritesOnly && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+                    <Bookmark size={12} className="fill-amber-400 text-amber-500" />
+                    <span>Favoris ({favoriteTicketsCount})</span>
+                    <button
+                      type="button"
+                      onClick={() => setTicketFilters(prev => ({ ...prev, favoritesOnly: false }))}
+                      className="hover:text-rose-500 ml-0.5"
+                      aria-label="Désactiver le filtre Favoris"
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                )}
                 {ticketFilters.liveEstimatedOnly && (
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
                     <Radio size={12} className="animate-pulse text-emerald-500" />
@@ -1934,8 +2079,18 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               {
                 id: 'ALL',
                 label: `Tous (${ticketsList.length})`,
-                active: ticketFilters.structure === 'ALL' && ticketFilters.productCode === 'ALL' && ticketFilters.leagueGroup === 'ALL' && ticketFilters.selectedMarketFamilies.length === 0 && !ticketFilters.liveEstimatedOnly,
+                active: ticketFilters.structure === 'ALL' && ticketFilters.productCode === 'ALL' && ticketFilters.leagueGroup === 'ALL' && ticketFilters.selectedMarketFamilies.length === 0 && !ticketFilters.liveEstimatedOnly && !ticketFilters.favoritesOnly,
                 onClick: onResetTicketFilters
+              },
+              {
+                id: 'FAVORITES',
+                label: `★ Favoris (${favoriteTicketsCount})`,
+                isFavorite: true,
+                active: Boolean(ticketFilters.favoritesOnly),
+                onClick: () => setTicketFilters(prev => ({
+                  ...prev,
+                  favoritesOnly: !prev.favoritesOnly
+                }))
               },
               {
                 id: 'LIVE_ESTIMATED',
@@ -2069,12 +2224,25 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   auditMode={auditMode}
                   onNavigateToMatch={onNavigateToMatch}
                   nowMs={nowMs}
+                  isFavorite={isTicketFavorite(ticket.ticket_id)}
+                  onToggleFavorite={handleToggleTicketFavorite}
                 />
               ))}
             </div>
           ) : (
             <div className="p-10 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-500 flex flex-col items-center justify-center gap-2">
-              <p className="font-semibold text-slate-700 dark:text-slate-300">Aucun ticket ne correspond aux critères de recherche ou de filtre sélectionnés.</p>
+              <p className="font-semibold text-slate-700 dark:text-slate-300">
+                {ticketFilters.favoritesOnly
+                  ? 'Aucun ticket favori dans cette session.'
+                  : 'Aucun ticket ne correspond aux critères de recherche ou de filtre sélectionnés.'}
+              </p>
+              {ticketFilters.favoritesOnly && (
+                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md">
+                  {favoriteTicketsCount === 0
+                    ? 'Vous n\'avez pas encore enregistré de tickets favoris pour cette session. Cliquez sur le signet dans une carte de ticket pour l\'enregistrer.'
+                    : 'Des tickets favoris existent dans la session, mais aucun ne correspond aux autres critères actifs (recherche, ligue, famille de marché).'}
+                </p>
+              )}
               {ticketFilters.liveEstimatedOnly && (
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md">
                   Aucun ticket n&apos;a de match dans la fenêtre conventionnelle LIVE estimé [0 à 115 minutes après coup d&apos;envoi] pour cette sélection.

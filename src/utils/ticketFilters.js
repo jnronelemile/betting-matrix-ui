@@ -476,7 +476,9 @@ export const INITIAL_TICKET_FILTERS = {
   minProbThreshold: 0, // Seuil min de min_leg_model_probability (0 = désactivé)
   minLegs: 1,
   maxLegs: 12,
-  sortBy: 'mean_prob' // 'mean_prob' | 'min_prob' | 'odds' | 'legs' | 'canonical'
+  sortBy: 'mean_prob', // 'mean_prob' | 'min_prob' | 'odds' | 'legs' | 'canonical'
+  favoritesOnly: false,
+  favoriteTicketIds: null
 };
 
 /**
@@ -488,6 +490,22 @@ export const INITIAL_TICKET_FILTERS = {
  */
 export function ticketPassesFilters(ticket, filters = INITIAL_TICKET_FILTERS) {
   if (!ticket || typeof ticket !== 'object') return false;
+
+  // 0. Filtre Favoris uniquement (WEB-FAVORITES-001 - Phase 4)
+  if (filters.favoritesOnly) {
+    const favIds = filters.favoriteTicketIds;
+    if (favIds instanceof Set) {
+      if (!favIds.has(ticket.ticket_id)) return false;
+    } else if (typeof filters.isTicketFavorite === 'function') {
+      if (!filters.isTicketFavorite(ticket.ticket_id)) return false;
+    } else if (Array.isArray(favIds)) {
+      if (!favIds.includes(ticket.ticket_id)) return false;
+    } else if (favIds && typeof favIds === 'object') {
+      if (!favIds[ticket.ticket_id]) return false;
+    } else {
+      return false;
+    }
+  }
 
   // 1. Structure : Singles vs Combinés
   const legCount = isValidNumericMetric(ticket.metrics?.leg_count)
