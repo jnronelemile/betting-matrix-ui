@@ -94,9 +94,27 @@ export const LEAGUE_GROUPS = {
       'AustrianBundesliga',
       'ScottishPremiership',
       'SüperLig',
-      'RussianPremierLeague'
+      'RussianPremierLeague',
+      'BelgianProLeague',
+      'Ekstraklasa',
+      'SwissSuperLeague'
     ],
-    aliases: ['ELITESERIEN', 'SUPERLIGAEN', 'ALLSVENSKAN', 'AUSTRIANBUNDESLIGA', 'SCOTTISHPREMIERSHIP', 'SÜPERLIG', 'SUPERLIG', 'RUSSIANPREMIERLEAGUE']
+    aliases: [
+      'ELITESERIEN',
+      'SUPERLIGAEN',
+      'ALLSVENSKAN',
+      'AUSTRIANBUNDESLIGA',
+      'SCOTTISHPREMIERSHIP',
+      'SÜPERLIG',
+      'SUPERLIG',
+      'RUSSIANPREMIERLEAGUE',
+      'BELGIANPROLEAGUE',
+      'BEL1',
+      'EKSTRAKLASA',
+      'POL1',
+      'SWISSSUPERLEAGUE',
+      'SUI1'
+    ]
   },
   AMERICAS: {
     id: 'AMERICAS',
@@ -115,9 +133,10 @@ export const LEAGUE_GROUPS = {
     description: 'Championnats asiatiques majeurs',
     leagues: [
       'J1League',
-      'KLeague1'
+      'KLeague1',
+      'SaudiProLeague'
     ],
-    aliases: ['J1LEAGUE', 'KLEAGUE1']
+    aliases: ['J1LEAGUE', 'KLEAGUE1', 'SAUDIPROLEAGUE', 'SAUDI']
   }
 };
 
