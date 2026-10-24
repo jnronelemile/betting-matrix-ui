@@ -5,7 +5,6 @@ import { Badge } from '../ui/Badge';
 import {
   Crosshair,
   Target,
-  Flag,
   Layers,
   AlertTriangle,
   ShieldAlert,
@@ -95,6 +94,7 @@ export default function TabTactical({ match, onNavigateTab }) {
   const risk = match.Risk_Management_Context || {};
   const tactical = risk.Tactical_Red_Flags || {};
   const anchors = risk.League_Anchors || {};
+  const killSwitchDiag = risk.Kill_Switch_Diagnostics || {};
   const props = match.Prop_Bets || {};
   const probs = match.True_Probabilities || {};
   const diag = match.Calibration_Diagnostics || {};
@@ -112,9 +112,27 @@ export default function TabTactical({ match, onNavigateTab }) {
   const isKillSwitchActive = investSignals.IS_KILL_SWITCH_ACTIVE ||
     ((probs.PROB_1 === 0 || probs.PROB_1 == null) && (probs.PROB_O25 === 0 || probs.PROB_O25 == null));
 
-  const propBetsKeys = Object.keys(props).filter(k => k.startsWith('PROP_HOME_MORE_'));
+  // Proposition markets canonical priority order: Corners -> SOT -> Shots -> Throws
+  const PROPOSITION_ORDER = [
+    'PROP_HOME_MORE_CORNERS',
+    'PROP_HOME_MORE_SOT',
+    'PROP_HOME_MORE_SHOTS',
+    'PROP_HOME_MORE_THROWS',
+  ];
+
+  const propBetsKeys = Object.keys(props)
+    .filter(k => k.startsWith('PROP_HOME_MORE_'))
+    .sort((a, b) => {
+      const idxA = PROPOSITION_ORDER.indexOf(a);
+      const idxB = PROPOSITION_ORDER.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a.localeCompare(b);
+    });
 
   // Anchor configurations with exact statistical nature (médiane vs moyenne)
+  // Canonical order: Corners -> SOT -> Shots -> Throws
   const statisticalMarkets = [
     {
       key: 'corners',
@@ -125,20 +143,20 @@ export default function TabTactical({ match, onNavigateTab }) {
       lambdaKey: 'LAMBDA_CORNERS_MATCH'
     },
     {
-      key: 'shots',
-      label: 'Shots',
-      refKey: 'median_shots',
-      refType: 'Médiane ligue',
-      propKey: 'PROB_OVER_MEDIAN_SHOTS',
-      lambdaKey: 'LAMBDA_SHOTS_MATCH'
-    },
-    {
       key: 'sot',
       label: 'Shots on Target',
       refKey: 'median_sot',
       refType: 'Médiane ligue',
       propKey: 'PROB_OVER_MEDIAN_SOT',
       lambdaKey: 'LAMBDA_SOT_MATCH'
+    },
+    {
+      key: 'shots',
+      label: 'Shots',
+      refKey: 'median_shots',
+      refType: 'Médiane ligue',
+      propKey: 'PROB_OVER_MEDIAN_SHOTS',
+      lambdaKey: 'LAMBDA_SHOTS_MATCH'
     },
     {
       key: 'throws',
@@ -180,10 +198,6 @@ export default function TabTactical({ match, onNavigateTab }) {
   const toggleCardNote = (key) => {
     setExpandedCardNotes(prev => ({ ...prev, [key]: !prev[key] }));
   };
-
-  const hasFotmobRatings = tactical.fotmob_rating_home !== undefined &&
-                           tactical.fotmob_rating_away !== undefined &&
-                           !tactical.MISSING_FOTMOB_DATA;
 
   const getPropColor = (val) => {
     if (val >= 0.70) return 'bg-emerald-500';
@@ -371,7 +385,7 @@ export default function TabTactical({ match, onNavigateTab }) {
               });
               return foundKey && typeof coverageMarkets[foundKey] === 'object' ? coverageMarkets[foundKey] : null;
             })();
-            const isGenerated = lambdaVal !== undefined && lambdaVal !== null;
+            const isGenerated = Number.isFinite(lambdaVal);
             const isNoteExpanded = !!expandedCardNotes[key];
 
             return (
@@ -398,7 +412,7 @@ export default function TabTactical({ match, onNavigateTab }) {
                           λ Attendu
                         </span>
                         <span className="font-mono text-base sm:text-lg font-black text-slate-900 dark:text-slate-100 leading-tight">
-                          {lambdaVal.toFixed(2)}
+                          {Number.isFinite(lambdaVal) ? lambdaVal.toFixed(2) : '-'}
                         </span>
                       </div>
 
@@ -407,7 +421,7 @@ export default function TabTactical({ match, onNavigateTab }) {
                           Réf Ligue
                         </span>
                         <span className="font-mono text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 leading-tight">
-                          {refVal !== undefined ? refVal.toFixed(2) : '-'}
+                          {Number.isFinite(refVal) ? refVal.toFixed(2) : '-'}
                         </span>
                       </div>
 
@@ -415,8 +429,8 @@ export default function TabTactical({ match, onNavigateTab }) {
                         <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold truncate w-full" title="Probabilité supérieure à la référence de ligue">
                           Prob &gt; Réf
                         </span>
-                        <span className={`font-mono text-xs sm:text-sm font-black leading-tight ${getPropTextColor(prob || 0)}`}>
-                          {prob !== undefined ? `${(prob * 100).toFixed(1)}%` : '-'}
+                        <span className={`font-mono text-xs sm:text-sm font-black leading-tight ${getPropTextColor(Number.isFinite(prob) ? prob : 0)}`}>
+                          {Number.isFinite(prob) ? `${(prob * 100).toFixed(1)}%` : '-'}
                         </span>
                       </div>
                     </div>
@@ -514,6 +528,7 @@ export default function TabTactical({ match, onNavigateTab }) {
               {propBetsKeys.length > 0 ? propBetsKeys.map(key => {
                 const val = props[key];
                 const label = key.replace('PROP_HOME_MORE_', '').replace(/_/g, ' ');
+                const hasVal = Number.isFinite(val);
 
                 return (
                   <div key={key} className="bg-slate-50 dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -521,11 +536,18 @@ export default function TabTactical({ match, onNavigateTab }) {
                       <span className="text-xs font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">
                         {label}
                       </span>
-                      <span className={`font-mono text-sm font-bold ${getPropTextColor(val)}`}>
-                        {(val * 100).toFixed(1)}%
+                      <span className={`font-mono text-sm font-bold ${hasVal ? getPropTextColor(val) : 'text-slate-400'}`}>
+                        {hasVal ? `${(val * 100).toFixed(1)}%` : '-'}
                       </span>
                     </div>
-                    <ProgressBar value={val} max={1} colorClass={getPropColor(val)} displayValue=" " />
+                    {hasVal && (
+                      <ProgressBar
+                        value={val}
+                        max={1}
+                        colorClass={getPropColor(val)}
+                        displayValue=" "
+                      />
+                    )}
                   </div>
                 );
               }) : (
@@ -611,73 +633,94 @@ export default function TabTactical({ match, onNavigateTab }) {
           </Card>
         </div>
 
-        {/* Tactical Ratings & Gaps */}
+        {/* Tactical Context & Signals */}
         <div className="lg:col-span-1">
-          <Card title="Tactical Ratings & Gaps" titleIcon={<Crosshair size={16} />}>
-            <div className="space-y-4 mt-1">
-              {hasFotmobRatings ? (
-                <div>
-                  <div className="flex justify-between items-end mb-2">
-                    <span className="text-xs uppercase text-slate-500 dark:text-slate-400 font-bold tracking-widest">FotMob Ratings</span>
-                    <span className="font-mono text-xs text-slate-400">Gap: {tactical.team_rating_gap?.toFixed(2) || 0}</span>
+          <Card title="Tactical Context & Signals" titleIcon={<Activity size={16} />}>
+            <div className="space-y-3 mt-1">
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 italic">
+                Indicateurs descriptifs contextuels et signaux tactiques modélisés.
+              </p>
+
+              {/* Match Openness Index & League Reference */}
+              <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 sm:p-3.5 rounded-xl flex items-center justify-between shadow-xs">
+                <div className="flex flex-col min-w-0 pr-2">
+                  <span className="text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold truncate">
+                    Match Openness Index
+                  </span>
+                  <span className="text-[11px] text-slate-400 dark:text-slate-500">
+                    Degré d'ouverture offensive du match
+                  </span>
+                  {Number.isFinite(killSwitchDiag.median_openness) && (
+                    <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
+                      Réf Ligue (médiane) : {killSwitchDiag.median_openness.toFixed(2)}
+                    </span>
+                  )}
+                </div>
+                <div className="text-right shrink-0">
+                  <span className="font-mono text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100">
+                    {Number.isFinite(tactical.match_openness_index)
+                      ? tactical.match_openness_index.toFixed(2)
+                      : '-'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Wastefulness Scores (Home vs Away side-by-side) */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  <span>Wastefulness Scores</span>
+                  <span className="text-[10px] font-normal normal-case italic text-slate-400">Inefficacité relative</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-slate-50 dark:bg-slate-950 p-2.5 sm:p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-center shadow-xs">
+                    <span className="text-[10px] text-blue-600 dark:text-blue-400 uppercase tracking-wider font-bold block mb-1">
+                      Home
+                    </span>
+                    <span className="font-mono text-base sm:text-lg font-bold text-slate-800 dark:text-slate-200 block">
+                      {Number.isFinite(tactical.home_wastefulness_score)
+                        ? tactical.home_wastefulness_score.toFixed(3)
+                        : '-'}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex-1 bg-slate-50 dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative overflow-hidden shadow-sm">
-                      <div className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-bold">Home</div>
-                      <div className="font-mono text-2xl text-blue-600 dark:text-blue-400 font-bold">{tactical.fotmob_rating_home?.toFixed(2)}</div>
-                      {tactical.home_wastefulness_score > 0 && (
-                        <div className="mt-1.5 pt-1.5 border-t border-slate-200 dark:border-slate-800/50 flex flex-col items-center">
-                          <span className="text-[7px] text-rose-500 dark:text-rose-400 uppercase font-bold tracking-tighter">Wastefulness</span>
-                          <span className="text-xs font-mono text-rose-600 dark:text-rose-500 font-bold">{tactical.home_wastefulness_score?.toFixed(3)}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="text-slate-400 dark:text-slate-600 font-mono text-xs font-bold">VS</div>
-                    <div className="flex-1 bg-slate-50 dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative overflow-hidden shadow-sm">
-                      <div className="text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-bold">Away</div>
-                      <div className="font-mono text-2xl text-rose-600 dark:text-rose-400 font-bold">{tactical.fotmob_rating_away?.toFixed(2)}</div>
-                      {tactical.away_wastefulness_score > 0 && (
-                        <div className="mt-1.5 pt-1.5 border-t border-slate-200 dark:border-slate-800/50 flex flex-col items-center">
-                          <span className="text-[7px] text-rose-500 dark:text-rose-400 uppercase font-bold tracking-tighter">Wastefulness</span>
-                          <span className="text-xs font-mono text-rose-600 dark:text-rose-500 font-bold">{tactical.away_wastefulness_score?.toFixed(3)}</span>
-                        </div>
-                      )}
-                    </div>
+                  <div className="bg-slate-50 dark:bg-slate-950 p-2.5 sm:p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-center shadow-xs">
+                    <span className="text-[10px] text-rose-600 dark:text-rose-400 uppercase tracking-wider font-bold block mb-1">
+                      Away
+                    </span>
+                    <span className="font-mono text-base sm:text-lg font-bold text-slate-800 dark:text-slate-200 block">
+                      {Number.isFinite(tactical.away_wastefulness_score)
+                        ? tactical.away_wastefulness_score.toFixed(3)
+                        : '-'}
+                    </span>
                   </div>
                 </div>
-              ) : (
-                <div className="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-center text-slate-400 text-xs italic flex flex-col items-center gap-1">
-                  <Flag size={16} className="opacity-40 mb-1" />
-                  <span>Ratings FotMob non disponibles pour ce match</span>
-                </div>
-              )}
+              </div>
 
               {/* False Favorite Alert */}
-              {tactical.IS_FALSE_FAVORITE && (
+              {tactical.IS_FALSE_FAVORITE === true && (
                 <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-xl flex items-center justify-between shadow-sm animate-pulse">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 min-w-0 pr-2">
                     <ShieldAlert className="text-rose-600 dark:text-rose-400 shrink-0" size={16} />
-                    <div className="flex flex-col">
-                      <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider leading-none">FALSE FAVORITE ALERT</span>
-                      <span className="text-xs text-rose-500/80">Favori algorithmique vulnérable</span>
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider leading-none truncate">
+                        FALSE FAVORITE ALERT
+                      </span>
+                      <span className="text-[11px] text-rose-500/80 mt-0.5">
+                        Favori algorithmique vulnérable
+                      </span>
                     </div>
                   </div>
-                  <span className="text-xs font-mono font-bold text-rose-600 dark:text-rose-400">
-                    {tactical.false_favorite_score?.toFixed(3)}
+                  <span className="text-xs font-mono font-bold text-rose-600 dark:text-rose-400 shrink-0">
+                    {Number.isFinite(tactical.false_favorite_score)
+                      ? tactical.false_favorite_score.toFixed(3)
+                      : '-'}
                   </span>
                 </div>
               )}
 
-              {/* Match Openness Index */}
-              <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3.5 rounded-xl flex items-center justify-between shadow-inner">
-                <div className="flex flex-col">
-                  <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Match Openness Index</span>
-                  <span className="text-xs text-slate-400">Degré d'ouverture offensive du match</span>
-                </div>
-                <span className="font-mono text-xl font-bold text-slate-800 dark:text-slate-200">
-                  {tactical.match_openness_index?.toFixed(2) || 'N/A'}
-                </span>
-              </div>
+              {/* Contextual notice */}
+              <p className="text-[9px] text-slate-400 dark:text-slate-500 italic pt-1 border-t border-slate-100 dark:border-slate-800/80">
+                * Indicateurs descriptifs de dynamique de jeu. Ne constituent pas des règles de décision ou des validations d’engagement.
+              </p>
             </div>
           </Card>
         </div>
@@ -703,7 +746,7 @@ export default function TabTactical({ match, onNavigateTab }) {
                   const refVal = anchors[refKey] !== undefined ? anchors[refKey] : diag[refKey];
                   const prob = props[propKey] !== undefined ? props[propKey] : probs[propKey];
                   const lambdaVal = props[lambdaKey] !== undefined ? props[lambdaKey] : probs[lambdaKey];
-                  const isGen = lambdaVal !== undefined && lambdaVal !== null;
+                  const isGen = Number.isFinite(lambdaVal);
 
                   return (
                     <tr key={key} className="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
@@ -714,13 +757,13 @@ export default function TabTactical({ match, onNavigateTab }) {
                         {refType}
                       </td>
                       <td className="py-2.5 px-3 text-right text-slate-500">
-                        {refVal !== undefined ? refVal.toFixed(2) : '-'}
+                        {Number.isFinite(refVal) ? refVal.toFixed(2) : '-'}
                       </td>
                       <td className="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-slate-100">
                         {isGen ? lambdaVal.toFixed(2) : <span className="text-slate-400 italic text-xs">Non générée</span>}
                       </td>
-                      <td className={`py-2.5 px-3 text-right font-bold ${prob !== undefined ? getPropTextColor(prob) : 'text-slate-400'}`}>
-                        {prob !== undefined ? `${(prob * 100).toFixed(1)}%` : '-'}
+                      <td className={`py-2.5 px-3 text-right font-bold ${Number.isFinite(prob) ? getPropTextColor(prob) : 'text-slate-400'}`}>
+                        {Number.isFinite(prob) ? `${(prob * 100).toFixed(1)}%` : '-'}
                       </td>
                     </tr>
                   );
