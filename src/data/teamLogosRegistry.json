@@ -4358,7 +4358,11 @@
     "clubamerica": 6576,
     "queretaro": 1943,
     "tigresuanl": 8561,
-    "pumasunam": 1946
+    "pumasunam": 1946,
+    "estorilpraia": 7842,
+    "cdnacional": 10214,
+    "cdsantaclara": 1567,
+    "slbenfica": 9772
   },
   "compoundKeyToId": {
     "premierleague:manchestercity": 8456,
@@ -5715,7 +5719,15 @@
     "ligamx:clubamerica": 6576,
     "ligamx:queretaro": 1943,
     "ligamx:tigresuanl": 8561,
-    "ligamx:pumasunam": 1946
+    "ligamx:pumasunam": 1946,
+    "ligaportugal:estorilpraia": 7842,
+    "por1:estorilpraia": 7842,
+    "ligaportugal:cdnacional": 10214,
+    "por1:cdnacional": 10214,
+    "ligaportugal:cdsantaclara": 1567,
+    "por1:cdsantaclara": 1567,
+    "ligaportugal:slbenfica": 9772,
+    "por1:slbenfica": 9772
   },
   "leagues": {
     "PremierLeague": {

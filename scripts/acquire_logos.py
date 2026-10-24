@@ -448,6 +448,16 @@ def main():
         ('laliga2', 'granada cf'): 7878,
         ('laliga2', 'granada'): 7878,
 
+        # --- LIGA PORTUGAL ---
+        ('ligaportugal', 'estoril praia'): 7842,
+        ('por1', 'estoril praia'): 7842,
+        ('ligaportugal', 'cd nacional'): 10214,
+        ('por1', 'cd nacional'): 10214,
+        ('ligaportugal', 'cd santa clara'): 1567,
+        ('por1', 'cd santa clara'): 1567,
+        ('ligaportugal', 'sl benfica'): 9772,
+        ('por1', 'sl benfica'): 9772,
+
         # --- SERIE A ---
         ('seriea', 'parma calcio 1913'): 10167,
         ('seriea', 'parma'): 10167,
