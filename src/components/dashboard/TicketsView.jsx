@@ -18,6 +18,7 @@ import {
   INITIAL_PICKS_FILTERS,
   PRODUCT_FAMILIES,
   TIME_SLOTS,
+  SUB_TIME_SLOTS,
   filterTickets,
   filterFinalPicks,
   getSynthesisHighlights,
@@ -27,7 +28,12 @@ import {
   getLeagueGroupId,
   formatDateDisplay,
   getMarketFamilyMeta,
-  getScopeTypeLabel
+  getScopeTypeLabel,
+  transitionSelectLeagueGroup,
+  transitionSetSelectedLeagues,
+  hasActiveLegCriteria,
+  sanitizeLegFilters,
+  MARKET_SUBDISCIPLINES
 } from '../../utils/ticketFilters';
 import { TicketFilterDrawer } from '../filters/TicketFilterDrawer';
 import { getLeagueFlag } from '../../utils/titaniumLoader';
@@ -742,10 +748,18 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   }, [toggleTicketFavorite, originSession]);
 
   // Isolated filter states for Tickets Assemblés and Choix Finaux
-  const [ticketFilters, setTicketFilters] = useState(() => ({
+  const [ticketFilters, setTicketFiltersState] = useState(() => ({
     ...INITIAL_TICKET_FILTERS,
     liveEstimatedOnly: false
   }));
+
+  // Sanitizing wrapper ensuring no ghost legMatchMode reactivates unexpectedly (WEB-FILTERS-001)
+  const setTicketFilters = useCallback((updater) => {
+    setTicketFiltersState(prev => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      return sanitizeLegFilters(next);
+    });
+  }, []);
   const [picksFilters, setPicksFilters] = useState(INITIAL_PICKS_FILTERS);
 
   // Live estimation ticker state (convention isMatchLive 0-115 min, auto-refresh 60s)
@@ -913,19 +927,28 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     ]);
   }, [ticketsList, effectiveTicketFilters]);
 
-  // Available unique leagues across the dataset
-  const availableLeagues = useMemo(() => {
+  // Available unique leagues in tickets universe
+  const availableTicketLeagues = useMemo(() => {
     const leagues = new Set();
     ticketsList.forEach(t => {
       (t.legs || []).forEach(l => {
         if (l.League) leagues.add(l.League);
       });
     });
+    return Array.from(leagues).sort();
+  }, [ticketsList]);
+
+  // Available unique leagues in final picks universe
+  const availablePicksLeagues = useMemo(() => {
+    const leagues = new Set();
     (finals?.Selections || []).forEach(s => {
       if (s.League) leagues.add(s.League);
     });
     return Array.from(leagues).sort();
-  }, [ticketsList, finals]);
+  }, [finals]);
+
+  // Contextual available leagues depending on active view
+  const availableLeagues = activeView === 'picks' ? availablePicksLeagues : availableTicketLeagues;
 
   // Available unique market families in ticket legs
   const availableMarketFamilies = useMemo(() => {
@@ -1000,8 +1023,13 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const totalSelections = finals?.Selections?.length || 0;
 
   const filteredPicks = useMemo(() => {
-    return filterFinalPicks(finals?.Selections || [], picksFilters);
-  }, [finals, picksFilters]);
+    return filterFinalPicks(finals?.Selections || [], { ...picksFilters, currentNowMs: nowMs });
+  }, [finals, picksFilters, nowMs]);
+
+  // Dynamic what-if count for LIVE estimé in Choix Finaux
+  const picksLiveEstimatedCount = useMemo(() => {
+    return filterFinalPicks(finals?.Selections || [], { ...picksFilters, liveEstimatedOnly: true, currentNowMs: nowMs }).length;
+  }, [finals, picksFilters, nowMs]);
 
   // Dynamic Tier counts and pills for Choix Finaux (D-1)
   const picksTierCounts = useMemo(() => {
@@ -1026,15 +1054,15 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     }));
   }, [picksTierCounts, picksFilters.tier]);
 
-  // Dynamic what-if counts for time slots (WEB-001-D B)
+  // Dynamic what-if counts for time slots (WEB-001-D B & WEB-FILTERS-001)
   const ticketTimeSlotCounts = useMemo(() => {
     const pool = ticketFilters.liveEstimatedOnly ? ticketsList.filter(t => isTicketLive(t, nowMs)) : ticketsList;
-    return computeTicketWhatIfCounts(pool, effectiveTicketFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']);
+    return computeTicketWhatIfCounts(pool, effectiveTicketFilters, 'timeSlot', ['ALL', ...Object.keys(SUB_TIME_SLOTS), ...Object.keys(TIME_SLOTS)]);
   }, [ticketsList, effectiveTicketFilters, ticketFilters.liveEstimatedOnly, nowMs]);
 
   const picksTimeSlotCounts = useMemo(() => {
-    return computePickWhatIfCounts(finals?.Selections || [], picksFilters, 'timeSlot', ['ALL', 'MATIN', 'APRES_MIDI', 'SOIR', 'NUIT']);
-  }, [finals, picksFilters]);
+    return computePickWhatIfCounts(finals?.Selections || [], { ...picksFilters, currentNowMs: nowMs }, 'timeSlot', ['ALL', ...Object.keys(SUB_TIME_SLOTS), ...Object.keys(TIME_SLOTS)]);
+  }, [finals, picksFilters, nowMs]);
 
   const ticketTimeSlotPills = useMemo(() => {
     return Object.values(TIME_SLOTS).map(slot => ({
@@ -1069,10 +1097,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     if (ticketFilters.leagueGroup !== 'ALL') count++;
     if (ticketFilters.selectedLeagues?.length > 0) count++;
     if (ticketFilters.selectedMarketFamilies?.length > 0) count++;
+    if (ticketFilters.selectedSubMarkets?.length > 0) count++;
     if (ticketFilters.selectedDate !== 'ALL') count++;
     if (ticketFilters.timeSlot && ticketFilters.timeSlot !== 'ALL') count++;
     if (ticketFilters.minProbThreshold > 0) count++;
-    if (ticketFilters.legMatchMode && ticketFilters.legMatchMode !== 'ANY') count++;
+    if (hasActiveLegCriteria(ticketFilters) && ticketFilters.legMatchMode && ticketFilters.legMatchMode !== 'ANY') count++;
     if (ticketFilters.liveEstimatedOnly) count++;
     if (ticketFilters.searchQuery?.trim()) count++;
     return count;
@@ -1084,11 +1113,13 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     if (picksFilters.leagueGroup !== 'ALL') count++;
     if (picksFilters.selectedLeagues?.length > 0) count++;
     if (picksFilters.selectedType !== 'ALL') count++;
+    if (picksFilters.selectedSubMarkets?.length > 0) count++;
     if (picksFilters.selectedProfile !== 'ALL') count++;
     if (picksFilters.streakStatus !== 'ALL') count++;
     if (picksFilters.alphaOnly) count++;
     if (picksFilters.superSignalOnly) count++;
     if (picksFilters.liveOnly) count++;
+    if (picksFilters.liveEstimatedOnly) count++;
     if (picksFilters.selectedDate !== 'ALL') count++;
     if (picksFilters.timeSlot && picksFilters.timeSlot !== 'ALL') count++;
     if (picksFilters.searchQuery?.trim()) count++;
@@ -1881,7 +1912,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                         structure: prev.structure === 'SINGLES' ? 'ALL' : prev.structure
                       }));
                     } else if (pill.id === 'TOP7') {
-                      setTicketFilters(prev => ({ ...prev, leagueGroup: prev.leagueGroup === 'TOP_7_EUROPE' ? 'ALL' : 'TOP_7_EUROPE' }));
+                      setTicketFilters(prev => transitionSelectLeagueGroup(prev, prev.leagueGroup === 'TOP_7_EUROPE' ? 'ALL' : 'TOP_7_EUROPE'));
                     } else if (pill.id === 'TG') {
                       setTicketFilters(prev => {
                         const hasTG = prev.selectedMarketFamilies.includes('Team Goals');
@@ -1954,7 +1985,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 )}
                 {ticketFilters.timeSlot && ticketFilters.timeSlot !== 'ALL' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20">
-                    Horaire : {TIME_SLOTS[ticketFilters.timeSlot]?.label || ticketFilters.timeSlot}
+                    Horaire : {SUB_TIME_SLOTS[ticketFilters.timeSlot]?.label || TIME_SLOTS[ticketFilters.timeSlot]?.label || ticketFilters.timeSlot}
                     <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, timeSlot: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
                   </span>
                 )}
@@ -1979,21 +2010,69 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 {ticketFilters.leagueGroup !== 'ALL' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
                     Groupe: {LEAGUE_GROUPS[ticketFilters.leagueGroup]?.label || ticketFilters.leagueGroup}
-                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, leagueGroup: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                    <button type="button" onClick={() => setTicketFilters(prev => transitionSelectLeagueGroup(prev, 'ALL'))} className="hover:text-rose-500" title="Réinitialiser le groupe"><X size={12} /></button>
                   </span>
                 )}
                 {ticketFilters.selectedLeagues?.map(l => (
                   <span key={l} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                    {l}
-                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, selectedLeagues: prev.selectedLeagues.filter(x => x !== l) }))} className="hover:text-rose-500"><X size={12} /></button>
+                    <span>{getLeagueFlag(l)}</span>
+                    <span>{getLeagueDisplayName(l)}</span>
+                    <button type="button" onClick={() => setTicketFilters(prev => transitionSetSelectedLeagues(prev, prev.selectedLeagues.filter(x => x !== l)))} className="hover:text-rose-500" title={`Retirer ${getLeagueDisplayName(l)}`}><X size={12} /></button>
                   </span>
                 ))}
                 {ticketFilters.selectedMarketFamilies?.map(f => (
                   <span key={f} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">
                     {f}
-                    <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, selectedMarketFamilies: prev.selectedMarketFamilies.filter(x => x !== f) }))} className="hover:text-rose-500"><X size={12} /></button>
+                    <button
+                      type="button"
+                      onClick={() => setTicketFilters(prev => {
+                        const nextFams = (prev.selectedMarketFamilies || []).filter(x => x !== f);
+                        const RAW_TO_FAM = {
+                          'Prop Totaux': 'PROP_TOTAUX',
+                          'Prop H2H': 'PROP_H2H',
+                          'Classique Buts': 'CLASSIQUE_BUTS',
+                          'Team Goals': 'TEAM_GOALS',
+                          'Classique 1X2': 'CLASSIQUE_1X2',
+                          'Contrarien': 'CONTRARIEN'
+                        };
+                        const activeFamIds = new Set(nextFams.map(fam => RAW_TO_FAM[fam] || fam));
+                        const nextSubs = (prev.selectedSubMarkets || []).filter(subId => {
+                          const meta = MARKET_SUBDISCIPLINES[subId];
+                          return meta && activeFamIds.has(meta.familyId);
+                        });
+                        return {
+                          ...prev,
+                          selectedMarketFamilies: nextFams,
+                          selectedSubMarkets: nextSubs
+                        };
+                      })}
+                      className="hover:text-rose-500"
+                      title={`Retirer ${f}`}
+                    >
+                      <X size={12} />
+                    </button>
                   </span>
                 ))}
+                {ticketFilters.selectedSubMarkets?.map(smId => {
+                  const meta = MARKET_SUBDISCIPLINES[smId];
+                  const label = meta ? meta.label : smId;
+                  return (
+                    <span key={smId} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20">
+                      <span>Sous-marché: {label}</span>
+                      <button
+                        type="button"
+                        onClick={() => setTicketFilters(prev => ({
+                          ...prev,
+                          selectedSubMarkets: (prev.selectedSubMarkets || []).filter(x => x !== smId)
+                        }))}
+                        className="hover:text-rose-500"
+                        title={`Retirer ${label}`}
+                      >
+                        <X size={12} />
+                      </button>
+                    </span>
+                  );
+                })}
                 {ticketFilters.selectedDate !== 'ALL' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
                     Date: {formatDateDisplay(ticketFilters.selectedDate)}
@@ -2006,25 +2085,25 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                     <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, minProbThreshold: 0 }))} className="hover:text-rose-500"><X size={12} /></button>
                   </span>
                 )}
-                {ticketFilters.legMatchMode === 'ALL' && (
+                {hasActiveLegCriteria(ticketFilters) && ticketFilters.legMatchMode === 'ALL' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20" title="Mode de correspondance stricte : toutes les jambes doivent satisfaire le critère">
                     Mode ALL (Toutes jambes)
                     <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, legMatchMode: 'ANY' }))} className="hover:text-rose-500"><X size={12} /></button>
                   </span>
                 )}
-                {ticketFilters.legMatchMode === 'AT_LEAST_2' && (
+                {hasActiveLegCriteria(ticketFilters) && ticketFilters.legMatchMode === 'AT_LEAST_2' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
                     Correspondance : ≥ 2 jambes
                     <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, legMatchMode: 'ANY' }))} className="hover:text-rose-500"><X size={12} /></button>
                   </span>
                 )}
-                {ticketFilters.legMatchMode === 'AT_LEAST_3' && (
+                {hasActiveLegCriteria(ticketFilters) && ticketFilters.legMatchMode === 'AT_LEAST_3' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
                     Correspondance : ≥ 3 jambes
                     <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, legMatchMode: 'ANY' }))} className="hover:text-rose-500"><X size={12} /></button>
                   </span>
                 )}
-                {ticketFilters.legMatchMode === 'CUSTOM' && (
+                {hasActiveLegCriteria(ticketFilters) && ticketFilters.legMatchMode === 'CUSTOM' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
                     Correspondance : ≥ {ticketFilters.minLegsMatching || 1} jambes
                     <button type="button" onClick={() => setTicketFilters(prev => ({ ...prev, legMatchMode: 'ANY' }))} className="hover:text-rose-500"><X size={12} /></button>
@@ -2176,10 +2255,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 id: 'TOP7',
                 label: 'Top 7 Europe',
                 active: ticketFilters.leagueGroup === 'TOP_7_EUROPE',
-                onClick: () => setTicketFilters(prev => ({
-                  ...prev,
-                  leagueGroup: prev.leagueGroup === 'TOP_7_EUROPE' ? 'ALL' : 'TOP_7_EUROPE'
-                }))
+                onClick: () => setTicketFilters(prev => transitionSelectLeagueGroup(prev, prev.leagueGroup === 'TOP_7_EUROPE' ? 'ALL' : 'TOP_7_EUROPE'))
               },
               {
                 id: 'TG',
@@ -2359,8 +2435,9 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             {/* Row 2: Quick Filter Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
               {[
-                { id: 'ALL', label: `Tous (${totalSelections})`, active: picksFilters.tier === 'ALL' && !picksFilters.liveOnly && picksFilters.streakStatus === 'ALL' && picksFilters.timeSlot === 'ALL' },
+                { id: 'ALL', label: `Tous (${totalSelections})`, active: picksFilters.tier === 'ALL' && !picksFilters.liveOnly && !picksFilters.liveEstimatedOnly && picksFilters.streakStatus === 'ALL' && picksFilters.timeSlot === 'ALL' },
                 ...picksTierPills,
+                { id: 'LIVE_ESTIMATED', label: `LIVE estimé (${picksLiveEstimatedCount})`, isLive: true, active: Boolean(picksFilters.liveEstimatedOnly) },
                 { id: 'LIVE', label: 'Live Eligible', active: picksFilters.liveOnly },
                 { id: 'STREAK', label: 'Séries confirmées', active: picksFilters.streakStatus === 'STREAK_CONFIRMED' },
                 ...picksTimeSlotPills
@@ -2373,6 +2450,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       onResetPicksFilters();
                     } else if (pill.tierKey) {
                       setPicksFilters(prev => ({ ...prev, tier: prev.tier === pill.tierKey ? 'ALL' : pill.tierKey }));
+                    } else if (pill.id === 'LIVE_ESTIMATED') {
+                      setPicksFilters(prev => ({ ...prev, liveEstimatedOnly: !prev.liveEstimatedOnly }));
                     } else if (pill.id === 'LIVE') {
                       setPicksFilters(prev => ({ ...prev, liveOnly: !prev.liveOnly }));
                     } else if (pill.id === 'STREAK') {
@@ -2381,13 +2460,16 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                       setPicksFilters(prev => ({ ...prev, timeSlot: prev.timeSlot === pill.slotKey ? 'ALL' : pill.slotKey }));
                     }
                   }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all shrink-0 select-none flex items-center gap-1.5 ${
                     pill.active
                       ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xs'
                       : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300'
                   }`}
                 >
-                  {pill.label}
+                  {pill.isLive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  )}
+                  <span>{pill.label}</span>
                 </button>
               ))}
             </div>
@@ -2398,12 +2480,6 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-tight mr-1">
                   Actifs :
                 </span>
-                {picksFilters.timeSlot && picksFilters.timeSlot !== 'ALL' && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20">
-                    Horaire : {TIME_SLOTS[picksFilters.timeSlot]?.label || picksFilters.timeSlot}
-                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, timeSlot: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
-                  </span>
-                )}
                 {picksFilters.tier !== 'ALL' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
                     Tier {picksFilters.tier}
@@ -2413,13 +2489,14 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                 {picksFilters.leagueGroup !== 'ALL' && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
                     Groupe: {LEAGUE_GROUPS[picksFilters.leagueGroup]?.label || picksFilters.leagueGroup}
-                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, leagueGroup: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                    <button type="button" onClick={() => setPicksFilters(prev => transitionSelectLeagueGroup(prev, 'ALL'))} className="hover:text-rose-500" title="Réinitialiser le groupe"><X size={12} /></button>
                   </span>
                 )}
                 {picksFilters.selectedLeagues?.map(l => (
                   <span key={l} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                    {l}
-                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, selectedLeagues: prev.selectedLeagues.filter(x => x !== l) }))} className="hover:text-rose-500"><X size={12} /></button>
+                    <span>{getLeagueFlag(l)}</span>
+                    <span>{getLeagueDisplayName(l)}</span>
+                    <button type="button" onClick={() => setPicksFilters(prev => transitionSetSelectedLeagues(prev, prev.selectedLeagues.filter(x => x !== l)))} className="hover:text-rose-500" title={`Retirer ${getLeagueDisplayName(l)}`}><X size={12} /></button>
                   </span>
                 ))}
                 {picksFilters.selectedType !== 'ALL' && (
@@ -2446,6 +2523,20 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                     <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, liveOnly: false }))} className="hover:text-rose-500"><X size={12} /></button>
                   </span>
                 )}
+                {picksFilters.liveEstimatedOnly && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                    <Radio size={12} className="animate-pulse text-emerald-500" />
+                    <span>LIVE estimé</span>
+                    <button
+                      type="button"
+                      onClick={() => setPicksFilters(prev => ({ ...prev, liveEstimatedOnly: false }))}
+                      className="hover:text-rose-500 ml-0.5"
+                      aria-label="Désactiver le filtre LIVE estimé"
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                )}
                 {picksFilters.alphaOnly && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
                     Alpha
@@ -2456,6 +2547,12 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
                     Date: {formatDateDisplay(picksFilters.selectedDate)}
                     <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, selectedDate: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
+                  </span>
+                )}
+                {picksFilters.timeSlot && picksFilters.timeSlot !== 'ALL' && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20">
+                    Horaire : {SUB_TIME_SLOTS[picksFilters.timeSlot]?.label || TIME_SLOTS[picksFilters.timeSlot]?.label || picksFilters.timeSlot}
+                    <button type="button" onClick={() => setPicksFilters(prev => ({ ...prev, timeSlot: 'ALL' }))} className="hover:text-rose-500"><X size={12} /></button>
                   </span>
                 )}
 
@@ -2505,7 +2602,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               {
                 id: 'ALL',
                 label: `Tous (${totalSelections})`,
-                active: picksFilters.tier === 'ALL' && !picksFilters.liveOnly && picksFilters.streakStatus === 'ALL',
+                active: picksFilters.tier === 'ALL' && !picksFilters.liveOnly && !picksFilters.liveEstimatedOnly && picksFilters.streakStatus === 'ALL' && picksFilters.timeSlot === 'ALL',
                 onClick: onResetPicksFilters
               },
               ...picksTierPills.map(p => ({
@@ -2517,6 +2614,13 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                   tier: prev.tier === p.tierKey ? 'ALL' : p.tierKey
                 }))
               })),
+              {
+                id: 'LIVE_ESTIMATED',
+                label: `LIVE estimé (${picksLiveEstimatedCount})`,
+                isLive: true,
+                active: Boolean(picksFilters.liveEstimatedOnly),
+                onClick: () => setPicksFilters(prev => ({ ...prev, liveEstimatedOnly: !prev.liveEstimatedOnly }))
+              },
               {
                 id: 'LIVE',
                 label: 'Live Eligible',
@@ -2780,11 +2884,14 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
         totalPicksCount={totalSelections}
         filteredPicksCount={filteredPicks.length}
         availableLeagues={availableLeagues}
+        availableTicketLeagues={availableTicketLeagues}
+        availablePicksLeagues={availablePicksLeagues}
         availableMarketFamilies={availableMarketFamilies}
         availablePicksProfiles={availablePicksProfiles}
         availablePicksTypes={availablePicksTypes}
         availableDates={availableDates}
         isTicketLive={isTicketLive}
+        nowMs={nowMs}
       />
     </div>
   );
