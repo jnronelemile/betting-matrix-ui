@@ -33,7 +33,9 @@ import {
   sanitizeLegFilters,
   getScopeTypeLabel,
   MARKET_SUBDISCIPLINES,
-  GEOGRAPHIC_LEAGUE_HIERARCHY
+  GEOGRAPHIC_LEAGUE_HIERARCHY,
+  getLeagueCountryMeta,
+  normalizeLeagueCode
 } from '../../utils/ticketFilters.js';
 import { LeagueTreeSelector } from './LeagueTreeSelector.jsx';
 
@@ -54,6 +56,8 @@ export function TicketFilterDrawer({
   totalPicksCount = 0,
   filteredPicksCount = 0,
   availableLeagues = [],
+  availableTicketLeagues,
+  availablePicksLeagues,
   availableMarketFamilies = [],
   availablePicksProfiles = [],
   availablePicksTypes = [],
@@ -63,6 +67,37 @@ export function TicketFilterDrawer({
 }) {
   const isTickets = tab === 'strategies';
   const [showAdvancedOptions, setShowAdvancedOptions] = React.useState(false);
+
+  // Détermination robuste et isolée des univers de ligues
+  const effectiveTicketLeagues = React.useMemo(() => {
+    if (Array.isArray(availableTicketLeagues) && availableTicketLeagues.length > 0) {
+      return availableTicketLeagues;
+    }
+    if (isTickets && Array.isArray(availableLeagues) && availableLeagues.length > 0) {
+      return availableLeagues;
+    }
+    const set = new Set();
+    (tickets || []).forEach(t => {
+      (t.legs || []).forEach(l => {
+        if (l.League) set.add(l.League);
+      });
+    });
+    return Array.from(set).sort();
+  }, [availableTicketLeagues, availableLeagues, isTickets, tickets]);
+
+  const effectivePicksLeagues = React.useMemo(() => {
+    if (Array.isArray(availablePicksLeagues) && availablePicksLeagues.length > 0) {
+      return availablePicksLeagues;
+    }
+    if (!isTickets && Array.isArray(availableLeagues) && availableLeagues.length > 0) {
+      return availableLeagues;
+    }
+    const set = new Set();
+    (picks || []).forEach(p => {
+      if (p.League) set.add(p.League);
+    });
+    return Array.from(set).sort();
+  }, [availablePicksLeagues, availableLeagues, isTickets, picks]);
 
   // Table de correspondance biunivoque entre libellés de familles brutes et identifiants canoniques
   const RAW_TO_FAMILY_ID = React.useMemo(() => ({
@@ -197,7 +232,7 @@ export function TicketFilterDrawer({
       structure: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'structure', ['ALL', 'SINGLES', 'COMBOS']),
       productCode: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'productCode', PRODUCT_FAMILIES.map(f => f.code)),
       leagueGroup: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'leagueGroup', ['ALL', ...Object.keys(LEAGUE_GROUPS)]),
-      selectedLeagues: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'selectedLeagues', availableLeagues),
+      selectedLeagues: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'selectedLeagues', effectiveTicketLeagues),
       selectedMarketFamilies: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'selectedMarketFamilies', availableMarketFamilies),
       selectedSubMarkets: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'selectedSubMarkets', allAvailableSubMarketIds),
       selectedDate: computeTicketWhatIfCounts(candidateTickets, ticketFilters, 'selectedDate', ['ALL', ...availableDates]),
@@ -208,24 +243,24 @@ export function TicketFilterDrawer({
         'ANY', 'AT_LEAST_2', 'AT_LEAST_3', 'CUSTOM', 'ALL'
       ])
     };
-  }, [isTickets, candidateTickets, ticketFilters, availableLeagues, availableMarketFamilies, allAvailableSubMarketIds, availableDates, availableScopeTypes]);
+  }, [isTickets, candidateTickets, ticketFilters, effectiveTicketLeagues, availableMarketFamilies, allAvailableSubMarketIds, availableDates, availableScopeTypes]);
 
   // Compteurs pays pour tickets assemblés
   const ticketCountryWhatIfCounts = React.useMemo(() => {
     if (!isTickets) return {};
     const counts = {};
-    const availableSet = new Set(availableLeagues);
     for (const region of Object.values(GEOGRAPHIC_LEAGUE_HIERARCHY)) {
       for (const [code, country] of Object.entries(region.countries)) {
-        const cLeagues = (country.leagues || []).filter(l => availableSet.has(l));
+        const cLeagues = effectiveTicketLeagues.filter(l => getLeagueCountryMeta(l)?.code === code);
         if (cLeagues.length === 0) {
           counts[code] = 0;
           continue;
         }
-        const allSelected = cLeagues.every(l => (ticketFilters.selectedLeagues || []).includes(l));
+        const isLeagueSelected = (l, list) => (list || []).some(sel => sel === l || normalizeLeagueCode(sel) === normalizeLeagueCode(l));
+        const allSelected = cLeagues.every(l => isLeagueSelected(l, ticketFilters.selectedLeagues));
         let testLeagues;
         if (allSelected) {
-          testLeagues = (ticketFilters.selectedLeagues || []).filter(l => !cLeagues.includes(l));
+          testLeagues = (ticketFilters.selectedLeagues || []).filter(sel => !cLeagues.some(l => l === sel || normalizeLeagueCode(l) === normalizeLeagueCode(sel)));
         } else {
           testLeagues = Array.from(new Set([...(ticketFilters.selectedLeagues || []), ...cLeagues]));
         }
@@ -238,7 +273,7 @@ export function TicketFilterDrawer({
       }
     }
     return counts;
-  }, [isTickets, candidateTickets, ticketFilters, availableLeagues]);
+  }, [isTickets, candidateTickets, ticketFilters, effectiveTicketLeagues]);
 
   // Compteurs prospectifs pour les Choix Finaux
   const picksWhatIfCounts = React.useMemo(() => {
@@ -247,7 +282,7 @@ export function TicketFilterDrawer({
     return {
       tier: computePickWhatIfCounts(picks, effectivePicksFilters, 'tier', ['ALL', '1', '2', '3', '4']),
       leagueGroup: computePickWhatIfCounts(picks, effectivePicksFilters, 'leagueGroup', ['ALL', ...Object.keys(LEAGUE_GROUPS)]),
-      selectedLeagues: computePickWhatIfCounts(picks, effectivePicksFilters, 'selectedLeagues', availableLeagues),
+      selectedLeagues: computePickWhatIfCounts(picks, effectivePicksFilters, 'selectedLeagues', effectivePicksLeagues),
       selectedType: computePickWhatIfCounts(picks, effectivePicksFilters, 'selectedType', ['ALL', ...availablePicksTypes]),
       selectedProfile: computePickWhatIfCounts(picks, effectivePicksFilters, 'selectedProfile', ['ALL', ...availablePicksProfiles]),
       selectedDate: computePickWhatIfCounts(picks, effectivePicksFilters, 'selectedDate', ['ALL', ...availableDates]),
@@ -261,25 +296,25 @@ export function TicketFilterDrawer({
         streakStatus: picksFilters.streakStatus === 'STREAK_CONFIRMED' ? 'ALL' : 'STREAK_CONFIRMED'
       })).length
     };
-  }, [isTickets, picks, picksFilters, availableLeagues, availablePicksTypes, availablePicksProfiles, availableDates, nowMs]);
+  }, [isTickets, picks, picksFilters, effectivePicksLeagues, availablePicksTypes, availablePicksProfiles, availableDates, nowMs]);
 
   // Compteurs pays pour Choix Finaux
   const picksCountryWhatIfCounts = React.useMemo(() => {
     if (isTickets) return {};
     const counts = {};
-    const availableSet = new Set(availableLeagues);
     const effectivePicksFilters = { ...picksFilters, currentNowMs: nowMs };
     for (const region of Object.values(GEOGRAPHIC_LEAGUE_HIERARCHY)) {
       for (const [code, country] of Object.entries(region.countries)) {
-        const cLeagues = (country.leagues || []).filter(l => availableSet.has(l));
+        const cLeagues = effectivePicksLeagues.filter(l => getLeagueCountryMeta(l)?.code === code);
         if (cLeagues.length === 0) {
           counts[code] = 0;
           continue;
         }
-        const allSelected = cLeagues.every(l => (picksFilters.selectedLeagues || []).includes(l));
+        const isLeagueSelected = (l, list) => (list || []).some(sel => sel === l || normalizeLeagueCode(sel) === normalizeLeagueCode(l));
+        const allSelected = cLeagues.every(l => isLeagueSelected(l, picksFilters.selectedLeagues));
         let testLeagues;
         if (allSelected) {
-          testLeagues = (picksFilters.selectedLeagues || []).filter(l => !cLeagues.includes(l));
+          testLeagues = (picksFilters.selectedLeagues || []).filter(sel => !cLeagues.some(l => l === sel || normalizeLeagueCode(l) === normalizeLeagueCode(sel)));
         } else {
           testLeagues = Array.from(new Set([...(picksFilters.selectedLeagues || []), ...cLeagues]));
         }
@@ -292,7 +327,7 @@ export function TicketFilterDrawer({
       }
     }
     return counts;
-  }, [isTickets, picks, picksFilters, availableLeagues, nowMs]);
+  }, [isTickets, picks, picksFilters, effectivePicksLeagues, nowMs]);
 
   // Tiers disponibles
   const availableTiers = React.useMemo(() => {
@@ -713,7 +748,7 @@ export function TicketFilterDrawer({
                 onSetSelectedLeagues={(nextLeagues) => {
                   setTicketFilters(prev => transitionSetSelectedLeagues(prev, nextLeagues));
                 }}
-                availableLeagues={availableLeagues}
+                availableLeagues={effectiveTicketLeagues}
                 leagueWhatIfCounts={ticketWhatIfCounts?.selectedLeagues || {}}
                 countryWhatIfCounts={ticketCountryWhatIfCounts}
                 isTickets={true}
@@ -1072,7 +1107,7 @@ export function TicketFilterDrawer({
                 onSetSelectedLeagues={(nextLeagues) => {
                   setPicksFilters(prev => transitionSetSelectedLeagues(prev, nextLeagues));
                 }}
-                availableLeagues={availableLeagues}
+                availableLeagues={effectivePicksLeagues}
                 leagueWhatIfCounts={picksWhatIfCounts?.selectedLeagues || {}}
                 countryWhatIfCounts={picksCountryWhatIfCounts}
                 isTickets={false}

@@ -382,9 +382,10 @@ export const GEOGRAPHIC_LEAGUE_HIERARCHY = {
  */
 export function getLeagueCountryMeta(leagueName) {
   if (!leagueName) return null;
+  const clean = normalizeLeagueCode(leagueName);
   for (const [regionId, region] of Object.entries(GEOGRAPHIC_LEAGUE_HIERARCHY)) {
     for (const [countryCode, country] of Object.entries(region.countries)) {
-      if (country.leagues.includes(leagueName)) {
+      if (country.leagues.some(l => l === leagueName || normalizeLeagueCode(l) === clean)) {
         return {
           code: countryCode,
           label: country.label,
@@ -734,7 +735,9 @@ export function legMatchesUnifiedCriteria(leg, {
 
   // 2. Sélection spécifique de ligue(s)
   if (Array.isArray(selectedLeagues) && selectedLeagues.length > 0 && !selectedLeagues.includes('ALL')) {
-    if (!selectedLeagues.includes(leg.League)) return false;
+    const cleanLegLeague = normalizeLeagueCode(leg.League);
+    const matchesLeague = selectedLeagues.some(l => l === leg.League || normalizeLeagueCode(l) === cleanLegLeague);
+    if (!matchesLeague) return false;
   }
 
   // 3. Famille de marché
@@ -1131,7 +1134,9 @@ export function pickPassesFilters(pick, filters = INITIAL_PICKS_FILTERS) {
 
   // 3. Ligues spécifiques
   if (Array.isArray(filters.selectedLeagues) && filters.selectedLeagues.length > 0 && !filters.selectedLeagues.includes('ALL')) {
-    if (!filters.selectedLeagues.includes(pick.League)) return false;
+    const cleanPickLeague = normalizeLeagueCode(pick.League);
+    const matchesLeague = filters.selectedLeagues.some(l => l === pick.League || normalizeLeagueCode(l) === cleanPickLeague);
+    if (!matchesLeague) return false;
   }
 
   // 3.bis Sous-marché précis ou discipline (CORNERS_TOTALS, SHOTS_TOTALS, etc.)

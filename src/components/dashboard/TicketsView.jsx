@@ -927,19 +927,28 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
     ]);
   }, [ticketsList, effectiveTicketFilters]);
 
-  // Available unique leagues across the dataset
-  const availableLeagues = useMemo(() => {
+  // Available unique leagues in tickets universe
+  const availableTicketLeagues = useMemo(() => {
     const leagues = new Set();
     ticketsList.forEach(t => {
       (t.legs || []).forEach(l => {
         if (l.League) leagues.add(l.League);
       });
     });
+    return Array.from(leagues).sort();
+  }, [ticketsList]);
+
+  // Available unique leagues in final picks universe
+  const availablePicksLeagues = useMemo(() => {
+    const leagues = new Set();
     (finals?.Selections || []).forEach(s => {
       if (s.League) leagues.add(s.League);
     });
     return Array.from(leagues).sort();
-  }, [ticketsList, finals]);
+  }, [finals]);
+
+  // Contextual available leagues depending on active view
+  const availableLeagues = activeView === 'picks' ? availablePicksLeagues : availableTicketLeagues;
 
   // Available unique market families in ticket legs
   const availableMarketFamilies = useMemo(() => {
@@ -2875,6 +2884,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
         totalPicksCount={totalSelections}
         filteredPicksCount={filteredPicks.length}
         availableLeagues={availableLeagues}
+        availableTicketLeagues={availableTicketLeagues}
+        availablePicksLeagues={availablePicksLeagues}
         availableMarketFamilies={availableMarketFamilies}
         availablePicksProfiles={availablePicksProfiles}
         availablePicksTypes={availablePicksTypes}

@@ -11,7 +11,9 @@ import {
 } from 'lucide-react';
 import {
   GEOGRAPHIC_LEAGUE_HIERARCHY,
-  isUnclassifiedLeague
+  isUnclassifiedLeague,
+  getLeagueCountryMeta,
+  normalizeLeagueCode
 } from '../../utils/ticketFilters.js';
 import { getLeagueFlag } from '../../utils/titaniumLoader.js';
 import { getLeagueDisplayName } from '../../utils/teamLogos.jsx';
@@ -54,7 +56,6 @@ export function LeagueTreeSelector({
 
   // Construction de la structure hiérarchique filtrée par les ligues réellement disponibles
   const hierarchyData = useMemo(() => {
-    const availableSet = new Set(availableLeagues);
     const regions = [];
 
     // 1. Régions canoniques répertoriées (Europe, Amériques, Asie)
@@ -62,7 +63,15 @@ export function LeagueTreeSelector({
       const countriesList = [];
 
       for (const [countryCode, country] of Object.entries(region.countries)) {
-        const countryLeagues = (country.leagues || []).filter(l => availableSet.has(l));
+        const countryLeagues = (availableLeagues || [])
+          .filter(l => getLeagueCountryMeta(l)?.code === countryCode)
+          .sort((a, b) => {
+            const idxA = (country.leagues || []).findIndex(canon => canon === a || normalizeLeagueCode(canon) === normalizeLeagueCode(a));
+            const idxB = (country.leagues || []).findIndex(canon => canon === b || normalizeLeagueCode(canon) === normalizeLeagueCode(b));
+            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+            return 0;
+          });
+
         if (countryLeagues.length > 0) {
           countriesList.push({
             code: countryCode,
@@ -169,9 +178,10 @@ export function LeagueTreeSelector({
   // Action unitaire : bascule d'une seule ligue
   const handleToggleSingleLeague = useCallback((league) => {
     if (typeof onSetSelectedLeagues !== 'function') return;
-    const isSelected = selectedLeagues.includes(league);
+    const clean = normalizeLeagueCode(league);
+    const isSelected = selectedLeagues.some(l => l === league || normalizeLeagueCode(l) === clean);
     const next = isSelected
-      ? selectedLeagues.filter(l => l !== league)
+      ? selectedLeagues.filter(l => l !== league && normalizeLeagueCode(l) !== clean)
       : [...selectedLeagues, league];
     onSetSelectedLeagues(next);
   }, [selectedLeagues, onSetSelectedLeagues]);
@@ -179,10 +189,11 @@ export function LeagueTreeSelector({
   // Action pays : sélection ou désélection groupée de toutes les ligues d'un pays
   const handleToggleAllCountryLeagues = useCallback((countryLeagues) => {
     if (typeof onSetSelectedLeagues !== 'function' || !Array.isArray(countryLeagues)) return;
-    const allSelected = countryLeagues.length > 0 && countryLeagues.every(l => selectedLeagues.includes(l));
+    const isLeagueInList = (l, list) => list.some(s => s === l || normalizeLeagueCode(s) === normalizeLeagueCode(l));
+    const allSelected = countryLeagues.length > 0 && countryLeagues.every(l => isLeagueInList(l, selectedLeagues));
     let next;
     if (allSelected) {
-      next = selectedLeagues.filter(l => !countryLeagues.includes(l));
+      next = selectedLeagues.filter(s => !isLeagueInList(s, countryLeagues));
     } else {
       next = Array.from(new Set([...selectedLeagues, ...countryLeagues]));
     }
@@ -192,7 +203,8 @@ export function LeagueTreeSelector({
   // Suppression unitaire depuis le bandeau de badges actifs
   const handleRemoveSingleLeague = useCallback((league) => {
     if (typeof onSetSelectedLeagues !== 'function') return;
-    onSetSelectedLeagues(selectedLeagues.filter(l => l !== league));
+    const clean = normalizeLeagueCode(league);
+    onSetSelectedLeagues(selectedLeagues.filter(l => l !== league && normalizeLeagueCode(l) !== clean));
   }, [selectedLeagues, onSetSelectedLeagues]);
 
   // Réinitialisation complète
@@ -246,7 +258,10 @@ export function LeagueTreeSelector({
           </div>
           <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto custom-scrollbar pr-1">
             {selectedLeagues.map(league => {
-              const count = leagueWhatIfCounts?.[league] ?? 0;
+              const cleanBadgeLeague = normalizeLeagueCode(league);
+              const count = leagueWhatIfCounts?.[league] ?? (
+                Object.entries(leagueWhatIfCounts || {}).find(([k]) => normalizeLeagueCode(k) === cleanBadgeLeague)?.[1] ?? 0
+              );
               return (
                 <span
                   key={league}
@@ -307,7 +322,10 @@ export function LeagueTreeSelector({
           {hierarchyData.map(region => {
             const isActive = activeRegionTab === region.id;
             const selectedInRegion = region.countries.reduce((acc, c) => {
-              return acc + c.leagues.filter(l => selectedLeagues.includes(l)).length;
+              return acc + c.leagues.filter(l => {
+                const clean = normalizeLeagueCode(l);
+                return selectedLeagues.some(s => s === l || normalizeLeagueCode(s) === clean);
+              }).length;
             }, 0);
 
             return (
@@ -419,7 +437,8 @@ function CountryRow({
 
   // CAS 1 : Pays à ligue unique -> Clic direct en 1 interaction
   if (isSingle && singleLeagueId) {
-    const isSelected = selectedLeagues.includes(singleLeagueId);
+    const cleanSingle = normalizeLeagueCode(singleLeagueId);
+    const isSelected = selectedLeagues.some(l => l === singleLeagueId || normalizeLeagueCode(l) === cleanSingle);
     const count = leagueWhatIfCounts?.[singleLeagueId] ?? 0;
     const leagueDisplayName = getLeagueDisplayName(singleLeagueId);
 
@@ -461,7 +480,10 @@ function CountryRow({
   }
 
   // CAS 2 : Pays multi-ligues (Angleterre, Espagne, Italie, Allemagne, France...)
-  const selectedInCountry = leagues.filter(l => selectedLeagues.includes(l)).length;
+  const selectedInCountry = leagues.filter(l => {
+    const clean = normalizeLeagueCode(l);
+    return selectedLeagues.some(s => s === l || normalizeLeagueCode(s) === clean);
+  }).length;
   const allSelected = leagues.length > 0 && selectedInCountry === leagues.length;
   const isPartial = selectedInCountry > 0 && !allSelected;
   const isExpanded = isSearching || expandedCountries.has(country.code);
@@ -551,7 +573,8 @@ function CountryRow({
         <div className="p-1.5 pt-0 border-t border-slate-100 dark:border-slate-800/60 bg-slate-50/40 dark:bg-slate-950/20">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 pt-1.5">
             {leagues.map(league => {
-              const isSelected = selectedLeagues.includes(league);
+              const cleanLeague = normalizeLeagueCode(league);
+              const isSelected = selectedLeagues.some(l => l === league || normalizeLeagueCode(l) === cleanLeague);
               const count = leagueWhatIfCounts?.[league] ?? 0;
 
               return (
