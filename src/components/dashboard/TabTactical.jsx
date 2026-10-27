@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
 import { Badge } from '../ui/Badge';
@@ -94,12 +94,51 @@ import { getThreeClosestLines, getNearestLine } from '../../utils/titaniumLoader
 
 export { getThreeClosestLines, getNearestLine };
 
+const DISCIPLINE_KEYS = ['corners', 'sot', 'shots', 'throws'];
+
 export default function TabTactical({ match, onNavigateTab }) {
   const [showCoverageDetails, setShowCoverageDetails] = useState(false);
   const [expandedCardNotes, setExpandedCardNotes] = useState({});
   const [selectedDiscipline, setSelectedDiscipline] = useState('corners'); // 'corners' | 'sot' | 'shots' | 'throws'
   const [expandedHomeCatalogue, setExpandedHomeCatalogue] = useState(false);
   const [expandedAwayCatalogue, setExpandedAwayCatalogue] = useState(false);
+
+  // Détection dynamique et réactive du viewport Desktop (>= 1024px)
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(min-width: 1024px)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mql = window.matchMedia('(min-width: 1024px)');
+    const onChange = (e) => setIsDesktop(e.matches);
+    if (mql.addEventListener) {
+      mql.addEventListener('change', onChange);
+    } else {
+      mql.addListener(onChange);
+    }
+    return () => {
+      if (mql.removeEventListener) {
+        mql.removeEventListener('change', onChange);
+      } else {
+        mql.removeListener(onChange);
+      }
+    };
+  }, []);
+
+  // Gestion du geste tactile (sub-swipe) pour la sous-navigation entre disciplines
+  const subTouchRef = useRef({
+    startX: 0,
+    startY: 0,
+    startTime: 0,
+    isTracking: false,
+    isDragging: false,
+    isVerticalScroll: false,
+  });
+  const subSwipeContainerRef = useRef(null);
 
   const risk = match.Risk_Management_Context || {};
   const tactical = risk.Tactical_Red_Flags || {};
@@ -150,6 +189,7 @@ export default function TabTactical({ match, onNavigateTab }) {
       marketType: 'TEAM_CORNERS',
       refKey: 'median_corners',
       refType: 'Médiane ligue (Match)',
+      shortRefType: 'Méd. Match',
       propKey: 'PROB_OVER_MEDIAN_CORNERS',
       lambdaKey: 'LAMBDA_CORNERS_MATCH',
       propMoreKey: 'PROP_HOME_MORE_CORNERS'
@@ -161,6 +201,7 @@ export default function TabTactical({ match, onNavigateTab }) {
       marketType: 'TEAM_SOT',
       refKey: 'median_sot',
       refType: 'Médiane ligue (Match)',
+      shortRefType: 'Méd. Match',
       propKey: 'PROB_OVER_MEDIAN_SOT',
       lambdaKey: 'LAMBDA_SOT_MATCH',
       propMoreKey: 'PROP_HOME_MORE_SOT'
@@ -172,6 +213,7 @@ export default function TabTactical({ match, onNavigateTab }) {
       marketType: 'TEAM_SHOTS',
       refKey: 'median_shots',
       refType: 'Médiane ligue (Match)',
+      shortRefType: 'Méd. Match',
       propKey: 'PROB_OVER_MEDIAN_SHOTS',
       lambdaKey: 'LAMBDA_SHOTS_MATCH',
       propMoreKey: 'PROP_HOME_MORE_SHOTS'
@@ -183,6 +225,7 @@ export default function TabTactical({ match, onNavigateTab }) {
       marketType: 'TEAM_THROWS',
       refKey: 'mean_throws',
       refType: 'Moyenne ligue (par équipe)',
+      shortRefType: 'Moy. Équipe',
       propKey: 'PROB_OVER_MEDIAN_THROWS',
       lambdaKey: 'LAMBDA_THROWS_MATCH',
       propMoreKey: 'PROP_HOME_MORE_THROWS'
@@ -225,11 +268,110 @@ export default function TabTactical({ match, onNavigateTab }) {
     };
   }, [coverageMarkets]);
 
-  const handleSelectDiscipline = (key) => {
+  const handleSelectDiscipline = useCallback((key) => {
     setSelectedDiscipline(key);
     setExpandedHomeCatalogue(false);
     setExpandedAwayCatalogue(false);
+  }, []);
+
+  // Détection des éléments interactifs où le sous-swipe tactile ne doit pas intervenir
+  const isInteractiveSubTarget = (target) => {
+    if (!target) return true;
+    if (target.closest('[data-sub-swipe-ignore="true"]')) return true;
+    if (target.closest('button, a, input, select, textarea')) return true;
+    if (target.closest('.overflow-x-auto, table')) return true;
+    return false;
   };
+
+  const handleSubTouchStart = useCallback((e) => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) return;
+    if (!e.touches || e.touches.length !== 1) return;
+    if (isInteractiveSubTarget(e.target)) {
+      subTouchRef.current.isTracking = false;
+      return;
+    }
+
+    const touch = e.touches[0];
+    subTouchRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      startTime: Date.now(),
+      isTracking: true,
+      isDragging: false,
+      isVerticalScroll: false,
+    };
+  }, []);
+
+  const handleSubTouchMove = useCallback((e) => {
+    if (!subTouchRef.current.isTracking) return;
+    if (subTouchRef.current.isVerticalScroll) return;
+
+    const touch = e.touches[0];
+    if (!touch) return;
+    const dx = touch.clientX - subTouchRef.current.startX;
+    const dy = touch.clientY - subTouchRef.current.startY;
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+
+    // Phase 1 : Détermination stricte de l'intention (Scroll vertical vs Sous-swipe horizontal)
+    if (!subTouchRef.current.isDragging) {
+      if (absY > absX && absY > 7) {
+        // Défilement vertical naturel : priorité absolue
+        subTouchRef.current.isVerticalScroll = true;
+        return;
+      }
+      if (absX > 10 && absX > absY * 1.15) {
+        subTouchRef.current.isDragging = true;
+      } else {
+        return;
+      }
+    }
+  }, []);
+
+  const handleSubTouchEnd = useCallback((e) => {
+    if (!subTouchRef.current.isTracking) return;
+    subTouchRef.current.isTracking = false;
+
+    if (!subTouchRef.current.isDragging) {
+      subTouchRef.current.isVerticalScroll = false;
+      return;
+    }
+    subTouchRef.current.isDragging = false;
+
+    const touch = e.changedTouches?.[0];
+    if (!touch) return;
+    const dx = touch.clientX - subTouchRef.current.startX;
+    const dt = Date.now() - subTouchRef.current.startTime;
+    const velocity = dt > 0 ? Math.abs(dx) / dt : 0;
+
+    const threshold = 48;
+    const isFastSwipe = velocity > 0.30 && Math.abs(dx) > 25;
+
+    if (Math.abs(dx) > threshold || isFastSwipe) {
+      const curIndex = DISCIPLINE_KEYS.indexOf(selectedDiscipline);
+      if (curIndex !== -1) {
+        if (dx < 0) {
+          // Balayage vers la gauche -> discipline suivante
+          if (curIndex < DISCIPLINE_KEYS.length - 1) {
+            handleSelectDiscipline(DISCIPLINE_KEYS[curIndex + 1]);
+          }
+          // Si curIndex === DISCIPLINE_KEYS.length - 1 (Throws) : résistance/aucun débordement
+        } else if (dx > 0) {
+          // Balayage vers la droite -> discipline précédente
+          if (curIndex > 0) {
+            handleSelectDiscipline(DISCIPLINE_KEYS[curIndex - 1]);
+          }
+          // Si curIndex === 0 (Corners) : résistance/aucun débordement
+        }
+      }
+    }
+  }, [selectedDiscipline, handleSelectDiscipline]);
+
+  const handleSubTouchCancel = useCallback(() => {
+    subTouchRef.current.isTracking = false;
+    subTouchRef.current.isDragging = false;
+    subTouchRef.current.isVerticalScroll = false;
+  }, []);
 
   const toggleCardNote = (key) => {
     setExpandedCardNotes(prev => ({ ...prev, [key]: !prev[key] }));
@@ -262,15 +404,16 @@ export default function TabTactical({ match, onNavigateTab }) {
   const homeNearestLine = useMemo(() => getNearestLine(homeLines, homeLambda), [homeLines, homeLambda]);
   const awayNearestLine = useMemo(() => getNearestLine(awayLines, awayLambda), [awayLines, awayLambda]);
 
+  // Catalogue complet direct sur PC (>= 1024px) ; 3 lignes pivots + extension sous 1024px
   const homeDisplayedLines = useMemo(() => {
-    if (expandedHomeCatalogue) return homeLines;
+    if (isDesktop || expandedHomeCatalogue) return homeLines;
     return getThreeClosestLines(homeLines, homeLambda);
-  }, [homeLines, homeLambda, expandedHomeCatalogue]);
+  }, [isDesktop, expandedHomeCatalogue, homeLines, homeLambda]);
 
   const awayDisplayedLines = useMemo(() => {
-    if (expandedAwayCatalogue) return awayLines;
+    if (isDesktop || expandedAwayCatalogue) return awayLines;
     return getThreeClosestLines(awayLines, awayLambda);
-  }, [awayLines, awayLambda, expandedAwayCatalogue]);
+  }, [isDesktop, expandedAwayCatalogue, awayLines, awayLambda]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -431,7 +574,7 @@ export default function TabTactical({ match, onNavigateTab }) {
 
         {/* 4 Cards Grid - Selectable & Interactive Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          {statisticalMarkets.map(({ key, label, refKey, refType, propKey, lambdaKey }) => {
+          {statisticalMarkets.map(({ key, label, refKey, refType, shortRefType, propKey, lambdaKey }) => {
             const refVal = anchors[refKey] !== undefined ? anchors[refKey] : diag[refKey];
             const prob = props[propKey] !== undefined ? props[propKey] : probs[propKey];
             const lambdaVal = props[lambdaKey] !== undefined ? props[lambdaKey] : probs[lambdaKey];
@@ -465,13 +608,17 @@ export default function TabTactical({ match, onNavigateTab }) {
                   aria-pressed={isSelected}
                   className="w-full text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg -m-1 p-1 transition-colors"
                 >
-                  {/* En-tête compact */}
+                  {/* En-tête compact avec libellé de référence raccourci pour éviter toute troncature du titre */}
                   <div className="flex items-center justify-between gap-1.5 pb-1.5 border-b border-slate-200 dark:border-slate-800/60">
                     <span className={`text-xs font-bold uppercase tracking-wider truncate ${isSelected ? 'text-blue-700 dark:text-blue-300' : 'text-slate-800 dark:text-slate-200'}`}>
                       {label}
                     </span>
-                    <Badge variant={isSelected ? 'info' : 'default'} className="text-[9px] px-1.5 py-0 font-mono shrink-0">
-                      {refType}
+                    <Badge
+                      variant={isSelected ? 'info' : 'default'}
+                      className="text-[9px] px-1.5 py-0.5 font-mono shrink-0"
+                      title={refType}
+                    >
+                      {shortRefType}
                     </Badge>
                   </div>
 
@@ -583,12 +730,55 @@ export default function TabTactical({ match, onNavigateTab }) {
             );
           })}
         </div>
+      </div>
 
-        {/* Sélecteur Pills Option A — Discipline Détaillée */}
-        <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
+      {/* Second Card: Team Statistical Markets & Tripartite Poisson Models */}
+      <div
+        data-no-swipe="true"
+        className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5 relative"
+      >
+        {/* En-tête identifiable de la Carte 2 */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl shrink-0">
+              <Layers size={18} />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                  Team Statistical Markets
+                </h3>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                  {match.Team_Stat_Markets?.Catalogue_Version
+                    ? `v${match.Team_Stat_Markets.Catalogue_Version}`
+                    : (match.Team_Stat_Markets?.Schema_Version
+                        ? `v${match.Team_Stat_Markets.Schema_Version}`
+                        : 'Legacy')}
+                </span>
+              </div>
+              <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 mt-0.5">
+                Modélisations Poisson unilatérales par club (Domicile / Extérieur) et total de match.
+              </p>
+            </div>
+          </div>
+
+          {/* Badge de gouvernance scientifique INTERNAL_RESEARCH_ONLY */}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-mono text-[10px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+              INTERNAL_RESEARCH_ONLY
+            </span>
+          </div>
+        </div>
+
+        {/* Sélecteur Pills Option A — Discipline Détaillée avec data-sub-swipe-ignore */}
+        <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto max-w-full">
-              {statisticalMarkets.map(({ key, label, shortLabel, lambdaKey }) => {
+            <div
+              data-sub-swipe-ignore="true"
+              className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto max-w-full"
+            >
+              {statisticalMarkets.map(({ key, label, lambdaKey }) => {
                 const isSelected = selectedDiscipline === key;
                 const lambdaVal = props[lambdaKey];
                 return (
@@ -618,17 +808,13 @@ export default function TabTactical({ match, onNavigateTab }) {
               })}
             </div>
 
-            {/* Avertissement de gouvernance scientifique INTERNAL_RESEARCH_ONLY */}
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-mono text-[10px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                INTERNAL_RESEARCH_ONLY
-              </span>
-            </div>
+            <span className="hidden sm:inline text-xs text-slate-400 dark:text-slate-500 italic shrink-0">
+              Glissez horizontalement pour naviguer entre disciplines
+            </span>
           </div>
 
-          {/* Bandeau explicatif de recherche */}
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          {/* Bandeau explicatif de recherche : masqué sur mobile (< 768px), affiché sur md+ */}
+          <div className="hidden md:flex p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 leading-relaxed flex-col sm:flex-row sm:items-center justify-between gap-2">
             <p className="text-[11px]">
               <strong className="text-slate-800 dark:text-slate-200 font-semibold mr-1">Discipline active : {currentMarketMeta.label}</strong>
               — Modélisations Poisson unilatérales par club ({
@@ -643,6 +829,16 @@ export default function TabTactical({ match, onNavigateTab }) {
               Modèle descriptif hors trading • Aucune cote bookmaker calculée
             </span>
           </div>
+
+          {/* Conteneur de Sous-navigation Tactile (Sub-Swipe) pour le panneau tripartite */}
+          <div
+            ref={subSwipeContainerRef}
+            onTouchStart={handleSubTouchStart}
+            onTouchMove={handleSubTouchMove}
+            onTouchEnd={handleSubTouchEnd}
+            onTouchCancel={handleSubTouchCancel}
+            className="relative"
+          >
 
           {/* Rendu Tripartite de la Discipline Sélectionnée */}
           {(() => {
@@ -795,8 +991,8 @@ export default function TabTactical({ match, onNavigateTab }) {
                       </table>
                     </div>
 
-                    {/* Bouton d'extension du catalogue complet */}
-                    {homeLines.length > 3 && (
+                    {/* Bouton d'extension du catalogue complet (Mobile / Tablettes < 1024px uniquement) */}
+                    {!isDesktop && homeLines.length > 3 && (
                       <button
                         type="button"
                         onClick={() => setExpandedHomeCatalogue(prev => !prev)}
@@ -818,13 +1014,16 @@ export default function TabTactical({ match, onNavigateTab }) {
                   </div>
                 </div>
 
-                {/* 2. Pilier Central : Match Total & Contexte Ligue (order-first sur mobile pour synthèse immédiate) */}
-                <div className="order-first lg:order-none p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3.5">
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
-                      Total du Match
-                    </span>
-                    <Badge variant="default" className="text-[9px] font-mono">
+                {/* 2. Pilier Central : Match Total & Contexte Ligue (order-first sur mobile pour synthèse immédiate avec accentuation visuelle) */}
+                <div className="order-first lg:order-none p-4 rounded-2xl bg-gradient-to-b from-blue-50/40 to-white dark:from-blue-950/20 dark:to-slate-900 border-2 border-blue-500/30 dark:border-blue-500/40 shadow-xs space-y-3.5">
+                  <div className="flex items-center justify-between pb-2 border-b border-blue-100 dark:border-blue-900/40">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                        Total du Match
+                      </span>
+                    </div>
+                    <Badge variant="info" className="text-[9px] font-mono font-bold">
                       {currentMarketMeta.shortLabel}
                     </Badge>
                   </div>
@@ -969,8 +1168,8 @@ export default function TabTactical({ match, onNavigateTab }) {
                       </table>
                     </div>
 
-                    {/* Bouton d'extension du catalogue complet */}
-                    {awayLines.length > 3 && (
+                    {/* Bouton d'extension du catalogue complet (Mobile / Tablettes < 1024px uniquement) */}
+                    {!isDesktop && awayLines.length > 3 && (
                       <button
                         type="button"
                         onClick={() => setExpandedAwayCatalogue(prev => !prev)}
@@ -995,6 +1194,7 @@ export default function TabTactical({ match, onNavigateTab }) {
               </div>
             );
           })()}
+          </div>
         </div>
       </div>
 
