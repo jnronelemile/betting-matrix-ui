@@ -83,6 +83,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
     neighborTabId: null,
     containerWidth: 0,
     isAnimatingRelease: false,
+    isTracking: false,
   });
 
   const TABS = [
@@ -307,7 +308,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
           setOutgoingTab(null);
           setIsTransitioning(false);
         }
-        if (touchStateRef.current.isDragging || swipeNeighbor) {
+        if (touchStateRef.current.isDragging || swipeNeighbor || touchStateRef.current.isTracking) {
           if (finishTimeoutRef.current) {
             clearTimeout(finishTimeoutRef.current);
             finishTimeoutRef.current = null;
@@ -323,6 +324,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
           setSwipeNeighbor(null);
           touchStateRef.current.isDragging = false;
           touchStateRef.current.isAnimatingRelease = false;
+          touchStateRef.current.isTracking = false;
         }
       }
     };
@@ -417,6 +419,10 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
 
   // Début du geste tactile (Mobile < 768px uniquement)
   const handleTouchStart = useCallback((e) => {
+    touchStateRef.current.isTracking = false;
+    touchStateRef.current.isDragging = false;
+    touchStateRef.current.isVerticalScroll = false;
+
     if (typeof window !== 'undefined' && window.innerWidth >= 768) return;
     if (!e.targetTouches || e.targetTouches.length === 0) return;
     if (touchStateRef.current.isAnimatingRelease) return;
@@ -441,6 +447,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
       neighborTabId: null,
       containerWidth: containerW,
       isAnimatingRelease: false,
+      isTracking: true,
     };
 
     updateTabsGeometry();
@@ -449,6 +456,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   // Déplacement tactile au doigt en temps réel
   const handleTouchMove = useCallback((e) => {
     if (typeof window !== 'undefined' && window.innerWidth >= 768) return;
+    if (!touchStateRef.current.isTracking) return;
     if (!e.targetTouches || e.targetTouches.length === 0) return;
     if (touchStateRef.current.isAnimatingRelease) return;
     if (touchStateRef.current.isVerticalScroll) return;
@@ -544,6 +552,9 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
 
   // Relâchement du doigt : validation ou annulation amortie
   const handleTouchEnd = useCallback(() => {
+    if (!touchStateRef.current.isTracking) return;
+    touchStateRef.current.isTracking = false;
+
     if (!touchStateRef.current.isDragging) {
       touchStateRef.current.isDragging = false;
       touchStateRef.current.isVerticalScroll = false;
@@ -645,6 +656,9 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
 
   // Interruption système (touchcancel)
   const handleTouchCancel = useCallback(() => {
+    if (!touchStateRef.current.isTracking) return;
+    touchStateRef.current.isTracking = false;
+
     if (!touchStateRef.current.isDragging) return;
     if (finishTimeoutRef.current) clearTimeout(finishTimeoutRef.current);
     if (currentPanelRef.current) {
