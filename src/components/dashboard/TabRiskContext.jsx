@@ -164,7 +164,7 @@ export default function TabRiskContext({ match, onNavigateTab }) {
                 Qualifie l&apos;accessibilité bookmaker des marchés annexes (Corners, Tirs, Touches).
               </p>
               <p className="text-slate-500 dark:text-slate-400 italic">
-                Ne constitue pas un veto de risque opérationnel du Risk Manager (distinct des <code className="font-mono text-slate-700 dark:text-slate-300">blocked_markets</code> ci-dessus).
+                Ne constitue pas un veto de risque opérationnel du Risk Manager (distinct des <code className="font-mono text-slate-700 dark:text-slate-300">blocked_markets</code> ci-dessus). Les modélisations par équipe (Team_Stat_Markets) relèvent du statut <code className="font-mono text-slate-700 dark:text-slate-300">INTERNAL_RESEARCH_ONLY</code> à titre d'observation descriptive.
               </p>
             </div>
 
