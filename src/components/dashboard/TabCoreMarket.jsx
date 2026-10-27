@@ -314,53 +314,95 @@ export default function TabCoreMarket({ match, onNavigateTab }) {
             </div>
           </Card>
 
-          {/* Statistical Props Snapshot (Contextual Recall) */}
+          {/* Statistical Props Snapshot (Contextual Recall - 4 Disciplines) */}
           <Card title="Props & Marchés Statistiques (Aperçu)" titleIcon={<Crosshair size={16} />}>
             <div className="space-y-4 mt-1">
               <p className="text-[10px] text-slate-500 dark:text-slate-400 italic">
-                Synthèse des volumes attendus modélisés sur les marchés secondaires.
+                Synthèse des volumes attendus modélisés sur les 4 disciplines secondaires.
               </p>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 {/* Corners */}
-                <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                <div className="bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
                   <div className="flex justify-between items-center text-[9px] uppercase tracking-wider text-slate-500 mb-1 font-bold">
                     <span>Corners λ</span>
                   </div>
-                  {props.LAMBDA_CORNERS_MATCH !== undefined ? (
+                  {Number.isFinite(props.LAMBDA_CORNERS_MATCH) ? (
                     <div className="flex items-baseline justify-between">
-                      <span className="font-mono text-xl font-bold text-slate-800 dark:text-slate-200">
+                      <span className="font-mono text-base font-bold text-slate-800 dark:text-slate-200">
                         {props.LAMBDA_CORNERS_MATCH.toFixed(2)}
                       </span>
-                      {props.PROB_OVER_MEDIAN_CORNERS !== undefined && (
+                      {Number.isFinite(props.PROB_OVER_MEDIAN_CORNERS) && (
                         <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
                           {(props.PROB_OVER_MEDIAN_CORNERS * 100).toFixed(0)}% &gt; Réf
                         </span>
                       )}
                     </div>
                   ) : (
-                    <span className="text-[9px] text-slate-400 italic">Projection non générée dans cette session</span>
+                    <span className="text-[8px] text-slate-400 italic">Non généré</span>
+                  )}
+                </div>
+
+                {/* SOT */}
+                <div className="bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                  <div className="flex justify-between items-center text-[9px] uppercase tracking-wider text-slate-500 mb-1 font-bold">
+                    <span>Tirs Cadrés λ</span>
+                  </div>
+                  {Number.isFinite(props.LAMBDA_SOT_MATCH) ? (
+                    <div className="flex items-baseline justify-between">
+                      <span className="font-mono text-base font-bold text-slate-800 dark:text-slate-200">
+                        {props.LAMBDA_SOT_MATCH.toFixed(2)}
+                      </span>
+                      {Number.isFinite(props.PROB_OVER_MEDIAN_SOT) && (
+                        <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                          {(props.PROB_OVER_MEDIAN_SOT * 100).toFixed(0)}% &gt; Réf
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="text-[8px] text-slate-400 italic">Non généré</span>
                   )}
                 </div>
 
                 {/* Shots */}
-                <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                <div className="bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
                   <div className="flex justify-between items-center text-[9px] uppercase tracking-wider text-slate-500 mb-1 font-bold">
-                    <span>Tirs λ</span>
+                    <span>Tirs Totaux λ</span>
                   </div>
-                  {props.LAMBDA_SHOTS_MATCH !== undefined ? (
+                  {Number.isFinite(props.LAMBDA_SHOTS_MATCH) ? (
                     <div className="flex items-baseline justify-between">
-                      <span className="font-mono text-xl font-bold text-slate-800 dark:text-slate-200">
+                      <span className="font-mono text-base font-bold text-slate-800 dark:text-slate-200">
                         {props.LAMBDA_SHOTS_MATCH.toFixed(2)}
                       </span>
-                      {props.PROB_OVER_MEDIAN_SHOTS !== undefined && (
+                      {Number.isFinite(props.PROB_OVER_MEDIAN_SHOTS) && (
                         <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
                           {(props.PROB_OVER_MEDIAN_SHOTS * 100).toFixed(0)}% &gt; Réf
                         </span>
                       )}
                     </div>
                   ) : (
-                    <span className="text-[9px] text-slate-400 italic">Projection non générée dans cette session</span>
+                    <span className="text-[8px] text-slate-400 italic">Non généré</span>
+                  )}
+                </div>
+
+                {/* Throws */}
+                <div className="bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                  <div className="flex justify-between items-center text-[9px] uppercase tracking-wider text-slate-500 mb-1 font-bold">
+                    <span>Touches λ</span>
+                  </div>
+                  {Number.isFinite(props.LAMBDA_THROWS_MATCH) ? (
+                    <div className="flex items-baseline justify-between">
+                      <span className="font-mono text-base font-bold text-slate-800 dark:text-slate-200">
+                        {props.LAMBDA_THROWS_MATCH.toFixed(2)}
+                      </span>
+                      {Number.isFinite(props.PROB_OVER_MEDIAN_THROWS) && (
+                        <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                          {(props.PROB_OVER_MEDIAN_THROWS * 100).toFixed(0)}% &gt; Seuil
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="text-[8px] text-slate-400 italic">Non généré</span>
                   )}
                 </div>
               </div>
@@ -370,7 +412,7 @@ export default function TabCoreMarket({ match, onNavigateTab }) {
                   onClick={() => onNavigateTab('tactical')}
                   className="w-full py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold uppercase tracking-wider text-[10px] flex items-center justify-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                 >
-                  Explorer tous les Props & Marchés Statistiques <ArrowRight size={12} />
+                  Explorer les Marchés Statistiques détaillés <ArrowRight size={12} />
                 </button>
               )}
             </div>

@@ -233,6 +233,260 @@ export function areSessionsCompatible(candidateId, sessionId, runId) {
   return false;
 }
 
+/**
+ * Valide les composantes d'une date sans supposer arbitrairement un fuseau horaire.
+ * Rejette toute date calendaire impossible (ex: 30 février, mois 13, heure 25).
+ */
+export function isValidDateComponents(y, m, d, hh = 0, mm = 0, ss = 0) {
+  if (y < 2000 || y > 2100) return false;
+  if (m < 1 || m > 12) return false;
+  if (hh < 0 || hh > 23) return false;
+  if (mm < 0 || mm > 59) return false;
+  if (ss < 0 || ss > 59) return false;
+
+  const isLeap = (y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0));
+  const daysInMonth = [31, isLeap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (d < 1 || d > daysInMonth[m - 1]) return false;
+
+  return true;
+}
+
+/**
+ * Convertit des composantes validées en valeur d'échelle temporelle linéaire.
+ * Utilise Date.UTC uniquement comme convertisseur mathématique universel
+ * pour garantir l'ordre chronologique strict sans dépendre du fuseau local de l'utilisateur.
+ */
+function toNumericTimestamp(y, m, d, hh = 0, mm = 0, ss = 0) {
+  const yN = parseInt(y, 10);
+  const mN = parseInt(m, 10);
+  const dN = parseInt(d, 10);
+  const hhN = parseInt(hh, 10);
+  const mmN = parseInt(mm, 10);
+  const ssN = parseInt(ss, 10);
+
+  if (!isValidDateComponents(yN, mN, dN, hhN, mmN, ssN)) {
+    return 0;
+  }
+  return Date.UTC(yN, mN - 1, dN, hhN, mmN, ssN);
+}
+
+/**
+ * Extrait l'horodatage d'une matrice ou d'un run TITANIUM sous forme de timestamp numérique.
+ * Priorise l'horodatage effectif de génération de matrice (après VALUE_BETTING_MATRIX_ ou second timestamp d'un run_id),
+ * avec repli sur l'horodatage de session de collecte (après ___).
+ */
+export function parseMatrixGenerationTimestamp(fileNameOrId) {
+  if (!fileNameOrId || typeof fileNameOrId !== 'string') return 0;
+
+  // 1. Horodatage spécifique de génération de matrice : VALUE_BETTING_MATRIX_[vX.X_]YYYY-MM-DD_HHhMMmSSs
+  const matrixMatch = fileNameOrId.match(/VALUE_BETTING_MATRIX_(?:v[0-9.]+_)?([0-9]{4})-([0-9]{2})-([0-9]{2})_([0-9]{2})h([0-9]{2})m([0-9]{2})s/i);
+  if (matrixMatch) {
+    const [, y, m, d, hh, mm, ss] = matrixMatch;
+    return toNumericTimestamp(y, m, d, hh, mm, ss);
+  }
+
+  // 2. Format run_id moteur à double horodatage : ___YYYY-MM-DD_HHhMMmSSs_YYYY-MM-DD_HHhMMmSSs
+  // Le second horodatage représente l'instant de génération finale de la matrice
+  const doubleTimestampMatch = fileNameOrId.match(/___[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}h[0-9]{2}m[0-9]{2}s_([0-9]{4})-([0-9]{2})-([0-9]{2})_([0-9]{2})h([0-9]{2})m([0-9]{2})s/i);
+  if (doubleTimestampMatch) {
+    const [, y, m, d, hh, mm, ss] = doubleTimestampMatch;
+    return toNumericTimestamp(y, m, d, hh, mm, ss);
+  }
+
+  // 3. Horodatage de session : ___YYYY-MM-DD_HHhMMmSSs
+  const sessionMatch = fileNameOrId.match(/___([0-9]{4})-([0-9]{2})-([0-9]{2})_([0-9]{2})h([0-9]{2})m([0-9]{2})s/i);
+  if (sessionMatch) {
+    const [, y, m, d, hh, mm, ss] = sessionMatch;
+    return toNumericTimestamp(y, m, d, hh, mm, ss);
+  }
+
+  // 4. Horodatage complet libre : YYYY-MM-DD_HHhMMmSSs
+  const timeMatch = fileNameOrId.match(/([0-9]{4})-([0-9]{2})-([0-9]{2})_([0-9]{2})h([0-9]{2})m([0-9]{2})s/i);
+  if (timeMatch) {
+    const [, y, m, d, hh, mm, ss] = timeMatch;
+    return toNumericTimestamp(y, m, d, hh, mm, ss);
+  }
+
+  // 5. Date générique YYYY-MM-DD (minuit)
+  const dateMatch = fileNameOrId.match(/([0-9]{4})-([0-9]{2})-([0-9]{2})/);
+  if (dateMatch) {
+    const [, y, m, d] = dateMatch;
+    return toNumericTimestamp(y, m, d, 0, 0, 0);
+  }
+
+  return 0;
+}
+
+/**
+ * Extrait l'horodatage initial de session de collecte (premier horodatage après ___).
+ */
+export function parseSessionTimestamp(fileNameOrId) {
+  if (!fileNameOrId || typeof fileNameOrId !== 'string') return 0;
+  const sessionMatch = fileNameOrId.match(/___([0-9]{4})-([0-9]{2})-([0-9]{2})_([0-9]{2})h([0-9]{2})m([0-9]{2})s/i);
+  if (sessionMatch) {
+    const [, y, m, d, hh, mm, ss] = sessionMatch;
+    return toNumericTimestamp(y, m, d, hh, mm, ss);
+  }
+  return 0;
+}
+
+/**
+ * Sélectionne de manière déterministe le fichier de prédiction actif.
+ * Trie par horodatage de génération descendant, bris d'égalité par horodatage de session,
+ * puis ordre lexicographique ASCII strict.
+ *
+ * Échoue de manière stricte (retourne null sans repli silencieux) si un fichier ou
+ * une session explicitement demandé est introuvable.
+ */
+export function selectDeterministicPredictionFile(predictionsList, options = {}) {
+  if (!Array.isArray(predictionsList) || predictionsList.length === 0) return null;
+
+  // Tri déterministe préalable de toute la liste
+  const sorted = [...predictionsList].sort((a, b) => {
+    const timeA = parseMatrixGenerationTimestamp(a);
+    const timeB = parseMatrixGenerationTimestamp(b);
+    if (timeA !== timeB) {
+      return timeB - timeA; // Descendant : le plus récent en premier
+    }
+    // Bris d'égalité par horodatage de session
+    const sessA = parseSessionTimestamp(a);
+    const sessB = parseSessionTimestamp(b);
+    if (sessA !== sessB) {
+      return sessB - sessA;
+    }
+    // Bris d'égalité déterministe par code-unit ASCII strict
+    return b > a ? 1 : b < a ? -1 : 0;
+  });
+
+  // Si un fichier spécifique est explicitement demandé : aucun repli silencieux
+  if (options.predictionFile) {
+    return predictionsList.includes(options.predictionFile) ? options.predictionFile : null;
+  }
+
+  // Si un session_id spécifique est explicitement demandé : aucun repli silencieux
+  if (options.sessionId) {
+    const targetSession = canonicalSessionId(options.sessionId);
+    // Sélectionne la matrice la plus récente correspondant à cette session
+    const found = sorted.find(f => canonicalSessionId(f) === targetSession);
+    return found || null;
+  }
+
+  return sorted[0] || null;
+}
+
+/**
+ * Normalise le radical de lot (batch stem) d'un nom de fichier pour association fixtures/matrice.
+ */
+export function normalizeBatchStem(name) {
+  if (!name || typeof name !== 'string') return '';
+  let stem = name.replace(/\.json$/i, '');
+  if (stem.includes('___')) {
+    stem = stem.split('___')[0];
+  }
+  stem = stem.replace(/^run_/i, '');
+  return stem.toLowerCase().replace(/[-_]+/g, '_').trim();
+}
+
+/**
+ * Associe de manière déterministe le fichier matches_to_predict à la matrice de prédiction sélectionnée.
+ * En cas d'incompatibilité manifeste ou d'ambiguïté, retourne null pour ne jamais injecter
+ * des fixtures d'une autre semaine.
+ */
+export function selectMatchingFixturesFile(matchesList, predFileName) {
+  if (!Array.isArray(matchesList) || matchesList.length === 0) return null;
+  if (!predFileName) {
+    return matchesList.length === 1 ? matchesList[0] : null;
+  }
+
+  const predBatch = normalizeBatchStem(predFileName);
+
+  // 1. Recherche par correspondance exacte de batch stem
+  const exactMatches = matchesList.filter(m => normalizeBatchStem(m) === predBatch);
+  if (exactMatches.length === 1) {
+    return exactMatches[0];
+  }
+
+  // 2. Recherche par inclusion mutuelle de radicaux
+  const inclusiveMatches = matchesList.filter(m => {
+    const mStem = normalizeBatchStem(m);
+    return predBatch && mStem && (predBatch.includes(mStem) || mStem.includes(predBatch));
+  });
+  if (inclusiveMatches.length === 1) {
+    return inclusiveMatches[0];
+  }
+
+  // 3. Si un seul fichier de fixtures existe dans le manifeste, vérifier la compatibilité minimale
+  if (matchesList.length === 1) {
+    const singleStem = normalizeBatchStem(matchesList[0]);
+    // Vérifier les tokens discriminants (numéro de semaine)
+    const predWeek = predBatch.match(/week_([0-9]+)/);
+    const matchWeek = singleStem.match(/week_([0-9]+)/);
+    if (predWeek && matchWeek && predWeek[1] !== matchWeek[1]) {
+      // Semaines différentes incompatibles
+      return null;
+    }
+    return matchesList[0];
+  }
+
+  // Ambiguïté ou absence de correspondance : fail-closed
+  return null;
+}
+
+/**
+ * Sélectionne les 3 lignes du catalogue les plus proches du lambda de l'équipe.
+ * Gère de manière déterministe les cas limites aux bornes et bris d'égalité.
+ */
+export function getThreeClosestLines(lines, lambda) {
+  if (!Array.isArray(lines) || lines.length === 0) return [];
+
+  // Filtrer les entrées non conformes
+  const validLines = lines.filter(l => l && typeof l === 'object' && Number.isFinite(l.Line));
+  if (validLines.length <= 3) return validLines;
+
+  // Si lambda n'est pas un nombre fini, retourner les 3 premières lignes valides sans sélection arbitraire
+  if (!Number.isFinite(lambda)) {
+    return validLines.slice(0, 3);
+  }
+
+  // Tri par distance absolue à lambda
+  const sorted = [...validLines].sort((a, b) => {
+    const distA = Math.abs(a.Line - lambda);
+    const distB = Math.abs(b.Line - lambda);
+    if (Math.abs(distA - distB) > 0.0001) {
+      return distA - distB;
+    }
+    // Bris d'égalité déterministe : privilégier la ligne inférieure
+    return a.Line - b.Line;
+  });
+
+  const top3 = sorted.slice(0, 3);
+  // Réordonner les 3 lignes retenues de manière croissante pour une lecture naturelle
+  return top3.sort((a, b) => a.Line - b.Line);
+}
+
+/**
+ * Identifie la ligne pivot la plus proche du lambda attendu.
+ * Retourne null si lambda n'est pas un nombre fini ou si lines est vide/invalide.
+ */
+export function getNearestLine(lines, lambda) {
+  if (!Array.isArray(lines) || lines.length === 0 || !Number.isFinite(lambda)) return null;
+
+  const validLines = lines.filter(l => l && typeof l === 'object' && Number.isFinite(l.Line));
+  if (validLines.length === 0) return null;
+
+  let nearest = validLines[0].Line;
+  let minDiff = Math.abs(validLines[0].Line - lambda);
+
+  for (let i = 1; i < validLines.length; i++) {
+    const diff = Math.abs(validLines[i].Line - lambda);
+    if (diff < minDiff) {
+      minDiff = diff;
+      nearest = validLines[i].Line;
+    }
+  }
+  return nearest;
+}
+
 export function validateSeriesMetadata(stats, match) {
   if (!stats || !stats.streaks || !stats.goal_distribution) {
     return { valid: false, reason: 'Incomplete streaks or goal_distribution structure' };
@@ -424,9 +678,15 @@ export async function loadTitaniumV2Session(options = {}) {
   const warnings = [];
   const missingSources = [];
 
-  // 2. Load Predictions Matrix (Primary Source)
-  const predFileName = manifest.predictions?.[0];
+  // 2. Load Predictions Matrix (Primary Source) - Deterministic selection by generation timestamp
+  const predFileName = selectDeterministicPredictionFile(manifest.predictions, options);
   if (!predFileName) {
+    if (options.predictionFile) {
+      throw new Error(`TITANIUM V2: Explicit prediction file '${options.predictionFile}' not found in manifest.`);
+    }
+    if (options.sessionId) {
+      throw new Error(`TITANIUM V2: Explicit session '${options.sessionId}' not found in manifest predictions.`);
+    }
     throw new Error('TITANIUM V2: No predictions matrix found in manifest.');
   }
 
@@ -457,9 +717,9 @@ export async function loadTitaniumV2Session(options = {}) {
     warnings.push(`Séries statistiques : ${seriesTopology.reason}`);
   }
 
-  // 3. Load Matches Fixtures (matches_to_predict)
+  // 3. Load Matches Fixtures (matches_to_predict) with deterministic batch matching
   let fixturesByLeague = {};
-  const matchesFileName = manifest.matches?.[0];
+  const matchesFileName = selectMatchingFixturesFile(manifest.matches, predFileName);
   if (matchesFileName) {
     try {
       const matchRes = await fetchFn(`/data/titanium_v2/matches/${matchesFileName}`);
@@ -475,6 +735,11 @@ export async function loadTitaniumV2Session(options = {}) {
     }
   } else {
     missingSources.push('matches_to_predict');
+    if (Array.isArray(manifest.matches) && manifest.matches.length > 0) {
+      warnings.push('Aucun fichier matches_to_predict compatible trouvé pour ce run : métadonnées complémentaires non injectées.');
+    } else {
+      warnings.push('Fichier matches_to_predict absent du manifeste : métadonnées complémentaires non injectées.');
+    }
   }
 
   // Flatten fixtures with normalized keys for deterministic matching

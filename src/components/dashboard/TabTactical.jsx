@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
 import { Badge } from '../ui/Badge';
@@ -14,8 +14,11 @@ import {
   Activity,
   Info,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Maximize2,
+  Minimize2
 } from 'lucide-react';
+import { TeamLogo } from '../../utils/teamLogos';
 
 /**
  * Présentation typographique et sémantique du statut opérationnel TITANIUM.
@@ -87,9 +90,16 @@ export const getBookmakerCoverageMeta = (coverage) => {
   }
 };
 
+import { getThreeClosestLines, getNearestLine } from '../../utils/titaniumLoader';
+
+export { getThreeClosestLines, getNearestLine };
+
 export default function TabTactical({ match, onNavigateTab }) {
   const [showCoverageDetails, setShowCoverageDetails] = useState(false);
   const [expandedCardNotes, setExpandedCardNotes] = useState({});
+  const [selectedDiscipline, setSelectedDiscipline] = useState('corners'); // 'corners' | 'sot' | 'shots' | 'throws'
+  const [expandedHomeCatalogue, setExpandedHomeCatalogue] = useState(false);
+  const [expandedAwayCatalogue, setExpandedAwayCatalogue] = useState(false);
 
   const risk = match.Risk_Management_Context || {};
   const tactical = risk.Tactical_Red_Flags || {};
@@ -131,44 +141,64 @@ export default function TabTactical({ match, onNavigateTab }) {
       return a.localeCompare(b);
     });
 
-  // Anchor configurations with exact statistical nature (médiane vs moyenne)
-  // Canonical order: Corners -> SOT -> Shots -> Throws
+  // Configurations des 4 disciplines statistiques (Ordre canonique strict)
   const statisticalMarkets = [
     {
       key: 'corners',
       label: 'Corners',
+      shortLabel: 'Corners',
+      marketType: 'TEAM_CORNERS',
       refKey: 'median_corners',
-      refType: 'Médiane ligue',
+      refType: 'Médiane ligue (Match)',
       propKey: 'PROB_OVER_MEDIAN_CORNERS',
-      lambdaKey: 'LAMBDA_CORNERS_MATCH'
+      lambdaKey: 'LAMBDA_CORNERS_MATCH',
+      propMoreKey: 'PROP_HOME_MORE_CORNERS'
     },
     {
       key: 'sot',
       label: 'Shots on Target',
+      shortLabel: 'Cadrés',
+      marketType: 'TEAM_SOT',
       refKey: 'median_sot',
-      refType: 'Médiane ligue',
+      refType: 'Médiane ligue (Match)',
       propKey: 'PROB_OVER_MEDIAN_SOT',
-      lambdaKey: 'LAMBDA_SOT_MATCH'
+      lambdaKey: 'LAMBDA_SOT_MATCH',
+      propMoreKey: 'PROP_HOME_MORE_SOT'
     },
     {
       key: 'shots',
       label: 'Shots',
+      shortLabel: 'Tirs',
+      marketType: 'TEAM_SHOTS',
       refKey: 'median_shots',
-      refType: 'Médiane ligue',
+      refType: 'Médiane ligue (Match)',
       propKey: 'PROB_OVER_MEDIAN_SHOTS',
-      lambdaKey: 'LAMBDA_SHOTS_MATCH'
+      lambdaKey: 'LAMBDA_SHOTS_MATCH',
+      propMoreKey: 'PROP_HOME_MORE_SHOTS'
     },
     {
       key: 'throws',
       label: 'Throws',
+      shortLabel: 'Touches',
+      marketType: 'TEAM_THROWS',
       refKey: 'mean_throws',
-      refType: 'Moyenne ligue',
+      refType: 'Moyenne ligue (par équipe)',
       propKey: 'PROB_OVER_MEDIAN_THROWS',
-      lambdaKey: 'LAMBDA_THROWS_MATCH'
+      lambdaKey: 'LAMBDA_THROWS_MATCH',
+      propMoreKey: 'PROP_HOME_MORE_THROWS'
     },
   ];
 
-  const coverageSummary = React.useMemo(() => {
+  const currentMarketMeta = statisticalMarkets.find(m => m.key === selectedDiscipline) || statisticalMarkets[0];
+
+  // Extraction déterministe de la famille Team_Stat_Markets active
+  const currentFamily = useMemo(() => {
+    const families = match.Team_Stat_Markets?.Families;
+    if (!Array.isArray(families)) return null;
+    return families.find(f => f.Market_Type === currentMarketMeta.marketType) || null;
+  }, [match.Team_Stat_Markets, currentMarketMeta.marketType]);
+
+  const coverageSummary = useMemo(() => {
     if (!coverageMarkets) return null;
     const entries = Object.entries(coverageMarkets).filter(([, v]) => v && typeof v === 'object');
     if (entries.length === 0) return null;
@@ -195,6 +225,12 @@ export default function TabTactical({ match, onNavigateTab }) {
     };
   }, [coverageMarkets]);
 
+  const handleSelectDiscipline = (key) => {
+    setSelectedDiscipline(key);
+    setExpandedHomeCatalogue(false);
+    setExpandedAwayCatalogue(false);
+  };
+
   const toggleCardNote = (key) => {
     setExpandedCardNotes(prev => ({ ...prev, [key]: !prev[key] }));
   };
@@ -210,6 +246,31 @@ export default function TabTactical({ match, onNavigateTab }) {
     if (val >= 0.50) return 'text-amber-600 dark:text-amber-400';
     return 'text-slate-500 dark:text-slate-400';
   };
+
+  // Noms d'équipes et logos
+  const homeTeamName = match.displayHome || match.shortHome || match.Matchup?.split(' vs ')?.[0] || 'Domicile';
+  const awayTeamName = match.displayAway || match.shortAway || match.Matchup?.split(' vs ')?.[1] || 'Extérieur';
+  const homeLogoTeam = match.shortHome || match.displayHome || homeTeamName;
+  const awayLogoTeam = match.shortAway || match.displayAway || awayTeamName;
+
+  // Lignes et lambdas par équipe
+  const homeLines = currentFamily?.Home?.Lines || [];
+  const awayLines = currentFamily?.Away?.Lines || [];
+  const homeLambda = currentFamily?.Home?.Lambda;
+  const awayLambda = currentFamily?.Away?.Lambda;
+
+  const homeNearestLine = useMemo(() => getNearestLine(homeLines, homeLambda), [homeLines, homeLambda]);
+  const awayNearestLine = useMemo(() => getNearestLine(awayLines, awayLambda), [awayLines, awayLambda]);
+
+  const homeDisplayedLines = useMemo(() => {
+    if (expandedHomeCatalogue) return homeLines;
+    return getThreeClosestLines(homeLines, homeLambda);
+  }, [homeLines, homeLambda, expandedHomeCatalogue]);
+
+  const awayDisplayedLines = useMemo(() => {
+    if (expandedAwayCatalogue) return awayLines;
+    return getThreeClosestLines(awayLines, awayLambda);
+  }, [awayLines, awayLambda, expandedAwayCatalogue]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -242,8 +303,8 @@ export default function TabTactical({ match, onNavigateTab }) {
       )}
 
       {/* Top Grid: Statistical Market Overview (Full Width / Prominent) */}
-      <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
+      <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2.5">
             <div className="p-2 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl shrink-0">
               <Crosshair size={18} />
@@ -253,18 +314,18 @@ export default function TabTactical({ match, onNavigateTab }) {
                 Statistical Market Overview
               </h3>
               <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 mt-0.5">
-                Projections statistiques directes (Corners, Tirs, Cadrés, Touches) et références de ligue.
+                Projections statistiques directes (Corners, Cadrés, Tirs, Touches) et références de ligue.
               </p>
             </div>
           </div>
           <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
-            Priorité décisionnelle
+            Sélectionnez une discipline pour explorer le détail
           </span>
         </div>
 
         {/* Compact Market Coverage Notice Summary Banner */}
         {coverageNotice && (
-          <div className="mb-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/70 p-2 sm:px-3 sm:py-2 transition-colors max-w-full overflow-hidden">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/70 p-2 sm:px-3 sm:py-2 transition-colors max-w-full overflow-hidden">
             {/* Collapsed state: single interactive summary row */}
             <button
               type="button"
@@ -368,12 +429,13 @@ export default function TabTactical({ match, onNavigateTab }) {
           </div>
         )}
 
-        {/* 4 Cards Grid - Compact Mobile Architecture */}
+        {/* 4 Cards Grid - Selectable & Interactive Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {statisticalMarkets.map(({ key, label, refKey, refType, propKey, lambdaKey }) => {
             const refVal = anchors[refKey] !== undefined ? anchors[refKey] : diag[refKey];
             const prob = props[propKey] !== undefined ? props[propKey] : probs[propKey];
             const lambdaVal = props[lambdaKey] !== undefined ? props[lambdaKey] : probs[lambdaKey];
+            const isSelected = selectedDiscipline === key;
             const mNotice = (() => {
               if (!coverageMarkets || typeof coverageMarkets !== 'object') return null;
               if (coverageMarkets[key] && typeof coverageMarkets[key] === 'object') return coverageMarkets[key];
@@ -391,15 +453,24 @@ export default function TabTactical({ match, onNavigateTab }) {
             return (
               <div
                 key={key}
-                className="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-xs min-w-0 gap-2.5"
+                className={`p-3 rounded-xl border flex flex-col justify-between shadow-xs min-w-0 gap-2.5 transition-all select-none ${
+                  isSelected
+                    ? 'bg-blue-50/50 dark:bg-blue-950/30 border-blue-500/70 ring-2 ring-blue-500/30 shadow-sm'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
               >
-                <div>
+                <button
+                  type="button"
+                  onClick={() => handleSelectDiscipline(key)}
+                  aria-pressed={isSelected}
+                  className="w-full text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg -m-1 p-1 transition-colors"
+                >
                   {/* En-tête compact */}
                   <div className="flex items-center justify-between gap-1.5 pb-1.5 border-b border-slate-200 dark:border-slate-800/60">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 truncate">
+                    <span className={`text-xs font-bold uppercase tracking-wider truncate ${isSelected ? 'text-blue-700 dark:text-blue-300' : 'text-slate-800 dark:text-slate-200'}`}>
                       {label}
                     </span>
-                    <Badge variant="default" className="text-[9px] px-1.5 py-0 font-mono shrink-0">
+                    <Badge variant={isSelected ? 'info' : 'default'} className="text-[9px] px-1.5 py-0 font-mono shrink-0">
                       {refType}
                     </Badge>
                   </div>
@@ -426,10 +497,10 @@ export default function TabTactical({ match, onNavigateTab }) {
                       </div>
 
                       <div className="flex flex-col items-center justify-center min-w-0">
-                        <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold truncate w-full" title="Probabilité supérieure à la référence de ligue">
-                          Prob &gt; Réf
+                        <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold truncate w-full" title="Probabilité supérieure à la référence ou au seuil dérivé de ligue">
+                          {key === 'throws' ? 'Prob > Seuil' : 'Prob > Réf'}
                         </span>
-                        <span className={`font-mono text-xs sm:text-sm font-black leading-tight ${getPropTextColor(Number.isFinite(prob) ? prob : 0)}`}>
+                        <span className={`font-mono text-xs sm:text-sm font-black leading-tight ${Number.isFinite(prob) ? getPropTextColor(prob) : 'text-slate-400'}`}>
                           {Number.isFinite(prob) ? `${(prob * 100).toFixed(1)}%` : '-'}
                         </span>
                       </div>
@@ -441,10 +512,10 @@ export default function TabTactical({ match, onNavigateTab }) {
                       </p>
                     </div>
                   )}
-                </div>
+                </button>
 
                 {/* Qualification secondaire repliée par défaut */}
-                <div className="pt-1.5 border-t border-slate-200/80 dark:border-slate-800/80 space-y-1.5">
+                <div className="pt-1.5 border-t border-slate-200/80 dark:border-slate-800/80 space-y-1.5" onClick={e => e.stopPropagation()}>
                   {mNotice && (() => {
                     const opMeta = getOperationalStatusMeta(mNotice.operational_status);
                     const covMeta = getBookmakerCoverageMeta(mNotice.bookmaker_coverage);
@@ -505,12 +576,425 @@ export default function TabTactical({ match, onNavigateTab }) {
                   })()}
 
                   <div className="text-[9px] text-slate-400 dark:text-slate-500 italic text-right">
-                    {key === 'throws' ? 'Moyenne arithmétique ligue' : 'Médiane empirique ligue'}
+                    {key === 'throws' ? 'Moyenne arithmétique par équipe' : 'Médiane empirique ligue'}
                   </div>
                 </div>
               </div>
             );
           })}
+        </div>
+
+        {/* Sélecteur Pills Option A — Discipline Détaillée */}
+        <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto max-w-full">
+              {statisticalMarkets.map(({ key, label, shortLabel, lambdaKey }) => {
+                const isSelected = selectedDiscipline === key;
+                const lambdaVal = props[lambdaKey];
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => handleSelectDiscipline(key)}
+                    aria-pressed={isSelected}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shrink-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                      isSelected
+                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-900/50'
+                    }`}
+                  >
+                    <span>{label}</span>
+                    {Number.isFinite(lambdaVal) && (
+                      <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded font-semibold ${
+                        isSelected
+                          ? 'bg-white/20 text-white dark:bg-slate-900/20 dark:text-slate-900'
+                          : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                      }`}>
+                        λ {lambdaVal.toFixed(1)}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Avertissement de gouvernance scientifique INTERNAL_RESEARCH_ONLY */}
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-mono text-[10px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                INTERNAL_RESEARCH_ONLY
+              </span>
+            </div>
+          </div>
+
+          {/* Bandeau explicatif de recherche */}
+          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <p className="text-[11px]">
+              <strong className="text-slate-800 dark:text-slate-200 font-semibold mr-1">Discipline active : {currentMarketMeta.label}</strong>
+              — Modélisations Poisson unilatérales par club ({
+                match.Team_Stat_Markets?.Catalogue_Version
+                  ? `Team_Stat_Markets v${match.Team_Stat_Markets.Catalogue_Version}`
+                  : (match.Team_Stat_Markets?.Schema_Version
+                      ? `Team_Stat_Markets v${match.Team_Stat_Markets.Schema_Version}`
+                      : 'Prop_Bets (Session Legacy)')
+              }).
+            </p>
+            <span className="text-[10px] text-slate-400 italic shrink-0">
+              Modèle descriptif hors trading • Aucune cote bookmaker calculée
+            </span>
+          </div>
+
+          {/* Rendu Tripartite de la Discipline Sélectionnée */}
+          {(() => {
+            // Cas 1 : Archive Legacy sans Team_Stat_Markets
+            if (!match.Team_Stat_Markets) {
+              return (
+                <div className="p-6 text-center bg-slate-50 dark:bg-slate-950 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 space-y-2">
+                  <Info className="mx-auto text-slate-400" size={24} />
+                  <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                    Marchés par équipe non disponibles pour ce match
+                  </h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+                    Ce jeu de données provient d'une session antérieure à la modélisation Poisson par équipe (V1.0). Les totaux de match et comparaisons unilatérales restent consultables ci-dessus et ci-dessous.
+                  </p>
+                </div>
+              );
+            }
+
+            // Cas 2 : Statut racine Team_Stat_Markets non CALCULATED
+            if (match.Team_Stat_Markets.Status && match.Team_Stat_Markets.Status !== 'CALCULATED') {
+              return (
+                <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 space-y-2">
+                  <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
+                    <AlertTriangle size={16} />
+                    <span>Marchés par équipe suspendus ({match.Team_Stat_Markets.Status})</span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
+                    Motif rapporté par le moteur : {match.Team_Stat_Markets.Reason || 'Calcul suspendu par le moteur pour ce match.'}
+                  </p>
+                </div>
+              );
+            }
+
+            // Cas 3 : Famille absente du catalogue pour cette discipline
+            if (!currentFamily) {
+              const isV1_0_Throws = selectedDiscipline === 'throws' && String(match.Team_Stat_Markets.Schema_Version || match.Team_Stat_Markets.Catalogue_Version) === '1.0';
+              return (
+                <div className="p-6 text-center bg-slate-50 dark:bg-slate-950 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 space-y-2">
+                  <Info className="mx-auto text-slate-400" size={24} />
+                  <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                    {isV1_0_Throws
+                      ? 'Touches (Throws) non intégrées dans le catalogue V1.0'
+                      : `Discipline ${currentMarketMeta.label} non exportée dans ce payload`}
+                  </h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+                    {isV1_0_Throws
+                      ? 'Le catalogue V1.0 intègre Corners, Cadrés et Tirs. La discipline Touches est disponible à partir des jeux de données V1.1.'
+                      : `La famille ${currentMarketMeta.familyCode} n'est pas présente dans le contrat Team_Stat_Markets de ce match.`}
+                  </p>
+                  {Number.isFinite(props[currentMarketMeta.lambdaKey]) && (
+                    <div className="mt-2 text-xs font-mono text-slate-600 dark:text-slate-400">
+                      Total match préliminaire : λ = {props[currentMarketMeta.lambdaKey].toFixed(2)}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            // Cas 4 : Famille présente mais statut non CALCULATED ou Home/Away incomplets
+            if (currentFamily.Status !== 'CALCULATED' || !currentFamily.Home || !currentFamily.Away) {
+              return (
+                <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 space-y-2">
+                  <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
+                    <AlertTriangle size={16} />
+                    <span>Calcul suspendu pour {currentMarketMeta.label} ({currentFamily?.Status || 'NON_CALCULÉ'})</span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
+                    Motif rapporté par le moteur : {currentFamily?.Reason || 'Données volumétriques ou historiques insuffisantes pour cette discipline.'}
+                  </p>
+                </div>
+              );
+            }
+
+            // Cas 5 : Calcul nominal (CALCULATED) — Rendu Tripartite Home / Match Total / Away
+            return (
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px_1fr] gap-4 items-start">
+
+                {/* 1. Pilier Domicile (Home) */}
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <TeamLogo team={homeLogoTeam} league={match.League} size="sm" />
+                      <div className="min-w-0">
+                        <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate" title={homeTeamName}>
+                          {homeTeamName}
+                        </span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 block">
+                          Domicile
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
+                        λ Attendu
+                      </span>
+                      <span className="font-mono text-lg font-black text-slate-900 dark:text-slate-100">
+                        {Number.isFinite(homeLambda) ? homeLambda.toFixed(2) : '-'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Table Over/Under Domicile */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                      <span>Lignes Over / Under</span>
+                      <span className="font-mono text-[9px] text-slate-400">Dist. Poisson</span>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs font-mono">
+                        <thead>
+                          <tr className="border-b border-slate-200/80 dark:border-slate-800/80 text-[10px] text-slate-400 uppercase">
+                            <th className="py-1 text-left font-semibold">Seuil</th>
+                            <th className="py-1 text-right font-semibold">Over</th>
+                            <th className="py-1 text-right font-semibold">Under</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
+                          {homeDisplayedLines.map((line) => {
+                            const isNearest = line.Line === homeNearestLine;
+                            return (
+                              <tr
+                                key={line.Line}
+                                className={`transition-colors ${
+                                  isNearest
+                                    ? 'bg-blue-50/60 dark:bg-blue-950/40 font-bold'
+                                    : 'hover:bg-slate-100/50 dark:hover:bg-slate-900/50'
+                                }`}
+                              >
+                                <td className="py-1.5 text-left text-slate-700 dark:text-slate-300">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>&gt; {line.Line}</span>
+                                    {isNearest && (
+                                      <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-tight">
+                                        Pivot
+                                      </span>
+                                    )}
+                                  </div>
+                                </td>
+                                <td className={`py-1.5 text-right ${Number.isFinite(line.Probability_Over) ? getPropTextColor(line.Probability_Over) : 'text-slate-400'}`}>
+                                  {Number.isFinite(line.Probability_Over) ? `${(line.Probability_Over * 100).toFixed(1)}%` : '-'}
+                                </td>
+                                <td className="py-1.5 text-right text-slate-500 dark:text-slate-400">
+                                  {Number.isFinite(line.Probability_Under) ? `${(line.Probability_Under * 100).toFixed(1)}%` : '-'}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Bouton d'extension du catalogue complet */}
+                    {homeLines.length > 3 && (
+                      <button
+                        type="button"
+                        onClick={() => setExpandedHomeCatalogue(prev => !prev)}
+                        className="w-full py-1.5 px-2 mt-1 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                      >
+                        {expandedHomeCatalogue ? (
+                          <>
+                            <Minimize2 size={11} />
+                            <span>Réduire aux 3 lignes pivots{Number.isFinite(homeLambda) ? ` (λ = ${homeLambda.toFixed(2)})` : ''}</span>
+                          </>
+                        ) : (
+                          <>
+                            <Maximize2 size={11} />
+                            <span>Afficher le catalogue complet ({homeLines.length} lignes)</span>
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* 2. Pilier Central : Match Total & Contexte Ligue (order-first sur mobile pour synthèse immédiate) */}
+                <div className="order-first lg:order-none p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3.5">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                      Total du Match
+                    </span>
+                    <Badge variant="default" className="text-[9px] font-mono">
+                      {currentMarketMeta.shortLabel}
+                    </Badge>
+                  </div>
+
+                  {/* Somme additive exacte */}
+                  <div className="text-center py-2 px-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                    <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
+                      λ Total Match
+                    </span>
+                    <span className="font-mono text-2xl font-black text-slate-900 dark:text-slate-100">
+                      {Number.isFinite(currentFamily?.Match_Total_Lambda)
+                        ? currentFamily.Match_Total_Lambda.toFixed(2)
+                        : (Number.isFinite(props[currentMarketMeta.lambdaKey]) ? props[currentMarketMeta.lambdaKey].toFixed(2) : '-')}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 mt-0.5 block">
+                      {Number.isFinite(homeLambda) ? homeLambda.toFixed(2) : '-'} (H) + {Number.isFinite(awayLambda) ? awayLambda.toFixed(2) : '-'} (A)
+                    </span>
+                  </div>
+
+                  {/* Repère de ligue & Probabilité supérieure au seuil */}
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80">
+                      <span className="text-slate-500 text-[11px] truncate" title={currentMarketMeta.refType}>
+                        {currentMarketMeta.refType}
+                      </span>
+                      <span className="font-mono font-bold text-slate-800 dark:text-slate-200 shrink-0">
+                        {Number.isFinite(anchors[currentMarketMeta.refKey]) ? anchors[currentMarketMeta.refKey].toFixed(2) : '-'}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80">
+                      <span className="text-slate-500 text-[11px] truncate">
+                        {selectedDiscipline === 'throws' ? 'Prob > Seuil match dérivé' : 'Prob > Réf ligue'}
+                      </span>
+                      <span className={`font-mono font-bold shrink-0 ${getPropTextColor(props[currentMarketMeta.propKey] || 0)}`}>
+                        {Number.isFinite(props[currentMarketMeta.propKey])
+                          ? `${(props[currentMarketMeta.propKey] * 100).toFixed(1)}%`
+                          : '-'}
+                      </span>
+                    </div>
+
+                    {/* Domination unilatérale Domicile > Extérieur */}
+                    {Number.isFinite(props[currentMarketMeta.propMoreKey]) && (
+                      <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-1">
+                        <div className="flex justify-between items-center text-[10px]">
+                          <span className="font-semibold text-slate-600 dark:text-slate-400">
+                            P(Domination Domicile) :
+                          </span>
+                          <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
+                            {(props[currentMarketMeta.propMoreKey] * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                        <ProgressBar
+                          value={props[currentMarketMeta.propMoreKey]}
+                          max={1}
+                          colorClass={getPropColor(props[currentMarketMeta.propMoreKey])}
+                          displayValue=" "
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="text-[9px] text-slate-400 dark:text-slate-500 italic text-center">
+                    {selectedDiscipline === 'throws'
+                      ? '* La référence de ligue (mean_throws) est une moyenne par équipe, tandis que le seuil Over évalue le volume global du match.'
+                      : '* Médiane globale calculée sur l’ensemble des matchs de la compétition.'}
+                  </p>
+                </div>
+
+                {/* 3. Pilier Extérieur (Away) */}
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <TeamLogo team={awayLogoTeam} league={match.League} size="sm" />
+                      <div className="min-w-0">
+                        <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate" title={awayTeamName}>
+                          {awayTeamName}
+                        </span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400 block">
+                          Extérieur
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
+                        λ Attendu
+                      </span>
+                      <span className="font-mono text-lg font-black text-slate-900 dark:text-slate-100">
+                        {Number.isFinite(awayLambda) ? awayLambda.toFixed(2) : '-'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Table Over/Under Extérieur */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                      <span>Lignes Over / Under</span>
+                      <span className="font-mono text-[9px] text-slate-400">Dist. Poisson</span>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs font-mono">
+                        <thead>
+                          <tr className="border-b border-slate-200/80 dark:border-slate-800/80 text-[10px] text-slate-400 uppercase">
+                            <th className="py-1 text-left font-semibold">Seuil</th>
+                            <th className="py-1 text-right font-semibold">Over</th>
+                            <th className="py-1 text-right font-semibold">Under</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
+                          {awayDisplayedLines.map((line) => {
+                            const isNearest = line.Line === awayNearestLine;
+                            return (
+                              <tr
+                                key={line.Line}
+                                className={`transition-colors ${
+                                  isNearest
+                                    ? 'bg-blue-50/60 dark:bg-blue-950/40 font-bold'
+                                    : 'hover:bg-slate-100/50 dark:hover:bg-slate-900/50'
+                                }`}
+                              >
+                                <td className="py-1.5 text-left text-slate-700 dark:text-slate-300">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>&gt; {line.Line}</span>
+                                    {isNearest && (
+                                      <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-tight">
+                                        Pivot
+                                      </span>
+                                    )}
+                                  </div>
+                                </td>
+                                <td className={`py-1.5 text-right ${Number.isFinite(line.Probability_Over) ? getPropTextColor(line.Probability_Over) : 'text-slate-400'}`}>
+                                  {Number.isFinite(line.Probability_Over) ? `${(line.Probability_Over * 100).toFixed(1)}%` : '-'}
+                                </td>
+                                <td className="py-1.5 text-right text-slate-500 dark:text-slate-400">
+                                  {Number.isFinite(line.Probability_Under) ? `${(line.Probability_Under * 100).toFixed(1)}%` : '-'}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Bouton d'extension du catalogue complet */}
+                    {awayLines.length > 3 && (
+                      <button
+                        type="button"
+                        onClick={() => setExpandedAwayCatalogue(prev => !prev)}
+                        className="w-full py-1.5 px-2 mt-1 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                      >
+                        {expandedAwayCatalogue ? (
+                          <>
+                            <Minimize2 size={11} />
+                            <span>Réduire aux 3 lignes pivots{Number.isFinite(awayLambda) ? ` (λ = ${awayLambda.toFixed(2)})` : ''}</span>
+                          </>
+                        ) : (
+                          <>
+                            <Maximize2 size={11} />
+                            <span>Afficher le catalogue complet ({awayLines.length} lignes)</span>
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            );
+          })()}
         </div>
       </div>
 
@@ -772,7 +1256,7 @@ export default function TabTactical({ match, onNavigateTab }) {
             </table>
           </div>
           <p className="text-xs text-slate-400 italic pt-2 border-t border-slate-100 dark:border-slate-800">
-            * Indicateurs statistiques de référence algorithmique (moyennes et médianes de ligue). Ne constituent pas des lignes ou cotes bookmaker.
+            * Indicateurs statistiques de référence algorithmique (moyennes et médianes de ligue). Pour les Touches, la référence de ligue (mean_throws) correspond à une moyenne par équipe, tandis que la probabilité supérieure au repère évalue le volume global du match face au seuil dérivé de ligue.
           </p>
         </div>
       </Card>
