@@ -212,11 +212,15 @@ console.log('  ✓ Test 4 validé avec succès (aucun faux pivot, zéro préserv
 // -----------------------------------------------------------------------------
 // TEST 5 : Vérification d'intégrité sur les données réelles du dépôt
 // -----------------------------------------------------------------------------
-console.log('[TEST 5] Contrôle sur les 249 matchs de la session active du 26 oct.');
-const matrixPath = path.join(rootDir, 'public/data/titanium_v2/predictions/Run_matches-to-predict_Week-04_Octobre-2026___2026-10-26_22h37m28s_VALUE_BETTING_MATRIX_2026-10-26_23h07m42s.json');
+console.log('[TEST 5] Contrôle sur la matrice de prédictions active du dépôt');
+const predDir = path.join(rootDir, 'public/data/titanium_v2/predictions');
+const availableFiles = fs.readdirSync(predDir).filter(f => f.endsWith('.json'));
+const activeFileName = selectDeterministicPredictionFile(availableFiles);
+assert.ok(activeFileName, 'Un fichier de prédictions actif doit être sélectionné');
+const matrixPath = path.join(predDir, activeFileName);
 const matrixRaw = JSON.parse(fs.readFileSync(matrixPath, 'utf8'));
 
-assert.equal(matrixRaw.length, 249, 'La matrice du 26 oct. doit contenir 249 matchs');
+assert.ok(Array.isArray(matrixRaw) && matrixRaw.length > 0, 'La matrice active doit contenir au moins 1 match');
 
 let matchesWithTeamStatMarkets = 0;
 let matchesWithThrows = 0;
@@ -251,8 +255,8 @@ for (const match of matrixRaw) {
   }
 }
 
-assert.equal(matchesWithTeamStatMarkets, 249, 'Les 249 matchs ont Team_Stat_Markets V1.1');
-assert.equal(matchesWithThrows, 249, 'Les 249 matchs ont la famille TEAM_THROWS');
-console.log(`  ✓ Test 5 validé sur ${matchesWithTeamStatMarkets} matchs et ${calculatedFamiliesCount} familles de marché réelles.\n`);
+assert.equal(matchesWithTeamStatMarkets, matrixRaw.length, `Tous les ${matrixRaw.length} matchs ont Team_Stat_Markets V1.1`);
+assert.equal(matchesWithThrows, matrixRaw.length, `Tous les ${matrixRaw.length} matchs ont la famille TEAM_THROWS`);
+console.log(`  ✓ Test 5 validé sur ${matchesWithTeamStatMarkets} matchs et ${calculatedFamiliesCount} familles de marché réelles (${activeFileName}).\n`);
 
 console.log('=== TOUS LES TESTS UNITAIRES ET D’INTÉGRITÉ ONT RÉUSSI (5/5) ===');

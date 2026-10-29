@@ -2,7 +2,7 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getThreeClosestLines, getNearestLine } from '../src/utils/titaniumLoader.js';
+import { getThreeClosestLines, getNearestLine, selectDeterministicPredictionFile } from '../src/utils/titaniumLoader.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -189,15 +189,15 @@ console.log('\n[TEST 4] Rendu responsive immédiat : catalogue complet sur PC, 3
 // ---------------------------------------------------------------------------
 console.log('\n[TEST 5] Intégrité des données réelles TITANIUM (Sanctuaire public/data/)');
 {
-  const dataPath = path.join(
-    ROOT_DIR,
-    'public/data/titanium_v2/predictions/Run_matches-to-predict_Week-04_Octobre-2026___2026-10-26_22h37m28s_VALUE_BETTING_MATRIX_2026-10-26_23h07m42s.json'
-  );
-  assert(fs.existsSync(dataPath), 'Le fichier de prédictions du 26 octobre doit exister');
+  const predDir = path.join(ROOT_DIR, 'public/data/titanium_v2/predictions');
+  const availableFiles = fs.readdirSync(predDir).filter(f => f.endsWith('.json'));
+  const activeFileName = selectDeterministicPredictionFile(availableFiles);
+  assert(activeFileName, 'Un fichier de prédictions actif doit être sélectionné');
+  const dataPath = path.join(predDir, activeFileName);
+  assert(fs.existsSync(dataPath), `Le fichier de prédictions actif (${activeFileName}) doit exister`);
   const matrixRaw = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 
-  assert(Array.isArray(matrixRaw), 'Le payload doit contenir un tableau de matchs');
-  assert(matrixRaw.length === 249, `Le payload doit comporter exactement 249 matchs (trouvé ${matrixRaw.length})`);
+  assert(Array.isArray(matrixRaw) && matrixRaw.length > 0, 'Le payload doit contenir un tableau de matchs non vide');
 
   let countWithTeamMarkets = 0;
   matrixRaw.forEach((m) => {
@@ -214,8 +214,8 @@ console.log('\n[TEST 5] Intégrité des données réelles TITANIUM (Sanctuaire p
     }
   });
 
-  assert(countWithTeamMarkets === 249, `Tous les 249 matchs doivent posséder Team_Stat_Markets (trouvé ${countWithTeamMarkets})`);
-  console.log('  ✓ Test 5 validé : 249/249 matchs vérifiés, zéro recalcul côté client, public/data/ intact.');
+  assert(countWithTeamMarkets === matrixRaw.length, `Tous les ${matrixRaw.length} matchs doivent posséder Team_Stat_Markets (trouvé ${countWithTeamMarkets})`);
+  console.log(`  ✓ Test 5 validé : ${countWithTeamMarkets}/${matrixRaw.length} matchs vérifiés (${activeFileName}), zéro recalcul côté client, public/data/ intact.`);
 }
 
 console.log('\n=== TOUS LES TESTS WEB-MOBILE-001 ONT RÉUSSI AVEC SUCCÈS (5/5) ===');

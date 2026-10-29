@@ -17,7 +17,8 @@ import {
   Fingerprint,
   Calendar,
   Star,
-  FolderPlus
+  FolderPlus,
+  Compass
 } from 'lucide-react';
 
 import TabCoreMarket from './dashboard/TabCoreMarket';
@@ -27,8 +28,20 @@ import TabCalibration from './dashboard/TabCalibration';
 import TabRiskContext from './dashboard/TabRiskContext';
 import TabSeries from './dashboard/TabSeries';
 import TabDeepDive from './dashboard/TabDeepDive';
+import TabFootballIntelligence from './dashboard/TabFootballIntelligence';
 import { TeamLogo, LeagueLogo, getLeagueDisplayName, getLeagueCountryLabel } from '../utils/teamLogos';
 import { getSeriesStatsUrl, validateSeriesMetadata } from '../utils/titaniumLoader';
+import {
+  loadFootballIntelligenceForMatch,
+  resolveFiLeagueConfig,
+  classifyFiState,
+  buildFiMatchSummary
+} from '../utils/footballIntelligenceLoader';
+import {
+  FiEloSummaryStrip,
+  FiOpponentQualitySummary,
+  FiDocumentedRivalryCard
+} from './dashboard/FootballIntelligenceSummaries';
 import { getMatchScheduleDetails } from '../utils/matchSchedule';
 import { useFavorites } from '../context/FavoritesContext.jsx';
 import { GroupManagerModal } from './favorites/GroupManagerModal.jsx';
@@ -57,6 +70,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const [serieStats, setSerieStats] = useState(null);
   const [seriesError, setSeriesError] = useState(null);
   const [loadingStats, setLoadingStats] = useState(false);
+  const [fiState, setFiState] = useState(null);
   const dashboardRef = useRef(null);
   const headerRef = useRef(null);
   const tabsContainerRef = useRef(null);
@@ -94,7 +108,56 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
     { id: 'series', label: 'Series & Form', mobileLabel: 'SERIES', icon: <TrendingUp size={14} /> },
     { id: 'narrative', label: 'Narrative & Justice', mobileLabel: 'NARRATIVE', icon: <Brain size={14} /> },
     { id: 'calibration', label: 'Model Diagnostics', mobileLabel: 'DIAGNOSTICS', icon: <Calculator size={14} /> },
+    { id: 'intelligence', label: 'Football Intelligence', mobileLabel: 'INTEL', icon: <Compass size={14} /> },
   ];
+
+  const isFiLeague = useMemo(
+    () => Boolean(match && resolveFiLeagueConfig(match.League || match.league)),
+    [match]
+  );
+
+  const currentMatchFiKey = match
+    ? `${match.League || match.league || ''}::${match.Match_ID || match.Matchup || ''}::${match.Match_Date || match.date || ''}`
+    : '';
+  const currentMatchFi = fiState && fiState.matchKey === currentMatchFiKey ? fiState : null;
+  const fiLoading = isFiLeague && currentMatchFi === null;
+  const fiSummary = useMemo(() => buildFiMatchSummary(currentMatchFi), [currentMatchFi]);
+  const fiStatus = !isFiLeague
+    ? 'unsupported'
+    : fiLoading
+      ? 'loading'
+      : classifyFiState(currentMatchFi);
+
+  useEffect(() => {
+    if (!match || !currentMatchFiKey || !isFiLeague) return;
+    if (currentMatchFi !== null) return;
+
+    let cancelled = false;
+
+    loadFootballIntelligenceForMatch(match)
+      .then((res) => {
+        if (!cancelled) {
+          setFiState({ matchKey: currentMatchFiKey, ...res });
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setFiState({
+            matchKey: currentMatchFiKey,
+            available: false,
+            matched: false,
+            status: 'ERROR',
+            reason: err?.message || 'Unexpected error while loading Football Intelligence.',
+            association: null,
+            dataset: null
+          });
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [match, currentMatchFiKey, isFiLeague, currentMatchFi]);
 
   useEffect(() => {
     async function fetchSerieStats() {
@@ -769,13 +832,34 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                 <span>Séries indisponibles ou rejetées : {seriesError}</span>
               </div>
             )}
+            {isFiLeague && (
+              <FiOpponentQualitySummary
+                status={fiStatus}
+                summary={fiSummary}
+                homeLabel={homeName}
+                awayLabel={awayName}
+                onOpenDetails={() => navigateToTab('intelligence')}
+              />
+            )}
             <TabSeries stats={serieStats} match={match} loading={loadingStats} onNavigateTab={navigateToTab} />
           </div>
         );
       case 'narrative':
-        return <TabNarrative match={match} onNavigateTab={navigateToTab} />;
+        return (
+          <div className="flex flex-col gap-4">
+            <TabNarrative match={match} onNavigateTab={navigateToTab} />
+            {isFiLeague && fiSummary?.rivalry?.isDocumentedRivalry && (
+              <FiDocumentedRivalryCard
+                rivalry={fiSummary.rivalry}
+                onOpenDetails={() => navigateToTab('intelligence')}
+              />
+            )}
+          </div>
+        );
       case 'calibration':
         return <TabCalibration match={match} onNavigateTab={navigateToTab} />;
+      case 'intelligence':
+        return <TabFootballIntelligence match={match} fiState={currentMatchFi} loading={fiLoading} />;
       default:
         return null;
     }
@@ -1342,6 +1426,17 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
           </div>
         </div>
       </div>
+
+      {/* Bandeau résumé Football Intelligence (Elo avant-match & Rang) */}
+      {isFiLeague && (
+        <FiEloSummaryStrip
+          status={fiStatus}
+          summary={fiSummary}
+          homeLabel={homeName}
+          awayLabel={awayName}
+          onOpenDetails={() => navigateToTab('intelligence')}
+        />
+      )}
 
       {/* Tab Content with Directional Horizontal Sliding Panels & Interactive Mobile Touch Drag */}
       <div

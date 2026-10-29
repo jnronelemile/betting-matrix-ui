@@ -10,6 +10,7 @@ function scanTitaniumV2() {
     matches: [],
     seriesRuns: [],
     seriesFlatLeagues: [],
+    footballIntelligence: [],
     tickets: {
       assembled: null,
       finals: null,
@@ -59,6 +60,29 @@ function scanTitaniumV2() {
     if (fs.existsSync(liguesDir)) {
       manifest.tickets.leagues = fs.readdirSync(liguesDir).filter(f => f.endsWith('.json'));
     }
+  }
+
+  const fiDir = path.join(baseDir, 'football_intelligence');
+  if (fs.existsSync(fiDir)) {
+    const collectFiFiles = (dir, relPrefix = '') => {
+      let entries = [];
+      try {
+        entries = fs.readdirSync(dir, { withFileTypes: true });
+      } catch (e) {
+        return;
+      }
+      for (const entry of entries) {
+        const relPath = relPrefix ? `${relPrefix}/${entry.name}` : entry.name;
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          collectFiFiles(fullPath, relPath);
+        } else if (entry.isFile() && entry.name.endsWith('.json')) {
+          manifest.footballIntelligence.push(`/data/titanium_v2/football_intelligence/${relPath}`);
+        }
+      }
+    };
+    collectFiFiles(fiDir);
+    manifest.footballIntelligence.sort();
   }
 
   return manifest;
