@@ -1,10 +1,51 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Badge } from './ui/Badge';
-import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Trophy, Radio, Star, FolderPlus } from 'lucide-react';
-import { TIME_SLOTS, getLegTimeSlot } from '../utils/ticketFilters';
+import {
+  ChevronRight,
+  AlertTriangle,
+  ChevronDown,
+  Calendar,
+  Maximize2,
+  Minimize2,
+  Trophy,
+  Radio,
+  Star,
+  FolderPlus,
+  SlidersHorizontal,
+  Clock,
+  X
+} from 'lucide-react';
+import {
+  TIME_SLOTS,
+  SUB_TIME_SLOTS,
+  TIME_SLOT_HIERARCHY,
+  getLegTimeSlot,
+  getLegSubTimeSlot,
+  matchesTimeSlot
+} from '../utils/ticketFilters';
 import { TeamLogo, LeagueLogo, getLeagueDisplayName, getLeagueCountryLabel } from '../utils/teamLogos';
 import { useFavorites } from '../context/FavoritesContext.jsx';
 import { GroupManagerModal } from './favorites/GroupManagerModal.jsx';
+
+// Libellés compacts et conviviaux pour la navigation progressive par sous-créneaux (WEB-FILTERS-001)
+const MACRO_ALL_LABELS = {
+  MATIN: 'Toute la matinée',
+  APRES_MIDI: 'Tout l\'après-midi',
+  SOIR: 'Toute la soirée'
+};
+
+// Ordre d'affichage chronologique des filtres macro (rendu uniquement ; TIME_SLOTS inchangé)
+const TIME_FILTER_DISPLAY_ORDER = ['ALL', 'NUIT', 'MATIN', 'APRES_MIDI', 'SOIR'];
+
+const SUB_SLOT_COMPACT_LABELS = {
+  MATIN_TOT: '05h–09h',
+  FIN_MATINEE: '09h–12h',
+  DEBUT_APRES_MIDI: '12h–15h',
+  FIN_APRES_MIDI: '15h–18h',
+  DEBUT_SOIREE: '18h–21h',
+  FIN_SOIREE: '21h–00h',
+  NUIT: '00h–05h'
+};
 
 import {
   formatTimeAMPM,
@@ -228,10 +269,154 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
   const [collapsedDates, setCollapsedDates] = useState({});
   const [showLiveOnly, setShowLiveOnly] = useState(false);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('ALL');
+  const [selectedSubTimeSlot, setSelectedSubTimeSlot] = useState('ALL');
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
   const [classifyMatch, setClassifyMatch] = useState(null);
 
   const scrollContainerRef = useRef(null);
+  const advancedBtnRef = useRef(null);
+  const popoverContainerRef = useRef(null);
+  const popoverRef = useRef(null);
+  const timeRowRef = useRef(null);
+  const [timeRowOverflow, setTimeRowOverflow] = useState({ left: false, right: false });
+
+  // Indices de débordement horizontal (fondu aux bords) sans composant supplémentaire
+  const updateTimeRowOverflow = () => {
+    const el = timeRowRef.current;
+    if (!el) return;
+    const left = el.scrollLeft > 2;
+    const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+    setTimeRowOverflow(prev => (prev.left === left && prev.right === right ? prev : { left, right }));
+  };
+
+  const timeRowMask = (timeRowOverflow.left || timeRowOverflow.right)
+    ? (() => {
+        const mask = `linear-gradient(to right, ${timeRowOverflow.left ? 'transparent 0, #000 14px' : '#000 0'}, ${timeRowOverflow.right ? '#000 calc(100% - 14px), transparent 100%' : '#000 100%'})`;
+        return { WebkitMaskImage: mask, maskImage: mask };
+      })()
+    : undefined;
+
+  // Recentrage horizontal minimal du filtre actif (scrollLeft uniquement : aucun saut vertical)
+  useEffect(() => {
+    const row = timeRowRef.current;
+    if (!row) return;
+    const btn = row.querySelector(`[data-time-slot-id="${selectedTimeSlot}"]`);
+    if (btn) {
+      const pad = 16;
+      const left = btn.offsetLeft - row.offsetLeft;
+      const right = left + btn.offsetWidth;
+      if (left - pad < row.scrollLeft) {
+        row.scrollTo({ left: Math.max(0, left - pad), behavior: 'smooth' });
+      } else if (right + pad > row.scrollLeft + row.clientWidth) {
+        row.scrollTo({ left: right + pad - row.clientWidth, behavior: 'smooth' });
+      }
+    }
+    updateTimeRowOverflow();
+  }, [selectedTimeSlot]);
+
+  useEffect(() => {
+    updateTimeRowOverflow();
+    window.addEventListener('resize', updateTimeRowOverflow);
+    return () => window.removeEventListener('resize', updateTimeRowOverflow);
+  }, []);
+
+  // Défilement horizontal fluide à la molette verticale classique (sans Shift) avec respect strict des limites
+  useEffect(() => {
+    const el = timeRowRef.current;
+    if (!el) return;
+
+    const handleWheel = (e) => {
+      // 1. Préserver le défilement horizontal natif (trackpad horizontal ou molette multidirectionnelle)
+      if (Math.abs(e.deltaX) >= Math.abs(e.deltaY) && Math.abs(e.deltaX) > 0) {
+        return;
+      }
+
+      // 2. Si aucun débordement horizontal effectif, laisser défiler verticalement
+      const maxScrollLeft = el.scrollWidth - el.clientWidth;
+      if (maxScrollLeft <= 1) {
+        return;
+      }
+
+      let delta = e.deltaY;
+      if (e.deltaMode === 1) delta *= 33; // DOM_DELTA_LINE
+      else if (e.deltaMode === 2) delta *= el.clientWidth; // DOM_DELTA_PAGE
+
+      if (delta === 0) return;
+
+      // 3. Défilement vers la droite (delta > 0) : intercepter uniquement si la rangée peut avancer
+      if (delta > 0 && el.scrollLeft < maxScrollLeft - 1) {
+        e.preventDefault();
+        el.scrollLeft = Math.min(maxScrollLeft, el.scrollLeft + delta);
+        updateTimeRowOverflow();
+        return;
+      }
+
+      // 4. Défilement vers la gauche (delta < 0) : intercepter uniquement si la rangée peut reculer
+      if (delta < 0 && el.scrollLeft > 1) {
+        e.preventDefault();
+        el.scrollLeft = Math.max(0, el.scrollLeft + delta);
+        updateTimeRowOverflow();
+        return;
+      }
+
+      // 5. Limite atteinte dans la direction demandée : ne pas appeler preventDefault pour laisser défiler verticalement
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, []);
+
+  // Bascule de macro-créneau historique avec réinitialisation du sous-créneau actif et fermeture du popover
+  const handleSelectMacroSlot = (slotId) => {
+    setSelectedTimeSlot(slotId);
+    setSelectedSubTimeSlot('ALL');
+    setIsAdvancedOpen(false);
+  };
+
+  // Sélection d'un sous-créneau précis depuis le popover Avancé (synchronise le macro parent)
+  const handleSelectSubSlot = (subId) => {
+    if (selectedSubTimeSlot === subId) {
+      setSelectedSubTimeSlot('ALL');
+    } else {
+      setSelectedSubTimeSlot(subId);
+      const parentMacro = SUB_TIME_SLOTS[subId]?.legacySlot;
+      if (parentMacro) {
+        setSelectedTimeSlot(parentMacro);
+      }
+    }
+  };
+
+  // Fermeture du popover Avancé lors d'un clic extérieur ou de l'appui sur Escape (sans effacer le filtre)
+  useEffect(() => {
+    if (!isAdvancedOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsAdvancedOpen(false);
+        advancedBtnRef.current?.focus();
+      }
+    };
+
+    const handleClickOutside = (e) => {
+      if (
+        popoverContainerRef.current &&
+        !popoverContainerRef.current.contains(e.target)
+      ) {
+        setIsAdvancedOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isAdvancedOpen]);
 
   // Détection du défilement pour masquer le bandeau informatif supérieur sur mobile
   const handleContainerScroll = (e) => {
@@ -262,36 +447,57 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
     return matches.filter(m => isMatchLive(m, currentTime)).length;
   }, [matches, currentTime]);
 
-  // Décompte dynamique par créneau horaire (respecte showLiveOnly pour ne pas afficher de compteurs faussés)
+  // Décompte dynamique par macro-créneau et sous-créneau (respecte showLiveOnly pour ne pas afficher de compteurs faussés)
   const timeSlotCounts = useMemo(() => {
     const pool = showLiveOnly ? matches.filter(m => isMatchLive(m, currentTime)) : matches;
-    const counts = {
+    const macroCounts = {
       ALL: pool.length,
       MATIN: 0,
       APRES_MIDI: 0,
       SOIR: 0,
       NUIT: 0
     };
+    const subCounts = {
+      NUIT: 0,
+      MATIN_TOT: 0,
+      FIN_MATINEE: 0,
+      DEBUT_APRES_MIDI: 0,
+      FIN_APRES_MIDI: 0,
+      DEBUT_SOIREE: 0,
+      FIN_SOIREE: 0
+    };
+
     for (const m of pool) {
-      const slot = getLegTimeSlot(m);
-      if (counts[slot] !== undefined) {
-        counts[slot]++;
+      const macro = getLegTimeSlot(m);
+      if (macroCounts[macro] !== undefined) {
+        macroCounts[macro]++;
+      }
+      const sub = getLegSubTimeSlot(m);
+      if (subCounts[sub] !== undefined) {
+        subCounts[sub]++;
       }
     }
-    return counts;
+    return { macro: macroCounts, sub: subCounts };
   }, [matches, showLiveOnly, currentTime]);
 
-  // Filtrage combiné : LIVE estimé et/ou Créneau horaire
+  // Filtre horaire effectif : sous-créneau précis si actif, sinon macro-créneau ou 'ALL'
+  const activeTimeFilter = useMemo(() => {
+    if (selectedTimeSlot === 'ALL') return 'ALL';
+    if (selectedSubTimeSlot !== 'ALL') return selectedSubTimeSlot;
+    return selectedTimeSlot;
+  }, [selectedTimeSlot, selectedSubTimeSlot]);
+
+  // Filtrage combiné : LIVE estimé et/ou Créneau horaire (macro ou sous-créneau)
   const visibleMatches = useMemo(() => {
     let result = matches;
     if (showLiveOnly) {
       result = result.filter(m => isMatchLive(m, currentTime));
     }
-    if (selectedTimeSlot !== 'ALL') {
-      result = result.filter(m => getLegTimeSlot(m) === selectedTimeSlot);
+    if (activeTimeFilter !== 'ALL') {
+      result = result.filter(m => matchesTimeSlot(getLegSubTimeSlot(m), activeTimeFilter));
     }
     return result;
-  }, [matches, showLiveOnly, selectedTimeSlot, currentTime]);
+  }, [matches, showLiveOnly, activeTimeFilter, currentTime]);
 
   // 1. Groupement des matchs visibles par date
   const groupedMatches = useMemo(() => {
@@ -401,48 +607,177 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
           )}
         </div>
 
-        {/* Ligne 2 : Rangée de filtres par créneaux horaires (Matin, Après-midi, Soir, Nuit) */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none text-[11px]">
-          <button
-            type="button"
-            onClick={() => setSelectedTimeSlot('ALL')}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
-              selectedTimeSlot === 'ALL'
-                ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-            }`}
+        {/* Ligne 2 : Filtres horaires principaux (ordre chronologique) + bouton icône Avancé (WEB-FILTERS-001) */}
+        <div className="flex items-center gap-1 text-[11px] relative">
+          {/* Zone défilante native (tactile / trackpad) ; masque de fondu discret aux bords en débordement */}
+          <div
+            ref={timeRowRef}
+            onScroll={updateTimeRowOverflow}
+            style={timeRowMask}
+            className="flex-1 min-w-0 flex items-center gap-1 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            <span>Tous</span>
-            <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
-              selectedTimeSlot === 'ALL' ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
-            }`}>
-              {timeSlotCounts.ALL}
-            </span>
-          </button>
-          {Object.values(TIME_SLOTS).map(slot => {
-            const count = timeSlotCounts[slot.id] || 0;
-            const isSelected = selectedTimeSlot === slot.id;
-            return (
-              <button
-                key={slot.id}
-                type="button"
-                onClick={() => setSelectedTimeSlot(slot.id)}
-                title={`${slot.label} (${slot.hoursRange}) : ${slot.description}`}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
-                  isSelected
-                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
+            {TIME_FILTER_DISPLAY_ORDER.map(slotId => {
+              const slot = slotId === 'ALL' ? null : TIME_SLOTS[slotId];
+              if (slotId !== 'ALL' && !slot) return null;
+              const label = slot ? slot.label : 'Tous';
+              const count = timeSlotCounts.macro[slotId] || 0;
+              const isSelected = selectedTimeSlot === slotId;
+              return (
+                <button
+                  key={slotId}
+                  data-time-slot-id={slotId}
+                  type="button"
+                  onClick={() => handleSelectMacroSlot(slotId)}
+                  aria-pressed={isSelected}
+                  title={slot ? `${slot.label} (${slot.hoursRange}) : ${slot.description}` : undefined}
+                  className={`flex items-center gap-1 h-8 px-2 rounded-md text-[11px] leading-none font-medium whitespace-nowrap transition-colors shrink-0 border ${
+                    isSelected
+                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                      : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                  }`}
+                >
+                  <span>{label}</span>
+                  <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
+                    isSelected ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Bouton Avancé (icône seule, largeur fixe) avec conteneur popover ancré */}
+          <div className="relative shrink-0" ref={popoverContainerRef}>
+            <button
+              ref={advancedBtnRef}
+              type="button"
+              onClick={() => setIsAdvancedOpen(prev => !prev)}
+              aria-expanded={isAdvancedOpen}
+              aria-haspopup="dialog"
+              aria-label={
+                selectedSubTimeSlot !== 'ALL' && SUB_TIME_SLOTS[selectedSubTimeSlot]
+                  ? `Filtres horaires avancés (actif : ${SUB_TIME_SLOTS[selectedSubTimeSlot].label})`
+                  : 'Filtres horaires avancés'
+              }
+              title={
+                selectedSubTimeSlot !== 'ALL' && SUB_TIME_SLOTS[selectedSubTimeSlot]
+                  ? `Filtre avancé actif : ${SUB_TIME_SLOTS[selectedSubTimeSlot].label} (${SUB_TIME_SLOTS[selectedSubTimeSlot].hoursRange})`
+                  : 'Filtres horaires avancés (7 sous-créneaux)'
+              }
+              className={`relative flex items-center justify-center w-9 h-8 rounded-md transition-colors shrink-0 border select-none ${
+                selectedSubTimeSlot !== 'ALL'
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs ring-1 ring-indigo-400/30'
+                  : isAdvancedOpen
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700'
+                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+            >
+              <SlidersHorizontal size={14} aria-hidden="true" />
+              {selectedSubTimeSlot !== 'ALL' && (
+                <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-amber-300" aria-hidden="true" />
+              )}
+            </button>
+
+            {/* Panneau popover temporaire compact */}
+            {isAdvancedOpen && (
+              <div
+                ref={popoverRef}
+                role="dialog"
+                aria-label="Filtres horaires avancés"
+                data-testid="sub-time-slots-popover"
+                className="absolute right-0 top-full mt-1.5 w-[280px] max-w-[calc(100vw-2rem)] bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 p-2.5 z-50 flex flex-col gap-2"
               >
-                <span>{slot.label}</span>
-                <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
-                  isSelected ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+                {/* En-tête du panneau */}
+                <div className="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-800/80">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <Clock size={12} className="text-indigo-600 dark:text-indigo-400 shrink-0" />
+                    <span className="text-[11px] font-bold text-slate-900 dark:text-slate-100 truncate">
+                      Sous-créneaux horaires
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0">
+                    {(selectedSubTimeSlot !== 'ALL' || selectedTimeSlot !== 'ALL') && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedSubTimeSlot('ALL');
+                          setSelectedTimeSlot('ALL');
+                        }}
+                        className="text-[10px] text-indigo-600 dark:text-indigo-400 hover:underline font-medium px-1 py-0.5 rounded transition-colors"
+                        title="Réinitialiser tous les filtres horaires"
+                      >
+                        Réinitialiser
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setIsAdvancedOpen(false)}
+                      className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                      aria-label="Fermer le panneau des sous-créneaux"
+                    >
+                      <X size={13} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Liste des 7 sous-créneaux canoniques */}
+                <div className="flex flex-col gap-1 max-h-[280px] overflow-y-auto custom-scrollbar pr-0.5">
+                  {Object.values(SUB_TIME_SLOTS).map((subSlot) => {
+                    const isSelected = selectedSubTimeSlot === subSlot.id;
+                    const count = timeSlotCounts.sub[subSlot.id] || 0;
+                    const parentMacro = TIME_SLOTS[subSlot.legacySlot];
+
+                    return (
+                      <button
+                        key={subSlot.id}
+                        data-subslot-id={subSlot.id}
+                        type="button"
+                        onClick={() => handleSelectSubSlot(subSlot.id)}
+                        aria-pressed={isSelected}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left transition-all border ${
+                          isSelected
+                            ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-900 dark:text-indigo-200 border-indigo-200 dark:border-indigo-800/80 font-medium shadow-2xs'
+                            : 'hover:bg-slate-100 dark:hover:bg-slate-800/70 text-slate-700 dark:text-slate-300 border-transparent'
+                        }`}
+                      >
+                        <div className="flex flex-col min-w-0 pr-2">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[11px] font-semibold truncate">
+                              {subSlot.label}
+                            </span>
+                            {parentMacro && (
+                              <span className="text-[8.5px] uppercase font-mono px-1 py-0.2 rounded text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800">
+                                {parentMacro.label}
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500">
+                            {subSlot.hoursRange} ({subSlot.rangeLabel})
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold ${
+                            isSelected
+                              ? 'bg-indigo-600 text-white'
+                              : count > 0
+                              ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                              : 'bg-slate-50 dark:bg-slate-800/40 text-slate-400 dark:text-slate-600'
+                          }`}>
+                            {count}
+                          </span>
+                          {isSelected && (
+                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 dark:bg-indigo-400 shrink-0" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -486,18 +821,36 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
       {matches.length > 0 && visibleMatches.length === 0 && !showLiveOnly && selectedTimeSlot !== 'ALL' && (
         <div className="flex flex-col items-center justify-center py-10 px-4 text-center rounded-xl border border-dashed border-slate-300 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
           <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-            Aucun match sur ce créneau ({TIME_SLOTS[selectedTimeSlot]?.label || selectedTimeSlot})
+            Aucun match sur ce créneau (
+            {selectedSubTimeSlot !== 'ALL' && SUB_TIME_SLOTS[selectedSubTimeSlot]
+              ? `${TIME_SLOTS[selectedTimeSlot]?.label} · ${SUB_TIME_SLOTS[selectedSubTimeSlot].label}`
+              : (TIME_SLOTS[selectedTimeSlot]?.label || selectedTimeSlot)}
+            )
           </span>
           <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xs">
-            Aucune rencontre trouvée pour la plage horaire {TIME_SLOTS[selectedTimeSlot]?.hoursRange}.
+            Aucune rencontre trouvée pour la plage horaire{' '}
+            {selectedSubTimeSlot !== 'ALL' && SUB_TIME_SLOTS[selectedSubTimeSlot]
+              ? SUB_TIME_SLOTS[selectedSubTimeSlot].hoursRange
+              : TIME_SLOTS[selectedTimeSlot]?.hoursRange}.
           </span>
-          <button
-            type="button"
-            onClick={() => setSelectedTimeSlot('ALL')}
-            className="mt-3 px-3 py-1 rounded-lg text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-colors"
-          >
-            Afficher tous les créneaux horaires
-          </button>
+          <div className="flex items-center gap-2 mt-3">
+            {selectedSubTimeSlot !== 'ALL' && (
+              <button
+                type="button"
+                onClick={() => setSelectedSubTimeSlot('ALL')}
+                className="px-3 py-1 rounded-lg text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50/60 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-950/70 transition-colors"
+              >
+                Voir {MACRO_ALL_LABELS[selectedTimeSlot] || 'toute la plage'}
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => handleSelectMacroSlot('ALL')}
+              className="px-3 py-1 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              Afficher tous les créneaux
+            </button>
+          </div>
         </div>
       )}
 
