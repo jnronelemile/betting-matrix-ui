@@ -321,6 +321,52 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
     return () => window.removeEventListener('resize', updateTimeRowOverflow);
   }, []);
 
+  // Défilement horizontal fluide à la molette verticale classique (sans Shift) avec respect strict des limites
+  useEffect(() => {
+    const el = timeRowRef.current;
+    if (!el) return;
+
+    const handleWheel = (e) => {
+      // 1. Préserver le défilement horizontal natif (trackpad horizontal ou molette multidirectionnelle)
+      if (Math.abs(e.deltaX) >= Math.abs(e.deltaY) && Math.abs(e.deltaX) > 0) {
+        return;
+      }
+
+      // 2. Si aucun débordement horizontal effectif, laisser défiler verticalement
+      const maxScrollLeft = el.scrollWidth - el.clientWidth;
+      if (maxScrollLeft <= 1) {
+        return;
+      }
+
+      let delta = e.deltaY;
+      if (e.deltaMode === 1) delta *= 33; // DOM_DELTA_LINE
+      else if (e.deltaMode === 2) delta *= el.clientWidth; // DOM_DELTA_PAGE
+
+      if (delta === 0) return;
+
+      // 3. Défilement vers la droite (delta > 0) : intercepter uniquement si la rangée peut avancer
+      if (delta > 0 && el.scrollLeft < maxScrollLeft - 1) {
+        e.preventDefault();
+        el.scrollLeft = Math.min(maxScrollLeft, el.scrollLeft + delta);
+        updateTimeRowOverflow();
+        return;
+      }
+
+      // 4. Défilement vers la gauche (delta < 0) : intercepter uniquement si la rangée peut reculer
+      if (delta < 0 && el.scrollLeft > 1) {
+        e.preventDefault();
+        el.scrollLeft = Math.max(0, el.scrollLeft + delta);
+        updateTimeRowOverflow();
+        return;
+      }
+
+      // 5. Limite atteinte dans la direction demandée : ne pas appeler preventDefault pour laisser défiler verticalement
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, []);
+
   // Bascule de macro-créneau historique avec réinitialisation du sous-créneau actif et fermeture du popover
   const handleSelectMacroSlot = (slotId) => {
     setSelectedTimeSlot(slotId);

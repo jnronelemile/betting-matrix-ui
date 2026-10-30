@@ -306,6 +306,18 @@ console.log('\n[TEST 4] Intégration dans MatchList.jsx : État, réinitialisati
     'Les 7 sous-créneaux doivent définir aria-pressed'
   );
 
+  // 4.10 Défilement horizontal à la molette verticale avec respect strict des limites et passive: false
+  assert(
+    matchListCode.includes("addEventListener('wheel', handleWheel, { passive: false })"),
+    'L\'écouteur wheel doit être enregistré avec passive: false pour autoriser preventDefault'
+  );
+  assert(
+    matchListCode.includes("Math.abs(e.deltaX) >= Math.abs(e.deltaY)") &&
+    matchListCode.includes("el.scrollLeft < maxScrollLeft - 1") &&
+    matchListCode.includes("el.scrollLeft > 1"),
+    'Le gestionnaire wheel doit préserver le trackpad horizontal et relâcher le scroll vertical aux limites'
+  );
+
   console.log('  ✓ Test 4 validé : Structure, synchronisation d\'état et règles de rendu validées.');
 }
 
