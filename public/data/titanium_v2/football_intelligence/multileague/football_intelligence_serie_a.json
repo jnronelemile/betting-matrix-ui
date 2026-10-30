@@ -5,11 +5,11 @@
       "opponent_quality_l5_contextualized",
       "derby_and_rivalry_intelligence"
     ],
-    "cutoff": "2026-10-27",
+    "cutoff": "2026-10-31",
     "cutoff_contract": "date_strictly_before_cutoff_day_batch",
     "decision_effect": "NONE",
-    "historical_dataset_sha256": "dc3316f8b854f7858dcf3525f54a376247cbc7f8ea17d4e247dc9cd0a4dc6be3",
-    "historical_matches_replayed": 1220,
+    "historical_dataset_sha256": "1fc54caaf20dac813c518ed62e806c9b04fc82f72f5c97a12c538047b208e8fd",
+    "historical_matches_replayed": 1230,
     "history_policy": "fotmob_scores_complete_phase_not_playoff_including_2023_2024",
     "league_id": 55,
     "league_name": "Serie A",
@@ -93682,84 +93682,6 @@
           "rating_pre_match": 1455.3
         }
       }
-    }
-  ],
-  "target_matches": [
-    {
-      "active_league_mean": 1536.31,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "SS Lazio",
-      "date": "2026-10-27",
-      "decision_effect": "NONE",
-      "home_team": "Sassuolo",
-      "match_context": {
-        "as_of": "2026-10-27",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_serie_a.json",
-        "static_tags": []
-      },
-      "match_id": "20261027_SASSUOLO_SSLAZIO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1522.75,
-          "opp_strength_l5_contextualized_gap_avg": -13.56,
-          "schedule_difficulty_vs_active_mean": -13.56,
-          "schedule_difficulty_vs_nominal_anchor": 22.75
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1563.63,
-          "opp_strength_l5_contextualized_gap_avg": 27.32,
-          "schedule_difficulty_vs_active_mean": 27.32,
-          "schedule_difficulty_vs_nominal_anchor": 63.63
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_serie_a.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 122,
-          "matches_observed_season": 8,
-          "matches_observed_total": 122,
-          "rank_in_league": 7,
-          "rating_pre_match": 1603.64
-        },
-        "diff_home_minus_away": -114.59,
-        "expected_score_away": 0.612583,
-        "expected_score_home": 0.387417,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 84,
-          "matches_observed_season": 8,
-          "matches_observed_total": 84,
-          "rank_in_league": 13,
-          "rating_pre_match": 1489.05
-        }
-      }
     },
     {
       "active_league_mean": 1536.31,
@@ -93810,8 +93732,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": null,
-      "score_home": null,
+      "score_away": 2,
+      "score_home": 4,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -93834,6 +93756,82 @@
           "matches_observed_total": 122,
           "rank_in_league": 2,
           "rating_pre_match": 1643.96
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "SS Lazio",
+      "date": "2026-10-27",
+      "decision_effect": "NONE",
+      "home_team": "Sassuolo",
+      "match_context": {
+        "as_of": "2026-10-27",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261027_SASSUOLO_SSLAZIO",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1522.75,
+          "opp_strength_l5_contextualized_gap_avg": -13.56,
+          "schedule_difficulty_vs_active_mean": -13.56,
+          "schedule_difficulty_vs_nominal_anchor": 22.75
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1563.63,
+          "opp_strength_l5_contextualized_gap_avg": 27.32,
+          "schedule_difficulty_vs_active_mean": 27.32,
+          "schedule_difficulty_vs_nominal_anchor": 63.63
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": 6,
+      "score_home": 2,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 122,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "rank_in_league": 7,
+          "rating_pre_match": 1603.64
+        },
+        "diff_home_minus_away": -114.59,
+        "expected_score_away": 0.612583,
+        "expected_score_home": 0.387417,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 84,
+          "matches_observed_season": 8,
+          "matches_observed_total": 84,
+          "rank_in_league": 13,
+          "rating_pre_match": 1489.05
         }
       }
     },
@@ -93886,8 +93884,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": null,
-      "score_home": null,
+      "score_away": 3,
+      "score_home": 1,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -93962,8 +93960,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": null,
-      "score_home": null,
+      "score_away": 4,
+      "score_home": 2,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -93986,6 +93984,158 @@
           "matches_observed_total": 122,
           "rank_in_league": 4,
           "rating_pre_match": 1614.25
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "SSC Napoli",
+      "date": "2026-10-28",
+      "decision_effect": "NONE",
+      "home_team": "AC Monza",
+      "match_context": {
+        "as_of": "2026-10-28",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261028_ACMONZA_SSCNAPOLI",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1527.96,
+          "opp_strength_l5_contextualized_gap_avg": -8.35,
+          "schedule_difficulty_vs_active_mean": -8.35,
+          "schedule_difficulty_vs_nominal_anchor": 27.96
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1509.04,
+          "opp_strength_l5_contextualized_gap_avg": -27.27,
+          "schedule_difficulty_vs_active_mean": -27.27,
+          "schedule_difficulty_vs_nominal_anchor": 9.04
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": 4,
+      "score_home": 1,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 122,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "rank_in_league": 6,
+          "rating_pre_match": 1605.23
+        },
+        "diff_home_minus_away": -125.44,
+        "expected_score_away": 0.627293,
+        "expected_score_home": 0.372707,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 84,
+          "matches_observed_season": 8,
+          "matches_observed_total": 84,
+          "rank_in_league": 15,
+          "rating_pre_match": 1479.79
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Juventus",
+      "date": "2026-10-28",
+      "decision_effect": "NONE",
+      "home_team": "Genoa CFC",
+      "match_context": {
+        "as_of": "2026-10-28",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261028_GENOACFC_JUVENTUS",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1523.09,
+          "opp_strength_l5_contextualized_gap_avg": -13.22,
+          "schedule_difficulty_vs_active_mean": -13.22,
+          "schedule_difficulty_vs_nominal_anchor": 23.09
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1516.91,
+          "opp_strength_l5_contextualized_gap_avg": -19.4,
+          "schedule_difficulty_vs_active_mean": -19.4,
+          "schedule_difficulty_vs_nominal_anchor": 16.91
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": 0,
+      "score_home": 2,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 122,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "rank_in_league": 7,
+          "rating_pre_match": 1604.61
+        },
+        "diff_home_minus_away": -141.44,
+        "expected_score_away": 0.648566,
+        "expected_score_home": 0.351434,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 122,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "rank_in_league": 16,
+          "rating_pre_match": 1463.16
         }
       }
     },
@@ -94038,8 +94188,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": null,
-      "score_home": null,
+      "score_away": 0,
+      "score_home": 0,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -94114,8 +94264,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": null,
-      "score_home": null,
+      "score_away": 2,
+      "score_home": 0,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -94138,234 +94288,6 @@
           "matches_observed_total": 46,
           "rank_in_league": 18,
           "rating_pre_match": 1452.84
-        }
-      }
-    },
-    {
-      "active_league_mean": 1536.31,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Juventus",
-      "date": "2026-10-28",
-      "decision_effect": "NONE",
-      "home_team": "Genoa CFC",
-      "match_context": {
-        "as_of": "2026-10-28",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_serie_a.json",
-        "static_tags": []
-      },
-      "match_id": "20261028_GENOACFC_JUVENTUS",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1523.09,
-          "opp_strength_l5_contextualized_gap_avg": -13.22,
-          "schedule_difficulty_vs_active_mean": -13.22,
-          "schedule_difficulty_vs_nominal_anchor": 23.09
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1516.91,
-          "opp_strength_l5_contextualized_gap_avg": -19.4,
-          "schedule_difficulty_vs_active_mean": -19.4,
-          "schedule_difficulty_vs_nominal_anchor": 16.91
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_serie_a.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 122,
-          "matches_observed_season": 8,
-          "matches_observed_total": 122,
-          "rank_in_league": 6,
-          "rating_pre_match": 1604.61
-        },
-        "diff_home_minus_away": -141.44,
-        "expected_score_away": 0.648566,
-        "expected_score_home": 0.351434,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 122,
-          "matches_observed_season": 8,
-          "matches_observed_total": 122,
-          "rank_in_league": 16,
-          "rating_pre_match": 1463.16
-        }
-      }
-    },
-    {
-      "active_league_mean": 1536.31,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "SSC Napoli",
-      "date": "2026-10-28",
-      "decision_effect": "NONE",
-      "home_team": "AC Monza",
-      "match_context": {
-        "as_of": "2026-10-28",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_serie_a.json",
-        "static_tags": []
-      },
-      "match_id": "20261028_ACMONZA_SSCNAPOLI",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1527.96,
-          "opp_strength_l5_contextualized_gap_avg": -8.35,
-          "schedule_difficulty_vs_active_mean": -8.35,
-          "schedule_difficulty_vs_nominal_anchor": 27.96
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1509.04,
-          "opp_strength_l5_contextualized_gap_avg": -27.27,
-          "schedule_difficulty_vs_active_mean": -27.27,
-          "schedule_difficulty_vs_nominal_anchor": 9.04
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_serie_a.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 122,
-          "matches_observed_season": 8,
-          "matches_observed_total": 122,
-          "rank_in_league": 5,
-          "rating_pre_match": 1605.23
-        },
-        "diff_home_minus_away": -125.44,
-        "expected_score_away": 0.627293,
-        "expected_score_home": 0.372707,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 84,
-          "matches_observed_season": 8,
-          "matches_observed_total": 84,
-          "rank_in_league": 15,
-          "rating_pre_match": 1479.79
-        }
-      }
-    },
-    {
-      "active_league_mean": 1536.31,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "US Lecce",
-      "date": "2026-10-29",
-      "decision_effect": "NONE",
-      "home_team": "Frosinone Calcio",
-      "match_context": {
-        "as_of": "2026-10-29",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_serie_a.json",
-        "static_tags": []
-      },
-      "match_id": "20261029_FROSINONECALCIO_USLECCE",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1532.64,
-          "opp_strength_l5_contextualized_gap_avg": -3.67,
-          "schedule_difficulty_vs_active_mean": -3.67,
-          "schedule_difficulty_vs_nominal_anchor": 32.64
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1548.12,
-          "opp_strength_l5_contextualized_gap_avg": 11.81,
-          "schedule_difficulty_vs_active_mean": 11.81,
-          "schedule_difficulty_vs_nominal_anchor": 48.12
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_serie_a.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 122,
-          "matches_observed_season": 8,
-          "matches_observed_total": 122,
-          "rank_in_league": 20,
-          "rating_pre_match": 1448.3
-        },
-        "diff_home_minus_away": 78.87,
-        "expected_score_away": 0.34175,
-        "expected_score_home": 0.65825,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 46,
-          "matches_observed_season": 8,
-          "matches_observed_total": 46,
-          "rank_in_league": 10,
-          "rating_pre_match": 1527.17
         }
       }
     },
@@ -94418,8 +94340,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": null,
-      "score_home": null,
+      "score_away": 2,
+      "score_home": 2,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -94440,8 +94362,850 @@
           "matches_observed": 122,
           "matches_observed_season": 8,
           "matches_observed_total": 122,
-          "rank_in_league": 14,
+          "rank_in_league": 13,
           "rating_pre_match": 1481.7
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "US Lecce",
+      "date": "2026-10-29",
+      "decision_effect": "NONE",
+      "home_team": "Frosinone Calcio",
+      "match_context": {
+        "as_of": "2026-10-29",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261029_FROSINONECALCIO_USLECCE",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1532.64,
+          "opp_strength_l5_contextualized_gap_avg": -3.67,
+          "schedule_difficulty_vs_active_mean": -3.67,
+          "schedule_difficulty_vs_nominal_anchor": 32.64
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1548.12,
+          "opp_strength_l5_contextualized_gap_avg": 11.81,
+          "schedule_difficulty_vs_active_mean": 11.81,
+          "schedule_difficulty_vs_nominal_anchor": 48.12
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": 1,
+      "score_home": 5,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 122,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "rank_in_league": 20,
+          "rating_pre_match": 1448.3
+        },
+        "diff_home_minus_away": 78.87,
+        "expected_score_away": 0.34175,
+        "expected_score_home": 0.65825,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 46,
+          "matches_observed_season": 8,
+          "matches_observed_total": 46,
+          "rank_in_league": 10,
+          "rating_pre_match": 1527.17
+        }
+      }
+    }
+  ],
+  "target_matches": [
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "AC Monza",
+      "date": "2026-10-31",
+      "decision_effect": "NONE",
+      "home_team": "Bologna FC",
+      "match_context": {
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261031_BOLOGNAFC_ACMONZA",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1540.46,
+          "opp_strength_l5_contextualized_gap_avg": 4.15,
+          "schedule_difficulty_vs_active_mean": 4.15,
+          "schedule_difficulty_vs_nominal_anchor": 40.46
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1548.92,
+          "opp_strength_l5_contextualized_gap_avg": 12.61,
+          "schedule_difficulty_vs_active_mean": 12.61,
+          "schedule_difficulty_vs_nominal_anchor": 48.92
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 85,
+          "matches_observed_season": 9,
+          "matches_observed_total": 85,
+          "rank_in_league": 16,
+          "rating_pre_match": 1472.33
+        },
+        "diff_home_minus_away": 68.35,
+        "expected_score_away": 0.355503,
+        "expected_score_home": 0.644497,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 9,
+          "rating_pre_match": 1540.68
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "AS Roma",
+      "date": "2026-10-31",
+      "decision_effect": "NONE",
+      "home_team": "Udinese Calcio",
+      "match_context": {
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261031_UDINESECALCIO_ASROMA",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1571.44,
+          "opp_strength_l5_contextualized_gap_avg": 35.13,
+          "schedule_difficulty_vs_active_mean": 35.13,
+          "schedule_difficulty_vs_nominal_anchor": 71.44
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1495.89,
+          "opp_strength_l5_contextualized_gap_avg": -40.43,
+          "schedule_difficulty_vs_active_mean": -40.42,
+          "schedule_difficulty_vs_nominal_anchor": -4.11
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 2,
+          "rating_pre_match": 1649.01
+        },
+        "diff_home_minus_away": -195.43,
+        "expected_score_away": 0.715752,
+        "expected_score_home": 0.284248,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 18,
+          "rating_pre_match": 1453.59
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Inter Milan",
+      "date": "2026-10-31",
+      "decision_effect": "NONE",
+      "home_team": "AC Milan",
+      "match_context": {
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": "LOCAL_DERBY",
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [
+          "DERBY"
+        ]
+      },
+      "match_id": "20261031_ACMILAN_INTERMILAN",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1515.12,
+          "opp_strength_l5_contextualized_gap_avg": -21.19,
+          "schedule_difficulty_vs_active_mean": -21.19,
+          "schedule_difficulty_vs_nominal_anchor": 15.12
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1501.99,
+          "opp_strength_l5_contextualized_gap_avg": -34.33,
+          "schedule_difficulty_vs_active_mean": -34.32,
+          "schedule_difficulty_vs_nominal_anchor": 1.99
+        }
+      },
+      "rivalry_intelligence": {
+        "category": "LOCAL_DERBY",
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": "Milan",
+        "is_rivalry": true,
+        "provenance_count": 1,
+        "rivalry_id": "SERIE_A_DERBY_DELLA_MADONNINA",
+        "rivalry_name": "Derby della Madonnina",
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [
+          "DERBY"
+        ],
+        "status": "RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 1,
+          "rating_pre_match": 1718.43
+        },
+        "diff_home_minus_away": -117.55,
+        "expected_score_away": 0.616613,
+        "expected_score_home": 0.383387,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 6,
+          "rating_pre_match": 1600.88
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Venezia FC",
+      "date": "2026-11-01",
+      "decision_effect": "NONE",
+      "home_team": "Como 1907",
+      "match_context": {
+        "as_of": "2026-11-01",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261101_COMO1907_VENEZIAFC",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1583.25,
+          "opp_strength_l5_contextualized_gap_avg": 46.95,
+          "schedule_difficulty_vs_active_mean": 46.94,
+          "schedule_difficulty_vs_nominal_anchor": 83.25
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1528.46,
+          "opp_strength_l5_contextualized_gap_avg": -7.85,
+          "schedule_difficulty_vs_active_mean": -7.85,
+          "schedule_difficulty_vs_nominal_anchor": 28.46
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 47,
+          "matches_observed_season": 9,
+          "matches_observed_total": 47,
+          "rank_in_league": 19,
+          "rating_pre_match": 1448.57
+        },
+        "diff_home_minus_away": 174.78,
+        "expected_score_away": 0.230126,
+        "expected_score_home": 0.769874,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 85,
+          "matches_observed_season": 9,
+          "matches_observed_total": 85,
+          "rank_in_league": 3,
+          "rating_pre_match": 1623.35
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Torino FC",
+      "date": "2026-11-01",
+      "decision_effect": "NONE",
+      "home_team": "Frosinone Calcio",
+      "match_context": {
+        "as_of": "2026-11-01",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261101_FROSINONECALCIO_TORINOFC",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1514.46,
+          "opp_strength_l5_contextualized_gap_avg": -21.85,
+          "schedule_difficulty_vs_active_mean": -21.85,
+          "schedule_difficulty_vs_nominal_anchor": 14.46
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1546.6,
+          "opp_strength_l5_contextualized_gap_avg": 10.29,
+          "schedule_difficulty_vs_active_mean": 10.29,
+          "schedule_difficulty_vs_nominal_anchor": 46.6
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 11,
+          "rating_pre_match": 1495.17
+        },
+        "diff_home_minus_away": 38.84,
+        "expected_score_away": 0.395309,
+        "expected_score_home": 0.604691,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 47,
+          "matches_observed_season": 9,
+          "matches_observed_total": 47,
+          "rank_in_league": 10,
+          "rating_pre_match": 1534.01
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Cagliari Calcio",
+      "date": "2026-11-01",
+      "decision_effect": "NONE",
+      "home_team": "SS Lazio",
+      "match_context": {
+        "as_of": "2026-11-01",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261101_SSLAZIO_CAGLIARICALCIO",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1548.33,
+          "opp_strength_l5_contextualized_gap_avg": 12.02,
+          "schedule_difficulty_vs_active_mean": 12.02,
+          "schedule_difficulty_vs_nominal_anchor": 48.33
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1501.46,
+          "opp_strength_l5_contextualized_gap_avg": -34.85,
+          "schedule_difficulty_vs_active_mean": -34.85,
+          "schedule_difficulty_vs_nominal_anchor": 1.46
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 12,
+          "rating_pre_match": 1485.42
+        },
+        "diff_home_minus_away": 125.97,
+        "expected_score_away": 0.283608,
+        "expected_score_home": 0.716392,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 5,
+          "rating_pre_match": 1611.39
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Genoa CFC",
+      "date": "2026-11-01",
+      "decision_effect": "NONE",
+      "home_team": "US Lecce",
+      "match_context": {
+        "as_of": "2026-11-01",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261101_USLECCE_GENOACFC",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1535.44,
+          "opp_strength_l5_contextualized_gap_avg": -0.87,
+          "schedule_difficulty_vs_active_mean": -0.87,
+          "schedule_difficulty_vs_nominal_anchor": 35.44
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1541.05,
+          "opp_strength_l5_contextualized_gap_avg": 4.74,
+          "schedule_difficulty_vs_active_mean": 4.74,
+          "schedule_difficulty_vs_nominal_anchor": 41.05
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 15,
+          "rating_pre_match": 1476.13
+        },
+        "diff_home_minus_away": -34.67,
+        "expected_score_away": 0.499529,
+        "expected_score_home": 0.500471,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 20,
+          "rating_pre_match": 1441.46
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "SSC Napoli",
+      "date": "2026-11-01",
+      "decision_effect": "NONE",
+      "home_team": "Juventus",
+      "match_context": {
+        "as_of": "2026-11-01",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261101_JUVENTUS_SSCNAPOLI",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1519.43,
+          "opp_strength_l5_contextualized_gap_avg": -16.87,
+          "schedule_difficulty_vs_active_mean": -16.88,
+          "schedule_difficulty_vs_nominal_anchor": 19.43
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1515.82,
+          "opp_strength_l5_contextualized_gap_avg": -20.49,
+          "schedule_difficulty_vs_active_mean": -20.49,
+          "schedule_difficulty_vs_nominal_anchor": 15.82
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 4,
+          "rating_pre_match": 1612.68
+        },
+        "diff_home_minus_away": -21.04,
+        "expected_score_away": 0.479927,
+        "expected_score_home": 0.520073,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 7,
+          "rating_pre_match": 1591.64
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "AC Fiorentina",
+      "date": "2026-11-02",
+      "decision_effect": "NONE",
+      "home_team": "Sassuolo",
+      "match_context": {
+        "as_of": "2026-11-02",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261102_SASSUOLO_ACFIORENTINA",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1585.58,
+          "opp_strength_l5_contextualized_gap_avg": 49.27,
+          "schedule_difficulty_vs_active_mean": 49.27,
+          "schedule_difficulty_vs_nominal_anchor": 85.58
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1561.25,
+          "opp_strength_l5_contextualized_gap_avg": 24.95,
+          "schedule_difficulty_vs_active_mean": 24.94,
+          "schedule_difficulty_vs_nominal_anchor": 61.25
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 13,
+          "rating_pre_match": 1482.75
+        },
+        "diff_home_minus_away": -1.45,
+        "expected_score_away": 0.451868,
+        "expected_score_home": 0.548132,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 85,
+          "matches_observed_season": 9,
+          "matches_observed_total": 85,
+          "rank_in_league": 14,
+          "rating_pre_match": 1481.3
+        }
+      }
+    },
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Parma Calcio 1913",
+      "date": "2026-11-02",
+      "decision_effect": "NONE",
+      "home_team": "Atalanta BC",
+      "match_context": {
+        "as_of": "2026-11-02",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261102_ATALANTABC_PARMACALCIO1913",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1538.3,
+          "opp_strength_l5_contextualized_gap_avg": 1.99,
+          "schedule_difficulty_vs_active_mean": 1.99,
+          "schedule_difficulty_vs_nominal_anchor": 38.3
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1532.85,
+          "opp_strength_l5_contextualized_gap_avg": -3.46,
+          "schedule_difficulty_vs_active_mean": -3.46,
+          "schedule_difficulty_vs_nominal_anchor": 32.85
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 85,
+          "matches_observed_season": 9,
+          "matches_observed_total": 85,
+          "rank_in_league": 17,
+          "rating_pre_match": 1454.88
+        },
+        "diff_home_minus_away": 97.54,
+        "expected_score_away": 0.318,
+        "expected_score_home": 0.682,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 8,
+          "rating_pre_match": 1552.43
         }
       }
     }

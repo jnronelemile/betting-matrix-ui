@@ -1,0 +1,296 @@
+{
+  "metadata": {
+    "competition": "Major League Soccer",
+    "fixture": "St. Louis City vs San Diego FC",
+    "date": "2026-10-31",
+    "generated_at": "2026-10-30T13:42:32.222331",
+    "source": "football_master.db (100% Native)",
+    "target_season_start": "2026-01-01",
+    "season_source": "season_resolver",
+    "version": "10.0",
+    "features_legend": {
+      "fatigue_profile": "Score de 0.0 (Reposé) à 1.0 (Exténué) incluant les trêves hivernales (0.4 Rouillé) et le stress géographique asymétrique (affectant surtout l'équipe Extérieure).",
+      "live_indices": "Probabilités conditionnelles pures extraites au Snapshot de la 75ème minute. Clutch = Capacité à marquer quand on est mené/à égalité. Collapse = Risque d'encaisser quand on mène d'1 but.",
+      "game_state_distribution": "Chronologie absolue des buts selon l'état du score (winning, tied, losing) à la seconde précédant le but."
+    }
+  },
+  "streaks": {
+    "h2h_streaks": [
+      "No wins: 3"
+    ],
+    "team_streaks": {
+      "home": [
+        "Losses: 3",
+        "No wins: 4",
+        "No Clean Sheet: 3",
+        "Over 2.5 Goals: 9/10",
+        "Over 1.5 Team Goals: 8/10",
+        "Over 0.5 Team Goals: 8/10",
+        "BTTS Yes: 7/10",
+        "Over 8.5 SOT: 8/10",
+        "Over 3.5 SOT (Team): 9/10",
+        "Over 22.5 Shots: 10/10",
+        "Over 10.5 Shots (Team): 7/10",
+        "Over 22.5 Fouls: 10/10",
+        "Over 11.5 Fouls (Team): 9/10",
+        "Over 1.5 Offsides (Team): 5/7",
+        "Over 5.5 Keeper Saves: 5/7",
+        "Over 2.5 Keeper Saves (Team): 5/7",
+        "Under 4.5 Yellow Cards: 8/10",
+        "Opponent Over 11.5 Fouls: 7/10",
+        "Opponent Under 1.5 Offsides: 7/10",
+        "Opponent Over 2.5 Keeper Saves: 7/10",
+        "Opponent Over 1.5 Yellow Cards: 7/10",
+        "Opponent Over 3.5 SOT: 5/7"
+      ],
+      "away": [
+        "No wins: 10",
+        "Scoring: 7",
+        "No Clean Sheet: 11",
+        "Over 2.5 Goals: 9/10",
+        "Over 0.5 Team Goals: 8/10",
+        "BTTS Yes: 8/10",
+        "Over 8.5 SOT: 8/10",
+        "Over 3.5 SOT (Team): 8/10",
+        "Over 22.5 Shots: 8/10",
+        "Over 10.5 Shots (Team): 6/8",
+        "Over 22.5 Fouls: 7/10",
+        "Under 11.5 Fouls (Team): 5/7",
+        "Under 38.5 Throws: 8/10",
+        "Over 5.5 Keeper Saves: 7/10",
+        "Over 2.5 Keeper Saves (Team): 7/10",
+        "Under 4.5 Yellow Cards: 6/8",
+        "Opponent Over 11.5 Fouls: 7/10",
+        "Opponent Under 18.5 Throws: 9/10",
+        "Opponent Under 1.5 Offsides: 8/10",
+        "Opponent Over 2.5 Keeper Saves: 7/10",
+        "Opponent Over 3.5 SOT: 8/10",
+        "First to concede: 7/10"
+      ]
+    }
+  },
+  "fatigue_profile": {
+    "home": {
+      "index_score": 1.0,
+      "label": "Exténué",
+      "days_rest": 2
+    },
+    "away": {
+      "index_score": 1.0,
+      "label": "Exténué",
+      "days_rest": 2
+    }
+  },
+  "live_indices": {
+    "home": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 17,
+          "success_matches": 5,
+          "index": 0.29
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 7,
+          "failed_matches": 3,
+          "index": 0.43
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 8,
+          "success_matches": 3,
+          "index": 0.38
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 3,
+          "failed_matches": 1,
+          "index": 0.33
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "clutch": {
+          "opportunities_at_75m": 20,
+          "success_matches": 8,
+          "index": 0.4
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 5,
+          "failed_matches": 3,
+          "index": 0.6
+        }
+      },
+      "venue": {
+        "clutch": {
+          "opportunities_at_75m": 12,
+          "success_matches": 3,
+          "index": 0.25
+        },
+        "collapse": {
+          "opportunities_leading_by_one_at_75m": 3,
+          "failed_matches": 2,
+          "index": 0.67
+        }
+      }
+    }
+  },
+  "game_state_distribution": {
+    "home": {
+      "season": {
+        "scored": {
+          "winning": 23,
+          "tied": 25,
+          "losing": 10
+        },
+        "conceded": {
+          "winning": 21,
+          "tied": 16,
+          "losing": 10
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 15,
+          "tied": 15,
+          "losing": 6
+        },
+        "conceded": {
+          "winning": 13,
+          "tied": 7,
+          "losing": 2
+        }
+      }
+    },
+    "away": {
+      "season": {
+        "scored": {
+          "winning": 19,
+          "tied": 17,
+          "losing": 20
+        },
+        "conceded": {
+          "winning": 16,
+          "tied": 24,
+          "losing": 22
+        }
+      },
+      "venue": {
+        "scored": {
+          "winning": 4,
+          "tied": 6,
+          "losing": 9
+        },
+        "conceded": {
+          "winning": 8,
+          "tied": 13,
+          "losing": 12
+        }
+      }
+    }
+  },
+  "goal_distribution": {
+    "season": {
+      "home_scored": [
+        4,
+        6,
+        8,
+        8,
+        4,
+        6
+      ],
+      "home_conceded": [
+        3,
+        1,
+        4,
+        3,
+        6,
+        5
+      ],
+      "away_scored": [
+        3,
+        2,
+        4,
+        4,
+        3,
+        3
+      ],
+      "away_conceded": [
+        6,
+        7,
+        7,
+        2,
+        4,
+        7
+      ]
+    },
+    "venue": {
+      "home_scored": [
+        4,
+        6,
+        8,
+        8,
+        4,
+        6
+      ],
+      "home_conceded": [
+        3,
+        1,
+        4,
+        3,
+        6,
+        5
+      ],
+      "away_scored": [
+        3,
+        2,
+        4,
+        4,
+        3,
+        3
+      ],
+      "away_conceded": [
+        6,
+        7,
+        7,
+        2,
+        4,
+        7
+      ]
+    },
+    "recent_form": {
+      "home_scored": [
+        2,
+        3,
+        4,
+        4,
+        1,
+        1
+      ],
+      "home_conceded": [
+        1,
+        0,
+        3,
+        1,
+        2,
+        1
+      ],
+      "away_scored": [
+        2,
+        0,
+        1,
+        3,
+        1,
+        2
+      ],
+      "away_conceded": [
+        2,
+        6,
+        1,
+        0,
+        3,
+        4
+      ]
+    }
+  }
+}

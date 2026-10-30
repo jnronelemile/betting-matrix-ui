@@ -1,0 +1,1120 @@
+{
+  "_metadata_": {
+    "task_id": "FE-003",
+    "module": "football_intelligence_descriptive",
+    "scope": "operational_premier_league",
+    "league_id": 47,
+    "league_name": "Premier League",
+    "method_version": "0.3.0",
+    "session_folder": "Run_matches-to-predict_Week-05_Octobre-2026_not-complet___2026-10-30_13h14m58s",
+    "run_id": null,
+    "decision_effect": "NONE",
+    "temporal_certification": "PRE_MATCH_OPERATIONAL_EVALUATION",
+    "model_type": "score_based_elo_baseline",
+    "parameters": {
+      "k_factor": 20.0,
+      "home_advantage": 35.0,
+      "season_regression_lambda": 0.85,
+      "initial_rating": 1500.0
+    },
+    "cutoff_contract": "strictly_before_cutoff",
+    "target_cutoff": "2026-10-31",
+    "components_evaluated": [
+      "team_strength_elo_baseline",
+      "opponent_quality_l5_contextualized",
+      "derby_and_rivalry_intelligence"
+    ],
+    "batch_provenance": {
+      "batch_file": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/match_batches/active/matches_to_predict_Week-05-Octobre-2026_not-complet.json",
+      "batch_sha256": "f1e073b59cb17fc3f8b6ddf38eb61702aa6996fd64bb65cb8efffb19da16977e",
+      "target_fixtures_count": 10
+    },
+    "sqlite_provenance": {
+      "db_path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/databases/football_master_v2.db",
+      "access_mode": "READ_ONLY_URI_QUERY_ONLY",
+      "is_sealed_snapshot": false,
+      "isolation_status": "LIVE_SHARED_DB_READ_ONLY_CONNECTION",
+      "historical_matches_replayed": 1220,
+      "historical_dataset_sha256": "697bea1ce54a19ffb26a9860f35c195a396b9a348c423d429771c602a5c685a4"
+    },
+    "rivalry_registry_summary": {
+      "registry_file": "rivalry_registry_pl.json",
+      "total_registered_rivalries": 33,
+      "target_matches_with_rivalry": 1,
+      "target_matches_without_rivalry": 9
+    },
+    "interpretation_notice": "Statistiques purement descriptives et contextuelles d'avant-match. L'espérance de score Elo ne constitue pas une probabilité 1X2 calibrée. temporal_certification = PRE_MATCH_OPERATIONAL_EVALUATION. decision_effect = NONE. Aucune influence sur le moteur V9."
+  },
+  "current_season_active_standings": [
+    {
+      "rank": 1,
+      "team_name": "Arsenal",
+      "rating": 1693.12,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 2,
+      "team_name": "Manchester City",
+      "rating": 1675.54,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 3,
+      "team_name": "Liverpool",
+      "rating": 1596.33,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 4,
+      "team_name": "Aston Villa",
+      "rating": 1572.18,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 5,
+      "team_name": "Brighton & Hove Albion",
+      "rating": 1562.83,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 6,
+      "team_name": "Manchester United",
+      "rating": 1557.07,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 7,
+      "team_name": "AFC Bournemouth",
+      "rating": 1555.47,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 8,
+      "team_name": "Chelsea",
+      "rating": 1536.31,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 9,
+      "team_name": "Brentford",
+      "rating": 1535.92,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 10,
+      "team_name": "Leeds United",
+      "rating": 1529.93,
+      "matches_observed_season": 8,
+      "matches_observed_total": 46
+    },
+    {
+      "rank": 11,
+      "team_name": "Newcastle United",
+      "rating": 1515.39,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 12,
+      "team_name": "Everton",
+      "rating": 1509.07,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 13,
+      "team_name": "Hull City",
+      "rating": 1503.54,
+      "matches_observed_season": 8,
+      "matches_observed_total": 8
+    },
+    {
+      "rank": 14,
+      "team_name": "Fulham",
+      "rating": 1500.18,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 15,
+      "team_name": "Ipswich Town",
+      "rating": 1498.63,
+      "matches_observed_season": 8,
+      "matches_observed_total": 46
+    },
+    {
+      "rank": 16,
+      "team_name": "Sunderland AFC",
+      "rating": 1495.18,
+      "matches_observed_season": 8,
+      "matches_observed_total": 46
+    },
+    {
+      "rank": 17,
+      "team_name": "Nottingham Forest",
+      "rating": 1485.88,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 18,
+      "team_name": "Crystal Palace",
+      "rating": 1476.74,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 19,
+      "team_name": "Coventry City",
+      "rating": 1471.61,
+      "matches_observed_season": 8,
+      "matches_observed_total": 8
+    },
+    {
+      "rank": 20,
+      "team_name": "Tottenham Hotspur",
+      "rating": 1465.89,
+      "matches_observed_season": 8,
+      "matches_observed_total": 122
+    }
+  ],
+  "all_time_tracked_standings": [
+    {
+      "rank": 1,
+      "team_name": "Arsenal",
+      "rating": 1693.12,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 2,
+      "team_name": "Manchester City",
+      "rating": 1675.54,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 3,
+      "team_name": "Liverpool",
+      "rating": 1596.33,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 4,
+      "team_name": "Aston Villa",
+      "rating": 1572.18,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 5,
+      "team_name": "Brighton & Hove Albion",
+      "rating": 1562.83,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 6,
+      "team_name": "Manchester United",
+      "rating": 1557.07,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 7,
+      "team_name": "AFC Bournemouth",
+      "rating": 1555.47,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 8,
+      "team_name": "Chelsea",
+      "rating": 1536.31,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 9,
+      "team_name": "Brentford",
+      "rating": 1535.92,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 10,
+      "team_name": "Leeds United",
+      "rating": 1529.93,
+      "matches_observed_total": 46
+    },
+    {
+      "rank": 11,
+      "team_name": "Newcastle United",
+      "rating": 1515.39,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 12,
+      "team_name": "Everton",
+      "rating": 1509.07,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 13,
+      "team_name": "Hull City",
+      "rating": 1503.54,
+      "matches_observed_total": 8
+    },
+    {
+      "rank": 14,
+      "team_name": "Fulham",
+      "rating": 1500.18,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 15,
+      "team_name": "Ipswich Town",
+      "rating": 1498.63,
+      "matches_observed_total": 46
+    },
+    {
+      "rank": 16,
+      "team_name": "Sunderland AFC",
+      "rating": 1495.18,
+      "matches_observed_total": 46
+    },
+    {
+      "rank": 17,
+      "team_name": "Nottingham Forest",
+      "rating": 1485.88,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 18,
+      "team_name": "Crystal Palace",
+      "rating": 1476.74,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 19,
+      "team_name": "Coventry City",
+      "rating": 1471.61,
+      "matches_observed_total": 8
+    },
+    {
+      "rank": 20,
+      "team_name": "West Ham United",
+      "rating": 1470.09,
+      "matches_observed_total": 114
+    },
+    {
+      "rank": 21,
+      "team_name": "Tottenham Hotspur",
+      "rating": 1465.89,
+      "matches_observed_total": 122
+    },
+    {
+      "rank": 22,
+      "team_name": "Wolverhampton Wanderers",
+      "rating": 1391.19,
+      "matches_observed_total": 114
+    },
+    {
+      "rank": 23,
+      "team_name": "Burnley",
+      "rating": 1391.12,
+      "matches_observed_total": 76
+    },
+    {
+      "rank": 24,
+      "team_name": "Leicester City",
+      "rating": 1387.66,
+      "matches_observed_total": 38
+    },
+    {
+      "rank": 25,
+      "team_name": "Luton Town",
+      "rating": 1384.36,
+      "matches_observed_total": 38
+    },
+    {
+      "rank": 26,
+      "team_name": "Sheffield United",
+      "rating": 1340.89,
+      "matches_observed_total": 38
+    },
+    {
+      "rank": 27,
+      "team_name": "Southampton FC",
+      "rating": 1336.72,
+      "matches_observed_total": 38
+    }
+  ],
+  "target_fixtures": [
+    {
+      "match_id": "20261031_CHELSEA_MANCHESTERUNITED",
+      "date": "2026-10-31",
+      "season_key": "2026-2027",
+      "home_team": "Chelsea",
+      "away_team": "Manchester United",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1536.31,
+          "rank_in_league": 8,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1557.07,
+          "rank_in_league": 6,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": -20.76,
+        "expected_score_home": 0.520488,
+        "expected_score_away": 0.479512
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1515.86,
+          "schedule_difficulty_vs_active_mean": -20.98,
+          "schedule_difficulty_vs_nominal_anchor": 15.86,
+          "opp_strength_l5_contextualized_gap_avg": -20.98,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1531.75,
+          "schedule_difficulty_vs_active_mean": -5.09,
+          "schedule_difficulty_vs_nominal_anchor": 31.75,
+          "opp_strength_l5_contextualized_gap_avg": -5.08,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261031_AFCBOURNEMOUTH_LEEDSUNITED",
+      "date": "2026-10-31",
+      "season_key": "2026-2027",
+      "home_team": "AFC Bournemouth",
+      "away_team": "Leeds United",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1555.47,
+          "rank_in_league": 7,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1529.93,
+          "rank_in_league": 10,
+          "matches_observed_season": 8,
+          "matches_observed_total": 46,
+          "matches_observed": 46,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": 25.54,
+        "expected_score_home": 0.586254,
+        "expected_score_away": 0.413746
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1542.35,
+          "schedule_difficulty_vs_active_mean": 5.51,
+          "schedule_difficulty_vs_nominal_anchor": 42.35,
+          "opp_strength_l5_contextualized_gap_avg": 5.51,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1549.74,
+          "schedule_difficulty_vs_active_mean": 12.9,
+          "schedule_difficulty_vs_nominal_anchor": 49.74,
+          "opp_strength_l5_contextualized_gap_avg": 12.9,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261031_BRENTFORD_NOTTINGHAMFOREST",
+      "date": "2026-10-31",
+      "season_key": "2026-2027",
+      "home_team": "Brentford",
+      "away_team": "Nottingham Forest",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1535.92,
+          "rank_in_league": 9,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1485.88,
+          "rank_in_league": 17,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": 50.04,
+        "expected_score_home": 0.620002,
+        "expected_score_away": 0.379998
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1545.65,
+          "schedule_difficulty_vs_active_mean": 8.81,
+          "schedule_difficulty_vs_nominal_anchor": 45.65,
+          "opp_strength_l5_contextualized_gap_avg": 8.82,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1538.65,
+          "schedule_difficulty_vs_active_mean": 1.81,
+          "schedule_difficulty_vs_nominal_anchor": 38.65,
+          "opp_strength_l5_contextualized_gap_avg": 1.81,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261031_COVENTRYCITY_SUNDERLANDAFC",
+      "date": "2026-10-31",
+      "season_key": "2026-2027",
+      "home_team": "Coventry City",
+      "away_team": "Sunderland AFC",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1471.61,
+          "rank_in_league": 19,
+          "matches_observed_season": 8,
+          "matches_observed_total": 8,
+          "matches_observed": 8,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1495.18,
+          "rank_in_league": 16,
+          "matches_observed_season": 8,
+          "matches_observed_total": 46,
+          "matches_observed": 46,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": -23.57,
+        "expected_score_home": 0.516442,
+        "expected_score_away": 0.483558
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1499.96,
+          "schedule_difficulty_vs_active_mean": -36.88,
+          "schedule_difficulty_vs_nominal_anchor": -0.04,
+          "opp_strength_l5_contextualized_gap_avg": -36.88,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1594.85,
+          "schedule_difficulty_vs_active_mean": 58.01,
+          "schedule_difficulty_vs_nominal_anchor": 94.85,
+          "opp_strength_l5_contextualized_gap_avg": 58.01,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261031_HULLCITY_IPSWICHTOWN",
+      "date": "2026-10-31",
+      "season_key": "2026-2027",
+      "home_team": "Hull City",
+      "away_team": "Ipswich Town",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1503.54,
+          "rank_in_league": 13,
+          "matches_observed_season": 8,
+          "matches_observed_total": 8,
+          "matches_observed": 8,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1498.63,
+          "rank_in_league": 15,
+          "matches_observed_season": 8,
+          "matches_observed_total": 46,
+          "matches_observed": 46,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": 4.91,
+        "expected_score_home": 0.557189,
+        "expected_score_away": 0.442811
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1519.04,
+          "schedule_difficulty_vs_active_mean": -17.8,
+          "schedule_difficulty_vs_nominal_anchor": 19.04,
+          "opp_strength_l5_contextualized_gap_avg": -17.79,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1532.88,
+          "schedule_difficulty_vs_active_mean": -3.96,
+          "schedule_difficulty_vs_nominal_anchor": 32.88,
+          "opp_strength_l5_contextualized_gap_avg": -3.96,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261031_MANCHESTERCITY_BRIGHTONHOVEALBION",
+      "date": "2026-10-31",
+      "season_key": "2026-2027",
+      "home_team": "Manchester City",
+      "away_team": "Brighton & Hove Albion",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1675.54,
+          "rank_in_league": 2,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1562.83,
+          "rank_in_league": 5,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": 112.71,
+        "expected_score_home": 0.700628,
+        "expected_score_away": 0.299372
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1550.45,
+          "schedule_difficulty_vs_active_mean": 13.61,
+          "schedule_difficulty_vs_nominal_anchor": 50.45,
+          "opp_strength_l5_contextualized_gap_avg": 13.6,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1553.17,
+          "schedule_difficulty_vs_active_mean": 16.33,
+          "schedule_difficulty_vs_nominal_anchor": 53.17,
+          "opp_strength_l5_contextualized_gap_avg": 16.33,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261031_TOTTENHAMHOTSPUR_CRYSTALPALACE",
+      "date": "2026-10-31",
+      "season_key": "2026-2027",
+      "home_team": "Tottenham Hotspur",
+      "away_team": "Crystal Palace",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1465.89,
+          "rank_in_league": 20,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1476.74,
+          "rank_in_league": 18,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": -10.85,
+        "expected_score_home": 0.534697,
+        "expected_score_away": 0.465303
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1534.92,
+          "schedule_difficulty_vs_active_mean": -1.92,
+          "schedule_difficulty_vs_nominal_anchor": 34.92,
+          "opp_strength_l5_contextualized_gap_avg": -1.92,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1519.99,
+          "schedule_difficulty_vs_active_mean": -16.85,
+          "schedule_difficulty_vs_nominal_anchor": 19.99,
+          "opp_strength_l5_contextualized_gap_avg": -16.85,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": true,
+        "rivalry_id": "PL_LONDON_DERBY_CRY_TOT",
+        "rivalry_name": "London Derby (Crystal Palace vs Tottenham Hotspur)",
+        "category": "LOCAL_DERBY",
+        "static_tags": [
+          "DERBY"
+        ],
+        "geographic_scope": "London (South vs North)",
+        "established_since": null,
+        "provenance_count": 1,
+        "source": "rivalry_registry_pl.json",
+        "status": "RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [
+          "DERBY"
+        ],
+        "dynamic_tags": [],
+        "rivalry_level": "LOCAL_DERBY",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261031_ASTONVILLA_FULHAM",
+      "date": "2026-10-31",
+      "season_key": "2026-2027",
+      "home_team": "Aston Villa",
+      "away_team": "Fulham",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1572.18,
+          "rank_in_league": 4,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1500.18,
+          "rank_in_league": 14,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": 71.99,
+        "expected_score_home": 0.649286,
+        "expected_score_away": 0.350714
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1538.5,
+          "schedule_difficulty_vs_active_mean": 1.66,
+          "schedule_difficulty_vs_nominal_anchor": 38.5,
+          "opp_strength_l5_contextualized_gap_avg": 1.66,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1529.23,
+          "schedule_difficulty_vs_active_mean": -7.61,
+          "schedule_difficulty_vs_nominal_anchor": 29.23,
+          "opp_strength_l5_contextualized_gap_avg": -7.61,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261101_LIVERPOOL_ARSENAL",
+      "date": "2026-11-01",
+      "season_key": "2026-2027",
+      "home_team": "Liverpool",
+      "away_team": "Arsenal",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1596.33,
+          "rank_in_league": 3,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1693.12,
+          "rank_in_league": 1,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": -96.79,
+        "expected_score_home": 0.412007,
+        "expected_score_away": 0.587993
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1566.21,
+          "schedule_difficulty_vs_active_mean": 29.37,
+          "schedule_difficulty_vs_nominal_anchor": 66.21,
+          "opp_strength_l5_contextualized_gap_avg": 29.37,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1521.0,
+          "schedule_difficulty_vs_active_mean": -15.84,
+          "schedule_difficulty_vs_nominal_anchor": 21.0,
+          "opp_strength_l5_contextualized_gap_avg": -15.84,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-11-01",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    },
+    {
+      "match_id": "20261102_NEWCASTLEUNITED_EVERTON",
+      "date": "2026-11-02",
+      "season_key": "2026-2027",
+      "home_team": "Newcastle United",
+      "away_team": "Everton",
+      "score_home": null,
+      "score_away": null,
+      "active_league_mean": 1536.84,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "team_strength": {
+        "home": {
+          "rating_pre_match": 1515.39,
+          "rank_in_league": 11,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "away": {
+          "rating_pre_match": 1509.07,
+          "rank_in_league": 12,
+          "matches_observed_season": 8,
+          "matches_observed_total": 122,
+          "matches_observed": 122,
+          "is_new_entrant": false,
+          "is_returning_after_absence": false
+        },
+        "diff_home_minus_away": 6.32,
+        "expected_score_home": 0.559182,
+        "expected_score_away": 0.440818
+      },
+      "opponent_quality": {
+        "home": {
+          "opp_strength_l5_avg": 1514.35,
+          "schedule_difficulty_vs_active_mean": -22.49,
+          "schedule_difficulty_vs_nominal_anchor": 14.35,
+          "opp_strength_l5_contextualized_gap_avg": -22.49,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        },
+        "away": {
+          "opp_strength_l5_avg": 1538.23,
+          "schedule_difficulty_vs_active_mean": 1.39,
+          "schedule_difficulty_vs_nominal_anchor": 38.23,
+          "opp_strength_l5_contextualized_gap_avg": 1.39,
+          "n_opponents_observed": 5,
+          "n_contextualized_gaps_observed": 5,
+          "flags": []
+        }
+      },
+      "rivalry_intelligence": {
+        "is_rivalry": false,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "category": "NONE",
+        "static_tags": [],
+        "geographic_scope": null,
+        "established_since": null,
+        "provenance_count": 0,
+        "source": "rivalry_registry_pl.json",
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY",
+        "decision_effect": "NONE"
+      },
+      "match_context": {
+        "static_tags": [],
+        "dynamic_tags": [],
+        "rivalry_level": "NONE",
+        "source": "rivalry_registry_pl.json",
+        "as_of": "2026-11-02",
+        "decision_effect": "NONE"
+      },
+      "decision_effect": "NONE"
+    }
+  ]
+}
