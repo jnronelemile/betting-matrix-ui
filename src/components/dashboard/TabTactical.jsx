@@ -129,16 +129,29 @@ export default function TabTactical({ match, onNavigateTab }) {
     };
   }, []);
 
-  // Gestion du geste tactile (sub-swipe) pour la sous-navigation entre disciplines
+  // État et refs pour le sous-swipe tactile interactif au pixel près et synchronisation du sélecteur
+  const [subSwipeNeighbor, setSubSwipeNeighbor] = useState(null); // { id: string, direction: 'next' | 'prev' } | null
+  const pillsContainerRef = useRef(null);
+  const pillRefs = useRef({});
+  const subSwipeContainerRef = useRef(null);
+  const subCurrentPanelRef = useRef(null);
+  const subNeighborPanelRef = useRef(null);
+  const subFinishTimeoutRef = useRef(null);
+
   const subTouchRef = useRef({
     startX: 0,
     startY: 0,
+    currentDx: 0,
     startTime: 0,
     isTracking: false,
     isDragging: false,
     isVerticalScroll: false,
+    direction: null,
+    neighborDisciplineKey: null,
+    containerWidth: 0,
+    isAnimatingRelease: false,
+    prefersReducedMotion: false,
   });
-  const subSwipeContainerRef = useRef(null);
 
   const risk = match.Risk_Management_Context || {};
   const tactical = risk.Tactical_Red_Flags || {};
@@ -268,7 +281,109 @@ export default function TabTactical({ match, onNavigateTab }) {
     };
   }, [coverageMarkets]);
 
+  // Recentrage horizontal automatique et fluide de la discipline active dans la barre de sous-onglets
+  const centerActivePill = useCallback((disciplineKey, behavior = 'smooth') => {
+    const container = pillsContainerRef.current;
+    if (!container) return;
+    const button = pillRefs.current[disciplineKey];
+    if (!button) return;
+
+    // Calcul du scrollLeft pour centrer exactement le bouton dans le conteneur
+    const targetScrollLeft = button.offsetLeft - (container.clientWidth - button.offsetWidth) / 2;
+
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    container.scrollTo({
+      left: Math.max(0, targetScrollLeft),
+      behavior: (prefersReducedMotion || behavior === 'instant') ? 'instant' : 'smooth'
+    });
+  }, []);
+
+  // Synchronisation du recentrage horizontal dès que la discipline active change (par clic ou sous-swipe)
+  useEffect(() => {
+    centerActivePill(selectedDiscipline);
+  }, [selectedDiscipline, centerActivePill]);
+
+  // Recentrage initial et au redimensionnement sans défilement vertical involontaire
+  useEffect(() => {
+    centerActivePill(selectedDiscipline, 'instant');
+    const handleResize = () => {
+      centerActivePill(selectedDiscipline, 'instant');
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [selectedDiscipline, centerActivePill]);
+
+  // Nettoyage des timers lors du démontage
+  useEffect(() => {
+    return () => {
+      if (subFinishTimeoutRef.current) {
+        clearTimeout(subFinishTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Sécurisation au passage sur Desktop (>= 1024px) : purger tout état de transition ou sous-swipe résiduel
+  useEffect(() => {
+    if (isDesktop) {
+      if (subFinishTimeoutRef.current) {
+        clearTimeout(subFinishTimeoutRef.current);
+        subFinishTimeoutRef.current = null;
+      }
+      if (subCurrentPanelRef.current) {
+        subCurrentPanelRef.current.style.transition = '';
+        subCurrentPanelRef.current.style.transform = '';
+      }
+      if (subNeighborPanelRef.current) {
+        subNeighborPanelRef.current.style.transition = '';
+        subNeighborPanelRef.current.style.transform = '';
+      }
+      if (subSwipeContainerRef.current) {
+        subSwipeContainerRef.current.style.minHeight = '';
+      }
+      setSubSwipeNeighbor(null);
+      subTouchRef.current.isDragging = false;
+      subTouchRef.current.isAnimatingRelease = false;
+      subTouchRef.current.isTracking = false;
+    }
+  }, [isDesktop]);
+
+  // Verrouillage de la hauteur minimale pendant le swipe pour éviter les sauts brusques de hauteur
+  useEffect(() => {
+    if (subSwipeNeighbor && subCurrentPanelRef.current && subNeighborPanelRef.current && subSwipeContainerRef.current) {
+      const currentH = subCurrentPanelRef.current.offsetHeight;
+      const neighborH = subNeighborPanelRef.current.offsetHeight;
+      if (currentH > 0 || neighborH > 0) {
+        subSwipeContainerRef.current.style.minHeight = `${Math.max(currentH, neighborH)}px`;
+      }
+    } else if (!subSwipeNeighbor && subSwipeContainerRef.current && !subTouchRef.current.isAnimatingRelease) {
+      subSwipeContainerRef.current.style.minHeight = '';
+    }
+  }, [subSwipeNeighbor]);
+
   const handleSelectDiscipline = useCallback((key) => {
+    if (subFinishTimeoutRef.current) {
+      clearTimeout(subFinishTimeoutRef.current);
+      subFinishTimeoutRef.current = null;
+    }
+    if (subCurrentPanelRef.current) {
+      subCurrentPanelRef.current.style.transition = '';
+      subCurrentPanelRef.current.style.transform = '';
+    }
+    if (subNeighborPanelRef.current) {
+      subNeighborPanelRef.current.style.transition = '';
+      subNeighborPanelRef.current.style.transform = '';
+    }
+    if (subSwipeContainerRef.current) {
+      subSwipeContainerRef.current.style.minHeight = '';
+    }
+    setSubSwipeNeighbor(null);
+    subTouchRef.current.isDragging = false;
+    subTouchRef.current.isAnimatingRelease = false;
+    subTouchRef.current.isTracking = false;
+
     setSelectedDiscipline(key);
     setExpandedHomeCatalogue(false);
     setExpandedAwayCatalogue(false);
@@ -284,30 +399,46 @@ export default function TabTactical({ match, onNavigateTab }) {
   };
 
   const handleSubTouchStart = useCallback((e) => {
+    subTouchRef.current.isTracking = false;
+    subTouchRef.current.isDragging = false;
+    subTouchRef.current.isVerticalScroll = false;
+
     if (typeof window !== 'undefined' && window.innerWidth >= 1024) return;
     if (!e.touches || e.touches.length !== 1) return;
-    if (isInteractiveSubTarget(e.target)) {
-      subTouchRef.current.isTracking = false;
-      return;
-    }
+    if (subTouchRef.current.isAnimatingRelease) return;
+    if (isInteractiveSubTarget(e.target)) return;
+
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const touch = e.touches[0];
+    const containerW = subSwipeContainerRef.current ? subSwipeContainerRef.current.offsetWidth : (window.innerWidth || 390);
+
     subTouchRef.current = {
       startX: touch.clientX,
       startY: touch.clientY,
+      currentDx: 0,
       startTime: Date.now(),
       isTracking: true,
       isDragging: false,
       isVerticalScroll: false,
+      direction: null,
+      neighborDisciplineKey: null,
+      containerWidth: containerW,
+      isAnimatingRelease: false,
+      prefersReducedMotion,
     };
   }, []);
 
   const handleSubTouchMove = useCallback((e) => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) return;
     if (!subTouchRef.current.isTracking) return;
+    if (!e.touches || e.touches.length === 0) return;
+    if (subTouchRef.current.isAnimatingRelease) return;
     if (subTouchRef.current.isVerticalScroll) return;
 
     const touch = e.touches[0];
-    if (!touch) return;
     const dx = touch.clientX - subTouchRef.current.startX;
     const dy = touch.clientY - subTouchRef.current.startY;
     const absX = Math.abs(dx);
@@ -326,51 +457,212 @@ export default function TabTactical({ match, onNavigateTab }) {
         return;
       }
     }
-  }, []);
 
-  const handleSubTouchEnd = useCallback((e) => {
+    // Phase 2 : En cours de glissement horizontal piloté par le doigt
+    if (subTouchRef.current.isDragging) {
+      if (e.cancelable) e.preventDefault();
+
+      const curIdx = DISCIPLINE_KEYS.indexOf(selectedDiscipline);
+      const direction = dx < 0 ? 'next' : 'prev';
+      let neighborKey = null;
+
+      if (direction === 'next') {
+        if (curIdx < DISCIPLINE_KEYS.length - 1) {
+          neighborKey = DISCIPLINE_KEYS[curIdx + 1];
+        }
+      } else {
+        if (curIdx > 0) {
+          neighborKey = DISCIPLINE_KEYS[curIdx - 1];
+        }
+      }
+
+      // Résistance élastique aux deux extrémités (Corners à gauche, Throws à droite)
+      let effectiveDx = dx;
+      if (!neighborKey) {
+        effectiveDx = dx * 0.15;
+      }
+
+      // Montage / bascule dynamique du panneau voisin
+      if (neighborKey) {
+        if (!subSwipeNeighbor || subSwipeNeighbor.id !== neighborKey || subSwipeNeighbor.direction !== direction) {
+          setSubSwipeNeighbor({ id: neighborKey, direction });
+        }
+      } else if (subSwipeNeighbor) {
+        setSubSwipeNeighbor(null);
+      }
+
+      subTouchRef.current.currentDx = effectiveDx;
+      subTouchRef.current.direction = direction;
+      subTouchRef.current.neighborDisciplineKey = neighborKey;
+
+      if (subTouchRef.current.prefersReducedMotion) {
+        return;
+      }
+
+      // Translation GPU directe en temps réel synchronisée avec le doigt (zéro re-render)
+      const containerW = subTouchRef.current.containerWidth || 390;
+      if (subCurrentPanelRef.current) {
+        subCurrentPanelRef.current.style.transition = 'none';
+        subCurrentPanelRef.current.style.transform = `translate3d(${effectiveDx}px, 0, 0)`;
+      }
+      if (subNeighborPanelRef.current && neighborKey) {
+        const neighborOffset = direction === 'next' ? containerW + effectiveDx : -containerW + effectiveDx;
+        subNeighborPanelRef.current.style.transition = 'none';
+        subNeighborPanelRef.current.style.transform = `translate3d(${neighborOffset}px, 0, 0)`;
+      }
+    }
+  }, [selectedDiscipline, subSwipeNeighbor]);
+
+  const handleSubTouchEnd = useCallback(() => {
     if (!subTouchRef.current.isTracking) return;
     subTouchRef.current.isTracking = false;
 
     if (!subTouchRef.current.isDragging) {
+      subTouchRef.current.isDragging = false;
       subTouchRef.current.isVerticalScroll = false;
       return;
     }
-    subTouchRef.current.isDragging = false;
 
-    const touch = e.changedTouches?.[0];
-    if (!touch) return;
-    const dx = touch.clientX - subTouchRef.current.startX;
-    const dt = Date.now() - subTouchRef.current.startTime;
-    const velocity = dt > 0 ? Math.abs(dx) / dt : 0;
+    const { currentDx, containerWidth, startTime, direction, neighborDisciplineKey, prefersReducedMotion } = subTouchRef.current;
+    const containerW = containerWidth || 390;
+    const dt = Date.now() - startTime;
+    const velocity = dt > 0 ? currentDx / dt : 0;
 
-    const threshold = 48;
-    const isFastSwipe = velocity > 0.30 && Math.abs(dx) > 25;
-
-    if (Math.abs(dx) > threshold || isFastSwipe) {
-      const curIndex = DISCIPLINE_KEYS.indexOf(selectedDiscipline);
-      if (curIndex !== -1) {
-        if (dx < 0) {
-          // Balayage vers la gauche -> discipline suivante
-          if (curIndex < DISCIPLINE_KEYS.length - 1) {
-            handleSelectDiscipline(DISCIPLINE_KEYS[curIndex + 1]);
-          }
-          // Si curIndex === DISCIPLINE_KEYS.length - 1 (Throws) : résistance/aucun débordement
-        } else if (dx > 0) {
-          // Balayage vers la droite -> discipline précédente
-          if (curIndex > 0) {
-            handleSelectDiscipline(DISCIPLINE_KEYS[curIndex - 1]);
-          }
-          // Si curIndex === 0 (Corners) : résistance/aucun débordement
-        }
+    let shouldCommit = false;
+    if (neighborDisciplineKey) {
+      if (direction === 'next') {
+        shouldCommit = (currentDx < -containerW * 0.22) || (velocity < -0.32 && currentDx < -25);
+      } else if (direction === 'prev') {
+        shouldCommit = (currentDx > containerW * 0.22) || (velocity > 0.32 && currentDx > 25);
       }
     }
-  }, [selectedDiscipline, handleSelectDiscipline]);
+
+    subTouchRef.current.isAnimatingRelease = true;
+
+    if (shouldCommit && neighborDisciplineKey) {
+      // Recentrage anticipé et fluide de la discipline cible dans le sélecteur
+      centerActivePill(neighborDisciplineKey, prefersReducedMotion ? 'instant' : 'smooth');
+
+      if (prefersReducedMotion) {
+        if (subCurrentPanelRef.current) {
+          subCurrentPanelRef.current.style.transition = '';
+          subCurrentPanelRef.current.style.transform = '';
+        }
+        if (subNeighborPanelRef.current) {
+          subNeighborPanelRef.current.style.transition = '';
+          subNeighborPanelRef.current.style.transform = '';
+        }
+        setSelectedDiscipline(neighborDisciplineKey);
+        setSubSwipeNeighbor(null);
+        setExpandedHomeCatalogue(false);
+        setExpandedAwayCatalogue(false);
+        subTouchRef.current.isDragging = false;
+        subTouchRef.current.isAnimatingRelease = false;
+        return;
+      }
+
+      const duration = 220;
+      const ease = 'cubic-bezier(0.2, 0.9, 0.3, 1)';
+      const targetCurrent = direction === 'next' ? -containerW : containerW;
+
+      if (subCurrentPanelRef.current) {
+        subCurrentPanelRef.current.style.transition = `transform ${duration}ms ${ease}`;
+        subCurrentPanelRef.current.style.transform = `translate3d(${targetCurrent}px, 0, 0)`;
+      }
+      if (subNeighborPanelRef.current) {
+        subNeighborPanelRef.current.style.transition = `transform ${duration}ms ${ease}`;
+        subNeighborPanelRef.current.style.transform = 'translate3d(0px, 0, 0)';
+      }
+
+      subFinishTimeoutRef.current = setTimeout(() => {
+        if (subCurrentPanelRef.current) {
+          subCurrentPanelRef.current.style.transition = '';
+          subCurrentPanelRef.current.style.transform = '';
+        }
+        if (subNeighborPanelRef.current) {
+          subNeighborPanelRef.current.style.transition = '';
+          subNeighborPanelRef.current.style.transform = '';
+        }
+        if (subSwipeContainerRef.current) {
+          subSwipeContainerRef.current.style.minHeight = '';
+        }
+        setSelectedDiscipline(neighborDisciplineKey);
+        setSubSwipeNeighbor(null);
+        setExpandedHomeCatalogue(false);
+        setExpandedAwayCatalogue(false);
+        subTouchRef.current.isDragging = false;
+        subTouchRef.current.isAnimatingRelease = false;
+        subFinishTimeoutRef.current = null;
+      }, duration);
+    } else {
+      // Annulation : retour amorti à la position d'origine
+      centerActivePill(selectedDiscipline, prefersReducedMotion ? 'instant' : 'smooth');
+
+      if (prefersReducedMotion) {
+        if (subCurrentPanelRef.current) {
+          subCurrentPanelRef.current.style.transition = '';
+          subCurrentPanelRef.current.style.transform = '';
+        }
+        if (subNeighborPanelRef.current) {
+          subNeighborPanelRef.current.style.transition = '';
+          subNeighborPanelRef.current.style.transform = '';
+        }
+        setSubSwipeNeighbor(null);
+        subTouchRef.current.isDragging = false;
+        subTouchRef.current.isAnimatingRelease = false;
+        return;
+      }
+
+      const duration = 200;
+      const ease = 'cubic-bezier(0.2, 0.9, 0.3, 1)';
+
+      if (subCurrentPanelRef.current) {
+        subCurrentPanelRef.current.style.transition = `transform ${duration}ms ${ease}`;
+        subCurrentPanelRef.current.style.transform = 'translate3d(0px, 0, 0)';
+      }
+      if (subNeighborPanelRef.current && neighborDisciplineKey) {
+        const targetNeighbor = direction === 'next' ? containerW : -containerW;
+        subNeighborPanelRef.current.style.transition = `transform ${duration}ms ${ease}`;
+        subNeighborPanelRef.current.style.transform = `translate3d(${targetNeighbor}px, 0, 0)`;
+      }
+
+      subFinishTimeoutRef.current = setTimeout(() => {
+        if (subCurrentPanelRef.current) {
+          subCurrentPanelRef.current.style.transition = '';
+          subCurrentPanelRef.current.style.transform = '';
+        }
+        if (subNeighborPanelRef.current) {
+          subNeighborPanelRef.current.style.transition = '';
+          subNeighborPanelRef.current.style.transform = '';
+        }
+        if (subSwipeContainerRef.current) {
+          subSwipeContainerRef.current.style.minHeight = '';
+        }
+        setSubSwipeNeighbor(null);
+        subTouchRef.current.isDragging = false;
+        subTouchRef.current.isAnimatingRelease = false;
+        subFinishTimeoutRef.current = null;
+      }, duration);
+    }
+  }, [selectedDiscipline, centerActivePill]);
 
   const handleSubTouchCancel = useCallback(() => {
+    if (!subTouchRef.current.isTracking) return;
     subTouchRef.current.isTracking = false;
     subTouchRef.current.isDragging = false;
     subTouchRef.current.isVerticalScroll = false;
+    if (subCurrentPanelRef.current) {
+      subCurrentPanelRef.current.style.transition = '';
+      subCurrentPanelRef.current.style.transform = '';
+    }
+    if (subNeighborPanelRef.current) {
+      subNeighborPanelRef.current.style.transition = '';
+      subNeighborPanelRef.current.style.transform = '';
+    }
+    if (subSwipeContainerRef.current) {
+      subSwipeContainerRef.current.style.minHeight = '';
+    }
+    setSubSwipeNeighbor(null);
   }, []);
 
   const toggleCardNote = (key) => {
@@ -414,6 +706,382 @@ export default function TabTactical({ match, onNavigateTab }) {
     if (isDesktop || expandedAwayCatalogue) return awayLines;
     return getThreeClosestLines(awayLines, awayLambda);
   }, [isDesktop, expandedAwayCatalogue, awayLines, awayLambda]);
+
+  // Rendu modulaire du panneau tripartite pour une discipline donnée (courante ou voisine de swipe)
+  const renderDisciplinePanel = (disciplineKey) => {
+    const isCurrent = disciplineKey === selectedDiscipline;
+    const marketMeta = statisticalMarkets.find(m => m.key === disciplineKey) || statisticalMarkets[0];
+    const family = isCurrent
+      ? currentFamily
+      : (match.Team_Stat_Markets?.Families?.find(f => f.Market_Type === marketMeta.marketType) || null);
+
+    // Cas 1 : Archive Legacy sans Team_Stat_Markets
+    if (!match.Team_Stat_Markets) {
+      return (
+        <div className="p-6 text-center bg-slate-50 dark:bg-slate-950 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 space-y-2">
+          <Info className="mx-auto text-slate-400" size={24} />
+          <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
+            Marchés par équipe non disponibles pour ce match
+          </h4>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+            Ce jeu de données provient d'une session antérieure à la modélisation Poisson par équipe (V1.0). Les totaux de match et comparaisons unilatérales restent consultables ci-dessus et ci-dessous.
+          </p>
+        </div>
+      );
+    }
+
+    // Cas 2 : Statut racine Team_Stat_Markets non CALCULATED
+    if (match.Team_Stat_Markets.Status && match.Team_Stat_Markets.Status !== 'CALCULATED') {
+      return (
+        <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 space-y-2">
+          <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
+            <AlertTriangle size={16} />
+            <span>Marchés par équipe suspendus ({match.Team_Stat_Markets.Status})</span>
+          </div>
+          <p className="text-xs text-slate-600 dark:text-slate-400">
+            Motif rapporté par le moteur : {match.Team_Stat_Markets.Reason || 'Calcul suspendu par le moteur pour ce match.'}
+          </p>
+        </div>
+      );
+    }
+
+    // Cas 3 : Famille absente du catalogue pour cette discipline
+    if (!family) {
+      const isV1_0_Throws = disciplineKey === 'throws' && String(match.Team_Stat_Markets.Schema_Version || match.Team_Stat_Markets.Catalogue_Version) === '1.0';
+      return (
+        <div className="p-6 text-center bg-slate-50 dark:bg-slate-950 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 space-y-2">
+          <Info className="mx-auto text-slate-400" size={24} />
+          <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
+            {isV1_0_Throws
+              ? 'Touches (Throws) non intégrées dans le catalogue V1.0'
+              : `Discipline ${marketMeta.label} non exportée dans ce payload`}
+          </h4>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+            {isV1_0_Throws
+              ? 'Le catalogue V1.0 intègre Corners, Cadrés et Tirs. La discipline Touches est disponible à partir des jeux de données V1.1.'
+              : `La famille ${marketMeta.marketType} n'est pas présente dans le contrat Team_Stat_Markets de ce match.`}
+          </p>
+          {Number.isFinite(props[marketMeta.lambdaKey]) && (
+            <div className="mt-2 text-xs font-mono text-slate-600 dark:text-slate-400">
+              Total match préliminaire : λ = {props[marketMeta.lambdaKey].toFixed(2)}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Cas 4 : Famille présente mais statut non CALCULATED ou Home/Away incomplets
+    if (family.Status !== 'CALCULATED' || !family.Home || !family.Away) {
+      return (
+        <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 space-y-2">
+          <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
+            <AlertTriangle size={16} />
+            <span>Calcul suspendu pour {marketMeta.label} ({family?.Status || 'NON_CALCULÉ'})</span>
+          </div>
+          <p className="text-xs text-slate-600 dark:text-slate-400">
+            Motif rapporté par le moteur : {family?.Reason || 'Données volumétriques ou historiques insuffisantes pour cette discipline.'}
+          </p>
+        </div>
+      );
+    }
+
+    // Données spécifiques à la discipline
+    const panelHomeLines = isCurrent ? homeLines : (family?.Home?.Lines || []);
+    const panelAwayLines = isCurrent ? awayLines : (family?.Away?.Lines || []);
+    const panelHomeLambda = isCurrent ? homeLambda : family?.Home?.Lambda;
+    const panelAwayLambda = isCurrent ? awayLambda : family?.Away?.Lambda;
+    const panelHomeNearestLine = isCurrent ? homeNearestLine : getNearestLine(panelHomeLines, panelHomeLambda);
+    const panelAwayNearestLine = isCurrent ? awayNearestLine : getNearestLine(panelAwayLines, panelAwayLambda);
+    const panelHomeDisplayedLines = isCurrent
+      ? homeDisplayedLines
+      : (isDesktop ? panelHomeLines : getThreeClosestLines(panelHomeLines, panelHomeLambda));
+    const panelAwayDisplayedLines = isCurrent
+      ? awayDisplayedLines
+      : (isDesktop ? panelAwayLines : getThreeClosestLines(panelAwayLines, panelAwayLambda));
+
+    const linesForHome = panelHomeLines;
+    const linesForAway = panelAwayLines;
+
+    // Cas 5 : Calcul nominal (CALCULATED) — Rendu Tripartite Home / Match Total / Away
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px_1fr] gap-4 items-start">
+        {/* 1. Pilier Domicile (Home) */}
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+          <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-2 min-w-0">
+              <TeamLogo team={homeLogoTeam} league={match.League} size="sm" />
+              <div className="min-w-0">
+                <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate" title={homeTeamName}>
+                  {homeTeamName}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 block">
+                  Domicile
+                </span>
+              </div>
+            </div>
+            <div className="text-right shrink-0">
+              <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
+                λ Attendu
+              </span>
+              <span className="font-mono text-lg font-black text-slate-900 dark:text-slate-100">
+                {Number.isFinite(panelHomeLambda) ? panelHomeLambda.toFixed(2) : '-'}
+              </span>
+            </div>
+          </div>
+
+          {/* Table Over/Under Domicile */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+              <span>Lignes Over / Under</span>
+              <span className="font-mono text-[9px] text-slate-400">Dist. Poisson</span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs font-mono">
+                <thead>
+                  <tr className="border-b border-slate-200/80 dark:border-slate-800/80 text-[10px] text-slate-400 uppercase">
+                    <th className="py-1 text-left font-semibold">Seuil</th>
+                    <th className="py-1 text-right font-semibold">Over</th>
+                    <th className="py-1 text-right font-semibold">Under</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
+                  {panelHomeDisplayedLines.map((line) => {
+                    const isNearest = line.Line === panelHomeNearestLine;
+                    return (
+                      <tr
+                        key={line.Line}
+                        className={`transition-colors ${
+                          isNearest
+                            ? 'bg-blue-50/60 dark:bg-blue-950/40 font-bold'
+                            : 'hover:bg-slate-100/50 dark:hover:bg-slate-900/50'
+                        }`}
+                      >
+                        <td className="py-1.5 text-left text-slate-700 dark:text-slate-300">
+                          <div className="flex items-center gap-1.5">
+                            <span>&gt; {line.Line}</span>
+                            {isNearest && (
+                              <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-tight">
+                                Pivot
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className={`py-1.5 text-right ${Number.isFinite(line.Probability_Over) ? getPropTextColor(line.Probability_Over) : 'text-slate-400'}`}>
+                          {Number.isFinite(line.Probability_Over) ? `${(line.Probability_Over * 100).toFixed(1)}%` : '-'}
+                        </td>
+                        <td className="py-1.5 text-right text-slate-500 dark:text-slate-400">
+                          {Number.isFinite(line.Probability_Under) ? `${(line.Probability_Under * 100).toFixed(1)}%` : '-'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Bouton d'extension du catalogue complet (Mobile / Tablettes < 1024px uniquement) */}
+            {!isDesktop && homeLines.length > 3 && isCurrent && (
+              <button
+                type="button"
+                onClick={() => setExpandedHomeCatalogue(prev => !prev)}
+                className="w-full py-1.5 px-2 mt-1 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
+              >
+                {expandedHomeCatalogue ? (
+                  <>
+                    <Minimize2 size={11} />
+                    <span>Réduire aux 3 lignes pivots{Number.isFinite(panelHomeLambda) ? ` (λ = ${panelHomeLambda.toFixed(2)})` : ''}</span>
+                  </>
+                ) : (
+                  <>
+                    <Maximize2 size={11} />
+                    <span>Afficher le catalogue complet ({linesForHome.length} lignes)</span>
+                  </>
+                )}
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* 2. Pilier Central : Match Total & Contexte Ligue (order-first sur mobile pour synthèse immédiate avec accentuation visuelle) */}
+        <div className="order-first lg:order-none p-4 rounded-2xl bg-gradient-to-b from-blue-50/40 to-white dark:from-blue-950/20 dark:to-slate-900 border-2 border-blue-500/30 dark:border-blue-500/40 shadow-xs space-y-3.5">
+          <div className="flex items-center justify-between pb-2 border-b border-blue-100 dark:border-blue-900/40">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                Total du Match
+              </span>
+            </div>
+            <Badge variant="info" className="text-[9px] font-mono font-bold">
+              {marketMeta.shortLabel}
+            </Badge>
+          </div>
+
+          {/* Somme additive exacte */}
+          <div className="text-center py-2 px-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+            <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
+              λ Total Match
+            </span>
+            <span className="font-mono text-2xl font-black text-slate-900 dark:text-slate-100">
+              {Number.isFinite(family?.Match_Total_Lambda)
+                ? family.Match_Total_Lambda.toFixed(2)
+                : (Number.isFinite(props[marketMeta.lambdaKey]) ? props[marketMeta.lambdaKey].toFixed(2) : '-')}
+            </span>
+            <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 mt-0.5 block">
+              {Number.isFinite(panelHomeLambda) ? panelHomeLambda.toFixed(2) : '-'} (H) + {Number.isFinite(panelAwayLambda) ? panelAwayLambda.toFixed(2) : '-'} (A)
+            </span>
+          </div>
+
+          {/* Repère de ligue & Probabilité supérieure au seuil */}
+          <div className="space-y-2 text-xs">
+            <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80">
+              <span className="text-slate-500 text-[11px] truncate" title={marketMeta.refType}>
+                {marketMeta.refType}
+              </span>
+              <span className="font-mono font-bold text-slate-800 dark:text-slate-200 shrink-0">
+                {Number.isFinite(anchors[marketMeta.refKey]) ? anchors[marketMeta.refKey].toFixed(2) : '-'}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80">
+              <span className="text-slate-500 text-[11px] truncate">
+                {disciplineKey === 'throws' ? 'Prob > Seuil match dérivé' : 'Prob > Réf ligue'}
+              </span>
+              <span className={`font-mono font-bold shrink-0 ${getPropTextColor(props[marketMeta.propKey] || 0)}`}>
+                {Number.isFinite(props[marketMeta.propKey])
+                  ? `${(props[marketMeta.propKey] * 100).toFixed(1)}%`
+                  : '-'}
+              </span>
+            </div>
+
+            {/* Domination unilatérale Domicile > Extérieur */}
+            {Number.isFinite(props[marketMeta.propMoreKey]) && (
+              <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-1">
+                <div className="flex justify-between items-center text-[10px]">
+                  <span className="font-semibold text-slate-600 dark:text-slate-400">
+                    P(Domination Domicile) :
+                  </span>
+                  <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
+                    {(props[marketMeta.propMoreKey] * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <ProgressBar
+                  value={props[marketMeta.propMoreKey]}
+                  max={1}
+                  colorClass={getPropColor(props[marketMeta.propMoreKey])}
+                  displayValue=" "
+                />
+              </div>
+            )}
+          </div>
+
+          <p className="text-[9px] text-slate-400 dark:text-slate-500 italic text-center">
+            {disciplineKey === 'throws'
+              ? '* La référence de ligue (mean_throws) est une moyenne par équipe, tandis que le seuil Over évalue le volume global du match.'
+              : '* Médiane globale calculée sur l’ensemble des matchs de la compétition.'}
+          </p>
+        </div>
+
+        {/* 3. Pilier Extérieur (Away) */}
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+          <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-2 min-w-0">
+              <TeamLogo team={awayLogoTeam} league={match.League} size="sm" />
+              <div className="min-w-0">
+                <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate" title={awayTeamName}>
+                  {awayTeamName}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400 block">
+                  Extérieur
+                </span>
+              </div>
+            </div>
+            <div className="text-right shrink-0">
+              <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
+                λ Attendu
+              </span>
+              <span className="font-mono text-lg font-black text-slate-900 dark:text-slate-100">
+                {Number.isFinite(panelAwayLambda) ? panelAwayLambda.toFixed(2) : '-'}
+              </span>
+            </div>
+          </div>
+
+          {/* Table Over/Under Extérieur */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+              <span>Lignes Over / Under</span>
+              <span className="font-mono text-[9px] text-slate-400">Dist. Poisson</span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs font-mono">
+                <thead>
+                  <tr className="border-b border-slate-200/80 dark:border-slate-800/80 text-[10px] text-slate-400 uppercase">
+                    <th className="py-1 text-left font-semibold">Seuil</th>
+                    <th className="py-1 text-right font-semibold">Over</th>
+                    <th className="py-1 text-right font-semibold">Under</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
+                  {panelAwayDisplayedLines.map((line) => {
+                    const isNearest = line.Line === panelAwayNearestLine;
+                    return (
+                      <tr
+                        key={line.Line}
+                        className={`transition-colors ${
+                          isNearest
+                            ? 'bg-blue-50/60 dark:bg-blue-950/40 font-bold'
+                            : 'hover:bg-slate-100/50 dark:hover:bg-slate-900/50'
+                        }`}
+                      >
+                        <td className="py-1.5 text-left text-slate-700 dark:text-slate-300">
+                          <div className="flex items-center gap-1.5">
+                            <span>&gt; {line.Line}</span>
+                            {isNearest && (
+                              <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-tight">
+                                Pivot
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className={`py-1.5 text-right ${Number.isFinite(line.Probability_Over) ? getPropTextColor(line.Probability_Over) : 'text-slate-400'}`}>
+                          {Number.isFinite(line.Probability_Over) ? `${(line.Probability_Over * 100).toFixed(1)}%` : '-'}
+                        </td>
+                        <td className="py-1.5 text-right text-slate-500 dark:text-slate-400">
+                          {Number.isFinite(line.Probability_Under) ? `${(line.Probability_Under * 100).toFixed(1)}%` : '-'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Bouton d'extension du catalogue complet (Mobile / Tablettes < 1024px uniquement) */}
+            {!isDesktop && awayLines.length > 3 && isCurrent && (
+              <button
+                type="button"
+                onClick={() => setExpandedAwayCatalogue(prev => !prev)}
+                className="w-full py-1.5 px-2 mt-1 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
+              >
+                {expandedAwayCatalogue ? (
+                  <>
+                    <Minimize2 size={11} />
+                    <span>Réduire aux 3 lignes pivots{Number.isFinite(panelAwayLambda) ? ` (λ = ${panelAwayLambda.toFixed(2)})` : ''}</span>
+                  </>
+                ) : (
+                  <>
+                    <Maximize2 size={11} />
+                    <span>Afficher le catalogue complet ({linesForAway.length} lignes)</span>
+                  </>
+                )}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -775,8 +1443,9 @@ export default function TabTactical({ match, onNavigateTab }) {
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div
+              ref={pillsContainerRef}
               data-sub-swipe-ignore="true"
-              className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto max-w-full"
+              className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar scroll-smooth max-w-full"
             >
               {statisticalMarkets.map(({ key, label, lambdaKey }) => {
                 const isSelected = selectedDiscipline === key;
@@ -784,6 +1453,8 @@ export default function TabTactical({ match, onNavigateTab }) {
                 return (
                   <button
                     key={key}
+                    ref={el => { pillRefs.current[key] = el; }}
+                    data-discipline-key={key}
                     type="button"
                     onClick={() => handleSelectDiscipline(key)}
                     aria-pressed={isSelected}
@@ -837,363 +1508,35 @@ export default function TabTactical({ match, onNavigateTab }) {
             onTouchMove={handleSubTouchMove}
             onTouchEnd={handleSubTouchEnd}
             onTouchCancel={handleSubTouchCancel}
-            className="relative"
+            className="relative overflow-hidden w-full select-none"
+            style={{ touchAction: 'pan-y' }}
           >
-
-          {/* Rendu Tripartite de la Discipline Sélectionnée */}
-          {(() => {
-            // Cas 1 : Archive Legacy sans Team_Stat_Markets
-            if (!match.Team_Stat_Markets) {
-              return (
-                <div className="p-6 text-center bg-slate-50 dark:bg-slate-950 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 space-y-2">
-                  <Info className="mx-auto text-slate-400" size={24} />
-                  <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                    Marchés par équipe non disponibles pour ce match
-                  </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-                    Ce jeu de données provient d'une session antérieure à la modélisation Poisson par équipe (V1.0). Les totaux de match et comparaisons unilatérales restent consultables ci-dessus et ci-dessous.
-                  </p>
-                </div>
-              );
-            }
-
-            // Cas 2 : Statut racine Team_Stat_Markets non CALCULATED
-            if (match.Team_Stat_Markets.Status && match.Team_Stat_Markets.Status !== 'CALCULATED') {
-              return (
-                <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
-                    <AlertTriangle size={16} />
-                    <span>Marchés par équipe suspendus ({match.Team_Stat_Markets.Status})</span>
-                  </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">
-                    Motif rapporté par le moteur : {match.Team_Stat_Markets.Reason || 'Calcul suspendu par le moteur pour ce match.'}
-                  </p>
-                </div>
-              );
-            }
-
-            // Cas 3 : Famille absente du catalogue pour cette discipline
-            if (!currentFamily) {
-              const isV1_0_Throws = selectedDiscipline === 'throws' && String(match.Team_Stat_Markets.Schema_Version || match.Team_Stat_Markets.Catalogue_Version) === '1.0';
-              return (
-                <div className="p-6 text-center bg-slate-50 dark:bg-slate-950 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 space-y-2">
-                  <Info className="mx-auto text-slate-400" size={24} />
-                  <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                    {isV1_0_Throws
-                      ? 'Touches (Throws) non intégrées dans le catalogue V1.0'
-                      : `Discipline ${currentMarketMeta.label} non exportée dans ce payload`}
-                  </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-                    {isV1_0_Throws
-                      ? 'Le catalogue V1.0 intègre Corners, Cadrés et Tirs. La discipline Touches est disponible à partir des jeux de données V1.1.'
-                      : `La famille ${currentMarketMeta.familyCode} n'est pas présente dans le contrat Team_Stat_Markets de ce match.`}
-                  </p>
-                  {Number.isFinite(props[currentMarketMeta.lambdaKey]) && (
-                    <div className="mt-2 text-xs font-mono text-slate-600 dark:text-slate-400">
-                      Total match préliminaire : λ = {props[currentMarketMeta.lambdaKey].toFixed(2)}
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
-            // Cas 4 : Famille présente mais statut non CALCULATED ou Home/Away incomplets
-            if (currentFamily.Status !== 'CALCULATED' || !currentFamily.Home || !currentFamily.Away) {
-              return (
-                <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
-                    <AlertTriangle size={16} />
-                    <span>Calcul suspendu pour {currentMarketMeta.label} ({currentFamily?.Status || 'NON_CALCULÉ'})</span>
-                  </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">
-                    Motif rapporté par le moteur : {currentFamily?.Reason || 'Données volumétriques ou historiques insuffisantes pour cette discipline.'}
-                  </p>
-                </div>
-              );
-            }
-
-            // Cas 5 : Calcul nominal (CALCULATED) — Rendu Tripartite Home / Match Total / Away
-            return (
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px_1fr] gap-4 items-start">
-
-                {/* 1. Pilier Domicile (Home) */}
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <TeamLogo team={homeLogoTeam} league={match.League} size="sm" />
-                      <div className="min-w-0">
-                        <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate" title={homeTeamName}>
-                          {homeTeamName}
-                        </span>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 block">
-                          Domicile
-                        </span>
-                      </div>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
-                        λ Attendu
-                      </span>
-                      <span className="font-mono text-lg font-black text-slate-900 dark:text-slate-100">
-                        {Number.isFinite(homeLambda) ? homeLambda.toFixed(2) : '-'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Table Over/Under Domicile */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-                      <span>Lignes Over / Under</span>
-                      <span className="font-mono text-[9px] text-slate-400">Dist. Poisson</span>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs font-mono">
-                        <thead>
-                          <tr className="border-b border-slate-200/80 dark:border-slate-800/80 text-[10px] text-slate-400 uppercase">
-                            <th className="py-1 text-left font-semibold">Seuil</th>
-                            <th className="py-1 text-right font-semibold">Over</th>
-                            <th className="py-1 text-right font-semibold">Under</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
-                          {homeDisplayedLines.map((line) => {
-                            const isNearest = line.Line === homeNearestLine;
-                            return (
-                              <tr
-                                key={line.Line}
-                                className={`transition-colors ${
-                                  isNearest
-                                    ? 'bg-blue-50/60 dark:bg-blue-950/40 font-bold'
-                                    : 'hover:bg-slate-100/50 dark:hover:bg-slate-900/50'
-                                }`}
-                              >
-                                <td className="py-1.5 text-left text-slate-700 dark:text-slate-300">
-                                  <div className="flex items-center gap-1.5">
-                                    <span>&gt; {line.Line}</span>
-                                    {isNearest && (
-                                      <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-tight">
-                                        Pivot
-                                      </span>
-                                    )}
-                                  </div>
-                                </td>
-                                <td className={`py-1.5 text-right ${Number.isFinite(line.Probability_Over) ? getPropTextColor(line.Probability_Over) : 'text-slate-400'}`}>
-                                  {Number.isFinite(line.Probability_Over) ? `${(line.Probability_Over * 100).toFixed(1)}%` : '-'}
-                                </td>
-                                <td className="py-1.5 text-right text-slate-500 dark:text-slate-400">
-                                  {Number.isFinite(line.Probability_Under) ? `${(line.Probability_Under * 100).toFixed(1)}%` : '-'}
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    {/* Bouton d'extension du catalogue complet (Mobile / Tablettes < 1024px uniquement) */}
-                    {!isDesktop && homeLines.length > 3 && (
-                      <button
-                        type="button"
-                        onClick={() => setExpandedHomeCatalogue(prev => !prev)}
-                        className="w-full py-1.5 px-2 mt-1 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
-                      >
-                        {expandedHomeCatalogue ? (
-                          <>
-                            <Minimize2 size={11} />
-                            <span>Réduire aux 3 lignes pivots{Number.isFinite(homeLambda) ? ` (λ = ${homeLambda.toFixed(2)})` : ''}</span>
-                          </>
-                        ) : (
-                          <>
-                            <Maximize2 size={11} />
-                            <span>Afficher le catalogue complet ({homeLines.length} lignes)</span>
-                          </>
-                        )}
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                {/* 2. Pilier Central : Match Total & Contexte Ligue (order-first sur mobile pour synthèse immédiate avec accentuation visuelle) */}
-                <div className="order-first lg:order-none p-4 rounded-2xl bg-gradient-to-b from-blue-50/40 to-white dark:from-blue-950/20 dark:to-slate-900 border-2 border-blue-500/30 dark:border-blue-500/40 shadow-xs space-y-3.5">
-                  <div className="flex items-center justify-between pb-2 border-b border-blue-100 dark:border-blue-900/40">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
-                        Total du Match
-                      </span>
-                    </div>
-                    <Badge variant="info" className="text-[9px] font-mono font-bold">
-                      {currentMarketMeta.shortLabel}
-                    </Badge>
-                  </div>
-
-                  {/* Somme additive exacte */}
-                  <div className="text-center py-2 px-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-                    <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
-                      λ Total Match
-                    </span>
-                    <span className="font-mono text-2xl font-black text-slate-900 dark:text-slate-100">
-                      {Number.isFinite(currentFamily?.Match_Total_Lambda)
-                        ? currentFamily.Match_Total_Lambda.toFixed(2)
-                        : (Number.isFinite(props[currentMarketMeta.lambdaKey]) ? props[currentMarketMeta.lambdaKey].toFixed(2) : '-')}
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 mt-0.5 block">
-                      {Number.isFinite(homeLambda) ? homeLambda.toFixed(2) : '-'} (H) + {Number.isFinite(awayLambda) ? awayLambda.toFixed(2) : '-'} (A)
-                    </span>
-                  </div>
-
-                  {/* Repère de ligue & Probabilité supérieure au seuil */}
-                  <div className="space-y-2 text-xs">
-                    <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80">
-                      <span className="text-slate-500 text-[11px] truncate" title={currentMarketMeta.refType}>
-                        {currentMarketMeta.refType}
-                      </span>
-                      <span className="font-mono font-bold text-slate-800 dark:text-slate-200 shrink-0">
-                        {Number.isFinite(anchors[currentMarketMeta.refKey]) ? anchors[currentMarketMeta.refKey].toFixed(2) : '-'}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80">
-                      <span className="text-slate-500 text-[11px] truncate">
-                        {selectedDiscipline === 'throws' ? 'Prob > Seuil match dérivé' : 'Prob > Réf ligue'}
-                      </span>
-                      <span className={`font-mono font-bold shrink-0 ${getPropTextColor(props[currentMarketMeta.propKey] || 0)}`}>
-                        {Number.isFinite(props[currentMarketMeta.propKey])
-                          ? `${(props[currentMarketMeta.propKey] * 100).toFixed(1)}%`
-                          : '-'}
-                      </span>
-                    </div>
-
-                    {/* Domination unilatérale Domicile > Extérieur */}
-                    {Number.isFinite(props[currentMarketMeta.propMoreKey]) && (
-                      <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-1">
-                        <div className="flex justify-between items-center text-[10px]">
-                          <span className="font-semibold text-slate-600 dark:text-slate-400">
-                            P(Domination Domicile) :
-                          </span>
-                          <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
-                            {(props[currentMarketMeta.propMoreKey] * 100).toFixed(1)}%
-                          </span>
-                        </div>
-                        <ProgressBar
-                          value={props[currentMarketMeta.propMoreKey]}
-                          max={1}
-                          colorClass={getPropColor(props[currentMarketMeta.propMoreKey])}
-                          displayValue=" "
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  <p className="text-[9px] text-slate-400 dark:text-slate-500 italic text-center">
-                    {selectedDiscipline === 'throws'
-                      ? '* La référence de ligue (mean_throws) est une moyenne par équipe, tandis que le seuil Over évalue le volume global du match.'
-                      : '* Médiane globale calculée sur l’ensemble des matchs de la compétition.'}
-                  </p>
-                </div>
-
-                {/* 3. Pilier Extérieur (Away) */}
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <TeamLogo team={awayLogoTeam} league={match.League} size="sm" />
-                      <div className="min-w-0">
-                        <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate" title={awayTeamName}>
-                          {awayTeamName}
-                        </span>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400 block">
-                          Extérieur
-                        </span>
-                      </div>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block">
-                        λ Attendu
-                      </span>
-                      <span className="font-mono text-lg font-black text-slate-900 dark:text-slate-100">
-                        {Number.isFinite(awayLambda) ? awayLambda.toFixed(2) : '-'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Table Over/Under Extérieur */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-                      <span>Lignes Over / Under</span>
-                      <span className="font-mono text-[9px] text-slate-400">Dist. Poisson</span>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs font-mono">
-                        <thead>
-                          <tr className="border-b border-slate-200/80 dark:border-slate-800/80 text-[10px] text-slate-400 uppercase">
-                            <th className="py-1 text-left font-semibold">Seuil</th>
-                            <th className="py-1 text-right font-semibold">Over</th>
-                            <th className="py-1 text-right font-semibold">Under</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
-                          {awayDisplayedLines.map((line) => {
-                            const isNearest = line.Line === awayNearestLine;
-                            return (
-                              <tr
-                                key={line.Line}
-                                className={`transition-colors ${
-                                  isNearest
-                                    ? 'bg-blue-50/60 dark:bg-blue-950/40 font-bold'
-                                    : 'hover:bg-slate-100/50 dark:hover:bg-slate-900/50'
-                                }`}
-                              >
-                                <td className="py-1.5 text-left text-slate-700 dark:text-slate-300">
-                                  <div className="flex items-center gap-1.5">
-                                    <span>&gt; {line.Line}</span>
-                                    {isNearest && (
-                                      <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-tight">
-                                        Pivot
-                                      </span>
-                                    )}
-                                  </div>
-                                </td>
-                                <td className={`py-1.5 text-right ${Number.isFinite(line.Probability_Over) ? getPropTextColor(line.Probability_Over) : 'text-slate-400'}`}>
-                                  {Number.isFinite(line.Probability_Over) ? `${(line.Probability_Over * 100).toFixed(1)}%` : '-'}
-                                </td>
-                                <td className="py-1.5 text-right text-slate-500 dark:text-slate-400">
-                                  {Number.isFinite(line.Probability_Under) ? `${(line.Probability_Under * 100).toFixed(1)}%` : '-'}
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    {/* Bouton d'extension du catalogue complet (Mobile / Tablettes < 1024px uniquement) */}
-                    {!isDesktop && awayLines.length > 3 && (
-                      <button
-                        type="button"
-                        onClick={() => setExpandedAwayCatalogue(prev => !prev)}
-                        className="w-full py-1.5 px-2 mt-1 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
-                      >
-                        {expandedAwayCatalogue ? (
-                          <>
-                            <Minimize2 size={11} />
-                            <span>Réduire aux 3 lignes pivots{Number.isFinite(awayLambda) ? ` (λ = ${awayLambda.toFixed(2)})` : ''}</span>
-                          </>
-                        ) : (
-                          <>
-                            <Maximize2 size={11} />
-                            <span>Afficher le catalogue complet ({awayLines.length} lignes)</span>
-                          </>
-                        )}
-                      </button>
-                    )}
-                  </div>
-                </div>
-
+            {/* Panneau voisin interactif (Mobile sub-swipe au doigt en temps réel) */}
+            {subSwipeNeighbor && (
+              <div
+                ref={subNeighborPanelRef}
+                aria-hidden="true"
+                className="w-full absolute top-0 left-0 z-0 bg-white dark:bg-slate-900 will-change-transform"
+                style={{
+                  transform:
+                    subSwipeNeighbor.direction === 'next'
+                      ? 'translate3d(100%, 0, 0)'
+                      : 'translate3d(-100%, 0, 0)',
+                }}
+              >
+                {renderDisciplinePanel(subSwipeNeighbor.id)}
               </div>
-            );
-          })()}
+            )}
+
+            {/* Panneau actif courant */}
+            <div
+              ref={subCurrentPanelRef}
+              key={`sub-current-${selectedDiscipline}`}
+              className="w-full relative z-10 bg-white dark:bg-slate-900 will-change-transform"
+              style={{ transform: 'translate3d(0px, 0, 0)' }}
+            >
+              {renderDisciplinePanel(selectedDiscipline)}
+            </div>
           </div>
         </div>
       </div>

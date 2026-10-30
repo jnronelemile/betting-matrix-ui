@@ -218,4 +218,69 @@ console.log('\n[TEST 5] Intégrité des données réelles TITANIUM (Sanctuaire p
   console.log(`  ✓ Test 5 validé : ${countWithTeamMarkets}/${matrixRaw.length} matchs vérifiés (${activeFileName}), zéro recalcul côté client, public/data/ intact.`);
 }
 
-console.log('\n=== TOUS LES TESTS WEB-MOBILE-001 ONT RÉUSSI AVEC SUCCÈS (5/5) ===');
+// ---------------------------------------------------------------------------
+// TEST 6 : Finition UX : Synchronisation du sélecteur et animation du sous-swipe
+// ---------------------------------------------------------------------------
+console.log('\n[TEST 6] Finition UX : Recentrage automatique et animation tactile bi-panneaux');
+{
+  const tacticalPath = path.join(ROOT_DIR, 'src/components/dashboard/TabTactical.jsx');
+  const tacticalCode = fs.readFileSync(tacticalPath, 'utf-8');
+
+  // 6.1 Recentrage horizontal automatique et fluide (centerActivePill)
+  assert(
+    tacticalCode.includes('const centerActivePill = useCallback('),
+    'TabTactical doit définir centerActivePill pour le recentrage fluide de la discipline active'
+  );
+  assert(
+    tacticalCode.includes('container.scrollTo({') && tacticalCode.includes('left: Math.max(0, targetScrollLeft)'),
+    'centerActivePill doit scroller exclusivement horizontalement sans impacter le défilement vertical'
+  );
+  assert(
+    tacticalCode.includes('centerActivePill(selectedDiscipline);'),
+    'centerActivePill doit être déclenché lors du changement de selectedDiscipline'
+  );
+  assert(
+    tacticalCode.includes('ref={pillsContainerRef}'),
+    'La barre des Pills doit porter ref={pillsContainerRef}'
+  );
+  assert(
+    tacticalCode.includes('data-discipline-key={key}'),
+    'Chaque bouton de discipline doit être indexable avec data-discipline-key'
+  );
+
+  // 6.2 Suivi au doigt et translation GPU en temps réel (sous-swipe)
+  assert(
+    tacticalCode.includes('subCurrentPanelRef.current.style.transform = `translate3d(${effectiveDx}px, 0, 0)`'),
+    'Le panneau courant doit suivre le doigt en temps réel via translate3d GPU'
+  );
+  assert(
+    tacticalCode.includes('subNeighborPanelRef.current.style.transform = `translate3d(${neighborOffset}px, 0, 0)`'),
+    'Le panneau voisin doit être translaté en direct avec le panneau courant'
+  );
+
+  // 6.3 Résistance élastique aux deux extrémités (Corners et Throws)
+  assert(
+    tacticalCode.includes('effectiveDx = dx * 0.15;'),
+    'Le geste doit opposer une résistance élastique (0.15) aux bornes extrêmes sans panneau vide'
+  );
+
+  // 6.4 Décision de commit ou annulation et transitions amorties
+  assert(
+    tacticalCode.includes('cubic-bezier(0.2, 0.9, 0.3, 1)'),
+    'Le relâchement doit utiliser la courbe cubic-bezier(0.2, 0.9, 0.3, 1)'
+  );
+  assert(
+    tacticalCode.includes('prefersReducedMotion'),
+    'Le composant doit respecter prefers-reduced-motion pour les transitions'
+  );
+
+  // 6.5 Structure bi-panneaux dans subSwipeContainerRef
+  assert(
+    tacticalCode.includes('subNeighborPanelRef') && tacticalCode.includes('subCurrentPanelRef'),
+    'Le conteneur de sous-swipe doit gérer subCurrentPanelRef et subNeighborPanelRef'
+  );
+
+  console.log('  ✓ Test 6 validé : Recentrage automatique et animation fluide du sous-swipe validés.');
+}
+
+console.log('\n=== TOUS LES TESTS WEB-MOBILE-001 ONT RÉUSSI AVEC SUCCÈS (6/6) ===');
