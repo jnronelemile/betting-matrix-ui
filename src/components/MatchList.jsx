@@ -1,6 +1,20 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Badge } from './ui/Badge';
-import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Trophy, Radio, Star, FolderPlus } from 'lucide-react';
+import {
+  ChevronRight,
+  AlertTriangle,
+  ChevronDown,
+  Calendar,
+  Maximize2,
+  Minimize2,
+  Trophy,
+  Radio,
+  Star,
+  FolderPlus,
+  SlidersHorizontal,
+  Clock,
+  X
+} from 'lucide-react';
 import {
   TIME_SLOTS,
   SUB_TIME_SLOTS,
@@ -19,6 +33,9 @@ const MACRO_ALL_LABELS = {
   APRES_MIDI: 'Tout l\'après-midi',
   SOIR: 'Toute la soirée'
 };
+
+// Ordre d'affichage chronologique des filtres macro (rendu uniquement ; TIME_SLOTS inchangé)
+const TIME_FILTER_DISPLAY_ORDER = ['ALL', 'NUIT', 'MATIN', 'APRES_MIDI', 'SOIR'];
 
 const SUB_SLOT_COMPACT_LABELS = {
   MATIN_TOT: '05h–09h',
@@ -253,16 +270,107 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
   const [showLiveOnly, setShowLiveOnly] = useState(false);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('ALL');
   const [selectedSubTimeSlot, setSelectedSubTimeSlot] = useState('ALL');
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
   const [classifyMatch, setClassifyMatch] = useState(null);
 
   const scrollContainerRef = useRef(null);
+  const advancedBtnRef = useRef(null);
+  const popoverContainerRef = useRef(null);
+  const popoverRef = useRef(null);
+  const timeRowRef = useRef(null);
+  const [timeRowOverflow, setTimeRowOverflow] = useState({ left: false, right: false });
 
-  // Bascule de macro-créneau avec réinitialisation automatique du sous-créneau
+  // Indices de débordement horizontal (fondu aux bords) sans composant supplémentaire
+  const updateTimeRowOverflow = () => {
+    const el = timeRowRef.current;
+    if (!el) return;
+    const left = el.scrollLeft > 2;
+    const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+    setTimeRowOverflow(prev => (prev.left === left && prev.right === right ? prev : { left, right }));
+  };
+
+  const timeRowMask = (timeRowOverflow.left || timeRowOverflow.right)
+    ? (() => {
+        const mask = `linear-gradient(to right, ${timeRowOverflow.left ? 'transparent 0, #000 14px' : '#000 0'}, ${timeRowOverflow.right ? '#000 calc(100% - 14px), transparent 100%' : '#000 100%'})`;
+        return { WebkitMaskImage: mask, maskImage: mask };
+      })()
+    : undefined;
+
+  // Recentrage horizontal minimal du filtre actif (scrollLeft uniquement : aucun saut vertical)
+  useEffect(() => {
+    const row = timeRowRef.current;
+    if (!row) return;
+    const btn = row.querySelector(`[data-time-slot-id="${selectedTimeSlot}"]`);
+    if (btn) {
+      const pad = 16;
+      const left = btn.offsetLeft - row.offsetLeft;
+      const right = left + btn.offsetWidth;
+      if (left - pad < row.scrollLeft) {
+        row.scrollTo({ left: Math.max(0, left - pad), behavior: 'smooth' });
+      } else if (right + pad > row.scrollLeft + row.clientWidth) {
+        row.scrollTo({ left: right + pad - row.clientWidth, behavior: 'smooth' });
+      }
+    }
+    updateTimeRowOverflow();
+  }, [selectedTimeSlot]);
+
+  useEffect(() => {
+    updateTimeRowOverflow();
+    window.addEventListener('resize', updateTimeRowOverflow);
+    return () => window.removeEventListener('resize', updateTimeRowOverflow);
+  }, []);
+
+  // Bascule de macro-créneau historique avec réinitialisation du sous-créneau actif et fermeture du popover
   const handleSelectMacroSlot = (slotId) => {
     setSelectedTimeSlot(slotId);
     setSelectedSubTimeSlot('ALL');
+    setIsAdvancedOpen(false);
   };
+
+  // Sélection d'un sous-créneau précis depuis le popover Avancé (synchronise le macro parent)
+  const handleSelectSubSlot = (subId) => {
+    if (selectedSubTimeSlot === subId) {
+      setSelectedSubTimeSlot('ALL');
+    } else {
+      setSelectedSubTimeSlot(subId);
+      const parentMacro = SUB_TIME_SLOTS[subId]?.legacySlot;
+      if (parentMacro) {
+        setSelectedTimeSlot(parentMacro);
+      }
+    }
+  };
+
+  // Fermeture du popover Avancé lors d'un clic extérieur ou de l'appui sur Escape (sans effacer le filtre)
+  useEffect(() => {
+    if (!isAdvancedOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsAdvancedOpen(false);
+        advancedBtnRef.current?.focus();
+      }
+    };
+
+    const handleClickOutside = (e) => {
+      if (
+        popoverContainerRef.current &&
+        !popoverContainerRef.current.contains(e.target)
+      ) {
+        setIsAdvancedOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isAdvancedOpen]);
 
   // Détection du défilement pour masquer le bandeau informatif supérieur sur mobile
   const handleContainerScroll = (e) => {
@@ -453,110 +561,38 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
           )}
         </div>
 
-        {/* Ligne 2 : Rangée de filtres par créneaux horaires (Matin, Après-midi, Soir, Nuit) */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none text-[11px]">
-          <button
-            type="button"
-            onClick={() => handleSelectMacroSlot('ALL')}
-            aria-pressed={selectedTimeSlot === 'ALL'}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
-              selectedTimeSlot === 'ALL'
-                ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-            }`}
-          >
-            <span>Tous</span>
-            <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
-              selectedTimeSlot === 'ALL' ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
-            }`}>
-              {timeSlotCounts.macro.ALL}
-            </span>
-          </button>
-          {Object.values(TIME_SLOTS).map(slot => {
-            const count = timeSlotCounts.macro[slot.id] || 0;
-            const isSelected = selectedTimeSlot === slot.id;
-            return (
-              <button
-                key={slot.id}
-                type="button"
-                onClick={() => handleSelectMacroSlot(slot.id)}
-                aria-pressed={isSelected}
-                title={`${slot.label} (${slot.hoursRange}) : ${slot.description}`}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
-                  isSelected
-                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
-              >
-                <span>{slot.label}</span>
-                <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
-                  isSelected ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Ligne 3 : Sous-créneaux horaires progressifs (affichés uniquement si le macro-créneau possède plusieurs subdivisions) */}
-        {selectedTimeSlot !== 'ALL' && TIME_SLOT_HIERARCHY[selectedTimeSlot]?.length > 1 && (
+        {/* Ligne 2 : Filtres horaires principaux (ordre chronologique) + bouton icône Avancé (WEB-FILTERS-001) */}
+        <div className="flex items-center gap-1 text-[11px] relative">
+          {/* Zone défilante native (tactile / trackpad) ; masque de fondu discret aux bords en débordement */}
           <div
-            data-testid="sub-time-slots-row"
-            className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none text-[10px] sm:text-[11px] pt-1.5 border-t border-slate-200/60 dark:border-slate-800/60"
+            ref={timeRowRef}
+            onScroll={updateTimeRowOverflow}
+            style={timeRowMask}
+            className="flex-1 min-w-0 flex items-center gap-1 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 shrink-0 mr-0.5 select-none">
-              Affiner :
-            </span>
-
-            {/* Bouton pour tout le macro-créneau sélectionné */}
-            <button
-              type="button"
-              onClick={() => setSelectedSubTimeSlot('ALL')}
-              aria-pressed={selectedSubTimeSlot === 'ALL'}
-              className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium transition-all shrink-0 border ${
-                selectedSubTimeSlot === 'ALL'
-                  ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-slate-900 dark:border-white shadow-2xs font-semibold'
-                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-              }`}
-            >
-              <span>{MACRO_ALL_LABELS[selectedTimeSlot] || 'Tout'}</span>
-              <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
-                selectedSubTimeSlot === 'ALL'
-                  ? 'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
-              }`}>
-                {timeSlotCounts.macro[selectedTimeSlot] || 0}
-              </span>
-            </button>
-
-            {/* Boutons pour chaque sous-créneau enfant */}
-            {TIME_SLOT_HIERARCHY[selectedTimeSlot].map(subId => {
-              const subSlot = SUB_TIME_SLOTS[subId];
-              if (!subSlot) return null;
-              const count = timeSlotCounts.sub[subId] || 0;
-              const isSelected = selectedSubTimeSlot === subId;
-              const displayLabel = SUB_SLOT_COMPACT_LABELS[subId] || subSlot.rangeLabel;
-
+            {TIME_FILTER_DISPLAY_ORDER.map(slotId => {
+              const slot = slotId === 'ALL' ? null : TIME_SLOTS[slotId];
+              if (slotId !== 'ALL' && !slot) return null;
+              const label = slot ? slot.label : 'Tous';
+              const count = timeSlotCounts.macro[slotId] || 0;
+              const isSelected = selectedTimeSlot === slotId;
               return (
                 <button
-                  key={subId}
-                  data-subslot-id={subId}
+                  key={slotId}
+                  data-time-slot-id={slotId}
                   type="button"
-                  onClick={() => setSelectedSubTimeSlot(subId)}
+                  onClick={() => handleSelectMacroSlot(slotId)}
                   aria-pressed={isSelected}
-                  title={`${subSlot.label} (${subSlot.hoursRange}) : ${subSlot.description}`}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium transition-all shrink-0 border ${
+                  title={slot ? `${slot.label} (${slot.hoursRange}) : ${slot.description}` : undefined}
+                  className={`flex items-center gap-1 h-8 px-2 rounded-md text-[11px] leading-none font-medium whitespace-nowrap transition-colors shrink-0 border ${
                     isSelected
-                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-2xs font-semibold'
+                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
                       : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
-                  <span>{displayLabel}</span>
+                  <span>{label}</span>
                   <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
-                    isSelected
-                      ? 'bg-indigo-700 text-white'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                    isSelected ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
                   }`}>
                     {count}
                   </span>
@@ -564,7 +600,139 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
               );
             })}
           </div>
-        )}
+
+          {/* Bouton Avancé (icône seule, largeur fixe) avec conteneur popover ancré */}
+          <div className="relative shrink-0" ref={popoverContainerRef}>
+            <button
+              ref={advancedBtnRef}
+              type="button"
+              onClick={() => setIsAdvancedOpen(prev => !prev)}
+              aria-expanded={isAdvancedOpen}
+              aria-haspopup="dialog"
+              aria-label={
+                selectedSubTimeSlot !== 'ALL' && SUB_TIME_SLOTS[selectedSubTimeSlot]
+                  ? `Filtres horaires avancés (actif : ${SUB_TIME_SLOTS[selectedSubTimeSlot].label})`
+                  : 'Filtres horaires avancés'
+              }
+              title={
+                selectedSubTimeSlot !== 'ALL' && SUB_TIME_SLOTS[selectedSubTimeSlot]
+                  ? `Filtre avancé actif : ${SUB_TIME_SLOTS[selectedSubTimeSlot].label} (${SUB_TIME_SLOTS[selectedSubTimeSlot].hoursRange})`
+                  : 'Filtres horaires avancés (7 sous-créneaux)'
+              }
+              className={`relative flex items-center justify-center w-9 h-8 rounded-md transition-colors shrink-0 border select-none ${
+                selectedSubTimeSlot !== 'ALL'
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs ring-1 ring-indigo-400/30'
+                  : isAdvancedOpen
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700'
+                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+            >
+              <SlidersHorizontal size={14} aria-hidden="true" />
+              {selectedSubTimeSlot !== 'ALL' && (
+                <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-amber-300" aria-hidden="true" />
+              )}
+            </button>
+
+            {/* Panneau popover temporaire compact */}
+            {isAdvancedOpen && (
+              <div
+                ref={popoverRef}
+                role="dialog"
+                aria-label="Filtres horaires avancés"
+                data-testid="sub-time-slots-popover"
+                className="absolute right-0 top-full mt-1.5 w-[280px] max-w-[calc(100vw-2rem)] bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 p-2.5 z-50 flex flex-col gap-2"
+              >
+                {/* En-tête du panneau */}
+                <div className="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-800/80">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <Clock size={12} className="text-indigo-600 dark:text-indigo-400 shrink-0" />
+                    <span className="text-[11px] font-bold text-slate-900 dark:text-slate-100 truncate">
+                      Sous-créneaux horaires
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0">
+                    {(selectedSubTimeSlot !== 'ALL' || selectedTimeSlot !== 'ALL') && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedSubTimeSlot('ALL');
+                          setSelectedTimeSlot('ALL');
+                        }}
+                        className="text-[10px] text-indigo-600 dark:text-indigo-400 hover:underline font-medium px-1 py-0.5 rounded transition-colors"
+                        title="Réinitialiser tous les filtres horaires"
+                      >
+                        Réinitialiser
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setIsAdvancedOpen(false)}
+                      className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                      aria-label="Fermer le panneau des sous-créneaux"
+                    >
+                      <X size={13} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Liste des 7 sous-créneaux canoniques */}
+                <div className="flex flex-col gap-1 max-h-[280px] overflow-y-auto custom-scrollbar pr-0.5">
+                  {Object.values(SUB_TIME_SLOTS).map((subSlot) => {
+                    const isSelected = selectedSubTimeSlot === subSlot.id;
+                    const count = timeSlotCounts.sub[subSlot.id] || 0;
+                    const parentMacro = TIME_SLOTS[subSlot.legacySlot];
+
+                    return (
+                      <button
+                        key={subSlot.id}
+                        data-subslot-id={subSlot.id}
+                        type="button"
+                        onClick={() => handleSelectSubSlot(subSlot.id)}
+                        aria-pressed={isSelected}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left transition-all border ${
+                          isSelected
+                            ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-900 dark:text-indigo-200 border-indigo-200 dark:border-indigo-800/80 font-medium shadow-2xs'
+                            : 'hover:bg-slate-100 dark:hover:bg-slate-800/70 text-slate-700 dark:text-slate-300 border-transparent'
+                        }`}
+                      >
+                        <div className="flex flex-col min-w-0 pr-2">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[11px] font-semibold truncate">
+                              {subSlot.label}
+                            </span>
+                            {parentMacro && (
+                              <span className="text-[8.5px] uppercase font-mono px-1 py-0.2 rounded text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800">
+                                {parentMacro.label}
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500">
+                            {subSlot.hoursRange} ({subSlot.rangeLabel})
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold ${
+                            isSelected
+                              ? 'bg-indigo-600 text-white'
+                              : count > 0
+                              ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                              : 'bg-slate-50 dark:bg-slate-800/40 text-slate-400 dark:text-slate-600'
+                          }`}>
+                            {count}
+                          </span>
+                          {isSelected && (
+                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 dark:bg-indigo-400 shrink-0" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Zone de défilement indépendante pour les journées et matchs */}

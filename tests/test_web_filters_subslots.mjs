@@ -235,40 +235,75 @@ console.log('\n[TEST 4] Intégration dans MatchList.jsx : État, réinitialisati
     'handleSelectMacroSlot doit réinitialiser selectedSubTimeSlot à ALL pour éviter les incohérences'
   );
 
-  // 4.4 Condition d\'affichage de la rangée de sous-créneaux
+  // 4.4 Bouton "Avancé" et panneau popover compact (Correction UX WEB-FILTERS-001)
   assert(
-    matchListCode.includes("selectedTimeSlot !== 'ALL' && TIME_SLOT_HIERARCHY[selectedTimeSlot]?.length > 1"),
-    'La rangée secondaire ne doit s\'afficher que si le macro-créneau a plus d\'une subdivision (exclut ALL et NUIT)'
+    matchListCode.includes("const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);"),
+    'MatchList.jsx doit déclarer isAdvancedOpen initialisé à false'
+  );
+  assert(
+    matchListCode.includes('aria-haspopup="dialog"') &&
+    matchListCode.includes('aria-label="Filtres horaires avancés"'),
+    'Le bouton Avancé doit comporter les attributs aria-haspopup="dialog" et aria-label'
+  );
+  assert(
+    matchListCode.includes('data-testid="sub-time-slots-popover"') &&
+    matchListCode.includes('role="dialog"') &&
+    !matchListCode.includes('aria-modal'),
+    'Le panneau non modal doit comporter data-testid="sub-time-slots-popover", role="dialog" et PAS aria-modal'
   );
 
-  // 4.5 Présence des libellés compacts requis
+  // 4.4b Bouton Avancé icône seule + ordre chronologique explicite côté rendu
   assert(
-    matchListCode.includes("MATIN: 'Toute la matinée'") &&
-    matchListCode.includes("APRES_MIDI: 'Tout l\\'après-midi'") &&
-    matchListCode.includes("SOIR: 'Toute la soirée'"),
-    'Les libellés compacts Toda la matinée / Tout l\'après-midi / Toute la soirée doivent être définis'
+    !/<span>Avancé<\/span>/.test(matchListCode) &&
+    matchListCode.includes('<SlidersHorizontal') &&
+    matchListCode.includes('aria-label={'),
+    'Le bouton Avancé doit être icône seule avec nom accessible'
   );
   assert(
-    matchListCode.includes("MATIN_TOT: '05h–09h'") &&
-    matchListCode.includes("FIN_MATINEE: '09h–12h'") &&
-    matchListCode.includes("DEBUT_APRES_MIDI: '12h–15h'") &&
-    matchListCode.includes("FIN_APRES_MIDI: '15h–18h'") &&
-    matchListCode.includes("DEBUT_SOIREE: '18h–21h'") &&
-    matchListCode.includes("FIN_SOIREE: '21h–00h'"),
-    'Les libellés compacts des plages horaires (05h-09h, etc.) doivent être définis'
+    matchListCode.includes("TIME_FILTER_DISPLAY_ORDER = ['ALL', 'NUIT', 'MATIN', 'APRES_MIDI', 'SOIR']"),
+    "L'ordre d'affichage explicite ALL, NUIT, MATIN, APRES_MIDI, SOIR doit être défini dans MatchList"
+  );
+  assert(
+    !matchListCode.includes('scrollIntoView'),
+    'Aucun scrollIntoView (risque de saut vertical) ; recentrage via scrollTo horizontal'
   );
 
-  // 4.6 Filtrage effectif dans visibleMatches
+  // 4.5 Fermeture par clic extérieur et touche Escape
+  assert(
+    matchListCode.includes("e.key === 'Escape'") &&
+    matchListCode.includes("setIsAdvancedOpen(false);"),
+    'Le popover doit se fermer sur appui de la touche Escape'
+  );
+  assert(
+    matchListCode.includes("document.addEventListener('mousedown', handleClickOutside)") ||
+    matchListCode.includes("document.addEventListener('touchstart', handleClickOutside)"),
+    'Le popover doit écouter les clics extérieurs pour se refermer sans effacer le filtre'
+  );
+
+  // 4.6 Synchronisation du macro parent lors de la sélection d'un sous-créneau
+  assert(
+    matchListCode.includes("const handleSelectSubSlot = (subId) => {") &&
+    matchListCode.includes("SUB_TIME_SLOTS[subId]?.legacySlot"),
+    'handleSelectSubSlot doit synchroniser selectedTimeSlot avec le macro-créneau parent'
+  );
+
+  // 4.7 Option de réinitialisation complète des filtres horaires
+  assert(
+    matchListCode.includes("setSelectedSubTimeSlot('ALL');") &&
+    matchListCode.includes("setSelectedTimeSlot('ALL');"),
+    'Le panneau doit proposer une réinitialisation ramenant à ALL sans impacter showLiveOnly'
+  );
+
+  // 4.8 Filtrage effectif dans visibleMatches
   assert(
     matchListCode.includes("matchesTimeSlot(getLegSubTimeSlot(m), activeTimeFilter)"),
     'visibleMatches doit utiliser matchesTimeSlot avec getLegSubTimeSlot'
   );
 
-  // 4.7 Accessibilité des boutons tactiles
+  // 4.9 Accessibilité et détection de sélection des sous-créneaux
   assert(
-    matchListCode.includes("aria-pressed={selectedSubTimeSlot === 'ALL'}") &&
     matchListCode.includes("aria-pressed={isSelected}"),
-    'Les boutons de sous-créneaux doivent définir aria-pressed'
+    'Les 7 sous-créneaux doivent définir aria-pressed'
   );
 
   console.log('  ✓ Test 4 validé : Structure, synchronisation d\'état et règles de rendu validées.');
