@@ -283,4 +283,73 @@ console.log('\n[TEST 6] Finition UX : Recentrage automatique et animation tactil
   console.log('  ✓ Test 6 validé : Recentrage automatique et animation fluide du sous-swipe validés.');
 }
 
-console.log('\n=== TOUS LES TESTS WEB-MOBILE-001 ONT RÉUSSI AVEC SUCCÈS (6/6) ===');
+// ---------------------------------------------------------------------------
+// TEST 7 : Dock contextuel Team Markets (Navigation fixe sous l'en-tête sticky)
+// ---------------------------------------------------------------------------
+console.log('\n[TEST 7] Dock contextuel Team Markets : Emplacement sticky, React Portal et anti-oscillation');
+{
+  const dashboardPath = path.join(ROOT_DIR, 'src/components/MatchDashboard.jsx');
+  const tacticalPath = path.join(ROOT_DIR, 'src/components/dashboard/TabTactical.jsx');
+  const dashboardCode = fs.readFileSync(dashboardPath, 'utf-8');
+  const tacticalCode = fs.readFileSync(tacticalPath, 'utf-8');
+
+  // 7.1 Emplacement d'accueil du dock contextuel dans l'en-tête sticky de MatchDashboard
+  assert(
+    dashboardCode.includes('id="tactical-sticky-dock"'),
+    'MatchDashboard doit définir l\'emplacement d\'accueil #tactical-sticky-dock'
+  );
+  assert(
+    dashboardCode.includes('lg:hidden') && dashboardCode.includes('empty:hidden'),
+    '#tactical-sticky-dock doit être masqué sur desktop (lg:hidden) et lorsqu\'il est vide (empty:hidden)'
+  );
+  assert(
+    dashboardCode.includes("activeTab === 'tactical' ? '' : 'hidden'"),
+    '#tactical-sticky-dock doit être strictement masqué hors de l\'onglet tactical'
+  );
+
+  // 7.2 Intégration de React Portal dans TabTactical
+  assert(
+    tacticalCode.includes("import { createPortal } from 'react-dom';"),
+    'TabTactical doit importer createPortal depuis react-dom'
+  );
+  assert(
+    tacticalCode.includes('createPortal(') && tacticalCode.includes('dockHost'),
+    'TabTactical doit projeter le dock compact via createPortal dans dockHost'
+  );
+
+  // 7.3 Détection de scroll robuste et prévention des oscillations (invariance de hauteur)
+  assert(
+    tacticalCode.includes('const baseHeaderBottom = headerRect.bottom - dockHeight;'),
+    'TabTactical doit déduire dockHeight pour conserver un seuil baseHeaderBottom invariant et sans oscillation'
+  );
+  assert(
+    tacticalCode.includes('isPastPills') && tacticalCode.includes('isInsideCard2'),
+    'Le dock doit vérifier que les pills sont passées sous l\'en-tête ET que l\'utilisateur est toujours dans Carte 2'
+  );
+  assert(
+    tacticalCode.includes('ref={carte2Ref}'),
+    'La Carte 2 Team Statistical Markets doit porter ref={carte2Ref} comme délimiteur contextuel'
+  );
+
+  // 7.4 Recentrage automatique synchronisé dans les deux barres
+  assert(
+    tacticalCode.includes('dockPillsContainerRef') && tacticalCode.includes('dockPillRefs'),
+    'TabTactical doit gérer dockPillsContainerRef et dockPillRefs pour le dock'
+  );
+  assert(
+    tacticalCode.includes('targetDockScrollLeft = dockButton.offsetLeft'),
+    'centerActivePill doit recentrer horizontalement la pill active dans le dock compact'
+  );
+
+  // 7.5 Sécurité tactile : immunité contre le swipe principal et les déclenchements parasites
+  assert(
+    tacticalCode.includes('key={`dock-${key}`}') &&
+    tacticalCode.includes('data-no-swipe="true"') &&
+    tacticalCode.includes('data-sub-swipe-ignore="true"'),
+    'Le dock compact et ses boutons doivent porter data-no-swipe="true" et data-sub-swipe-ignore="true"'
+  );
+
+  console.log('  ✓ Test 7 validé : Emplacement sticky, React Portal, anti-oscillation et synchronisation validés.');
+}
+
+console.log('\n=== TOUS LES TESTS WEB-MOBILE-001 ONT RÉUSSI AVEC SUCCÈS (7/7) ===');

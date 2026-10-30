@@ -816,7 +816,7 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
   const renderTabContent = (tabId) => {
     switch (tabId) {
       case 'tactical':
-        return <TabTactical match={match} onNavigateTab={navigateToTab} />;
+        return <TabTactical match={match} onNavigateTab={navigateToTab} isActiveTab={activeTab === 'tactical'} />;
       case 'core':
         return <TabCoreMarket match={match} onNavigateTab={navigateToTab} />;
       case 'deepdive':
@@ -1425,6 +1425,13 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
             </button>
           </div>
         </div>
+
+        {/* Emplacement d'accueil pour le dock contextuel mobile (Team Markets, etc.) */}
+        <div
+          id="tactical-sticky-dock"
+          data-testid="tactical-sticky-dock"
+          className={`lg:hidden empty:hidden ${activeTab === 'tactical' ? '' : 'hidden'}`}
+        />
       </div>
 
       {/* Bandeau résumé Football Intelligence (Elo avant-match & Rang) */}

@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
 import { Badge } from '../ui/Badge';
@@ -96,12 +97,36 @@ export { getThreeClosestLines, getNearestLine };
 
 const DISCIPLINE_KEYS = ['corners', 'sot', 'shots', 'throws'];
 
-export default function TabTactical({ match, onNavigateTab }) {
+/**
+ * Recherche ascendante du conteneur réel de défilement vertical.
+ */
+function getScrollParent(node) {
+  if (typeof window === 'undefined' || !node) return null;
+  let parent = node.parentElement;
+  while (parent && parent !== document.body && parent !== document.documentElement) {
+    const style = window.getComputedStyle(parent);
+    if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+      return parent;
+    }
+    parent = parent.parentElement;
+  }
+  return window;
+}
+
+export default function TabTactical({ match, onNavigateTab, isActiveTab = true }) {
   const [showCoverageDetails, setShowCoverageDetails] = useState(false);
   const [expandedCardNotes, setExpandedCardNotes] = useState({});
   const [selectedDiscipline, setSelectedDiscipline] = useState('corners'); // 'corners' | 'sot' | 'shots' | 'throws'
   const [expandedHomeCatalogue, setExpandedHomeCatalogue] = useState(false);
   const [expandedAwayCatalogue, setExpandedAwayCatalogue] = useState(false);
+
+  // Références et état pour le dock contextuel compact mobile dans l'en-tête sticky
+  const carte2Ref = useRef(null);
+  const dockPillsContainerRef = useRef(null);
+  const dockPillRefs = useRef({});
+  const [isDockVisible, setIsDockVisible] = useState(false);
+  const [dockHost, setDockHost] = useState(null);
+  const scrollRafRef = useRef(null);
 
   // Détection dynamique et réactive du viewport Desktop (>= 1024px)
   const [isDesktop, setIsDesktop] = useState(() => {
@@ -283,23 +308,108 @@ export default function TabTactical({ match, onNavigateTab }) {
 
   // Recentrage horizontal automatique et fluide de la discipline active dans la barre de sous-onglets
   const centerActivePill = useCallback((disciplineKey, behavior = 'smooth') => {
-    const container = pillsContainerRef.current;
-    if (!container) return;
-    const button = pillRefs.current[disciplineKey];
-    if (!button) return;
-
-    // Calcul du scrollLeft pour centrer exactement le bouton dans le conteneur
-    const targetScrollLeft = button.offsetLeft - (container.clientWidth - button.offsetWidth) / 2;
-
     const prefersReducedMotion = typeof window !== 'undefined' &&
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const scrollBehavior = (prefersReducedMotion || behavior === 'instant') ? 'instant' : 'smooth';
 
-    container.scrollTo({
-      left: Math.max(0, targetScrollLeft),
-      behavior: (prefersReducedMotion || behavior === 'instant') ? 'instant' : 'smooth'
-    });
+    // 1. Recentrage dans le sélecteur inline d'origine de la Carte 2
+    const container = pillsContainerRef.current;
+    const button = pillRefs.current[disciplineKey];
+    if (container && button) {
+      const targetScrollLeft = button.offsetLeft - (container.clientWidth - button.offsetWidth) / 2;
+      container.scrollTo({
+        left: Math.max(0, targetScrollLeft),
+        behavior: scrollBehavior
+      });
+    }
+
+    // 2. Recentrage dans le dock contextuel compact mobile
+    const dockContainer = dockPillsContainerRef.current;
+    const dockButton = dockPillRefs.current[disciplineKey];
+    if (dockContainer && dockButton) {
+      const targetDockScrollLeft = dockButton.offsetLeft - (dockContainer.clientWidth - dockButton.offsetWidth) / 2;
+      dockContainer.scrollTo({
+        left: Math.max(0, targetDockScrollLeft),
+        behavior: scrollBehavior
+      });
+    }
   }, []);
+
+  // Détection contextuelle de l'affichage du dock compact dans l'en-tête collant
+  const checkDockVisibility = useCallback(() => {
+    if (isDesktop || !isActiveTab) {
+      setIsDockVisible(false);
+      return;
+    }
+
+    const pillsEl = pillsContainerRef.current;
+    const card2El = carte2Ref.current;
+    const hostEl = dockHost || (typeof document !== 'undefined' ? document.getElementById('tactical-sticky-dock') : null);
+
+    if (!pillsEl || !card2El || !hostEl) {
+      setIsDockVisible(false);
+      return;
+    }
+
+    if (!dockHost) {
+      setDockHost(hostEl);
+    }
+
+    const stickyHeader = hostEl.closest('.sticky') || hostEl.parentElement;
+    const headerRect = stickyHeader?.getBoundingClientRect();
+    const pillsRect = pillsEl.getBoundingClientRect();
+    const card2Rect = card2El.getBoundingClientRect();
+
+    if (!headerRect) return;
+
+    // Déduction de la hauteur du dock pour une référence de base invariable face aux changements de hauteur d'en-tête
+    const dockHeight = hostEl.offsetHeight || 0;
+    const baseHeaderBottom = headerRect.bottom - dockHeight;
+
+    setIsDockVisible(prevVisible => {
+      // Seuil d'apparition : la barre originale est passée sous l'en-tête de base
+      // Hystérésis de dégagement : la barre originale doit redescendre de quelques pixels pour éviter tout battement
+      const isPastPills = prevVisible
+        ? pillsRect.top < baseHeaderBottom - 6
+        : pillsRect.bottom <= baseHeaderBottom;
+
+      // Sortie basse : la Carte 2 est presque complètement sortie par le haut
+      const isInsideCard2 = card2Rect.bottom > baseHeaderBottom + 40;
+
+      return isPastPills && isInsideCard2;
+    });
+  }, [isDesktop, isActiveTab, dockHost]);
+
+  useEffect(() => {
+    const scrollParent = getScrollParent(carte2Ref.current);
+    const onScroll = () => {
+      checkDockVisibility();
+    };
+
+    checkDockVisibility();
+
+    if (scrollParent && scrollParent.addEventListener) {
+      scrollParent.addEventListener('scroll', onScroll, { passive: true });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    return () => {
+      if (scrollParent && scrollParent.removeEventListener) {
+        scrollParent.removeEventListener('scroll', onScroll);
+      }
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [checkDockVisibility]);
+
+  // Synchronisation du recentrage au montage ou bascule du dock
+  useEffect(() => {
+    if (isDockVisible) {
+      centerActivePill(selectedDiscipline, 'instant');
+    }
+  }, [isDockVisible, selectedDiscipline, centerActivePill]);
 
   // Synchronisation du recentrage horizontal dès que la discipline active change (par clic ou sous-swipe)
   useEffect(() => {
@@ -1402,6 +1512,7 @@ export default function TabTactical({ match, onNavigateTab }) {
 
       {/* Second Card: Team Statistical Markets & Tripartite Poisson Models */}
       <div
+        ref={carte2Ref}
         data-no-swipe="true"
         className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5 relative"
       >
@@ -1804,6 +1915,53 @@ export default function TabTactical({ match, onNavigateTab }) {
         </div>
       </Card>
 
+      {/* Dock contextuel compact mobile via React Portal */}
+      {isDockVisible && !isDesktop && isActiveTab && dockHost && createPortal(
+        <div
+          data-no-swipe="true"
+          data-sub-swipe-ignore="true"
+          className="w-full px-2 py-1 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200/80 dark:border-slate-800/80 flex items-center gap-1.5 shadow-2xs select-none"
+        >
+          <div
+            ref={dockPillsContainerRef}
+            data-no-swipe="true"
+            data-sub-swipe-ignore="true"
+            className="flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth w-full py-0.5"
+          >
+            {statisticalMarkets.map(({ key, label, lambdaKey }) => {
+              const isSelected = selectedDiscipline === key;
+              const lambdaVal = props[lambdaKey];
+              return (
+                <button
+                  key={`dock-${key}`}
+                  ref={el => { dockPillRefs.current[key] = el; }}
+                  data-discipline-key={key}
+                  type="button"
+                  onClick={() => handleSelectDiscipline(key)}
+                  aria-pressed={isSelected}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shrink-0 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 select-none ${
+                    isSelected
+                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs ring-1 ring-slate-900 dark:ring-white'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800'
+                  }`}
+                >
+                  <span>{label}</span>
+                  {Number.isFinite(lambdaVal) && (
+                    <span className={`text-[9px] font-mono px-1 py-0.2 rounded font-semibold ${
+                      isSelected
+                        ? 'bg-white/20 text-white dark:bg-slate-900/20 dark:text-slate-900'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                    }`}>
+                      λ {lambdaVal.toFixed(1)}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>,
+        dockHost
+      )}
     </div>
   );
 }
