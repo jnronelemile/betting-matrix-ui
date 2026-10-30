@@ -1,10 +1,34 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Badge } from './ui/Badge';
 import { ChevronRight, AlertTriangle, ChevronDown, Calendar, Maximize2, Minimize2, Trophy, Radio, Star, FolderPlus } from 'lucide-react';
-import { TIME_SLOTS, getLegTimeSlot } from '../utils/ticketFilters';
+import {
+  TIME_SLOTS,
+  SUB_TIME_SLOTS,
+  TIME_SLOT_HIERARCHY,
+  getLegTimeSlot,
+  getLegSubTimeSlot,
+  matchesTimeSlot
+} from '../utils/ticketFilters';
 import { TeamLogo, LeagueLogo, getLeagueDisplayName, getLeagueCountryLabel } from '../utils/teamLogos';
 import { useFavorites } from '../context/FavoritesContext.jsx';
 import { GroupManagerModal } from './favorites/GroupManagerModal.jsx';
+
+// Libellés compacts et conviviaux pour la navigation progressive par sous-créneaux (WEB-FILTERS-001)
+const MACRO_ALL_LABELS = {
+  MATIN: 'Toute la matinée',
+  APRES_MIDI: 'Tout l\'après-midi',
+  SOIR: 'Toute la soirée'
+};
+
+const SUB_SLOT_COMPACT_LABELS = {
+  MATIN_TOT: '05h–09h',
+  FIN_MATINEE: '09h–12h',
+  DEBUT_APRES_MIDI: '12h–15h',
+  FIN_APRES_MIDI: '15h–18h',
+  DEBUT_SOIREE: '18h–21h',
+  FIN_SOIREE: '21h–00h',
+  NUIT: '00h–05h'
+};
 
 import {
   formatTimeAMPM,
@@ -228,10 +252,17 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
   const [collapsedDates, setCollapsedDates] = useState({});
   const [showLiveOnly, setShowLiveOnly] = useState(false);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('ALL');
+  const [selectedSubTimeSlot, setSelectedSubTimeSlot] = useState('ALL');
   const [currentTime, setCurrentTime] = useState(() => Date.now());
   const [classifyMatch, setClassifyMatch] = useState(null);
 
   const scrollContainerRef = useRef(null);
+
+  // Bascule de macro-créneau avec réinitialisation automatique du sous-créneau
+  const handleSelectMacroSlot = (slotId) => {
+    setSelectedTimeSlot(slotId);
+    setSelectedSubTimeSlot('ALL');
+  };
 
   // Détection du défilement pour masquer le bandeau informatif supérieur sur mobile
   const handleContainerScroll = (e) => {
@@ -262,36 +293,57 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
     return matches.filter(m => isMatchLive(m, currentTime)).length;
   }, [matches, currentTime]);
 
-  // Décompte dynamique par créneau horaire (respecte showLiveOnly pour ne pas afficher de compteurs faussés)
+  // Décompte dynamique par macro-créneau et sous-créneau (respecte showLiveOnly pour ne pas afficher de compteurs faussés)
   const timeSlotCounts = useMemo(() => {
     const pool = showLiveOnly ? matches.filter(m => isMatchLive(m, currentTime)) : matches;
-    const counts = {
+    const macroCounts = {
       ALL: pool.length,
       MATIN: 0,
       APRES_MIDI: 0,
       SOIR: 0,
       NUIT: 0
     };
+    const subCounts = {
+      NUIT: 0,
+      MATIN_TOT: 0,
+      FIN_MATINEE: 0,
+      DEBUT_APRES_MIDI: 0,
+      FIN_APRES_MIDI: 0,
+      DEBUT_SOIREE: 0,
+      FIN_SOIREE: 0
+    };
+
     for (const m of pool) {
-      const slot = getLegTimeSlot(m);
-      if (counts[slot] !== undefined) {
-        counts[slot]++;
+      const macro = getLegTimeSlot(m);
+      if (macroCounts[macro] !== undefined) {
+        macroCounts[macro]++;
+      }
+      const sub = getLegSubTimeSlot(m);
+      if (subCounts[sub] !== undefined) {
+        subCounts[sub]++;
       }
     }
-    return counts;
+    return { macro: macroCounts, sub: subCounts };
   }, [matches, showLiveOnly, currentTime]);
 
-  // Filtrage combiné : LIVE estimé et/ou Créneau horaire
+  // Filtre horaire effectif : sous-créneau précis si actif, sinon macro-créneau ou 'ALL'
+  const activeTimeFilter = useMemo(() => {
+    if (selectedTimeSlot === 'ALL') return 'ALL';
+    if (selectedSubTimeSlot !== 'ALL') return selectedSubTimeSlot;
+    return selectedTimeSlot;
+  }, [selectedTimeSlot, selectedSubTimeSlot]);
+
+  // Filtrage combiné : LIVE estimé et/ou Créneau horaire (macro ou sous-créneau)
   const visibleMatches = useMemo(() => {
     let result = matches;
     if (showLiveOnly) {
       result = result.filter(m => isMatchLive(m, currentTime));
     }
-    if (selectedTimeSlot !== 'ALL') {
-      result = result.filter(m => getLegTimeSlot(m) === selectedTimeSlot);
+    if (activeTimeFilter !== 'ALL') {
+      result = result.filter(m => matchesTimeSlot(getLegSubTimeSlot(m), activeTimeFilter));
     }
     return result;
-  }, [matches, showLiveOnly, selectedTimeSlot, currentTime]);
+  }, [matches, showLiveOnly, activeTimeFilter, currentTime]);
 
   // 1. Groupement des matchs visibles par date
   const groupedMatches = useMemo(() => {
@@ -405,7 +457,8 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
         <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none text-[11px]">
           <button
             type="button"
-            onClick={() => setSelectedTimeSlot('ALL')}
+            onClick={() => handleSelectMacroSlot('ALL')}
+            aria-pressed={selectedTimeSlot === 'ALL'}
             className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
               selectedTimeSlot === 'ALL'
                 ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
@@ -416,17 +469,18 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
             <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
               selectedTimeSlot === 'ALL' ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
             }`}>
-              {timeSlotCounts.ALL}
+              {timeSlotCounts.macro.ALL}
             </span>
           </button>
           {Object.values(TIME_SLOTS).map(slot => {
-            const count = timeSlotCounts[slot.id] || 0;
+            const count = timeSlotCounts.macro[slot.id] || 0;
             const isSelected = selectedTimeSlot === slot.id;
             return (
               <button
                 key={slot.id}
                 type="button"
-                onClick={() => setSelectedTimeSlot(slot.id)}
+                onClick={() => handleSelectMacroSlot(slot.id)}
+                aria-pressed={isSelected}
                 title={`${slot.label} (${slot.hoursRange}) : ${slot.description}`}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-medium transition-all shrink-0 border ${
                   isSelected
@@ -444,6 +498,73 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
             );
           })}
         </div>
+
+        {/* Ligne 3 : Sous-créneaux horaires progressifs (affichés uniquement si le macro-créneau possède plusieurs subdivisions) */}
+        {selectedTimeSlot !== 'ALL' && TIME_SLOT_HIERARCHY[selectedTimeSlot]?.length > 1 && (
+          <div
+            data-testid="sub-time-slots-row"
+            className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none text-[10px] sm:text-[11px] pt-1.5 border-t border-slate-200/60 dark:border-slate-800/60"
+          >
+            <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 shrink-0 mr-0.5 select-none">
+              Affiner :
+            </span>
+
+            {/* Bouton pour tout le macro-créneau sélectionné */}
+            <button
+              type="button"
+              onClick={() => setSelectedSubTimeSlot('ALL')}
+              aria-pressed={selectedSubTimeSlot === 'ALL'}
+              className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium transition-all shrink-0 border ${
+                selectedSubTimeSlot === 'ALL'
+                  ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-slate-900 dark:border-white shadow-2xs font-semibold'
+                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+            >
+              <span>{MACRO_ALL_LABELS[selectedTimeSlot] || 'Tout'}</span>
+              <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
+                selectedSubTimeSlot === 'ALL'
+                  ? 'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+              }`}>
+                {timeSlotCounts.macro[selectedTimeSlot] || 0}
+              </span>
+            </button>
+
+            {/* Boutons pour chaque sous-créneau enfant */}
+            {TIME_SLOT_HIERARCHY[selectedTimeSlot].map(subId => {
+              const subSlot = SUB_TIME_SLOTS[subId];
+              if (!subSlot) return null;
+              const count = timeSlotCounts.sub[subId] || 0;
+              const isSelected = selectedSubTimeSlot === subId;
+              const displayLabel = SUB_SLOT_COMPACT_LABELS[subId] || subSlot.rangeLabel;
+
+              return (
+                <button
+                  key={subId}
+                  data-subslot-id={subId}
+                  type="button"
+                  onClick={() => setSelectedSubTimeSlot(subId)}
+                  aria-pressed={isSelected}
+                  title={`${subSlot.label} (${subSlot.hoursRange}) : ${subSlot.description}`}
+                  className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium transition-all shrink-0 border ${
+                    isSelected
+                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-2xs font-semibold'
+                      : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                  }`}
+                >
+                  <span>{displayLabel}</span>
+                  <span className={`px-1.5 rounded-full text-[9px] font-mono leading-none py-0.5 ${
+                    isSelected
+                      ? 'bg-indigo-700 text-white'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Zone de défilement indépendante pour les journées et matchs */}
@@ -486,18 +607,36 @@ export function MatchList({ matches, selectedMatch, onSelectMatch, isScrolled = 
       {matches.length > 0 && visibleMatches.length === 0 && !showLiveOnly && selectedTimeSlot !== 'ALL' && (
         <div className="flex flex-col items-center justify-center py-10 px-4 text-center rounded-xl border border-dashed border-slate-300 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
           <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-            Aucun match sur ce créneau ({TIME_SLOTS[selectedTimeSlot]?.label || selectedTimeSlot})
+            Aucun match sur ce créneau (
+            {selectedSubTimeSlot !== 'ALL' && SUB_TIME_SLOTS[selectedSubTimeSlot]
+              ? `${TIME_SLOTS[selectedTimeSlot]?.label} · ${SUB_TIME_SLOTS[selectedSubTimeSlot].label}`
+              : (TIME_SLOTS[selectedTimeSlot]?.label || selectedTimeSlot)}
+            )
           </span>
           <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xs">
-            Aucune rencontre trouvée pour la plage horaire {TIME_SLOTS[selectedTimeSlot]?.hoursRange}.
+            Aucune rencontre trouvée pour la plage horaire{' '}
+            {selectedSubTimeSlot !== 'ALL' && SUB_TIME_SLOTS[selectedSubTimeSlot]
+              ? SUB_TIME_SLOTS[selectedSubTimeSlot].hoursRange
+              : TIME_SLOTS[selectedTimeSlot]?.hoursRange}.
           </span>
-          <button
-            type="button"
-            onClick={() => setSelectedTimeSlot('ALL')}
-            className="mt-3 px-3 py-1 rounded-lg text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition-colors"
-          >
-            Afficher tous les créneaux horaires
-          </button>
+          <div className="flex items-center gap-2 mt-3">
+            {selectedSubTimeSlot !== 'ALL' && (
+              <button
+                type="button"
+                onClick={() => setSelectedSubTimeSlot('ALL')}
+                className="px-3 py-1 rounded-lg text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50/60 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-950/70 transition-colors"
+              >
+                Voir {MACRO_ALL_LABELS[selectedTimeSlot] || 'toute la plage'}
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => handleSelectMacroSlot('ALL')}
+              className="px-3 py-1 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              Afficher tous les créneaux
+            </button>
+          </div>
         </div>
       )}
 
