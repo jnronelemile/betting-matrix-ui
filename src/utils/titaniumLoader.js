@@ -28,6 +28,8 @@ export const LEAGUE_FLAGS = {
   'BELGIANPROLEAGUE': '🇧🇪',
   'SCOTTISHPREMIERSHIP': '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
   'SWISSSUPERLEAGUE': '🇨🇭',
+  'SUPERLEAGUEGREECE': '🇬🇷',
+  'GRE1': '🇬🇷',
   'AUSTRIANBUNDESLIGA': '🇦🇹',
   'SUPERLIGAEN': '🇩🇰',
   'ALLSVENSKAN': '🇸🇪',

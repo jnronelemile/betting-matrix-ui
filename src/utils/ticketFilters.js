@@ -101,7 +101,8 @@ export const LEAGUE_GROUPS = {
       'RussianPremierLeague',
       'BelgianProLeague',
       'Ekstraklasa',
-      'SwissSuperLeague'
+      'SwissSuperLeague',
+      'SuperLeagueGreece'
     ],
     aliases: [
       'ELITESERIEN',
@@ -117,7 +118,10 @@ export const LEAGUE_GROUPS = {
       'EKSTRAKLASA',
       'POL1',
       'SWISSSUPERLEAGUE',
-      'SUI1'
+      'SUI1',
+      'SUPERLEAGUEGREECE',
+      'SUPERLEAGUE',
+      'GRE1'
     ]
   },
   AMERICAS: {
@@ -348,6 +352,7 @@ export const GEOGRAPHIC_LEAGUE_HIERARCHY = {
       NOR: { code: 'NOR', label: 'Norvège', flag: '🇳🇴', leagues: ['Eliteserien'] },
       SWE: { code: 'SWE', label: 'Suède', flag: '🇸🇪', leagues: ['Allsvenskan'] },
       SCO: { code: 'SCO', label: 'Écosse', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', leagues: ['ScottishPremiership'] },
+      GRE: { code: 'GRE', label: 'Grèce', flag: '🇬🇷', leagues: ['SuperLeagueGreece'] },
       TUR: { code: 'TUR', label: 'Turquie', flag: '🇹🇷', leagues: ['SüperLig'] },
       RUS: { code: 'RUS', label: 'Russie', flag: '🇷🇺', leagues: ['RussianPremierLeague'] }
     }

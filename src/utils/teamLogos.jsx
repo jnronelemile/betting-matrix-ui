@@ -148,6 +148,8 @@ export const LEAGUE_DISPLAY_NAMES = {
   'SwissSuperLeague': 'Swiss Super League',
   'SUI1': 'Swiss Super League',
   'SuperLeagueGreece': 'Super League Greece',
+  'SUPERLEAGUEGREECE': 'Super League Greece',
+  'Super League Greece': 'Super League Greece',
   'GRE1': 'Super League Greece',
   'Ekstraklasa': 'Ekstraklasa',
   'POL1': 'Ekstraklasa',
