@@ -18,7 +18,8 @@ import {
   Calendar,
   Star,
   FolderPlus,
-  Compass
+  Compass,
+  Flame
 } from 'lucide-react';
 
 import TabCoreMarket from './dashboard/TabCoreMarket';
@@ -979,14 +980,13 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                 aria-pressed={isFav}
                 title={isFav ? "Retirer des favoris" : "Ajouter aux favoris (À classer)"}
                 onClick={() => toggleMatchFavorite(match, [], { sessionId: sessionId || match.session_id })}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all border shrink-0 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-400 ${
+                className={`p-1 sm:p-1.5 rounded-md inline-flex items-center justify-center transition-all shrink-0 focus:outline-none focus:ring-1 focus:ring-amber-400 active:scale-95 ${
                   isFav
-                    ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/40 shadow-xs ring-1 ring-amber-500/20'
-                    : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'
+                    ? 'text-amber-500 hover:bg-amber-500/10'
+                    : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
                 }`}
               >
-                <Star size={14} className={isFav ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]' : ''} />
-                <span>{isFav ? 'FAVORI' : 'FAVORI'}</span>
+                <Star size={15} className={isFav ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]' : 'transition-colors'} />
               </button>
 
               {isFav && (
@@ -1025,6 +1025,30 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                 <Badge variant="danger" className="text-[9px] flex items-center gap-1 px-2 py-0.5 uppercase tracking-wider bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50 font-mono">
                   <AlertTriangle size={10} /> KILL-SWITCH
                 </Badge>
+              )}
+
+              {/* Badge Derby / Rivalité documentée (Desktop) */}
+              {isFiLeague && fiSummary?.rivalry?.isDocumentedRivalry && (
+                <button
+                  type="button"
+                  data-no-swipe="true"
+                  data-testid="fi-header-rivalry-badge"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigateToTab('intelligence');
+                  }}
+                  title={`${fiSummary.rivalry.categoryLabel}${fiSummary.rivalry.rivalryName ? ` : ${fiSummary.rivalry.rivalryName}` : ''} (Ouvrir Football Intelligence)`}
+                  aria-label={`${fiSummary.rivalry.categoryLabel} : ${fiSummary.rivalry.rivalryName || ''}`}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition-colors cursor-pointer shrink-0"
+                >
+                  <Flame size={10} className="text-amber-500 shrink-0" />
+                  <span>{fiSummary.rivalry.categoryLabel}</span>
+                  {fiSummary.rivalry.rivalryName && fiSummary.rivalry.rivalryName !== fiSummary.rivalry.categoryLabel && (
+                    <span className="hidden xl:inline text-amber-600 dark:text-amber-400 font-semibold normal-case">
+                      : {fiSummary.rivalry.rivalryName}
+                    </span>
+                  )}
+                </button>
               )}
 
               {match.Data_Integrity?.map((flag, idx) => {
@@ -1088,13 +1112,13 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                   aria-pressed={isFav}
                   title={isFav ? "Retirer des favoris" : "Ajouter aux favoris (À classer)"}
                   onClick={() => toggleMatchFavorite(match, [], { sessionId: sessionId || match.session_id })}
-                  className={`w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition-all border shrink-0 focus:outline-none focus:ring-2 focus:ring-amber-400 ${
+                  className={`p-1 sm:p-1.5 rounded-md inline-flex items-center justify-center transition-all shrink-0 focus:outline-none focus:ring-1 focus:ring-amber-400 active:scale-95 ${
                     isFav
-                      ? 'bg-amber-500/15 text-amber-500 border-amber-500/40 shadow-xs'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700 hover:text-slate-600 dark:hover:text-slate-300'
+                      ? 'text-amber-500 hover:bg-amber-500/10'
+                      : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
                   }`}
                 >
-                  <Star size={15} className={isFav ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]' : ''} />
+                  <Star size={15} className={isFav ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]' : 'transition-colors'} />
                 </button>
 
                 {isFav && (
@@ -1205,6 +1229,35 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                 </span>
               </div>
             </div>
+
+            {/* Étage 3 Mobile : Badge Rivalité / Derby cliquable centré */}
+            {isFiLeague && fiSummary?.rivalry?.isDocumentedRivalry && (
+              <div className="flex justify-center -mt-0.5 px-1 w-full min-w-0">
+                <button
+                  type="button"
+                  data-no-swipe="true"
+                  data-testid="fi-mobile-rivalry-badge"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigateToTab('intelligence');
+                  }}
+                  title={`${fiSummary.rivalry.categoryLabel}${fiSummary.rivalry.rivalryName ? ` : ${fiSummary.rivalry.rivalryName}` : ''} (Ouvrir Football Intelligence)`}
+                  aria-label={`${fiSummary.rivalry.categoryLabel} : ${fiSummary.rivalry.rivalryName || ''}`}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 hover:bg-amber-500/20 active:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition-colors cursor-pointer max-w-full min-w-0 active:scale-95"
+                >
+                  <Flame size={11} className="text-amber-500 shrink-0" />
+                  <span className="font-bold shrink-0">{fiSummary.rivalry.categoryLabel}</span>
+                  {fiSummary.rivalry.rivalryName && fiSummary.rivalry.rivalryName !== fiSummary.rivalry.categoryLabel && (
+                    <>
+                      <span className="text-amber-500/40 shrink-0">•</span>
+                      <span className="truncate max-w-[130px] xs:max-w-[180px] min-w-0 font-medium">
+                        {fiSummary.rivalry.rivalryName}
+                      </span>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
 
           {/* TABLETTE (768px à 1023px) : Reproduction à l'identique du header d'origine */}
@@ -1254,6 +1307,22 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
 
               {/* Badges Tablettes */}
               <div className="flex items-center gap-1 shrink-0">
+                <button
+                  type="button"
+                  data-no-swipe="true"
+                  aria-label={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+                  aria-pressed={isFav}
+                  title={isFav ? "Retirer des favoris" : "Ajouter aux favoris (À classer)"}
+                  onClick={() => toggleMatchFavorite(match, [], { sessionId: sessionId || match.session_id })}
+                  className={`p-1 sm:p-1.5 rounded-md inline-flex items-center justify-center transition-all shrink-0 focus:outline-none focus:ring-1 focus:ring-amber-400 active:scale-95 ${
+                    isFav
+                      ? 'text-amber-500 hover:bg-amber-500/10'
+                      : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
+                  }`}
+                >
+                  <Star size={15} className={isFav ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]' : 'transition-colors'} />
+                </button>
+
                 {match.isFinalPick && (
                   <Badge variant="success" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider bg-emerald-600 text-white border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)] animate-pulse font-mono">
                     <Trophy size={9} /> <span className="hidden xs:inline">MASTER</span> PICK
@@ -1276,6 +1345,25 @@ export function MatchDashboard({ match, leagueReport, sessionId, onClose }) {
                   <Badge variant="danger" className="text-[8px] flex items-center gap-0.5 px-1.5 py-0.5 uppercase tracking-wider bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/50 font-mono">
                     <AlertTriangle size={9} /> KILL
                   </Badge>
+                )}
+
+                {/* Badge Derby / Rivalité documentée (Tablette) */}
+                {isFiLeague && fiSummary?.rivalry?.isDocumentedRivalry && (
+                  <button
+                    type="button"
+                    data-no-swipe="true"
+                    data-testid="fi-tablet-rivalry-badge"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateToTab('intelligence');
+                    }}
+                    title={`${fiSummary.rivalry.categoryLabel}${fiSummary.rivalry.rivalryName ? ` : ${fiSummary.rivalry.rivalryName}` : ''} (Ouvrir Football Intelligence)`}
+                    aria-label={`${fiSummary.rivalry.categoryLabel} : ${fiSummary.rivalry.rivalryName || ''}`}
+                    className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[8px] font-mono font-bold uppercase tracking-wider bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition-colors cursor-pointer shrink-0"
+                  >
+                    <Flame size={9} className="text-amber-500 shrink-0" />
+                    <span>{fiSummary.rivalry.categoryLabel}</span>
+                  </button>
                 )}
               </div>
             </div>

@@ -1072,4 +1072,129 @@ console.log('[TEST 12] Full Multileague Acceptance (7/7 Envelopes, 66/66 Targets
   console.log('  ✓ Test 12 passed: 7/7 envelopes accepted, 66/66 targets associated, 1,220 PL history indexed, and standings verified.\n');
 }
 
-console.log('=== ALL WEB-FI-001 PHASE A & PHASE B TESTS PASSED SUCCESSFULLY (12/12) ===');
+// -----------------------------------------------------------------------------
+// TEST 13: Derby / Documented Rivalry Header Badge Integration & Semantic Fidelity
+// -----------------------------------------------------------------------------
+console.log('[TEST 13] Derby / Documented Rivalry Header Badge Integration & Responsive Robustness');
+{
+  const dashboardPath = path.join(ROOT_DIR, 'src/components/MatchDashboard.jsx');
+  const dashboardCode = fs.readFileSync(dashboardPath, 'utf8');
+
+  // 13.1: Flame icon import from lucide-react
+  assert.ok(dashboardCode.includes('Flame'), 'Flame icon must be imported in MatchDashboard');
+
+  // 13.2: Badge conditional logic: must strictly check isDocumentedRivalry
+  assert.ok(
+    dashboardCode.includes('isFiLeague && fiSummary?.rivalry?.isDocumentedRivalry'),
+    'Header badges must be conditioned on isFiLeague && fiSummary?.rivalry?.isDocumentedRivalry'
+  );
+
+  // 13.3: Interactive safety on mobile: data-no-swipe="true" to prevent swipe conflict
+  assert.ok(
+    dashboardCode.includes('data-testid="fi-mobile-rivalry-badge"') &&
+    dashboardCode.includes('data-no-swipe="true"'),
+    'Mobile rivalry badge must bear data-no-swipe="true" and data-testid="fi-mobile-rivalry-badge"'
+  );
+
+  // 13.4: Desktop and Tablet badges present
+  assert.ok(
+    dashboardCode.includes('data-testid="fi-header-rivalry-badge"'),
+    'Desktop rivalry badge must bear data-testid="fi-header-rivalry-badge"'
+  );
+  assert.ok(
+    dashboardCode.includes('data-testid="fi-tablet-rivalry-badge"'),
+    'Tablet rivalry badge must bear data-testid="fi-tablet-rivalry-badge"'
+  );
+
+  // 13.5: Navigation directly to football intelligence tab
+  assert.ok(
+    dashboardCode.includes("navigateToTab('intelligence')"),
+    'Rivalry badge click handler must invoke navigateToTab("intelligence")'
+  );
+
+  // 13.6: Truncation and overflow protection for 320px/360px viewports
+  assert.ok(
+    dashboardCode.includes('truncate max-w-[130px] xs:max-w-[180px]'),
+    'Mobile badge must apply responsive truncation classes to prevent overflow at 320px and 360px'
+  );
+
+  // 13.7: Real-world operational fixture check: Milan vs Inter derby
+  const milanInterTarget = serieAFiRaw.target_matches.find(
+    m => m.match_id === '20261031_ACMILAN_INTERMILAN'
+  );
+  assert.ok(milanInterTarget, 'Operational Milan vs Inter target must exist in Serie A envelope');
+  const milanRivalry = resolveRivalryPresentation(milanInterTarget.rivalry_intelligence);
+  assert.equal(milanRivalry.isDocumentedRivalry, true, 'Milan-Inter must be a documented rivalry');
+  assert.equal(milanRivalry.categoryLabel, 'Derby documenté', 'Milan-Inter must be classified as Derby documenté');
+  assert.equal(milanRivalry.rivalryName, 'Derby della Madonnina', 'Milan-Inter rivalry name must be Derby della Madonnina');
+
+  // Synthetic summary check via buildFiMatchSummary
+  const mockFiStateMilan = {
+    available: true,
+    matched: true,
+    association: {
+      target: milanInterTarget,
+      expectedParticipants: 20,
+      leagueName: 'Serie A',
+      canonicalLeagueName: 'Serie A'
+    }
+  };
+  const summaryMilan = buildFiMatchSummary(mockFiStateMilan);
+  assert.ok(summaryMilan.rivalry.isDocumentedRivalry, 'buildFiMatchSummary must expose isDocumentedRivalry: true');
+  assert.equal(summaryMilan.rivalry.categoryLabel, 'Derby documenté');
+  assert.equal(summaryMilan.rivalry.rivalryName, 'Derby della Madonnina');
+
+  // Non-derby fixture check: Brentford vs Nottingham Forest
+  const plVal = validateAndIndexFiEnvelope(plFiRaw, 'PremierLeague');
+  const brentfordForestPred = predictionsRaw.find(p => p.Match_ID === '20261031_BRENTFORD_NOTTINGHAMFOREST');
+  assert.ok(brentfordForestPred, 'Brentford vs Nottingham Forest prediction must exist');
+  const brentfordAssoc = associatePredictionWithFiTarget(brentfordForestPred, plVal);
+  assert.ok(brentfordAssoc.matched, 'Brentford fixture must associate');
+  const summaryBrentford = buildFiMatchSummary({
+    available: true,
+    matched: true,
+    association: brentfordAssoc
+  });
+  assert.equal(
+    summaryBrentford.rivalry.isDocumentedRivalry,
+    false,
+    'Brentford-Nottingham Forest must have isDocumentedRivalry: false (no badge rendered)'
+  );
+
+  // Category resolution tests:
+  // LOCAL_DERBY -> Derby documenté
+  assert.equal(
+    resolveRivalryPresentation({ status: 'RECORDED_IN_PILOT_REGISTRY', is_rivalry: true, category: 'LOCAL_DERBY' }).categoryLabel,
+    'Derby documenté'
+  );
+  // HISTORIC_RIVALRY -> Rivalité historique
+  assert.equal(
+    resolveRivalryPresentation({ status: 'RECORDED_IN_PILOT_REGISTRY', is_rivalry: true, category: 'HISTORIC_RIVALRY' }).categoryLabel,
+    'Rivalité historique'
+  );
+  // Other documented category -> Rivalité documentée
+  assert.equal(
+    resolveRivalryPresentation({ status: 'RECORDED_IN_PILOT_REGISTRY', is_rivalry: true, category: 'OTHER' }).categoryLabel,
+    'Rivalité documentée'
+  );
+
+  // 13.8: Compact Favorite Button validation across all 3 viewports (PC, Tablet, Mobile)
+  assert.ok(
+    !dashboardCode.includes("<span>{isFav ? 'FAVORI' : 'FAVORI'}</span>"),
+    'PC favorite button must not render bulky FAVORI text'
+  );
+  const favMatches = dashboardCode.match(/toggleMatchFavorite\(match/g);
+  assert.equal(
+    favMatches?.length,
+    3,
+    'Favorite button must be implemented across all 3 viewports: PC, Tablet, and Mobile'
+  );
+  assert.ok(
+    dashboardCode.includes('p-1 sm:p-1.5 rounded-md inline-flex items-center justify-center'),
+    'Favorite buttons must use compact, non-bulky layout without 44x44px fixed size'
+  );
+
+  console.log('  ✓ Test 13 passed: Derby/Rivalry header badge integration, compact favorite buttons across 3 viewports, and responsive robustness verified.\n');
+}
+
+console.log('=== ALL WEB-FI-001 PHASE A & PHASE B TESTS PASSED SUCCESSFULLY (13/13) ===');
