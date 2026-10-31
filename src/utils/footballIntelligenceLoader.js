@@ -2,8 +2,15 @@
  * TITANIUM Football Intelligence Loader & Semantic Adapter (WEB-FI-001)
  *
  * Loads, validates, caches, and indexes Football Intelligence descriptive artifacts
- * (profiles FE-002, FE-003, FE-009) strictly on demand without modifying source data
- * or computing probabilities, betting edges, or risk decisions.
+ * (profiles FE-002, FE-003, FE-009 - Semantic Contract v1.1.0) strictly on demand
+ * without modifying source data or computing probabilities, betting edges, or risk decisions.
+ *
+ * Contract v1.1.0 specifications:
+ * - FE-002: Historical pilot Premier League (matches array, active & tracked standings).
+ * - FE-003: Operational Premier League (target_fixtures array, active & tracked standings,
+ *           optional historical_matches array).
+ * - FE-009: Autonomous multi-league operational pilot (historical_matches & target_matches arrays,
+ *           optional current_season_active_standings & all_time_tracked_standings under standings_schema_version 1.0.0).
  */
 
 import { isValidDateComponents } from './titaniumLoader.js';
@@ -309,9 +316,15 @@ export function recognizeFiEnvelopeProfile(payload) {
         reason: 'FE-003 envelope requires target_fixtures, current_season_active_standings, and all_time_tracked_standings arrays'
       };
     }
+    if (payload.historical_matches !== undefined && !Array.isArray(payload.historical_matches)) {
+      return {
+        valid: false,
+        profile: null,
+        reason: 'FE-003 historical_matches must be an array when present'
+      };
+    }
     if (
       payload.matches !== undefined ||
-      payload.historical_matches !== undefined ||
       payload.target_matches !== undefined
     ) {
       return {
@@ -338,16 +351,35 @@ export function recognizeFiEnvelopeProfile(payload) {
         reason: 'FE-009 envelope requires historical_matches and target_matches arrays'
       };
     }
+    if (payload.current_season_active_standings !== undefined && !Array.isArray(payload.current_season_active_standings)) {
+      return {
+        valid: false,
+        profile: null,
+        reason: 'FE-009 current_season_active_standings must be an array when present'
+      };
+    }
+    if (payload.all_time_tracked_standings !== undefined && !Array.isArray(payload.all_time_tracked_standings)) {
+      return {
+        valid: false,
+        profile: null,
+        reason: 'FE-009 all_time_tracked_standings must be an array when present'
+      };
+    }
+    if (meta.standings_schema_version !== undefined && (typeof meta.standings_schema_version !== 'string' || !meta.standings_schema_version.trim())) {
+      return {
+        valid: false,
+        profile: null,
+        reason: 'FE-009 standings_schema_version must be a non-empty string when present'
+      };
+    }
     if (
       payload.matches !== undefined ||
-      payload.target_fixtures !== undefined ||
-      payload.current_season_active_standings !== undefined ||
-      payload.all_time_tracked_standings !== undefined
+      payload.target_fixtures !== undefined
     ) {
       return {
         valid: false,
         profile: null,
-        reason: 'FE-009 envelope must not contain PL root standings or matches/target_fixtures arrays'
+        reason: 'FE-009 envelope must not contain FE-002 matches or FE-003 target_fixtures arrays'
       };
     }
     return { valid: true, profile: 'FE-009', leagueConfig, reason: null };
@@ -498,6 +530,34 @@ export function validateFiMatchRecord(record, mode = 'target') {
 }
 
 /**
+ * Validates a single Elo standings entry (active season or all-time tracked).
+ * Strictly preserves producer types without rejecting legitimate complementary fields.
+ */
+export function validateFiStandingRecord(record, mode = 'active') {
+  if (!isPlainObject(record)) {
+    return { valid: false, reason: 'Standings entry is not an object' };
+  }
+  if (!Number.isInteger(record.rank) || record.rank < 1) {
+    return { valid: false, reason: `Invalid standings rank "${record.rank}"` };
+  }
+  if (typeof record.team_name !== 'string' || !record.team_name.trim()) {
+    return { valid: false, reason: 'Missing or invalid team_name in standings entry' };
+  }
+  if (!Number.isFinite(record.rating)) {
+    return { valid: false, reason: `Invalid Elo rating "${record.rating}" in standings entry for ${record.team_name}` };
+  }
+  if (!Number.isInteger(record.matches_observed_total) || record.matches_observed_total < 0) {
+    return { valid: false, reason: `Invalid matches_observed_total in standings entry for ${record.team_name}` };
+  }
+  if (mode === 'active') {
+    if (!Number.isInteger(record.matches_observed_season) || record.matches_observed_season < 0) {
+      return { valid: false, reason: `Invalid matches_observed_season in standings entry for ${record.team_name}` };
+    }
+  }
+  return { valid: true, reason: null };
+}
+
+/**
  * Validates and indexes a full Football Intelligence JSON payload.
  */
 export function validateAndIndexFiEnvelope(payload, expectedLeagueInput = null) {
@@ -533,7 +593,7 @@ export function validateAndIndexFiEnvelope(payload, expectedLeagueInput = null) 
     };
   }
 
-  const rawHistorical = profile === 'FE-009'
+  const rawHistorical = (profile === 'FE-009' || profile === 'FE-003')
     ? (payload.historical_matches || [])
     : profile === 'FE-002'
       ? (payload.matches || [])
@@ -638,6 +698,29 @@ export function validateAndIndexFiEnvelope(payload, expectedLeagueInput = null) 
 
   const targetSeasonKey = targetSeasons.size === 1 ? Array.from(targetSeasons)[0] : null;
 
+  // Validation sémantique des classements Elo (current_season_active_standings & all_time_tracked_standings)
+  const rawActiveStandings = Array.isArray(payload.current_season_active_standings)
+    ? payload.current_season_active_standings
+    : [];
+  for (let i = 0; i < rawActiveStandings.length; i++) {
+    const entryCheck = validateFiStandingRecord(rawActiveStandings[i], 'active');
+    if (!entryCheck.valid) {
+      return { valid: false, profile, reason: entryCheck.reason };
+    }
+  }
+
+  const rawAllTimeStandings = Array.isArray(payload.all_time_tracked_standings)
+    ? payload.all_time_tracked_standings
+    : [];
+  for (let i = 0; i < rawAllTimeStandings.length; i++) {
+    const entryCheck = validateFiStandingRecord(rawAllTimeStandings[i], 'all_time');
+    if (!entryCheck.valid) {
+      return { valid: false, profile, reason: entryCheck.reason };
+    }
+  }
+
+  const isStandingsComplete = rawActiveStandings.length > 0 && rawActiveStandings.length === leagueConfig.expectedParticipants;
+
   return {
     valid: true,
     profile,
@@ -654,6 +737,11 @@ export function validateAndIndexFiEnvelope(payload, expectedLeagueInput = null) 
     historicalSeasons: Array.from(seasonsSet).sort((a, b) => a.localeCompare(b)),
     historicalTeams: Array.from(teamsSet).sort((a, b) => a.localeCompare(b)),
     teamSeasonEntryState,
+    currentSeasonActiveStandings: rawActiveStandings,
+    allTimeTrackedStandings: rawAllTimeStandings,
+    hasStandings: rawActiveStandings.length > 0 || rawAllTimeStandings.length > 0,
+    isStandingsComplete,
+    standingsSchemaVersion: meta.standings_schema_version || null,
     reason: null
   };
 }

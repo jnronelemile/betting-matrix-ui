@@ -398,6 +398,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
   const [sortOrder, setSortOrder] = useState('DESC'); // 'DESC' | 'ASC'
   const [visibleRowsCount, setVisibleRowsCount] = useState(INITIAL_EXPLORER_LIMIT);
   const [showDefinitions, setShowDefinitions] = useState(false);
+  const [standingsMode, setStandingsMode] = useState('ACTIVE'); // 'ACTIVE' | 'ALL_TIME'
 
   const association = fiState?.association || null;
   const dataset = fiState?.dataset || null;
@@ -418,6 +419,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
     setExplorerSeason('ALL');
     setOnlyRivalries(false);
     setVisibleRowsCount(INITIAL_EXPLORER_LIMIT);
+    setStandingsMode('ACTIVE');
   }, [targetHomeTeam, targetAwayTeam, target?.date]);
 
   useEffect(() => {
@@ -1578,6 +1580,147 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
           )}
         </div>
       </Card>
+
+      {/* 6. Classements Elo du championnat (Elo Standings) */}
+      {dataset?.hasStandings && (
+        <Card title="Classements Elo du championnat (Elo Standings)" titleIcon={<Award size={16} />}>
+          <div className="flex flex-col gap-4" data-no-swipe="true">
+            {/* Header controls: Bascule Saison Active vs Historique des clubs */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 w-fit">
+                <button
+                  type="button"
+                  onClick={() => setStandingsMode('ACTIVE')}
+                  className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
+                    standingsMode === 'ACTIVE'
+                      ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  Saison active ({target.season_key || 'En cours'})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStandingsMode('ALL_TIME')}
+                  className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
+                    standingsMode === 'ALL_TIME'
+                      ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  Historique complet des clubs observés
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Badge variant="default" className="text-[10px] font-mono px-2.5 py-0.5">
+                  {standingsMode === 'ACTIVE'
+                    ? `${dataset.currentSeasonActiveStandings.length} clubs engagés${dataset.isStandingsComplete ? ' (Complet)' : ''}`
+                    : `${dataset.allTimeTrackedStandings.length} clubs observés sur les 4 saisons`}
+                </Badge>
+              </div>
+            </div>
+
+            {/* Notice explicative conforme TITANIUM */}
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+              {standingsMode === 'ACTIVE'
+                ? `Classement Elo des clubs participant à la saison ${target.season_key || 'active'} du championnat (${association.canonicalLeagueName}), calculé strictement à partir des résultats observés en amont de cette journée.`
+                : `Classement Elo multi-saisons incluant tous les clubs observés dans ${association.canonicalLeagueName} sur l'ensemble du jeu de données historique rejoué.`}
+            </p>
+
+            {/* Table des classements */}
+            <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">
+              <table className="w-full text-left text-xs font-mono">
+                <thead className="bg-slate-100/80 dark:bg-slate-900/80 text-[10px] uppercase text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
+                  <tr>
+                    <th className="py-2 px-3 w-14 text-center">Rang</th>
+                    <th className="py-2 px-3">Club</th>
+                    <th className="py-2 px-3 text-right">Rating Elo</th>
+                    {standingsMode === 'ACTIVE' && (
+                      <th className="py-2 px-3 text-right">Matchs saison</th>
+                    )}
+                    <th className="py-2 px-3 text-right">Total matchs observés</th>
+                    <th className="py-2 px-3 text-center w-24">Statut match</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 bg-white dark:bg-slate-950">
+                  {(standingsMode === 'ACTIVE' ? dataset.currentSeasonActiveStandings : dataset.allTimeTrackedStandings).map((row) => {
+                    const isHome = row.team_name === target.home_team;
+                    const isAway = row.team_name === target.away_team;
+                    const isMatchTeam = isHome || isAway;
+                    return (
+                      <tr
+                        key={`${row.rank}_${row.team_name}`}
+                        className={`transition-colors ${
+                          isHome
+                            ? 'bg-blue-50/70 dark:bg-blue-950/25 font-semibold'
+                            : isAway
+                            ? 'bg-rose-50/70 dark:bg-rose-950/25 font-semibold'
+                            : 'hover:bg-slate-50 dark:hover:bg-slate-900/40'
+                        }`}
+                      >
+                        <td className="py-2 px-3 text-center font-bold">
+                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs ${
+                            row.rank === 1
+                              ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-black'
+                              : row.rank === 2
+                              ? 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                              : row.rank === 3
+                              ? 'bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-400'
+                              : 'text-slate-500 dark:text-slate-400'
+                          }`}>
+                            #{row.rank}
+                          </span>
+                        </td>
+                        <td className="py-2 px-3">
+                          <div className="flex items-center gap-2">
+                            <span className={`font-sans font-bold text-xs ${
+                              isHome
+                                ? 'text-blue-600 dark:text-blue-400'
+                                : isAway
+                                ? 'text-rose-600 dark:text-rose-400'
+                                : 'text-slate-900 dark:text-slate-100'
+                            }`}>
+                              {row.team_name}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-2 px-3 text-right whitespace-nowrap font-bold text-slate-800 dark:text-slate-200">
+                          {formatEloRating(row.rating)}
+                          <span className="text-[10px] font-normal text-slate-400 ml-1">Elo</span>
+                        </td>
+                        {standingsMode === 'ACTIVE' && (
+                          <td className="py-2 px-3 text-right whitespace-nowrap text-slate-600 dark:text-slate-400">
+                            {row.matches_observed_season ?? '-'}
+                          </td>
+                        )}
+                        <td className="py-2 px-3 text-right whitespace-nowrap text-slate-600 dark:text-slate-400">
+                          {row.matches_observed_total}
+                        </td>
+                        <td className="py-2 px-3 text-center">
+                          {isHome && (
+                            <Badge variant="default" className="text-[9px] px-1.5 py-0 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+                              Domicile
+                            </Badge>
+                          )}
+                          {isAway && (
+                            <Badge variant="default" className="text-[9px] px-1.5 py-0 bg-rose-100 dark:bg-rose-900 text-rose-700 dark:text-rose-300">
+                              Extérieur
+                            </Badge>
+                          )}
+                          {!isMatchTeam && (
+                            <span className="text-[10px] text-slate-300 dark:text-slate-600">-</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Card>
+      )}
     </div>
   );
 }

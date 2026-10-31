@@ -8,6 +8,7 @@ import {
   resolveFiLeagueConfig,
   recognizeFiEnvelopeProfile,
   validateFiMatchRecord,
+  validateFiStandingRecord,
   validateAndIndexFiEnvelope,
   associatePredictionWithFiTarget,
   loadFootballIntelligenceForMatch,
@@ -25,20 +26,40 @@ import {
   buildFiMatchSummary
 } from '../src/utils/footballIntelligenceLoader.js';
 
+import {
+  selectDeterministicPredictionFile,
+  canonicalSessionId
+} from '../src/utils/titaniumLoader.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 
 console.log('=== STARTING TARGETED TEST SUITE: WEB-FI-001 (PHASES A & B) ===\n');
 
+// 1. Détermination déterministe de la matrice de prédictions active
+const predDir = path.join(ROOT_DIR, 'public/data/titanium_v2/predictions');
+const availablePredFiles = fs.readdirSync(predDir).filter(f => f.endsWith('.json'));
+const activePredictionFileName = selectDeterministicPredictionFile(availablePredFiles);
+assert.ok(activePredictionFileName, 'Authoritative operational prediction file must be deterministically resolved');
+
+// 2. Contrôle explicite de concordance entre la matrice et le batch Football Intelligence
+const plFiPath = path.join(
+  ROOT_DIR,
+  'public/data/titanium_v2/football_intelligence/multileague/football_intelligence_premier_league.json'
+);
+const plFiRaw = JSON.parse(fs.readFileSync(plFiPath, 'utf8'));
+assert.equal(
+  canonicalSessionId(activePredictionFileName),
+  canonicalSessionId(plFiRaw._metadata_.session_folder),
+  'Authoritative prediction file must match the Football Intelligence session folder exactly without silent fallback'
+);
+
 const serieAFiPath = path.join(
   ROOT_DIR,
   'public/data/titanium_v2/football_intelligence/multileague/football_intelligence_serie_a.json'
 );
-const predictionsPath = path.join(
-  ROOT_DIR,
-  'public/data/titanium_v2/predictions/Run_matches-to-predict_Week-05_AB_Octobre-2026___2026-10-27_19h35m54s_VALUE_BETTING_MATRIX_2026-10-27_19h45m38s.json'
-);
+const predictionsPath = path.join(predDir, activePredictionFileName);
 
 const serieAFiRaw = JSON.parse(fs.readFileSync(serieAFiPath, 'utf8'));
 const predictionsRaw = JSON.parse(fs.readFileSync(predictionsPath, 'utf8'));
@@ -241,8 +262,8 @@ console.log('[TEST 3] Real Serie A Dataset Validation, 10/10 Target Associations
   assert.equal(validatedSerieA.valid, true, 'Real Serie A FI JSON must validate cleanly');
   assert.equal(validatedSerieA.profile, 'FE-009');
   assert.equal(validatedSerieA.leagueId, 55);
-  assert.equal(validatedSerieA.cutoff, '2026-10-27');
-  assert.equal(validatedSerieA.historicalMatches.length, 1220, 'Must index all 1,220 historical Serie A matches');
+  assert.equal(validatedSerieA.cutoff, '2026-10-31');
+  assert.equal(validatedSerieA.historicalMatches.length, 1230, 'Must index all 1,230 historical Serie A matches');
   assert.equal(validatedSerieA.targetMatches.length, 10, 'Must index all 10 Serie A target matches');
   assert.deepEqual(
     validatedSerieA.historicalSeasons,
@@ -265,50 +286,43 @@ console.log('[TEST 3] Real Serie A Dataset Validation, 10/10 Target Associations
   }
 
   // Spot-check exact numerical fidelity on specific Serie A targets
-  // 1) Sassuolo vs SS Lazio (20261027_SASSUOLO_SSLAZIO)
-  const sassuoloLazio = validatedSerieA.targetByKey.get('55::20261027_SASSUOLO_SSLAZIO');
-  assert.equal(sassuoloLazio.team_strength.home.rating_pre_match, 1489.05);
-  assert.equal(sassuoloLazio.team_strength.home.rank_in_league, 13);
-  assert.equal(sassuoloLazio.team_strength.home.matches_observed_season, 8);
-  assert.equal(sassuoloLazio.team_strength.home.matches_observed_total, 84);
-  assert.equal(sassuoloLazio.team_strength.away.rating_pre_match, 1603.64);
-  assert.equal(sassuoloLazio.team_strength.away.rank_in_league, 7);
-  assert.equal(sassuoloLazio.team_strength.away.matches_observed_season, 8);
-  assert.equal(sassuoloLazio.team_strength.away.matches_observed_total, 122);
-  assert.equal(sassuoloLazio.team_strength.diff_home_minus_away, -114.59);
-  assert.equal(sassuoloLazio.team_strength.expected_score_home, 0.387417);
-  assert.equal(sassuoloLazio.team_strength.expected_score_away, 0.612583);
-  assert.equal(sassuoloLazio.opponent_quality.home.opp_strength_l5_avg, 1563.63);
-  assert.equal(sassuoloLazio.opponent_quality.home.schedule_difficulty_vs_active_mean, 27.32);
-  assert.equal(sassuoloLazio.opponent_quality.home.schedule_difficulty_vs_nominal_anchor, 63.63);
-  assert.equal(sassuoloLazio.opponent_quality.home.opp_strength_l5_contextualized_gap_avg, 27.32);
-  assert.equal(sassuoloLazio.opponent_quality.home.n_opponents_observed, 5);
-  assert.equal(sassuoloLazio.opponent_quality.home.n_contextualized_gaps_observed, 5);
+  // 1) AC Milan vs Inter Milan (20261031_ACMILAN_INTERMILAN) - Derby della Madonnina
+  const milanInter = validatedSerieA.targetByKey.get('55::20261031_ACMILAN_INTERMILAN');
+  assert.equal(milanInter.team_strength.home.rating_pre_match, 1600.88);
+  assert.equal(milanInter.team_strength.home.rank_in_league, 6);
+  assert.equal(milanInter.team_strength.home.matches_observed_season, 9);
+  assert.equal(milanInter.team_strength.home.matches_observed_total, 123);
+  assert.equal(milanInter.team_strength.away.rating_pre_match, 1718.43);
+  assert.equal(milanInter.team_strength.away.rank_in_league, 1);
+  assert.equal(milanInter.team_strength.away.matches_observed_season, 9);
+  assert.equal(milanInter.team_strength.away.matches_observed_total, 123);
+  assert.equal(milanInter.team_strength.diff_home_minus_away, -117.55);
+  assert.equal(milanInter.team_strength.expected_score_home, 0.383387);
+  assert.equal(milanInter.team_strength.expected_score_away, 0.616613);
+  assert.equal(milanInter.rivalry_intelligence.is_rivalry, true);
+  assert.equal(milanInter.rivalry_intelligence.rivalry_name, 'Derby della Madonnina');
 
-  // 2) AS Roma vs Cagliari Calcio (20261027_ASROMA_CAGLIARICALCIO) - note contextualized gap 32.8 vs active mean gap 32.79
-  const romaCagliari = validatedSerieA.targetByKey.get('55::20261027_ASROMA_CAGLIARICALCIO');
-  assert.equal(romaCagliari.team_strength.home.rating_pre_match, 1643.96);
-  assert.equal(romaCagliari.team_strength.home.rank_in_league, 2);
-  assert.equal(romaCagliari.team_strength.away.rating_pre_match, 1490.47);
-  assert.equal(romaCagliari.team_strength.away.rank_in_league, 12);
-  assert.equal(romaCagliari.team_strength.diff_home_minus_away, 153.49);
-  assert.equal(romaCagliari.opponent_quality.home.schedule_difficulty_vs_active_mean, 32.79);
-  assert.equal(romaCagliari.opponent_quality.home.opp_strength_l5_contextualized_gap_avg, 32.8);
+  // 2) Como 1907 vs Venezia FC (20261101_COMO1907_VENEZIAFC) - Venezia returned after absence on 2026-08-23
+  const comoVeneziaPred = serieAPredictions.find(p => p.Match_ID === '20261101_COMO1907_VENEZIAFC');
+  const comoVeneziaAssoc = associatePredictionWithFiTarget(comoVeneziaPred, validatedSerieA);
+  assert.equal(comoVeneziaAssoc.target.team_strength.home.rank_in_league, 3);
+  assert.equal(comoVeneziaAssoc.target.team_strength.home.rating_pre_match, 1623.35);
+  assert.equal(comoVeneziaAssoc.target.team_strength.away.rank_in_league, 19);
+  assert.equal(comoVeneziaAssoc.target.team_strength.away.rating_pre_match, 1448.57);
+  assert.equal(comoVeneziaAssoc.target.team_strength.away.matches_observed_season, 9);
+  assert.equal(comoVeneziaAssoc.target.team_strength.away.matches_observed_total, 47);
+  assert.equal(comoVeneziaAssoc.target.team_strength.away.is_returning_after_absence, false, 'Target fixture itself must have is_returning_after_absence = false');
+  assert.equal(comoVeneziaAssoc.target.team_strength.away.is_new_entrant, false);
+  assert.equal(comoVeneziaAssoc.awaySeasonEntry?.isReturningAfterAbsence, true, 'Venezia FC 2026-2027 season entry records return after absence');
+  assert.equal(comoVeneziaAssoc.awaySeasonEntry?.firstMatchDate, '2026-08-23');
+  assert.equal(comoVeneziaAssoc.awaySeasonEntry?.firstMatchId, '20260823_VENEZIAFC_USLECCE');
 
-  // 3) Venezia FC vs Inter Milan (20261028_VENEZIAFC_INTERMILAN) - Venezia returned after absence on 2026-08-23, false on Oct 28 target
-  const veneziaPred = serieAPredictions.find(p => p.Match_ID === '20261028_VENEZIAFC_INTERMILAN');
-  const veneziaAssoc = associatePredictionWithFiTarget(veneziaPred, validatedSerieA);
-  assert.equal(veneziaAssoc.target.team_strength.away.rank_in_league, 1);
-  assert.equal(veneziaAssoc.target.team_strength.away.rating_pre_match, 1714.15);
-  assert.equal(veneziaAssoc.target.team_strength.home.rank_in_league, 18);
-  assert.equal(veneziaAssoc.target.team_strength.home.rating_pre_match, 1452.84);
-  assert.equal(veneziaAssoc.target.team_strength.home.matches_observed_season, 8);
-  assert.equal(veneziaAssoc.target.team_strength.home.matches_observed_total, 46);
-  assert.equal(veneziaAssoc.target.team_strength.home.is_returning_after_absence, false, 'October 28 target fixture itself must have is_returning_after_absence = false');
-  assert.equal(veneziaAssoc.target.team_strength.home.is_new_entrant, false);
-  assert.equal(veneziaAssoc.homeSeasonEntry?.isReturningAfterAbsence, true, 'Venezia FC 2026-2027 season entry records return after absence');
-  assert.equal(veneziaAssoc.homeSeasonEntry?.firstMatchDate, '2026-08-23');
-  assert.equal(veneziaAssoc.homeSeasonEntry?.firstMatchId, '20260823_VENEZIAFC_USLECCE');
+  // 3) Bologna FC vs AC Monza (20261031_BOLOGNAFC_ACMONZA)
+  const bolognaMonza = validatedSerieA.targetByKey.get('55::20261031_BOLOGNAFC_ACMONZA');
+  assert.equal(bolognaMonza.team_strength.home.rating_pre_match, 1540.68);
+  assert.equal(bolognaMonza.team_strength.home.rank_in_league, 9);
+  assert.equal(bolognaMonza.team_strength.away.rating_pre_match, 1472.33);
+  assert.equal(bolognaMonza.team_strength.away.rank_in_league, 16);
 
   console.log('  ✓ Test 3 passed: 10/10 Serie A targets matched with exact numerical fidelity.\n');
 }
@@ -322,13 +336,13 @@ console.log('[TEST 4] Historical Elo Series, Match Explorer & Rivalry/Coverage S
 
   // Check Inter Milan trajectory across all 4 seasons
   const interAllSeasons = extractTeamHistoricalSeries(validatedSerieA, 'Inter Milan', 'ALL');
-  assert.equal(interAllSeasons.length, 122, 'Inter Milan must have 122 historical pre-match points (38*3 + 8)');
+  assert.equal(interAllSeasons.length, 123, 'Inter Milan must have 123 historical pre-match points (38*3 + 9)');
   const inter2627 = extractTeamHistoricalSeries(validatedSerieA, 'Inter Milan', '2026-2027');
-  assert.equal(inter2627.length, 8, 'Inter Milan must have 8 recorded matches in 2026-2027 prior to Round 9');
+  assert.equal(inter2627.length, 9, 'Inter Milan must have 9 recorded matches in 2026-2027 prior to Round 10');
 
   // Check Venezia FC trajectory (present in 2024-2025 and 2026-2027, absent in 2023-2024 and 2025-2026)
   const veneziaAll = extractTeamHistoricalSeries(validatedSerieA, 'Venezia FC', 'ALL');
-  assert.equal(veneziaAll.length, 46, 'Venezia FC must have exactly 46 recorded matches (38 in 24-25 + 8 in 26-27)');
+  assert.equal(veneziaAll.length, 47, 'Venezia FC must have exactly 47 recorded matches (38 in 24-25 + 9 in 26-27)');
   assert.equal(veneziaAll[0].isNewEntrant, true, 'Venezia first appearance in 2024-2025 has isNewEntrant=true');
   assert.equal(veneziaAll[0].ratingPreMatch, 1500.0);
   const veneziaReturnMatch = veneziaAll.find(p => p.seasonKey === '2026-2027');
@@ -511,6 +525,10 @@ console.log('[TEST 6] UI Component Integration & Semantic Guardrails');
     'Couverture contextualisée :',
     'Historical Elo Development',
     'Historical Match Explorer',
+    'Classements Elo du championnat (Elo Standings)',
+    'Saison active',
+    'Historique complet des clubs observés',
+    'Total matchs observés',
     'Première apparition dans ce jeu de données',
     "Retour après absence dans l'historique observé",
     'data-no-swipe="true"'
@@ -611,9 +629,15 @@ console.log('[TEST 7] Phase B Summary Builder & Exact Metric Restitution (10/10 
     assert.equal(summary.home.oq.nCtx, 5);
     assert.equal(summary.away.oq.nCtx, 5);
 
-    // All 10 current Serie A targets are NOT_RECORDED_IN_PILOT_REGISTRY -> must not trigger rivalry card
-    assert.equal(summary.rivalry.isDocumentedRivalry, false);
-    assert.equal(summary.rivalry.state, 'NOT_RECORDED');
+    // All Serie A targets except Milan-Inter are NOT_RECORDED_IN_PILOT_REGISTRY
+    if (pred.Match_ID === '20261031_ACMILAN_INTERMILAN') {
+      assert.equal(summary.rivalry.isDocumentedRivalry, true);
+      assert.equal(summary.rivalry.rivalryName, 'Derby della Madonnina');
+      assert.equal(summary.rivalry.state, 'DOCUMENTED');
+    } else {
+      assert.equal(summary.rivalry.isDocumentedRivalry, false);
+      assert.equal(summary.rivalry.state, 'NOT_RECORDED');
+    }
   }
 
   console.log('  ✓ Test 7 passed: buildFiMatchSummary restitutes all 10 Serie A targets with zero drift.\n');
@@ -923,4 +947,129 @@ console.log('[TEST 11] Phase B Structural & Semantic Guardrails on Source Files'
   console.log('  ✓ Test 11 passed: All Phase B structural and semantic guardrails verified.\n');
 }
 
-console.log('=== ALL WEB-FI-001 PHASE A & PHASE B TESTS PASSED SUCCESSFULLY (11/11) ===');
+// -----------------------------------------------------------------------------
+// TEST 12: Full Multileague Acceptance (7/7 Envelopes, 66/66 Targets, PL 1,220 History & Standings Fidelity)
+// -----------------------------------------------------------------------------
+console.log('[TEST 12] Full Multileague Acceptance (7/7 Envelopes, 66/66 Targets, PL 1,220 History & Standings Fidelity)');
+{
+  const fiDir = path.join(ROOT_DIR, 'public/data/titanium_v2/football_intelligence/multileague');
+  const leagueConfigs = [
+    { file: 'football_intelligence_bundesliga.json', leagueKey: 'Bundesliga', expectedLeagueId: 54, profile: 'FE-009', expectedTargets: 9, expectedHistory: 981, expectedParticipants: 18, expectedAllTime: 24 },
+    { file: 'football_intelligence_eredivisie.json', leagueKey: 'Eredivisie', expectedLeagueId: 57, profile: 'FE-009', expectedTargets: 9, expectedHistory: 1008, expectedParticipants: 18, expectedAllTime: 24 },
+    { file: 'football_intelligence_laliga.json', leagueKey: 'LaLiga', expectedLeagueId: 87, profile: 'FE-009', expectedTargets: 10, expectedHistory: 1240, expectedParticipants: 20, expectedAllTime: 29 },
+    { file: 'football_intelligence_liga_portugal.json', leagueKey: 'LigaPortugal', expectedLeagueId: 61, profile: 'FE-009', expectedTargets: 9, expectedHistory: 999, expectedParticipants: 18, expectedAllTime: 25 },
+    { file: 'football_intelligence_ligue_1.json', leagueKey: 'Ligue1', expectedLeagueId: 53, profile: 'FE-009', expectedTargets: 9, expectedHistory: 990, expectedParticipants: 18, expectedAllTime: 24 },
+    { file: 'football_intelligence_premier_league.json', leagueKey: 'PremierLeague', expectedLeagueId: 47, profile: 'FE-003', expectedTargets: 10, expectedHistory: 1220, expectedParticipants: 20, expectedAllTime: 27 },
+    { file: 'football_intelligence_serie_a.json', leagueKey: 'SerieA', expectedLeagueId: 55, profile: 'FE-009', expectedTargets: 10, expectedHistory: 1230, expectedParticipants: 20, expectedAllTime: 25 }
+  ];
+
+  let totalValidatedTargets = 0;
+  let totalAssociatedTargets = 0;
+  const validatedByLeague = new Map();
+
+  for (const item of leagueConfigs) {
+    const rawPayload = JSON.parse(fs.readFileSync(path.join(fiDir, item.file), 'utf8'));
+    const validated = validateAndIndexFiEnvelope(rawPayload, item.leagueKey);
+
+    assert.equal(validated.valid, true, `Envelope ${item.file} must validate cleanly: ${validated.reason}`);
+    assert.equal(validated.profile, item.profile, `${item.file} must have profile ${item.profile}`);
+    assert.equal(validated.leagueId, item.expectedLeagueId);
+    assert.equal(validated.targetMatches.length, item.expectedTargets, `${item.file} must have ${item.expectedTargets} targets`);
+    assert.equal(validated.historicalMatches.length, item.expectedHistory, `${item.file} must have ${item.expectedHistory} historical matches`);
+    assert.equal(validated.hasStandings, true, `${item.file} must have standings`);
+    assert.equal(validated.isStandingsComplete, true, `${item.file} active standings must be complete`);
+    assert.equal(validated.currentSeasonActiveStandings.length, item.expectedParticipants, `${item.file} active standings must have ${item.expectedParticipants} clubs`);
+    assert.equal(validated.allTimeTrackedStandings.length, item.expectedAllTime, `${item.file} all-time standings must have ${item.expectedAllTime} clubs`);
+
+    // Verify standings rank sequence and numerical validity
+    for (let r = 0; r < validated.currentSeasonActiveStandings.length; r++) {
+      const entry = validated.currentSeasonActiveStandings[r];
+      assert.equal(entry.rank, r + 1, `Active standing rank must be sequential starting at 1 (${entry.team_name})`);
+      assert.ok(Number.isFinite(entry.rating), 'Rating must be finite');
+      assert.ok(entry.rating >= 1000 && entry.rating <= 2000, 'Rating must fall in realistic Elo range');
+      assert.ok(entry.matches_observed_season >= 0);
+      assert.ok(entry.matches_observed_total >= 0);
+    }
+
+    // Verify exact raw source fidelity (no client-side recomputation or ranking alteration)
+    for (let r = 0; r < rawPayload.current_season_active_standings.length; r++) {
+      const rawEntry = rawPayload.current_season_active_standings[r];
+      const valEntry = validated.currentSeasonActiveStandings[r];
+      assert.equal(valEntry.rank, rawEntry.rank);
+      assert.equal(valEntry.team_name, rawEntry.team_name);
+      assert.equal(valEntry.rating, rawEntry.rating);
+      assert.equal(valEntry.matches_observed_season, rawEntry.matches_observed_season);
+      assert.equal(valEntry.matches_observed_total, rawEntry.matches_observed_total);
+    }
+
+    validatedByLeague.set(item.leagueKey, validated);
+    totalValidatedTargets += validated.targetMatches.length;
+
+    // Associate all predictions for this league
+    const leaguePreds = predictionsRaw.filter(p => p.League === item.leagueKey);
+    assert.equal(leaguePreds.length, item.expectedTargets, `Predictions count for ${item.leagueKey} must be ${item.expectedTargets}`);
+
+    for (const pred of leaguePreds) {
+      const assoc = associatePredictionWithFiTarget(pred, validated);
+      assert.equal(assoc.matched, true, `Prediction ${pred.Match_ID} must associate cleanly`);
+      assert.equal(assoc.target.match_id, pred.Match_ID);
+      assert.equal(assoc.target.date, pred.Match_Date);
+      totalAssociatedTargets++;
+    }
+  }
+
+  assert.equal(totalValidatedTargets, 66, 'All 7 envelopes must contain exactly 66 targets');
+  assert.equal(totalAssociatedTargets, 66, 'All 66 predictions across the 7 FI leagues must associate cleanly');
+
+  // Verify Premier League FE-003 historical matches specifically (Criterion 3)
+  const plVal = validatedByLeague.get('PremierLeague');
+  assert.equal(plVal.profile, 'FE-003');
+  assert.equal(plVal.historicalMatches.length, 1220, '1,220 Premier League historical observations must be accessible');
+  assert.deepEqual(plVal.historicalSeasons, ['2023-2024', '2024-2025', '2025-2026', '2026-2027']);
+  assert.equal(plVal.historicalTeams.length, 27);
+
+  // Arsenal trajectory in Premier League
+  const arsenalSeries = extractTeamHistoricalSeries(plVal, 'Arsenal', 'ALL');
+  assert.equal(arsenalSeries.length, 122, 'Arsenal must have 122 historical matches (38*3 + 8)');
+  const arsenal2627 = extractTeamHistoricalSeries(plVal, 'Arsenal', '2026-2027');
+  assert.equal(arsenal2627.length, 8, 'Arsenal must have 8 matches recorded in 2026-2027 prior to Round 9');
+
+  // Backward compatibility: synthetic FE-003 without historical_matches remains valid
+  const syntheticLegacyFe003 = {
+    _metadata_: structuredClone(plFiRaw._metadata_),
+    target_fixtures: structuredClone(plFiRaw.target_fixtures),
+    current_season_active_standings: structuredClone(plFiRaw.current_season_active_standings),
+    all_time_tracked_standings: structuredClone(plFiRaw.all_time_tracked_standings)
+  };
+  const legacyVal = validateAndIndexFiEnvelope(syntheticLegacyFe003, 'PremierLeague');
+  assert.equal(legacyVal.valid, true, 'Legacy FE-003 without historical_matches must remain valid');
+  assert.equal(legacyVal.historicalMatches.length, 0);
+  assert.equal(legacyVal.targetMatches.length, 10);
+
+  // Backward compatibility: synthetic FE-009 without standings remains valid
+  const syntheticLegacyFe009 = {
+    _metadata_: structuredClone(serieAFiRaw._metadata_),
+    historical_matches: structuredClone(serieAFiRaw.historical_matches),
+    target_matches: structuredClone(serieAFiRaw.target_matches)
+  };
+  delete syntheticLegacyFe009._metadata_.standings_schema_version;
+  const legacyFe009Val = validateAndIndexFiEnvelope(syntheticLegacyFe009, 'SerieA');
+  assert.equal(legacyFe009Val.valid, true, 'Legacy FE-009 without standings must remain valid');
+  assert.equal(legacyFe009Val.hasStandings, false);
+  assert.equal(legacyFe009Val.currentSeasonActiveStandings.length, 0);
+
+  // Standings validator unit checks (Criterion 2)
+  assert.equal(validateFiStandingRecord({ rank: 1, team_name: 'Arsenal', rating: 1693.12, matches_observed_season: 8, matches_observed_total: 122 }, 'active').valid, true);
+  assert.equal(validateFiStandingRecord({ rank: 1, team_name: 'Arsenal', rating: 1693.12, matches_observed_total: 122 }, 'all_time').valid, true);
+  // Complementary fields must not be rejected
+  assert.equal(validateFiStandingRecord({ rank: 1, team_name: 'Arsenal', rating: 1693.12, matches_observed_season: 8, matches_observed_total: 122, extra_meta: 'valid' }, 'active').valid, true);
+  // Invalids must be rejected
+  assert.equal(validateFiStandingRecord({ rank: 0, team_name: 'Arsenal', rating: 1693.12, matches_observed_season: 8, matches_observed_total: 122 }, 'active').valid, false);
+  assert.equal(validateFiStandingRecord({ rank: 1, team_name: '', rating: 1693.12, matches_observed_season: 8, matches_observed_total: 122 }, 'active').valid, false);
+  assert.equal(validateFiStandingRecord({ rank: 1, team_name: 'Arsenal', rating: NaN, matches_observed_season: 8, matches_observed_total: 122 }, 'active').valid, false);
+  assert.equal(validateFiStandingRecord({ rank: 1, team_name: 'Arsenal', rating: 1693.12, matches_observed_season: -1, matches_observed_total: 122 }, 'active').valid, false);
+
+  console.log('  ✓ Test 12 passed: 7/7 envelopes accepted, 66/66 targets associated, 1,220 PL history indexed, and standings verified.\n');
+}
+
+console.log('=== ALL WEB-FI-001 PHASE A & PHASE B TESTS PASSED SUCCESSFULLY (12/12) ===');
