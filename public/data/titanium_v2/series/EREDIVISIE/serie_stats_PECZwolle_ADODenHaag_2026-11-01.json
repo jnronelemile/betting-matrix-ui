@@ -3,7 +3,7 @@
     "competition": "Eredivisie",
     "fixture": "PEC Zwolle vs ADO Den Haag",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:42:56.684239",
+    "generated_at": "2026-10-31T11:20:58.054139",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

@@ -3,7 +3,7 @@
     "competition": "Major League Soccer",
     "fixture": "Portland Timbers vs Houston Dynamo",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:42:35.376028",
+    "generated_at": "2026-10-31T11:20:36.717813",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-01-01",
     "season_source": "season_resolver",

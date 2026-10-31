@@ -3,7 +3,7 @@
     "competition": "Eredivisie",
     "fixture": "Excelsior Rotterdam vs FC Twente",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:42:57.015429",
+    "generated_at": "2026-10-31T11:20:58.384252",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

@@ -3,7 +3,7 @@
     "competition": "Serie B",
     "fixture": "Arezzo vs Ascoli",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:43:25.929734",
+    "generated_at": "2026-10-31T11:21:33.933807",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

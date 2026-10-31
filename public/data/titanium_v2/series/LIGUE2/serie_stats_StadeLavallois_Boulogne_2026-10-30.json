@@ -3,7 +3,7 @@
     "competition": "Ligue 2",
     "fixture": "Stade Lavallois vs Boulogne",
     "date": "2026-10-30",
-    "generated_at": "2026-10-30T13:42:27.463336",
+    "generated_at": "2026-10-31T11:20:29.322678",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

@@ -3,7 +3,7 @@
     "competition": "Belgian Pro League",
     "fixture": "Lommel vs Gent",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:42:41.013481",
+    "generated_at": "2026-10-31T11:20:42.294228",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

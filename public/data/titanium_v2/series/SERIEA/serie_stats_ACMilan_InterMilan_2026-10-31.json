@@ -3,7 +3,7 @@
     "competition": "Serie A",
     "fixture": "AC Milan vs Inter Milan",
     "date": "2026-10-31",
-    "generated_at": "2026-10-30T13:43:08.773725",
+    "generated_at": "2026-10-31T11:21:10.201590",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

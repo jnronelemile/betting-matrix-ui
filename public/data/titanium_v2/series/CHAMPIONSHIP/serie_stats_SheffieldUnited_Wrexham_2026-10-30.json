@@ -3,7 +3,7 @@
     "competition": "Championship",
     "fixture": "Sheffield United vs Wrexham",
     "date": "2026-10-30",
-    "generated_at": "2026-10-30T13:42:16.580215",
+    "generated_at": "2026-10-31T11:20:16.792638",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

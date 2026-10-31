@@ -28,10 +28,329 @@
     "rivalry_temporal_policy": "CURRENT_STATIC_REGISTRY_NOT_PIT_CERTIFIED",
     "scope": "laliga_descriptive_pilot",
     "sqlite_access": "READ_ONLY_URI_QUERY_ONLY",
+    "standings_schema_version": "1.0.0",
     "target_league_identity": "CALLER_DECLARED",
     "task_id": "FE-009",
     "temporal_certification": "CHRONOLOGICAL_RECONSTRUCTION_ONLY"
   },
+  "all_time_tracked_standings": [
+    {
+      "matches_observed_total": 124,
+      "rank": 1,
+      "rating": 1728.3,
+      "team_name": "FC Barcelona"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 2,
+      "rating": 1693.28,
+      "team_name": "Real Madrid"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 3,
+      "rating": 1632.02,
+      "team_name": "Atletico Madrid"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 4,
+      "rating": 1594.98,
+      "team_name": "Real Betis"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 5,
+      "rating": 1570.89,
+      "team_name": "Villarreal CF"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 6,
+      "rating": 1527.28,
+      "team_name": "Real Sociedad"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 7,
+      "rating": 1520.85,
+      "team_name": "Celta Vigo"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 8,
+      "rating": 1506.43,
+      "team_name": "Rayo Vallecano"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 9,
+      "rating": 1505.99,
+      "team_name": "Athletic Club"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 10,
+      "rating": 1500.16,
+      "team_name": "Sevilla FC"
+    },
+    {
+      "matches_observed_total": 10,
+      "rank": 11,
+      "rating": 1494.68,
+      "team_name": "Deportivo La Coruña"
+    },
+    {
+      "matches_observed_total": 48,
+      "rank": 12,
+      "rating": 1486.82,
+      "team_name": "Elche CF"
+    },
+    {
+      "matches_observed_total": 10,
+      "rank": 13,
+      "rating": 1486.5,
+      "team_name": "Racing Santander"
+    },
+    {
+      "matches_observed_total": 48,
+      "rank": 14,
+      "rating": 1485.87,
+      "team_name": "Levante UD"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 15,
+      "rating": 1476.77,
+      "team_name": "Deportivo Alaves"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 16,
+      "rating": 1476.29,
+      "team_name": "Valencia CF"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 17,
+      "rating": 1475.63,
+      "team_name": "Getafe CF"
+    },
+    {
+      "matches_observed_total": 114,
+      "rank": 18,
+      "rating": 1469.76,
+      "team_name": "Girona FC"
+    },
+    {
+      "matches_observed_total": 114,
+      "rank": 19,
+      "rating": 1468.21,
+      "team_name": "RCD Mallorca"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 20,
+      "rating": 1467.47,
+      "team_name": "CD Leganes"
+    },
+    {
+      "matches_observed_total": 124,
+      "rank": 21,
+      "rating": 1463.41,
+      "team_name": "CA Osasuna"
+    },
+    {
+      "matches_observed_total": 10,
+      "rank": 22,
+      "rating": 1460.97,
+      "team_name": "Málaga CF"
+    },
+    {
+      "matches_observed_total": 86,
+      "rank": 23,
+      "rating": 1444.36,
+      "team_name": "RCD Espanyol"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 24,
+      "rating": 1433.25,
+      "team_name": "Cádiz"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 25,
+      "rating": 1422.43,
+      "team_name": "Real Oviedo"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 26,
+      "rating": 1394.03,
+      "team_name": "UD Almería"
+    },
+    {
+      "matches_observed_total": 76,
+      "rank": 27,
+      "rating": 1391.7,
+      "team_name": "UD Las Palmas"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 28,
+      "rating": 1367.85,
+      "team_name": "Granada CF"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 29,
+      "rating": 1328.57,
+      "team_name": "Real Valladolid"
+    }
+  ],
+  "current_season_active_standings": [
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 1,
+      "rating": 1728.3,
+      "team_name": "FC Barcelona"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 2,
+      "rating": 1693.28,
+      "team_name": "Real Madrid"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 3,
+      "rating": 1632.02,
+      "team_name": "Atletico Madrid"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 4,
+      "rating": 1594.98,
+      "team_name": "Real Betis"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 5,
+      "rating": 1570.89,
+      "team_name": "Villarreal CF"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 6,
+      "rating": 1527.28,
+      "team_name": "Real Sociedad"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 7,
+      "rating": 1520.85,
+      "team_name": "Celta Vigo"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 8,
+      "rating": 1506.43,
+      "team_name": "Rayo Vallecano"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 9,
+      "rating": 1505.99,
+      "team_name": "Athletic Club"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 10,
+      "rating": 1500.16,
+      "team_name": "Sevilla FC"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 10,
+      "rank": 11,
+      "rating": 1494.68,
+      "team_name": "Deportivo La Coruña"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 48,
+      "rank": 12,
+      "rating": 1486.82,
+      "team_name": "Elche CF"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 10,
+      "rank": 13,
+      "rating": 1486.5,
+      "team_name": "Racing Santander"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 48,
+      "rank": 14,
+      "rating": 1485.87,
+      "team_name": "Levante UD"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 15,
+      "rating": 1476.77,
+      "team_name": "Deportivo Alaves"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 16,
+      "rating": 1476.29,
+      "team_name": "Valencia CF"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 17,
+      "rating": 1475.63,
+      "team_name": "Getafe CF"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 124,
+      "rank": 18,
+      "rating": 1463.41,
+      "team_name": "CA Osasuna"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 10,
+      "rank": 19,
+      "rating": 1460.97,
+      "team_name": "Málaga CF"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 86,
+      "rank": 20,
+      "rating": 1444.36,
+      "team_name": "RCD Espanyol"
+    }
+  ],
   "historical_matches": [
     {
       "active_league_mean": null,

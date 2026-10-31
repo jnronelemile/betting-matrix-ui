@@ -28,10 +28,285 @@
     "rivalry_temporal_policy": "CURRENT_STATIC_REGISTRY_NOT_PIT_CERTIFIED",
     "scope": "ligue_1_descriptive_pilot",
     "sqlite_access": "READ_ONLY_URI_QUERY_ONLY",
+    "standings_schema_version": "1.0.0",
     "target_league_identity": "CALLER_DECLARED",
     "task_id": "FE-009",
     "temporal_certification": "CHRONOLOGICAL_RECONSTRUCTION_ONLY"
   },
+  "all_time_tracked_standings": [
+    {
+      "matches_observed_total": 110,
+      "rank": 1,
+      "rating": 1681.15,
+      "team_name": "Paris Saint-Germain"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 2,
+      "rating": 1599.39,
+      "team_name": "Lille OSC"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 3,
+      "rating": 1589.87,
+      "team_name": "RC Lens"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 4,
+      "rating": 1584.06,
+      "team_name": "AS Monaco"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 5,
+      "rating": 1578.29,
+      "team_name": "Olympique Lyonnais"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 6,
+      "rating": 1573.48,
+      "team_name": "Stade Rennais"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 7,
+      "rating": 1558.53,
+      "team_name": "Olympique de Marseille"
+    },
+    {
+      "matches_observed_total": 42,
+      "rank": 8,
+      "rating": 1542.81,
+      "team_name": "Paris FC"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 9,
+      "rating": 1525.64,
+      "team_name": "RC Strasbourg"
+    },
+    {
+      "matches_observed_total": 76,
+      "rank": 10,
+      "rating": 1524.35,
+      "team_name": "FC Lorient"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 11,
+      "rating": 1510.99,
+      "team_name": "Toulouse FC"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 12,
+      "rating": 1491.61,
+      "team_name": "OGC Nice"
+    },
+    {
+      "matches_observed_total": 8,
+      "rank": 13,
+      "rating": 1487.67,
+      "team_name": "Le Mans FC"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 14,
+      "rating": 1484.25,
+      "team_name": "Stade Brestois 29"
+    },
+    {
+      "matches_observed_total": 76,
+      "rank": 15,
+      "rating": 1480.38,
+      "team_name": "AJ Auxerre"
+    },
+    {
+      "matches_observed_total": 8,
+      "rank": 16,
+      "rating": 1469.27,
+      "team_name": "ESTAC Troyes"
+    },
+    {
+      "matches_observed_total": 76,
+      "rank": 17,
+      "rating": 1446.06,
+      "team_name": "Angers SCO"
+    },
+    {
+      "matches_observed_total": 68,
+      "rank": 18,
+      "rating": 1435.33,
+      "team_name": "Stade de Reims"
+    },
+    {
+      "matches_observed_total": 34,
+      "rank": 19,
+      "rating": 1434.27,
+      "team_name": "AS Saint-Etienne"
+    },
+    {
+      "matches_observed_total": 110,
+      "rank": 20,
+      "rating": 1418.64,
+      "team_name": "Le Havre AC"
+    },
+    {
+      "matches_observed_total": 34,
+      "rank": 21,
+      "rating": 1410.75,
+      "team_name": "Clermont Foot"
+    },
+    {
+      "matches_observed_total": 102,
+      "rank": 22,
+      "rating": 1401.38,
+      "team_name": "FC Nantes"
+    },
+    {
+      "matches_observed_total": 68,
+      "rank": 23,
+      "rating": 1380.92,
+      "team_name": "FC Metz"
+    },
+    {
+      "matches_observed_total": 68,
+      "rank": 24,
+      "rating": 1353.65,
+      "team_name": "Montpellier HSC"
+    }
+  ],
+  "current_season_active_standings": [
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 1,
+      "rating": 1681.15,
+      "team_name": "Paris Saint-Germain"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 2,
+      "rating": 1599.39,
+      "team_name": "Lille OSC"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 3,
+      "rating": 1589.87,
+      "team_name": "RC Lens"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 4,
+      "rating": 1584.06,
+      "team_name": "AS Monaco"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 5,
+      "rating": 1578.29,
+      "team_name": "Olympique Lyonnais"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 6,
+      "rating": 1573.48,
+      "team_name": "Stade Rennais"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 7,
+      "rating": 1558.53,
+      "team_name": "Olympique de Marseille"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 42,
+      "rank": 8,
+      "rating": 1542.81,
+      "team_name": "Paris FC"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 9,
+      "rating": 1525.64,
+      "team_name": "RC Strasbourg"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 76,
+      "rank": 10,
+      "rating": 1524.35,
+      "team_name": "FC Lorient"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 11,
+      "rating": 1510.99,
+      "team_name": "Toulouse FC"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 12,
+      "rating": 1491.61,
+      "team_name": "OGC Nice"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 8,
+      "rank": 13,
+      "rating": 1487.67,
+      "team_name": "Le Mans FC"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 14,
+      "rating": 1484.25,
+      "team_name": "Stade Brestois 29"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 76,
+      "rank": 15,
+      "rating": 1480.38,
+      "team_name": "AJ Auxerre"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 8,
+      "rank": 16,
+      "rating": 1469.27,
+      "team_name": "ESTAC Troyes"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 76,
+      "rank": 17,
+      "rating": 1446.06,
+      "team_name": "Angers SCO"
+    },
+    {
+      "matches_observed_season": 8,
+      "matches_observed_total": 110,
+      "rank": 18,
+      "rating": 1418.64,
+      "team_name": "Le Havre AC"
+    }
+  ],
   "historical_matches": [
     {
       "active_league_mean": null,

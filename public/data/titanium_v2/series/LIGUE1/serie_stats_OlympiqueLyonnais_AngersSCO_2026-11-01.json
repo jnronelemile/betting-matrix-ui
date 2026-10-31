@@ -3,7 +3,7 @@
     "competition": "Ligue 1",
     "fixture": "Olympique Lyonnais vs Angers SCO",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:42:37.412694",
+    "generated_at": "2026-10-31T11:20:38.682788",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

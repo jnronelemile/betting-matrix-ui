@@ -3,7 +3,7 @@
     "competition": "Major League Soccer",
     "fixture": "Cincinnati vs Philadelphia Union",
     "date": "2026-10-31",
-    "generated_at": "2026-10-30T13:42:31.126349",
+    "generated_at": "2026-10-31T11:20:32.625470",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-01-01",
     "season_source": "season_resolver",

@@ -3,7 +3,7 @@
     "competition": "Russian Premier League",
     "fixture": "Lokomotiv Moscow vs Spartak Moscow",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:42:51.296096",
+    "generated_at": "2026-10-31T11:20:52.807870",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

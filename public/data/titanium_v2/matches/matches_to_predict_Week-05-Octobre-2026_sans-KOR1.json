@@ -441,6 +441,71 @@
       "fotmob_match_id": "5107651"
     }
   ],
+  "SuperLeagueGreece": [
+    {
+      "home": "Kifisia FC",
+      "away": "Olympiacos",
+      "date": "2026-10-31",
+      "hours": "13:00",
+      "kickoff_utc": "2026-10-31T17:00:00+00:00",
+      "round": "9",
+      "fotmob_match_id": "5943283"
+    },
+    {
+      "home": "Levadiakos",
+      "away": "Aris Thessaloniki",
+      "date": "2026-11-01",
+      "hours": "10:00",
+      "kickoff_utc": "2026-11-01T15:00:00+00:00",
+      "round": "9",
+      "fotmob_match_id": "5943284"
+    },
+    {
+      "home": "Panetolikos",
+      "away": "OFI Crete",
+      "date": "2026-11-01",
+      "hours": "11:00",
+      "kickoff_utc": "2026-11-01T16:00:00+00:00",
+      "round": "9",
+      "fotmob_match_id": "5943286"
+    },
+    {
+      "home": "PAOK Thessaloniki",
+      "away": "Asteras Tripolis",
+      "date": "2026-11-01",
+      "hours": "12:00",
+      "kickoff_utc": "2026-11-01T17:00:00+00:00",
+      "round": "9",
+      "fotmob_match_id": "5943287"
+    },
+    {
+      "home": "Panathinaikos",
+      "away": "AEK Athens",
+      "date": "2026-11-01",
+      "hours": "12:30",
+      "kickoff_utc": "2026-11-01T17:30:00+00:00",
+      "round": "9",
+      "fotmob_match_id": "5943285"
+    },
+    {
+      "home": "Atromitos",
+      "away": "NFC Volos",
+      "date": "2026-11-02",
+      "hours": "11:00",
+      "kickoff_utc": "2026-11-02T16:00:00+00:00",
+      "round": "9",
+      "fotmob_match_id": "5943281"
+    },
+    {
+      "home": "Kalamata",
+      "away": "Iraklis",
+      "date": "2026-11-02",
+      "hours": "12:30",
+      "kickoff_utc": "2026-11-02T17:30:00+00:00",
+      "round": "9",
+      "fotmob_match_id": "5943282"
+    }
+  ],
   "Ligue2": [
     {
       "home": "Grenoble",
@@ -828,6 +893,15 @@
     }
   ],
   "Ekstraklasa": [
+    {
+      "home": "Cracovia",
+      "away": "Motor Lublin",
+      "date": "2026-10-30",
+      "hours": "13:00",
+      "kickoff_utc": "2026-10-30T17:00:00+00:00",
+      "round": "13",
+      "fotmob_match_id": "5804022"
+    },
     {
       "home": "Górnik Zabrze",
       "away": "Legia Warszawa",
@@ -1457,6 +1531,15 @@
   ],
   "SüperLig": [
     {
+      "home": "Konyaspor",
+      "away": "Galatasaray",
+      "date": "2026-10-30",
+      "hours": "13:00",
+      "kickoff_utc": "2026-10-30T17:00:00+00:00",
+      "round": "10",
+      "fotmob_match_id": "5904790"
+    },
+    {
       "home": "Erzurumspor FK",
       "away": "Çorum FK",
       "date": "2026-10-31",
@@ -2039,15 +2122,16 @@
     }
   ],
   "_batch_metadata": {
-    "generated_at": "2026-10-30T13:11:55.393811",
-    "total_matches": 221,
-    "total_leagues": 25,
+    "generated_at": "2026-10-30T11:27:21.052238",
+    "total_matches": 230,
+    "total_leagues": 26,
     "rounds_covered": {
       "PL": "9",
       "NOR1": "25",
       "CHAM": "13",
       "JAP1": "13",
       "SWE1": "27",
+      "GRE1": "9",
       "LIG2": "11",
       "MLS": "33",
       "LIG1": "9",
@@ -2075,6 +2159,7 @@
       "CHAM": "complete_round_plus_eligible_catchups",
       "JAP1": "complete_round_plus_eligible_catchups",
       "SWE1": "complete_round_plus_eligible_catchups",
+      "GRE1": "complete_round_plus_eligible_catchups",
       "LIG2": "complete_round_plus_eligible_catchups",
       "MLS": "complete_round_plus_eligible_catchups",
       "LIG1": "complete_round_plus_eligible_catchups",
@@ -2102,6 +2187,7 @@
       "CHAM": "13",
       "JAP1": "13",
       "SWE1": "27",
+      "GRE1": "9",
       "LIG2": "11",
       "MLS": "33",
       "LIG1": "9",
@@ -2141,6 +2227,10 @@
         "excluded": 0
       },
       "SWE1": {
+        "included": 0,
+        "excluded": 0
+      },
+      "GRE1": {
         "included": 0,
         "excluded": 0
       },
@@ -2232,6 +2322,8 @@
       "J1League": "2026-10-31T05:00:00+00:00",
       "J1 League": "2026-10-31T05:00:00+00:00",
       "Allsvenskan": "2026-11-01T13:00:00+00:00",
+      "SuperLeagueGreece": "2026-10-31T17:00:00+00:00",
+      "Super League Greece": "2026-10-31T17:00:00+00:00",
       "Ligue2": "2026-10-30T19:00:00+00:00",
       "Ligue 2": "2026-10-30T19:00:00+00:00",
       "MajorLeagueSoccer": "2026-10-31T17:00:00+00:00",

@@ -3,7 +3,7 @@
     "competition": "Ligue 1",
     "fixture": "Paris FC vs AS Monaco",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:42:37.740793",
+    "generated_at": "2026-10-31T11:20:39.022104",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

@@ -3,7 +3,7 @@
     "competition": "Major League Soccer",
     "fixture": "New England Revolution vs Inter Miami",
     "date": "2026-11-01",
-    "generated_at": "2026-10-30T13:42:34.659619",
+    "generated_at": "2026-10-31T11:20:36.036077",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-01-01",
     "season_source": "season_resolver",

@@ -28,10 +28,291 @@
     "rivalry_temporal_policy": "CURRENT_STATIC_REGISTRY_NOT_PIT_CERTIFIED",
     "scope": "liga_portugal_descriptive_pilot",
     "sqlite_access": "READ_ONLY_URI_QUERY_ONLY",
+    "standings_schema_version": "1.0.0",
     "target_league_identity": "CALLER_DECLARED",
     "task_id": "FE-009",
     "temporal_certification": "CHRONOLOGICAL_RECONSTRUCTION_ONLY"
   },
+  "all_time_tracked_standings": [
+    {
+      "matches_observed_total": 111,
+      "rank": 1,
+      "rating": 1734.01,
+      "team_name": "FC Porto"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 2,
+      "rating": 1716.44,
+      "team_name": "SL Benfica"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 3,
+      "rating": 1695.3,
+      "team_name": "Sporting CP"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 4,
+      "rating": 1562.12,
+      "team_name": "SC Braga"
+    },
+    {
+      "matches_observed_total": 9,
+      "rank": 5,
+      "rating": 1542.53,
+      "team_name": "Académico Viseu"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 6,
+      "rating": 1537.94,
+      "team_name": "FC Famalicão"
+    },
+    {
+      "matches_observed_total": 77,
+      "rank": 7,
+      "rating": 1532.28,
+      "team_name": "CD Santa Clara"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 8,
+      "rating": 1529.99,
+      "team_name": "FC Arouca"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 9,
+      "rating": 1512.87,
+      "team_name": "Gil Vicente FC"
+    },
+    {
+      "matches_observed_total": 43,
+      "rank": 10,
+      "rating": 1487.32,
+      "team_name": "FC Alverca"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 11,
+      "rating": 1483.74,
+      "team_name": "Moreirense FC"
+    },
+    {
+      "matches_observed_total": 9,
+      "rank": 12,
+      "rating": 1479.87,
+      "team_name": "Marítimo"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 13,
+      "rating": 1478.4,
+      "team_name": "Vitória de Guimarães"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 14,
+      "rating": 1442.4,
+      "team_name": "Rio Ave FC"
+    },
+    {
+      "matches_observed_total": 34,
+      "rank": 15,
+      "rating": 1438.08,
+      "team_name": "CD Tondela"
+    },
+    {
+      "matches_observed_total": 34,
+      "rank": 16,
+      "rating": 1436.21,
+      "team_name": "Portimonense"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 17,
+      "rating": 1433.63,
+      "team_name": "Casa Pia AC"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 18,
+      "rating": 1430.6,
+      "team_name": "Estrela da Amadora"
+    },
+    {
+      "matches_observed_total": 111,
+      "rank": 19,
+      "rating": 1422.26,
+      "team_name": "Estoril Praia"
+    },
+    {
+      "matches_observed_total": 77,
+      "rank": 20,
+      "rating": 1421.94,
+      "team_name": "CD Nacional"
+    },
+    {
+      "matches_observed_total": 68,
+      "rank": 21,
+      "rating": 1414.68,
+      "team_name": "SC Farense"
+    },
+    {
+      "matches_observed_total": 34,
+      "rank": 22,
+      "rating": 1412.6,
+      "team_name": "Vizela"
+    },
+    {
+      "matches_observed_total": 68,
+      "rank": 23,
+      "rating": 1402.78,
+      "team_name": "AVS Futebol SAD"
+    },
+    {
+      "matches_observed_total": 34,
+      "rank": 24,
+      "rating": 1396.04,
+      "team_name": "Chaves"
+    },
+    {
+      "matches_observed_total": 68,
+      "rank": 25,
+      "rating": 1375.39,
+      "team_name": "Boavista FC"
+    }
+  ],
+  "current_season_active_standings": [
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 1,
+      "rating": 1734.01,
+      "team_name": "FC Porto"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 2,
+      "rating": 1716.44,
+      "team_name": "SL Benfica"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 3,
+      "rating": 1695.3,
+      "team_name": "Sporting CP"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 4,
+      "rating": 1562.12,
+      "team_name": "SC Braga"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 9,
+      "rank": 5,
+      "rating": 1542.53,
+      "team_name": "Académico Viseu"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 6,
+      "rating": 1537.94,
+      "team_name": "FC Famalicão"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 77,
+      "rank": 7,
+      "rating": 1532.28,
+      "team_name": "CD Santa Clara"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 8,
+      "rating": 1529.99,
+      "team_name": "FC Arouca"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 9,
+      "rating": 1512.87,
+      "team_name": "Gil Vicente FC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 43,
+      "rank": 10,
+      "rating": 1487.32,
+      "team_name": "FC Alverca"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 11,
+      "rating": 1483.74,
+      "team_name": "Moreirense FC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 9,
+      "rank": 12,
+      "rating": 1479.87,
+      "team_name": "Marítimo"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 13,
+      "rating": 1478.4,
+      "team_name": "Vitória de Guimarães"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 14,
+      "rating": 1442.4,
+      "team_name": "Rio Ave FC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 15,
+      "rating": 1433.63,
+      "team_name": "Casa Pia AC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 16,
+      "rating": 1430.6,
+      "team_name": "Estrela da Amadora"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 111,
+      "rank": 17,
+      "rating": 1422.26,
+      "team_name": "Estoril Praia"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 77,
+      "rank": 18,
+      "rating": 1421.94,
+      "team_name": "CD Nacional"
+    }
+  ],
   "historical_matches": [
     {
       "active_league_mean": null,

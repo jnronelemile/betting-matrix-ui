@@ -3,7 +3,7 @@
     "competition": "Ligue 2",
     "fixture": "FC Nantes vs Clermont Foot",
     "date": "2026-10-30",
-    "generated_at": "2026-10-30T13:42:28.128039",
+    "generated_at": "2026-10-31T11:20:29.975658",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

@@ -28,10 +28,305 @@
     "rivalry_temporal_policy": "CURRENT_STATIC_REGISTRY_NOT_PIT_CERTIFIED",
     "scope": "serie_a_descriptive_pilot",
     "sqlite_access": "READ_ONLY_URI_QUERY_ONLY",
+    "standings_schema_version": "1.0.0",
     "target_league_identity": "CALLER_DECLARED",
     "task_id": "FE-009",
     "temporal_certification": "CHRONOLOGICAL_RECONSTRUCTION_ONLY"
   },
+  "all_time_tracked_standings": [
+    {
+      "matches_observed_total": 123,
+      "rank": 1,
+      "rating": 1718.43,
+      "team_name": "Inter Milan"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 2,
+      "rating": 1649.01,
+      "team_name": "AS Roma"
+    },
+    {
+      "matches_observed_total": 85,
+      "rank": 3,
+      "rating": 1623.35,
+      "team_name": "Como 1907"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 4,
+      "rating": 1612.68,
+      "team_name": "SSC Napoli"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 5,
+      "rating": 1611.39,
+      "team_name": "SS Lazio"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 6,
+      "rating": 1600.88,
+      "team_name": "AC Milan"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 7,
+      "rating": 1591.64,
+      "team_name": "Juventus"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 8,
+      "rating": 1552.43,
+      "team_name": "Atalanta BC"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 9,
+      "rating": 1540.68,
+      "team_name": "Bologna FC"
+    },
+    {
+      "matches_observed_total": 47,
+      "rank": 10,
+      "rating": 1534.01,
+      "team_name": "Frosinone Calcio"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 11,
+      "rating": 1495.17,
+      "team_name": "Torino FC"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 12,
+      "rating": 1485.42,
+      "team_name": "Cagliari Calcio"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 13,
+      "rating": 1482.75,
+      "team_name": "AC Fiorentina"
+    },
+    {
+      "matches_observed_total": 85,
+      "rank": 14,
+      "rating": 1481.3,
+      "team_name": "Sassuolo"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 15,
+      "rating": 1476.13,
+      "team_name": "Genoa CFC"
+    },
+    {
+      "matches_observed_total": 85,
+      "rank": 16,
+      "rating": 1472.33,
+      "team_name": "AC Monza"
+    },
+    {
+      "matches_observed_total": 85,
+      "rank": 17,
+      "rating": 1454.88,
+      "team_name": "Parma Calcio 1913"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 18,
+      "rating": 1453.59,
+      "team_name": "Udinese Calcio"
+    },
+    {
+      "matches_observed_total": 47,
+      "rank": 19,
+      "rating": 1448.57,
+      "team_name": "Venezia FC"
+    },
+    {
+      "matches_observed_total": 123,
+      "rank": 20,
+      "rating": 1441.46,
+      "team_name": "US Lecce"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 21,
+      "rating": 1427.98,
+      "team_name": "US Cremonese"
+    },
+    {
+      "matches_observed_total": 76,
+      "rank": 22,
+      "rating": 1399.25,
+      "team_name": "Empoli FC"
+    },
+    {
+      "matches_observed_total": 114,
+      "rank": 23,
+      "rating": 1368.43,
+      "team_name": "Hellas Verona"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 24,
+      "rating": 1362.36,
+      "team_name": "Pisa SC"
+    },
+    {
+      "matches_observed_total": 38,
+      "rank": 25,
+      "rating": 1351.07,
+      "team_name": "US Salernitana"
+    }
+  ],
+  "current_season_active_standings": [
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 1,
+      "rating": 1718.43,
+      "team_name": "Inter Milan"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 2,
+      "rating": 1649.01,
+      "team_name": "AS Roma"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 85,
+      "rank": 3,
+      "rating": 1623.35,
+      "team_name": "Como 1907"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 4,
+      "rating": 1612.68,
+      "team_name": "SSC Napoli"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 5,
+      "rating": 1611.39,
+      "team_name": "SS Lazio"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 6,
+      "rating": 1600.88,
+      "team_name": "AC Milan"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 7,
+      "rating": 1591.64,
+      "team_name": "Juventus"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 8,
+      "rating": 1552.43,
+      "team_name": "Atalanta BC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 9,
+      "rating": 1540.68,
+      "team_name": "Bologna FC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 47,
+      "rank": 10,
+      "rating": 1534.01,
+      "team_name": "Frosinone Calcio"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 11,
+      "rating": 1495.17,
+      "team_name": "Torino FC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 12,
+      "rating": 1485.42,
+      "team_name": "Cagliari Calcio"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 13,
+      "rating": 1482.75,
+      "team_name": "AC Fiorentina"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 85,
+      "rank": 14,
+      "rating": 1481.3,
+      "team_name": "Sassuolo"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 15,
+      "rating": 1476.13,
+      "team_name": "Genoa CFC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 85,
+      "rank": 16,
+      "rating": 1472.33,
+      "team_name": "AC Monza"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 85,
+      "rank": 17,
+      "rating": 1454.88,
+      "team_name": "Parma Calcio 1913"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 18,
+      "rating": 1453.59,
+      "team_name": "Udinese Calcio"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 47,
+      "rank": 19,
+      "rating": 1448.57,
+      "team_name": "Venezia FC"
+    },
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 20,
+      "rating": 1441.46,
+      "team_name": "US Lecce"
+    }
+  ],
   "historical_matches": [
     {
       "active_league_mean": null,

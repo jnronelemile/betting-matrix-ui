@@ -3,7 +3,7 @@
     "competition": "Serie A",
     "fixture": "Atalanta BC vs Parma Calcio 1913",
     "date": "2026-11-02",
-    "generated_at": "2026-10-30T13:43:11.181983",
+    "generated_at": "2026-10-31T11:21:12.525963",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

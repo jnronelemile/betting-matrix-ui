@@ -3,7 +3,7 @@
     "competition": "Russian Premier League",
     "fixture": "Krylya Sovetov vs Zenit St. Petersburg",
     "date": "2026-11-02",
-    "generated_at": "2026-10-30T13:42:51.623623",
+    "generated_at": "2026-10-31T11:20:53.133940",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

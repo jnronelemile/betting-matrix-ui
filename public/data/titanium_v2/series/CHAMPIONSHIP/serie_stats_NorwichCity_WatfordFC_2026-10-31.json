@@ -3,7 +3,7 @@
     "competition": "Championship",
     "fixture": "Norwich City vs Watford FC",
     "date": "2026-10-31",
-    "generated_at": "2026-10-30T13:42:17.357023",
+    "generated_at": "2026-10-31T11:20:17.454726",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",

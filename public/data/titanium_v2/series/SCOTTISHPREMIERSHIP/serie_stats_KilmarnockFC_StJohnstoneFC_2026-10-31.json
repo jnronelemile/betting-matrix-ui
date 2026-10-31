@@ -3,7 +3,7 @@
     "competition": "Scottish Premiership",
     "fixture": "Kilmarnock FC vs St Johnstone FC",
     "date": "2026-10-31",
-    "generated_at": "2026-10-30T13:43:07.106567",
+    "generated_at": "2026-10-31T11:21:08.549670",
     "source": "football_master.db (100% Native)",
     "target_season_start": "2026-07-01",
     "season_source": "season_resolver",
