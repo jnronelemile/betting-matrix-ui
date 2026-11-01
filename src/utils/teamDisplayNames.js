@@ -133,6 +133,7 @@ export const TEAM_DISPLAY_REGISTRY = {
   'borussiadortmund': { short: 'Dortmund', status: 'VERIFIED' },
   'dortmund': { short: 'Dortmund', status: 'VERIFIED' },
   'bayernmunchen': { short: 'Bayern', status: 'VERIFIED' },
+  'bayernmunich': { short: 'Bayern', status: 'VERIFIED' },
   'bayern': { short: 'Bayern', status: 'VERIFIED' },
   'bayerleverkusen': { short: 'Leverkusen', status: 'VERIFIED' },
   'leverkusen': { short: 'Leverkusen', status: 'VERIFIED' },

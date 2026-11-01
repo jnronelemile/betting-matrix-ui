@@ -132,7 +132,7 @@ export default function App() {
     };
   }, [isSignalsDropdownOpen]);
 
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const mobileSearchInputRef = useRef(null);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [collapsedGroups, setCollapsedGroups] = useState(() => ({}));
   const [isMatchListScrolled, setIsMatchListScrolled] = useState(false);
@@ -826,8 +826,8 @@ export default function App() {
                       type="button"
                       className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
                       onClick={() => {
-                        setMobileSearchOpen(true);
-                        setHeaderVisible(true);
+                        mobileSearchInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        mobileSearchInputRef.current?.focus();
                       }}
                       aria-label="Recherche"
                     >
@@ -851,32 +851,7 @@ export default function App() {
           {/* Desktop Header & Mobile Static Top Part */}
           <div className="border-b border-slate-200 dark:border-slate-800">
             <div className="h-16 flex items-center justify-between px-2.5 sm:px-4 lg:px-6 gap-2 sm:gap-4">
-              {mobileSearchOpen && selectedLeague.id !== 'TICKETS' ? (
-                <div className="flex-1 flex items-center gap-3 animate-in fade-in slide-in-from-top-1 duration-200 lg:hidden">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500" size={16} />
-                    <input
-                      type="text"
-                      autoFocus
-                      placeholder="Chercher une équipe..."
-                      value={searchQuery}
-                      onChange={e => setSearchQuery(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-950 border border-emerald-500/50 rounded-lg py-2 pl-9 pr-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-mono"
-                    />
-                  </div>
-                  <button
-                    onClick={() => {
-                      setMobileSearchOpen(false);
-                      setSearchQuery('');
-                    }}
-                    className="p-2 text-slate-400 hover:text-rose-400 transition-colors"
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <div className="flex items-center gap-2 lg:gap-4 shrink-0">
+              <div className="flex items-center gap-2 lg:gap-4 shrink-0">
                     <button
                       className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm min-w-[44px] min-h-[44px] flex items-center justify-center"
                       onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -1134,9 +1109,9 @@ export default function App() {
                       </div>
                     )}
 
-                    {/* 5. Recherche Repliable (Icône Loupe avec Popover Ancré) */}
+                    {/* 5. Recherche Repliable (Icône Loupe avec Popover Ancré - Desktop uniquement) */}
                     {currentMainView === 'matrix' && selectedLeague.id !== 'TICKETS' && (
-                      <div className="relative" ref={searchContainerRef}>
+                      <div className="hidden lg:block relative" ref={searchContainerRef}>
                         <button
                           ref={searchTriggerBtnRef}
                           type="button"
@@ -1206,8 +1181,6 @@ export default function App() {
                       {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
                     </button>
                   </div>
-                </>
-              )}
             </div>
           </div>
         </header>
@@ -1282,6 +1255,42 @@ export default function App() {
 
         {/* Sticky Filters: Quick Bar stays at the top on Mobile when viewing match list, hidden when match dashboard, MASTER HUB or MES FAVORIS is open */}
         <div className={`sticky top-0 z-40 lg:z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/90 py-1.5 shadow-sm dark:shadow-[0_6px_20px_rgba(0,0,0,0.65)] lg:hidden transition-colors duration-300 ${selectedMatch || selectedLeague.id === 'TICKETS' || currentMainView !== 'matrix' ? 'hidden' : 'block'}`}>
+          {/* Étage 1 : Champ de recherche prioritaire mobile (hauteur tactile ~44px, police 16px sur smartphone) */}
+          <div className="px-2.5 sm:px-4 pt-1 pb-1.5">
+            <div className="relative flex items-center">
+              <Search
+                className="absolute left-3 text-slate-400 dark:text-slate-500 pointer-events-none shrink-0"
+                size={18}
+              />
+              <input
+                ref={mobileSearchInputRef}
+                type="search"
+                inputMode="search"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                placeholder="Rechercher un match ou une équipe..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="w-full h-11 min-h-[44px] bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-9 text-[16px] text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-sans"
+                aria-label="Rechercher un match ou une équipe"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery('');
+                    mobileSearchInputRef.current?.focus();
+                  }}
+                  className="absolute right-1 w-9 h-9 min-w-[36px] min-h-[36px] flex items-center justify-center text-slate-400 hover:text-rose-500 active:text-rose-600 transition-colors"
+                  aria-label="Effacer la recherche"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+          </div>
+
           {/* Mobile Quick Bar with Fixed FILTRES Button */}
           <div className="flex items-center gap-1.5 px-2.5 sm:px-4">
             {/* Scrollable Quick Filter Pills */}

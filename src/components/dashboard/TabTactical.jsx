@@ -792,10 +792,13 @@ export default function TabTactical({ match, onNavigateTab, isActiveTab = true }
   };
 
   // Noms d'équipes et logos
-  const homeTeamName = match.displayHome || match.shortHome || match.Matchup?.split(' vs ')?.[0] || 'Domicile';
-  const awayTeamName = match.displayAway || match.shortAway || match.Matchup?.split(' vs ')?.[1] || 'Extérieur';
-  const homeLogoTeam = match.shortHome || match.displayHome || homeTeamName;
-  const awayLogoTeam = match.shortAway || match.displayAway || awayTeamName;
+  const parts = (match.Matchup || '').split(' vs ');
+  const rawHome = match.Home_Team || match.home_team || match.HomeTeam || match.home || parts[0] || '';
+  const rawAway = match.Away_Team || match.away_team || match.AwayTeam || match.away || parts[1] || '';
+  const homeTeamName = match.displayHome || match.shortHome || parts[0] || 'Domicile';
+  const awayTeamName = match.displayAway || match.shortAway || parts[1] || 'Extérieur';
+  const homeLogoTeam = rawHome || homeTeamName;
+  const awayLogoTeam = rawAway || awayTeamName;
 
   // Lignes et lambdas par équipe
   const homeLines = currentFamily?.Home?.Lines || [];
@@ -919,7 +922,7 @@ export default function TabTactical({ match, onNavigateTab, isActiveTab = true }
         <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2 min-w-0">
-              <TeamLogo team={homeLogoTeam} league={match.League} size="sm" />
+              <TeamLogo teamName={homeLogoTeam} league={match.League} size="sm" alt={homeTeamName} />
               <div className="min-w-0">
                 <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate" title={homeTeamName}>
                   {homeTeamName}
@@ -1096,7 +1099,7 @@ export default function TabTactical({ match, onNavigateTab, isActiveTab = true }
         <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2 min-w-0">
-              <TeamLogo team={awayLogoTeam} league={match.League} size="sm" />
+              <TeamLogo teamName={awayLogoTeam} league={match.League} size="sm" alt={awayTeamName} />
               <div className="min-w-0">
                 <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate" title={awayTeamName}>
                   {awayTeamName}
