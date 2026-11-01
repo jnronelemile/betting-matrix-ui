@@ -564,21 +564,22 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
         <div className={`absolute top-0 left-0 w-1 h-full ${borderAccentClass}`} />
         <div className="flex items-center justify-between gap-2 mb-3">
           <div>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500 block">
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 block">
               {sideLabel}
             </span>
             <h4 className={`text-sm sm:text-base font-bold ${accentClass} tracking-tight`}>
               {teamName}
             </h4>
           </div>
-          <Badge variant="default" className="font-mono text-[10px] px-2.5 py-0.5">
-            Rang Elo : {rankDisplay}
+          <Badge variant="default" className="text-xs px-2.5 py-0.5">
+            <span className="text-slate-500 dark:text-slate-400">Rang Elo :</span>{' '}
+            <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{rankDisplay}</span>
           </Badge>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3">
           <div className="bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800">
-            <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold block">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
               Rating Elo d&apos;avant-match (Pre-match Elo)
             </span>
             <span className="font-mono text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5 block">
@@ -588,27 +589,27 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
           </div>
 
           <div className="bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800">
-            <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold block">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
               Historique cette saison
             </span>
             <span className="font-mono text-base sm:text-lg font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">
               {sideStrength.matches_observed_season}
               <span className="text-[10px] font-normal text-slate-400 ml-1">matchs</span>
             </span>
-            <span className="text-[9px] text-slate-400 dark:text-slate-500 block">
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
               Précédant cette rencontre ({target.season_key})
             </span>
           </div>
 
           <div className="bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 col-span-2 sm:col-span-1">
-            <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold block">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
               Historique observé en championnat
             </span>
             <span className="font-mono text-base sm:text-lg font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">
               {sideStrength.matches_observed_total}
               <span className="text-[10px] font-normal text-slate-400 ml-1">matchs</span>
             </span>
-            <span className="text-[9px] text-slate-400 dark:text-slate-500 block">
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
               Cumul dans le jeu de données rejoué
             </span>
           </div>
@@ -635,7 +636,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
               </div>
             )}
             {showHistoricalSeasonNewEntrant && (
-              <div className="flex items-start gap-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-[11px]">
+              <div className="flex items-start gap-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs">
                 <Info size={13} className="shrink-0 mt-0.5" />
                 <span>
                   <strong>Contexte historique (Saison {target.season_key}) :</strong> Première apparition dans les saisons enregistrées survenue le {seasonEntry.firstMatchDate}.
@@ -643,7 +644,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
               </div>
             )}
             {showHistoricalSeasonReturning && (
-              <div className="flex items-start gap-2 p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-700 dark:text-indigo-300 text-[11px]">
+              <div className="flex items-start gap-2 p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-700 dark:text-indigo-300 text-xs">
                 <Info size={13} className="shrink-0 mt-0.5" />
                 <span>
                   <strong>Contexte historique (Saison {target.season_key}) :</strong> Retour après absence dans l&apos;historique observé survenu le {seasonEntry.firstMatchDate}.
@@ -667,7 +668,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
         <div>
           <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500 block">
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400 block">
                 {sideLabel}
               </span>
               <h4 className={`text-sm sm:text-base font-bold ${accentClass}`}>
@@ -675,24 +676,24 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
               </h4>
             </div>
             <div className="flex flex-wrap items-center gap-1.5">
-              <Badge variant={isPartialL5 ? 'warning' : 'info'} className="font-mono text-[9px] px-2 py-0.5">
-                Couverture L5 : {nObs}/5
+              <Badge variant={isPartialL5 ? 'warning' : 'info'} className="text-xs px-2 py-0.5">
+                Couverture L5 : <span className="font-mono font-bold">{nObs}/5</span>
               </Badge>
-              <Badge variant={isPartialCtx || nObs === 0 ? 'warning' : 'default'} className="font-mono text-[9px] px-2 py-0.5">
-                Couverture contextualisée : {nCtx}/{nObs}
+              <Badge variant={isPartialCtx || nObs === 0 ? 'warning' : 'default'} className="text-xs px-2 py-0.5">
+                Couverture contextualisée : <span className="font-mono font-bold">{nCtx}/{nObs}</span>
               </Badge>
             </div>
           </div>
 
           {nObs === 0 ? (
-            <div className="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 font-mono">
-              Historique enregistré restreint (0/5 adversaires observés). Moyennes Elo des adversaires et écarts de calendrier indisponibles.
+            <div className="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
+              Historique enregistré restreint (<span className="font-mono">0/5</span> adversaires observés). Moyennes Elo des adversaires et écarts de calendrier indisponibles.
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Métrique principale 1 : Rating Elo moyen des adversaires L5 */}
               <div className="bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold block">
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
                   Rating Elo moyen des adversaires · 5 derniers (L5)
                 </span>
                 <span className="font-mono text-lg font-bold text-slate-900 dark:text-white mt-0.5 block">
@@ -701,14 +702,14 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                     <span className="text-[10px] font-normal text-slate-400 ml-1">Elo</span>
                   )}
                 </span>
-                <span className="text-[9px] text-slate-400 dark:text-slate-500 block mt-0.5">
+                <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
                   Moyenne des ratings Elo d&apos;avant-match des {nObs} dernier{nObs > 1 ? 's' : ''} adversaire{nObs > 1 ? 's' : ''}
                 </span>
               </div>
 
               {/* Métrique principale 2 : Écart vs moyenne active du championnat */}
               <div className="bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold block">
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
                   Écart vs moyenne active du championnat
                 </span>
                 <span className="font-mono text-lg font-bold text-slate-900 dark:text-white mt-0.5 block">
@@ -717,7 +718,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                     <span className="text-[10px] font-normal text-slate-400 ml-1">Elo</span>
                   )}
                 </span>
-                <span className="text-[9px] text-slate-400 dark:text-slate-500 block mt-0.5">
+                <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
                   Écart vs moyenne active actuelle ({isFullLeagueCoverage && Number.isFinite(target.active_league_mean) ? target.active_league_mean.toFixed(2) : 'non établie'})
                 </span>
               </div>
@@ -725,10 +726,10 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
               {/* Métrique avancée 3 : Écart vs référence fixe 1500 Elo */}
               <div className="bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800">
                 <div className="flex items-center justify-between gap-1">
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                     Écart vs référence fixe 1500 Elo
                   </span>
-                  <span className="text-[8px] font-mono uppercase px-1.5 py-0.2 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
+                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
                     Réf. Nominale
                   </span>
                 </div>
@@ -738,7 +739,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                     <span className="text-[10px] font-normal text-slate-400 ml-1">Elo</span>
                   )}
                 </span>
-                <span className="text-[9px] text-slate-400 dark:text-slate-500 block mt-0.5">
+                <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
                   Comparé à l&apos;ancrage fixe de 1500,00 (et non à la moyenne observée)
                 </span>
               </div>
@@ -746,11 +747,11 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
               {/* Métrique avancée 4 : Écart moyen contextualisé aux dates des matchs */}
               <div className="bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800">
                 <div className="flex items-center justify-between gap-1">
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                     Écart contextualisé aux dates des matchs
                   </span>
-                  <span className="text-[8px] font-mono uppercase px-1.5 py-0.2 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
-                    {nCtx}/{nObs} Dates
+                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                    <span className="font-mono font-bold">{nCtx}/{nObs}</span> Dates
                   </span>
                 </div>
                 <span className="font-mono text-base font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">
@@ -759,7 +760,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                     <span className="text-[10px] font-normal text-slate-400 ml-1">Elo</span>
                   )}
                 </span>
-                <span className="text-[9px] text-slate-400 dark:text-slate-500 block mt-0.5">
+                <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
                   Moyenne des écarts vs moyenne active à la date respective de chaque match
                 </span>
               </div>
@@ -770,7 +771,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
         {translatedFlags.length > 0 && (
           <div className="flex flex-col gap-1.5 pt-2 border-t border-slate-200/70 dark:border-slate-800/70">
             {translatedFlags.map((msg, i) => (
-              <div key={i} className="flex items-center gap-1.5 text-[11px] text-amber-700 dark:text-amber-400">
+              <div key={i} className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400">
                 <AlertTriangle size={12} className="shrink-0" />
                 <span>{msg}</span>
               </div>
@@ -783,64 +784,115 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
 
   return (
     <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
-      {/* Bandeau d'analyse et de contexte descriptif */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-2xs flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="info" className="text-[9px] font-mono px-2.5 py-0.5">
-              Analyse descriptive
-            </Badge>
-            <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
-              {association.leagueName} · Saison {target.season_key}
-            </span>
-            <span className="text-slate-300 dark:text-slate-700">•</span>
-            <span className="text-xs font-mono text-slate-500 dark:text-slate-400 inline-flex items-center gap-1">
-              <Calendar size={12} /> Date de la rencontre : {target.date}
-            </span>
-            <span className="text-slate-300 dark:text-slate-700">•</span>
-            <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
-              Base historique : {dataset.historicalMatches.length.toLocaleString('fr-FR')} matchs ({dataset.historicalSeasons.join(' – ')})
-            </span>
+      {/* Bandeau d'analyse et de contexte descriptif (Restructuré en 3 niveaux harmonisés) */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-2xs flex flex-col gap-3.5">
+        {/* Niveau 1 : Titre et contexte hiérarchisé & Bouton d'action pédagogique */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
+          <div className="flex flex-col gap-0.5 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Badge variant="info" className="text-[10px] font-semibold px-2 py-0.5 tracking-wide shrink-0">
+                Couche FI
+              </Badge>
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white tracking-tight">
+                Analyse descriptive
+              </h3>
+            </div>
+            <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              Football Intelligence · Ratings Elo
+            </p>
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Reconstruction chronologique intra-championnat des ratings Elo et contexte du calendrier adverse pour <strong>{target.home_team}</strong> vs <strong>{target.away_team}</strong>. Couche descriptive pure — ne modifie ni les probabilités des modèles, ni les edges de valeur, ni les décisions de risque.
-          </p>
+
+          <button
+            type="button"
+            data-no-swipe="true"
+            onClick={() => setShowDefinitions(prev => !prev)}
+            className="self-start sm:self-center inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-colors shrink-0 active:scale-95"
+          >
+            <BookOpen size={13} className="text-blue-500" />
+            <span>{showDefinitions ? 'Masquer le guide' : 'Guide des métriques'}</span>
+            {showDefinitions ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+          </button>
         </div>
 
-        <button
-          type="button"
-          data-no-swipe="true"
-          onClick={() => setShowDefinitions(prev => !prev)}
-          className="self-start md:self-center inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-colors shrink-0"
-        >
-          <BookOpen size={13} />
-          <span>{showDefinitions ? 'Masquer le guide' : 'Guide des métriques'}</span>
-          {showDefinitions ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-        </button>
+        {/* Niveau 2 : Métadonnées structurées de la rencontre (Capsules compactes anti-débordement) */}
+        <div className="flex flex-wrap items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300">
+          {/* Capsule Compétition & Saison */}
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 shrink-0">
+            <span className="font-semibold text-slate-800 dark:text-slate-200">{association.leagueName}</span>
+            <span className="text-slate-300 dark:text-slate-600">•</span>
+            <span className="text-slate-500 dark:text-slate-400">Saison</span>
+            <span className="font-mono text-[11px] font-bold text-slate-700 dark:text-slate-200">{target.season_key}</span>
+          </div>
+
+          {/* Capsule Date du match */}
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 shrink-0">
+            <Calendar size={12} className="text-slate-400 dark:text-slate-500 shrink-0" />
+            <span className="font-mono text-[11px] text-slate-700 dark:text-slate-300">{target.date}</span>
+          </div>
+
+          {/* Capsule Couverture historique avec protection anti-débordement sur mobile */}
+          <div
+            title={`Saisons observées : ${dataset.historicalSeasons.join(', ')}`}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 max-w-full"
+          >
+            <History size={12} className="text-slate-400 dark:text-slate-500 shrink-0" />
+            <span className="text-slate-500 dark:text-slate-400 shrink-0">Base historique :</span>
+            <span className="font-mono text-[11px] font-bold text-slate-800 dark:text-slate-200 shrink-0">
+              {dataset.historicalMatches.length.toLocaleString('fr-FR')}
+            </span>
+            <span className="text-slate-500 dark:text-slate-400 shrink-0">matchs</span>
+            {dataset.historicalSeasons.length > 0 && (
+              <span className="font-mono text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[130px] xs:max-w-none">
+                ({dataset.historicalSeasons.length > 2
+                  ? `${dataset.historicalSeasons[0]} → ${dataset.historicalSeasons[dataset.historicalSeasons.length - 1]}`
+                  : dataset.historicalSeasons.join(' – ')})
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Niveau 3 : Contexte analytique & Avertissement de neutralité décisionnelle distincts */}
+        <div className="flex flex-col gap-2 border-t border-slate-100 dark:border-slate-800/80 pt-2.5">
+          {/* Contexte analytique spécifique à la rencontre */}
+          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Reconstruction chronologique des ratings Elo et difficulté du calendrier adverse pour <strong className="text-slate-900 dark:text-white font-semibold">{target.home_team}</strong> vs <strong className="text-slate-900 dark:text-white font-semibold">{target.away_team}</strong>.
+          </p>
+
+          {/* Avertissement méthodologique et neutralité décisionnelle (visuellement démarqué) */}
+          <div className="inline-flex items-start sm:items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950/40 border border-slate-200/60 dark:border-slate-800/60 text-[11px] text-slate-500 dark:text-slate-400 leading-normal">
+            <Info size={13} className="text-blue-500 dark:text-blue-400 shrink-0 mt-0.5 sm:mt-0" />
+            <span>
+              Couche descriptive pure — ne modifie ni les probabilités des modèles, ni les edges de valeur, ni les décisions de risque.
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Panneau pédagogique d'explication des métriques */}
       {showDefinitions && (
-        <div className="bg-slate-100/80 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-600 dark:text-slate-300">
+        <div className="bg-slate-100/80 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-5 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-600 dark:text-slate-300">
           <div>
-            <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-1">
-              Rating Elo d&apos;avant-match & Rang Elo (Pre-match Elo & League Elo Rank)
+            <h4 className="font-semibold text-slate-900 dark:text-white text-xs mb-1.5 flex items-center gap-1.5">
+              <Shield size={14} className="text-indigo-500 shrink-0" />
+              <span>Rating Elo d&apos;avant-match & Rang Elo (Pre-match Elo & League Elo Rank)</span>
             </h4>
             <p className="leading-relaxed text-slate-500 dark:text-slate-400">
               Évaluation intra-championnat actualisée de façon strictement chronologique à partir des scores officiels en saison régulière précédant cette rencontre. Le <strong>Rang Elo en championnat (League Elo Rank)</strong> ordonne les clubs actifs établis selon leur rating Elo d&apos;avant-match — à ne jamais confondre avec le classement officiel par points.
             </p>
           </div>
           <div>
-            <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-1">
-              Qualité des adversaires vs Forme récente (Opponent Quality vs Recent Form)
+            <h4 className="font-semibold text-slate-900 dark:text-white text-xs mb-1.5 flex items-center gap-1.5">
+              <TrendingUp size={14} className="text-blue-500 shrink-0" />
+              <span>Qualité des adversaires vs Forme récente (Opponent Quality vs Recent Form)</span>
             </h4>
             <p className="leading-relaxed text-slate-500 dark:text-slate-400">
               La métrique <strong>Opponent Quality</strong> mesure les ratings Elo d&apos;avant-match jusqu&apos;aux 5 derniers adversaires observés en championnat. Une valeur positive indique des adversaires d&apos;un niveau supérieur à la moyenne de référence ; elle mesure la difficulté du calendrier passé, jamais les résultats V/N/D ou les xG de l&apos;équipe elle-même.
             </p>
           </div>
           <div>
-            <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-1">
-              Espérance normalisée du résultat Elo & Rivalités (Normalized Elo Expectation & Rivalries)
+            <h4 className="font-semibold text-slate-900 dark:text-white text-xs mb-1.5 flex items-center gap-1.5">
+              <Scale size={14} className="text-emerald-500 shrink-0" />
+              <span>Espérance normalisée du résultat Elo & Rivalités (Normalized Elo Expectation & Rivalries)</span>
             </h4>
             <p className="leading-relaxed text-slate-500 dark:text-slate-400">
               Dans l&apos;échelle des résultats observés en football selon le modèle Elo, une défaite vaut <strong>0</strong>, un match nul <strong>0,5</strong> et une victoire <strong>1</strong>. L&apos;<strong>espérance normalisée du résultat Elo (Normalized Elo Outcome Expectation)</strong> est une valeur théorique continue (de 0 à 1) représentant le score moyen attendu, et non une probabilité de victoire ou de match nul 1X2. Les <strong>rivalités documentées</strong> reflètent les paires répertoriées dans le registre documentaire partiel ; l&apos;absence de ce registre ne certifie jamais l&apos;absence de rivalité.
@@ -855,26 +907,26 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
           {/* Barre récapitulative : Écart Elo & Moyenne active */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Écart de rating Elo (Domicile − Extérieur)
               </span>
               <span className="font-mono text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
                 {formatSignedEloDelta(ts.diff_home_minus_away)}
                 <span className="text-xs font-normal text-slate-400 ml-1">Elo</span>
               </span>
-              <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                 Différence brute de rating d&apos;avant-match (hors avantage du terrain)
               </span>
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Moyenne Elo active du championnat
               </span>
               <span className="font-mono text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
                 {activeLeagueAvgDisplay}
               </span>
-              <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                 {isFullLeagueCoverage
                   ? `Établie sur l'ensemble des ${association.expectedParticipants} clubs actifs de ${association.leagueName}`
                   : 'Moyenne masquée tant que tous les clubs de la saison ne sont pas établis'}
@@ -882,7 +934,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Comparatif des rangs Elo en championnat
               </span>
               <div className="flex items-center gap-3 font-mono text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-200">
@@ -894,7 +946,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                   {isFullLeagueCoverage && Number.isInteger(ts.away.rank_in_league) ? `#${ts.away.rank_in_league}` : '—'}
                 </span>
               </div>
-              <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                 Classement par rating Elo d&apos;avant-match (distinct du tableau des points)
               </span>
             </div>
@@ -926,27 +978,27 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
           <div className="bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2">
-                <Scale size={15} className="text-indigo-500" />
-                <h4 className="text-xs font-bold uppercase tracking-widest text-slate-700 dark:text-slate-200">
+                <Scale size={16} className="text-indigo-500 shrink-0" />
+                <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">
                   Espérance normalisée du résultat Elo (Normalized Elo Outcome Expectation)
                 </h4>
               </div>
-              <Badge variant="default" className="font-mono text-[9px]">
+              <Badge variant="default" className="text-xs font-medium">
                 Métrique avancée · Valeur théorique continue [0, 1]
               </Badge>
             </div>
 
-            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
               Dans l&apos;échelle des résultats observés en football selon le modèle Elo, une défaite vaut <strong>0</strong>, un match nul <strong>0,5</strong> et une victoire <strong>1</strong>. L&apos;espérance normalisée du résultat est une <strong>valeur théorique continue</strong> comprise entre 0 et 1 (score moyen espéré par rencontre) déduite des ratings Elo d&apos;avant-match et de l&apos;avantage théorique du terrain standard. Elle ne représente <strong>en aucun cas</strong> une probabilité de victoire ou de match nul 1X2, des buts attendus (xG) ou un edge de valeur.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
               <div className="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 block">
+                  <span className="text-xs font-bold text-blue-600 dark:text-blue-400 block">
                     {target.home_team} (Domicile)
                   </span>
-                  <span className="text-[10px] text-slate-400">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
                     Espérance Elo normalisée (0–1)
                   </span>
                 </div>
@@ -957,10 +1009,10 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
 
               <div className="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 block">
+                  <span className="text-xs font-bold text-rose-600 dark:text-rose-400 block">
                     {target.away_team} (Extérieur)
                   </span>
-                  <span className="text-[10px] text-slate-400">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
                     Espérance Elo normalisée (0–1)
                   </span>
                 </div>
@@ -982,12 +1034,12 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                     style={{ width: `${Math.max(0, Math.min(100, ts.expected_score_away * 100)).toFixed(2)}%` }}
                   />
                 </div>
-                <div className="flex justify-between text-[10px] font-mono text-slate-400 mt-1">
+                <div className="flex justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-1">
                   <span>0,00 (Défaite = 0)</span>
                   <span>0,50 (Nul = 0,5)</span>
                   <span>1,00 (Victoire = 1)</span>
                 </div>
-                <p className="text-[9px] text-slate-400 dark:text-slate-500 mt-1 text-center font-sans">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 text-center font-sans">
                   Échelle des résultats observés : Défaite = 0 · Nul = 0,5 · Victoire = 1. L&apos;espérance est une valeur théorique continue (score moyen attendu) et non une probabilité de résultat.
                 </p>
               </div>
@@ -1000,10 +1052,10 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
       <Card title="Qualité des adversaires · Difficulté du calendrier récent (Opponent Quality L5)" titleIcon={<TrendingUp size={16} />}>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800/80">
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               Ratings Elo d&apos;avant-match jusqu&apos;aux 5 derniers adversaires observés en championnat précédant cette rencontre. Mesure la difficulté du calendrier passé — <strong>ne reflète pas</strong> la forme, les résultats V/N/D ou les xG de l&apos;équipe.
             </p>
-            <span className="text-[10px] font-mono text-slate-400 shrink-0">
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0">
               Écart positif = adversaires récents mieux classés
             </span>
           </div>
@@ -1033,16 +1085,16 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-5 flex flex-col gap-3">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="warning" className="text-[10px] font-mono px-2.5 py-0.5">
+                <Badge variant="warning" className="text-xs font-medium px-2.5 py-0.5">
                   {rivalryInfo.badgeLabel}
                 </Badge>
-                <Badge variant="default" className="text-[10px] font-mono px-2.5 py-0.5">
+                <Badge variant="default" className="text-xs font-medium px-2.5 py-0.5">
                   {rivalryInfo.categoryLabel}
                 </Badge>
               </div>
               {rivalryInfo.establishedSince !== null && (
-                <span className="text-xs font-mono font-semibold text-amber-700 dark:text-amber-300">
-                  Documenté depuis {rivalryInfo.establishedSince}
+                <span className="text-xs font-semibold text-amber-700 dark:text-amber-300">
+                  Documenté depuis <span className="font-mono">{rivalryInfo.establishedSince}</span>
                 </span>
               )}
             </div>
@@ -1053,12 +1105,12 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
               </h4>
               {rivalryInfo.geographicScope && (
                 <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">
-                  Périmètre géographique / historique : <span className="font-mono">{rivalryInfo.geographicScope}</span>
+                  Périmètre géographique / historique : <span className="font-semibold text-slate-700 dark:text-slate-200">{rivalryInfo.geographicScope}</span>
                 </p>
               )}
             </div>
 
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               {rivalryInfo.explanation}
             </p>
           </div>
@@ -1066,10 +1118,10 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
           <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex items-start gap-3">
             <Info size={16} className="text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" />
             <div className="flex flex-col gap-1">
-              <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+              <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">
                 {rivalryInfo.statusTitle}
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 {rivalryInfo.explanation}
               </p>
             </div>
@@ -1081,7 +1133,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
       <Card title="Évolution historique des ratings Elo (Historical Elo Development)" titleIcon={<History size={16} />}>
         <div className="flex flex-col gap-4" data-no-swipe="true">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-200/70 dark:border-slate-800/70">
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               Reconstitution des <strong>ratings Elo d&apos;avant-match</strong> enregistrés sur les {dataset.historicalMatches.length.toLocaleString('fr-FR')} matchs rejoués de {association.leagueName} précédant cette journée. Aucun rating post-match ni interpolation quotidienne n&apos;est inventé.
             </p>
 
@@ -1094,9 +1146,9 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                   setPinnedChartPoint(null);
                   setHoveredChartPoint(null);
                 }}
-                className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase transition-colors ${
+                className={`px-2.5 py-1 rounded-lg text-xs font-medium uppercase transition-colors ${
                   chartSeason === 'ALL'
-                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950'
+                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-semibold'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
               >
@@ -1111,9 +1163,9 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                     setPinnedChartPoint(null);
                     setHoveredChartPoint(null);
                   }}
-                  className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold transition-colors ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
                     chartSeason === sec
-                      ? 'bg-indigo-600 text-white'
+                      ? 'bg-indigo-600 text-white font-semibold'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
                   }`}
                 >
@@ -1196,17 +1248,17 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
             </div>
 
             {/* Légende */}
-            <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
+            <div className="flex flex-wrap items-center gap-3 text-xs font-medium">
               {primaryChartTeam && (
                 <span className="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                   <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" />
-                  {primaryChartTeam} ({primarySeries.length} obs.)
+                  {primaryChartTeam} <span className="font-mono text-slate-500 dark:text-slate-400">({primarySeries.length} obs.)</span>
                 </span>
               )}
               {secondaryChartTeam && (
                 <span className="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                   <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />
-                  {secondaryChartTeam} ({secondarySeries.length} obs.)
+                  {secondaryChartTeam} <span className="font-mono text-slate-500 dark:text-slate-400">({secondarySeries.length} obs.)</span>
                 </span>
               )}
               <span className="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
@@ -1240,29 +1292,29 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                   <span className="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400">
                     {inspectedPoint.date}
                   </span>
-                  <Badge variant="default" className="font-mono text-[9px]">
+                  <Badge variant="default" className="text-xs font-medium">
                     Saison {inspectedPoint.seasonKey}
                   </Badge>
-                  <Badge variant="default" className="font-mono text-[9px]">
+                  <Badge variant="default" className="text-xs font-medium">
                     {inspectedPoint.venueLabel}
                   </Badge>
                   {inspectedPoint.rivalry?.isDocumentedRivalry && (
-                    <Badge variant="warning" className="font-mono text-[9px]">
+                    <Badge variant="warning" className="text-xs font-medium">
                       {inspectedPoint.rivalry.rivalryName} ({inspectedPoint.rivalry.categoryLabel})
                     </Badge>
                   )}
                   {inspectedPoint.isNewEntrant && (
-                    <Badge variant="warning" className="font-mono text-[9px]">
+                    <Badge variant="warning" className="text-xs font-medium">
                       Première apparition dans ce jeu de données
                     </Badge>
                   )}
                   {inspectedPoint.isReturningAfterAbsence && (
-                    <Badge variant="info" className="font-mono text-[9px]">
+                    <Badge variant="info" className="text-xs font-medium">
                       Retour après absence dans l&apos;historique observé
                     </Badge>
                   )}
                   {pinnedChartPoint?.key === inspectedPoint.key && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30">
                       Observation épinglée
                       <button
                         type="button"
@@ -1289,22 +1341,22 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 font-mono text-xs shrink-0">
+              <div className="flex flex-wrap items-center gap-4 text-xs shrink-0">
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase block">Rating Elo d&apos;avant-match</span>
-                  <span className="font-bold text-sm text-slate-900 dark:text-white">
+                  <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">Rating Elo d&apos;avant-match</span>
+                  <span className="font-mono font-bold text-sm text-slate-900 dark:text-white">
                     {formatEloRating(inspectedPoint.ratingPreMatch)} Elo
                   </span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase block">Rating Elo adverse avant-match</span>
-                  <span className="font-bold text-sm text-slate-700 dark:text-slate-300">
+                  <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">Rating Elo adverse avant-match</span>
+                  <span className="font-mono font-bold text-sm text-slate-700 dark:text-slate-300">
                     {formatEloRating(inspectedPoint.opponentRatingPreMatch)} Elo
                   </span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase block">Rang Elo en championnat</span>
-                  <span className="font-bold text-sm text-slate-700 dark:text-slate-300">
+                  <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">Rang Elo en championnat</span>
+                  <span className="font-mono font-bold text-sm text-slate-700 dark:text-slate-300">
                     {inspectedPoint.rankInLeague !== null ? `#${inspectedPoint.rankInLeague}` : 'Couverture partielle'}
                   </span>
                 </div>
@@ -1422,7 +1474,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                   setExplorerSeason(e.target.value);
                   setVisibleRowsCount(INITIAL_EXPLORER_LIMIT);
                 }}
-                className="px-2.5 py-1.5 rounded-lg text-xs font-mono bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800"
               >
                 <option value="ALL">Toutes saisons ({dataset.historicalSeasons.join(', ')})</option>
                 {dataset.historicalSeasons.map(sec => (
@@ -1450,18 +1502,18 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
               <button
                 type="button"
                 onClick={() => setSortOrder(prev => (prev === 'DESC' ? 'ASC' : 'DESC'))}
-                className="px-2.5 py-1.5 rounded-lg text-xs font-mono bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 {sortOrder === 'DESC' ? 'Plus récents d\'abord ↓' : 'Plus anciens d\'abord ↑'}
               </button>
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
             <span>
-              Affichage de {displayedExplorerRows.length} sur {filteredHistoryRows.length} matchs historiques enregistrés
+              Affichage de <strong className="font-mono font-bold text-slate-700 dark:text-slate-200">{displayedExplorerRows.length}</strong> sur <strong className="font-mono font-bold text-slate-700 dark:text-slate-200">{filteredHistoryRows.length}</strong> matchs historiques enregistrés
             </span>
-            <span>Tous les ratings Elo affichés sont strictement d&apos;avant-match</span>
+            <span className="text-[11px] font-medium">Tous les ratings Elo affichés sont strictement d&apos;avant-match</span>
           </div>
 
           {/* Tableau des confrontations historiques */}
@@ -1473,7 +1525,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
             <div className="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950">
               <table className="w-full text-xs font-mono text-left">
                 <thead>
-                  <tr className="border-b border-slate-200 dark:border-slate-800 text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-100/70 dark:bg-slate-900/70">
+                  <tr className="border-b border-slate-200 dark:border-slate-800 text-[11px] font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider bg-slate-100/70 dark:bg-slate-900/70">
                     <th className="py-2.5 px-3">Date / Saison</th>
                     <th className="py-2.5 px-3">Club à domicile (Elo avant-match)</th>
                     <th className="py-2.5 px-3 text-center">Score</th>
@@ -1493,58 +1545,58 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                         className="hover:bg-white dark:hover:bg-slate-900/80 transition-colors"
                       >
                         <td className="py-2.5 px-3 whitespace-nowrap">
-                          <div className="font-bold text-slate-700 dark:text-slate-300">{row.date}</div>
-                          <div className="text-[10px] text-slate-400">{row.seasonKey}</div>
+                          <div className="font-mono font-bold text-slate-800 dark:text-slate-200">{row.date}</div>
+                          <div className="text-[11px] text-slate-500 dark:text-slate-400">{row.seasonKey}</div>
                         </td>
 
                         <td className="py-2.5 px-3">
-                          <div className={`font-sans font-bold ${row.homeTeam === target.home_team ? 'text-blue-600 dark:text-blue-400' : row.homeTeam === target.away_team ? 'text-rose-600 dark:text-rose-400' : 'text-slate-800 dark:text-slate-200'}`}>
+                          <div className={`font-sans font-bold text-xs ${row.homeTeam === target.home_team ? 'text-blue-600 dark:text-blue-400' : row.homeTeam === target.away_team ? 'text-rose-600 dark:text-rose-400' : 'text-slate-800 dark:text-slate-200'}`}>
                             {row.homeTeam}
                           </div>
-                          <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                          <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
                             {formatEloRating(row.homeRatingPreMatch)} Elo
                             {row.homeRank !== null ? ` · #${row.homeRank}` : ''}
                           </div>
                         </td>
 
                         <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                          <span className="px-2 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-bold text-slate-900 dark:text-white">
+                          <span className="px-2 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono font-bold text-slate-900 dark:text-white">
                             {row.scoreDisplay}
                           </span>
                         </td>
 
                         <td className="py-2.5 px-3">
-                          <div className={`font-sans font-bold ${row.awayTeam === target.away_team ? 'text-rose-600 dark:text-rose-400' : row.awayTeam === target.home_team ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'}`}>
+                          <div className={`font-sans font-bold text-xs ${row.awayTeam === target.away_team ? 'text-rose-600 dark:text-rose-400' : row.awayTeam === target.home_team ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'}`}>
                             {row.awayTeam}
                           </div>
-                          <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                          <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
                             {formatEloRating(row.awayRatingPreMatch)} Elo
                             {row.awayRank !== null ? ` · #${row.awayRank}` : ''}
                           </div>
                         </td>
 
-                        <td className="py-2.5 px-3 text-right whitespace-nowrap font-semibold text-slate-700 dark:text-slate-300">
+                        <td className="py-2.5 px-3 text-right whitespace-nowrap font-mono font-semibold text-slate-800 dark:text-slate-200">
                           {formatSignedEloDelta(row.diffHomeMinusAway)}
                         </td>
 
-                        <td className="py-2.5 px-3 text-right whitespace-nowrap text-slate-500 dark:text-slate-400">
+                        <td className="py-2.5 px-3 text-right whitespace-nowrap font-mono text-slate-600 dark:text-slate-400">
                           {row.activeLeagueMean !== null ? formatEloRating(row.activeLeagueMean) : 'Partielle'}
                         </td>
 
                         <td className="py-2.5 px-3">
                           <div className="flex flex-wrap items-center gap-1">
                             {row.rivalry.isDocumentedRivalry && (
-                              <Badge variant="warning" className="text-[8px] px-1.5 py-0">
+                              <Badge variant="warning" className="text-[10px] font-medium px-2 py-0.5">
                                 {row.rivalry.rivalryName} ({row.rivalry.categoryLabel})
                               </Badge>
                             )}
                             {(row.homeNewEntrant || row.awayNewEntrant) && (
-                              <Badge variant="default" className="text-[8px] px-1.5 py-0">
+                              <Badge variant="default" className="text-[10px] font-medium px-2 py-0.5">
                                 Première apparition dans ce jeu de données
                               </Badge>
                             )}
                             {(row.homeReturning || row.awayReturning) && (
-                              <Badge variant="info" className="text-[8px] px-1.5 py-0">
+                              <Badge variant="info" className="text-[10px] font-medium px-2 py-0.5">
                                 Retour après absence dans l&apos;historique observé
                               </Badge>
                             )}
@@ -1553,7 +1605,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                               !row.awayNewEntrant &&
                               !row.homeReturning &&
                               !row.awayReturning && (
-                                <span className="text-[10px] text-slate-400">
+                                <span className="text-[11px] text-slate-500 dark:text-slate-400">
                                   {isTargetHomeInvolved && isTargetAwayInvolved ? 'Face-à-face direct' : 'Match régulier de championnat'}
                                 </span>
                               )}
@@ -1572,7 +1624,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
               <button
                 type="button"
                 onClick={() => setVisibleRowsCount(prev => prev + 25)}
-                className="px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                className="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
               >
                 Afficher plus de matchs historiques ({filteredHistoryRows.length - visibleRowsCount} restants)
               </button>
