@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useFavorites } from '../../context/FavoritesContext';
+import { PersonalTicketsView, usePersonalTickets } from '../tickets/PersonalTicketsView';
 import { getTeamInfo } from '../../utils';
 import { getTeamDisplayName } from '../../utils/teamDisplayNames';
 import { TeamLogo, LeagueLogo, getLeagueDisplayName } from '../../utils/teamLogos';
@@ -735,6 +736,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const { isTicketFavorite, toggleTicketFavorite, store } = useFavorites();
+  const personalTickets = usePersonalTickets();
 
   const originSession = useMemo(() => ({
     sessionId: assembled?.metadata?.run_id || 'UNKNOWN_SESSION',
@@ -1264,6 +1266,7 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
             { id: 'summary', label: 'Synthèse', shortLabel: 'Synthèse', icon: <BarChart3 size={14} /> },
             { id: 'strategies', label: `Tickets (${ticketsList.length})`, shortLabel: `Tickets (${ticketsList.length})`, icon: <PieChart size={14} /> },
             { id: 'picks', label: `Choix Finaux (${totalSelections})`, shortLabel: `Choix (${totalSelections})`, icon: <Layers size={14} /> },
+            { id: 'personal', label: `Mes tickets (${personalTickets.legs.length})`, shortLabel: `Mes tickets (${personalTickets.legs.length})`, icon: <Bookmark size={14} /> },
           ].map(tab => (
             <button
               key={tab.id}
@@ -2366,6 +2369,8 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
         </div>
       )}
 
+      {activeView === 'personal' && <PersonalTicketsView model={personalTickets} />}
+
       {/* VIEW 3: FINAL SELECTIONS (CHOIX_FINAUX) */}
       {activeView === 'picks' && (
         <div className="flex flex-col gap-5 animate-in fade-in duration-300">
@@ -2377,6 +2382,11 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 {filteredPicks.length} sur {totalSelections} sélections affichées
               </p>
+              {personalTickets.message && (
+                <p role="status" className="text-xs text-emerald-700 dark:text-emerald-400 mt-2 font-medium">
+                  {personalTickets.message}
+                </p>
+              )}
             </div>
             <div
               className="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-2"
@@ -2753,6 +2763,44 @@ export default function TicketsView({ assembled, finals, loading, onNavigateToMa
                           </div>
                         </div>
                       </div>
+                    </div>
+
+                    <div className="px-4 pb-3 flex justify-end">
+                      {(() => {
+                        const hasSessionProvenance = Boolean(
+                          (sel.run_id && String(sel.run_id).trim()) ||
+                          (sel.session_id && String(sel.session_id).trim()) ||
+                          (originSession?.runId && String(originSession.runId).trim() && originSession.runId !== 'UNKNOWN_SESSION') ||
+                          (originSession?.sessionId && String(originSession.sessionId).trim() && originSession.sessionId !== 'UNKNOWN_SESSION')
+                        );
+                        const isAdded = personalTickets.legs.some(leg => leg.Bet_ID === sel.Bet_ID);
+                        const isDisabled = !sel.Bet_ID || !sel.Match_ID || !hasSessionProvenance || !(sel.Marche || sel.market) || isAdded;
+
+                        return (
+                          <button
+                            type="button"
+                            disabled={isDisabled}
+                            onClick={event => {
+                              event.stopPropagation();
+                              personalTickets.addSelection(sel, originSession);
+                            }}
+                            className={`min-h-11 px-4 rounded-xl text-xs font-bold transition-colors ${
+                              isAdded
+                                ? 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed'
+                                : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm'
+                            } disabled:opacity-40`}
+                            title={
+                              isAdded
+                                ? 'Déjà présent dans le brouillon'
+                                : !hasSessionProvenance
+                                ? 'Provenance de session manquante'
+                                : 'Ajouter ce choix final à votre brouillon personnel'
+                            }
+                          >
+                            {isAdded ? 'Déjà ajouté' : 'Ajouter au ticket'}
+                          </button>
+                        );
+                      })()}
                     </div>
 
                     {/* Collapsible Secondary Info */}
