@@ -39,7 +39,7 @@ export function selectionFromTitanium(selection, fallbackSession = null) {
 
   // Preserve raw numeric facts verbatim; never convert missing metrics to 0.
   const selectedFields = [
-    'Bet_ID', 'Match_ID', 'Match', 'League', 'Marche', 'market', 'line', 'Line',
+    'Bet_ID', 'Match_ID', 'Match', 'home', 'away', 'League', 'Marche', 'market', 'line', 'Line',
     'Type', 'family_name', 'family_code', 'Prob', 'Cote_Ref', 'Score_EV',
     'Tier', 'Alpha', 'Super_Signal', 'Profile', 'Streak_Status', 'Streak_Reason',
     'Date', 'Heure', 'kickoff_utc', 'run_id', 'session_id', 'source_matrix',
@@ -186,11 +186,25 @@ export function persistPersonalTickets(storage, store, ticket = null, removeId =
 
 export function formatPersonalTicketShare(ticket) {
   assertConsistentLegs(ticket?.legs);
-  const header = `TITANIUM Web — ${ticket.name || 'Ticket personnel'}\nBROUILLON PERSONNEL — NON APPROUVÉ PAR TITANIUM`;
-  const lines = ticket.legs.map((leg, idx) => {
-    const p = validMetric(leg.Prob) ? `${(leg.Prob * 100).toFixed(1)} % (modèle)` : 'N/D';
-    const cote = validMetric(leg.Cote_Ref) ? `${leg.Cote_Ref.toFixed(2)} (réf. modèle)` : 'N/D';
-    return `${idx + 1}. ${leg.Match || leg.Match_ID} — ${leg.Marche || leg.market}\n   P: ${p} | Cote: ${cote} | Bet_ID: ${leg.Bet_ID}`;
+  const count = ticket.legs.length;
+  const countLabel = `⚽ ${count} ${count > 1 ? 'SÉLECTIONS' : 'SÉLECTION'}`;
+  const separator = '━━━━━━━━━━━━━━━━━━━━';
+  const header = `🎟️ TITANIUM | ${ticket.name || 'Ticket personnel'}\n${separator}\n${countLabel}`;
+  const blocks = ticket.legs.map((leg, idx) => {
+    const num = String(idx + 1).padStart(2, '0');
+    let matchTitle = '';
+    if (nonEmpty(leg.Match)) {
+      matchTitle = leg.Match.replace(/\s+vs\s+/i, ' \u2013 ').trim();
+    } else if (nonEmpty(leg.home) && nonEmpty(leg.away)) {
+      matchTitle = `${leg.home.trim()} \u2013 ${leg.away.trim()}`;
+    } else {
+      matchTitle = 'Match inconnu';
+    }
+    const market = asText(leg.Marche || leg.market, 240) || 'Sélection';
+    const p = validMetric(leg.Prob) ? `${(leg.Prob * 100).toFixed(1)} %` : 'N/D';
+    const cote = validMetric(leg.Cote_Ref) ? leg.Cote_Ref.toFixed(2) : 'N/D';
+    return `${num}. ${matchTitle}\n▸ ${market}\n📊 Prob. ${p} • Cote réf. ${cote}`;
   });
-  return [header, '', ...lines, '', 'Probabilité combinée : non calculée (dépendances non validées).', 'Ni cote bookmaker, ni recommandation de mise, ni approbation de risque.'].join('\n');
+  const footer = 'ℹ️ Ticket personnel · Non approuvé par TITANIUM';
+  return [header, '', blocks.join('\n\n'), '', footer].join('\n');
 }

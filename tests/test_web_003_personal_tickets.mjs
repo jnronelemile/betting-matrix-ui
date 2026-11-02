@@ -193,14 +193,53 @@ test('[TEST 7] Unknown schema versions and non-personal Ticket_IDs are rejected 
   assert.equal(generatePersonalId({ randomUUID: () => 'abc-123' }), 'PERSONAL_abc-123');
 });
 
-test('[TEST 8] Sharing text is descriptive with strict analytical disclaimers (no combined prob, no odds product)', () => {
-  const ticket = createPersonalTicket({ id: localId, name: 'Ma sélection', legs: [selectionFromTitanium(pick())] });
+test('[TEST 8] Compact sharing text matches expected format and excludes internal technical identifiers', () => {
+  const ticket = createPersonalTicket({
+    id: localId,
+    name: 'Ma sélection',
+    legs: [
+      selectionFromTitanium(pick('BET_1', { Match: 'Paris SG vs Marseille', Marche: 'Over 1.5 Paris SG', Prob: 0.85, Cote_Ref: 1.25 })),
+      selectionFromTitanium(pick('BET_2', { Match: 'Real Madrid vs Barcelona', Marche: 'Over 2.5 buts', Prob: 0.654, Cote_Ref: 1.55 }))
+    ]
+  });
   const share = formatPersonalTicketShare(ticket);
-  assert.match(share, /NON APPROUVÉ/);
-  assert.match(share, /Probabilité combinée : non calculée/);
-  assert.match(share, /réf\. modèle/);
-  assert.doesNotMatch(share, /\bROI\s*:/);
-  assert.doesNotMatch(share, /\bCote combinée\s*:/);
+
+  // Exact header, visual separator & dynamic counter
+  assert.match(share, /^🎟️ TITANIUM \| Ma sélection\n━━━━━━━━━━━━━━━━━━━━\n⚽ 2 SÉLECTIONS/);
+  assert.match(share, /ℹ️ Ticket personnel · Non approuvé par TITANIUM$/);
+
+  // Compact layout: 01/02 numbering, match line, ▸ market line, 📊 metrics line with bullet
+  assert.match(share, /01\. Paris SG – Marseille\n▸ Over 1\.5 Paris SG\n📊 Prob\. 85\.0 % • Cote réf\. 1\.25/);
+  assert.match(share, /02\. Real Madrid – Barcelona\n▸ Over 2\.5 buts\n📊 Prob\. 65\.4 % • Cote réf\. 1\.55/);
+
+  // Absence of all internal metadata and technical IDs
+  assert.doesNotMatch(share, /\bBET_1\b/);
+  assert.doesNotMatch(share, /\bBET_2\b/);
+  assert.doesNotMatch(share, /\bMATCH_BET_1\b/);
+  assert.doesNotMatch(share, /\bBet_ID\b/);
+  assert.doesNotMatch(share, /\bMatch_ID\b/);
+  assert.doesNotMatch(share, /\brun_id\b/);
+  assert.doesNotMatch(share, /\bsession_id\b/);
+  assert.doesNotMatch(share, /\bsource_matrix\b/);
+  assert.doesNotMatch(share, /RUN_TEST_01/);
+  assert.doesNotMatch(share, /matrix_01\.json/);
+
+  // Absence of long paragraphs, combined odds or ROI
+  assert.doesNotMatch(share, /Probabilité combinée/);
+  assert.doesNotMatch(share, /dépendances non validées/);
+  assert.doesNotMatch(share, /Ni cote bookmaker/);
+  assert.doesNotMatch(share, /\bROI\b/);
+
+  // Single leg dynamic counter (singular) & absence of Match_ID fallback
+  const ticketWithoutMatchName = createPersonalTicket({
+    id: localId,
+    name: 'Sans nom de match',
+    legs: [selectionFromTitanium(pick('BET_NO_NAME', { Match: '' }))]
+  });
+  const shareNoMatch = formatPersonalTicketShare(ticketWithoutMatchName);
+  assert.match(shareNoMatch, /⚽ 1 SÉLECTION/);
+  assert.match(shareNoMatch, /01\. Match inconnu/);
+  assert.doesNotMatch(shareNoMatch, /MATCH_BET_NO_NAME/);
 });
 
 test('[TEST 9] Multi-tab conflict fails closed without dirty overwriting', () => {
