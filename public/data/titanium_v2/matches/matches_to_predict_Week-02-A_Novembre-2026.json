@@ -1,0 +1,236 @@
+{
+  "Championship": [
+    {
+      "home": "Blackburn Rovers",
+      "away": "Stoke City",
+      "date": "2026-11-03",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-03T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836911"
+    },
+    {
+      "home": "Charlton Athletic",
+      "away": "Bolton Wanderers",
+      "date": "2026-11-03",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-03T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836920"
+    },
+    {
+      "home": "Derby County",
+      "away": "Norwich City",
+      "date": "2026-11-03",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-03T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836912"
+    },
+    {
+      "home": "Portsmouth",
+      "away": "Swansea City",
+      "date": "2026-11-03",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-03T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836913"
+    },
+    {
+      "home": "Preston North End",
+      "away": "Sheffield United",
+      "date": "2026-11-03",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-03T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836914"
+    },
+    {
+      "home": "Queens Park Rangers",
+      "away": "Burnley",
+      "date": "2026-11-03",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-03T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836915"
+    },
+    {
+      "home": "Watford",
+      "away": "Lincoln City",
+      "date": "2026-11-03",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-03T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836916"
+    },
+    {
+      "home": "Birmingham City",
+      "away": "Millwall",
+      "date": "2026-11-03",
+      "hours": "15:00",
+      "kickoff_utc": "2026-11-03T20:00:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836910"
+    },
+    {
+      "home": "West Bromwich Albion",
+      "away": "Southampton",
+      "date": "2026-11-03",
+      "hours": "15:00",
+      "kickoff_utc": "2026-11-03T20:00:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836917"
+    },
+    {
+      "home": "Cardiff City",
+      "away": "West Ham United",
+      "date": "2026-11-04",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-04T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836919"
+    },
+    {
+      "home": "Wrexham",
+      "away": "Middlesbrough",
+      "date": "2026-11-04",
+      "hours": "14:45",
+      "kickoff_utc": "2026-11-04T19:45:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836921"
+    },
+    {
+      "home": "Bristol City",
+      "away": "Wolverhampton Wanderers",
+      "date": "2026-11-04",
+      "hours": "15:00",
+      "kickoff_utc": "2026-11-04T20:00:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5836918"
+    }
+  ],
+  "BrazilianSerieA": [
+    {
+      "home": "RB Bragantino",
+      "away": "Santos",
+      "date": "2026-11-02",
+      "hours": "18:00",
+      "kickoff_utc": "2026-11-02T23:00:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103698"
+    },
+    {
+      "home": "Chapecoense",
+      "away": "Mirassol",
+      "date": "2026-11-03",
+      "hours": "17:30",
+      "kickoff_utc": "2026-11-03T22:30:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103703"
+    },
+    {
+      "home": "Internacional",
+      "away": "Coritiba",
+      "date": "2026-11-03",
+      "hours": "19:30",
+      "kickoff_utc": "2026-11-04T00:30:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103700"
+    },
+    {
+      "home": "Athletico Paranaense",
+      "away": "Vasco da Gama",
+      "date": "2026-11-04",
+      "hours": "17:30",
+      "kickoff_utc": "2026-11-04T22:30:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103701"
+    },
+    {
+      "home": "Flamengo",
+      "away": "Grêmio",
+      "date": "2026-11-04",
+      "hours": "17:30",
+      "kickoff_utc": "2026-11-04T22:30:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103694"
+    },
+    {
+      "home": "Botafogo",
+      "away": "Atlético-MG",
+      "date": "2026-11-04",
+      "hours": "19:30",
+      "kickoff_utc": "2026-11-05T00:30:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103695"
+    },
+    {
+      "home": "São Paulo",
+      "away": "Corinthians",
+      "date": "2026-11-04",
+      "hours": "19:30",
+      "kickoff_utc": "2026-11-05T00:30:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103696"
+    },
+    {
+      "home": "Palmeiras",
+      "away": "Remo",
+      "date": "2026-11-05",
+      "hours": "17:30",
+      "kickoff_utc": "2026-11-05T22:30:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103697"
+    },
+    {
+      "home": "Cruzeiro",
+      "away": "Bahia",
+      "date": "2026-11-05",
+      "hours": "19:30",
+      "kickoff_utc": "2026-11-06T00:30:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103699"
+    },
+    {
+      "home": "Vitória",
+      "away": "Fluminense",
+      "date": "2026-11-06",
+      "hours": "18:00",
+      "kickoff_utc": "2026-11-06T23:00:00+00:00",
+      "round": "34",
+      "fotmob_match_id": "5103702"
+    }
+  ],
+  "_batch_metadata": {
+    "generated_at": "2026-11-02T17:17:16.221145",
+    "total_matches": 22,
+    "total_leagues": 2,
+    "rounds_covered": {
+      "CHAM": "14",
+      "BRA1": "34"
+    },
+    "selection_scopes": {
+      "CHAM": "complete_round_plus_eligible_catchups",
+      "BRA1": "complete_round_plus_eligible_catchups"
+    },
+    "primary_rounds": {
+      "CHAM": "14",
+      "BRA1": "34"
+    },
+    "catchup_summary": {
+      "CHAM": {
+        "included": 0,
+        "excluded": 0
+      },
+      "BRA1": {
+        "included": 0,
+        "excluded": 0
+      }
+    },
+    "session_first_kickoff_utc_by_league": {
+      "Championship": "2026-11-03T19:45:00+00:00",
+      "BrazilianSerieA": "2026-11-02T23:00:00+00:00",
+      "Brazilian Serie A": "2026-11-02T23:00:00+00:00"
+    }
+  }
+}
