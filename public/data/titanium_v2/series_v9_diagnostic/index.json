@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "diagnostic_id": "d9a799ee10516806372c5692bec584a6ddf1e7c2c55c214458a86a57dc089cd6",
+  "session": "Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s",
+  "classification": "EXPERIMENTAL_DESCRIPTIVE_ONLY",
+  "decision_authority": "NONE",
+  "summary": {
+    "matrix_match_count": 22,
+    "identity_matched_count": 22,
+    "refusal_count": 0,
+    "comparison_count": 396,
+    "unavailable_count": 3737
+  },
+  "refusals": [],
+  "sources": {
+    "matrix": {
+      "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/processed_matrices/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s_VALUE_BETTING_MATRIX_2026-11-04_10h07m50s.json",
+      "sha256": "a2e35865bc03e3a89cb2f5165ed93a8ce4ca36f363249d938624c16b79a74ef4"
+    },
+    "series_root": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series",
+    "series": [
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_Athletico-PR_VascodaGama_2026-11-04.json",
+        "sha256": "93859dc9d923c96a0c69bba6631af635d525b4c6413e3326bd8ff507d10570cf"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_Botafogo_AtléticoMineiro_2026-11-04.json",
+        "sha256": "153171e884cc37bf9dec2b5a56def7d0ba9a67965a7c2e081c5bf7e323977026"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_Bragantino_SantosFC_2026-11-02.json",
+        "sha256": "c423b93acb0c74649e41181b6cc6e2c353a5781aa0b9488a3ffc943a6dec72aa"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_Chapecoense_Mirassol_2026-11-03.json",
+        "sha256": "4e3b6a6d9dc14c49a09a30cde0b7fc3b4fd97f58689236d47ca912d941d2f92b"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_Cruzeiro_Bahia_2026-11-05.json",
+        "sha256": "68075c4d76a47894fd32cd4795b501d2a1795575c4ab5f9e4c9e41849e989e84"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_ECVitória_Fluminense_2026-11-06.json",
+        "sha256": "911b0111a2ee6ed21f80784635098e4fc839fea05200d606236b7612a4b284ef"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_Flamengo_Grêmio_2026-11-04.json",
+        "sha256": "99029f05ab93c901a2fa3d69feef88ce0d87daf4eb0657e279a9471ca95a9474"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_Internacional_Coritiba_2026-11-03.json",
+        "sha256": "b1fc3ed135cbd47ea1a3bbf941a8756b604fa57debf402de8dd85b968e335e00"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_Palmeiras_Remo_2026-11-05.json",
+        "sha256": "abf39d69a147caefe6252c40cbdc12cf1190771b0288d3ce4a26414bd394b6e1"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/BRAZILIANSERIEA/serie_stats_SãoPaulo_Corinthians_2026-11-04.json",
+        "sha256": "6cdcb5469fbcdc3889fa3d8cde4bec0f4e3cfc7e50cc8b1cc246a244df6c17d5"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_BirminghamCity_MillwallFC_2026-11-03.json",
+        "sha256": "4bc66e861fa3ca9dffea0deb574cf715f02c4285458d1e40d60770bc1d43bc7a"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_BlackburnRovers_StokeCity_2026-11-03.json",
+        "sha256": "e97b22e6a53c7409ae58ac23d0b0c7b4aa480d05ca425002cbb287bd51b7db48"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_BristolCity_WolverhamptonWanderers_2026-11-04.json",
+        "sha256": "d127375fad9f6138d86dd0e69fc1a5e0979bf84280d428df1e0a39159293d277"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_CardiffCity_WestHamUnited_2026-11-04.json",
+        "sha256": "c4dd9cc25175c0fead7c2eadf185be57ee4ca7b1d47c4827759f2a33ba4645a5"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_CharltonAthletic_BoltonWanderers_2026-11-03.json",
+        "sha256": "34795454f60f98e23b362ac190308519e02dc48cc915948187b615451f3b1b3b"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_DerbyCounty_NorwichCity_2026-11-03.json",
+        "sha256": "d936f82ccaf07dbb31957eee367bd5257d0dc40a3d8b5cfb4e7e2071f7ebb552"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_PortsmouthFC_SwanseaCity_2026-11-03.json",
+        "sha256": "5d7f54586d78b9b5292287a0b1490672f2f39eacd42edfa893e4e84dbe1ebc4e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_PrestonNorthEnd_SheffieldUnited_2026-11-03.json",
+        "sha256": "fa2cdbf0a36160e9d7a4448a3b8ce11d708b7b11c238b441b44a1a3947837815"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_QueensParkRangers_Burnley_2026-11-03.json",
+        "sha256": "7dbe02e3c7c1a130181ffd558269abca004d191996dfeb4f7431c841c6ff0d47"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_WatfordFC_LincolnCity_2026-11-03.json",
+        "sha256": "5a9ffded188fc8df178494b9352bf8d7520e385548330d4672592956e00eef59"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_WestBromwichAlbion_SouthamptonFC_2026-11-03.json",
+        "sha256": "4f07f309c1276265cc77c6c028181d585ceac6af295134a984a3bf6f2ecef7a6"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-02_A_Novembre-2026___2026-11-04_10h04m16s/CHAMPIONSHIP/serie_stats_Wrexham_Middlesbrough_2026-11-04.json",
+        "sha256": "991d66ae00b569ba469bec114b1f8643fa4412ca8be6d145b34c4ce686bba63d"
+      }
+    ],
+    "league_maps": [
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/feature_engineering/modules/etl/config.py",
+        "sha256": "dd575fc7e925ebec96db64c746e8164c80542915116fb6918683e92452e9745f"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/inference_engine/titanium_engine_v9/main.py",
+        "sha256": "8a8aa1ef8fe9d6c1e48cc4cc65187f79aab09c417d5dfa2f2aa0af86a967352f"
+      }
+    ]
+  },
+  "canonical": {
+    "path": "diagnostic.json",
+    "sha256": "4635867ee8a0628801d2db725f681e44e043be56f2e4fccf1ed8eb1eb38f8da6"
+  },
+  "match_order": [
+    "/0",
+    "/1",
+    "/2",
+    "/3",
+    "/4",
+    "/5",
+    "/6",
+    "/7",
+    "/8",
+    "/9",
+    "/10",
+    "/11",
+    "/12",
+    "/13",
+    "/14",
+    "/15",
+    "/16",
+    "/17",
+    "/18",
+    "/19",
+    "/20",
+    "/21"
+  ],
+  "leagues": [
+    {
+      "league": "Brazilian Serie A",
+      "slug": "brazilian_serie_a",
+      "path": "leagues/brazilian_serie_a.json",
+      "sha256": "cc92eae49e7fbe874e42d1e04601c93290a93d26f01a0120e7862eb97bf9316d",
+      "match_count": 10,
+      "comparison_count": 180,
+      "unavailable_count": 1669
+    },
+    {
+      "league": "Championship",
+      "slug": "championship",
+      "path": "leagues/championship.json",
+      "sha256": "7aa55d462888f8f2afb3cf836dad641adeadb13215d11ca742b72bb891e46408",
+      "match_count": 12,
+      "comparison_count": 216,
+      "unavailable_count": 2068
+    }
+  ]
+}
