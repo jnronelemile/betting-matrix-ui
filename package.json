@@ -2,7 +2,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync:data": "bash .agents/skills/titanium-data-sync/scripts/sync_data.sh"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",
