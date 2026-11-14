@@ -1,0 +1,175 @@
+{
+  "BrazilianSerieA": [
+    {
+      "home": "Mirassol",
+      "away": "Atlético-MG",
+      "date": "2026-11-14",
+      "hours": "16:30",
+      "kickoff_utc": "2026-11-14T21:30:00+00:00",
+      "round": "35",
+      "fotmob_match_id": "5103708"
+    },
+    {
+      "home": "Chapecoense",
+      "away": "Vasco da Gama",
+      "date": "2026-11-14",
+      "hours": "18:30",
+      "kickoff_utc": "2026-11-14T23:30:00+00:00",
+      "round": "21",
+      "fotmob_match_id": "5103573"
+    }
+  ],
+  "LaLiga2": [
+    {
+      "home": "Leganés",
+      "away": "Burgos CF",
+      "date": "2026-11-13",
+      "hours": "14:30",
+      "kickoff_utc": "2026-11-13T19:30:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868541"
+    },
+    {
+      "home": "Real Valladolid",
+      "away": "Castellón",
+      "date": "2026-11-14",
+      "hours": "08:00",
+      "kickoff_utc": "2026-11-14T13:00:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868546"
+    },
+    {
+      "home": "Real Sociedad B",
+      "away": "Sporting Gijón",
+      "date": "2026-11-14",
+      "hours": "10:15",
+      "kickoff_utc": "2026-11-14T15:15:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868544"
+    },
+    {
+      "home": "Almería",
+      "away": "FC Andorra",
+      "date": "2026-11-14",
+      "hours": "12:30",
+      "kickoff_utc": "2026-11-14T17:30:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868537"
+    },
+    {
+      "home": "Mallorca",
+      "away": "Córdoba",
+      "date": "2026-11-14",
+      "hours": "12:30",
+      "kickoff_utc": "2026-11-14T17:30:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868542"
+    },
+    {
+      "home": "Real Oviedo",
+      "away": "Girona",
+      "date": "2026-11-14",
+      "hours": "15:00",
+      "kickoff_utc": "2026-11-14T20:00:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868543"
+    },
+    {
+      "home": "Tenerife",
+      "away": "AD Ceuta FC",
+      "date": "2026-11-15",
+      "hours": "08:00",
+      "kickoff_utc": "2026-11-15T13:00:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868545"
+    },
+    {
+      "home": "Granada",
+      "away": "Las Palmas",
+      "date": "2026-11-15",
+      "hours": "10:15",
+      "kickoff_utc": "2026-11-15T15:15:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868540"
+    },
+    {
+      "home": "Eibar",
+      "away": "Cádiz",
+      "date": "2026-11-15",
+      "hours": "12:30",
+      "kickoff_utc": "2026-11-15T17:30:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868538"
+    },
+    {
+      "home": "Eldense",
+      "away": "Sabadell",
+      "date": "2026-11-15",
+      "hours": "12:30",
+      "kickoff_utc": "2026-11-15T17:30:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868539"
+    },
+    {
+      "home": "Albacete",
+      "away": "Celta Fortuna",
+      "date": "2026-11-16",
+      "hours": "14:30",
+      "kickoff_utc": "2026-11-16T19:30:00+00:00",
+      "round": "14",
+      "fotmob_match_id": "5868536"
+    }
+  ],
+  "LigaMX": [
+    {
+      "home": "Querétaro FC",
+      "away": "Monterrey",
+      "date": "2026-11-14",
+      "hours": "18:00",
+      "kickoff_utc": "2026-11-14T23:00:00+00:00",
+      "round": "7",
+      "fotmob_match_id": "1000014556"
+    }
+  ],
+  "_batch_metadata": {
+    "generated_at": "2026-11-13T14:05:33.575087",
+    "total_matches": 14,
+    "total_leagues": 3,
+    "rounds_covered": {
+      "BRA1": "21, 35",
+      "LIGA2": "14",
+      "MEX1": "7"
+    },
+    "selection_scopes": {
+      "BRA1": "complete_round_plus_eligible_catchups",
+      "LIGA2": "complete_round_plus_eligible_catchups",
+      "MEX1": "complete_round_plus_eligible_catchups"
+    },
+    "primary_rounds": {
+      "BRA1": "35",
+      "LIGA2": "14",
+      "MEX1": "7"
+    },
+    "catchup_summary": {
+      "BRA1": {
+        "included": 1,
+        "excluded": 0
+      },
+      "LIGA2": {
+        "included": 0,
+        "excluded": 0
+      },
+      "MEX1": {
+        "included": 0,
+        "excluded": 0
+      }
+    },
+    "session_first_kickoff_utc_by_league": {
+      "BrazilianSerieA": "2026-11-14T21:30:00+00:00",
+      "Brazilian Serie A": "2026-11-14T21:30:00+00:00",
+      "LaLiga2": "2026-11-13T19:30:00+00:00",
+      "LigaMX": "2026-11-14T23:00:00+00:00",
+      "Liga MX": "2026-11-14T23:00:00+00:00"
+    }
+  }
+}
