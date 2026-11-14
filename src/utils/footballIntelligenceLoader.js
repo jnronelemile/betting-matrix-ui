@@ -21,6 +21,24 @@ import { isValidDateComponents } from './titaniumLoader.js';
  */
 export const FI_LEAGUE_REGISTRY = Object.freeze([
   {
+    leagueId: 104, canonicalName: 'LaLiga2', webLeagueKeys: ['LALIGA2'],
+    expectedParticipants: 22, allowedProfiles: ['FE-009'],
+    allowedScopes: { 'FE-009': 'laliga_2_descriptive_pilot' },
+    allowedFileBasenames: ['football_intelligence_laliga_2.json']
+  },
+  {
+    leagueId: 303, canonicalName: 'Brazilian Serie A', webLeagueKeys: ['BRAZILIANSERIEA'],
+    expectedParticipants: 20, allowedProfiles: ['FE-009'],
+    allowedScopes: { 'FE-009': 'tier4_303_descriptive' },
+    allowedFileBasenames: ['football_intelligence_brazilian_serie_a.json']
+  },
+  {
+    leagueId: 230, canonicalName: 'Liga MX', webLeagueKeys: ['LIGAMX'],
+    expectedParticipants: 18, allowedProfiles: ['FE-009'],
+    allowedScopes: { 'FE-009': 'recurrent_230_descriptive' },
+    allowedFileBasenames: ['football_intelligence_liga_mx.json']
+  },
+  {
     leagueId: 47,
     canonicalName: 'Premier League',
     webLeagueKeys: ['PL', 'PREMIERLEAGUE', 'ENGPR'],
@@ -168,6 +186,7 @@ export function isValidIsoDateString(dateStr) {
 export function normalizeSeasonKey(seasonInput) {
   if (typeof seasonInput !== 'string') return null;
   const trimmed = seasonInput.trim();
+  if (/^\d{4}$/.test(trimmed)) return trimmed;
   const fullMatch = trimmed.match(/^(\d{4})-(\d{4})$/);
   if (fullMatch) {
     const y1 = parseInt(fullMatch[1], 10);
@@ -819,7 +838,7 @@ export function associatePredictionWithFiTarget(webMatch, validatedFi) {
     };
   }
 
-  const [startYearStr, endYearStr] = normalizedTargetSeason.split('-');
+  const [startYearStr, endYearStr = startYearStr] = normalizedTargetSeason.split('-');
   const matchYear = parseInt(target.date.slice(0, 4), 10);
   if (matchYear !== parseInt(startYearStr, 10) && matchYear !== parseInt(endYearStr, 10)) {
     return {

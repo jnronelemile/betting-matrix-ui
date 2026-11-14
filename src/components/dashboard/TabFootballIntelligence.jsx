@@ -1634,6 +1634,11 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
       </Card>
 
       {/* 6. Classements Elo du championnat (Elo Standings) */}
+      {!dataset?.hasStandings && (
+        <Card title="Classements Elo du championnat (Elo Standings)" titleIcon={<Award size={16} />}>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Aucun classement Elo disponible pour ce championnat.</p>
+        </Card>
+      )}
       {dataset?.hasStandings && (
         <Card title="Classements Elo du championnat (Elo Standings)" titleIcon={<Award size={16} />}>
           <div className="flex flex-col gap-4" data-no-swipe="true">
@@ -1668,7 +1673,7 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                 <Badge variant="default" className="text-[10px] font-mono px-2.5 py-0.5">
                   {standingsMode === 'ACTIVE'
                     ? `${dataset.currentSeasonActiveStandings.length} clubs engagés${dataset.isStandingsComplete ? ' (Complet)' : ''}`
-                    : `${dataset.allTimeTrackedStandings.length} clubs observés sur les 4 saisons`}
+                    : `${dataset.allTimeTrackedStandings.length} clubs observés sur ${dataset.historicalSeasons.length} saisons`}
                 </Badge>
               </div>
             </div>
@@ -1679,6 +1684,10 @@ export default function TabFootballIntelligence({ match, fiState, loading }) {
                 ? `Classement Elo des clubs participant à la saison ${target.season_key || 'active'} du championnat (${association.canonicalLeagueName}), calculé strictement à partir des résultats observés en amont de cette journée.`
                 : `Classement Elo multi-saisons incluant tous les clubs observés dans ${association.canonicalLeagueName} sur l'ensemble du jeu de données historique rejoué.`}
             </p>
+
+            {(standingsMode === 'ACTIVE' ? dataset.currentSeasonActiveStandings : dataset.allTimeTrackedStandings).length === 0 && (
+              <p className="text-xs text-slate-500 dark:text-slate-400">Ce classement Elo n&apos;est pas disponible.</p>
+            )}
 
             {/* Table des classements */}
             <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">

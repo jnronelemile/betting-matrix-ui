@@ -69,7 +69,7 @@ const predictionsRaw = JSON.parse(fs.readFileSync(predictionsPath, 'utf8'));
 // -----------------------------------------------------------------------------
 console.log('[TEST 1] Explicit League Identification & Cross-League Isolation');
 {
-  assert.equal(FI_LEAGUE_REGISTRY.length, 7, 'Registry must define the 7 canonical FI leagues');
+  assert.equal(FI_LEAGUE_REGISTRY.length, 10, 'Registry must define the configured FI leagues');
 
   const serieAConfig = resolveFiLeagueConfig('SerieA');
   assert.ok(serieAConfig, 'SerieA must resolve');
@@ -79,10 +79,10 @@ console.log('[TEST 1] Explicit League Identification & Cross-League Isolation');
 
   // Strict rejection of similar-sounding leagues (no substring heuristics)
   assert.equal(resolveFiLeagueConfig('SerieB'), null, 'SerieB must never match SerieA');
-  assert.equal(resolveFiLeagueConfig('BrazilianSerieA'), null, 'BrazilianSerieA must never match SerieA');
+  assert.equal(resolveFiLeagueConfig('BrazilianSerieA').leagueId, 303, 'BrazilianSerieA must never match SerieA');
   assert.equal(resolveFiLeagueConfig('2.Bundesliga'), null, '2.Bundesliga must never match Bundesliga');
   assert.equal(resolveFiLeagueConfig('Ligue2'), null, 'Ligue2 must never match Ligue1');
-  assert.equal(resolveFiLeagueConfig('LaLiga2'), null, 'LaLiga2 must never match LaLiga');
+  assert.equal(resolveFiLeagueConfig('LaLiga2').leagueId, 104, 'LaLiga2 must never match LaLiga');
   assert.equal(resolveFiLeagueConfig('Allsvenskan'), null, 'Allsvenskan must be unsupported');
 
   console.log('  ✓ Test 1 passed: League identification is strict with zero cross-league collisions.\n');
