@@ -5,11 +5,11 @@
       "team_strength_elo_baseline",
       "opponent_quality_l5_contextualized"
     ],
-    "cutoff": "2026-11-14",
+    "cutoff": "2026-10-23",
     "cutoff_contract": "date_strictly_before_cutoff_day_batch",
     "decision_effect": "NONE",
-    "historical_dataset_sha256": "8b44f816b4d630087ef232fab33020f91330e5cfe01766d1f3fed516faaf120a",
-    "historical_matches_replayed": 754,
+    "historical_dataset_sha256": "28df091441db410de0f19044294863ae6af4f75017bd5e183da05b16894143c9",
+    "historical_matches_replayed": 727,
     "history_coverage_status": "NOT_CERTIFIED_COMPLETE_CALENDAR",
     "history_policy": "SOURCE_BOUND_OBSERVATIONS_STRICTLY_BEFORE_CUTOFF",
     "history_provenance": {
@@ -157,7 +157,7 @@
           "season": "2025-2026"
         },
         {
-          "count": 142,
+          "count": 115,
           "phase": "all",
           "season": "2026-2027"
         }
@@ -180,12 +180,100 @@
     "standings_schema_version": "1.0.0",
     "target_admission_evidence": [
       {
-        "away": "Monterrey",
+        "away": "FC Juarez",
+        "home": "Necaxa",
+        "identity_basis": "SOURCE_BOUND_HISTORY",
+        "observed_at": null,
+        "phase": null,
+        "provider_match_id": "1000014616",
+        "provider_pit_status": "PIT_UNVERIFIED",
+        "regime": "MEX_MX_Ape26",
+        "season": "2026-2027"
+      },
+      {
+        "away": "Atletico San Luis",
+        "home": "Atlante",
+        "identity_basis": "SOURCE_BOUND_HISTORY",
+        "observed_at": null,
+        "phase": null,
+        "provider_match_id": "1000014617",
+        "provider_pit_status": "PIT_UNVERIFIED",
+        "regime": "MEX_MX_Ape26",
+        "season": "2026-2027"
+      },
+      {
+        "away": "Toluca",
+        "home": "Club Leon",
+        "identity_basis": "SOURCE_BOUND_HISTORY",
+        "observed_at": null,
+        "phase": null,
+        "provider_match_id": "1000014618",
+        "provider_pit_status": "PIT_UNVERIFIED",
+        "regime": "MEX_MX_Ape26",
+        "season": "2026-2027"
+      },
+      {
+        "away": "Guadalajara",
+        "home": "Monterrey",
+        "identity_basis": "SOURCE_BOUND_HISTORY",
+        "observed_at": null,
+        "phase": null,
+        "provider_match_id": "1000014619",
+        "provider_pit_status": "PIT_UNVERIFIED",
+        "regime": "MEX_MX_Ape26",
+        "season": "2026-2027"
+      },
+      {
+        "away": "Tigres UANL",
+        "home": "Pumas UNAM",
+        "identity_basis": "SOURCE_BOUND_HISTORY",
+        "observed_at": null,
+        "phase": null,
+        "provider_match_id": "1000014620",
+        "provider_pit_status": "PIT_UNVERIFIED",
+        "regime": "MEX_MX_Ape26",
+        "season": "2026-2027"
+      },
+      {
+        "away": "Puebla",
+        "home": "Atlas",
+        "identity_basis": "SOURCE_BOUND_HISTORY",
+        "observed_at": null,
+        "phase": null,
+        "provider_match_id": "1000014621",
+        "provider_pit_status": "PIT_UNVERIFIED",
+        "regime": "MEX_MX_Ape26",
+        "season": "2026-2027"
+      },
+      {
+        "away": "Cruz Azul",
         "home": "Queretaro",
         "identity_basis": "SOURCE_BOUND_HISTORY",
         "observed_at": null,
         "phase": null,
-        "provider_match_id": "1000014556",
+        "provider_match_id": "1000014623",
+        "provider_pit_status": "PIT_UNVERIFIED",
+        "regime": "MEX_MX_Ape26",
+        "season": "2026-2027"
+      },
+      {
+        "away": "Pachuca",
+        "home": "Club America",
+        "identity_basis": "SOURCE_BOUND_HISTORY",
+        "observed_at": null,
+        "phase": null,
+        "provider_match_id": "1000014622",
+        "provider_pit_status": "PIT_UNVERIFIED",
+        "regime": "MEX_MX_Ape26",
+        "season": "2026-2027"
+      },
+      {
+        "away": "Santos Laguna",
+        "home": "Club Tijuana",
+        "identity_basis": "SOURCE_BOUND_HISTORY",
+        "observed_at": null,
+        "phase": null,
+        "provider_match_id": "1000014624",
         "provider_pit_status": "PIT_UNVERIFIED",
         "regime": "MEX_MX_Ape26",
         "season": "2026-2027"
@@ -197,246 +285,246 @@
   },
   "all_time_tracked_standings": [
     {
-      "matches_observed_total": 84,
+      "matches_observed_total": 81,
       "rank": 1,
-      "rating": 1624.73,
+      "rating": 1602.48,
       "team_name": "Cruz Azul"
     },
     {
-      "matches_observed_total": 84,
+      "matches_observed_total": 80,
       "rank": 2,
-      "rating": 1595.29,
-      "team_name": "Toluca"
-    },
-    {
-      "matches_observed_total": 84,
-      "rank": 3,
-      "rating": 1590.61,
-      "team_name": "Guadalajara"
-    },
-    {
-      "matches_observed_total": 83,
-      "rank": 4,
-      "rating": 1580.85,
+      "rating": 1595.72,
       "team_name": "Club America"
     },
     {
-      "matches_observed_total": 84,
+      "matches_observed_total": 81,
+      "rank": 3,
+      "rating": 1589.56,
+      "team_name": "Toluca"
+    },
+    {
+      "matches_observed_total": 81,
+      "rank": 4,
+      "rating": 1577.38,
+      "team_name": "Guadalajara"
+    },
+    {
+      "matches_observed_total": 81,
       "rank": 5,
-      "rating": 1544.65,
+      "rating": 1538.7,
       "team_name": "Pumas UNAM"
     },
     {
-      "matches_observed_total": 84,
+      "matches_observed_total": 81,
       "rank": 6,
-      "rating": 1519.26,
-      "team_name": "Pachuca"
-    },
-    {
-      "matches_observed_total": 84,
-      "rank": 7,
-      "rating": 1516.48,
-      "team_name": "Atlas"
-    },
-    {
-      "matches_observed_total": 83,
-      "rank": 8,
-      "rating": 1510.76,
-      "team_name": "Club Tijuana"
-    },
-    {
-      "matches_observed_total": 84,
-      "rank": 9,
-      "rating": 1510.02,
+      "rating": 1526.74,
       "team_name": "Tigres UANL"
     },
     {
-      "matches_observed_total": 83,
-      "rank": 10,
-      "rating": 1499.41,
+      "matches_observed_total": 80,
+      "rank": 7,
+      "rating": 1515.95,
       "team_name": "Monterrey"
     },
     {
-      "matches_observed_total": 84,
-      "rank": 11,
-      "rating": 1487.53,
-      "team_name": "Club Leon"
+      "matches_observed_total": 80,
+      "rank": 8,
+      "rating": 1515.41,
+      "team_name": "Club Tijuana"
     },
     {
-      "matches_observed_total": 83,
-      "rank": 12,
-      "rating": 1471.71,
+      "matches_observed_total": 81,
+      "rank": 9,
+      "rating": 1512.12,
+      "team_name": "Atlas"
+    },
+    {
+      "matches_observed_total": 80,
+      "rank": 10,
+      "rating": 1505.03,
       "team_name": "Queretaro"
     },
     {
-      "matches_observed_total": 16,
-      "rank": 13,
-      "rating": 1457.87,
+      "matches_observed_total": 81,
+      "rank": 11,
+      "rating": 1489.46,
+      "team_name": "Club Leon"
+    },
+    {
+      "matches_observed_total": 13,
+      "rank": 12,
+      "rating": 1487.41,
       "team_name": "Atlante"
     },
     {
-      "matches_observed_total": 84,
-      "rank": 14,
-      "rating": 1455.11,
-      "team_name": "Santos Laguna"
+      "matches_observed_total": 81,
+      "rank": 13,
+      "rating": 1483.82,
+      "team_name": "Pachuca"
     },
     {
-      "matches_observed_total": 84,
-      "rank": 15,
-      "rating": 1449.88,
+      "matches_observed_total": 81,
+      "rank": 14,
+      "rating": 1460.13,
       "team_name": "Atletico San Luis"
     },
     {
-      "matches_observed_total": 84,
-      "rank": 16,
-      "rating": 1426.24,
-      "team_name": "FC Juarez"
+      "matches_observed_total": 81,
+      "rank": 15,
+      "rating": 1441.76,
+      "team_name": "Santos Laguna"
     },
     {
-      "matches_observed_total": 84,
-      "rank": 17,
-      "rating": 1423.36,
+      "matches_observed_total": 81,
+      "rank": 16,
+      "rating": 1421.35,
       "team_name": "Necaxa"
     },
     {
       "matches_observed_total": 68,
-      "rank": 18,
+      "rank": 17,
       "rating": 1412.44,
       "team_name": "Mazatlan"
     },
     {
-      "matches_observed_total": 84,
-      "rank": 19,
-      "rating": 1410.69,
+      "matches_observed_total": 81,
+      "rank": 18,
+      "rating": 1410.82,
       "team_name": "Puebla"
+    },
+    {
+      "matches_observed_total": 81,
+      "rank": 19,
+      "rating": 1400.59,
+      "team_name": "FC Juarez"
     }
   ],
   "current_season_active_standings": [
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
       "rank": 1,
-      "rating": 1624.73,
+      "rating": 1602.48,
       "team_name": "Cruz Azul"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
+      "matches_observed_season": 12,
+      "matches_observed_total": 80,
       "rank": 2,
-      "rating": 1595.29,
-      "team_name": "Toluca"
-    },
-    {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 3,
-      "rating": 1590.61,
-      "team_name": "Guadalajara"
-    },
-    {
-      "matches_observed_season": 15,
-      "matches_observed_total": 83,
-      "rank": 4,
-      "rating": 1580.85,
+      "rating": 1595.72,
       "team_name": "Club America"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 3,
+      "rating": 1589.56,
+      "team_name": "Toluca"
+    },
+    {
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 4,
+      "rating": 1577.38,
+      "team_name": "Guadalajara"
+    },
+    {
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
       "rank": 5,
-      "rating": 1544.65,
+      "rating": 1538.7,
       "team_name": "Pumas UNAM"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
       "rank": 6,
-      "rating": 1519.26,
-      "team_name": "Pachuca"
-    },
-    {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 7,
-      "rating": 1516.48,
-      "team_name": "Atlas"
-    },
-    {
-      "matches_observed_season": 15,
-      "matches_observed_total": 83,
-      "rank": 8,
-      "rating": 1510.76,
-      "team_name": "Club Tijuana"
-    },
-    {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 9,
-      "rating": 1510.02,
+      "rating": 1526.74,
       "team_name": "Tigres UANL"
     },
     {
-      "matches_observed_season": 15,
-      "matches_observed_total": 83,
-      "rank": 10,
-      "rating": 1499.41,
+      "matches_observed_season": 12,
+      "matches_observed_total": 80,
+      "rank": 7,
+      "rating": 1515.95,
       "team_name": "Monterrey"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 11,
-      "rating": 1487.53,
-      "team_name": "Club Leon"
+      "matches_observed_season": 12,
+      "matches_observed_total": 80,
+      "rank": 8,
+      "rating": 1515.41,
+      "team_name": "Club Tijuana"
     },
     {
-      "matches_observed_season": 15,
-      "matches_observed_total": 83,
-      "rank": 12,
-      "rating": 1471.71,
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 9,
+      "rating": 1512.12,
+      "team_name": "Atlas"
+    },
+    {
+      "matches_observed_season": 12,
+      "matches_observed_total": 80,
+      "rank": 10,
+      "rating": 1505.03,
       "team_name": "Queretaro"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 16,
-      "rank": 13,
-      "rating": 1457.87,
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 11,
+      "rating": 1489.46,
+      "team_name": "Club Leon"
+    },
+    {
+      "matches_observed_season": 13,
+      "matches_observed_total": 13,
+      "rank": 12,
+      "rating": 1487.41,
       "team_name": "Atlante"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 14,
-      "rating": 1455.11,
-      "team_name": "Santos Laguna"
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 13,
+      "rating": 1483.82,
+      "team_name": "Pachuca"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 15,
-      "rating": 1449.88,
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 14,
+      "rating": 1460.13,
       "team_name": "Atletico San Luis"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 16,
-      "rating": 1426.24,
-      "team_name": "FC Juarez"
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 15,
+      "rating": 1441.76,
+      "team_name": "Santos Laguna"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 17,
-      "rating": 1423.36,
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 16,
+      "rating": 1421.35,
       "team_name": "Necaxa"
     },
     {
-      "matches_observed_season": 16,
-      "matches_observed_total": 84,
-      "rank": 18,
-      "rating": 1410.69,
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 17,
+      "rating": 1410.82,
       "team_name": "Puebla"
+    },
+    {
+      "matches_observed_season": 13,
+      "matches_observed_total": 81,
+      "rank": 18,
+      "rating": 1400.59,
+      "team_name": "FC Juarez"
     }
   ],
   "historical_matches": [
@@ -52638,23 +52726,96 @@
           "rating_pre_match": 1592.77
         }
       }
-    },
+    }
+  ],
+  "target_matches": [
     {
       "active_league_mean": 1504.13,
       "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Atletico San Luis",
-      "date": "2026-10-24",
+      "away_team": "FC Juarez",
+      "date": "2026-10-23",
       "decision_effect": "NONE",
-      "home_team": "Atlante",
+      "home_team": "Necaxa",
       "match_context": {
-        "as_of": "2026-10-24",
+        "as_of": "2026-10-23",
         "decision_effect": "NONE",
         "dynamic_tags": [],
         "rivalry_level": null,
         "source": null,
         "static_tags": []
       },
-      "match_id": "20261024_ATLANTE_ATLETICOSANLUIS",
+      "match_id": "20261023_NECAXA_FCJUAREZ",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1519.43,
+          "opp_strength_l5_contextualized_gap_avg": 15.3,
+          "schedule_difficulty_vs_active_mean": 15.3,
+          "schedule_difficulty_vs_nominal_anchor": 19.43
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1519.25,
+          "opp_strength_l5_contextualized_gap_avg": 15.12,
+          "schedule_difficulty_vs_active_mean": 15.12,
+          "schedule_difficulty_vs_nominal_anchor": 19.25
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "is_rivalry": null,
+        "source": null,
+        "static_tags": [],
+        "status": "NOT_EVALUATED"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 81,
+          "matches_observed_season": 13,
+          "matches_observed_total": 81,
+          "rank_in_league": 18,
+          "rating_pre_match": 1400.59
+        },
+        "diff_home_minus_away": 20.75,
+        "expected_score_away": 0.420445,
+        "expected_score_home": 0.579555,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 81,
+          "matches_observed_season": 13,
+          "matches_observed_total": 81,
+          "rank_in_league": 16,
+          "rating_pre_match": 1421.35
+        }
+      }
+    },
+    {
+      "active_league_mean": 1504.13,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Atletico San Luis",
+      "date": "2026-10-23",
+      "decision_effect": "NONE",
+      "home_team": "Atlante",
+      "match_context": {
+        "as_of": "2026-10-23",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": null,
+        "static_tags": []
+      },
+      "match_id": "20261023_ATLANTE_ATLETICOSANLUIS",
       "opponent_quality": {
         "away": {
           "flags": [],
@@ -52683,8 +52844,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 1,
-      "score_home": 0,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -52754,8 +52915,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 1,
-      "score_home": 1,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -52784,10 +52945,10 @@
     {
       "active_league_mean": 1504.13,
       "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "FC Juarez",
+      "away_team": "Guadalajara",
       "date": "2026-10-24",
       "decision_effect": "NONE",
-      "home_team": "Necaxa",
+      "home_team": "Monterrey",
       "match_context": {
         "as_of": "2026-10-24",
         "decision_effect": "NONE",
@@ -52796,25 +52957,25 @@
         "source": null,
         "static_tags": []
       },
-      "match_id": "20261024_NECAXA_FCJUAREZ",
+      "match_id": "20261024_MONTERREY_GUADALAJARA",
       "opponent_quality": {
         "away": {
           "flags": [],
           "n_contextualized_gaps_observed": 5,
           "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1519.43,
-          "opp_strength_l5_contextualized_gap_avg": 15.3,
-          "schedule_difficulty_vs_active_mean": 15.3,
-          "schedule_difficulty_vs_nominal_anchor": 19.43
+          "opp_strength_l5_avg": 1511.45,
+          "opp_strength_l5_contextualized_gap_avg": 7.31,
+          "schedule_difficulty_vs_active_mean": 7.32,
+          "schedule_difficulty_vs_nominal_anchor": 11.45
         },
         "home": {
           "flags": [],
           "n_contextualized_gaps_observed": 5,
           "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1519.25,
-          "opp_strength_l5_contextualized_gap_avg": 15.12,
-          "schedule_difficulty_vs_active_mean": 15.12,
-          "schedule_difficulty_vs_nominal_anchor": 19.25
+          "opp_strength_l5_avg": 1518.28,
+          "opp_strength_l5_contextualized_gap_avg": 14.15,
+          "schedule_difficulty_vs_active_mean": 14.15,
+          "schedule_difficulty_vs_nominal_anchor": 18.28
         }
       },
       "rivalry_intelligence": {
@@ -52825,8 +52986,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 1,
-      "score_home": 1,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -52835,20 +52996,91 @@
           "matches_observed": 81,
           "matches_observed_season": 13,
           "matches_observed_total": 81,
-          "rank_in_league": 18,
-          "rating_pre_match": 1400.59
+          "rank_in_league": 4,
+          "rating_pre_match": 1577.38
         },
-        "diff_home_minus_away": 20.75,
-        "expected_score_away": 0.420445,
-        "expected_score_home": 0.579555,
+        "diff_home_minus_away": -61.44,
+        "expected_score_away": 0.537971,
+        "expected_score_home": 0.462029,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 80,
+          "matches_observed_season": 12,
+          "matches_observed_total": 80,
+          "rank_in_league": 7,
+          "rating_pre_match": 1515.95
+        }
+      }
+    },
+    {
+      "active_league_mean": 1504.13,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Tigres UANL",
+      "date": "2026-10-24",
+      "decision_effect": "NONE",
+      "home_team": "Pumas UNAM",
+      "match_context": {
+        "as_of": "2026-10-24",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": null,
+        "static_tags": []
+      },
+      "match_id": "20261024_PUMASUNAM_TIGRESUANL",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1497.58,
+          "opp_strength_l5_contextualized_gap_avg": -6.55,
+          "schedule_difficulty_vs_active_mean": -6.55,
+          "schedule_difficulty_vs_nominal_anchor": -2.42
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1489.85,
+          "opp_strength_l5_contextualized_gap_avg": -14.28,
+          "schedule_difficulty_vs_active_mean": -14.28,
+          "schedule_difficulty_vs_nominal_anchor": -10.15
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "is_rivalry": null,
+        "source": null,
+        "static_tags": [],
+        "status": "NOT_EVALUATED"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 81,
+          "matches_observed_season": 13,
+          "matches_observed_total": 81,
+          "rank_in_league": 6,
+          "rating_pre_match": 1526.74
+        },
+        "diff_home_minus_away": 11.97,
+        "expected_score_away": 0.432819,
+        "expected_score_home": 0.567181,
         "home": {
           "is_new_entrant": false,
           "is_returning_after_absence": false,
           "matches_observed": 81,
           "matches_observed_season": 13,
           "matches_observed_total": 81,
-          "rank_in_league": 16,
-          "rating_pre_match": 1421.35
+          "rank_in_league": 5,
+          "rating_pre_match": 1538.7
         }
       }
     },
@@ -52896,8 +53128,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 3,
-      "score_home": 4,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -52926,303 +53158,19 @@
     {
       "active_league_mean": 1504.13,
       "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Guadalajara",
-      "date": "2026-10-25",
-      "decision_effect": "NONE",
-      "home_team": "Monterrey",
-      "match_context": {
-        "as_of": "2026-10-25",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261025_MONTERREY_GUADALAJARA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1511.45,
-          "opp_strength_l5_contextualized_gap_avg": 7.31,
-          "schedule_difficulty_vs_active_mean": 7.32,
-          "schedule_difficulty_vs_nominal_anchor": 11.45
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1518.28,
-          "opp_strength_l5_contextualized_gap_avg": 14.15,
-          "schedule_difficulty_vs_active_mean": 14.15,
-          "schedule_difficulty_vs_nominal_anchor": 18.28
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 4,
-          "rating_pre_match": 1577.38
-        },
-        "diff_home_minus_away": -61.44,
-        "expected_score_away": 0.537971,
-        "expected_score_home": 0.462029,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 80,
-          "matches_observed_season": 12,
-          "matches_observed_total": 80,
-          "rank_in_league": 7,
-          "rating_pre_match": 1515.95
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Tigres UANL",
-      "date": "2026-10-25",
-      "decision_effect": "NONE",
-      "home_team": "Pumas UNAM",
-      "match_context": {
-        "as_of": "2026-10-25",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261025_PUMASUNAM_TIGRESUANL",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1497.58,
-          "opp_strength_l5_contextualized_gap_avg": -6.55,
-          "schedule_difficulty_vs_active_mean": -6.55,
-          "schedule_difficulty_vs_nominal_anchor": -2.42
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1489.85,
-          "opp_strength_l5_contextualized_gap_avg": -14.28,
-          "schedule_difficulty_vs_active_mean": -14.28,
-          "schedule_difficulty_vs_nominal_anchor": -10.15
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 6,
-          "rating_pre_match": 1526.74
-        },
-        "diff_home_minus_away": 11.97,
-        "expected_score_away": 0.432819,
-        "expected_score_home": 0.567181,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 5,
-          "rating_pre_match": 1538.7
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Pachuca",
-      "date": "2026-10-26",
-      "decision_effect": "NONE",
-      "home_team": "Club America",
-      "match_context": {
-        "as_of": "2026-10-26",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261026_CLUBAMERICA_PACHUCA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1489.3,
-          "opp_strength_l5_contextualized_gap_avg": -14.83,
-          "schedule_difficulty_vs_active_mean": -14.83,
-          "schedule_difficulty_vs_nominal_anchor": -10.7
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1505.71,
-          "opp_strength_l5_contextualized_gap_avg": 1.58,
-          "schedule_difficulty_vs_active_mean": 1.58,
-          "schedule_difficulty_vs_nominal_anchor": 5.71
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 12,
-          "rating_pre_match": 1483.82
-        },
-        "diff_home_minus_away": 111.9,
-        "expected_score_away": 0.300357,
-        "expected_score_home": 0.699643,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 80,
-          "matches_observed_season": 12,
-          "matches_observed_total": 80,
-          "rank_in_league": 2,
-          "rating_pre_match": 1595.72
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Santos Laguna",
-      "date": "2026-10-26",
-      "decision_effect": "NONE",
-      "home_team": "Club Tijuana",
-      "match_context": {
-        "as_of": "2026-10-26",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261026_CLUBTIJUANA_SANTOSLAGUNA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1535.55,
-          "opp_strength_l5_contextualized_gap_avg": 31.42,
-          "schedule_difficulty_vs_active_mean": 31.42,
-          "schedule_difficulty_vs_nominal_anchor": 35.55
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1487.49,
-          "opp_strength_l5_contextualized_gap_avg": -16.64,
-          "schedule_difficulty_vs_active_mean": -16.64,
-          "schedule_difficulty_vs_nominal_anchor": -12.51
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 4,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 15,
-          "rating_pre_match": 1441.76
-        },
-        "diff_home_minus_away": 73.64,
-        "expected_score_away": 0.348553,
-        "expected_score_home": 0.651447,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 80,
-          "matches_observed_season": 12,
-          "matches_observed_total": 80,
-          "rank_in_league": 8,
-          "rating_pre_match": 1515.41
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
       "away_team": "Cruz Azul",
-      "date": "2026-10-26",
+      "date": "2026-10-25",
       "decision_effect": "NONE",
       "home_team": "Queretaro",
       "match_context": {
-        "as_of": "2026-10-26",
+        "as_of": "2026-10-25",
         "decision_effect": "NONE",
         "dynamic_tags": [],
         "rivalry_level": null,
         "source": null,
         "static_tags": []
       },
-      "match_id": "20261026_QUERETARO_CRUZAZUL",
+      "match_id": "20261025_QUERETARO_CRUZAZUL",
       "opponent_quality": {
         "away": {
           "flags": [],
@@ -53251,8 +53199,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 3,
-      "score_home": 1,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -53281,1317 +53229,37 @@
     {
       "active_league_mean": 1504.13,
       "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Atlas",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "Atletico San Luis",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261031_ATLETICOSANLUIS_ATLAS",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1507.51,
-          "opp_strength_l5_contextualized_gap_avg": 3.38,
-          "schedule_difficulty_vs_active_mean": 3.38,
-          "schedule_difficulty_vs_nominal_anchor": 7.51
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1512.22,
-          "opp_strength_l5_contextualized_gap_avg": 8.09,
-          "schedule_difficulty_vs_active_mean": 8.09,
-          "schedule_difficulty_vs_nominal_anchor": 12.22
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 8,
-          "rating_pre_match": 1518.39
-        },
-        "diff_home_minus_away": -46.49,
-        "expected_score_away": 0.516526,
-        "expected_score_home": 0.483474,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 14,
-          "rating_pre_match": 1471.9
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Queretaro",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "FC Juarez",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261031_FCJUAREZ_QUERETARO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1510.66,
-          "opp_strength_l5_contextualized_gap_avg": 6.52,
-          "schedule_difficulty_vs_active_mean": 6.53,
-          "schedule_difficulty_vs_nominal_anchor": 10.66
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1497.24,
-          "opp_strength_l5_contextualized_gap_avg": -6.89,
-          "schedule_difficulty_vs_active_mean": -6.89,
-          "schedule_difficulty_vs_nominal_anchor": -2.76
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 3,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 11,
-          "rating_pre_match": 1496.81
-        },
-        "diff_home_minus_away": -94.63,
-        "expected_score_away": 0.584976,
-        "expected_score_home": 0.415024,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 18,
-          "rating_pre_match": 1402.18
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Tigres UANL",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "Pachuca",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261031_PACHUCA_TIGRESUANL",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1523.91,
-          "opp_strength_l5_contextualized_gap_avg": 19.79,
-          "schedule_difficulty_vs_active_mean": 19.78,
-          "schedule_difficulty_vs_nominal_anchor": 23.91
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1502.62,
-          "opp_strength_l5_contextualized_gap_avg": -1.51,
-          "schedule_difficulty_vs_active_mean": -1.51,
-          "schedule_difficulty_vs_nominal_anchor": 2.62
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 3,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 6,
-          "rating_pre_match": 1528.08
-        },
-        "diff_home_minus_away": -30.27,
-        "expected_score_away": 0.49319,
-        "expected_score_home": 0.50681,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 10,
-          "rating_pre_match": 1497.81
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Pumas UNAM",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "Puebla",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261031_PUEBLA_PUMASUNAM",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1495.36,
-          "opp_strength_l5_contextualized_gap_avg": -8.77,
-          "schedule_difficulty_vs_active_mean": -8.77,
-          "schedule_difficulty_vs_nominal_anchor": -4.64
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1508.27,
-          "opp_strength_l5_contextualized_gap_avg": 4.14,
-          "schedule_difficulty_vs_active_mean": 4.14,
-          "schedule_difficulty_vs_nominal_anchor": 8.27
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 5,
-          "rating_pre_match": 1537.36
-        },
-        "diff_home_minus_away": -132.81,
-        "expected_score_away": 0.637157,
-        "expected_score_home": 0.362843,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 17,
-          "rating_pre_match": 1404.55
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Toluca",
-      "date": "2026-11-01",
+      "away_team": "Pachuca",
+      "date": "2026-10-25",
       "decision_effect": "NONE",
       "home_team": "Club America",
       "match_context": {
-        "as_of": "2026-11-01",
+        "as_of": "2026-10-25",
         "decision_effect": "NONE",
         "dynamic_tags": [],
         "rivalry_level": null,
         "source": null,
         "static_tags": []
       },
-      "match_id": "20261101_CLUBAMERICA_TOLUCA",
+      "match_id": "20261025_CLUBAMERICA_PACHUCA",
       "opponent_quality": {
         "away": {
           "flags": [],
           "n_contextualized_gaps_observed": 5,
           "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1512.54,
-          "opp_strength_l5_contextualized_gap_avg": 8.41,
-          "schedule_difficulty_vs_active_mean": 8.41,
-          "schedule_difficulty_vs_nominal_anchor": 12.54
+          "opp_strength_l5_avg": 1489.3,
+          "opp_strength_l5_contextualized_gap_avg": -14.83,
+          "schedule_difficulty_vs_active_mean": -14.83,
+          "schedule_difficulty_vs_nominal_anchor": -10.7
         },
         "home": {
           "flags": [],
           "n_contextualized_gaps_observed": 5,
           "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1484.95,
-          "opp_strength_l5_contextualized_gap_avg": -19.18,
-          "schedule_difficulty_vs_active_mean": -19.18,
-          "schedule_difficulty_vs_nominal_anchor": -15.05
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 2,
-          "rating_pre_match": 1587.71
-        },
-        "diff_home_minus_away": -5.98,
-        "expected_score_away": 0.45834,
-        "expected_score_home": 0.54166,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 4,
-          "rating_pre_match": 1581.72
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Atlante",
-      "date": "2026-11-01",
-      "decision_effect": "NONE",
-      "home_team": "Guadalajara",
-      "match_context": {
-        "as_of": "2026-11-01",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261101_GUADALAJARA_ATLANTE",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1487.15,
-          "opp_strength_l5_contextualized_gap_avg": -16.98,
-          "schedule_difficulty_vs_active_mean": -16.98,
-          "schedule_difficulty_vs_nominal_anchor": -12.85
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1499.63,
-          "opp_strength_l5_contextualized_gap_avg": -4.51,
-          "schedule_difficulty_vs_active_mean": -4.5,
-          "schedule_difficulty_vs_nominal_anchor": -0.37
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 4,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 14,
-          "matches_observed_season": 14,
-          "matches_observed_total": 14,
-          "rank_in_league": 13,
-          "rating_pre_match": 1475.64
-        },
-        "diff_home_minus_away": 110.99,
-        "expected_score_away": 0.301459,
-        "expected_score_home": 0.698541,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 3,
-          "rating_pre_match": 1586.63
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Club Tijuana",
-      "date": "2026-11-01",
-      "decision_effect": "NONE",
-      "home_team": "Monterrey",
-      "match_context": {
-        "as_of": "2026-11-01",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261101_MONTERREY_CLUBTIJUANA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1472.42,
-          "opp_strength_l5_contextualized_gap_avg": -31.71,
-          "schedule_difficulty_vs_active_mean": -31.71,
-          "schedule_difficulty_vs_nominal_anchor": -27.58
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1513.19,
-          "opp_strength_l5_contextualized_gap_avg": 9.05,
-          "schedule_difficulty_vs_active_mean": 9.06,
-          "schedule_difficulty_vs_nominal_anchor": 13.19
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 3,
-      "score_home": 3,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 7,
-          "rating_pre_match": 1522.38
-        },
-        "diff_home_minus_away": -15.67,
-        "expected_score_away": 0.472209,
-        "expected_score_home": 0.527791,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 81,
-          "matches_observed_season": 13,
-          "matches_observed_total": 81,
-          "rank_in_league": 10,
-          "rating_pre_match": 1506.71
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Necaxa",
-      "date": "2026-11-01",
-      "decision_effect": "NONE",
-      "home_team": "Santos Laguna",
-      "match_context": {
-        "as_of": "2026-11-01",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261101_SANTOSLAGUNA_NECAXA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1512.71,
-          "opp_strength_l5_contextualized_gap_avg": 8.58,
-          "schedule_difficulty_vs_active_mean": 8.58,
-          "schedule_difficulty_vs_nominal_anchor": 12.71
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1513.57,
-          "opp_strength_l5_contextualized_gap_avg": 9.44,
-          "schedule_difficulty_vs_active_mean": 9.44,
-          "schedule_difficulty_vs_nominal_anchor": 13.57
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 16,
-          "rating_pre_match": 1419.75
-        },
-        "diff_home_minus_away": 15.04,
-        "expected_score_away": 0.428484,
-        "expected_score_home": 0.571516,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 15,
-          "rating_pre_match": 1434.79
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Club Leon",
-      "date": "2026-11-02",
-      "decision_effect": "NONE",
-      "home_team": "Cruz Azul",
-      "match_context": {
-        "as_of": "2026-11-02",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261102_CRUZAZUL_CLUBLEON",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1508.28,
-          "opp_strength_l5_contextualized_gap_avg": 4.15,
-          "schedule_difficulty_vs_active_mean": 4.15,
-          "schedule_difficulty_vs_nominal_anchor": 8.28
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1512.21,
-          "opp_strength_l5_contextualized_gap_avg": 8.08,
-          "schedule_difficulty_vs_active_mean": 8.08,
-          "schedule_difficulty_vs_nominal_anchor": 12.21
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 11,
-          "rating_pre_match": 1491.31
-        },
-        "diff_home_minus_away": 119.4,
-        "expected_score_away": 0.291364,
-        "expected_score_home": 0.708636,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 1,
-          "rating_pre_match": 1610.7
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Santos Laguna",
-      "date": "2026-11-07",
-      "decision_effect": "NONE",
-      "home_team": "Atlante",
-      "match_context": {
-        "as_of": "2026-11-07",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261107_ATLANTE_SANTOSLAGUNA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1494.23,
-          "opp_strength_l5_contextualized_gap_avg": -9.91,
-          "schedule_difficulty_vs_active_mean": -9.9,
-          "schedule_difficulty_vs_nominal_anchor": -5.77
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1503.57,
-          "opp_strength_l5_contextualized_gap_avg": -0.56,
-          "schedule_difficulty_vs_active_mean": -0.56,
-          "schedule_difficulty_vs_nominal_anchor": 3.57
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 15,
-          "rating_pre_match": 1443.36
-        },
-        "diff_home_minus_away": 26.25,
-        "expected_score_away": 0.412757,
-        "expected_score_home": 0.587243,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 15,
-          "matches_observed_season": 15,
-          "matches_observed_total": 15,
-          "rank_in_league": 13,
-          "rating_pre_match": 1469.61
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Pachuca",
-      "date": "2026-11-07",
-      "decision_effect": "NONE",
-      "home_team": "Atlas",
-      "match_context": {
-        "as_of": "2026-11-07",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261107_ATLAS_PACHUCA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1529.8,
-          "opp_strength_l5_contextualized_gap_avg": 25.67,
-          "schedule_difficulty_vs_active_mean": 25.67,
-          "schedule_difficulty_vs_nominal_anchor": 29.8
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1495.94,
-          "opp_strength_l5_contextualized_gap_avg": -8.19,
-          "schedule_difficulty_vs_active_mean": -8.19,
-          "schedule_difficulty_vs_nominal_anchor": -4.06
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 4,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 9,
-          "rating_pre_match": 1507.68
-        },
-        "diff_home_minus_away": 20.38,
-        "expected_score_away": 0.420972,
-        "expected_score_home": 0.579028,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 6,
-          "rating_pre_match": 1528.06
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "FC Juarez",
-      "date": "2026-11-07",
-      "decision_effect": "NONE",
-      "home_team": "Atletico San Luis",
-      "match_context": {
-        "as_of": "2026-11-07",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261107_ATLETICOSANLUIS_FCJUAREZ",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1500.85,
-          "opp_strength_l5_contextualized_gap_avg": -3.28,
-          "schedule_difficulty_vs_active_mean": -3.28,
-          "schedule_difficulty_vs_nominal_anchor": 0.85
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1504.83,
-          "opp_strength_l5_contextualized_gap_avg": 0.7,
-          "schedule_difficulty_vs_active_mean": 0.7,
-          "schedule_difficulty_vs_nominal_anchor": 4.83
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 16,
-          "rating_pre_match": 1413.88
-        },
-        "diff_home_minus_away": 48.35,
-        "expected_score_away": 0.382302,
-        "expected_score_home": 0.617698,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 14,
-          "rating_pre_match": 1462.23
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Club Tijuana",
-      "date": "2026-11-07",
-      "decision_effect": "NONE",
-      "home_team": "Necaxa",
-      "match_context": {
-        "as_of": "2026-11-07",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261107_NECAXA_CLUBTIJUANA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1473.81,
-          "opp_strength_l5_contextualized_gap_avg": -30.32,
-          "schedule_difficulty_vs_active_mean": -30.32,
-          "schedule_difficulty_vs_nominal_anchor": -26.19
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1484.79,
-          "opp_strength_l5_contextualized_gap_avg": -19.34,
-          "schedule_difficulty_vs_active_mean": -19.34,
-          "schedule_difficulty_vs_nominal_anchor": -15.21
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 7,
-          "rating_pre_match": 1522.93
-        },
-        "diff_home_minus_away": -111.75,
-        "expected_score_away": 0.608689,
-        "expected_score_home": 0.391311,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 17,
-          "rating_pre_match": 1411.18
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Club America",
-      "date": "2026-11-08",
-      "decision_effect": "NONE",
-      "home_team": "Pumas UNAM",
-      "match_context": {
-        "as_of": "2026-11-08",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261108_PUMASUNAM_CLUBAMERICA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1514.57,
-          "opp_strength_l5_contextualized_gap_avg": 10.45,
-          "schedule_difficulty_vs_active_mean": 10.44,
-          "schedule_difficulty_vs_nominal_anchor": 14.57
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1487.73,
-          "opp_strength_l5_contextualized_gap_avg": -16.4,
-          "schedule_difficulty_vs_active_mean": -16.4,
-          "schedule_difficulty_vs_nominal_anchor": -12.27
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 4,
-          "rating_pre_match": 1580.89
-        },
-        "diff_home_minus_away": -36.27,
-        "expected_score_away": 0.501832,
-        "expected_score_home": 0.498168,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 5,
-          "rating_pre_match": 1544.62
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Cruz Azul",
-      "date": "2026-11-08",
-      "decision_effect": "NONE",
-      "home_team": "Tigres UANL",
-      "match_context": {
-        "as_of": "2026-11-08",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261108_TIGRESUANL_CRUZAZUL",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1488.75,
-          "opp_strength_l5_contextualized_gap_avg": -15.38,
-          "schedule_difficulty_vs_active_mean": -15.38,
-          "schedule_difficulty_vs_nominal_anchor": -11.25
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1539.3,
-          "opp_strength_l5_contextualized_gap_avg": 35.17,
-          "schedule_difficulty_vs_active_mean": 35.17,
-          "schedule_difficulty_vs_nominal_anchor": 39.3
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 3,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 1,
-          "rating_pre_match": 1616.53
-        },
-        "diff_home_minus_away": -98.31,
-        "expected_score_away": 0.59012,
-        "expected_score_home": 0.40988,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 7,
-          "rating_pre_match": 1518.22
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Monterrey",
-      "date": "2026-11-08",
-      "decision_effect": "NONE",
-      "home_team": "Toluca",
-      "match_context": {
-        "as_of": "2026-11-08",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261108_TOLUCA_MONTERREY",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1520.33,
-          "opp_strength_l5_contextualized_gap_avg": 16.2,
-          "schedule_difficulty_vs_active_mean": 16.2,
-          "schedule_difficulty_vs_nominal_anchor": 20.33
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1510.74,
-          "opp_strength_l5_contextualized_gap_avg": 6.61,
-          "schedule_difficulty_vs_active_mean": 6.61,
-          "schedule_difficulty_vs_nominal_anchor": 10.74
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 4,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 10,
-          "rating_pre_match": 1506.15
-        },
-        "diff_home_minus_away": 82.39,
-        "expected_score_away": 0.337212,
-        "expected_score_home": 0.662788,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 3,
-          "rating_pre_match": 1588.54
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Guadalajara",
-      "date": "2026-11-09",
-      "decision_effect": "NONE",
-      "home_team": "Club Leon",
-      "match_context": {
-        "as_of": "2026-11-09",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261109_CLUBLEON_GUADALAJARA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1493.45,
-          "opp_strength_l5_contextualized_gap_avg": -10.68,
-          "schedule_difficulty_vs_active_mean": -10.68,
-          "schedule_difficulty_vs_nominal_anchor": -6.55
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1546.51,
-          "opp_strength_l5_contextualized_gap_avg": 42.38,
-          "schedule_difficulty_vs_active_mean": 42.38,
-          "schedule_difficulty_vs_nominal_anchor": 46.51
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 3,
-          "rating_pre_match": 1592.65
-        },
-        "diff_home_minus_away": -107.17,
-        "expected_score_away": 0.602397,
-        "expected_score_home": 0.397603,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 11,
-          "rating_pre_match": 1485.48
-        }
-      }
-    },
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Puebla",
-      "date": "2026-11-09",
-      "decision_effect": "NONE",
-      "home_team": "Queretaro",
-      "match_context": {
-        "as_of": "2026-11-09",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261109_QUERETARO_PUEBLA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1511.79,
-          "opp_strength_l5_contextualized_gap_avg": 7.66,
-          "schedule_difficulty_vs_active_mean": 7.66,
-          "schedule_difficulty_vs_nominal_anchor": 11.79
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1473.44,
-          "opp_strength_l5_contextualized_gap_avg": -30.69,
-          "schedule_difficulty_vs_active_mean": -30.69,
-          "schedule_difficulty_vs_nominal_anchor": -26.56
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 18,
-          "rating_pre_match": 1397.29
-        },
-        "diff_home_minus_away": 87.82,
-        "expected_score_away": 0.330265,
-        "expected_score_home": 0.669735,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 82,
-          "matches_observed_season": 14,
-          "matches_observed_total": 82,
-          "rank_in_league": 12,
-          "rating_pre_match": 1485.11
-        }
-      }
-    }
-  ],
-  "target_matches": [
-    {
-      "active_league_mean": 1504.13,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Monterrey",
-      "date": "2026-11-14",
-      "decision_effect": "NONE",
-      "home_team": "Queretaro",
-      "match_context": {
-        "as_of": "2026-11-14",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261114_QUERETARO_MONTERREY",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1521.71,
-          "opp_strength_l5_contextualized_gap_avg": 17.58,
-          "schedule_difficulty_vs_active_mean": 17.58,
-          "schedule_difficulty_vs_nominal_anchor": 21.71
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1453.67,
-          "opp_strength_l5_contextualized_gap_avg": -50.47,
-          "schedule_difficulty_vs_active_mean": -50.46,
-          "schedule_difficulty_vs_nominal_anchor": -46.33
+          "opp_strength_l5_avg": 1505.71,
+          "opp_strength_l5_contextualized_gap_avg": 1.58,
+          "schedule_difficulty_vs_active_mean": 1.58,
+          "schedule_difficulty_vs_nominal_anchor": 5.71
         }
       },
       "rivalry_intelligence": {
@@ -54609,23 +53277,94 @@
         "away": {
           "is_new_entrant": false,
           "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 10,
-          "rating_pre_match": 1499.41
+          "matches_observed": 81,
+          "matches_observed_season": 13,
+          "matches_observed_total": 81,
+          "rank_in_league": 13,
+          "rating_pre_match": 1483.82
         },
-        "diff_home_minus_away": -27.69,
-        "expected_score_away": 0.489488,
-        "expected_score_home": 0.510512,
+        "diff_home_minus_away": 111.9,
+        "expected_score_away": 0.300357,
+        "expected_score_home": 0.699643,
         "home": {
           "is_new_entrant": false,
           "is_returning_after_absence": false,
-          "matches_observed": 83,
-          "matches_observed_season": 15,
-          "matches_observed_total": 83,
-          "rank_in_league": 12,
-          "rating_pre_match": 1471.71
+          "matches_observed": 80,
+          "matches_observed_season": 12,
+          "matches_observed_total": 80,
+          "rank_in_league": 2,
+          "rating_pre_match": 1595.72
+        }
+      }
+    },
+    {
+      "active_league_mean": 1504.13,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Santos Laguna",
+      "date": "2026-10-25",
+      "decision_effect": "NONE",
+      "home_team": "Club Tijuana",
+      "match_context": {
+        "as_of": "2026-10-25",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": null,
+        "static_tags": []
+      },
+      "match_id": "20261025_CLUBTIJUANA_SANTOSLAGUNA",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1535.55,
+          "opp_strength_l5_contextualized_gap_avg": 31.42,
+          "schedule_difficulty_vs_active_mean": 31.42,
+          "schedule_difficulty_vs_nominal_anchor": 35.55
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1487.49,
+          "opp_strength_l5_contextualized_gap_avg": -16.64,
+          "schedule_difficulty_vs_active_mean": -16.64,
+          "schedule_difficulty_vs_nominal_anchor": -12.51
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "is_rivalry": null,
+        "source": null,
+        "static_tags": [],
+        "status": "NOT_EVALUATED"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 81,
+          "matches_observed_season": 13,
+          "matches_observed_total": 81,
+          "rank_in_league": 15,
+          "rating_pre_match": 1441.76
+        },
+        "diff_home_minus_away": 73.64,
+        "expected_score_away": 0.348553,
+        "expected_score_home": 0.651447,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 80,
+          "matches_observed_season": 12,
+          "matches_observed_total": 80,
+          "rank_in_league": 8,
+          "rating_pre_match": 1515.41
         }
       }
     }

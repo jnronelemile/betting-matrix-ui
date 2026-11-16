@@ -1,79 +1,987 @@
 {
   "schema_version": "1.0",
-  "diagnostic_id": "6bafa0e303853bb39fc9c203b27d572b4a31971adf72b40deae1f15ac8f6b141",
-  "session": "Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s",
+  "diagnostic_id": "2a8ce291621c10646ce071b6d0a11f5db45d17357df4134857cbd1c72e26548c",
+  "session": "Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s",
   "classification": "EXPERIMENTAL_DESCRIPTIVE_ONLY",
   "decision_authority": "NONE",
   "summary": {
-    "matrix_match_count": 14,
-    "identity_matched_count": 14,
+    "matrix_match_count": 241,
+    "identity_matched_count": 241,
     "refusal_count": 0,
-    "comparison_count": 252,
-    "unavailable_count": 2385
+    "comparison_count": 4338,
+    "unavailable_count": 42434
   },
   "refusals": [],
   "sources": {
     "matrix": {
-      "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/processed_matrices/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s_VALUE_BETTING_MATRIX_2026-11-13_14h12m53s.json",
-      "sha256": "015e7e9e5ae7ec8a123df3015b491f449bb83b0e43dc988c7e4845ec66ae68cd"
+      "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/processed_matrices/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s_VALUE_BETTING_MATRIX_2026-11-14_12h29m37s.json",
+      "sha256": "e9cdab93853bf6862945dbd26491a948df18f7541feab2a5d23a675626c498c0"
     },
     "series_root": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series",
     "series": [
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/BRAZILIANSERIEA/serie_stats_Chapecoense_VascodaGama_2026-11-14.json",
-        "sha256": "054262bdff2779f964fdfb8a84c4c2abbe9e927b27e532735e7c0621cf425af3"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_1.FCHeidenheim_EnergieCottbus_2026-10-24.json",
+        "sha256": "4b2dfbe5a12acb96b3c370e9053abf24256327245e569177d31064d96e0d8730"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/BRAZILIANSERIEA/serie_stats_Mirassol_AtléticoMineiro_2026-11-14.json",
-        "sha256": "2c65438d530c8b4fc4333b9f4d650403fcdbc2b8a5cbfb46065ed54cf16ec961"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_EintrachtBraunschweig_Hannover96_2026-10-25.json",
+        "sha256": "c2c8d28bd3ea77bf8f55dfd0e6b9a4fc1cab2764acfd40fa22bc05d685d115d4"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_Albacete_CeltaFortuna_2026-11-16.json",
-        "sha256": "84b44587ad538d3b1cedab119d0bdbdfd9a27128621f1fa9a856313be255f39f"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_FCMagdeburg_KarlsruherSC_2026-10-24.json",
+        "sha256": "0789e03a0a20712af6c68558b0db57047655b1014acd79be27a31c370c1bd0e1"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_CDLeganes_BurgosCF_2026-11-13.json",
-        "sha256": "8f2baf396c4782c2e8aeb36fbe13c5288ea8f3880325e53c55a7878287ba9630"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_HerthaBSC_ArminiaBielefeld_2026-10-24.json",
+        "sha256": "544daf6febff391e08c2871cd6454f449e4f110afa678fd0a295cd58199bf2fd"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_CDTenerife_ADCeutaFC_2026-11-15.json",
-        "sha256": "04a85b91c14d6aabc20b45cdbdc6bc6b2dd01612e87207ce76aa12767f7854c1"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_HolsteinKiel_DynamoDresden_2026-10-25.json",
+        "sha256": "28ddd91bd30e0ddb2ab3ed419b0675b5e1436d0058014cea5c93b2e4e181dc41"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_Eibar_Cádiz_2026-11-15.json",
-        "sha256": "d9d0229134a390a01357aed643d31e87b64fdcd195196d6c97387eac1a9b0fb9"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_Nürnberg_Kaiserslautern_2026-10-24.json",
+        "sha256": "200b581dd940daca88976f2da6b89bd0e9412969345c5580b5b2e2ef26dbc023"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_Eldense_Sabadell_2026-11-15.json",
-        "sha256": "4d358c719d8b7c8b6a6acef2184de92d7b2079e4ba7bea82d4c653d16cbf7bba"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_SVDarmstadt98_FCSt.Pauli_2026-10-23.json",
+        "sha256": "89c0bb076e17d049691cffff0227bae5d7d79441d077b89d90039144bbeebb89"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_GranadaCF_UDLasPalmas_2026-11-15.json",
-        "sha256": "684cd6e3f72e8b0fb3414d01cec2ccd29174aa7735f22501ddd89a7554f31511"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_VfLBochum_VfLWolfsburg_2026-10-23.json",
+        "sha256": "b017e4917b4c4a973047d6647f7080c98a58f3252ff184a6bab0a2e2cae492e8"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_RCDMallorca_CórdobaCF_2026-11-14.json",
-        "sha256": "b05a49e3be6656993d5bc97072963e1cf9986804338e911d866b6b8419392ef0"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/2.BUNDESLIGA/serie_stats_VfLOsnabrück_GreutherFürth_2026-10-25.json",
+        "sha256": "832fbb87fe75580a60823cb1f4f55ab88c45c5f66c941d273fe29089efd01ed6"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_RealOviedo_GironaFC_2026-11-14.json",
-        "sha256": "bdc7bef27f3bd23a540fe950b9164c45a0cfd6117c07055a89081140ca1e55c2"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ALLSVENSKAN/serie_stats_Djurgården_Örgryte_2026-10-24.json",
+        "sha256": "2d98d87526490cc1b3f4419310eecedfa5699715516012ba4f832294ee2b38b4"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_RealSociedadB_SportingGijón_2026-11-14.json",
-        "sha256": "1769a8711d51ee79dd3a2faa8aa8c2157313aa7e839b99483f90118e62e71fe0"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ALLSVENSKAN/serie_stats_Elfsborg_MalmöFF_2026-10-23.json",
+        "sha256": "7c1d09edd9e5f38caf61d06b3ce088c181330e5fa4bb3976f26dc49d8ce0fb78"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_RealValladolid_CDCastellón_2026-11-14.json",
-        "sha256": "714d156c46c17ef0e388441c6beb150afa5cf551596d47022d111e5853851918"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ALLSVENSKAN/serie_stats_GAIS_IFKGöteborg_2026-10-25.json",
+        "sha256": "b12217fa1484c8cd777ced96646226c9737e71f85a5e81c94d7d062161ffe542"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LALIGA2/serie_stats_UDAlmería_FCAndorra_2026-11-14.json",
-        "sha256": "1aba27cf8bb3be1e003da4088ac7f667ab34d8b4b841acd4c87997a2e6e5b9d1"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ALLSVENSKAN/serie_stats_Häcken_DegerforsIF_2026-10-24.json",
+        "sha256": "9c5d31f85a96be36dfd3f0fa0f4248c15522064dccc886fd34471944fcd44661"
       },
       {
-        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_Week-03_Novembre-2026___2026-11-13_14h09m12s/LIGAMX/serie_stats_Queretaro_Monterrey_2026-11-14.json",
-        "sha256": "0a53030eb0f0234d47dbdfb7320d41b3baf0b281ecaa6a7bc123ec3ff6da4a77"
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ALLSVENSKAN/serie_stats_Kalmar_IFBrommapojkarna_2026-10-24.json",
+        "sha256": "c1fc6e53d98ec46e0951733c39f90123d3d7386619ca6e9e2974737b875d7d4b"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ALLSVENSKAN/serie_stats_Mjällby_Hammarby_2026-10-25.json",
+        "sha256": "a543c83e98b8b622fb70a415d52e8a5b6bd865ce74e004a4f2b25c0852e39986"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ALLSVENSKAN/serie_stats_Sirius_AIKSolna_2026-10-24.json",
+        "sha256": "b6f5c6525c0a3f9b5b9c2670d2996d6c4380bf389b9af4c6fb170d1feae7c94e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ALLSVENSKAN/serie_stats_Västerås_Halmstad_2026-10-23.json",
+        "sha256": "9d38376012d26bcac3890ef1538d8fc0e268b7d2c53df48d8b1a720f412578fb"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/AUSTRIANBUNDESLIGA/serie_stats_Altach_AustriaWien_2026-10-23.json",
+        "sha256": "8a8ccb05a803dc501c0406d953d6c83f3f05629bf4de0a7d6910540f2d3a2835"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/AUSTRIANBUNDESLIGA/serie_stats_Hartberg_WolfsbergerAC_2026-10-24.json",
+        "sha256": "e639ee51cee31f66f4779d5ca5c9f8ae7fea49c2e5bf93c26412e056582c5e0c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/AUSTRIANBUNDESLIGA/serie_stats_LASKLinz_Salzburg_2026-10-25.json",
+        "sha256": "57a4835c2b08211506cb7ca3c172e1dbac1fd044509a328af8645809169d76e8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/AUSTRIANBUNDESLIGA/serie_stats_RapidWien_AustriaLustenau_2026-10-24.json",
+        "sha256": "b1837002ac416d983ef346f3a16899e8ebc59a97b32929552d6386a07f9ba7b6"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/AUSTRIANBUNDESLIGA/serie_stats_SturmGraz_SVRied_2026-10-25.json",
+        "sha256": "7cecbab53b101983f17028ab0c948fb4b477cf0fe2ea113f2733cc85e1e33d59"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/AUSTRIANBUNDESLIGA/serie_stats_WSGTirol_GrazerAK_2026-10-24.json",
+        "sha256": "7697c6275803ffc63d21dfcef6cea9d625532ecac7de6e04216abc0178396700"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BELGIANPROLEAGUE/serie_stats_Antwerp_Charleroi_2026-10-24.json",
+        "sha256": "8699afe9e0580ccfc1738a2368233a0a962488a3b8c2a5dec97a29dbcddb3c3d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BELGIANPROLEAGUE/serie_stats_ClubBrugge_STVV_2026-10-25.json",
+        "sha256": "891693ac6d0c2444cdadc922b6cf4a61bcc287c3bb8559969bea38ee887e40cf"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BELGIANPROLEAGUE/serie_stats_Genk_StandardLiege_2026-10-25.json",
+        "sha256": "e642e1894feb8bc443905e83dac0476c952d31b1651f4eeb0cfadb51d8f4123a"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BELGIANPROLEAGUE/serie_stats_Gent_Anderlecht_2026-10-25.json",
+        "sha256": "5f7bfa14534a63f944f7a1c408b62a7201f2504bce5a1874287c7fca47890eee"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BELGIANPROLEAGUE/serie_stats_OHLeuven_Lommel_2026-10-24.json",
+        "sha256": "16914f497c221ff1a62563734fe3c0f24657ad78d10aced67cfd330eb7679ebd"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BELGIANPROLEAGUE/serie_stats_RAALLaLouvière_ZulteWaregem_2026-10-24.json",
+        "sha256": "89c3c42c8ff30406a6f03ba0a72a6ff0da8fc8e7227a86e2a3531ea824632296"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BELGIANPROLEAGUE/serie_stats_UnionSaint-Gilloise_CercleBrugge_2026-10-25.json",
+        "sha256": "5fb39501e6d365cb191ec391103bb2dc159f6c8d9a1bfe94bc3536b38aa22ab3"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BELGIANPROLEAGUE/serie_stats_Westerlo_SKBeveren_2026-10-24.json",
+        "sha256": "ff8c855127176e6467e83dc1a4d3bec2f7266a4bb5b47065645bf81f1ab58579"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_Chapecoense_Fluminense_2026-10-24.json",
+        "sha256": "c85a5f55beaffe6a5356366a5540498ade22a9e9f0b3cf67c7050d556616be02"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_Coritiba_Grêmio_2026-10-26.json",
+        "sha256": "7106573ba05c85cd184ed4b9a188b6067913671d7443f11f3bf310ecf6239357"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_Cruzeiro_Remo_2026-10-23.json",
+        "sha256": "552f0ca4ad822a081d55fbc9ea96941bdc71dfead038a36107703285e852e75b"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_ECVitória_Athletico-PR_2026-10-24.json",
+        "sha256": "35e7dbf66fabd405c7e27d3b1844ca25d666661512e9f19cc30b4343078522f6"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_Flamengo_AtléticoMineiro_2026-10-26.json",
+        "sha256": "20d9ad910b5ae4f565ce3fff76b338a3cd951674c605aee5ba0aa484083c6adb"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_Internacional_Botafogo_2026-10-24.json",
+        "sha256": "f8126a95f0d7ff06b99fb839d16447c084d29d06c004af32bfd1cc05b9e71719"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_Mirassol_SãoPaulo_2026-10-24.json",
+        "sha256": "8a5b7612ea703c422e7736f53fbaa1a8acbfa09e8f35c67293dc87ab2e206999"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_Palmeiras_Bragantino_2026-10-24.json",
+        "sha256": "b2d0221f38c3eca50b3d7bf5dc0c8f5e44a9088318d71c6b49e735a8fecc7b43"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_SantosFC_Bahia_2026-10-24.json",
+        "sha256": "8cc73db0929b5c35df06c363cf9be08092ef91844bcc7089731f177f2c189e97"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BRAZILIANSERIEA/serie_stats_VascodaGama_Corinthians_2026-10-24.json",
+        "sha256": "869f44b7792ec1896c2b3bf0b941619e809eb5c4b24f7c01f0bee3946b321e44"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_1.FCKöln_Schalke04_2026-10-24.json",
+        "sha256": "5328d6422f115ebb028bbefb89355057fddc075a845413c581406b804897ad66"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_BorussiaDortmund_EintrachtFrankfurt_2026-10-24.json",
+        "sha256": "be068e7855cc2e84210701639bcc7154b2c04c8d53f085d71d1574891075d334"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_FCAugsburg_1.FCUnionBerlin_2026-10-24.json",
+        "sha256": "337b78eeeb7c311fc21155b32778893c1af2e7e0122640ec0fdf31e13510b7d5"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_FSVMainz05_WerderBremen_2026-10-24.json",
+        "sha256": "a07fdb779731858617d9c6762fb3077b7062800871e1e1036e46d1f2ff858441"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_RBLeipzig_SVElversberg_2026-10-24.json",
+        "sha256": "c3855efec09c235c0e6b68f0ef6953c95fee41fefdd820da932dbc52d501708e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_SCFreiburg_BayernMunich_2026-10-25.json",
+        "sha256": "5bb46cfa7a1c6a91b9a1bdc5484c5213ead1c65336ff4e4b7b66429d3ac371da"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_SCPaderborn07_HamburgerSV_2026-10-24.json",
+        "sha256": "95bebd3fee526baa82856da3b807f9d6324faff2f4e742d8242124be5d917d5a"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_TSGHoffenheim_BayerLeverkusen_2026-10-25.json",
+        "sha256": "69220978abbd3101daba32a1a4cb5e5c22f8e1f3e8130ffadc4ee3cabc3e8454"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/BUNDESLIGA/serie_stats_VfBStuttgart_BorussiaMonchengladbach_2026-10-23.json",
+        "sha256": "f5767e7a01133e52467f8c2abce139fcf9581266b67de11d7494fbba720ba338"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_BlackburnRovers_Wrexham_2026-10-24.json",
+        "sha256": "ebfdd2185124febf9ea77b6813f96d2019626d793a4d165f16600fab60ee7183"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_BoltonWanderers_Middlesbrough_2026-10-23.json",
+        "sha256": "5fb27c73d4c3db45d87914996289180a6d0fb2f46af9c0a75aaff95fa657be0a"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_CardiffCity_BirminghamCity_2026-10-24.json",
+        "sha256": "cce64513d260a7ddab23a27ca39ee533cedb3c513a9c6a6ba2662aa63a229d3d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_CharltonAthletic_NorwichCity_2026-10-24.json",
+        "sha256": "f5bb2a8e05dc65b379d602fff5e2d0281021b483dd025af19752538d34372549"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_LincolnCity_Burnley_2026-10-24.json",
+        "sha256": "03ceedb74eddc42e147168241badb99a7db000abc24f5dd02ec85ef38a3ad3b4"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_PortsmouthFC_MillwallFC_2026-10-24.json",
+        "sha256": "a49f601fd7b4649584024f918740a35412672eddb4d635d21504ca51cfd29d44"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_PrestonNorthEnd_WestBromwichAlbion_2026-10-24.json",
+        "sha256": "d6795c615791bf4e32f3dac4cfb02680480ac20ddb28d8dd816bf5aba7a19872"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_QueensParkRangers_SwanseaCity_2026-10-24.json",
+        "sha256": "0cda281bfe974420ddc1eaab94f2720850ce72d8c3ba02ba1b1d3eaa3f51d201"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_SheffieldUnited_DerbyCounty_2026-10-24.json",
+        "sha256": "31be33c025612c8c408f993fac388d1d886c828f74f5387b3fa51da327baef82"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_StokeCity_BristolCity_2026-10-24.json",
+        "sha256": "6e2f5c6b2047dd89808b41a923e1430aa13eec7f192469ad9ef39b0c29c2d288"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_WestHamUnited_SouthamptonFC_2026-10-24.json",
+        "sha256": "6f738ad7a25d375c30ec4ac39c55fa98e80ef553221fab8f0ccda1b987fb5ba8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/CHAMPIONSHIP/serie_stats_WolverhamptonWanderers_WatfordFC_2026-10-24.json",
+        "sha256": "ce994916c4944f1054d564c2c2264f1bf10eeda3af4d9c823a7f696aacce7800"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_JagielloniaBiałystok_WisłaPłock_2026-10-25.json",
+        "sha256": "dd4e30282832526687fc2837f159e932ebaebae3aac8b521fa157c23c198b416"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_KoronaKielce_GKSKatowice_2026-10-24.json",
+        "sha256": "872276383789362323b7fc5d17b6fe1e53fa414e6adc11d2052439071f80b30c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_LegiaWarszawa_LechPoznań_2026-10-25.json",
+        "sha256": "8f49751fe369e64bedf31c2ddecf6c1e7310454b431b23e492c8c4a4ecc6e520"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_MotorLublin_ZagłębieLubin_2026-10-23.json",
+        "sha256": "d75c4021cab86d6a1c274ee378e14b6ed5e35c8ee690bd10a051482016f9d6b5"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_PiastGliwice_Cracovia_2026-10-24.json",
+        "sha256": "e30dea1c46b045c5d686cb82688b80592befbdec4ba616b604b828e42028e14f"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_PogońSzczecin_RadomiakRadom_2026-10-24.json",
+        "sha256": "f31df8349528b6b23b8d7657b3e6ebaa70300c83bdb4f3b8a2b8b33dd80079d0"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_WidzewŁódź_GórnikZabrze_2026-10-23.json",
+        "sha256": "1c7b69522ff7428efbbff17eb102327016f06d056b29bfc6b6bb821f1d2e3521"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_WisłaKraków_RakówCzęstochowa_2026-10-24.json",
+        "sha256": "16c84ce0892ec34a0aa618852f5e9297fac0f40e0b83116d100cea13fb3e59b8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EKSTRAKLASA/serie_stats_ŚląskWrocław_WieczystaKraków_2026-10-25.json",
+        "sha256": "4e82b9d27a7b8012d4a82de3151495e851b0f26d748a679ed4108d6972a407a3"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ELITESERIEN/serie_stats_Bodø_Glimt_Vålerenga_2026-10-24.json",
+        "sha256": "cec70c49297dd424799247c6081be312c42ace0ec24589bc671aaafad03345b2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ELITESERIEN/serie_stats_HamKam_Rosenborg_2026-10-24.json",
+        "sha256": "85530c943e1b2a1057b20344cf9ad4f6b4c819a91c0f7741e5f83879aba11f9e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ELITESERIEN/serie_stats_Kristiansund_KFUM_2026-10-25.json",
+        "sha256": "74e5f45f2fe2559f64eee0d08c0f3575c25def883274d1d67e3bd987760c853f"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ELITESERIEN/serie_stats_Lillestrøm_Brann_2026-10-25.json",
+        "sha256": "40c5f3c6dda4fda64f6a2a68d42ffd45fae2de22cc40ac370d6c500841269478"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ELITESERIEN/serie_stats_Molde_Fredrikstad_2026-10-25.json",
+        "sha256": "4c688542445953c66636c5b8ba01d4dcc27f869410da87f5a17d494e5c9e046e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ELITESERIEN/serie_stats_Sarpsborg_Aalesund_2026-10-25.json",
+        "sha256": "36d6fa0074a5e2864c05499fea046f78f78bcc810cd57e29b850d039a6be3821"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ELITESERIEN/serie_stats_Start_Sandefjord_2026-10-25.json",
+        "sha256": "d9333e98f7516ec976b5386b33174aa4aef4c102d42488a1894208ddce7e8694"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/ELITESERIEN/serie_stats_Viking_Tromsø_2026-10-25.json",
+        "sha256": "be5530961975641a07da4c151587717d348c86d73221e2499cc816b721ff1259"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_ADODenHaag_SCHeerenveen_2026-10-24.json",
+        "sha256": "358b4326240d5bb6c81094ac0276f0c3dde3e857c6dc110b29caffacf689befb"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_AZAlkmaar_FCTwente_2026-10-25.json",
+        "sha256": "1a3728efc1606f0977a007a5991fca9d69ebadfdf1c9ecd2c59e58ec10e16e31"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_FCUtrecht_PECZwolle_2026-10-24.json",
+        "sha256": "b8471dc86f7b14fced0ba3dfafa91b72865a98bd0fb5aecfdcb34aed3e5901a0"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_FortunaSittard_ExcelsiorRotterdam_2026-10-25.json",
+        "sha256": "0f5c5298f072d054ebe2ded99d56ca3db1f2423f979b5200687cabd056b28a34"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_GoAheadEagles_SCTelstar_2026-10-23.json",
+        "sha256": "fe177cb90e42d8c3568018b6f92a8c7bbbb91d19e0f3ce54106cbfc8f3f92ead"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_NECNijmegen_FCGroningen_2026-10-25.json",
+        "sha256": "b0b0440f8fda26ef5d3f4242758cd596201c336eca3ab324a5663b0f26417ed7"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_PSVEindhoven_FeyenoordRotterdam_2026-10-25.json",
+        "sha256": "ad1b343bf7ca70ef390458505082f219d3ba4a4e1679450552fbfa1fe6a2f97d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_SpartaRotterdam_AFCAjax_2026-10-25.json",
+        "sha256": "1ac00a48235fd396244cb2def10e00ade84e9662fce0395b1664fd72f8245992"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/EREDIVISIE/serie_stats_WillemII_Cambuur_2026-10-24.json",
+        "sha256": "28326361176b8fa15c4f504b8ba463529e0038b0ed41dc6223334ab38144e1e4"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_CerezoOsaka_JEFUnitedChiba_2026-10-25.json",
+        "sha256": "34d19eb50dee172ed14cc1141034cb30718d888b847337fac7d5f4c234c97c30"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_FCTokyo_MitoHollyhock_2026-10-25.json",
+        "sha256": "333bc33cf039b00091cf14598a82102211c4d439ab5b370ef035be4b5ed2216e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_GambaOsaka_KyotoSangaFC_2026-10-24.json",
+        "sha256": "750350854e6306894b4f66cbd1ff000466521672f581d3bddede688ce5486b97"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_KashimaAntlers_KashiwaReysol_2026-10-24.json",
+        "sha256": "d653f515d8b95976858bd13ba10b395c781cb66178136902fe0239dc7e61962a"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_KawasakiFrontale_FagianoOkayamaFC_2026-10-25.json",
+        "sha256": "cf9f4d22e153de2c9d5a24e3cc77f4326c8cd3934d8f903a6348f199d42bb6a2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_NagoyaGrampus_YokohamaF.Marinos_2026-10-25.json",
+        "sha256": "0214b7209068af038b1c5a4bdc43a3cf70c402b03d524544220d27a1dd38d4b7"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_SanfrecceHiroshima_ShimizuS-Pulse_2026-10-24.json",
+        "sha256": "eddfd462aa9e73018c8ed6d9cc31148a30c573c3c7cf527af4d44e3851a88acc"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_TokyoVerdy_AvispaFukuoka_2026-10-24.json",
+        "sha256": "5cc67b74d175eb207b73f2bfbf4a0395c4cc8ef812a5bac084c2d130850c57aa"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_UrawaReds_V-VarenNagasaki_2026-10-25.json",
+        "sha256": "32d8cba30f6689de310d550f9b4b4439799d8c25f6e22965e9d83100483240dc"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/J1LEAGUE/serie_stats_VisselKobe_MachidaZelvia_2026-10-24.json",
+        "sha256": "d03f81e567b593d922d9e4c2b806ebb3345088b2f2d3f5da3813c8f278458dcc"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/KLEAGUE1/serie_stats_BucheonFC_GwangjuFC_2026-10-24.json",
+        "sha256": "345647a6249d438d68427c8e01eda71d36269bb9791330056c69dc58f7988a51"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/KLEAGUE1/serie_stats_FCAnyang_JeonbukHyundaiMotors_2026-10-24.json",
+        "sha256": "4628db79f1914c24d6dea1474b48b65c27083f604f7840b2c0d1892d45f15ad6"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/KLEAGUE1/serie_stats_FCSeoul_GangwonFC_2026-10-24.json",
+        "sha256": "30ec7d499def1c4f507892f64f4c97a23f3c653a21d4d0a5e8303fc7c9829dbd"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/KLEAGUE1/serie_stats_GimcheonSangmu_DaejeonHanaCitizen_2026-10-24.json",
+        "sha256": "89f74054dcefdec5be203be7797b77b44b2c357de34e1b03eb37df95edc9f704"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/KLEAGUE1/serie_stats_IncheonUnited_JejuUnited_2026-10-24.json",
+        "sha256": "9523db4601eb98ccd09c40e0f436c117332f472116d6216ec32f45cf5c5c17ae"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/KLEAGUE1/serie_stats_UlsanHD_PohangSteelers_2026-10-24.json",
+        "sha256": "a6892e96fbe463aa3b4713441064e13632bc4727fd616927206047ed6d68afc1"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_AthleticClub_GetafeCF_2026-10-25.json",
+        "sha256": "34bd615e314f93719e1f68354c347144ccfac6a7192c5acd814c3089155cc4d8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_AtleticoMadrid_DeportivoLaCoruña_2026-10-24.json",
+        "sha256": "c421ce21e160a34002282bb890ba7f198e6cec069cfe7773c96ac8414a4dd779"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_CeltaVigo_RealBetis_2026-10-25.json",
+        "sha256": "cd159303baa32692a50eb0ecc346e3aeabaa81673f57d5533e16fc967becef57"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_DeportivoAlaves_MálagaCF_2026-10-23.json",
+        "sha256": "63084c4edd85e382ec41957061c56daf0f3a986d0c53da9bb9b2cd6468bcad4c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_FCBarcelona_RealMadrid_2026-10-25.json",
+        "sha256": "06db53cb6074909812bb83732f66a136c5c2a7aef088c971efc3c37a55c0274d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_RacingSantander_RCDEspanyol_2026-10-24.json",
+        "sha256": "07ce7415c633a33e71440e48ed98f8117b8d8b84933c8e3d43eded75324e9e91"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_RayoVallecano_ElcheCF_2026-10-24.json",
+        "sha256": "db848d040245775a96cd9901ead82c9708c63c918246be4c5a4f42a3522de7f2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_RealSociedad_LevanteUD_2026-10-25.json",
+        "sha256": "e909a1192f70cd9cc524cf49c70e1c005100f3a2716b7fb245abb7610ffb43c2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_SevillaFC_CAOsasuna_2026-10-26.json",
+        "sha256": "79cf2d948efc8ab6c5314bc7e8935bb3516c3189178bebf48a66686c52618cbb"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA/serie_stats_ValenciaCF_VillarrealCF_2026-10-24.json",
+        "sha256": "0657846f06729d301c49310e9eca9b3bf288866f7f599822df01cf8f75323f13"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_Albacete_Eldense_2026-10-25.json",
+        "sha256": "e043a00642323882b502ba24748d142daabf19ee30c40c5aa3221eb9b1c49e58"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_CDCastellón_SportingGijón_2026-10-25.json",
+        "sha256": "5cd60eb82254055a369720eaadce4cc25498d862db41b1001f01fbda74490a63"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_CDLeganes_RCDMallorca_2026-10-24.json",
+        "sha256": "5d43fa5dc4f3147a5aecaf7061bdeb21bc6d1edb6b45de28107b3860e44b04c9"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_Cádiz_ADCeutaFC_2026-10-25.json",
+        "sha256": "e79d2544975c9ae8c531faad9b1ae9374ca0f959770d2f9d953906b1a478f88c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_CórdobaCF_Eibar_2026-10-24.json",
+        "sha256": "064d5618f44cc7fcd0f33a5ad848309a322380d2e09569a5b4f02779f6ef4745"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_FCAndorra_BurgosCF_2026-10-26.json",
+        "sha256": "63216544644725960eca647e3d72626215fd27339cc9e98b183386d087f2466e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_GironaFC_CeltaFortuna_2026-10-24.json",
+        "sha256": "373122cfc7bf31b39a531deb1ee08d0645f9c2097d74b60c36df70d8868700ae"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_GranadaCF_RealValladolid_2026-10-23.json",
+        "sha256": "d668082ac608efb312d6882b75b16f190b1c556f7a044c715a22998e02b423ea"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_Sabadell_CDTenerife_2026-10-25.json",
+        "sha256": "f71fedb0b0260a08a5f03798d5c1d38928bbd932082430ca9d981cb2f855cbeb"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_UDAlmería_RealOviedo_2026-10-24.json",
+        "sha256": "c341d514a520f629d04acc9e708561912af464eb5d4e4a6d8568ac7766ffebd5"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LALIGA2/serie_stats_UDLasPalmas_RealSociedadB_2026-10-24.json",
+        "sha256": "4e64ca7c1e74b2fc60d3454bbea13439d1811e1963e5c7c14ddb50ce2bdfe1de"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_Atlante_AtleticoSanLuis_2026-10-23.json",
+        "sha256": "647f95220fcf00a4fd98535157373cd0c2e6dafc8a51a363fbd04f9b574dce3a"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_Atlas_Puebla_2026-10-25.json",
+        "sha256": "d7262749bab6eaf749208dca92e72a1a904d6bedffbf4f5836ce7d7859bd2cdc"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_ClubAmerica_Pachuca_2026-10-25.json",
+        "sha256": "a690a436d61930f6bd59c0d3d18c14dfc0bf8d443b8fdd42e9c6eee55089b6e9"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_ClubLeon_Toluca_2026-10-24.json",
+        "sha256": "74b747e46f7c13a9c34a56864ea6be03c90d81ac5c6da82fa044868294ff22d2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_ClubTijuana_SantosLaguna_2026-10-25.json",
+        "sha256": "e029dcaed35b8b0b8cdbb6619b6f1f8486cb0d975f8dd80ee95bfeb9f2d6f7d4"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_Monterrey_Guadalajara_2026-10-24.json",
+        "sha256": "5bc56e419bc92acf1d7f2335fa74f2643b13ca32fc1269d8e1d466bc25324c7f"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_Necaxa_FCJuarez_2026-10-23.json",
+        "sha256": "6c2b74c311ef1d74b47a4532a7cc2c69c5aa8a7619041054e1489efc4a6830a1"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_PumasUNAM_TigresUANL_2026-10-24.json",
+        "sha256": "70d5cd16175eb24ba7fa5c198b6a33514ef0e88d8f3ce16c12d958630c44edde"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAMX/serie_stats_Queretaro_CruzAzul_2026-10-25.json",
+        "sha256": "153c78cc8a25280886bc5eb873795d46bb55e0bb0315c2d9b89c62a5998682c2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_CDNacional_SCBraga_2026-10-25.json",
+        "sha256": "fd887c47211eaba94470bd14f0bd1835cbc9f6e73a9d2ec8a66fe7e0177755e9"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_CDSantaClara_SLBenfica_2026-10-26.json",
+        "sha256": "3527b4e7705bb735ae89123bcf7cae28d2f0ebfe5dead16611f32bcdbe5eff9c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_EstorilPraia_MoreirenseFC_2026-10-25.json",
+        "sha256": "15253a73f985443235b7f6eb96586a7e3649605505ad8e8d9bb9fbcfdd6d2246"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_EstreladaAmadora_CasaPiaAC_2026-10-24.json",
+        "sha256": "c0648e3abddb48a183a338abb3a7b058108660bcfa29720ab00aa3e673326b0d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_FCAlverca_FCArouca_2026-10-24.json",
+        "sha256": "7ecc937dda1d9638bec07f701d928f938f707117bd112f18ee586cf30e166424"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_GilVicenteFC_FCPorto_2026-10-24.json",
+        "sha256": "5b5b4250ccd3a1b3a078f29f430715dbfa163b643f0be64d2fa271495bc2e838"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_RioAveFC_FCFamalicão_2026-10-25.json",
+        "sha256": "b6390006190be01a9717d35ed7163fec260e268db82f9f38ac9a00aab6b4f3f3"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_SportingCP_AcadémicoViseu_2026-10-25.json",
+        "sha256": "40b21f2f929955a89d181da2727dda6a7a8b6715bae2137a38803a847c4306bb"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGAPORTUGAL/serie_stats_VitóriadeGuimarães_Marítimo_2026-10-23.json",
+        "sha256": "3588b87f1b2bbfb61cbe3c0df628eef0f41f8f72bc3948746c3e31fa5a0a24fd"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_AJAuxerre_LeMansFC_2026-10-25.json",
+        "sha256": "f6bb3b7735f4b4ad8bf52961d3589b9868bc8fdd9121e4f05163518993ae847d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_ASMonaco_LilleOSC_2026-10-25.json",
+        "sha256": "c9594a674c03525c52c3d4bf2812197a394f698a1ff99f0a2da788b54017ab1f"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_AngersSCO_FCLorient_2026-10-25.json",
+        "sha256": "5f1cfccfd6257ca08a54c85702fb2b6752996d9f0112a7fee5c4c80e6ef71b11"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_OlympiquedeMarseille_LeHavreAC_2026-10-25.json",
+        "sha256": "a4365021bc7f4ceee880210cc741d8fe4aaae0d0105bb2176d730868b7d4028c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_ParisSaint-Germain_OlympiqueLyonnais_2026-10-25.json",
+        "sha256": "954035b0ab78cbb995c6c2a9ef6930ffcaacc4f71a25e31d4cbb74808682f128"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_RCLens_ParisFC_2026-10-24.json",
+        "sha256": "28afb1d3ac85984e05e55660f549041e9dcc473da63f2e9a45eb96aeed3eaf83"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_StadeBrestois29_OGCNice_2026-10-23.json",
+        "sha256": "40a764d54ca0ad4993b341dffe05d0ccb1b331464d20f74b241cf156c24efc01"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_StadeRennais_RCStrasbourg_2026-10-25.json",
+        "sha256": "52e555450eff0ddde972ca169858d1358882553696d739e41967ac3afe4d03e7"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE1/serie_stats_ToulouseFC_ESTACTroyes_2026-10-25.json",
+        "sha256": "3c09cc171696464703b525cae3104bf8e0f9af499e14bb86b217ec6bc49534a2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_ASNancyLorraine_StadeLavallois_2026-10-23.json",
+        "sha256": "2c71465e33d4a69ec9c2b955ff6df1ab76d8607f2bde88999599bef672cc4af8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_ASSaint-Etienne_FCNantes_2026-10-24.json",
+        "sha256": "15c5b4c7e929fc05ed9bfbd6ee38fa756a9226915cdfc0f29c99338f3132f68f"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_Boulogne_StadedeReims_2026-10-26.json",
+        "sha256": "9eb945887b82b3d37d3f863e9757533cc59f062ffece6247583a9ebae92371c1"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_ClermontFoot_EAGuingamp_2026-10-23.json",
+        "sha256": "599be2cc913f5aa0831c79ee4de91f06eb0312a5b597272526186512ecec5767"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_DijonFCO_RodezAF_2026-10-24.json",
+        "sha256": "b1883c32e896a08698ff779d3bd7d26c9c273fe5ec03be3642486bcc1d3811f4"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_MontpellierHSC_RedStarFC_2026-10-26.json",
+        "sha256": "72158599603abb5ebaf35368a2368724b0cbc2006495536d89a271463fdf7102"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_PauFC_GrenobleFoot38_2026-10-23.json",
+        "sha256": "c1445c15a86b03315c219f74695dd545426b40198cf75c620f7c9714b90760d8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_Sochaux_AnnecyFC_2026-10-23.json",
+        "sha256": "dac12fb29069c3bc0867f87ac67c6fd0ae9def36cfc2115319bc7124a2a23478"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/LIGUE2/serie_stats_USDunkerque_FCMetz_2026-10-23.json",
+        "sha256": "d83c7623231e09ceb40afd40e3102a45e33c9200d91c9d6d82b2f273925c5873"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_AtlantaUnited_ChicagoFire_2026-10-24.json",
+        "sha256": "73a65d2cdf5f8d9358b8911e959d16fd8ad80e2320125000801d3ca8b1e43385"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_ColoradoRapids_VancouverWhitecaps_2026-10-24.json",
+        "sha256": "5becdbb2f1afea9b0204bedb5666433139839c35db80935bd045b51321b014a2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_ColumbusCrew_TorontoFC_2026-10-24.json",
+        "sha256": "e8cc5bc47357efdc39db890bf50454cffb50da6c06b3553696a405002333452c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_DCUnited_Cincinnati_2026-10-24.json",
+        "sha256": "4eb69e473b1c40dc33d01bb9d6c467efb24da97e5f5ad31011467614778e951b"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_Dallas_Earthquakes_2026-10-24.json",
+        "sha256": "96dc35ee26000c2d4f7983e2aa8f9964c9678dbd9158d4839b521b2819201ec8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_HoustonDynamo_MinnesotaUnited_2026-10-24.json",
+        "sha256": "8fdab78b977e8d52e80d1d2279db6b81b75a46ef514ae8f21243394a9fd255f5"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_LAFC_LAGalaxy_2026-10-25.json",
+        "sha256": "8afec00ac1a5f750c28870eb34b02932a12cc497de83a14a46e29834db50f741"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_Montreal_NashvilleSC_2026-10-24.json",
+        "sha256": "b0c3c4ed37357f5f769f78802ffe29aeceefa6181a9dc51c3a5cb3efb4c78a2c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_NewYorkRedBulls_InterMiami_2026-10-24.json",
+        "sha256": "15f1e67a570e0e958b3a5dd2254cd978b6e33a9397af971a2c208c6f169146c7"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_OrlandoCity_NYCFC_2026-10-24.json",
+        "sha256": "f563b9c050a8cae4978ec92f2f5b3bba3679e1b58af7e4030e6c9ccd05e9a67d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_PhiladelphiaUnion_NewEnglandRevolution_2026-10-24.json",
+        "sha256": "56c800be40decf275e765013bd3dc4413c1ee57a2b8f3c8a67fb6fe0a6b16b08"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_PortlandTimbers_CharlotteFC_2026-10-24.json",
+        "sha256": "6a73154043284b4cef5c7bddedcfc174511124349754f34e57fc670373028987"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_RealSaltLake_St.LouisCity_2026-10-24.json",
+        "sha256": "326078e9bc1061c652787b8ebd8016db60a73a00298cc109f1d9df6e37395785"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_SanDiegoFC_SeattleSounders_2026-10-24.json",
+        "sha256": "37552e1c9c8b33a2683f3fb42745c6591bc9fe86157d78100fa9bacf7af35ed4"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/MAJORLEAGUESOCCER/serie_stats_SportingKC_AustinFC_2026-10-24.json",
+        "sha256": "902ea8bb2c43bce23557d1547faced80d28fedfd30cd9e797ceab95b5636e2d7"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_Arsenal_Everton_2026-10-24.json",
+        "sha256": "d02c3ccc1c3b90a758cde6778221aa57ed21accff23eb0191a9bd6f07aa03948"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_AstonVilla_ManchesterCity_2026-10-24.json",
+        "sha256": "9b0ac7ca50a3015ee7363cdeed858bfbd992ec81139812d2259a94c618417e38"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_Chelsea_TottenhamHotspur_2026-10-24.json",
+        "sha256": "338b4268c5157259ae4de131703d581265059e962e206d912b610a753748f53e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_CoventryCity_Fulham_2026-10-24.json",
+        "sha256": "b93634bff444022ff47b5e1a4dd6188c8035a04570d69442cf9d2aa6d5c8ed61"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_CrystalPalace_NewcastleUnited_2026-10-25.json",
+        "sha256": "36e1ad15c67f7ed024999297e825a352875d9f20bab4b6a28684d9d89d66bdfc"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_HullCity_Brentford_2026-10-25.json",
+        "sha256": "84eebad478d44397778196ffed036908585bd544ca03a15189f4deeda61dcdca"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_IpswichTown_NottinghamForest_2026-10-23.json",
+        "sha256": "249f50bde2cda9074086434d9381fd658ba6a638663b5e01db334c774ceb2ec0"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_Liverpool_Brighton&HoveAlbion_2026-10-25.json",
+        "sha256": "2a149f6dab11ebb3c88c9d0b1e804b8183313a4b636a590313989b79d50b47a0"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_ManchesterUnited_AFCBournemouth_2026-10-25.json",
+        "sha256": "e3010811a87eabcd80de8ec5a8442a38f449264c17a9b0634da6d523874c0fa8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/PREMIERLEAGUE/serie_stats_SunderlandAFC_LeedsUnited_2026-10-25.json",
+        "sha256": "2dff4b1346dca89584832e22430f21ec58690cdf1134c3f6c28e17e4000d858c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/RUSSIANPREMIERLEAGUE/serie_stats_AkhmatGrozny_Orenburg_2026-10-23.json",
+        "sha256": "3cbb79f1a8034e0fec2700d1a552afc1c3b28c0922dd62c8af61f2acdaae5ca4"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/RUSSIANPREMIERLEAGUE/serie_stats_AkronTogliatti_DynamoMoscow_2026-10-24.json",
+        "sha256": "c028ae4bb1b75784748fcc56413b7674f1a08710c1a472145a4fea88ef7b9243"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/RUSSIANPREMIERLEAGUE/serie_stats_CSKAMoscow_SpartakMoscow_2026-10-25.json",
+        "sha256": "f04f06bc44dd6384344c3003b1d70e4b05fe2eb9782b1c35c145fb304835f8c9"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/RUSSIANPREMIERLEAGUE/serie_stats_FakelVoronezh_Rodina_2026-10-24.json",
+        "sha256": "9d526a2cdbbadd2817d645b0d4e9ca9864228968949a019e6b0435a2560ceddf"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/RUSSIANPREMIERLEAGUE/serie_stats_Krasnodar_BaltikaKaliningrad_2026-10-24.json",
+        "sha256": "3a3df68265fb33179426ff5c20eafe4e5123f7096ca4444feeb5a83b896c650f"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/RUSSIANPREMIERLEAGUE/serie_stats_Rostov_LokomotivMoscow_2026-10-25.json",
+        "sha256": "6e1511b99063adfe4251908b31a08f8173dae8794fb6ee02a86135f8ac2be72b"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/RUSSIANPREMIERLEAGUE/serie_stats_RubinKazan_KrylyaSovetov_2026-10-24.json",
+        "sha256": "6e109718393fc379c393c5c1fa96616ab70cd52059b266e6e377fec239b91079"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/RUSSIANPREMIERLEAGUE/serie_stats_ZenitSt.Petersburg_DynamoMakhachkala_2026-10-25.json",
+        "sha256": "9d29fc29e17edf927498786e7744e813b95545271f764a96b98763bb2b200f99"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SCOTTISHPREMIERSHIP/serie_stats_DundeeUnitedFC_AberdeenFC_2026-10-24.json",
+        "sha256": "1457ead701a326b865cd4f49ea08421ef64a5e2df4e88b2cfde979f0ef561610"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SCOTTISHPREMIERSHIP/serie_stats_FalkirkFC_KilmarnockFC_2026-10-24.json",
+        "sha256": "c8ca3c10512d9fce9c7842b774061c06052624020971d5a102b8cca1f2bfcc54"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SCOTTISHPREMIERSHIP/serie_stats_HibernianFC_CelticFC_2026-10-25.json",
+        "sha256": "d82bad93d2b1887fcb0f834612f22e0c9cd0a17aeb3a64b264425408f4ce41d4"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SCOTTISHPREMIERSHIP/serie_stats_MotherwellFC_HeartofMidlothianFC_2026-10-25.json",
+        "sha256": "89aa0d70418e3686c588d302a3215fd274b64286014e6c61c01eb212773145ff"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SCOTTISHPREMIERSHIP/serie_stats_RangersFC_StJohnstoneFC_2026-10-24.json",
+        "sha256": "b97031ca1f93373dd4bbb532ceb70368592a79796d047dab84bfb4eed27a27f7"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SCOTTISHPREMIERSHIP/serie_stats_StMirrenFC_DundeeFC_2026-10-24.json",
+        "sha256": "bf4eb4a5b4c226edfc8998f36b2554eb076cae57ac19df44b75a571aaacc570b"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_AtalantaBC_FrosinoneCalcio_2026-10-25.json",
+        "sha256": "481e5b38aa338e3ee68e9a8a4fe80f35bfc1a590d8f3bc2a0e65174e90fdca27"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_CagliariCalcio_BolognaFC_2026-10-24.json",
+        "sha256": "74e6715b9c0a3fdedca4d02bc8355ba10c383660545139f65aa3336b4fa825c3"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_Como1907_Sassuolo_2026-10-24.json",
+        "sha256": "e615553b01a4fa5163ed7683dbd24785f7238d71c4446fe306fe72d84088968e"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_GenoaCFC_VeneziaFC_2026-10-25.json",
+        "sha256": "236b300913c2a2701047d5bc1e3b45f22490152b3449368f54115c0eb0207952"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_InterMilan_ACFiorentina_2026-10-25.json",
+        "sha256": "d3425d95480bb6cdc11cc37df62c1d8439a111aaae3c3c9909e8ee3a41ba2566"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_SSCNapoli_ASRoma_2026-10-24.json",
+        "sha256": "c6c79b364bbe394b5bf9d2cfff001edb50f5da7f5e272ada8bb31f2aa577d1ab"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_SSLazio_ParmaCalcio1913_2026-10-24.json",
+        "sha256": "c92c34bb4e62674b0c1a60b3ba7c11a6994ffac9c467b10b6f4c38cedcdfd802"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_TorinoFC_ACMonza_2026-10-23.json",
+        "sha256": "a8d465f1f120dfa3ef8d21951730057fa8dab1d9d31c9368665c3aca9c4ff582"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_USLecce_Juventus_2026-10-25.json",
+        "sha256": "a225e7e18133ece7be275a9a715ea84be5f5ae205102f00a8ef06941e2b5e156"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEA/serie_stats_UdineseCalcio_ACMilan_2026-10-25.json",
+        "sha256": "ca3143ec89302587c763f4ce7cdac9681bacb2fb5242a8992897d249d45380c7"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_Arezzo_Benevento_2026-10-24.json",
+        "sha256": "63e53eb9e25fde37b2d5fb5f026ed304fcbf3797236c9f7606d6d7776b21e7a7"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_Avellino_Padova_2026-10-24.json",
+        "sha256": "f0922470c336ba3a3b2709417ea93f8eef2078dbe9e9f4d2007e6d2b0b65d2ab"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_Catanzaro_Ascoli_2026-10-24.json",
+        "sha256": "b64372c9eb8133c027f23a86b29413349541cfe7e24eef74b4a5fc25bfa45161"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_EmpoliFC_LRVicenza_2026-10-23.json",
+        "sha256": "74503d2b971bdbab38ae82a2bf7efae7d680bd77f2dd11333f347648302c8825"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_FCSüdtirol_Sampdoria_2026-10-24.json",
+        "sha256": "fae0acc95556dd3c4dde97e59147561a5b1d85acb4b2d068352c549a73822e6d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_HellasVerona_PisaSC_2026-10-25.json",
+        "sha256": "1d825aadca833dc0f4f5c57bd71d792fd17fb589c59a9acfce88a206ceb8e249"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_Modena_Cesena_2026-10-24.json",
+        "sha256": "f26d0149d52d23d1562950dabda8c9f79109d5967e8cd97ff0a38c2b7cd2e3c6"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_Palermo_Carrarese_2026-10-25.json",
+        "sha256": "24ea19e73e0958796f613f8d69d66f0757de585902111c35debeaf48e541fb2d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_USCremonese_JuveStabia_2026-10-24.json",
+        "sha256": "fc9c7be17aa2896ece5b942362a5bdec1ca16d1461d9b4bcb1dfd06c512d73ff"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SERIEB/serie_stats_VirtusEntella_Mantova_2026-10-24.json",
+        "sha256": "7ffdbf78f0239048746804714386c070889ebdb1c79af139a163f32350fe0e46"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SUPERLIGAEN/serie_stats_ACHorsens_Sønderjyske_2026-10-25.json",
+        "sha256": "21dffefb908f771ca5857938b580f22b1d7112b1ba8746f38380a0d78699b404"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SUPERLIGAEN/serie_stats_AGF_Viborg_2026-10-25.json",
+        "sha256": "f69f8a803ea328618ae9f92021d48abdeaddcfbae59e540180c81704f22398a8"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SUPERLIGAEN/serie_stats_FCCopenhagen_OdenseBoldklub_2026-10-26.json",
+        "sha256": "6862c72adddee770c6355a206a63c930fe1c787f7fa577a884e55a9ac98a72cf"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SUPERLIGAEN/serie_stats_FCMidtjylland_Lyngby_2026-10-25.json",
+        "sha256": "83265f072f2685c279656f7e2e45511e8382d3c185bf80a57623aeffce1e0b6a"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SUPERLIGAEN/serie_stats_Randers_BrøndbyIF_2026-10-23.json",
+        "sha256": "c0e61cdc9bb8554ee92ec3dac0eceb7340f44b372d8dc229b1f0dc3d44a270e2"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SUPERLIGAEN/serie_stats_Silkeborg_FCNordsjælland_2026-10-25.json",
+        "sha256": "1f0f62036c298a2c86b061861adce1fb4d830dec38f937da26193168615e5499"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SWISSSUPERLEAGUE/serie_stats_FCBasel_Grasshoppers_2026-10-25.json",
+        "sha256": "da78e60edc7a0b6a69dda23f74601df8d856a5dbf3301979bf42bf699358593d"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SWISSSUPERLEAGUE/serie_stats_FCSion_Lausanne-Sport_2026-10-25.json",
+        "sha256": "1c640201d07817e1a99d82b02e4d34d7d5108ee65c50cd9a1daa2b0c881e3742"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SWISSSUPERLEAGUE/serie_stats_FCThun_FCLugano_2026-10-25.json",
+        "sha256": "b42ba167fb9d436b1408ba774d980498799b061a88c5a003f1aaea525074ec23"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SWISSSUPERLEAGUE/serie_stats_FCZurich_FCLuzern_2026-10-24.json",
+        "sha256": "b599e6a534723c5013e4081bc80ac0ce82c6f2f225cff548821796c2bd011190"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SWISSSUPERLEAGUE/serie_stats_ServetteFC_FCVaduz_2026-10-24.json",
+        "sha256": "5038da8bf1a7ea26d5ca076cda5b0e31610e2d4b8736e5c2ac25a4671a1f0c12"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SWISSSUPERLEAGUE/serie_stats_YoungBoys_FCSt.Gallen_2026-10-24.json",
+        "sha256": "144a7c2f05283ae2ceb37fa87443444caef3c1c233fdc544964bcc12ef5601a6"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_Alanyaspor_Kocaelispor_2026-10-23.json",
+        "sha256": "9fab8b899ef5127945d131b469a474ccb44965c447aacff6ea8ae00ce65e8022"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_Besiktas_İstanbulBaşakşehir_2026-10-26.json",
+        "sha256": "8c9368ce9e647d6192ab9f504dd8561c688cab7181f2e5e5d55b424b40d8c810"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_Eyupspor_Kasimpasa_2026-10-24.json",
+        "sha256": "77e9a1c85b5203e88fc99689cdc6aab8d59fd5bbd013f5a7ddfeef5af86ab397"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_Galatasaray_Fenerbahce_2026-10-26.json",
+        "sha256": "b351da12da7c8d3897572bc79b2ba4cc403cc17c40f14e19b10a8163c066831c"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_GaziantepFK_ErzurumsporFK_2026-10-24.json",
+        "sha256": "ae924586504b6d213166f3e127786d3d89715313b7021985de72f7d50f45ba27"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_Goztepe_ÇorumFK_2026-10-25.json",
+        "sha256": "730e32e9dbe871538fa3f6536c7ecce251120608ac053622eee8722fe008e142"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_Konyaspor_Gençlerbirliği_2026-10-25.json",
+        "sha256": "fe49718b25e40dd22265d8bb51e04b92ebf529158976d5a8bd793ca6de5c8076"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_Rizespor_Trabzonspor_2026-10-26.json",
+        "sha256": "065084a9ba1a51deca3d61f9b2a28937950c21691d884d6d67cb368d60ea5ce0"
+      },
+      {
+        "path": "/home/neldrox/IT/TITANIUM_PIPELINE_WORKSPACE/data/analysis/series/Run_matches-to-predict_week_04_octobre_2026___2026-11-14_11h51m03s/SÜPERLIG/serie_stats_Samsunspor_AmedSportif_2026-10-24.json",
+        "sha256": "bd7eeb20dafad9ad0d4e9846ad1e9e10115c1242f19706bf13ea9686647805af"
       }
     ],
     "league_maps": [
@@ -89,7 +997,7 @@
   },
   "canonical": {
     "path": "diagnostic.json",
-    "sha256": "f9e525750f32f3845bc7528aeee984820acca2496e4028aa77da7ce6193351ec"
+    "sha256": "08644613a9c1a84a100aacc384c2f00d751724f88dc4de7979abd20977913925"
   },
   "match_order": [
     "/0",
@@ -105,35 +1013,478 @@
     "/10",
     "/11",
     "/12",
-    "/13"
+    "/13",
+    "/14",
+    "/15",
+    "/16",
+    "/17",
+    "/18",
+    "/19",
+    "/20",
+    "/21",
+    "/22",
+    "/23",
+    "/24",
+    "/25",
+    "/26",
+    "/27",
+    "/28",
+    "/29",
+    "/30",
+    "/31",
+    "/32",
+    "/33",
+    "/34",
+    "/35",
+    "/36",
+    "/37",
+    "/38",
+    "/39",
+    "/40",
+    "/41",
+    "/42",
+    "/43",
+    "/44",
+    "/45",
+    "/46",
+    "/47",
+    "/48",
+    "/49",
+    "/50",
+    "/51",
+    "/52",
+    "/53",
+    "/54",
+    "/55",
+    "/56",
+    "/57",
+    "/58",
+    "/59",
+    "/60",
+    "/61",
+    "/62",
+    "/63",
+    "/64",
+    "/65",
+    "/66",
+    "/67",
+    "/68",
+    "/69",
+    "/70",
+    "/71",
+    "/72",
+    "/73",
+    "/74",
+    "/75",
+    "/76",
+    "/77",
+    "/78",
+    "/79",
+    "/80",
+    "/81",
+    "/82",
+    "/83",
+    "/84",
+    "/85",
+    "/86",
+    "/87",
+    "/88",
+    "/89",
+    "/90",
+    "/91",
+    "/92",
+    "/93",
+    "/94",
+    "/95",
+    "/96",
+    "/97",
+    "/98",
+    "/99",
+    "/100",
+    "/101",
+    "/102",
+    "/103",
+    "/104",
+    "/105",
+    "/106",
+    "/107",
+    "/108",
+    "/109",
+    "/110",
+    "/111",
+    "/112",
+    "/113",
+    "/114",
+    "/115",
+    "/116",
+    "/117",
+    "/118",
+    "/119",
+    "/120",
+    "/121",
+    "/122",
+    "/123",
+    "/124",
+    "/125",
+    "/126",
+    "/127",
+    "/128",
+    "/129",
+    "/130",
+    "/131",
+    "/132",
+    "/133",
+    "/134",
+    "/135",
+    "/136",
+    "/137",
+    "/138",
+    "/139",
+    "/140",
+    "/141",
+    "/142",
+    "/143",
+    "/144",
+    "/145",
+    "/146",
+    "/147",
+    "/148",
+    "/149",
+    "/150",
+    "/151",
+    "/152",
+    "/153",
+    "/154",
+    "/155",
+    "/156",
+    "/157",
+    "/158",
+    "/159",
+    "/160",
+    "/161",
+    "/162",
+    "/163",
+    "/164",
+    "/165",
+    "/166",
+    "/167",
+    "/168",
+    "/169",
+    "/170",
+    "/171",
+    "/172",
+    "/173",
+    "/174",
+    "/175",
+    "/176",
+    "/177",
+    "/178",
+    "/179",
+    "/180",
+    "/181",
+    "/182",
+    "/183",
+    "/184",
+    "/185",
+    "/186",
+    "/187",
+    "/188",
+    "/189",
+    "/190",
+    "/191",
+    "/192",
+    "/193",
+    "/194",
+    "/195",
+    "/196",
+    "/197",
+    "/198",
+    "/199",
+    "/200",
+    "/201",
+    "/202",
+    "/203",
+    "/204",
+    "/205",
+    "/206",
+    "/207",
+    "/208",
+    "/209",
+    "/210",
+    "/211",
+    "/212",
+    "/213",
+    "/214",
+    "/215",
+    "/216",
+    "/217",
+    "/218",
+    "/219",
+    "/220",
+    "/221",
+    "/222",
+    "/223",
+    "/224",
+    "/225",
+    "/226",
+    "/227",
+    "/228",
+    "/229",
+    "/230",
+    "/231",
+    "/232",
+    "/233",
+    "/234",
+    "/235",
+    "/236",
+    "/237",
+    "/238",
+    "/239",
+    "/240"
   ],
   "leagues": [
+    {
+      "league": "2. Bundesliga",
+      "slug": "2_bundesliga",
+      "path": "leagues/2_bundesliga.json",
+      "sha256": "f8c9eec1b62e937eb7e8ec095cda782fcdb06c9a767ba12d2892c08d97acee8c",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1697
+    },
+    {
+      "league": "Allsvenskan",
+      "slug": "allsvenskan",
+      "path": "leagues/allsvenskan.json",
+      "sha256": "1d0e17d8dc697a685365cbaccf7652bc6356ae8eafd27f16ce31f95feceaa3a3",
+      "match_count": 8,
+      "comparison_count": 144,
+      "unavailable_count": 1318
+    },
+    {
+      "league": "Austrian Bundesliga",
+      "slug": "austrian_bundesliga",
+      "path": "leagues/austrian_bundesliga.json",
+      "sha256": "56a86a52c5579c7920444b6d8953dcb1830e9eacd59e5f6ebbcec5c957cca347",
+      "match_count": 6,
+      "comparison_count": 108,
+      "unavailable_count": 1076
+    },
+    {
+      "league": "Belgian Pro League",
+      "slug": "belgian_pro_league",
+      "path": "leagues/belgian_pro_league.json",
+      "sha256": "0884a01f1002fbdca4a5fdf99e9e495225b598d5d06f0e7c8d01b06c20f42aa8",
+      "match_count": 8,
+      "comparison_count": 144,
+      "unavailable_count": 1488
+    },
     {
       "league": "Brazilian Serie A",
       "slug": "brazilian_serie_a",
       "path": "leagues/brazilian_serie_a.json",
-      "sha256": "57d8a081ee5869bbb77d0f8a9c0207d87005df1c43151adf13f6acfdeb7a0055",
-      "match_count": 2,
-      "comparison_count": 36,
-      "unavailable_count": 333
+      "sha256": "9c4c499f6624f9ef2dbea199379ec6c9e4a16d490d3a3397847285947fd7cf5e",
+      "match_count": 10,
+      "comparison_count": 180,
+      "unavailable_count": 1683
+    },
+    {
+      "league": "Bundesliga",
+      "slug": "bundesliga",
+      "path": "leagues/bundesliga.json",
+      "sha256": "2d7144c468d14afb21cd4925e6a023929861627e2fa0bdb3f4daa11f807767da",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1688
+    },
+    {
+      "league": "Championship",
+      "slug": "championship",
+      "path": "leagues/championship.json",
+      "sha256": "99bc5e72a846a903063485116cad854791b42d17ff6d5e6d580602062e2ca629",
+      "match_count": 12,
+      "comparison_count": 216,
+      "unavailable_count": 2025
+    },
+    {
+      "league": "Ekstraklasa",
+      "slug": "ekstraklasa",
+      "path": "leagues/ekstraklasa.json",
+      "sha256": "fc18cd291a79a2a2aeb1b051a440b4b3da86c40fda73096f27dd2068c9a51500",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1497
+    },
+    {
+      "league": "Eliteserien",
+      "slug": "eliteserien",
+      "path": "leagues/eliteserien.json",
+      "sha256": "3e5de1d5366d5a882525725c28162bf65bf19d33d14f85254b47fa3fb694feed",
+      "match_count": 8,
+      "comparison_count": 144,
+      "unavailable_count": 1331
+    },
+    {
+      "league": "Eredivisie",
+      "slug": "eredivisie",
+      "path": "leagues/eredivisie.json",
+      "sha256": "5e8e66229b89272ca43b6988318c299d51a98be90ac86912a40bdc19f976690c",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1595
+    },
+    {
+      "league": "J1 League",
+      "slug": "j1_league",
+      "path": "leagues/j1_league.json",
+      "sha256": "3f9b127ab7b00ddb031ccb70a885da24a34238b15b9a18e01c48113c2360c0e3",
+      "match_count": 10,
+      "comparison_count": 180,
+      "unavailable_count": 1644
+    },
+    {
+      "league": "K League 1",
+      "slug": "k_league_1",
+      "path": "leagues/k_league_1.json",
+      "sha256": "a23fcae8b044208edfed382d49086f184330dd9723eac8f535dd301f8e5b79a8",
+      "match_count": 6,
+      "comparison_count": 108,
+      "unavailable_count": 979
+    },
+    {
+      "league": "La Liga",
+      "slug": "la_liga",
+      "path": "leagues/la_liga.json",
+      "sha256": "50fb6f39c2c3ea5017b7adcaacc01123155af068fa0a1068069b0bd9383b7586",
+      "match_count": 10,
+      "comparison_count": 180,
+      "unavailable_count": 1784
     },
     {
       "league": "LaLiga2",
       "slug": "laliga2",
       "path": "leagues/laliga2.json",
-      "sha256": "a71d28d798e9743ff3bb87ac36d7699044d55157d7ab26b10d1f8373328f57c9",
+      "sha256": "29652a6a79ef634c80d1bffd5ab50777d4786541528c7f48a61cbd761dd01529",
       "match_count": 11,
       "comparison_count": 198,
-      "unavailable_count": 1880
+      "unavailable_count": 1959
     },
     {
       "league": "Liga MX",
       "slug": "liga_mx",
       "path": "leagues/liga_mx.json",
-      "sha256": "65317653bb2de389d7bbf044883230432aacce14c6380bcff658fe955f856695",
-      "match_count": 1,
-      "comparison_count": 18,
-      "unavailable_count": 172
+      "sha256": "81ccca8898a87dccb2ee0c3303fd4f457f8c99b786ddf6952f53c02be3ef1308",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1565
+    },
+    {
+      "league": "Liga Portugal",
+      "slug": "liga_portugal",
+      "path": "leagues/liga_portugal.json",
+      "sha256": "8bca7d6010d1a9ce15fbc4c22b519bafd314729325c18b6b248d9b00e830d138",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1647
+    },
+    {
+      "league": "Ligue 1",
+      "slug": "ligue_1",
+      "path": "leagues/ligue_1.json",
+      "sha256": "212c98025c59e19bb5b6fc579069d757932cce7e5d248d6e0e365741763192a3",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1644
+    },
+    {
+      "league": "Ligue 2",
+      "slug": "ligue_2",
+      "path": "leagues/ligue_2.json",
+      "sha256": "eddae8f3c90c02790d685d4f0854af2a6319915360791c449d05aa6e15d8955d",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1626
+    },
+    {
+      "league": "Major League Soccer",
+      "slug": "major_league_soccer",
+      "path": "leagues/major_league_soccer.json",
+      "sha256": "2723691375af9d5b28cfb6ced6585f7ea8f459df60ba0ba2ecb3ba50cb00745a",
+      "match_count": 15,
+      "comparison_count": 270,
+      "unavailable_count": 2448
+    },
+    {
+      "league": "Premier League",
+      "slug": "premier_league",
+      "path": "leagues/premier_league.json",
+      "sha256": "a82ca07811dda9f9391f55ff8d2c9cbe43223d2aae74d91584c94ab1313ce03f",
+      "match_count": 10,
+      "comparison_count": 180,
+      "unavailable_count": 1836
+    },
+    {
+      "league": "Russian Premier League",
+      "slug": "russian_premier_league",
+      "path": "leagues/russian_premier_league.json",
+      "sha256": "d0cdcc01bc9916192531f828c2645f43f32251decdc87c1c106f18cd9cbe8091",
+      "match_count": 8,
+      "comparison_count": 144,
+      "unavailable_count": 1369
+    },
+    {
+      "league": "Scottish Premiership",
+      "slug": "scottish_premiership",
+      "path": "leagues/scottish_premiership.json",
+      "sha256": "d3ec0f0816e93df525791469b5a0b3faea1e4ef06cae8e5e24dc907527282bc7",
+      "match_count": 6,
+      "comparison_count": 108,
+      "unavailable_count": 1103
+    },
+    {
+      "league": "Serie A",
+      "slug": "serie_a",
+      "path": "leagues/serie_a.json",
+      "sha256": "3c21383bccd14c025542395056a2f916f39357e3a29c9b3ee17b9a300ba9a33b",
+      "match_count": 10,
+      "comparison_count": 180,
+      "unavailable_count": 1850
+    },
+    {
+      "league": "Serie B",
+      "slug": "serie_b",
+      "path": "leagues/serie_b.json",
+      "sha256": "ca5d809c1347bbbe2f8182ff24e9e55fe045783a6a33467012cad5ead6236bf1",
+      "match_count": 10,
+      "comparison_count": 180,
+      "unavailable_count": 1875
+    },
+    {
+      "league": "Süper Lig",
+      "slug": "super_lig",
+      "path": "leagues/super_lig.json",
+      "sha256": "a23740357027f678e7376f492187ae517cb099ac43115a860724945f28c50695",
+      "match_count": 9,
+      "comparison_count": 162,
+      "unavailable_count": 1672
+    },
+    {
+      "league": "Superligaen",
+      "slug": "superligaen",
+      "path": "leagues/superligaen.json",
+      "sha256": "f0603310cf1b9688ffba1e52b28d27d521249adafb9c7adc38c111df512ec8da",
+      "match_count": 6,
+      "comparison_count": 108,
+      "unavailable_count": 1015
+    },
+    {
+      "league": "Swiss Super League",
+      "slug": "swiss_super_league",
+      "path": "leagues/swiss_super_league.json",
+      "sha256": "b5589a66350a88efe7ce41c6c73b1078cb95baa8353fcf4bbe11943f2ae6b97a",
+      "match_count": 6,
+      "comparison_count": 108,
+      "unavailable_count": 1020
     }
   ]
 }

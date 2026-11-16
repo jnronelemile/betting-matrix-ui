@@ -4,11 +4,11 @@
       "team_strength_elo_baseline",
       "opponent_quality_l5_contextualized"
     ],
-    "cutoff": "2026-11-13",
+    "cutoff": "2026-10-23",
     "cutoff_contract": "date_strictly_before_cutoff_day_batch",
     "decision_effect": "NONE",
-    "historical_dataset_sha256": "da405a6f3278a44c48d00e326bab3c823ca1a0729d1820d8f0c9207a347660dc",
-    "historical_matches_replayed": 1525,
+    "historical_dataset_sha256": "b21ec793682009954860a162f8fa05a336a1e3cc8877248b3ca8dc93bbc0c388",
+    "historical_matches_replayed": 1496,
     "history_identity_provenance": {
       "league_id": 104,
       "matches": [
@@ -13475,270 +13475,9 @@
           "raw_home": "Celta Fortuna",
           "season_key": "2026-2027",
           "source_match_id": null
-        },
-        {
-          "match_id": "20261023_GRANADACF_REALVALLADOLID",
-          "normalized_away": "Real Valladolid",
-          "normalized_home": "Granada CF",
-          "raw_away": "Real Valladolid",
-          "raw_home": "Granada CF",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261024_CDLEGANES_RCDMALLORCA",
-          "normalized_away": "RCD Mallorca",
-          "normalized_home": "CD Leganes",
-          "raw_away": "RCD Mallorca",
-          "raw_home": "CD Leganes",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261024_CÓRDOBACF_EIBAR",
-          "normalized_away": "Eibar",
-          "normalized_home": "Córdoba CF",
-          "raw_away": "Eibar",
-          "raw_home": "Córdoba CF",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261024_GIRONAFC_CELTAFORTUNA",
-          "normalized_away": "Celta Fortuna",
-          "normalized_home": "Girona FC",
-          "raw_away": "Celta Fortuna",
-          "raw_home": "Girona FC",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261024_UDALMERÍA_REALOVIEDO",
-          "normalized_away": "Real Oviedo",
-          "normalized_home": "UD Almería",
-          "raw_away": "Real Oviedo",
-          "raw_home": "UD Almería",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261024_UDLASPALMAS_REALSOCIEDADB",
-          "normalized_away": "Real Sociedad B",
-          "normalized_home": "UD Las Palmas",
-          "raw_away": "Real Sociedad B",
-          "raw_home": "UD Las Palmas",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261025_ALBACETE_ELDENSE",
-          "normalized_away": "Eldense",
-          "normalized_home": "Albacete",
-          "raw_away": "Eldense",
-          "raw_home": "Albacete",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261025_CDCASTELLÓN_SPORTINGGIJÓN",
-          "normalized_away": "Sporting Gijón",
-          "normalized_home": "CD Castellón",
-          "raw_away": "Sporting Gijón",
-          "raw_home": "CD Castellón",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261025_CÁDIZ_ADCEUTAFC",
-          "normalized_away": "AD Ceuta FC",
-          "normalized_home": "Cádiz",
-          "raw_away": "AD Ceuta FC",
-          "raw_home": "Cádiz",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261025_SABADELL_CDTENERIFE",
-          "normalized_away": "CD Tenerife",
-          "normalized_home": "Sabadell",
-          "raw_away": "CD Tenerife",
-          "raw_home": "Sabadell",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261026_FCANDORRA_BURGOSCF",
-          "normalized_away": "Burgos CF",
-          "normalized_home": "FC Andorra",
-          "raw_away": "Burgos CF",
-          "raw_home": "FC Andorra",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261031_ALBACETE_SABADELL",
-          "normalized_away": "Sabadell",
-          "normalized_home": "Albacete",
-          "raw_away": "Sabadell",
-          "raw_home": "Albacete",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261031_CELTAFORTUNA_CÓRDOBACF",
-          "normalized_away": "Córdoba CF",
-          "normalized_home": "Celta Fortuna",
-          "raw_away": "Córdoba CF",
-          "raw_home": "Celta Fortuna",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261031_EIBAR_UDALMERÍA",
-          "normalized_away": "UD Almería",
-          "normalized_home": "Eibar",
-          "raw_away": "UD Almería",
-          "raw_home": "Eibar",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261031_REALSOCIEDADB_GIRONAFC",
-          "normalized_away": "Girona FC",
-          "normalized_home": "Real Sociedad B",
-          "raw_away": "Girona FC",
-          "raw_home": "Real Sociedad B",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261101_ADCEUTAFC_SPORTINGGIJÓN",
-          "normalized_away": "Sporting Gijón",
-          "normalized_home": "AD Ceuta FC",
-          "raw_away": "Sporting Gijón",
-          "raw_home": "AD Ceuta FC",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261101_BURGOSCF_CDCASTELLÓN",
-          "normalized_away": "CD Castellón",
-          "normalized_home": "Burgos CF",
-          "raw_away": "CD Castellón",
-          "raw_home": "Burgos CF",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261101_ELDENSE_GRANADACF",
-          "normalized_away": "Granada CF",
-          "normalized_home": "Eldense",
-          "raw_away": "Granada CF",
-          "raw_home": "Eldense",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261102_RCDMALLORCA_CÁDIZ",
-          "normalized_away": "Cádiz",
-          "normalized_home": "RCD Mallorca",
-          "raw_away": "Cádiz",
-          "raw_home": "RCD Mallorca",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261102_REALOVIEDO_UDLASPALMAS",
-          "normalized_away": "UD Las Palmas",
-          "normalized_home": "Real Oviedo",
-          "raw_away": "UD Las Palmas",
-          "raw_home": "Real Oviedo",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261102_REALVALLADOLID_CDLEGANES",
-          "normalized_away": "CD Leganes",
-          "normalized_home": "Real Valladolid",
-          "raw_away": "CD Leganes",
-          "raw_home": "Real Valladolid",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261107_BURGOSCF_CELTAFORTUNA",
-          "normalized_away": "Celta Fortuna",
-          "normalized_home": "Burgos CF",
-          "raw_away": "Celta Fortuna",
-          "raw_home": "Burgos CF",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261107_CDLEGANES_ALBACETE",
-          "normalized_away": "Albacete",
-          "normalized_home": "CD Leganes",
-          "raw_away": "Albacete",
-          "raw_home": "CD Leganes",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261107_CÁDIZ_REALOVIEDO",
-          "normalized_away": "Real Oviedo",
-          "normalized_home": "Cádiz",
-          "raw_away": "Real Oviedo",
-          "raw_home": "Cádiz",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261107_CÓRDOBACF_ADCEUTAFC",
-          "normalized_away": "AD Ceuta FC",
-          "normalized_home": "Córdoba CF",
-          "raw_away": "AD Ceuta FC",
-          "raw_home": "Córdoba CF",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261108_GIRONAFC_UDALMERÍA",
-          "normalized_away": "UD Almería",
-          "normalized_home": "Girona FC",
-          "raw_away": "UD Almería",
-          "raw_home": "Girona FC",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261108_SPORTINGGIJÓN_REALVALLADOLID",
-          "normalized_away": "Real Valladolid",
-          "normalized_home": "Sporting Gijón",
-          "raw_away": "Real Valladolid",
-          "raw_home": "Sporting Gijón",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261109_SABADELL_REALSOCIEDADB",
-          "normalized_away": "Real Sociedad B",
-          "normalized_home": "Sabadell",
-          "raw_away": "Real Sociedad B",
-          "raw_home": "Sabadell",
-          "season_key": "2026-2027",
-          "source_match_id": null
-        },
-        {
-          "match_id": "20261109_UDLASPALMAS_ELDENSE",
-          "normalized_away": "Eldense",
-          "normalized_home": "UD Las Palmas",
-          "raw_away": "Eldense",
-          "raw_home": "UD Las Palmas",
-          "season_key": "2026-2027",
-          "source_match_id": null
         }
       ],
-      "raw_history_sha256": "e19d69d7e8292539a5a9f6eaa24a5190244b940a1ca2c1f08931cd47bd481f01",
+      "raw_history_sha256": "aa449c85e33e4ceb312bcfac8afc0d5be74afc1513d62d9b2822b0d74f1c7841",
       "rules": {
         "Racing de Ferrol": "Racing Ferrol"
       },
@@ -13790,21 +13529,21 @@
       "team_name": "Levante UD"
     },
     {
-      "matches_observed_total": 97,
-      "rank": 2,
-      "rating": 1605.09,
-      "team_name": "UD Almería"
-    },
-    {
       "matches_observed_total": 126,
-      "rank": 3,
+      "rank": 2,
       "rating": 1602.93,
       "team_name": "Racing Santander"
     },
     {
-      "matches_observed_total": 96,
+      "matches_observed_total": 94,
+      "rank": 3,
+      "rating": 1599.12,
+      "team_name": "UD Almería"
+    },
+    {
+      "matches_observed_total": 94,
       "rank": 4,
-      "rating": 1602.46,
+      "rating": 1595.15,
       "team_name": "CD Castellón"
     },
     {
@@ -13820,10 +13559,10 @@
       "team_name": "Deportivo La Coruña"
     },
     {
-      "matches_observed_total": 139,
+      "matches_observed_total": 136,
       "rank": 7,
-      "rating": 1579.58,
-      "team_name": "Burgos CF"
+      "rating": 1580.0,
+      "team_name": "Eibar"
     },
     {
       "matches_observed_total": 84,
@@ -13832,10 +13571,10 @@
       "team_name": "Málaga CF"
     },
     {
-      "matches_observed_total": 138,
+      "matches_observed_total": 136,
       "rank": 9,
-      "rating": 1568.31,
-      "team_name": "Eibar"
+      "rating": 1564.58,
+      "team_name": "Burgos CF"
     },
     {
       "matches_observed_total": 42,
@@ -13844,112 +13583,112 @@
       "team_name": "RCD Espanyol"
     },
     {
-      "matches_observed_total": 55,
+      "matches_observed_total": 10,
       "rank": 11,
-      "rating": 1553.04,
-      "team_name": "UD Las Palmas"
-    },
-    {
-      "matches_observed_total": 12,
-      "rank": 12,
-      "rating": 1535.05,
+      "rating": 1530.22,
       "team_name": "RCD Mallorca"
     },
     {
-      "matches_observed_total": 97,
-      "rank": 13,
-      "rating": 1520.93,
-      "team_name": "Real Oviedo"
+      "matches_observed_total": 52,
+      "rank": 12,
+      "rating": 1528.52,
+      "team_name": "UD Las Palmas"
     },
     {
-      "matches_observed_total": 139,
-      "rank": 14,
-      "rating": 1517.01,
+      "matches_observed_total": 136,
+      "rank": 13,
+      "rating": 1528.06,
       "team_name": "Sporting Gijón"
     },
     {
-      "matches_observed_total": 96,
-      "rank": 15,
-      "rating": 1516.31,
-      "team_name": "Granada CF"
-    },
-    {
-      "matches_observed_total": 13,
-      "rank": 16,
-      "rating": 1514.34,
+      "matches_observed_total": 10,
+      "rank": 14,
+      "rating": 1527.2,
       "team_name": "Girona FC"
     },
     {
-      "matches_observed_total": 97,
-      "rank": 17,
-      "rating": 1512.66,
-      "team_name": "Córdoba CF"
-    },
-    {
-      "matches_observed_total": 13,
-      "rank": 18,
-      "rating": 1506.55,
+      "matches_observed_total": 10,
+      "rank": 15,
+      "rating": 1521.95,
       "team_name": "Sabadell"
     },
     {
-      "matches_observed_total": 95,
-      "rank": 19,
-      "rating": 1501.17,
-      "team_name": "CD Tenerife"
+      "matches_observed_total": 94,
+      "rank": 16,
+      "rating": 1520.23,
+      "team_name": "Real Oviedo"
     },
     {
-      "matches_observed_total": 97,
-      "rank": 20,
-      "rating": 1477.1,
+      "matches_observed_total": 94,
+      "rank": 17,
+      "rating": 1505.95,
       "team_name": "Eldense"
     },
     {
-      "matches_observed_total": 13,
+      "matches_observed_total": 94,
+      "rank": 18,
+      "rating": 1499.53,
+      "team_name": "CD Tenerife"
+    },
+    {
+      "matches_observed_total": 94,
+      "rank": 19,
+      "rating": 1497.82,
+      "team_name": "Granada CF"
+    },
+    {
+      "matches_observed_total": 94,
+      "rank": 20,
+      "rating": 1493.43,
+      "team_name": "Córdoba CF"
+    },
+    {
+      "matches_observed_total": 10,
       "rank": 21,
-      "rating": 1476.44,
+      "rating": 1491.37,
       "team_name": "Celta Fortuna"
     },
     {
-      "matches_observed_total": 139,
+      "matches_observed_total": 94,
       "rank": 22,
-      "rating": 1473.64,
-      "team_name": "Albacete"
-    },
-    {
-      "matches_observed_total": 95,
-      "rank": 23,
-      "rating": 1472.45,
+      "rating": 1481.06,
       "team_name": "FC Andorra"
     },
     {
       "matches_observed_total": 42,
-      "rank": 24,
+      "rank": 23,
       "rating": 1471.04,
       "team_name": "SD Amorebieta"
     },
     {
-      "matches_observed_total": 97,
-      "rank": 25,
-      "rating": 1469.0,
-      "team_name": "Real Valladolid"
+      "matches_observed_total": 52,
+      "rank": 24,
+      "rating": 1466.32,
+      "team_name": "AD Ceuta FC"
     },
     {
       "matches_observed_total": 42,
-      "rank": 26,
+      "rank": 25,
       "rating": 1461.0,
       "team_name": "Alcorcon"
     },
     {
       "matches_observed_total": 126,
-      "rank": 27,
+      "rank": 26,
       "rating": 1455.92,
       "team_name": "CD Mirandés"
     },
     {
-      "matches_observed_total": 55,
+      "matches_observed_total": 94,
+      "rank": 27,
+      "rating": 1454.59,
+      "team_name": "Real Valladolid"
+    },
+    {
+      "matches_observed_total": 94,
       "rank": 28,
-      "rating": 1446.73,
-      "team_name": "Real Sociedad B"
+      "rating": 1451.32,
+      "team_name": "CD Leganes"
     },
     {
       "matches_observed_total": 42,
@@ -13958,16 +13697,16 @@
       "team_name": "Villarreal B"
     },
     {
-      "matches_observed_total": 55,
+      "matches_observed_total": 136,
       "rank": 30,
-      "rating": 1439.2,
-      "team_name": "AD Ceuta FC"
+      "rating": 1441.41,
+      "team_name": "Albacete"
     },
     {
-      "matches_observed_total": 97,
+      "matches_observed_total": 52,
       "rank": 31,
-      "rating": 1432.98,
-      "team_name": "CD Leganes"
+      "rating": 1438.52,
+      "team_name": "Real Sociedad B"
     },
     {
       "matches_observed_total": 126,
@@ -13982,9 +13721,9 @@
       "team_name": "Cultural Leonesa"
     },
     {
-      "matches_observed_total": 97,
+      "matches_observed_total": 94,
       "rank": 34,
-      "rating": 1406.19,
+      "rating": 1409.86,
       "team_name": "Cádiz"
     },
     {
@@ -14008,157 +13747,157 @@
   ],
   "current_season_active_standings": [
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 97,
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
       "rank": 1,
-      "rating": 1605.09,
+      "rating": 1599.12,
       "team_name": "UD Almería"
     },
     {
-      "matches_observed_season": 12,
-      "matches_observed_total": 96,
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
       "rank": 2,
-      "rating": 1602.46,
+      "rating": 1595.15,
       "team_name": "CD Castellón"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 139,
+      "matches_observed_season": 10,
+      "matches_observed_total": 136,
       "rank": 3,
-      "rating": 1579.58,
-      "team_name": "Burgos CF"
-    },
-    {
-      "matches_observed_season": 12,
-      "matches_observed_total": 138,
-      "rank": 4,
-      "rating": 1568.31,
+      "rating": 1580.0,
       "team_name": "Eibar"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 55,
-      "rank": 5,
-      "rating": 1553.04,
-      "team_name": "UD Las Palmas"
+      "matches_observed_season": 10,
+      "matches_observed_total": 136,
+      "rank": 4,
+      "rating": 1564.58,
+      "team_name": "Burgos CF"
     },
     {
-      "matches_observed_season": 12,
-      "matches_observed_total": 12,
-      "rank": 6,
-      "rating": 1535.05,
+      "matches_observed_season": 10,
+      "matches_observed_total": 10,
+      "rank": 5,
+      "rating": 1530.22,
       "team_name": "RCD Mallorca"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 97,
-      "rank": 7,
-      "rating": 1520.93,
-      "team_name": "Real Oviedo"
+      "matches_observed_season": 10,
+      "matches_observed_total": 52,
+      "rank": 6,
+      "rating": 1528.52,
+      "team_name": "UD Las Palmas"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 139,
-      "rank": 8,
-      "rating": 1517.01,
+      "matches_observed_season": 10,
+      "matches_observed_total": 136,
+      "rank": 7,
+      "rating": 1528.06,
       "team_name": "Sporting Gijón"
     },
     {
-      "matches_observed_season": 12,
-      "matches_observed_total": 96,
-      "rank": 9,
-      "rating": 1516.31,
-      "team_name": "Granada CF"
-    },
-    {
-      "matches_observed_season": 13,
-      "matches_observed_total": 13,
-      "rank": 10,
-      "rating": 1514.34,
+      "matches_observed_season": 10,
+      "matches_observed_total": 10,
+      "rank": 8,
+      "rating": 1527.2,
       "team_name": "Girona FC"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 97,
-      "rank": 11,
-      "rating": 1512.66,
-      "team_name": "Córdoba CF"
-    },
-    {
-      "matches_observed_season": 13,
-      "matches_observed_total": 13,
-      "rank": 12,
-      "rating": 1506.55,
+      "matches_observed_season": 10,
+      "matches_observed_total": 10,
+      "rank": 9,
+      "rating": 1521.95,
       "team_name": "Sabadell"
     },
     {
-      "matches_observed_season": 11,
-      "matches_observed_total": 95,
-      "rank": 13,
-      "rating": 1501.17,
-      "team_name": "CD Tenerife"
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
+      "rank": 10,
+      "rating": 1520.23,
+      "team_name": "Real Oviedo"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 97,
-      "rank": 14,
-      "rating": 1477.1,
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
+      "rank": 11,
+      "rating": 1505.95,
       "team_name": "Eldense"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 13,
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
+      "rank": 12,
+      "rating": 1499.53,
+      "team_name": "CD Tenerife"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
+      "rank": 13,
+      "rating": 1497.82,
+      "team_name": "Granada CF"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
+      "rank": 14,
+      "rating": 1493.43,
+      "team_name": "Córdoba CF"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 10,
       "rank": 15,
-      "rating": 1476.44,
+      "rating": 1491.37,
       "team_name": "Celta Fortuna"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 139,
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
       "rank": 16,
-      "rating": 1473.64,
-      "team_name": "Albacete"
-    },
-    {
-      "matches_observed_season": 11,
-      "matches_observed_total": 95,
-      "rank": 17,
-      "rating": 1472.45,
+      "rating": 1481.06,
       "team_name": "FC Andorra"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 97,
-      "rank": 18,
-      "rating": 1469.0,
-      "team_name": "Real Valladolid"
-    },
-    {
-      "matches_observed_season": 13,
-      "matches_observed_total": 55,
-      "rank": 19,
-      "rating": 1446.73,
-      "team_name": "Real Sociedad B"
-    },
-    {
-      "matches_observed_season": 13,
-      "matches_observed_total": 55,
-      "rank": 20,
-      "rating": 1439.2,
+      "matches_observed_season": 10,
+      "matches_observed_total": 52,
+      "rank": 17,
+      "rating": 1466.32,
       "team_name": "AD Ceuta FC"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 97,
-      "rank": 21,
-      "rating": 1432.98,
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
+      "rank": 18,
+      "rating": 1454.59,
+      "team_name": "Real Valladolid"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
+      "rank": 19,
+      "rating": 1451.32,
       "team_name": "CD Leganes"
     },
     {
-      "matches_observed_season": 13,
-      "matches_observed_total": 97,
+      "matches_observed_season": 10,
+      "matches_observed_total": 136,
+      "rank": 20,
+      "rating": 1441.41,
+      "team_name": "Albacete"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 52,
+      "rank": 21,
+      "rating": 1438.52,
+      "team_name": "Real Sociedad B"
+    },
+    {
+      "matches_observed_season": 10,
+      "matches_observed_total": 94,
       "rank": 22,
-      "rating": 1406.19,
+      "rating": 1409.86,
       "team_name": "Cádiz"
     }
   ],
@@ -128300,7 +128039,9 @@
           "rating_pre_match": 1492.19
         }
       }
-    },
+    }
+  ],
+  "target_matches": [
     {
       "active_league_mean": 1505.74,
       "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
@@ -128350,8 +128091,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": 1,
-      "score_home": 2,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -128374,82 +128115,6 @@
           "matches_observed_total": 94,
           "rank_in_league": 13,
           "rating_pre_match": 1497.82
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "RCD Mallorca",
-      "date": "2026-10-24",
-      "decision_effect": "NONE",
-      "home_team": "CD Leganes",
-      "match_context": {
-        "as_of": "2026-10-24",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261024_CDLEGANES_RCDMALLORCA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1540.27,
-          "opp_strength_l5_contextualized_gap_avg": 34.53,
-          "schedule_difficulty_vs_active_mean": 34.53,
-          "schedule_difficulty_vs_nominal_anchor": 40.27
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1513.04,
-          "opp_strength_l5_contextualized_gap_avg": 7.31,
-          "schedule_difficulty_vs_active_mean": 7.3,
-          "schedule_difficulty_vs_nominal_anchor": 13.04
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 1,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 10,
-          "matches_observed_season": 10,
-          "matches_observed_total": 10,
-          "rank_in_league": 5,
-          "rating_pre_match": 1530.22
-        },
-        "diff_home_minus_away": -78.9,
-        "expected_score_away": 0.562841,
-        "expected_score_home": 0.437159,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 94,
-          "matches_observed_season": 10,
-          "matches_observed_total": 94,
-          "rank_in_league": 18,
-          "rating_pre_match": 1451.32
         }
       }
     },
@@ -128502,8 +128167,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": 0,
-      "score_home": 2,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -128526,6 +128191,82 @@
           "matches_observed_total": 94,
           "rank_in_league": 14,
           "rating_pre_match": 1493.43
+        }
+      }
+    },
+    {
+      "active_league_mean": 1505.74,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "RCD Mallorca",
+      "date": "2026-10-24",
+      "decision_effect": "NONE",
+      "home_team": "CD Leganes",
+      "match_context": {
+        "as_of": "2026-10-24",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_laliga_2.json",
+        "static_tags": []
+      },
+      "match_id": "20261024_CDLEGANES_RCDMALLORCA",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1540.27,
+          "opp_strength_l5_contextualized_gap_avg": 34.53,
+          "schedule_difficulty_vs_active_mean": 34.53,
+          "schedule_difficulty_vs_nominal_anchor": 40.27
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1513.04,
+          "opp_strength_l5_contextualized_gap_avg": 7.31,
+          "schedule_difficulty_vs_active_mean": 7.3,
+          "schedule_difficulty_vs_nominal_anchor": 13.04
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_laliga_2.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 10,
+          "matches_observed_season": 10,
+          "matches_observed_total": 10,
+          "rank_in_league": 5,
+          "rating_pre_match": 1530.22
+        },
+        "diff_home_minus_away": -78.9,
+        "expected_score_away": 0.562841,
+        "expected_score_home": 0.437159,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 94,
+          "matches_observed_season": 10,
+          "matches_observed_total": 94,
+          "rank_in_league": 19,
+          "rating_pre_match": 1451.32
         }
       }
     },
@@ -128578,8 +128319,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": 1,
-      "score_home": 5,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -128602,82 +128343,6 @@
           "matches_observed_total": 10,
           "rank_in_league": 8,
           "rating_pre_match": 1527.2
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Real Oviedo",
-      "date": "2026-10-24",
-      "decision_effect": "NONE",
-      "home_team": "UD Almería",
-      "match_context": {
-        "as_of": "2026-10-24",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261024_UDALMERÍA_REALOVIEDO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1514.84,
-          "opp_strength_l5_contextualized_gap_avg": 9.1,
-          "schedule_difficulty_vs_active_mean": 9.1,
-          "schedule_difficulty_vs_nominal_anchor": 14.84
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1503.73,
-          "opp_strength_l5_contextualized_gap_avg": -2.01,
-          "schedule_difficulty_vs_active_mean": -2.01,
-          "schedule_difficulty_vs_nominal_anchor": 3.73
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 2,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 94,
-          "matches_observed_season": 10,
-          "matches_observed_total": 94,
-          "rank_in_league": 10,
-          "rating_pre_match": 1520.23
-        },
-        "diff_home_minus_away": 78.89,
-        "expected_score_away": 0.341727,
-        "expected_score_home": 0.658273,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 94,
-          "matches_observed_season": 10,
-          "matches_observed_total": 94,
-          "rank_in_league": 1,
-          "rating_pre_match": 1599.12
         }
       }
     },
@@ -128730,8 +128395,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": 0,
-      "score_home": 1,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -128760,37 +128425,37 @@
     {
       "active_league_mean": 1505.74,
       "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Eldense",
-      "date": "2026-10-25",
+      "away_team": "Real Oviedo",
+      "date": "2026-10-24",
       "decision_effect": "NONE",
-      "home_team": "Albacete",
+      "home_team": "UD Almería",
       "match_context": {
-        "as_of": "2026-10-25",
+        "as_of": "2026-10-24",
         "decision_effect": "NONE",
         "dynamic_tags": [],
         "rivalry_level": null,
         "source": "rivalry_registry_laliga_2.json",
         "static_tags": []
       },
-      "match_id": "20261025_ALBACETE_ELDENSE",
+      "match_id": "20261024_UDALMERÍA_REALOVIEDO",
       "opponent_quality": {
         "away": {
           "flags": [],
           "n_contextualized_gaps_observed": 5,
           "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1521.4,
-          "opp_strength_l5_contextualized_gap_avg": 15.66,
-          "schedule_difficulty_vs_active_mean": 15.66,
-          "schedule_difficulty_vs_nominal_anchor": 21.4
+          "opp_strength_l5_avg": 1514.84,
+          "opp_strength_l5_contextualized_gap_avg": 9.1,
+          "schedule_difficulty_vs_active_mean": 9.1,
+          "schedule_difficulty_vs_nominal_anchor": 14.84
         },
         "home": {
           "flags": [],
           "n_contextualized_gaps_observed": 5,
           "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1511.41,
-          "opp_strength_l5_contextualized_gap_avg": 5.67,
-          "schedule_difficulty_vs_active_mean": 5.67,
-          "schedule_difficulty_vs_nominal_anchor": 11.41
+          "opp_strength_l5_avg": 1503.73,
+          "opp_strength_l5_contextualized_gap_avg": -2.01,
+          "schedule_difficulty_vs_active_mean": -2.01,
+          "schedule_difficulty_vs_nominal_anchor": 3.73
         }
       },
       "rivalry_intelligence": {
@@ -128806,8 +128471,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": 0,
-      "score_home": 2,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -128816,172 +128481,20 @@
           "matches_observed": 94,
           "matches_observed_season": 10,
           "matches_observed_total": 94,
-          "rank_in_league": 11,
-          "rating_pre_match": 1505.95
+          "rank_in_league": 10,
+          "rating_pre_match": 1520.23
         },
-        "diff_home_minus_away": -64.54,
-        "expected_score_away": 0.542412,
-        "expected_score_home": 0.457588,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 136,
-          "matches_observed_season": 10,
-          "matches_observed_total": 136,
-          "rank_in_league": 20,
-          "rating_pre_match": 1441.41
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Sporting Gijón",
-      "date": "2026-10-25",
-      "decision_effect": "NONE",
-      "home_team": "CD Castellón",
-      "match_context": {
-        "as_of": "2026-10-25",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261025_CDCASTELLÓN_SPORTINGGIJÓN",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1467.72,
-          "opp_strength_l5_contextualized_gap_avg": -38.02,
-          "schedule_difficulty_vs_active_mean": -38.02,
-          "schedule_difficulty_vs_nominal_anchor": -32.28
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1500.66,
-          "opp_strength_l5_contextualized_gap_avg": -5.08,
-          "schedule_difficulty_vs_active_mean": -5.08,
-          "schedule_difficulty_vs_nominal_anchor": 0.66
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 0,
-      "score_home": 4,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 136,
-          "matches_observed_season": 10,
-          "matches_observed_total": 136,
-          "rank_in_league": 8,
-          "rating_pre_match": 1528.06
-        },
-        "diff_home_minus_away": 67.09,
-        "expected_score_away": 0.357168,
-        "expected_score_home": 0.642832,
+        "diff_home_minus_away": 78.89,
+        "expected_score_away": 0.341727,
+        "expected_score_home": 0.658273,
         "home": {
           "is_new_entrant": false,
           "is_returning_after_absence": false,
           "matches_observed": 94,
           "matches_observed_season": 10,
           "matches_observed_total": 94,
-          "rank_in_league": 2,
-          "rating_pre_match": 1595.15
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "AD Ceuta FC",
-      "date": "2026-10-25",
-      "decision_effect": "NONE",
-      "home_team": "Cádiz",
-      "match_context": {
-        "as_of": "2026-10-25",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261025_CÁDIZ_ADCEUTAFC",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1509.1,
-          "opp_strength_l5_contextualized_gap_avg": 3.36,
-          "schedule_difficulty_vs_active_mean": 3.36,
-          "schedule_difficulty_vs_nominal_anchor": 9.1
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1499.53,
-          "opp_strength_l5_contextualized_gap_avg": -6.21,
-          "schedule_difficulty_vs_active_mean": -6.21,
-          "schedule_difficulty_vs_nominal_anchor": -0.47
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 1,
-      "score_home": 3,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 52,
-          "matches_observed_season": 10,
-          "matches_observed_total": 52,
-          "rank_in_league": 17,
-          "rating_pre_match": 1466.32
-        },
-        "diff_home_minus_away": -56.46,
-        "expected_score_away": 0.530847,
-        "expected_score_home": 0.469153,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 94,
-          "matches_observed_season": 10,
-          "matches_observed_total": 94,
-          "rank_in_league": 22,
-          "rating_pre_match": 1409.86
+          "rank_in_league": 1,
+          "rating_pre_match": 1599.12
         }
       }
     },
@@ -129034,8 +128547,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": 1,
-      "score_home": 1,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -129044,7 +128557,7 @@
           "matches_observed": 94,
           "matches_observed_season": 10,
           "matches_observed_total": 94,
-          "rank_in_league": 14,
+          "rank_in_league": 12,
           "rating_pre_match": 1499.53
         },
         "diff_home_minus_away": 22.42,
@@ -129056,8 +128569,236 @@
           "matches_observed": 10,
           "matches_observed_season": 10,
           "matches_observed_total": 10,
-          "rank_in_league": 10,
+          "rank_in_league": 9,
           "rating_pre_match": 1521.95
+        }
+      }
+    },
+    {
+      "active_league_mean": 1505.74,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Eldense",
+      "date": "2026-10-25",
+      "decision_effect": "NONE",
+      "home_team": "Albacete",
+      "match_context": {
+        "as_of": "2026-10-25",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_laliga_2.json",
+        "static_tags": []
+      },
+      "match_id": "20261025_ALBACETE_ELDENSE",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1521.4,
+          "opp_strength_l5_contextualized_gap_avg": 15.66,
+          "schedule_difficulty_vs_active_mean": 15.66,
+          "schedule_difficulty_vs_nominal_anchor": 21.4
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1511.41,
+          "opp_strength_l5_contextualized_gap_avg": 5.67,
+          "schedule_difficulty_vs_active_mean": 5.67,
+          "schedule_difficulty_vs_nominal_anchor": 11.41
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_laliga_2.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 94,
+          "matches_observed_season": 10,
+          "matches_observed_total": 94,
+          "rank_in_league": 11,
+          "rating_pre_match": 1505.95
+        },
+        "diff_home_minus_away": -64.54,
+        "expected_score_away": 0.542412,
+        "expected_score_home": 0.457588,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 136,
+          "matches_observed_season": 10,
+          "matches_observed_total": 136,
+          "rank_in_league": 20,
+          "rating_pre_match": 1441.41
+        }
+      }
+    },
+    {
+      "active_league_mean": 1505.74,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "AD Ceuta FC",
+      "date": "2026-10-25",
+      "decision_effect": "NONE",
+      "home_team": "Cádiz",
+      "match_context": {
+        "as_of": "2026-10-25",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_laliga_2.json",
+        "static_tags": []
+      },
+      "match_id": "20261025_CÁDIZ_ADCEUTAFC",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1509.1,
+          "opp_strength_l5_contextualized_gap_avg": 3.36,
+          "schedule_difficulty_vs_active_mean": 3.36,
+          "schedule_difficulty_vs_nominal_anchor": 9.1
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1499.53,
+          "opp_strength_l5_contextualized_gap_avg": -6.21,
+          "schedule_difficulty_vs_active_mean": -6.21,
+          "schedule_difficulty_vs_nominal_anchor": -0.47
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_laliga_2.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 52,
+          "matches_observed_season": 10,
+          "matches_observed_total": 52,
+          "rank_in_league": 17,
+          "rating_pre_match": 1466.32
+        },
+        "diff_home_minus_away": -56.46,
+        "expected_score_away": 0.530847,
+        "expected_score_home": 0.469153,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 94,
+          "matches_observed_season": 10,
+          "matches_observed_total": 94,
+          "rank_in_league": 22,
+          "rating_pre_match": 1409.86
+        }
+      }
+    },
+    {
+      "active_league_mean": 1505.74,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Sporting Gijón",
+      "date": "2026-10-25",
+      "decision_effect": "NONE",
+      "home_team": "CD Castellón",
+      "match_context": {
+        "as_of": "2026-10-25",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_laliga_2.json",
+        "static_tags": []
+      },
+      "match_id": "20261025_CDCASTELLÓN_SPORTINGGIJÓN",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1467.72,
+          "opp_strength_l5_contextualized_gap_avg": -38.02,
+          "schedule_difficulty_vs_active_mean": -38.02,
+          "schedule_difficulty_vs_nominal_anchor": -32.28
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1500.66,
+          "opp_strength_l5_contextualized_gap_avg": -5.08,
+          "schedule_difficulty_vs_active_mean": -5.08,
+          "schedule_difficulty_vs_nominal_anchor": 0.66
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_laliga_2.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 136,
+          "matches_observed_season": 10,
+          "matches_observed_total": 136,
+          "rank_in_league": 7,
+          "rating_pre_match": 1528.06
+        },
+        "diff_home_minus_away": 67.09,
+        "expected_score_away": 0.357168,
+        "expected_score_home": 0.642832,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 94,
+          "matches_observed_season": 10,
+          "matches_observed_total": 94,
+          "rank_in_league": 2,
+          "rating_pre_match": 1595.15
         }
       }
     },
@@ -129110,8 +128851,8 @@
         "static_tags": [],
         "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
       },
-      "score_away": 3,
-      "score_home": 2,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026-2027",
       "team_strength": {
         "away": {
@@ -129134,2212 +128875,6 @@
           "matches_observed_total": 94,
           "rank_in_league": 16,
           "rating_pre_match": 1481.06
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Sabadell",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "Albacete",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261031_ALBACETE_SABADELL",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1501.91,
-          "opp_strength_l5_contextualized_gap_avg": -3.82,
-          "schedule_difficulty_vs_active_mean": -3.83,
-          "schedule_difficulty_vs_nominal_anchor": 1.91
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1516.23,
-          "opp_strength_l5_contextualized_gap_avg": 10.49,
-          "schedule_difficulty_vs_active_mean": 10.49,
-          "schedule_difficulty_vs_nominal_anchor": 16.23
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 1,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 11,
-          "matches_observed_season": 11,
-          "matches_observed_total": 11,
-          "rank_in_league": 10,
-          "rating_pre_match": 1520.31
-        },
-        "diff_home_minus_away": -68.06,
-        "expected_score_away": 0.547429,
-        "expected_score_home": 0.452571,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 137,
-          "matches_observed_season": 11,
-          "matches_observed_total": 137,
-          "rank_in_league": 19,
-          "rating_pre_match": 1452.26
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Córdoba CF",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "Celta Fortuna",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261031_CELTAFORTUNA_CÓRDOBACF",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1495.76,
-          "opp_strength_l5_contextualized_gap_avg": -9.98,
-          "schedule_difficulty_vs_active_mean": -9.98,
-          "schedule_difficulty_vs_nominal_anchor": -4.24
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1501.14,
-          "opp_strength_l5_contextualized_gap_avg": -4.6,
-          "schedule_difficulty_vs_active_mean": -4.6,
-          "schedule_difficulty_vs_nominal_anchor": 1.14
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 2,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 12,
-          "rating_pre_match": 1504.9
-        },
-        "diff_home_minus_away": -21.53,
-        "expected_score_away": 0.480618,
-        "expected_score_home": 0.519382,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 11,
-          "matches_observed_season": 11,
-          "matches_observed_total": 11,
-          "rank_in_league": 15,
-          "rating_pre_match": 1483.38
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "UD Almería",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "Eibar",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261031_EIBAR_UDALMERÍA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1507.73,
-          "opp_strength_l5_contextualized_gap_avg": 1.99,
-          "schedule_difficulty_vs_active_mean": 1.99,
-          "schedule_difficulty_vs_nominal_anchor": 7.73
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1508.96,
-          "opp_strength_l5_contextualized_gap_avg": 3.22,
-          "schedule_difficulty_vs_active_mean": 3.22,
-          "schedule_difficulty_vs_nominal_anchor": 8.96
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 1,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 2,
-          "rating_pre_match": 1595.96
-        },
-        "diff_home_minus_away": -27.43,
-        "expected_score_away": 0.489104,
-        "expected_score_home": 0.510896,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 137,
-          "matches_observed_season": 11,
-          "matches_observed_total": 137,
-          "rank_in_league": 4,
-          "rating_pre_match": 1568.53
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Girona FC",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "Real Sociedad B",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261031_REALSOCIEDADB_GIRONAFC",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1493.88,
-          "opp_strength_l5_contextualized_gap_avg": -11.86,
-          "schedule_difficulty_vs_active_mean": -11.86,
-          "schedule_difficulty_vs_nominal_anchor": -6.12
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1508.88,
-          "opp_strength_l5_contextualized_gap_avg": 3.14,
-          "schedule_difficulty_vs_active_mean": 3.14,
-          "schedule_difficulty_vs_nominal_anchor": 8.88
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 0,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 11,
-          "matches_observed_season": 11,
-          "matches_observed_total": 11,
-          "rank_in_league": 5,
-          "rating_pre_match": 1535.19
-        },
-        "diff_home_minus_away": -103.21,
-        "expected_score_away": 0.596924,
-        "expected_score_home": 0.403076,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 53,
-          "matches_observed_season": 11,
-          "matches_observed_total": 53,
-          "rank_in_league": 21,
-          "rating_pre_match": 1431.97
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Sporting Gijón",
-      "date": "2026-11-01",
-      "decision_effect": "NONE",
-      "home_team": "AD Ceuta FC",
-      "match_context": {
-        "as_of": "2026-11-01",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261101_ADCEUTAFC_SPORTINGGIJÓN",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1492.12,
-          "opp_strength_l5_contextualized_gap_avg": -13.62,
-          "schedule_difficulty_vs_active_mean": -13.62,
-          "schedule_difficulty_vs_nominal_anchor": -7.88
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1503.17,
-          "opp_strength_l5_contextualized_gap_avg": -2.57,
-          "schedule_difficulty_vs_active_mean": -2.57,
-          "schedule_difficulty_vs_nominal_anchor": 3.17
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 2,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 137,
-          "matches_observed_season": 11,
-          "matches_observed_total": 137,
-          "rank_in_league": 9,
-          "rating_pre_match": 1520.92
-        },
-        "diff_home_minus_away": -65.22,
-        "expected_score_away": 0.543376,
-        "expected_score_home": 0.456624,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 53,
-          "matches_observed_season": 11,
-          "matches_observed_total": 53,
-          "rank_in_league": 18,
-          "rating_pre_match": 1455.7
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "CD Castellón",
-      "date": "2026-11-01",
-      "decision_effect": "NONE",
-      "home_team": "Burgos CF",
-      "match_context": {
-        "as_of": "2026-11-01",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261101_BURGOSCF_CDCASTELLÓN",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1502.31,
-          "opp_strength_l5_contextualized_gap_avg": -3.43,
-          "schedule_difficulty_vs_active_mean": -3.43,
-          "schedule_difficulty_vs_nominal_anchor": 2.31
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1509.87,
-          "opp_strength_l5_contextualized_gap_avg": 4.13,
-          "schedule_difficulty_vs_active_mean": 4.13,
-          "schedule_difficulty_vs_nominal_anchor": 9.87
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 1,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 1,
-          "rating_pre_match": 1602.3
-        },
-        "diff_home_minus_away": -29.1,
-        "expected_score_away": 0.491508,
-        "expected_score_home": 0.508492,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 137,
-          "matches_observed_season": 11,
-          "matches_observed_total": 137,
-          "rank_in_league": 3,
-          "rating_pre_match": 1573.2
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Granada CF",
-      "date": "2026-11-01",
-      "decision_effect": "NONE",
-      "home_team": "Eldense",
-      "match_context": {
-        "as_of": "2026-11-01",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261101_ELDENSE_GRANADACF",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1473.75,
-          "opp_strength_l5_contextualized_gap_avg": -31.99,
-          "schedule_difficulty_vs_active_mean": -31.99,
-          "schedule_difficulty_vs_nominal_anchor": -26.25
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1495.79,
-          "opp_strength_l5_contextualized_gap_avg": -9.95,
-          "schedule_difficulty_vs_active_mean": -9.95,
-          "schedule_difficulty_vs_nominal_anchor": -4.21
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 2,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 11,
-          "rating_pre_match": 1505.61
-        },
-        "diff_home_minus_away": -10.5,
-        "expected_score_away": 0.464803,
-        "expected_score_home": 0.535197,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 14,
-          "rating_pre_match": 1495.1
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Cádiz",
-      "date": "2026-11-02",
-      "decision_effect": "NONE",
-      "home_team": "RCD Mallorca",
-      "match_context": {
-        "as_of": "2026-11-02",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261102_RCDMALLORCA_CÁDIZ",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1492.16,
-          "opp_strength_l5_contextualized_gap_avg": -13.58,
-          "schedule_difficulty_vs_active_mean": -13.58,
-          "schedule_difficulty_vs_nominal_anchor": -7.84
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1533.82,
-          "opp_strength_l5_contextualized_gap_avg": 28.08,
-          "schedule_difficulty_vs_active_mean": 28.08,
-          "schedule_difficulty_vs_nominal_anchor": 33.82
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 1,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 22,
-          "rating_pre_match": 1420.47
-        },
-        "diff_home_minus_away": 108.49,
-        "expected_score_away": 0.304495,
-        "expected_score_home": 0.695505,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 11,
-          "matches_observed_season": 11,
-          "matches_observed_total": 11,
-          "rank_in_league": 7,
-          "rating_pre_match": 1528.96
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "UD Las Palmas",
-      "date": "2026-11-02",
-      "decision_effect": "NONE",
-      "home_team": "Real Oviedo",
-      "match_context": {
-        "as_of": "2026-11-02",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261102_REALOVIEDO_UDLASPALMAS",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1514.41,
-          "opp_strength_l5_contextualized_gap_avg": 8.67,
-          "schedule_difficulty_vs_active_mean": 8.67,
-          "schedule_difficulty_vs_nominal_anchor": 14.41
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1531.96,
-          "opp_strength_l5_contextualized_gap_avg": 26.22,
-          "schedule_difficulty_vs_active_mean": 26.22,
-          "schedule_difficulty_vs_nominal_anchor": 31.96
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 3,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 53,
-          "matches_observed_season": 11,
-          "matches_observed_total": 53,
-          "rank_in_league": 5,
-          "rating_pre_match": 1535.07
-        },
-        "diff_home_minus_away": -11.67,
-        "expected_score_away": 0.466483,
-        "expected_score_home": 0.533517,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 8,
-          "rating_pre_match": 1523.4
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "CD Leganes",
-      "date": "2026-11-02",
-      "decision_effect": "NONE",
-      "home_team": "Real Valladolid",
-      "match_context": {
-        "as_of": "2026-11-02",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261102_REALVALLADOLID_CDLEGANES",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1521.67,
-          "opp_strength_l5_contextualized_gap_avg": 15.93,
-          "schedule_difficulty_vs_active_mean": 15.93,
-          "schedule_difficulty_vs_nominal_anchor": 21.67
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1499.15,
-          "opp_strength_l5_contextualized_gap_avg": -6.59,
-          "schedule_difficulty_vs_active_mean": -6.59,
-          "schedule_difficulty_vs_nominal_anchor": -0.85
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 3,
-      "score_home": 4,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 18,
-          "rating_pre_match": 1452.58
-        },
-        "diff_home_minus_away": -5.77,
-        "expected_score_away": 0.458038,
-        "expected_score_home": 0.541962,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 19,
-          "rating_pre_match": 1446.8
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Celta Fortuna",
-      "date": "2026-11-07",
-      "decision_effect": "NONE",
-      "home_team": "Burgos CF",
-      "match_context": {
-        "as_of": "2026-11-07",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261107_BURGOSCF_CELTAFORTUNA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1497.65,
-          "opp_strength_l5_contextualized_gap_avg": -8.09,
-          "schedule_difficulty_vs_active_mean": -8.09,
-          "schedule_difficulty_vs_nominal_anchor": -2.35
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1533.65,
-          "opp_strength_l5_contextualized_gap_avg": 27.92,
-          "schedule_difficulty_vs_active_mean": 27.91,
-          "schedule_difficulty_vs_nominal_anchor": 33.65
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 1,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 12,
-          "matches_observed_season": 12,
-          "matches_observed_total": 12,
-          "rank_in_league": 15,
-          "rating_pre_match": 1482.99
-        },
-        "diff_home_minus_away": 90.04,
-        "expected_score_away": 0.327445,
-        "expected_score_home": 0.672555,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 138,
-          "matches_observed_season": 12,
-          "matches_observed_total": 138,
-          "rank_in_league": 3,
-          "rating_pre_match": 1573.03
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Albacete",
-      "date": "2026-11-07",
-      "decision_effect": "NONE",
-      "home_team": "CD Leganes",
-      "match_context": {
-        "as_of": "2026-11-07",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261107_CDLEGANES_ALBACETE",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1517.94,
-          "opp_strength_l5_contextualized_gap_avg": 12.2,
-          "schedule_difficulty_vs_active_mean": 12.2,
-          "schedule_difficulty_vs_nominal_anchor": 17.94
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1492.19,
-          "opp_strength_l5_contextualized_gap_avg": -13.55,
-          "schedule_difficulty_vs_active_mean": -13.55,
-          "schedule_difficulty_vs_nominal_anchor": -7.81
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 3,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 138,
-          "matches_observed_season": 12,
-          "matches_observed_total": 138,
-          "rank_in_league": 17,
-          "rating_pre_match": 1463.21
-        },
-        "diff_home_minus_away": -19.79,
-        "expected_score_away": 0.478125,
-        "expected_score_home": 0.521875,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 21,
-          "rating_pre_match": 1443.42
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Real Oviedo",
-      "date": "2026-11-07",
-      "decision_effect": "NONE",
-      "home_team": "Cádiz",
-      "match_context": {
-        "as_of": "2026-11-07",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261107_CÁDIZ_REALOVIEDO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1536.32,
-          "opp_strength_l5_contextualized_gap_avg": 30.58,
-          "schedule_difficulty_vs_active_mean": 30.58,
-          "schedule_difficulty_vs_nominal_anchor": 36.32
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1495.42,
-          "opp_strength_l5_contextualized_gap_avg": -10.32,
-          "schedule_difficulty_vs_active_mean": -10.32,
-          "schedule_difficulty_vs_nominal_anchor": -4.58
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 2,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 10,
-          "rating_pre_match": 1512.73
-        },
-        "diff_home_minus_away": -98.34,
-        "expected_score_away": 0.590164,
-        "expected_score_home": 0.409836,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 22,
-          "rating_pre_match": 1414.38
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "AD Ceuta FC",
-      "date": "2026-11-07",
-      "decision_effect": "NONE",
-      "home_team": "Córdoba CF",
-      "match_context": {
-        "as_of": "2026-11-07",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261107_CÓRDOBACF_ADCEUTAFC",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1512.65,
-          "opp_strength_l5_contextualized_gap_avg": 6.92,
-          "schedule_difficulty_vs_active_mean": 6.91,
-          "schedule_difficulty_vs_nominal_anchor": 12.65
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1504.14,
-          "opp_strength_l5_contextualized_gap_avg": -1.6,
-          "schedule_difficulty_vs_active_mean": -1.6,
-          "schedule_difficulty_vs_nominal_anchor": 4.14
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 0,
-      "score_home": 3,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 54,
-          "matches_observed_season": 12,
-          "matches_observed_total": 54,
-          "rank_in_league": 19,
-          "rating_pre_match": 1446.57
-        },
-        "diff_home_minus_away": 58.72,
-        "expected_score_away": 0.368302,
-        "expected_score_home": 0.631698,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 12,
-          "rating_pre_match": 1505.29
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "UD Almería",
-      "date": "2026-11-08",
-      "decision_effect": "NONE",
-      "home_team": "Girona FC",
-      "match_context": {
-        "as_of": "2026-11-08",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261108_GIRONAFC_UDALMERÍA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1516.12,
-          "opp_strength_l5_contextualized_gap_avg": 10.38,
-          "schedule_difficulty_vs_active_mean": 10.38,
-          "schedule_difficulty_vs_nominal_anchor": 16.12
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1485.69,
-          "opp_strength_l5_contextualized_gap_avg": -20.05,
-          "schedule_difficulty_vs_active_mean": -20.05,
-          "schedule_difficulty_vs_nominal_anchor": -14.31
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 1,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 2,
-          "rating_pre_match": 1596.18
-        },
-        "diff_home_minus_away": -72.93,
-        "expected_score_away": 0.554368,
-        "expected_score_home": 0.445632,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 12,
-          "matches_observed_season": 12,
-          "matches_observed_total": 12,
-          "rank_in_league": 8,
-          "rating_pre_match": 1523.25
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Real Valladolid",
-      "date": "2026-11-08",
-      "decision_effect": "NONE",
-      "home_team": "Sporting Gijón",
-      "match_context": {
-        "as_of": "2026-11-08",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261108_SPORTINGGIJÓN_REALVALLADOLID",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1491.08,
-          "opp_strength_l5_contextualized_gap_avg": -14.66,
-          "schedule_difficulty_vs_active_mean": -14.66,
-          "schedule_difficulty_vs_nominal_anchor": -8.92
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1483.46,
-          "opp_strength_l5_contextualized_gap_avg": -22.28,
-          "schedule_difficulty_vs_active_mean": -22.28,
-          "schedule_difficulty_vs_nominal_anchor": -16.54
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 2,
-      "score_home": 1,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 18,
-          "rating_pre_match": 1455.96
-        },
-        "diff_home_minus_away": 74.09,
-        "expected_score_away": 0.347975,
-        "expected_score_home": 0.652025,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 138,
-          "matches_observed_season": 12,
-          "matches_observed_total": 138,
-          "rank_in_league": 7,
-          "rating_pre_match": 1530.05
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Real Sociedad B",
-      "date": "2026-11-09",
-      "decision_effect": "NONE",
-      "home_team": "Sabadell",
-      "match_context": {
-        "as_of": "2026-11-09",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261109_SABADELL_REALSOCIEDADB",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1521.28,
-          "opp_strength_l5_contextualized_gap_avg": 15.54,
-          "schedule_difficulty_vs_active_mean": 15.54,
-          "schedule_difficulty_vs_nominal_anchor": 21.28
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1493.79,
-          "opp_strength_l5_contextualized_gap_avg": -11.95,
-          "schedule_difficulty_vs_active_mean": -11.95,
-          "schedule_difficulty_vs_nominal_anchor": -6.21
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 0,
-      "score_home": 0,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 54,
-          "matches_observed_season": 12,
-          "matches_observed_total": 54,
-          "rank_in_league": 19,
-          "rating_pre_match": 1443.91
-        },
-        "diff_home_minus_away": 65.45,
-        "expected_score_away": 0.359333,
-        "expected_score_home": 0.640667,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 12,
-          "matches_observed_season": 12,
-          "matches_observed_total": 12,
-          "rank_in_league": 12,
-          "rating_pre_match": 1509.37
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Eldense",
-      "date": "2026-11-09",
-      "decision_effect": "NONE",
-      "home_team": "UD Las Palmas",
-      "match_context": {
-        "as_of": "2026-11-09",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261109_UDLASPALMAS_ELDENSE",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1482.46,
-          "opp_strength_l5_contextualized_gap_avg": -23.28,
-          "schedule_difficulty_vs_active_mean": -23.28,
-          "schedule_difficulty_vs_nominal_anchor": -17.54
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1503.44,
-          "opp_strength_l5_contextualized_gap_avg": -2.3,
-          "schedule_difficulty_vs_active_mean": -2.3,
-          "schedule_difficulty_vs_nominal_anchor": 3.44
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": 0,
-      "score_home": 2,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 14,
-          "rating_pre_match": 1484.4
-        },
-        "diff_home_minus_away": 61.34,
-        "expected_score_away": 0.364797,
-        "expected_score_home": 0.635203,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 54,
-          "matches_observed_season": 12,
-          "matches_observed_total": 54,
-          "rank_in_league": 5,
-          "rating_pre_match": 1545.74
-        }
-      }
-    }
-  ],
-  "target_matches": [
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Burgos CF",
-      "date": "2026-11-13",
-      "decision_effect": "NONE",
-      "home_team": "CD Leganes",
-      "match_context": {
-        "as_of": "2026-11-13",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261113_CDLEGANES_BURGOSCF",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1514.78,
-          "opp_strength_l5_contextualized_gap_avg": 9.04,
-          "schedule_difficulty_vs_active_mean": 9.04,
-          "schedule_difficulty_vs_nominal_anchor": 14.78
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1501.93,
-          "opp_strength_l5_contextualized_gap_avg": -3.81,
-          "schedule_difficulty_vs_active_mean": -3.81,
-          "schedule_difficulty_vs_nominal_anchor": 1.93
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 139,
-          "matches_observed_season": 13,
-          "matches_observed_total": 139,
-          "rank_in_league": 3,
-          "rating_pre_match": 1579.58
-        },
-        "diff_home_minus_away": -146.6,
-        "expected_score_away": 0.655296,
-        "expected_score_home": 0.344704,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 97,
-          "matches_observed_season": 13,
-          "matches_observed_total": 97,
-          "rank_in_league": 21,
-          "rating_pre_match": 1432.98
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "CD Castellón",
-      "date": "2026-11-14",
-      "decision_effect": "NONE",
-      "home_team": "Real Valladolid",
-      "match_context": {
-        "as_of": "2026-11-14",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261114_REALVALLADOLID_CDCASTELLÓN",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1519.68,
-          "opp_strength_l5_contextualized_gap_avg": 13.94,
-          "schedule_difficulty_vs_active_mean": 13.94,
-          "schedule_difficulty_vs_nominal_anchor": 19.68
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1486.75,
-          "opp_strength_l5_contextualized_gap_avg": -18.99,
-          "schedule_difficulty_vs_active_mean": -18.99,
-          "schedule_difficulty_vs_nominal_anchor": -13.25
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 2,
-          "rating_pre_match": 1602.46
-        },
-        "diff_home_minus_away": -133.46,
-        "expected_score_away": 0.63802,
-        "expected_score_home": 0.36198,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 97,
-          "matches_observed_season": 13,
-          "matches_observed_total": 97,
-          "rank_in_league": 18,
-          "rating_pre_match": 1469.0
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Sporting Gijón",
-      "date": "2026-11-14",
-      "decision_effect": "NONE",
-      "home_team": "Real Sociedad B",
-      "match_context": {
-        "as_of": "2026-11-14",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261114_REALSOCIEDADB_SPORTINGGIJÓN",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1476.11,
-          "opp_strength_l5_contextualized_gap_avg": -29.63,
-          "schedule_difficulty_vs_active_mean": -29.63,
-          "schedule_difficulty_vs_nominal_anchor": -23.89
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1529.87,
-          "opp_strength_l5_contextualized_gap_avg": 24.13,
-          "schedule_difficulty_vs_active_mean": 24.13,
-          "schedule_difficulty_vs_nominal_anchor": 29.87
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 139,
-          "matches_observed_season": 13,
-          "matches_observed_total": 139,
-          "rank_in_league": 8,
-          "rating_pre_match": 1517.01
-        },
-        "diff_home_minus_away": -70.29,
-        "expected_score_away": 0.550606,
-        "expected_score_home": 0.449394,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 55,
-          "matches_observed_season": 13,
-          "matches_observed_total": 55,
-          "rank_in_league": 19,
-          "rating_pre_match": 1446.73
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "FC Andorra",
-      "date": "2026-11-14",
-      "decision_effect": "NONE",
-      "home_team": "UD Almería",
-      "match_context": {
-        "as_of": "2026-11-14",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261114_UDALMERÍA_FCANDORRA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1536.38,
-          "opp_strength_l5_contextualized_gap_avg": 30.64,
-          "schedule_difficulty_vs_active_mean": 30.64,
-          "schedule_difficulty_vs_nominal_anchor": 36.38
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1505.0,
-          "opp_strength_l5_contextualized_gap_avg": -0.75,
-          "schedule_difficulty_vs_active_mean": -0.74,
-          "schedule_difficulty_vs_nominal_anchor": 5.0
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 17,
-          "rating_pre_match": 1472.45
-        },
-        "diff_home_minus_away": 132.64,
-        "expected_score_away": 0.275877,
-        "expected_score_home": 0.724123,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 97,
-          "matches_observed_season": 13,
-          "matches_observed_total": 97,
-          "rank_in_league": 1,
-          "rating_pre_match": 1605.09
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Córdoba CF",
-      "date": "2026-11-14",
-      "decision_effect": "NONE",
-      "home_team": "RCD Mallorca",
-      "match_context": {
-        "as_of": "2026-11-14",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261114_RCDMALLORCA_CÓRDOBACF",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1491.67,
-          "opp_strength_l5_contextualized_gap_avg": -14.07,
-          "schedule_difficulty_vs_active_mean": -14.07,
-          "schedule_difficulty_vs_nominal_anchor": -8.33
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1504.41,
-          "opp_strength_l5_contextualized_gap_avg": -1.33,
-          "schedule_difficulty_vs_active_mean": -1.33,
-          "schedule_difficulty_vs_nominal_anchor": 4.41
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 97,
-          "matches_observed_season": 13,
-          "matches_observed_total": 97,
-          "rank_in_league": 11,
-          "rating_pre_match": 1512.66
-        },
-        "diff_home_minus_away": 22.39,
-        "expected_score_away": 0.418147,
-        "expected_score_home": 0.581853,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 12,
-          "matches_observed_season": 12,
-          "matches_observed_total": 12,
-          "rank_in_league": 6,
-          "rating_pre_match": 1535.05
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Girona FC",
-      "date": "2026-11-14",
-      "decision_effect": "NONE",
-      "home_team": "Real Oviedo",
-      "match_context": {
-        "as_of": "2026-11-14",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261114_REALOVIEDO_GIRONAFC",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1501.58,
-          "opp_strength_l5_contextualized_gap_avg": -4.16,
-          "schedule_difficulty_vs_active_mean": -4.16,
-          "schedule_difficulty_vs_nominal_anchor": 1.58
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1523.84,
-          "opp_strength_l5_contextualized_gap_avg": 18.1,
-          "schedule_difficulty_vs_active_mean": 18.1,
-          "schedule_difficulty_vs_nominal_anchor": 23.84
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 13,
-          "matches_observed_season": 13,
-          "matches_observed_total": 13,
-          "rank_in_league": 10,
-          "rating_pre_match": 1514.34
-        },
-        "diff_home_minus_away": 6.59,
-        "expected_score_away": 0.440432,
-        "expected_score_home": 0.559568,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 97,
-          "matches_observed_season": 13,
-          "matches_observed_total": 97,
-          "rank_in_league": 7,
-          "rating_pre_match": 1520.93
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "AD Ceuta FC",
-      "date": "2026-11-15",
-      "decision_effect": "NONE",
-      "home_team": "CD Tenerife",
-      "match_context": {
-        "as_of": "2026-11-15",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261115_CDTENERIFE_ADCEUTAFC",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1493.29,
-          "opp_strength_l5_contextualized_gap_avg": -12.45,
-          "schedule_difficulty_vs_active_mean": -12.45,
-          "schedule_difficulty_vs_nominal_anchor": -6.71
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1485.18,
-          "opp_strength_l5_contextualized_gap_avg": -20.56,
-          "schedule_difficulty_vs_active_mean": -20.56,
-          "schedule_difficulty_vs_nominal_anchor": -14.82
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 55,
-          "matches_observed_season": 13,
-          "matches_observed_total": 55,
-          "rank_in_league": 20,
-          "rating_pre_match": 1439.2
-        },
-        "diff_home_minus_away": 61.96,
-        "expected_score_away": 0.363972,
-        "expected_score_home": 0.636028,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 95,
-          "matches_observed_season": 11,
-          "matches_observed_total": 95,
-          "rank_in_league": 13,
-          "rating_pre_match": 1501.17
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "UD Las Palmas",
-      "date": "2026-11-15",
-      "decision_effect": "NONE",
-      "home_team": "Granada CF",
-      "match_context": {
-        "as_of": "2026-11-15",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261115_GRANADACF_UDLASPALMAS",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1509.93,
-          "opp_strength_l5_contextualized_gap_avg": 4.19,
-          "schedule_difficulty_vs_active_mean": 4.19,
-          "schedule_difficulty_vs_nominal_anchor": 9.93
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1480.17,
-          "opp_strength_l5_contextualized_gap_avg": -25.57,
-          "schedule_difficulty_vs_active_mean": -25.57,
-          "schedule_difficulty_vs_nominal_anchor": -19.83
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 55,
-          "matches_observed_season": 13,
-          "matches_observed_total": 55,
-          "rank_in_league": 5,
-          "rating_pre_match": 1553.04
-        },
-        "diff_home_minus_away": -36.73,
-        "expected_score_away": 0.50249,
-        "expected_score_home": 0.49751,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 96,
-          "matches_observed_season": 12,
-          "matches_observed_total": 96,
-          "rank_in_league": 9,
-          "rating_pre_match": 1516.31
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Cádiz",
-      "date": "2026-11-15",
-      "decision_effect": "NONE",
-      "home_team": "Eibar",
-      "match_context": {
-        "as_of": "2026-11-15",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261115_EIBAR_CÁDIZ",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1502.29,
-          "opp_strength_l5_contextualized_gap_avg": -3.45,
-          "schedule_difficulty_vs_active_mean": -3.45,
-          "schedule_difficulty_vs_nominal_anchor": 2.29
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1516.11,
-          "opp_strength_l5_contextualized_gap_avg": 10.37,
-          "schedule_difficulty_vs_active_mean": 10.37,
-          "schedule_difficulty_vs_nominal_anchor": 16.11
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 97,
-          "matches_observed_season": 13,
-          "matches_observed_total": 97,
-          "rank_in_league": 22,
-          "rating_pre_match": 1406.19
-        },
-        "diff_home_minus_away": 162.13,
-        "expected_score_away": 0.243285,
-        "expected_score_home": 0.756715,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 138,
-          "matches_observed_season": 12,
-          "matches_observed_total": 138,
-          "rank_in_league": 4,
-          "rating_pre_match": 1568.31
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Sabadell",
-      "date": "2026-11-15",
-      "decision_effect": "NONE",
-      "home_team": "Eldense",
-      "match_context": {
-        "as_of": "2026-11-15",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261115_ELDENSE_SABADELL",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1487.68,
-          "opp_strength_l5_contextualized_gap_avg": -18.06,
-          "schedule_difficulty_vs_active_mean": -18.06,
-          "schedule_difficulty_vs_nominal_anchor": -12.32
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1489.93,
-          "opp_strength_l5_contextualized_gap_avg": -15.81,
-          "schedule_difficulty_vs_active_mean": -15.81,
-          "schedule_difficulty_vs_nominal_anchor": -10.07
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 13,
-          "matches_observed_season": 13,
-          "matches_observed_total": 13,
-          "rank_in_league": 12,
-          "rating_pre_match": 1506.55
-        },
-        "diff_home_minus_away": -29.45,
-        "expected_score_away": 0.492012,
-        "expected_score_home": 0.507988,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 97,
-          "matches_observed_season": 13,
-          "matches_observed_total": 97,
-          "rank_in_league": 14,
-          "rating_pre_match": 1477.1
-        }
-      }
-    },
-    {
-      "active_league_mean": 1505.74,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Celta Fortuna",
-      "date": "2026-11-16",
-      "decision_effect": "NONE",
-      "home_team": "Albacete",
-      "match_context": {
-        "as_of": "2026-11-16",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": []
-      },
-      "match_id": "20261116_ALBACETE_CELTAFORTUNA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1511.48,
-          "opp_strength_l5_contextualized_gap_avg": 5.74,
-          "schedule_difficulty_vs_active_mean": 5.74,
-          "schedule_difficulty_vs_nominal_anchor": 11.48
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1489.28,
-          "opp_strength_l5_contextualized_gap_avg": -16.46,
-          "schedule_difficulty_vs_active_mean": -16.46,
-          "schedule_difficulty_vs_nominal_anchor": -10.72
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "established_since": null,
-        "geographic_scope": null,
-        "is_rivalry": null,
-        "provenance_count": 0,
-        "rivalry_id": null,
-        "rivalry_name": null,
-        "source": "rivalry_registry_laliga_2.json",
-        "static_tags": [],
-        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026-2027",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 13,
-          "matches_observed_season": 13,
-          "matches_observed_total": 13,
-          "rank_in_league": 15,
-          "rating_pre_match": 1476.44
-        },
-        "diff_home_minus_away": -2.8,
-        "expected_score_away": 0.453791,
-        "expected_score_home": 0.546209,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 139,
-          "matches_observed_season": 13,
-          "matches_observed_total": 139,
-          "rank_in_league": 16,
-          "rating_pre_match": 1473.64
         }
       }
     }

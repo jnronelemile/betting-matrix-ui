@@ -4,16 +4,16 @@
       "team_strength_elo_baseline",
       "opponent_quality_l5_contextualized"
     ],
-    "cutoff": "2026-11-14",
+    "cutoff": "2026-10-23",
     "cutoff_contract": "date_strictly_before_cutoff_day_batch",
     "decision_effect": "NONE",
-    "historical_dataset_sha256": "22dbbd8b06cfed3f4d33a66c3689fd00bf9f3ab5ce92bad612201c5a5028e739",
-    "historical_matches_replayed": 1099,
+    "historical_dataset_sha256": "95348a9c5bcb00dabb7a4c26cdc6c00066690854defe5c81a3d3bc0dae7816d5",
+    "historical_matches_replayed": 1069,
     "history_identity_provenance": {
       "season_counts": {
         "2024": 380,
         "2025": 380,
-        "2026": 339
+        "2026": 309
       },
       "source_by_match": {
         "20240413_CRICIUMA_JUVENTUDE": "fotmob",
@@ -1084,41 +1084,11 @@
         "20261018_GRÊMIO_CRUZEIRO": "fotmob",
         "20261018_REMO_BRAGANTINO": "fotmob",
         "20261018_SÃOPAULO_VASCODAGAMA": "fotmob",
-        "20261019_CORINTHIANS_ECVITÓRIA": "fotmob",
-        "20261023_CRUZEIRO_REMO": "fotmob",
-        "20261024_CHAPECOENSE_FLUMINENSE": "fotmob",
-        "20261024_ECVITÓRIA_ATHLETICOPR": "fotmob",
-        "20261024_INTERNACIONAL_BOTAFOGO": "fotmob",
-        "20261024_MIRASSOL_SÃOPAULO": "fotmob",
-        "20261024_PALMEIRAS_BRAGANTINO": "fotmob",
-        "20261024_VASCODAGAMA_CORINTHIANS": "fotmob",
-        "20261025_SANTOSFC_BAHIA": "fotmob",
-        "20261026_CORITIBA_GRÊMIO": "fotmob",
-        "20261026_FLAMENGO_ATLÉTICOMINEIRO": "fotmob",
-        "20261028_BRAGANTINO_CHAPECOENSE": "fotmob",
-        "20261028_FLUMINENSE_INTERNACIONAL": "fotmob",
-        "20261028_SANTOSFC_PALMEIRAS": "fotmob",
-        "20261029_ATLÉTICOMINEIRO_CRUZEIRO": "fotmob",
-        "20261029_BAHIA_SÃOPAULO": "fotmob",
-        "20261029_REMO_BOTAFOGO": "fotmob",
-        "20261029_VASCODAGAMA_FLAMENGO": "fotmob",
-        "20261030_CORINTHIANS_MIRASSOL": "fotmob",
-        "20261030_GRÊMIO_ATHLETICOPR": "fotmob",
-        "20261031_CORITIBA_ECVITÓRIA": "fotmob",
-        "20261102_BRAGANTINO_SANTOSFC": "fotmob",
-        "20261103_CHAPECOENSE_MIRASSOL": "fotmob",
-        "20261104_ATHLETICOPR_VASCODAGAMA": "fotmob",
-        "20261104_FLAMENGO_GRÊMIO": "fotmob",
-        "20261104_INTERNACIONAL_CORITIBA": "fotmob",
-        "20261105_BOTAFOGO_ATLÉTICOMINEIRO": "fotmob",
-        "20261105_PALMEIRAS_REMO": "fotmob",
-        "20261105_SÃOPAULO_CORINTHIANS": "fotmob",
-        "20261106_CRUZEIRO_BAHIA": "fotmob",
-        "20261106_ECVITÓRIA_FLUMINENSE": "fotmob"
+        "20261019_CORINTHIANS_ECVITÓRIA": "fotmob"
       },
       "source_counts": {
         "cbf": 4,
-        "fotmob": 1095
+        "fotmob": 1065
       }
     },
     "history_policy": "DATA_001_RECONCILED_FOTMOB_WITH_FOUR_CBF",
@@ -1142,64 +1112,64 @@
   },
   "all_time_tracked_standings": [
     {
-      "matches_observed_total": 110,
+      "matches_observed_total": 107,
       "rank": 1,
-      "rating": 1690.72,
+      "rating": 1675.31,
       "team_name": "Flamengo"
     },
     {
-      "matches_observed_total": 110,
+      "matches_observed_total": 107,
       "rank": 2,
-      "rating": 1663.29,
+      "rating": 1656.82,
       "team_name": "Palmeiras"
     },
     {
-      "matches_observed_total": 110,
+      "matches_observed_total": 107,
       "rank": 3,
-      "rating": 1608.34,
+      "rating": 1585.48,
       "team_name": "Cruzeiro"
     },
     {
-      "matches_observed_total": 110,
+      "matches_observed_total": 107,
       "rank": 4,
-      "rating": 1575.11,
+      "rating": 1573.73,
       "team_name": "Fluminense"
     },
     {
-      "matches_observed_total": 110,
+      "matches_observed_total": 69,
       "rank": 5,
-      "rating": 1549.17,
-      "team_name": "Bahia"
-    },
-    {
-      "matches_observed_total": 72,
-      "rank": 6,
-      "rating": 1537.43,
+      "rating": 1563.48,
       "team_name": "Athletico-PR"
     },
     {
-      "matches_observed_total": 72,
-      "rank": 7,
-      "rating": 1536.96,
-      "team_name": "Santos FC"
-    },
-    {
-      "matches_observed_total": 110,
-      "rank": 8,
-      "rating": 1528.53,
+      "matches_observed_total": 107,
+      "rank": 6,
+      "rating": 1554.0,
       "team_name": "Atlético Mineiro"
     },
     {
-      "matches_observed_total": 72,
-      "rank": 9,
-      "rating": 1518.91,
-      "team_name": "Mirassol"
+      "matches_observed_total": 107,
+      "rank": 7,
+      "rating": 1548.34,
+      "team_name": "Bahia"
     },
     {
-      "matches_observed_total": 110,
-      "rank": 10,
-      "rating": 1516.64,
+      "matches_observed_total": 69,
+      "rank": 8,
+      "rating": 1546.05,
+      "team_name": "Santos FC"
+    },
+    {
+      "matches_observed_total": 107,
+      "rank": 9,
+      "rating": 1528.82,
       "team_name": "Botafogo"
+    },
+    {
+      "matches_observed_total": 69,
+      "rank": 10,
+      "rating": 1523.37,
+      "team_name": "Mirassol"
     },
     {
       "matches_observed_total": 76,
@@ -1208,63 +1178,63 @@
       "team_name": "Fortaleza"
     },
     {
-      "matches_observed_total": 110,
+      "matches_observed_total": 107,
       "rank": 12,
-      "rating": 1506.91,
-      "team_name": "Bragantino"
-    },
-    {
-      "matches_observed_total": 109,
-      "rank": 13,
-      "rating": 1494.31,
-      "team_name": "Vasco da Gama"
-    },
-    {
-      "matches_observed_total": 110,
-      "rank": 14,
-      "rating": 1491.97,
+      "rating": 1499.79,
       "team_name": "São Paulo"
     },
     {
-      "matches_observed_total": 110,
-      "rank": 15,
-      "rating": 1479.78,
-      "team_name": "Internacional"
+      "matches_observed_total": 107,
+      "rank": 13,
+      "rating": 1494.28,
+      "team_name": "Bragantino"
     },
     {
-      "matches_observed_total": 34,
-      "rank": 16,
-      "rating": 1479.1,
+      "matches_observed_total": 31,
+      "rank": 14,
+      "rating": 1491.66,
       "team_name": "Coritiba"
     },
     {
-      "matches_observed_total": 110,
-      "rank": 17,
-      "rating": 1471.82,
-      "team_name": "Grêmio"
-    },
-    {
-      "matches_observed_total": 110,
-      "rank": 18,
-      "rating": 1466.34,
-      "team_name": "Corinthians"
-    },
-    {
-      "matches_observed_total": 110,
-      "rank": 19,
-      "rating": 1465.17,
+      "matches_observed_total": 107,
+      "rank": 15,
+      "rating": 1481.24,
       "team_name": "EC Vitória"
     },
     {
+      "matches_observed_total": 106,
+      "rank": 16,
+      "rating": 1478.6,
+      "team_name": "Vasco da Gama"
+    },
+    {
+      "matches_observed_total": 107,
+      "rank": 17,
+      "rating": 1466.2,
+      "team_name": "Internacional"
+    },
+    {
       "matches_observed_total": 38,
-      "rank": 20,
+      "rank": 18,
       "rating": 1463.67,
       "team_name": "Ceará"
     },
     {
-      "matches_observed_total": 34,
+      "matches_observed_total": 107,
+      "rank": 19,
+      "rating": 1462.08,
+      "team_name": "Corinthians"
+    },
+    {
+      "matches_observed_total": 107,
+      "rank": 20,
+      "rating": 1451.8,
+      "team_name": "Grêmio"
+    },
+    {
+      "matches_observed_total": 31,
       "rank": 21,
-      "rating": 1445.24,
+      "rating": 1443.17,
       "team_name": "Remo"
     },
     {
@@ -1292,9 +1262,9 @@
       "team_name": "Cuiaba"
     },
     {
-      "matches_observed_total": 33,
+      "matches_observed_total": 30,
       "rank": 26,
-      "rating": 1402.99,
+      "rating": 1404.51,
       "team_name": "Chapecoense"
     },
     {
@@ -1306,143 +1276,143 @@
   ],
   "current_season_active_standings": [
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
       "rank": 1,
-      "rating": 1690.72,
+      "rating": 1675.31,
       "team_name": "Flamengo"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
       "rank": 2,
-      "rating": 1663.29,
+      "rating": 1656.82,
       "team_name": "Palmeiras"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
       "rank": 3,
-      "rating": 1608.34,
+      "rating": 1585.48,
       "team_name": "Cruzeiro"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
       "rank": 4,
-      "rating": 1575.11,
+      "rating": 1573.73,
       "team_name": "Fluminense"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
+      "matches_observed_season": 31,
+      "matches_observed_total": 69,
       "rank": 5,
-      "rating": 1549.17,
-      "team_name": "Bahia"
-    },
-    {
-      "matches_observed_season": 34,
-      "matches_observed_total": 72,
-      "rank": 6,
-      "rating": 1537.43,
+      "rating": 1563.48,
       "team_name": "Athletico-PR"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 72,
-      "rank": 7,
-      "rating": 1536.96,
-      "team_name": "Santos FC"
-    },
-    {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
-      "rank": 8,
-      "rating": 1528.53,
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
+      "rank": 6,
+      "rating": 1554.0,
       "team_name": "Atlético Mineiro"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 72,
-      "rank": 9,
-      "rating": 1518.91,
-      "team_name": "Mirassol"
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
+      "rank": 7,
+      "rating": 1548.34,
+      "team_name": "Bahia"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
-      "rank": 10,
-      "rating": 1516.64,
+      "matches_observed_season": 31,
+      "matches_observed_total": 69,
+      "rank": 8,
+      "rating": 1546.05,
+      "team_name": "Santos FC"
+    },
+    {
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
+      "rank": 9,
+      "rating": 1528.82,
       "team_name": "Botafogo"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
+      "matches_observed_season": 31,
+      "matches_observed_total": 69,
+      "rank": 10,
+      "rating": 1523.37,
+      "team_name": "Mirassol"
+    },
+    {
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
       "rank": 11,
-      "rating": 1506.91,
-      "team_name": "Bragantino"
-    },
-    {
-      "matches_observed_season": 33,
-      "matches_observed_total": 109,
-      "rank": 12,
-      "rating": 1494.31,
-      "team_name": "Vasco da Gama"
-    },
-    {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
-      "rank": 13,
-      "rating": 1491.97,
+      "rating": 1499.79,
       "team_name": "São Paulo"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
-      "rank": 14,
-      "rating": 1479.78,
-      "team_name": "Internacional"
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
+      "rank": 12,
+      "rating": 1494.28,
+      "team_name": "Bragantino"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 34,
-      "rank": 15,
-      "rating": 1479.1,
+      "matches_observed_season": 31,
+      "matches_observed_total": 31,
+      "rank": 13,
+      "rating": 1491.66,
       "team_name": "Coritiba"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
-      "rank": 16,
-      "rating": 1471.82,
-      "team_name": "Grêmio"
-    },
-    {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
-      "rank": 17,
-      "rating": 1466.34,
-      "team_name": "Corinthians"
-    },
-    {
-      "matches_observed_season": 34,
-      "matches_observed_total": 110,
-      "rank": 18,
-      "rating": 1465.17,
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
+      "rank": 14,
+      "rating": 1481.24,
       "team_name": "EC Vitória"
     },
     {
-      "matches_observed_season": 34,
-      "matches_observed_total": 34,
+      "matches_observed_season": 30,
+      "matches_observed_total": 106,
+      "rank": 15,
+      "rating": 1478.6,
+      "team_name": "Vasco da Gama"
+    },
+    {
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
+      "rank": 16,
+      "rating": 1466.2,
+      "team_name": "Internacional"
+    },
+    {
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
+      "rank": 17,
+      "rating": 1462.08,
+      "team_name": "Corinthians"
+    },
+    {
+      "matches_observed_season": 31,
+      "matches_observed_total": 107,
+      "rank": 18,
+      "rating": 1451.8,
+      "team_name": "Grêmio"
+    },
+    {
+      "matches_observed_season": 31,
+      "matches_observed_total": 31,
       "rank": 19,
-      "rating": 1445.24,
+      "rating": 1443.17,
       "team_name": "Remo"
     },
     {
-      "matches_observed_season": 33,
-      "matches_observed_total": 33,
+      "matches_observed_season": 30,
+      "matches_observed_total": 30,
       "rank": 20,
-      "rating": 1402.99,
+      "rating": 1404.51,
       "team_name": "Chapecoense"
     }
   ],
@@ -77981,7 +77951,9 @@
           "rating_pre_match": 1462.57
         }
       }
-    },
+    }
+  ],
+  "target_matches": [
     {
       "active_league_mean": 1521.44,
       "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
@@ -78026,8 +77998,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 0,
-      "score_home": 1,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026",
       "team_strength": {
         "away": {
@@ -78050,148 +78022,6 @@
           "matches_observed_total": 107,
           "rank_in_league": 3,
           "rating_pre_match": 1585.48
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Fluminense",
-      "date": "2026-10-24",
-      "decision_effect": "NONE",
-      "home_team": "Chapecoense",
-      "match_context": {
-        "as_of": "2026-10-24",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261024_CHAPECOENSE_FLUMINENSE",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1541.1,
-          "opp_strength_l5_contextualized_gap_avg": 19.66,
-          "schedule_difficulty_vs_active_mean": 19.66,
-          "schedule_difficulty_vs_nominal_anchor": 41.1
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1512.92,
-          "opp_strength_l5_contextualized_gap_avg": -8.52,
-          "schedule_difficulty_vs_active_mean": -8.52,
-          "schedule_difficulty_vs_nominal_anchor": 12.92
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 2,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 107,
-          "matches_observed_season": 31,
-          "matches_observed_total": 107,
-          "rank_in_league": 4,
-          "rating_pre_match": 1573.73
-        },
-        "diff_home_minus_away": -169.22,
-        "expected_score_away": 0.684088,
-        "expected_score_home": 0.315912,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 30,
-          "matches_observed_season": 30,
-          "matches_observed_total": 30,
-          "rank_in_league": 20,
-          "rating_pre_match": 1404.51
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Athletico-PR",
-      "date": "2026-10-24",
-      "decision_effect": "NONE",
-      "home_team": "EC Vitória",
-      "match_context": {
-        "as_of": "2026-10-24",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261024_ECVITÓRIA_ATHLETICOPR",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1536.22,
-          "opp_strength_l5_contextualized_gap_avg": 14.78,
-          "schedule_difficulty_vs_active_mean": 14.78,
-          "schedule_difficulty_vs_nominal_anchor": 36.22
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1491.95,
-          "opp_strength_l5_contextualized_gap_avg": -29.49,
-          "schedule_difficulty_vs_active_mean": -29.49,
-          "schedule_difficulty_vs_nominal_anchor": -8.05
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 1,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 69,
-          "matches_observed_season": 31,
-          "matches_observed_total": 69,
-          "rank_in_league": 5,
-          "rating_pre_match": 1563.48
-        },
-        "diff_home_minus_away": -82.24,
-        "expected_score_away": 0.567575,
-        "expected_score_home": 0.432425,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 107,
-          "matches_observed_season": 31,
-          "matches_observed_total": 107,
-          "rank_in_league": 14,
-          "rating_pre_match": 1481.24
         }
       }
     },
@@ -78239,8 +78069,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 0,
-      "score_home": 3,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026",
       "team_strength": {
         "away": {
@@ -78310,8 +78140,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 1,
-      "score_home": 1,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026",
       "team_strength": {
         "away": {
@@ -78334,6 +78164,77 @@
           "matches_observed_total": 69,
           "rank_in_league": 10,
           "rating_pre_match": 1523.37
+        }
+      }
+    },
+    {
+      "active_league_mean": 1521.44,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Athletico-PR",
+      "date": "2026-10-24",
+      "decision_effect": "NONE",
+      "home_team": "EC Vitória",
+      "match_context": {
+        "as_of": "2026-10-24",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": null,
+        "static_tags": []
+      },
+      "match_id": "20261024_ECVITÓRIA_ATHLETICOPR",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1536.22,
+          "opp_strength_l5_contextualized_gap_avg": 14.78,
+          "schedule_difficulty_vs_active_mean": 14.78,
+          "schedule_difficulty_vs_nominal_anchor": 36.22
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1491.95,
+          "opp_strength_l5_contextualized_gap_avg": -29.49,
+          "schedule_difficulty_vs_active_mean": -29.49,
+          "schedule_difficulty_vs_nominal_anchor": -8.05
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "is_rivalry": null,
+        "source": null,
+        "static_tags": [],
+        "status": "NOT_EVALUATED"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 69,
+          "matches_observed_season": 31,
+          "matches_observed_total": 69,
+          "rank_in_league": 5,
+          "rating_pre_match": 1563.48
+        },
+        "diff_home_minus_away": -82.24,
+        "expected_score_away": 0.567575,
+        "expected_score_home": 0.432425,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 107,
+          "matches_observed_season": 31,
+          "matches_observed_total": 107,
+          "rank_in_league": 14,
+          "rating_pre_match": 1481.24
         }
       }
     },
@@ -78381,8 +78282,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 0,
-      "score_home": 2,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026",
       "team_strength": {
         "away": {
@@ -78452,8 +78353,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 2,
-      "score_home": 3,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026",
       "team_strength": {
         "away": {
@@ -78482,19 +78383,90 @@
     {
       "active_league_mean": 1521.44,
       "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Bahia",
-      "date": "2026-10-25",
+      "away_team": "Fluminense",
+      "date": "2026-10-24",
       "decision_effect": "NONE",
-      "home_team": "Santos FC",
+      "home_team": "Chapecoense",
       "match_context": {
-        "as_of": "2026-10-25",
+        "as_of": "2026-10-24",
         "decision_effect": "NONE",
         "dynamic_tags": [],
         "rivalry_level": null,
         "source": null,
         "static_tags": []
       },
-      "match_id": "20261025_SANTOSFC_BAHIA",
+      "match_id": "20261024_CHAPECOENSE_FLUMINENSE",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1541.1,
+          "opp_strength_l5_contextualized_gap_avg": 19.66,
+          "schedule_difficulty_vs_active_mean": 19.66,
+          "schedule_difficulty_vs_nominal_anchor": 41.1
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1512.92,
+          "opp_strength_l5_contextualized_gap_avg": -8.52,
+          "schedule_difficulty_vs_active_mean": -8.52,
+          "schedule_difficulty_vs_nominal_anchor": 12.92
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "is_rivalry": null,
+        "source": null,
+        "static_tags": [],
+        "status": "NOT_EVALUATED"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 107,
+          "matches_observed_season": 31,
+          "matches_observed_total": 107,
+          "rank_in_league": 4,
+          "rating_pre_match": 1573.73
+        },
+        "diff_home_minus_away": -169.22,
+        "expected_score_away": 0.684088,
+        "expected_score_home": 0.315912,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 30,
+          "matches_observed_season": 30,
+          "matches_observed_total": 30,
+          "rank_in_league": 20,
+          "rating_pre_match": 1404.51
+        }
+      }
+    },
+    {
+      "active_league_mean": 1521.44,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Bahia",
+      "date": "2026-10-24",
+      "decision_effect": "NONE",
+      "home_team": "Santos FC",
+      "match_context": {
+        "as_of": "2026-10-24",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": null,
+        "static_tags": []
+      },
+      "match_id": "20261024_SANTOSFC_BAHIA",
       "opponent_quality": {
         "away": {
           "flags": [],
@@ -78523,8 +78495,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 1,
-      "score_home": 1,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026",
       "team_strength": {
         "away": {
@@ -78594,8 +78566,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 1,
-      "score_home": 0,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026",
       "team_strength": {
         "away": {
@@ -78616,7 +78588,7 @@
           "matches_observed": 31,
           "matches_observed_season": 31,
           "matches_observed_total": 31,
-          "rank_in_league": 12,
+          "rank_in_league": 13,
           "rating_pre_match": 1491.66
         }
       }
@@ -78665,8 +78637,8 @@
         "static_tags": [],
         "status": "NOT_EVALUATED"
       },
-      "score_away": 2,
-      "score_home": 3,
+      "score_away": null,
+      "score_home": null,
       "season_key": "2026",
       "team_strength": {
         "away": {
@@ -78689,1570 +78661,6 @@
           "matches_observed_total": 107,
           "rank_in_league": 1,
           "rating_pre_match": 1675.31
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Chapecoense",
-      "date": "2026-10-28",
-      "decision_effect": "NONE",
-      "home_team": "Bragantino",
-      "match_context": {
-        "as_of": "2026-10-28",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261028_BRAGANTINO_CHAPECOENSE",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1535.17,
-          "opp_strength_l5_contextualized_gap_avg": 13.73,
-          "schedule_difficulty_vs_active_mean": 13.73,
-          "schedule_difficulty_vs_nominal_anchor": 35.17
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1548.14,
-          "opp_strength_l5_contextualized_gap_avg": 26.7,
-          "schedule_difficulty_vs_active_mean": 26.7,
-          "schedule_difficulty_vs_nominal_anchor": 48.14
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 3,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 31,
-          "matches_observed_season": 31,
-          "matches_observed_total": 31,
-          "rank_in_league": 20,
-          "rating_pre_match": 1418.19
-        },
-        "diff_home_minus_away": 71.23,
-        "expected_score_away": 0.351714,
-        "expected_score_home": 0.648286,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 12,
-          "rating_pre_match": 1489.42
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Internacional",
-      "date": "2026-10-28",
-      "decision_effect": "NONE",
-      "home_team": "Fluminense",
-      "match_context": {
-        "as_of": "2026-10-28",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261028_FLUMINENSE_INTERNACIONAL",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1494.11,
-          "opp_strength_l5_contextualized_gap_avg": -27.33,
-          "schedule_difficulty_vs_active_mean": -27.33,
-          "schedule_difficulty_vs_nominal_anchor": -5.89
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1517.95,
-          "opp_strength_l5_contextualized_gap_avg": -3.49,
-          "schedule_difficulty_vs_active_mean": -3.49,
-          "schedule_difficulty_vs_nominal_anchor": 17.95
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 2,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 16,
-          "rating_pre_match": 1476.99
-        },
-        "diff_home_minus_away": 83.05,
-        "expected_score_away": 0.336356,
-        "expected_score_home": 0.663644,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 5,
-          "rating_pre_match": 1560.04
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Palmeiras",
-      "date": "2026-10-28",
-      "decision_effect": "NONE",
-      "home_team": "Santos FC",
-      "match_context": {
-        "as_of": "2026-10-28",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261028_SANTOSFC_PALMEIRAS",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1508.78,
-          "opp_strength_l5_contextualized_gap_avg": -12.66,
-          "schedule_difficulty_vs_active_mean": -12.66,
-          "schedule_difficulty_vs_nominal_anchor": 8.78
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1566.53,
-          "opp_strength_l5_contextualized_gap_avg": 45.09,
-          "schedule_difficulty_vs_active_mean": 45.09,
-          "schedule_difficulty_vs_nominal_anchor": 66.53
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 0,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 2,
-          "rating_pre_match": 1661.68
-        },
-        "diff_home_minus_away": -116.57,
-        "expected_score_away": 0.615277,
-        "expected_score_home": 0.384723,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 70,
-          "matches_observed_season": 32,
-          "matches_observed_total": 70,
-          "rank_in_league": 8,
-          "rating_pre_match": 1545.11
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Cruzeiro",
-      "date": "2026-10-29",
-      "decision_effect": "NONE",
-      "home_team": "Atlético Mineiro",
-      "match_context": {
-        "as_of": "2026-10-29",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261029_ATLÉTICOMINEIRO_CRUZEIRO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1472.92,
-          "opp_strength_l5_contextualized_gap_avg": -48.52,
-          "schedule_difficulty_vs_active_mean": -48.52,
-          "schedule_difficulty_vs_nominal_anchor": -27.08
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1555.05,
-          "opp_strength_l5_contextualized_gap_avg": 33.61,
-          "schedule_difficulty_vs_active_mean": 33.61,
-          "schedule_difficulty_vs_nominal_anchor": 55.05
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 0,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 3,
-          "rating_pre_match": 1590.78
-        },
-        "diff_home_minus_away": -42.56,
-        "expected_score_away": 0.510879,
-        "expected_score_home": 0.489121,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 7,
-          "rating_pre_match": 1548.22
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "São Paulo",
-      "date": "2026-10-29",
-      "decision_effect": "NONE",
-      "home_team": "Bahia",
-      "match_context": {
-        "as_of": "2026-10-29",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261029_BAHIA_SÃOPAULO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1522.9,
-          "opp_strength_l5_contextualized_gap_avg": 1.46,
-          "schedule_difficulty_vs_active_mean": 1.46,
-          "schedule_difficulty_vs_nominal_anchor": 22.9
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1586.45,
-          "opp_strength_l5_contextualized_gap_avg": 65.01,
-          "schedule_difficulty_vs_active_mean": 65.01,
-          "schedule_difficulty_vs_nominal_anchor": 86.45
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 3,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 11,
-          "rating_pre_match": 1501.46
-        },
-        "diff_home_minus_away": 47.82,
-        "expected_score_away": 0.383022,
-        "expected_score_home": 0.616978,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 6,
-          "rating_pre_match": 1549.28
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Botafogo",
-      "date": "2026-10-29",
-      "decision_effect": "NONE",
-      "home_team": "Remo",
-      "match_context": {
-        "as_of": "2026-10-29",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261029_REMO_BOTAFOGO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1473.57,
-          "opp_strength_l5_contextualized_gap_avg": -47.87,
-          "schedule_difficulty_vs_active_mean": -47.87,
-          "schedule_difficulty_vs_nominal_anchor": -26.43
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1510.19,
-          "opp_strength_l5_contextualized_gap_avg": -11.25,
-          "schedule_difficulty_vs_active_mean": -11.25,
-          "schedule_difficulty_vs_nominal_anchor": 10.19
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 2,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 10,
-          "rating_pre_match": 1518.02
-        },
-        "diff_home_minus_away": -80.15,
-        "expected_score_away": 0.564616,
-        "expected_score_home": 0.435384,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 32,
-          "matches_observed_season": 32,
-          "matches_observed_total": 32,
-          "rank_in_league": 19,
-          "rating_pre_match": 1437.87
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Flamengo",
-      "date": "2026-10-29",
-      "decision_effect": "NONE",
-      "home_team": "Vasco da Gama",
-      "match_context": {
-        "as_of": "2026-10-29",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261029_VASCODAGAMA_FLAMENGO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1547.83,
-          "opp_strength_l5_contextualized_gap_avg": 26.39,
-          "schedule_difficulty_vs_active_mean": 26.39,
-          "schedule_difficulty_vs_nominal_anchor": 47.83
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1489.06,
-          "opp_strength_l5_contextualized_gap_avg": -32.38,
-          "schedule_difficulty_vs_active_mean": -32.38,
-          "schedule_difficulty_vs_nominal_anchor": -10.94
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 4,
-      "score_home": 1,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 1,
-          "rating_pre_match": 1681.1
-        },
-        "diff_home_minus_away": -193.97,
-        "expected_score_away": 0.71404,
-        "expected_score_home": 0.28596,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 107,
-          "matches_observed_season": 31,
-          "matches_observed_total": 107,
-          "rank_in_league": 13,
-          "rating_pre_match": 1487.13
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Mirassol",
-      "date": "2026-10-30",
-      "decision_effect": "NONE",
-      "home_team": "Corinthians",
-      "match_context": {
-        "as_of": "2026-10-30",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261030_CORINTHIANS_MIRASSOL",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1509.83,
-          "opp_strength_l5_contextualized_gap_avg": -11.61,
-          "schedule_difficulty_vs_active_mean": -11.61,
-          "schedule_difficulty_vs_nominal_anchor": 9.83
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1529.01,
-          "opp_strength_l5_contextualized_gap_avg": 7.57,
-          "schedule_difficulty_vs_active_mean": 7.57,
-          "schedule_difficulty_vs_nominal_anchor": 29.01
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 2,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 70,
-          "matches_observed_season": 32,
-          "matches_observed_total": 70,
-          "rank_in_league": 9,
-          "rating_pre_match": 1521.7
-        },
-        "diff_home_minus_away": -68.15,
-        "expected_score_away": 0.547556,
-        "expected_score_home": 0.452444,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 18,
-          "rating_pre_match": 1453.56
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Athletico-PR",
-      "date": "2026-10-30",
-      "decision_effect": "NONE",
-      "home_team": "Grêmio",
-      "match_context": {
-        "as_of": "2026-10-30",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261030_GRÊMIO_ATHLETICOPR",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1529.12,
-          "opp_strength_l5_contextualized_gap_avg": 7.68,
-          "schedule_difficulty_vs_active_mean": 7.68,
-          "schedule_difficulty_vs_nominal_anchor": 29.12
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1524.88,
-          "opp_strength_l5_contextualized_gap_avg": 3.44,
-          "schedule_difficulty_vs_active_mean": 3.44,
-          "schedule_difficulty_vs_nominal_anchor": 24.88
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 2,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 70,
-          "matches_observed_season": 32,
-          "matches_observed_total": 70,
-          "rank_in_league": 5,
-          "rating_pre_match": 1562.13
-        },
-        "diff_home_minus_away": -98.21,
-        "expected_score_away": 0.589976,
-        "expected_score_home": 0.410024,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 17,
-          "rating_pre_match": 1463.92
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "EC Vitória",
-      "date": "2026-10-31",
-      "decision_effect": "NONE",
-      "home_team": "Coritiba",
-      "match_context": {
-        "as_of": "2026-10-31",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261031_CORITIBA_ECVITÓRIA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1501.46,
-          "opp_strength_l5_contextualized_gap_avg": -19.98,
-          "schedule_difficulty_vs_active_mean": -19.98,
-          "schedule_difficulty_vs_nominal_anchor": 1.46
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1514.79,
-          "opp_strength_l5_contextualized_gap_avg": -6.65,
-          "schedule_difficulty_vs_active_mean": -6.65,
-          "schedule_difficulty_vs_nominal_anchor": 14.79
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 2,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 13,
-          "rating_pre_match": 1482.59
-        },
-        "diff_home_minus_away": -3.05,
-        "expected_score_away": 0.45415,
-        "expected_score_home": 0.54585,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 32,
-          "matches_observed_season": 32,
-          "matches_observed_total": 32,
-          "rank_in_league": 15,
-          "rating_pre_match": 1479.54
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Santos FC",
-      "date": "2026-11-02",
-      "decision_effect": "NONE",
-      "home_team": "Bragantino",
-      "match_context": {
-        "as_of": "2026-11-02",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261102_BRAGANTINO_SANTOSFC",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1599.23,
-          "opp_strength_l5_contextualized_gap_avg": 77.8,
-          "schedule_difficulty_vs_active_mean": 77.79,
-          "schedule_difficulty_vs_nominal_anchor": 99.23
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1526.32,
-          "opp_strength_l5_contextualized_gap_avg": 4.88,
-          "schedule_difficulty_vs_active_mean": 4.88,
-          "schedule_difficulty_vs_nominal_anchor": 26.32
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 2,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 71,
-          "matches_observed_season": 33,
-          "matches_observed_total": 71,
-          "rank_in_league": 7,
-          "rating_pre_match": 1547.42
-        },
-        "diff_home_minus_away": -50.96,
-        "expected_score_away": 0.522955,
-        "expected_score_home": 0.477045,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 11,
-          "rating_pre_match": 1496.45
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Mirassol",
-      "date": "2026-11-03",
-      "decision_effect": "NONE",
-      "home_team": "Chapecoense",
-      "match_context": {
-        "as_of": "2026-11-03",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261103_CHAPECOENSE_MIRASSOL",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1491.55,
-          "opp_strength_l5_contextualized_gap_avg": -29.89,
-          "schedule_difficulty_vs_active_mean": -29.89,
-          "schedule_difficulty_vs_nominal_anchor": -8.45
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1526.81,
-          "opp_strength_l5_contextualized_gap_avg": 5.37,
-          "schedule_difficulty_vs_active_mean": 5.37,
-          "schedule_difficulty_vs_nominal_anchor": 26.81
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 1,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 71,
-          "matches_observed_season": 33,
-          "matches_observed_total": 71,
-          "rank_in_league": 9,
-          "rating_pre_match": 1510.75
-        },
-        "diff_home_minus_away": -99.59,
-        "expected_score_away": 0.591902,
-        "expected_score_home": 0.408098,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 32,
-          "matches_observed_season": 32,
-          "matches_observed_total": 32,
-          "rank_in_league": 20,
-          "rating_pre_match": 1411.16
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Vasco da Gama",
-      "date": "2026-11-04",
-      "decision_effect": "NONE",
-      "home_team": "Athletico-PR",
-      "match_context": {
-        "as_of": "2026-11-04",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261104_ATHLETICOPR_VASCODAGAMA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1521.89,
-          "opp_strength_l5_contextualized_gap_avg": 0.45,
-          "schedule_difficulty_vs_active_mean": 0.45,
-          "schedule_difficulty_vs_nominal_anchor": 21.89
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1509.15,
-          "opp_strength_l5_contextualized_gap_avg": -12.29,
-          "schedule_difficulty_vs_active_mean": -12.29,
-          "schedule_difficulty_vs_nominal_anchor": 9.15
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 3,
-      "score_home": 1,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 108,
-          "matches_observed_season": 32,
-          "matches_observed_total": 108,
-          "rank_in_league": 14,
-          "rating_pre_match": 1481.41
-        },
-        "diff_home_minus_away": 68.92,
-        "expected_score_away": 0.354747,
-        "expected_score_home": 0.645253,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 71,
-          "matches_observed_season": 33,
-          "matches_observed_total": 71,
-          "rank_in_league": 6,
-          "rating_pre_match": 1550.33
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Grêmio",
-      "date": "2026-11-04",
-      "decision_effect": "NONE",
-      "home_team": "Flamengo",
-      "match_context": {
-        "as_of": "2026-11-04",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261104_FLAMENGO_GRÊMIO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1509.16,
-          "opp_strength_l5_contextualized_gap_avg": -12.28,
-          "schedule_difficulty_vs_active_mean": -12.28,
-          "schedule_difficulty_vs_nominal_anchor": 9.16
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1546.18,
-          "opp_strength_l5_contextualized_gap_avg": 24.74,
-          "schedule_difficulty_vs_active_mean": 24.74,
-          "schedule_difficulty_vs_nominal_anchor": 46.18
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 3,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 15,
-          "rating_pre_match": 1475.72
-        },
-        "diff_home_minus_away": 211.09,
-        "expected_score_away": 0.195192,
-        "expected_score_home": 0.804808,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 1,
-          "rating_pre_match": 1686.81
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Coritiba",
-      "date": "2026-11-04",
-      "decision_effect": "NONE",
-      "home_team": "Internacional",
-      "match_context": {
-        "as_of": "2026-11-04",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261104_INTERNACIONAL_CORITIBA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1517.94,
-          "opp_strength_l5_contextualized_gap_avg": -3.5,
-          "schedule_difficulty_vs_active_mean": -3.5,
-          "schedule_difficulty_vs_nominal_anchor": 17.94
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1508.19,
-          "opp_strength_l5_contextualized_gap_avg": -13.25,
-          "schedule_difficulty_vs_active_mean": -13.25,
-          "schedule_difficulty_vs_nominal_anchor": 8.19
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 1,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 33,
-          "matches_observed_season": 33,
-          "matches_observed_total": 33,
-          "rank_in_league": 13,
-          "rating_pre_match": 1488.62
-        },
-        "diff_home_minus_away": -18.36,
-        "expected_score_away": 0.476074,
-        "expected_score_home": 0.523926,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 17,
-          "rating_pre_match": 1470.26
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Atlético Mineiro",
-      "date": "2026-11-05",
-      "decision_effect": "NONE",
-      "home_team": "Botafogo",
-      "match_context": {
-        "as_of": "2026-11-05",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261105_BOTAFOGO_ATLÉTICOMINEIRO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1575.11,
-          "opp_strength_l5_contextualized_gap_avg": 53.67,
-          "schedule_difficulty_vs_active_mean": 53.67,
-          "schedule_difficulty_vs_nominal_anchor": 75.11
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1458.31,
-          "opp_strength_l5_contextualized_gap_avg": -63.13,
-          "schedule_difficulty_vs_active_mean": -63.13,
-          "schedule_difficulty_vs_nominal_anchor": -41.69
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 1,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 6,
-          "rating_pre_match": 1538.43
-        },
-        "diff_home_minus_away": -31.7,
-        "expected_score_away": 0.495257,
-        "expected_score_home": 0.504743,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 11,
-          "rating_pre_match": 1506.73
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Remo",
-      "date": "2026-11-05",
-      "decision_effect": "NONE",
-      "home_team": "Palmeiras",
-      "match_context": {
-        "as_of": "2026-11-05",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261105_PALMEIRAS_REMO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1509.55,
-          "opp_strength_l5_contextualized_gap_avg": -11.89,
-          "schedule_difficulty_vs_active_mean": -11.89,
-          "schedule_difficulty_vs_nominal_anchor": 9.55
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1526.69,
-          "opp_strength_l5_contextualized_gap_avg": 5.25,
-          "schedule_difficulty_vs_active_mean": 5.25,
-          "schedule_difficulty_vs_nominal_anchor": 26.69
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 1,
-      "score_home": 6,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 33,
-          "matches_observed_season": 33,
-          "matches_observed_total": 33,
-          "rank_in_league": 19,
-          "rating_pre_match": 1449.16
-        },
-        "diff_home_minus_away": 210.21,
-        "expected_score_away": 0.19599,
-        "expected_score_home": 0.80401,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 2,
-          "rating_pre_match": 1659.37
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Corinthians",
-      "date": "2026-11-05",
-      "decision_effect": "NONE",
-      "home_team": "São Paulo",
-      "match_context": {
-        "as_of": "2026-11-05",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261105_SÃOPAULO_CORINTHIANS",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1517.71,
-          "opp_strength_l5_contextualized_gap_avg": -3.73,
-          "schedule_difficulty_vs_active_mean": -3.73,
-          "schedule_difficulty_vs_nominal_anchor": 17.71
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1526.72,
-          "opp_strength_l5_contextualized_gap_avg": 5.28,
-          "schedule_difficulty_vs_active_mean": 5.28,
-          "schedule_difficulty_vs_nominal_anchor": 26.72
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 0,
-      "score_home": 0,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 18,
-          "rating_pre_match": 1464.51
-        },
-        "diff_home_minus_away": 29.3,
-        "expected_score_away": 0.408512,
-        "expected_score_home": 0.591488,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 13,
-          "rating_pre_match": 1493.8
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Bahia",
-      "date": "2026-11-06",
-      "decision_effect": "NONE",
-      "home_team": "Cruzeiro",
-      "match_context": {
-        "as_of": "2026-11-06",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261106_CRUZEIRO_BAHIA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1575.1,
-          "opp_strength_l5_contextualized_gap_avg": 53.66,
-          "schedule_difficulty_vs_active_mean": 53.66,
-          "schedule_difficulty_vs_nominal_anchor": 75.1
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1484.33,
-          "opp_strength_l5_contextualized_gap_avg": -37.11,
-          "schedule_difficulty_vs_active_mean": -37.11,
-          "schedule_difficulty_vs_nominal_anchor": -15.67
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 2,
-      "score_home": 3,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 5,
-          "rating_pre_match": 1556.94
-        },
-        "diff_home_minus_away": 43.62,
-        "expected_score_away": 0.388751,
-        "expected_score_home": 0.611249,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 3,
-          "rating_pre_match": 1600.56
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Fluminense",
-      "date": "2026-11-06",
-      "decision_effect": "NONE",
-      "home_team": "EC Vitória",
-      "match_context": {
-        "as_of": "2026-11-06",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261106_ECVITÓRIA_FLUMINENSE",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1516.38,
-          "opp_strength_l5_contextualized_gap_avg": -5.06,
-          "schedule_difficulty_vs_active_mean": -5.06,
-          "schedule_difficulty_vs_nominal_anchor": 16.38
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1482.4,
-          "opp_strength_l5_contextualized_gap_avg": -39.04,
-          "schedule_difficulty_vs_active_mean": -39.04,
-          "schedule_difficulty_vs_nominal_anchor": -17.6
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": 3,
-      "score_home": 0,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 4,
-          "rating_pre_match": 1566.77
-        },
-        "diff_home_minus_away": -93.26,
-        "expected_score_away": 0.58307,
-        "expected_score_home": 0.41693,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 16,
-          "rating_pre_match": 1473.51
-        }
-      }
-    }
-  ],
-  "target_matches": [
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Atlético Mineiro",
-      "date": "2026-11-14",
-      "decision_effect": "NONE",
-      "home_team": "Mirassol",
-      "match_context": {
-        "as_of": "2026-11-14",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261114_MIRASSOL_ATLÉTICOMINEIRO",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1562.98,
-          "opp_strength_l5_contextualized_gap_avg": 41.54,
-          "schedule_difficulty_vs_active_mean": 41.54,
-          "schedule_difficulty_vs_nominal_anchor": 62.98
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1477.28,
-          "opp_strength_l5_contextualized_gap_avg": -44.16,
-          "schedule_difficulty_vs_active_mean": -44.16,
-          "schedule_difficulty_vs_nominal_anchor": -22.72
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 110,
-          "matches_observed_season": 34,
-          "matches_observed_total": 110,
-          "rank_in_league": 8,
-          "rating_pre_match": 1528.53
-        },
-        "diff_home_minus_away": -9.62,
-        "expected_score_away": 0.463537,
-        "expected_score_home": 0.536463,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 72,
-          "matches_observed_season": 34,
-          "matches_observed_total": 72,
-          "rank_in_league": 9,
-          "rating_pre_match": 1518.91
-        }
-      }
-    },
-    {
-      "active_league_mean": 1521.44,
-      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
-      "away_team": "Vasco da Gama",
-      "date": "2026-11-14",
-      "decision_effect": "NONE",
-      "home_team": "Chapecoense",
-      "match_context": {
-        "as_of": "2026-11-14",
-        "decision_effect": "NONE",
-        "dynamic_tags": [],
-        "rivalry_level": null,
-        "source": null,
-        "static_tags": []
-      },
-      "match_id": "20261114_CHAPECOENSE_VASCODAGAMA",
-      "opponent_quality": {
-        "away": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1524.94,
-          "opp_strength_l5_contextualized_gap_avg": 3.5,
-          "schedule_difficulty_vs_active_mean": 3.5,
-          "schedule_difficulty_vs_nominal_anchor": 24.94
-        },
-        "home": {
-          "flags": [],
-          "n_contextualized_gaps_observed": 5,
-          "n_opponents_observed": 5,
-          "opp_strength_l5_avg": 1532.44,
-          "opp_strength_l5_contextualized_gap_avg": 11.0,
-          "schedule_difficulty_vs_active_mean": 11.0,
-          "schedule_difficulty_vs_nominal_anchor": 32.44
-        }
-      },
-      "rivalry_intelligence": {
-        "category": null,
-        "decision_effect": "NONE",
-        "is_rivalry": null,
-        "source": null,
-        "static_tags": [],
-        "status": "NOT_EVALUATED"
-      },
-      "score_away": null,
-      "score_home": null,
-      "season_key": "2026",
-      "team_strength": {
-        "away": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 109,
-          "matches_observed_season": 33,
-          "matches_observed_total": 109,
-          "rank_in_league": 12,
-          "rating_pre_match": 1494.31
-        },
-        "diff_home_minus_away": -91.32,
-        "expected_score_away": 0.58035,
-        "expected_score_home": 0.41965,
-        "home": {
-          "is_new_entrant": false,
-          "is_returning_after_absence": false,
-          "matches_observed": 33,
-          "matches_observed_season": 33,
-          "matches_observed_total": 33,
-          "rank_in_league": 20,
-          "rating_pre_match": 1402.99
         }
       }
     }
