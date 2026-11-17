@@ -1,0 +1,111 @@
+{
+  "_metadata_": {
+    "league_id": 55,
+    "league_name": "Serie A",
+    "task_id": "FE-009",
+    "scope": "serie_a_descriptive_pilot",
+    "cutoff": "2026-10-31",
+    "decision_effect": "NONE",
+    "temporal_certification": "CHRONOLOGICAL_RECONSTRUCTION_ONLY",
+    "components_evaluated": [
+      "team_strength_elo_baseline",
+      "opponent_quality_l5_contextualized",
+      "derby_and_rivalry_intelligence"
+    ],
+    "parameters": {
+      "home_advantage": 35.0,
+      "initial_rating": 1500.0,
+      "k_factor": 20.0,
+      "season_regression_lambda": 0.85
+    }
+  },
+  "historical_matches": [],
+  "target_matches": [
+    {
+      "active_league_mean": 1536.31,
+      "active_league_mean_status": "ESTABLISHED_FULL_PARTICIPANTS",
+      "away_team": "Test Away",
+      "date": "2026-10-31",
+      "decision_effect": "NONE",
+      "home_team": "Test Home",
+      "match_context": {
+        "as_of": "2026-10-31",
+        "decision_effect": "NONE",
+        "dynamic_tags": [],
+        "rivalry_level": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": []
+      },
+      "match_id": "20261031_TESTHOME_TESTAWAY",
+      "opponent_quality": {
+        "away": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1540.46,
+          "opp_strength_l5_contextualized_gap_avg": 4.15,
+          "schedule_difficulty_vs_active_mean": 4.15,
+          "schedule_difficulty_vs_nominal_anchor": 40.46
+        },
+        "home": {
+          "flags": [],
+          "n_contextualized_gaps_observed": 5,
+          "n_opponents_observed": 5,
+          "opp_strength_l5_avg": 1548.92,
+          "opp_strength_l5_contextualized_gap_avg": 12.61,
+          "schedule_difficulty_vs_active_mean": 12.61,
+          "schedule_difficulty_vs_nominal_anchor": 48.92
+        }
+      },
+      "rivalry_intelligence": {
+        "category": null,
+        "decision_effect": "NONE",
+        "established_since": null,
+        "geographic_scope": null,
+        "is_rivalry": null,
+        "provenance_count": 0,
+        "rivalry_id": null,
+        "rivalry_name": null,
+        "source": "rivalry_registry_serie_a.json",
+        "static_tags": [],
+        "status": "NOT_RECORDED_IN_PILOT_REGISTRY"
+      },
+      "score_away": null,
+      "score_home": null,
+      "season_key": "2026-2027",
+      "team_strength": {
+        "away": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 85,
+          "matches_observed_season": 9,
+          "matches_observed_total": 85,
+          "rank_in_league": 16,
+          "rating_pre_match": 1472.33
+        },
+        "diff_home_minus_away": 68.35,
+        "expected_score_away": 0.355503,
+        "expected_score_home": 0.644497,
+        "home": {
+          "is_new_entrant": false,
+          "is_returning_after_absence": false,
+          "matches_observed": 123,
+          "matches_observed_season": 9,
+          "matches_observed_total": 123,
+          "rank_in_league": 9,
+          "rating_pre_match": 1540.68
+        }
+      }
+    }
+  ],
+  "current_season_active_standings": [
+    {
+      "matches_observed_season": 9,
+      "matches_observed_total": 123,
+      "rank": 1,
+      "rating": 1718.43,
+      "team_name": "Inter Milan"
+    }
+  ],
+  "all_time_tracked_standings": []
+}
