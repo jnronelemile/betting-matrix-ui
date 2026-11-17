@@ -20,6 +20,25 @@ import { isValidDateComponents } from './titaniumLoader.js';
  * Never match by substring to avoid cross-league collisions (e.g., Serie A vs Brazilian Serie A / Serie B).
  */
 export const FI_LEAGUE_REGISTRY = Object.freeze([
+  { leagueId: 207, canonicalName: 'Super League Greece', webLeagueKeys: ['SUPERLEAGUEGREECE', 'GRE1'], expectedParticipants: 14, participantCountsBySeason: { '2026-2027': 14 }, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': 'gre1_regular_descriptive' }, allowedFileBasenames: ['football_intelligence_gre1.json'] },
+  { leagueId: 306, canonicalName: 'Saudi Pro League', webLeagueKeys: ['SAUDIPROLEAGUE'], expectedParticipants: 18, participantCountsBySeason: { '2026-2027': 18 }, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': 'tier4_306_descriptive' }, allowedFileBasenames: ['football_intelligence_saudi_pro_league.json'] },
+  { leagueId: 211, canonicalName: "Superligaen", webLeagueKeys: ["SUPERLIGAEN"], expectedParticipants: 12, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "recurrent_211_descriptive" }, allowedFileBasenames: ["football_intelligence_den1.json"] },
+  { leagueId: 307, canonicalName: "K League 1", webLeagueKeys: ["KLEAGUE1"], expectedParticipants: 12, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "tier4_307_descriptive" }, allowedFileBasenames: ["football_intelligence_k_league_1.json"] },
+  { leagueId: 204, canonicalName: "Belgian Pro League", webLeagueKeys: ["BELGIANPROLEAGUE"], expectedParticipants: 18, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "bel1_regular_descriptive" }, allowedFileBasenames: ["football_intelligence_bel1.json"] },
+  { leagueId: 209, canonicalName: "Ekstraklasa", webLeagueKeys: ["EKSTRAKLASA"], expectedParticipants: 18, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "pol1_descriptive_pilot" }, allowedFileBasenames: ["football_intelligence_pol1.json"] },
+  { leagueId: 308, canonicalName: "J1 League", webLeagueKeys: ["J1LEAGUE"], expectedParticipants: 20, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "recurrent_308_descriptive" }, allowedFileBasenames: ["football_intelligence_j1_league.json"] },
+  { leagueId: 103, canonicalName: "Serie B", webLeagueKeys: ["SERIEB"], expectedParticipants: 20, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "serie_b_descriptive_pilot" }, allowedFileBasenames: ["football_intelligence_serie_b.json"] },
+  { leagueId: 101, canonicalName: "Championship", webLeagueKeys: ["CHAMPIONSHIP"], expectedParticipants: 24, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "championship_descriptive_pilot" }, allowedFileBasenames: ["football_intelligence_championship.json"] },
+  { leagueId: 203, canonicalName: "Russian Premier League", webLeagueKeys: ["RUSSIANPREMIERLEAGUE"], expectedParticipants: 16, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "rus1_descriptive_pilot" }, allowedFileBasenames: ["football_intelligence_rus1.json"] },
+  { leagueId: 201, canonicalName: "Scottish Premiership", webLeagueKeys: ["SCOTTISHPREMIERSHIP"], expectedParticipants: 12, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "recurrent_201_descriptive" }, allowedFileBasenames: ["football_intelligence_premiership.json"] },
+  { leagueId: 202, canonicalName: "Süper Lig", webLeagueKeys: ["SPERLIG"], expectedParticipants: 18, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "tur1_descriptive_pilot" }, allowedFileBasenames: ["football_intelligence_tur1.json"] },
+  { leagueId: 304, canonicalName: "Major League Soccer", webLeagueKeys: ["MAJORLEAGUESOCCER"], expectedParticipants: 30, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "recurrent_304_descriptive" }, allowedFileBasenames: ["football_intelligence_mls.json"] },
+  { leagueId: 105, canonicalName: "Ligue 2", webLeagueKeys: ["LIGUE2"], expectedParticipants: 18, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "ligue_2_descriptive_pilot" }, allowedFileBasenames: ["football_intelligence_ligue_2.json"] },
+  { leagueId: 301, canonicalName: "Eliteserien", webLeagueKeys: ["ELITESERIEN"], expectedParticipants: 16, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "recurrent_301_descriptive" }, allowedFileBasenames: ["football_intelligence_eliteserien.json"] },
+  { leagueId: 302, canonicalName: "Allsvenskan", webLeagueKeys: ["ALLSVENSKAN"], expectedParticipants: 16, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "recurrent_302_descriptive" }, allowedFileBasenames: ["football_intelligence_allsvenskan.json"] },
+  { leagueId: 205, canonicalName: "Swiss Super League", webLeagueKeys: ["SWISSSUPERLEAGUE"], expectedParticipants: 12, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "sui1_regular_descriptive" }, allowedFileBasenames: ["football_intelligence_sui1.json"] },
+  { leagueId: 102, canonicalName: "2. Bundesliga", webLeagueKeys: ["2BUNDESLIGA"], expectedParticipants: 18, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "bundesliga_2_descriptive_pilot" }, allowedFileBasenames: ["football_intelligence_bundesliga_2.json"] },
+  { leagueId: 206, canonicalName: "Austrian Bundesliga", webLeagueKeys: ["AUSTRIANBUNDESLIGA"], expectedParticipants: 12, allowedProfiles: ['FE-009'], allowedScopes: { 'FE-009': "aut1_regular_descriptive" }, allowedFileBasenames: ["football_intelligence_aut1.json"] },
   {
     leagueId: 104, canonicalName: 'LaLiga2', webLeagueKeys: ['LALIGA2'],
     expectedParticipants: 22, allowedProfiles: ['FE-009'],
@@ -738,7 +757,10 @@ export function validateAndIndexFiEnvelope(payload, expectedLeagueInput = null) 
     }
   }
 
-  const isStandingsComplete = rawActiveStandings.length > 0 && rawActiveStandings.length === leagueConfig.expectedParticipants;
+  const expectedParticipants = leagueConfig.participantCountsBySeason
+    ? (leagueConfig.participantCountsBySeason[targetSeasonKey] ?? null)
+    : leagueConfig.expectedParticipants;
+  const isStandingsComplete = expectedParticipants !== null && rawActiveStandings.length > 0 && rawActiveStandings.length === expectedParticipants;
 
   return {
     valid: true,
@@ -746,7 +768,7 @@ export function validateAndIndexFiEnvelope(payload, expectedLeagueInput = null) 
     leagueId: leagueConfig.leagueId,
     leagueName: meta.league_name,
     canonicalLeagueName: leagueConfig.canonicalName,
-    expectedParticipants: leagueConfig.expectedParticipants,
+    expectedParticipants,
     cutoff,
     rivalryStatus: meta.rivalry_status || (meta.rivalry_registry_summary ? 'PARTIAL_REGISTRY_EVALUATED' : 'NOT_EVALUATED'),
     targetSeasonKey,

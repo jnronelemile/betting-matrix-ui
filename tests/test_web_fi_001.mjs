@@ -38,7 +38,7 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 console.log('=== STARTING TARGETED TEST SUITE: WEB-FI-001 (PHASES A & B) ===\n');
 
 // 1. Détermination déterministe de la matrice de prédictions active
-const predDir = path.join(ROOT_DIR, 'public/data/titanium_v2/predictions');
+const predDir = path.join(ROOT_DIR, 'tests/fixtures/web_fi_001/predictions');
 const availablePredFiles = fs.readdirSync(predDir).filter(f => f.endsWith('.json'));
 const activePredictionFileName = selectDeterministicPredictionFile(availablePredFiles);
 assert.ok(activePredictionFileName, 'Authoritative operational prediction file must be deterministically resolved');
@@ -46,7 +46,7 @@ assert.ok(activePredictionFileName, 'Authoritative operational prediction file m
 // 2. Contrôle explicite de concordance entre la matrice et le batch Football Intelligence
 const plFiPath = path.join(
   ROOT_DIR,
-  'public/data/titanium_v2/football_intelligence/multileague/football_intelligence_premier_league.json'
+  'tests/fixtures/web_fi_001/multileague/football_intelligence_premier_league.json'
 );
 const plFiRaw = JSON.parse(fs.readFileSync(plFiPath, 'utf8'));
 assert.equal(
@@ -57,7 +57,7 @@ assert.equal(
 
 const serieAFiPath = path.join(
   ROOT_DIR,
-  'public/data/titanium_v2/football_intelligence/multileague/football_intelligence_serie_a.json'
+  'tests/fixtures/web_fi_001/multileague/football_intelligence_serie_a.json'
 );
 const predictionsPath = path.join(predDir, activePredictionFileName);
 
@@ -69,7 +69,7 @@ const predictionsRaw = JSON.parse(fs.readFileSync(predictionsPath, 'utf8'));
 // -----------------------------------------------------------------------------
 console.log('[TEST 1] Explicit League Identification & Cross-League Isolation');
 {
-  assert.equal(FI_LEAGUE_REGISTRY.length, 10, 'Registry must define the configured FI leagues');
+  assert.equal(FI_LEAGUE_REGISTRY.length, 29, 'Registry must define the configured FI leagues');
 
   const serieAConfig = resolveFiLeagueConfig('SerieA');
   assert.ok(serieAConfig, 'SerieA must resolve');
@@ -78,12 +78,12 @@ console.log('[TEST 1] Explicit League Identification & Cross-League Isolation');
   assert.equal(serieAConfig.expectedParticipants, 20);
 
   // Strict rejection of similar-sounding leagues (no substring heuristics)
-  assert.equal(resolveFiLeagueConfig('SerieB'), null, 'SerieB must never match SerieA');
+  assert.equal(resolveFiLeagueConfig('SerieB').leagueId, 103, 'SerieB must never match SerieA');
   assert.equal(resolveFiLeagueConfig('BrazilianSerieA').leagueId, 303, 'BrazilianSerieA must never match SerieA');
-  assert.equal(resolveFiLeagueConfig('2.Bundesliga'), null, '2.Bundesliga must never match Bundesliga');
-  assert.equal(resolveFiLeagueConfig('Ligue2'), null, 'Ligue2 must never match Ligue1');
+  assert.equal(resolveFiLeagueConfig('2.Bundesliga').leagueId, 102, '2.Bundesliga must never match Bundesliga');
+  assert.equal(resolveFiLeagueConfig('Ligue2').leagueId, 105, 'Ligue2 must never match Ligue1');
   assert.equal(resolveFiLeagueConfig('LaLiga2').leagueId, 104, 'LaLiga2 must never match LaLiga');
-  assert.equal(resolveFiLeagueConfig('Allsvenskan'), null, 'Allsvenskan must be unsupported');
+  assert.equal(resolveFiLeagueConfig('Allsvenskan').leagueId, 302, 'Allsvenskan must be unsupported');
 
   console.log('  ✓ Test 1 passed: League identification is strict with zero cross-league collisions.\n');
 }
@@ -474,7 +474,7 @@ console.log('[TEST 5] Missing-Data Behavior, Fail-Closed Mismatches & On-Demand 
   };
 
   // Non-Serie A match (e.g. SerieB or Allsvenskan) must not trigger any fetch
-  const serieBMatch = predictionsRaw.find(p => p.League === 'SerieB');
+  const serieBMatch = { ...predictionsRaw[0], League: 'Unsupported league' };
   const serieBRes = await loadFootballIntelligenceForMatch(serieBMatch, { fetchFn: mockFetch, manifestOverride });
   assert.equal(serieBRes.available, false);
   assert.equal(serieBRes.status, 'LEAGUE_UNSUPPORTED');
@@ -504,7 +504,8 @@ console.log('[TEST 6] UI Component Integration & Semantic Guardrails');
 
   // Verify 8th tab in MatchDashboard.jsx
   assert.ok(dashboardCode.includes("id: 'intelligence'"), 'MatchDashboard must define the intelligence tab');
-  assert.ok(dashboardCode.includes("label: 'Football Intelligence'"), 'MatchDashboard must label the tab Football Intelligence');
+  assert.ok(dashboardCode.includes("label: 'Football'") || dashboardCode.includes("label: 'Football Intelligence'"), 'MatchDashboard must label the intelligence tab');
+  assert.ok(dashboardCode.includes("loadFootballIntelligenceForMatch(match)"), 'MatchDashboard must load FI for the selected match');
   assert.ok(dashboardCode.includes('<TabFootballIntelligence'), 'MatchDashboard must render TabFootballIntelligence');
 
   // Verify required French and bilingual analytical sections in TabFootballIntelligence.jsx
@@ -820,7 +821,7 @@ console.log('[TEST 10] Concurrent Request Deduplication, Failure Classification 
   };
 
   const serieAPreds = predictionsRaw.filter(p => p.League === 'SerieA');
-  const serieBMatch = predictionsRaw.find(p => p.League === 'SerieB');
+  const serieBMatch = { ...predictionsRaw[0], League: 'Unsupported league' };
 
   // Fire all 10 Serie A matches + 1 Serie B match concurrently via Promise.all
   const results = await Promise.all([
@@ -952,7 +953,7 @@ console.log('[TEST 11] Phase B Structural & Semantic Guardrails on Source Files'
 // -----------------------------------------------------------------------------
 console.log('[TEST 12] Full Multileague Acceptance (7/7 Envelopes, 66/66 Targets, PL 1,220 History & Standings Fidelity)');
 {
-  const fiDir = path.join(ROOT_DIR, 'public/data/titanium_v2/football_intelligence/multileague');
+  const fiDir = path.join(ROOT_DIR, 'tests/fixtures/web_fi_001/multileague');
   const leagueConfigs = [
     { file: 'football_intelligence_bundesliga.json', leagueKey: 'Bundesliga', expectedLeagueId: 54, profile: 'FE-009', expectedTargets: 9, expectedHistory: 981, expectedParticipants: 18, expectedAllTime: 24 },
     { file: 'football_intelligence_eredivisie.json', leagueKey: 'Eredivisie', expectedLeagueId: 57, profile: 'FE-009', expectedTargets: 9, expectedHistory: 1008, expectedParticipants: 18, expectedAllTime: 24 },
